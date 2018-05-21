@@ -61,7 +61,7 @@ In your PHP CS Fixer configuration register fixers and use them:
  namespace Foo;
  
 -
- class Foo {};
+ class Bar {};
 
 ```
 

@@ -19,7 +19,7 @@ final class NoTwoConsecutiveEmptyLinesFixer extends AbstractFixer
 namespace Foo;
 
 
-class Foo {};
+class Bar {};
 ')]
         );
     }
