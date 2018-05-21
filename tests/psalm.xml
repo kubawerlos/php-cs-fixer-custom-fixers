@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<psalm
+        totallyTyped='false'
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+>
+    <projectFiles>
+        <directory name='src' />
+    </projectFiles>
+
+    <issueHandlers>
+        <PossiblyNullArrayOffset errorLevel='suppress' />
+    </issueHandlers>
+</psalm>

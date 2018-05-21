@@ -1,0 +1,33 @@
+git:
+    depth: 1
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+sudo: false
+
+language: php
+
+notifications:
+    email: false
+
+before_install:
+    - composer self-update --stable
+
+matrix:
+    include:
+        - php: '7.1'
+          install: composer update --prefer-lowest
+        - php: '7.1'
+        - php: '7.2'
+
+install:
+    - composer install
+
+script:
+    - vendor/bin/phpcs --report-full --standard=PSR2 src tests
+    - vendor/bin/php-cs-fixer fix --config=tests/php-cs-fixer.config.php --diff --dry-run
+    - vendor/bin/types-checker src tests
+    - vendor/bin/psalm --config=tests/psalm.xml
+    - phpdbg -qrr vendor/bin/phpunit --configuration=tests
