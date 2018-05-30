@@ -65,6 +65,7 @@ jobs:
                 - sed -i -- 's/@covers \\PhpCsFixerCustomFixers\\Fixer/@covers \\PhpCsFixer\\Fixer\CustomFixers/g' tmp/tests/Fixer/CustomFixers/*
                 # prepare for testing
                 - cd tmp
+                - rm -fr tests/Smoke
                 - composer install
                 - php php-cs-fixer fix src/Fixer/CustomFixers
                 - php php-cs-fixer fix tests/Fixer/CustomFixers
