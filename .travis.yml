@@ -52,11 +52,17 @@ jobs:
                 - sed -i -- 's/@covers \\PhpCsFixerCustomFixers\\Fixer/@covers \\PhpCsFixer\\Fixer\CustomFixers/g' tmp/tests/Fixer/CustomFixers/*
                 # prepare for testing
                 - cd tmp
+                - pwd
                 - composer install
+                - pwd
                 - php php-cs-fixer fix src/Fixer/CustomFixers
+                - pwd
                 - php php-cs-fixer fix tests/Fixer/CustomFixers
+                - pwd
                 - php php-cs-fixer readme > README.rst
+                - pwd
                 # test
+                - pwd
                 - vendor/bin/phpunit
 
 install:
