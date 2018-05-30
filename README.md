@@ -4,6 +4,7 @@
 [![PHP Version](https://img.shields.io/badge/php-%5E7.1-8892BF.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![Build Status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
+[![Code coverage](https://img.shields.io/codecov/c/github/kubawerlos/php-cs-fixer-custom-fixers.svg?label=code%20coverage)](https://codecov.io/gh/kubawerlos/php-cs-fixer-custom-fixers)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 

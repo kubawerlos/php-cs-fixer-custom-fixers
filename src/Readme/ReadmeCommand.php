@@ -17,6 +17,7 @@ use Symfony\Component\Yaml\Yaml;
 class ReadmeCommand extends BaseCommand
 {
     private const SHIELDS_HOST  = 'https://img.shields.io';
+    private const CODECOV_URL   = 'https://codecov.io/gh/kubawerlos/php-cs-fixer-custom-fixers';
     private const PACKAGIST_URL = 'https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers';
     private const TRAVIS_URL    = 'https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers';
 
@@ -39,6 +40,7 @@ class ReadmeCommand extends BaseCommand
 [![PHP Version](%s/badge/php-%s-8892BF.svg)](https://php.net)
 [![License](%s/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](%s)
 [![Build Status](%s/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](%s)
+[![Code coverage](%s/codecov/c/github/kubawerlos/php-cs-fixer-custom-fixers.svg?label=code%%20coverage)](%s)
 ',
             self::SHIELDS_HOST,
             self::PACKAGIST_URL,
@@ -47,7 +49,9 @@ class ReadmeCommand extends BaseCommand
             self::SHIELDS_HOST,
             self::PACKAGIST_URL,
             self::SHIELDS_HOST,
-            self::TRAVIS_URL
+            self::TRAVIS_URL,
+            self::SHIELDS_HOST,
+            self::CODECOV_URL
         );
     }
 
