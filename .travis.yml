@@ -29,6 +29,10 @@ jobs:
             <<: *STANDARD_TEST_JOB
             stage: Test
             php: '7.2'
+            script:
+                - vendor/bin/phpunit --configuration=tests --coverage-clover=coverage.xml
+            after_success:
+                - bash <(curl -s https://codecov.io/bash)
 
         -
             stage: Stage 2
