@@ -36,7 +36,7 @@ jobs:
             php: '7.2'
             script:
                 # prepare PHP CS Fixer
-                - composer create-project --no-install friendsofphp/php-cs-fixer tmp
+                - composer create-project --no-install --prefer-source friendsofphp/php-cs-fixer tmp
                 # prepare fixers
                 - mkdir tmp/src/Fixer/CustomFixers
                 - cp src/Fixer/* tmp/src/Fixer/CustomFixers
@@ -57,7 +57,7 @@ jobs:
                 - php php-cs-fixer fix tests/Fixer/CustomFixers
                 - php php-cs-fixer readme > README.rst
                 # test
-                - vendor/bin/phpunit --configuration=.
+                - vendor/bin/phpunit
 
 install:
     - composer install
