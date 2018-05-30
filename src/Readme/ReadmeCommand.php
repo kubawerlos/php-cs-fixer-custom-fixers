@@ -40,7 +40,7 @@ class ReadmeCommand extends BaseCommand
 [![PHP Version](%s/badge/php-%s-8892BF.svg)](https://php.net)
 [![License](%s/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](%s)
 [![Build Status](%s/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](%s)
-[![codecov](%s/branch/master/graph/badge.svg)](%s)
+[![Code coverage](%s/codecov/c/github/kubawerlos/php-cs-fixer-custom-fixers.svg?label=code%%20coverage)](%s)
 ',
             self::SHIELDS_HOST,
             self::PACKAGIST_URL,
@@ -50,7 +50,7 @@ class ReadmeCommand extends BaseCommand
             self::PACKAGIST_URL,
             self::SHIELDS_HOST,
             self::TRAVIS_URL,
-            self::CODECOV_URL,
+            self::SHIELDS_HOST,
             self::CODECOV_URL
         );
     }
