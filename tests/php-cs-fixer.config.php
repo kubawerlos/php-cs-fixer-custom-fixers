@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-// PHP-CS-Fixer v2.9
+// PHP-CS-Fixer v2.11
 return PhpCsFixer\Config::create()
     ->setUsingCache(false)
     ->setFinder(
@@ -141,8 +141,12 @@ return PhpCsFixer\Config::create()
             'identical'        => false,
             'less_and_greater' => false,
         ],
-        PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => true,
-        PhpCsFixerCustomFixers\Fixer\NoPhpStormGeneratedCommentFixer::name()      => true,
-        PhpCsFixerCustomFixers\Fixer\NoTwoConsecutiveEmptyLinesFixer::name()      => true,
-        PhpCsFixerCustomFixers\Fixer\NoUselessClassCommentFixer::name()           => true,
-    ]);
+    ] + \array_reduce(
+        \iterator_to_array(new PhpCsFixerCustomFixers\Fixers()),
+        static function (array $carry, PhpCsFixer\Fixer\DefinedFixerInterface $item) : array {
+            $carry[$item->getName()] = true;
+
+            return $carry;
+        },
+        []
+    ));

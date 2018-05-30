@@ -35,7 +35,7 @@ namespace Foo;
     public function fix(\SplFileInfo $file, Tokens $tokens) : void
     {
         foreach ($tokens as $index => $token) {
-            if (!$tokens[$index]->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
                 continue;
             }
 
