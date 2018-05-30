@@ -15,12 +15,26 @@ notifications:
 before_install:
     - composer self-update --stable
 
-matrix:
+jobs:
     include:
-        - php: '7.1'
-          install: composer update --prefer-lowest
-        - php: '7.1'
-        - php: '7.2'
+        - &STANDARD_TEST_JOB
+            stage: Test
+            php: '7.1'
+            install: composer update --prefer-lowest
+        -
+            <<: *STANDARD_TEST_JOB
+            stage: Test
+            php: '7.1'
+        -
+            <<: *STANDARD_TEST_JOB
+            stage: Test
+            php: '7.2'
+
+        -
+            stage: Stage 2
+            php: '7.2'
+            script:
+                - vendor/bin/phpunit --configuration=tests
 
 install:
     - composer install
