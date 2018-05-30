@@ -32,6 +32,7 @@ jobs:
 
         -
             stage: Verify correctness for PHP CS Fixer
+            php: '7.2'
             script:
                 # prepare PHP CS Fixer
                 - git clone --depth 1 --single-branch git@github.com:FriendsOfPHP/PHP-CS-Fixer.git tmp
