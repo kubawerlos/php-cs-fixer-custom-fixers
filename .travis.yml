@@ -34,7 +34,7 @@ jobs:
             stage: Stage 2
             php: '7.2'
             script:
-                - vendor/bin/phpunit
+                - vendor/bin/phpunit --configuration=tests
 
 install:
     - composer install
