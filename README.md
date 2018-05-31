@@ -96,6 +96,17 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
+- **PhpdocMissingParamAnnotationTypeFixer** - adds missing type for `@param` annotation.
+```diff
+ <?php
+ /**
+  * @param string $foo
+- * @param        $bar
++ * @param mixed  $bar
+  */
+
+```
+
 
 ## Contributing
 Request a feature or report a bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
