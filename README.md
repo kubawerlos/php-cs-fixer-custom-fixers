@@ -87,6 +87,15 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
+- **NoUselessConstructorCommentFixer** - there should be no comment like: "Class Foo\Bar".
+```diff
+ <?php
+ /**
+- * Foo Constructor
+  */
+
+```
+
 
 ## Contributing
 Request a feature or report a bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
