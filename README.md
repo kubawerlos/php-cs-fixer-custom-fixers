@@ -56,17 +56,6 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
-- **NoTwoConsecutiveEmptyCommentLinesFixer** - there should be no two consecutive empty lines in comment or PHPDoc.
-```diff
- /**
-  * Foo
-  *
-- *
-  * Bar
-  */
-
-```
-
 - **NoTwoConsecutiveEmptyLinesFixer** - there should be no two consecutive empty lines in code.
 ```diff
  <?php
