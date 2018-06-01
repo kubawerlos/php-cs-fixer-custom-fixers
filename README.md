@@ -84,6 +84,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 - * Class Foo\Bar
   * Class to do something
   */
+ class Foo {}
 
 ```
 
