@@ -9,7 +9,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpdocMissingParamAnnotationTypeFixer extends AbstractFixer
+final class PhpdocParamTypeFixer extends AbstractFixer
 {
     public function getDefinition() : FixerDefinition
     {
@@ -56,7 +56,8 @@ final class PhpdocMissingParamAnnotationTypeFixer extends AbstractFixer
 
     public function getPriority() : int
     {
-        // must be run after CommentToPhpdocFixer and before PhpdocAlignFixer
-        return 0;
+        // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
+        // must be run before PhpdocAlignFixer
+        return -2;
     }
 }

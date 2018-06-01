@@ -5,18 +5,20 @@ declare(strict_types = 1);
 namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocMissingParamAnnotationTypeFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer
  */
-final class PhpdocMissingParamAnnotationTypeFixerTest extends AbstractFixerTestCase
+final class PhpdocParamTypeFixerTest extends AbstractFixerTestCase
 {
     public function testPriority() : void
     {
         $this->assertLessThan((new CommentToPhpdocFixer())->getPriority(), $this->fixer->getPriority());
+        $this->assertLessThan((new PhpdocAddMissingParamAnnotationFixer())->getPriority(), $this->fixer->getPriority());
         $this->assertGreaterThan((new PhpdocAlignFixer())->getPriority(), $this->fixer->getPriority());
     }
 

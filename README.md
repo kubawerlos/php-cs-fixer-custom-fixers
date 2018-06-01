@@ -97,7 +97,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
-- **PhpdocMissingParamAnnotationTypeFixer** - adds missing type for `@param` annotation.
+- **PhpdocParamTypeFixer** - adds missing type for `@param` annotation.
 ```diff
  <?php
  /**
