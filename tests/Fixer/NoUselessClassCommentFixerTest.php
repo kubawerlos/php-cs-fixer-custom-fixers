@@ -39,11 +39,13 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
             '<?php
             /**
              */
+            class Foo {}
              ',
             '<?php
             /**
              * Class Foo.
              */
+            class Foo {}
              ',
         ];
 
@@ -51,11 +53,13 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
             '<?php
             /**
              */
+            class Foo {}
              ',
             '<?php
             /**
              * Class Foo\Bar.
              */
+            class Foo {}
              ',
         ];
 
@@ -63,11 +67,13 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
             '<?php
             /**
              */
+            class Foo {}
              ',
             '<?php
             /**
              * Class Foo
              */
+            class Foo {}
              ',
         ];
 
@@ -77,6 +83,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
              *
              * Class provides nice functionality
              */
+            class Foo {}
              ',
             '<?php
             /**
@@ -84,6 +91,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
              *
              * Class provides nice functionality
              */
+            class Foo {}
              ',
         ];
 
@@ -93,6 +101,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
              * Class provides nice functionality
              *
              */
+            class Foo {}
              ',
             '<?php
             /**
@@ -100,6 +109,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
              *
              * Class Foo.
              */
+            class Foo {}
              ',
         ];
 
@@ -109,6 +119,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
              * @author John Doe
              * Class is cool
              */
+            class Foo {}
              ',
             '<?php
             /**
@@ -116,6 +127,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
              * Class Foo.
              * Class is cool
              */
+            class Foo {}
              ',
         ];
 
@@ -123,11 +135,13 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
             '<?php
             /** @see example.com
              */
+            abstract class Foo {}
              ',
             '<?php
             /** Class Foo
              * @see example.com
              */
+            abstract class Foo {}
              ',
         ];
 
@@ -135,16 +149,28 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
             '<?php
             //
             // Class that does something
+            final class Foo {}
              ',
             '<?php
             // Class Foo
             // Class that does something
+            final class Foo {}
              ',
         ];
 
         yield [
             '<?php
             // I am class Foo
+            class Foo {}
+             ',
+        ];
+
+        yield [
+            '<?php
+            // Class Foo
+            if (true) {
+                return false;
+            }
              ',
         ];
     }

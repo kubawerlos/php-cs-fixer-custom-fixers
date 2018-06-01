@@ -20,6 +20,7 @@ final class NoUselessClassCommentFixer extends AbstractFixer
  * Class Foo\Bar
  * Class to do something
  */
+class Foo {}
 ')]
         );
     }
@@ -37,6 +38,11 @@ final class NoUselessClassCommentFixer extends AbstractFixer
             }
 
             if (\strpos($token->getContent(), 'Class ') === false) {
+                continue;
+            }
+
+            $nextIndex = $tokens->getNextMeaningfulToken($index);
+            if ($nextIndex === null || !$tokens[$nextIndex]->isGivenKind([T_ABSTRACT, T_CLASS, T_FINAL])) {
                 continue;
             }
 
