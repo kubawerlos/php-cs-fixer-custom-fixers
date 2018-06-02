@@ -107,7 +107,7 @@ src/Readme/run > README.md
 ```
 make sure all checks pass:
 ```bash
-vendor/bin/phpcs --report-full --standard=PSR2 src tests
+vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 src tests
 vendor/bin/php-cs-fixer fix --config=tests/php-cs-fixer.config.php --diff --dry-run
 vendor/bin/types-checker src tests
 vendor/bin/psalm --config=tests/psalm.xml

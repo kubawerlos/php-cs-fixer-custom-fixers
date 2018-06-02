@@ -24,7 +24,7 @@ final class FixersTest extends TestCase
         $sortedFixerNames = $fixerNames;
         \sort($sortedFixerNames);
 
-        $this->assertSame($sortedFixerNames, $fixerNames);
+        static::assertSame($sortedFixerNames, $fixerNames);
     }
 
     /**
@@ -32,7 +32,7 @@ final class FixersTest extends TestCase
      */
     public function testFixerIsInCollection(FixerInterface $fixer) : void
     {
-        $this->assertContains($fixer->getName(), $this->fixerNamesFromCollection());
+        static::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
     }
 
     public function providerFixersInFixerDirectoryCases() : array
