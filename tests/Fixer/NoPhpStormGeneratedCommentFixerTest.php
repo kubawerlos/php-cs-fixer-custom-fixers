@@ -13,7 +13,7 @@ final class NoPhpStormGeneratedCommentFixerTest extends AbstractFixerTestCase
 {
     public function testPriority() : void
     {
-        $this->assertSame(0, $this->fixer->getPriority());
+        static::assertSame(0, $this->fixer->getPriority());
     }
 
     /**

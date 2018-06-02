@@ -17,9 +17,9 @@ final class PhpdocParamTypeFixerTest extends AbstractFixerTestCase
 {
     public function testPriority() : void
     {
-        $this->assertLessThan((new CommentToPhpdocFixer())->getPriority(), $this->fixer->getPriority());
-        $this->assertLessThan((new PhpdocAddMissingParamAnnotationFixer())->getPriority(), $this->fixer->getPriority());
-        $this->assertGreaterThan((new PhpdocAlignFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertLessThan((new CommentToPhpdocFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertLessThan((new PhpdocAddMissingParamAnnotationFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new PhpdocAlignFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     /**

@@ -22,7 +22,7 @@ final class AutoReviewTest extends TestCase
      */
     public function testFixerExtendsAbstractFixer(FixerInterface $fixer) : void
     {
-        $this->assertInstanceOf(AbstractFixer::class, $fixer);
+        static::assertInstanceOf(AbstractFixer::class, $fixer);
     }
 
     /**
@@ -32,7 +32,7 @@ final class AutoReviewTest extends TestCase
     {
         $validator = new FixerNameValidator();
 
-        $this->assertTrue(
+        static::assertTrue(
             $validator->isValid($fixer->getName(), true),
             \sprintf('Fixer name "%s" is incorrect', $fixer->getName())
         );
@@ -43,7 +43,7 @@ final class AutoReviewTest extends TestCase
      */
     public function testFixerIsFinal(FixerInterface $fixer) : void
     {
-        $this->assertTrue((new \ReflectionClass($fixer))->isFinal());
+        static::assertTrue((new \ReflectionClass($fixer))->isFinal());
     }
 
     public function provideFixerCases() : array
@@ -60,13 +60,13 @@ final class AutoReviewTest extends TestCase
     {
         $fixer = $this->getMockForAbstractClass(AbstractFixer::class);
 
-        $this->assertFalse($fixer->isRisky());
+        static::assertFalse($fixer->isRisky());
     }
 
     public function testFixerSupportsAllFilesByDefault() : void
     {
         $fixer = $this->getMockForAbstractClass(AbstractFixer::class);
 
-        $this->assertTrue($fixer->supports($this->createMock(\SplFileInfo::class)));
+        static::assertTrue($fixer->supports($this->createMock(\SplFileInfo::class)));
     }
 }

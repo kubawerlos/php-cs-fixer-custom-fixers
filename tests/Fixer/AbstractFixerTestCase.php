@@ -29,7 +29,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionHasExactlyOneCodeSample() : void
     {
-        $this->assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
+        static::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
     }
 
     final public function testCodeSampleIsChangedDuringFixing() : void
@@ -40,7 +40,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        $this->assertNotSame($codeSample->getCode(), $tokens->generateCode());
+        static::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
 
     final protected function doTest(string $expected, string $input = null) : void
@@ -51,10 +51,10 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $tokens = Tokens::fromCode($input);
 
-        $this->assertTrue($this->fixer->isCandidate($tokens));
+        static::assertTrue($this->fixer->isCandidate($tokens));
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        $this->assertSame($expected, $tokens->generateCode());
+        static::assertSame($expected, $tokens->generateCode());
     }
 }

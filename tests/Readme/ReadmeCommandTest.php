@@ -30,7 +30,7 @@ final class ReadmeCommandTest extends TestCase
 
         $tester->run([]);
 
-        $this->assertStringEqualsFile(
+        static::assertStringEqualsFile(
             __DIR__ . '/../../README.md',
             $tester->getDisplay()
         );

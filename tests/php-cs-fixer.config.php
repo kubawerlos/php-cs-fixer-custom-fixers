@@ -79,15 +79,19 @@ return PhpCsFixer\Config::create()
         'list_syntax'                 => [
             'syntax' => 'long',
         ],
+        'logical_operators'     => true,
         'method_argument_space' => [
             'ensure_fully_multiline'           => true,
             'keep_multiple_spaces_after_comma' => false,
         ],
         'method_chaining_indentation'       => true,
         'multiline_comment_opening_closing' => true,
-        'native_function_invocation'        => true,
-        'no_alternative_syntax'             => true,
-        'no_extra_consecutive_blank_lines'  => [
+        'native_function_invocation'        => [
+            'include' => ['@all'],
+        ],
+        'no_alternative_syntax'            => true,
+        'no_binary_string'                 => true,
+        'no_extra_consecutive_blank_lines' => [
             'tokens' => [
                 'continue',
                 'curly_brace_block',
@@ -105,22 +109,27 @@ return PhpCsFixer\Config::create()
         'no_php4_constructor'                       => true,
         'no_superfluous_elseif'                     => true,
         'no_unreachable_default_argument_value'     => true,
+        'no_unset_on_property'                      => true,
         'no_useless_else'                           => true,
         'no_useless_return'                         => true,
         'ordered_class_elements'                    => true,
         'ordered_imports'                           => [
             'sortAlgorithm' => 'alpha',
         ],
-        'php_unit_ordered_covers'              => true,
-        'php_unit_set_up_tear_down_visibility' => true,
-        'php_unit_strict'                      => true,
-        'php_unit_test_annotation'             => true,
-        'php_unit_test_class_requires_covers'  => true,
-        'phpdoc_order'                         => true,
-        'phpdoc_types_order'                   => [
+        'php_unit_internal_class'                       => true,
+        'php_unit_ordered_covers'                       => true,
+        'php_unit_set_up_tear_down_visibility'          => true,
+        'php_unit_strict'                               => true,
+        'php_unit_test_annotation'                      => true,
+        'php_unit_test_case_static_method_calls'        => true,
+        'php_unit_test_class_requires_covers'           => true,
+        'phpdoc_order'                                  => true,
+        'phpdoc_trim_consecutive_blank_line_separation' => true,
+        'phpdoc_types_order'                            => [
             'null_adjustment' => 'always_last',
             'sort_algorithm'  => 'alpha',
         ],
+        'return_assignment'       => true,
         'return_type_declaration' => [
             'space_before' => 'one',
         ],

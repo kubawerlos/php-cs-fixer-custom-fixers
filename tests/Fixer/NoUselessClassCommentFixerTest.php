@@ -17,9 +17,9 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
 {
     public function testPriority() : void
     {
-        $this->assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
-        $this->assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
-        $this->assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     /**

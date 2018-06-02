@@ -16,8 +16,8 @@ final class NoTwoConsecutiveEmptyLinesFixerTest extends AbstractFixerTestCase
 {
     public function testPriority() : void
     {
-        $this->assertLessThan((new NoTrailingWhitespaceFixer())->getPriority(), $this->fixer->getPriority());
-        $this->assertLessThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertLessThan((new NoTrailingWhitespaceFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertLessThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     /**
