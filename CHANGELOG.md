@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.2.0 - 2018-06-03
 - Add PhpdocNoIncorrectVarAnnotationFixer
 
 ## v1.1.0 - 2018-06-02
