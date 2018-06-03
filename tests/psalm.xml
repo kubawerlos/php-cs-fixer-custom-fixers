@@ -8,6 +8,8 @@
     </projectFiles>
 
     <issueHandlers>
+        <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
+        <PossiblyNullOperand errorLevel='suppress' />
     </issueHandlers>
 </psalm>

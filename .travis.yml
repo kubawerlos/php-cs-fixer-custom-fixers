@@ -61,6 +61,7 @@ jobs:
                 - sed -i -- 's/namespace PhpCsFixerCustomFixers\\Fixer;/namespace PhpCsFixer\\Fixer\\CustomFixers;use PhpCsFixer\\AbstractFixer;use PhpCsFixer\\Preg;/g' tmp/src/Fixer/CustomFixers/*
                 - sed -i -- 's/public function fix/protected function applyFix/g' tmp/src/Fixer/CustomFixers/*
                 - sed -i -- 's/\\preg_/Preg::/g' tmp/src/Fixer/CustomFixers/*
+                - sed -i -- 's/Preg::quote/preg_quote/g' tmp/src/Fixer/CustomFixers/*
                 # prepare tests
                 - mkdir tmp/tests/Fixer/CustomFixers
                 - cp tests/Fixer/* tmp/tests/Fixer/CustomFixers
