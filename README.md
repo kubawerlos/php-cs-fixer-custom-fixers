@@ -86,6 +86,15 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
+- **PhpdocNoIncorrectVarAnnotationFixer** - `@var` should be correct in the code.
+```diff
+ <?php
+-/** @var LoggerInterface $foo */
++
+ $bar = new Logger();
+
+```
+
 - **PhpdocParamTypeFixer** - adds missing type for `@param` annotation.
 ```diff
  <?php
