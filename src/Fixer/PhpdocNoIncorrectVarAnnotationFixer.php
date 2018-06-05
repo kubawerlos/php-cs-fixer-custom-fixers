@@ -17,8 +17,8 @@ final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
         return new FixerDefinition(
             '`@var` should be correct in the code.',
             [new CodeSample('<?php
-/** @var LoggerInterface $foo */
-$bar = new Logger();
+/** @var Foo $foo */
+$bar = new Foo();
 ')]
         );
     }
@@ -40,7 +40,7 @@ $bar = new Logger();
             }
 
             // remove ones not having type at the beginning
-            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\s+[\\\\a-zA-Z_\x7f-\xff]/');
+            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\s+[\?\\\\a-zA-Z_\x7f-\xff]/');
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);
 

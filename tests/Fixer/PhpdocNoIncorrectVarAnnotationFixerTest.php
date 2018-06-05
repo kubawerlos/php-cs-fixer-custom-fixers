@@ -45,14 +45,21 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
     {
         yield [
             '<?php
-/** @var LoggerInterface $foo */
-$foo = new Logger();
+/** @var Foo $foo */
+$foo = new Foo();
 ',
         ];
 
         yield [
             '<?php
 /** @var \Foo $foo */
+$foo = new Foo();
+',
+        ];
+
+        yield [
+            '<?php
+/** @var ?Foo $foo */
 $foo = new Foo();
 ',
         ];
