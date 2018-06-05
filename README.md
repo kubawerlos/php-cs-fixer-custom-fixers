@@ -109,6 +109,15 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
+- **PhpdocVarAnnotationCorrectOrderFixer** - in `@var` type and variable must be in correct order.
+```diff
+ <?php
+-/** @var $foo int */
++/** @var int $foo */
+ $foo = 2 + 2;
+
+```
+
 
 ## Contributing
 Request a feature or report a bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
