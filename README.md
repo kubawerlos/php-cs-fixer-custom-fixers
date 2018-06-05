@@ -79,10 +79,13 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 - **NoUselessConstructorCommentFixer** - there should be no comment like: "Class Foo\Bar".
 ```diff
- <?php
- /**
-- * Foo Constructor
-  */
+ class Foo
+ {
+     /**
+-     * Foo constructor
+      */
+     public function __construct() {}
+ }
 
 ```
 
