@@ -53,7 +53,7 @@ jobs:
                 - phpenv config-rm xdebug.ini || return 0
             script:
                 # prepare PHP CS Fixer
-                - composer create-project --no-install --prefer-source friendsofphp/php-cs-fixer tmp
+                - composer create-project --prefer-source friendsofphp/php-cs-fixer tmp
                 # prepare fixers
                 - mkdir tmp/src/Fixer/CustomFixers
                 - cp src/Fixer/* tmp/src/Fixer/CustomFixers
@@ -70,7 +70,6 @@ jobs:
                 - sed -i -- 's/@covers \\PhpCsFixerCustomFixers\\Fixer/@covers \\PhpCsFixer\\Fixer\CustomFixers/g' tmp/tests/Fixer/CustomFixers/*
                 # prepare for testing
                 - cd tmp
-                - composer install
                 - php php-cs-fixer fix src/Fixer/CustomFixers
                 - php php-cs-fixer fix tests/Fixer/CustomFixers
                 - php php-cs-fixer readme > README.rst
