@@ -9,7 +9,7 @@
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 
 ## Installation
-PHP CS Fixer custom fixers can be installed by running:
+PHP CS Fixer: custom fixers can be installed by running:
 ```bash
 composer require --dev kubawerlos/php-cs-fixer-custom-fixers
 ```
@@ -66,14 +66,14 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
-- **NoUselessClassCommentFixer** - there must be no comment like: "Class Foo\Bar".
+- **NoUselessClassCommentFixer** - there must be no comment like: "Class FooBar".
 ```diff
  <?php
  /**
-- * Class Foo\Bar
+- * Class FooBar
   * Class to do something
   */
- class Foo {}
+ class FooBar {}
 
 ```
 

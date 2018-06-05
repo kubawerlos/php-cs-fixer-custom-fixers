@@ -16,6 +16,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class ReadmeCommand extends BaseCommand
 {
+    private const NAME = 'PHP CS Fixer: custom fixers';
+
     private const SHIELDS_HOST  = 'https://img.shields.io';
     private const CODECOV_URL   = 'https://codecov.io/gh/kubawerlos/php-cs-fixer-custom-fixers';
     private const PACKAGIST_URL = 'https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers';
@@ -23,7 +25,7 @@ class ReadmeCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output) : void
     {
-        $output->writeln('# PHP CS Fixer: custom fixers');
+        $output->writeln(\sprintf('# %s', self::NAME));
         $output->writeln($this->badges());
         $output->writeln($this->description());
         $output->writeln($this->installation());
@@ -69,11 +71,12 @@ class ReadmeCommand extends BaseCommand
         return \sprintf(
             '
 ## Installation
-PHP CS Fixer custom fixers can be installed by running:
+%s can be installed by running:
 ```bash
 composer require --dev %s
 ```
 ',
+            self::NAME,
             $this->composer()->name
         );
     }
