@@ -10,6 +10,7 @@ use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
 use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocVarAnnotationCorrectOrderFixer;
 
 /**
  * @internal
@@ -26,6 +27,7 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
         static::assertGreaterThan((new NoTrailingWhitespaceFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoUnusedImportsFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertLessThan((new PhpdocVarAnnotationCorrectOrderFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     /**
@@ -50,11 +52,28 @@ $foo = new Logger();
 
         yield [
             '<?php
+/** @var \Foo $foo */
+$foo = new Foo();
+',
+        ];
+
+        yield [
+            '<?php
 
 $bar = new Logger();
 ',
             '<?php
 /** @var LoggerInterface $foo */
+$bar = new Logger();
+',
+        ];
+
+        yield [
+            '<?php
+$bar = new Logger();
+',
+            '<?php
+/** @var $bar */
 $bar = new Logger();
 ',
         ];
@@ -140,6 +159,47 @@ class Foo
 
     /**
      * @var int
+     */
+    private $d;
+}
+',
+        ];
+
+        yield [
+            '<?php
+class Foo
+{
+    
+    static $a;
+
+    /*
+     */
+    public $b;
+
+    
+    protected $c;
+
+    /**
+     */
+    private $d;
+}
+',
+            '<?php
+class Foo
+{
+    /* @var */
+    static $a;
+
+    /*
+     * @var
+     */
+    public $b;
+
+    /** @var */
+    protected $c;
+
+    /**
+     * @var
      */
     private $d;
 }

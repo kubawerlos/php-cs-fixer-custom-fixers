@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
+
 /**
  * @internal
  *
@@ -13,7 +15,7 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
 {
     public function testPriority() : void
     {
-        static::assertSame(0, $this->fixer->getPriority());
+        static::assertGreaterThan((new PhpdocNoIncorrectVarAnnotationFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     /**
