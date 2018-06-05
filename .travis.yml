@@ -67,7 +67,7 @@ jobs:
                 - cp tests/Fixer/* tmp/tests/Fixer/CustomFixers
                 - rm tmp/tests/Fixer/CustomFixers/AbstractFixerTestCase.php
                 - sed -i -- 's/namespace Tests\\Fixer;/namespace PhpCsFixer\\Tests\\Fixer\\CustomFixers;use PhpCsFixer\\Tests\\Test\\AbstractFixerTestCase;/g' tmp/tests/Fixer/CustomFixers/*
-                - sed -i -- 's/@covers \\PhpCsFixerCustomFixers\\Fixer/@covers \\PhpCsFixer\\Fixer\CustomFixers/g' tmp/tests/Fixer/CustomFixers/*
+                - sed -i -- 's/PhpCsFixerCustomFixers\\Fixer/PhpCsFixer\\Fixer\CustomFixers/g' tmp/tests/Fixer/CustomFixers/*
                 # prepare for testing
                 - cd tmp
                 - php php-cs-fixer fix src/Fixer/CustomFixers
