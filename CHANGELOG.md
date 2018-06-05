@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add PhpdocVarAnnotationCorrectOrderFixer
+- Remove @var without type at the beginning in PhpdocNoIncorrectVarAnnotationFixer
 
 ## v1.2.0 - 2018-06-03
 - Add PhpdocNoIncorrectVarAnnotationFixer

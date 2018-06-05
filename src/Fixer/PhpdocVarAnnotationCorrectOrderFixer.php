@@ -54,6 +54,7 @@ $foo = 2 + 2;
 
     public function getPriority() : int
     {
-        return 0;
+        // must be before PhpdocNoIncorrectVarAnnotationFixer
+        return 7;
     }
 }

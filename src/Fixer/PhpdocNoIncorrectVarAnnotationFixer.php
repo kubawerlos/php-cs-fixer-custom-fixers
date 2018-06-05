@@ -39,10 +39,13 @@ $bar = new Logger();
                 continue;
             }
 
+            // remove ones not having type at the beginning
+            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\s+[\\\\a-zA-Z_\x7f-\xff]/');
+
             $nextIndex = $tokens->getNextMeaningfulToken($index);
 
             if ($nextIndex === null) {
-                $this->removeVarAnnotation($tokens, $index);
+                $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
                 continue;
             }
 
@@ -60,37 +63,32 @@ $bar = new Logger();
                 continue;
             }
 
-            $this->removeVarAnnotation($tokens, $index);
+            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
         }
     }
 
     public function getPriority() : int
     {
-        // should be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
+        // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
+        // must be after PhpdocVarAnnotationCorrectOrderFixer
         return 6;
     }
 
-    private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables = []) : void
+    private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables) : void
     {
-        $doc = new DocBlock($tokens[$index]->getContent());
-
-        foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
-            $allowedVariablesQuoted = \array_map(
-                static function (string $variable) : string {
-                    return \preg_quote($variable, '/') . '\b';
-                },
-                $allowedVariables
-            );
-            if ($allowedVariables === [] || \preg_match(\sprintf('/%s/i', \implode('|', $allowedVariablesQuoted)), $annotation->getContent()) !== 1) {
-                $annotation->remove();
-            }
-        }
-
-        if ($doc->getContent() === '') {
-            $tokens->clearTokenAndMergeSurroundingWhitespace($index);
-        } else {
-            $tokens[$index] = new Token([$tokens[$index]->getId(), $doc->getContent()]);
-        }
+        $this->removeVarAnnotationNotMatchingPattern(
+            $tokens,
+            $index,
+            '/' . \implode(
+                '|',
+                \array_map(
+                    static function (string $variable) : string {
+                        return \preg_quote($variable, '/') . '\b';
+                    },
+                    $allowedVariables
+                )
+            ) . '/i'
+        );
     }
 
     private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex) : void
@@ -109,5 +107,22 @@ $bar = new Logger();
         }
 
         $this->removeVarAnnotation($tokens, $commentIndex, $variables);
+    }
+
+    private function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern) : void
+    {
+        $doc = new DocBlock($tokens[$index]->getContent());
+
+        foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
+            if ($pattern === null || \preg_match($pattern, $annotation->getContent()) !== 1) {
+                $annotation->remove();
+            }
+        }
+
+        if ($doc->getContent() === '') {
+            $tokens->clearTokenAndMergeSurroundingWhitespace($index);
+        } else {
+            $tokens[$index] = new Token([$tokens[$index]->getId(), $doc->getContent()]);
+        }
     }
 }
