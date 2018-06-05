@@ -48,7 +48,7 @@ $foo = 2 + 2;
                 continue;
             }
 
-            $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
+            $tokens[$index] = new Token([$token->getId(), $newContent]);
         }
     }
 
