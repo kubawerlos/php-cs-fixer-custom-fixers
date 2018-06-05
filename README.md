@@ -92,9 +92,9 @@ In your PHP CS Fixer configuration register fixers and use them:
 - **PhpdocNoIncorrectVarAnnotationFixer** - `@var` should be correct in the code.
 ```diff
  <?php
--/** @var LoggerInterface $foo */
+-/** @var Foo $foo */
 +
- $bar = new Logger();
+ $bar = new Foo();
 
 ```
 
