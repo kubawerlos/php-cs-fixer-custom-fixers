@@ -35,7 +35,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 ## Fixers
 - **NoLeadingSlashInGlobalNamespaceFixer** - when in global namespace there should be no leading slash for class.
 ```diff
- <?php 
+ <?php
 -$x = new \Foo();
 +$x = new Foo();
  namespace Bar;

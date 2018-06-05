@@ -14,7 +14,7 @@ final class NoLeadingSlashInGlobalNamespaceFixer extends AbstractFixer
     {
         return new FixerDefinition(
             'When in global namespace there should be no leading slash for class.',
-            [new CodeSample('<?php 
+            [new CodeSample('<?php
 $x = new \Foo();
 namespace Bar;
 $y = new \Baz();

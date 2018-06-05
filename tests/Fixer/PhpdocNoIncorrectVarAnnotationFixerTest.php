@@ -129,15 +129,15 @@ class Foo
 {
     /* @var int */
     static $a;
-    
+
     /*
      * @var int
      */
     public $b;
-    
+
     /** @var int */
     protected $c;
-    
+
     /**
      * @var int
      */
