@@ -14,7 +14,7 @@ final class NoUselessConstructorCommentFixer extends AbstractFixer
     public function getDefinition() : FixerDefinition
     {
         return new FixerDefinition(
-            'There should be no comment like: "Class Foo\Bar".',
+            'There must be no comment like: "Foo constructor".',
             [new CodeSample('<?php
 class Foo
 {
