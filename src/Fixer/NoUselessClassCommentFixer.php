@@ -14,13 +14,13 @@ final class NoUselessClassCommentFixer extends AbstractFixer
     public function getDefinition() : FixerDefinition
     {
         return new FixerDefinition(
-            'There must be no comment like: "Class Foo\Bar".',
+            'There must be no comment like: "Class FooBar".',
             [new CodeSample('<?php
 /**
- * Class Foo\Bar
+ * Class FooBar
  * Class to do something
  */
-class Foo {}
+class FooBar {}
 ')]
         );
     }
