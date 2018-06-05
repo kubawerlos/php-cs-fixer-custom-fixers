@@ -14,7 +14,7 @@ final class NoTwoConsecutiveEmptyLinesFixer extends AbstractFixer
     public function getDefinition() : FixerDefinition
     {
         return new FixerDefinition(
-            'There should be no two consecutive empty lines in code.',
+            'There must be no two consecutive empty lines in code.',
             [new CodeSample('<?php
 namespace Foo;
 

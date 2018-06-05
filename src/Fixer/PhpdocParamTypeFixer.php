@@ -14,7 +14,7 @@ final class PhpdocParamTypeFixer extends AbstractFixer
     public function getDefinition() : FixerDefinition
     {
         return new FixerDefinition(
-            'Adds missing type for `@param` annotation.',
+            '`@param` must have type.',
             [new CodeSample('<?php
 /**
  * @param string $foo
