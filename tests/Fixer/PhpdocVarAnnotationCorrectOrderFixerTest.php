@@ -45,6 +45,12 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
 
         yield [
             '<?php
+/** @var $foo $bar */
+',
+        ];
+
+        yield [
+            '<?php
 /**
  * @var Foo $foo
  * @var Bar $bar

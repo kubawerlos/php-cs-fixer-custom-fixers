@@ -39,7 +39,7 @@ $foo = 2 + 2;
             }
 
             $newContent = \preg_replace(
-                '/(@var\s*)(\$\S+)(\s+)(\S+)\b/i',
+                '/(@var\s*)(\$\S+)(\s+)([^\$]\S*)\b/i',
                 '$1$4$3$2',
                 $token->getContent()
             );
