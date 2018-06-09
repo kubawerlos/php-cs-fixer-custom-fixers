@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v1.4.0 - 2018-06-09
+- Add NoDoctrineMigrationsGeneratedCommentFixer
+
 ## v1.3.0 - 2018-06-05
 - Add PhpdocVarAnnotationCorrectOrderFixer
 - Remove @var without type at the beginning in PhpdocNoIncorrectVarAnnotationFixer
