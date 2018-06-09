@@ -1,0 +1,65 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace PhpCsFixerCustomFixers;
+
+use PhpCsFixer\Tokenizer\Token;
+use PhpCsFixer\Tokenizer\Tokens;
+
+/**
+ * @internal
+ */
+final class CommentRemover
+{
+    public static function removeCommentWithLinesIfPossible(Tokens $tokens, int $index) : void
+    {
+        self::removeTrailingHorizontalWhitespaces($tokens, $index - 1);
+
+        self::removeLeadingNewline($tokens, $index + 1);
+
+        $tokens->clearTokenAndMergeSurroundingWhitespace($index);
+    }
+
+    private static function removeTrailingHorizontalWhitespaces(Tokens $tokens, int $index) : void
+    {
+        if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
+            return;
+        }
+
+        $newContent = \preg_replace('/\h+$/', '', $tokens[$index]->getContent());
+
+        if (empty($newContent)) {
+            $tokens->clearAt($index);
+
+            return;
+        }
+
+        if ($newContent === $tokens[$index]->getContent()) {
+            return;
+        }
+
+        $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
+    }
+
+    private static function removeLeadingNewline(Tokens $tokens, int $index) : void
+    {
+        if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
+            return;
+        }
+
+        $newContent = \preg_replace('/^\h*\R/', '', $tokens[$index]->getContent());
+
+        if ($newContent === $tokens[$index]->getContent()) {
+            return;
+        }
+
+        if (empty($newContent)) {
+            $tokens->clearAt($index);
+
+            return;
+        }
+
+        $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
+    }
+}

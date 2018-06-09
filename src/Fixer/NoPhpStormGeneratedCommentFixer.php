@@ -6,8 +6,8 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\CommentRemover;
 
 final class NoPhpStormGeneratedCommentFixer extends AbstractFixer
 {
@@ -43,58 +43,12 @@ namespace Foo;
                 continue;
             }
 
-            $this->removeTrailingHorizontalWhitespaces($tokens, $index - 1);
-
-            $this->removeLeadingNewline($tokens, $index + 1);
-
-            $tokens->clearTokenAndMergeSurroundingWhitespace($index);
+            CommentRemover::removeCommentWithLinesIfPossible($tokens, $index);
         }
     }
 
     public function getPriority() : int
     {
         return 0;
-    }
-
-    private function removeTrailingHorizontalWhitespaces(Tokens $tokens, int $index) : void
-    {
-        if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
-            return;
-        }
-
-        $newContent = \preg_replace('/\h+$/', '', $tokens[$index]->getContent());
-
-        if (empty($newContent)) {
-            $tokens->clearAt($index);
-
-            return;
-        }
-
-        if ($newContent === $tokens[$index]->getContent()) {
-            return;
-        }
-
-        $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
-    }
-
-    private function removeLeadingNewline(Tokens $tokens, int $index) : void
-    {
-        if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
-            return;
-        }
-
-        $newContent = \preg_replace('/^\h*\R/', '', $tokens[$index]->getContent());
-
-        if ($newContent === $tokens[$index]->getContent()) {
-            return;
-        }
-
-        if (empty($newContent)) {
-            $tokens->clearAt($index);
-
-            return;
-        }
-
-        $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
     }
 }
