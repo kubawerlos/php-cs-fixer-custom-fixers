@@ -36,25 +36,36 @@ class ReadmeCommand extends BaseCommand
 
     private function badges() : string
     {
-        return \sprintf(
-            '
-[![Latest Stable Version](%s/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg)](%s)
-[![PHP Version](%s/badge/php-%s-8892BF.svg)](https://php.net)
-[![License](%s/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](%s)
-[![Build Status](%s/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](%s)
-[![Code coverage](%s/codecov/c/github/kubawerlos/php-cs-fixer-custom-fixers.svg?label=code%%20coverage)](%s)
-',
-            self::SHIELDS_HOST,
-            self::PACKAGIST_URL,
-            self::SHIELDS_HOST,
-            \rawurlencode($this->composer()->require->php),
-            self::SHIELDS_HOST,
-            self::PACKAGIST_URL,
-            self::SHIELDS_HOST,
-            self::TRAVIS_URL,
-            self::SHIELDS_HOST,
-            self::CODECOV_URL
-        );
+        return "\n" . \implode("\n", [
+            \sprintf(
+                '[![Latest Stable Version](%s/packagist/v/%s.svg)](%s)',
+                self::SHIELDS_HOST,
+                $this->composer()->name,
+                self::PACKAGIST_URL
+            ),
+            \sprintf(
+                '[![PHP Version](%s/badge/php-%s-8892BF.svg)](https://php.net)',
+                self::SHIELDS_HOST,
+                \rawurlencode($this->composer()->require->php)
+            ),
+            \sprintf(
+                '[![License](%s/github/license/%s.svg)](%s)',
+                self::SHIELDS_HOST,
+                $this->composer()->name,
+                self::PACKAGIST_URL
+            ),
+            \sprintf(
+                '[![Build Status](%s/travis/%s/master.svg)](%s)',
+                self::SHIELDS_HOST,
+                $this->composer()->name,
+                self::TRAVIS_URL
+            ),
+            \sprintf(
+                '[![Code coverage](%s/codecov/c/github/kubawerlos/php-cs-fixer-custom-fixers.svg?label=code%%20coverage)](%s)',
+                self::SHIELDS_HOST,
+                self::CODECOV_URL
+            ),
+        ]) . "\n";
     }
 
     private function description() : string
