@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Add NoUselessDoctrineRepositoryCommentFixer
+
 ## v1.4.0 - 2018-06-09
 - Add NoDoctrineMigrationsGeneratedCommentFixer
 
