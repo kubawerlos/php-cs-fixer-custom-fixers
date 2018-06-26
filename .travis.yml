@@ -16,15 +16,9 @@ before_install:
     - composer self-update --stable
     - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
 
-install:
-    - composer install
+install: composer install
 
-script:
-    - vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 src tests
-    - vendor/bin/php-cs-fixer fix --config=tests/php-cs-fixer.config.php --diff --dry-run
-    - vendor/bin/types-checker src tests
-    - vendor/bin/psalm --config=tests/psalm.xml
-    - phpdbg -qrr vendor/bin/phpunit --configuration=tests
+script: composer check
 
 jobs:
     include:
@@ -45,15 +39,14 @@ jobs:
             stage: Test
             php: '7.2'
             install: composer require --dev php-coveralls/php-coveralls
-            script: phpdbg -qrr vendor/bin/phpunit --configuration=tests --coverage-clover=build/logs/clover.xml
+            script: composer phpunit -- --coverage-clover=build/logs/clover.xml
             after_success: vendor/bin/php-coveralls
 
         -
             stage: Verify correctness for PHP CS Fixer
             php: '7.2'
             install: ~
-            before_script:
-                - phpenv config-rm xdebug.ini || return 0
+            before_script: phpenv config-rm xdebug.ini || return 0
             script:
                 # prepare PHP CS Fixer
                 - composer create-project --no-interaction --prefer-source friendsofphp/php-cs-fixer tmp
