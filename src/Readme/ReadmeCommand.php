@@ -12,7 +12,6 @@ use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Yaml\Yaml;
 
 class ReadmeCommand extends BaseCommand
 {
@@ -138,11 +137,6 @@ In your PHP CS Fixer configuration register fixers and use them:
         return $output;
     }
 
-    private function composer() : \stdClass
-    {
-        return \json_decode(\file_get_contents(__DIR__ . '/../../composer.json'));
-    }
-
     private function diff(string $from, string $to) : string
     {
         return \str_replace(
@@ -168,16 +162,15 @@ src/Readme/run > README.md
 ```
 make sure all checks pass:
 ```bash
-%s
+composer check
 ```
 and submit a pull request.',
-            $this->composer()->name,
-            \implode("\n", $this->travisScripts())
+            $this->composer()->name
         );
     }
 
-    private function travisScripts() : array
+    private function composer() : \stdClass
     {
-        return Yaml::parse(\file_get_contents(__DIR__ . '/../../.travis.yml'))['script'];
+        return \json_decode(\file_get_contents(__DIR__ . '/../../composer.json'));
     }
 }
