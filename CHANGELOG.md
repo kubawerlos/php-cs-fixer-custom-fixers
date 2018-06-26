@@ -1,8 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
-- Use composer scripts
-- Switch from Codecov to Coveralls
+## v1.5.0 - *2018-06-26*
 - Add NoUselessDoctrineRepositoryCommentFixer
 
 ## v1.4.0 - *2018-06-09*
