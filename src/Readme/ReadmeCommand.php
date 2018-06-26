@@ -18,10 +18,7 @@ class ReadmeCommand extends BaseCommand
 {
     private const NAME = 'PHP CS Fixer: custom fixers';
 
-    private const SHIELDS_HOST  = 'https://img.shields.io';
-    private const CODECOV_URL   = 'https://codecov.io/gh/kubawerlos/php-cs-fixer-custom-fixers';
-    private const PACKAGIST_URL = 'https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers';
-    private const TRAVIS_URL    = 'https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers';
+    private const SHIELDS_HOST = 'https://img.shields.io';
 
     protected function execute(InputInterface $input, OutputInterface $output) : void
     {
@@ -37,35 +34,43 @@ class ReadmeCommand extends BaseCommand
     private function badges() : string
     {
         return "\n" . \implode("\n", [
-            \sprintf(
-                '[![Latest Stable Version](%s/packagist/v/%s.svg)](%s)',
-                self::SHIELDS_HOST,
-                $this->composer()->name,
-                self::PACKAGIST_URL
+            $this->badge(
+                'Latest Stable Version',
+                \sprintf('%s/packagist/v/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://packagist.org/packages/%s', $this->composer()->name)
             ),
-            \sprintf(
-                '[![PHP Version](%s/badge/php-%s-8892BF.svg)](https://php.net)',
-                self::SHIELDS_HOST,
-                \rawurlencode($this->composer()->require->php)
+            $this->badge(
+                'PHP Version',
+                \sprintf('%s/badge/php-%s-8892BF.svg', self::SHIELDS_HOST, \rawurlencode($this->composer()->require->php)),
+                'https://php.net'
             ),
-            \sprintf(
-                '[![License](%s/github/license/%s.svg)](%s)',
-                self::SHIELDS_HOST,
-                $this->composer()->name,
-                self::PACKAGIST_URL
+            $this->badge(
+                'License',
+                \sprintf('%s/github/license/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://packagist.org/packages/%s', $this->composer()->name)
             ),
-            \sprintf(
-                '[![Build Status](%s/travis/%s/master.svg)](%s)',
-                self::SHIELDS_HOST,
-                $this->composer()->name,
-                self::TRAVIS_URL
+            $this->badge(
+                'Build Status',
+                \sprintf('%s/travis/%s/master.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://travis-ci.org/%s', $this->composer()->name)
             ),
-            \sprintf(
-                '[![Code coverage](%s/codecov/c/github/kubawerlos/php-cs-fixer-custom-fixers.svg?label=code%%20coverage)](%s)',
-                self::SHIELDS_HOST,
-                self::CODECOV_URL
+            $this->badge(
+                'Code coverage',
+                \sprintf('%s/coveralls/github/%s/master.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://coveralls.io/github/%s?branch=master', $this->composer()->name)
             ),
         ]) . "\n";
+    }
+
+    private function badge(string $description, string $imageUrl, string $targetUrl) : string
+    {
+        return
+            \sprintf(
+                '[![%s](%s)](%s)',
+                $description,
+                $imageUrl,
+                $targetUrl
+            );
     }
 
     private function description() : string
