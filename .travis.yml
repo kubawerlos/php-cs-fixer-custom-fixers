@@ -40,10 +40,13 @@ jobs:
             <<: *STANDARD_TEST_JOB
             stage: Test
             php: '7.2'
-            script:
-                - vendor/bin/phpunit --configuration=tests --coverage-clover=coverage.xml
-            after_success:
-                - bash <(curl -s https://codecov.io/bash)
+        -
+            <<: *STANDARD_TEST_JOB
+            stage: Test
+            php: '7.2'
+            install: composer require --dev php-coveralls/php-coveralls
+            script: phpdbg -qrr vendor/bin/phpunit --configuration=tests --coverage-clover=build/logs/clover.xml
+            after_success: vendor/bin/php-coveralls
 
         -
             stage: Verify correctness for PHP CS Fixer
