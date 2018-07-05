@@ -14,7 +14,7 @@ final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer
     public function getDefinition() : FixerDefinition
     {
         return new FixerDefinition(
-            'In `@var` type and variable must be in correct order.',
+            '`@var` annotation must have type and name in the correct order.',
             [new CodeSample('<?php
 /** @var $foo int */
 $foo = 2 + 2;
@@ -24,13 +24,13 @@ $foo = 2 + 2;
 
     public function isCandidate(Tokens $tokens) : bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens) : void
     {
         foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
 
@@ -39,8 +39,8 @@ $foo = 2 + 2;
             }
 
             $newContent = \preg_replace(
-                '/(@var\s*)(\$\S+)(\s+)([^\$]\S*)\b/i',
-                '$1$4$3$2',
+                '/(@var\s*)(\$\S+)(\s+)([^\$]\S*)(\s|\*)/i',
+                '$1$4$3$2$5',
                 $token->getContent()
             );
 
