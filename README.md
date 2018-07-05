@@ -146,7 +146,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
-- **PhpdocVarAnnotationCorrectOrderFixer** - in `@var` type and variable must be in correct order.
+- **PhpdocVarAnnotationCorrectOrderFixer** - `@var` annotation must have type and name in the correct order.
 ```diff
  <?php
 -/** @var $foo int */

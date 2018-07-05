@@ -31,19 +31,19 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
 
     public function provideFixCases() : \Iterator
     {
-        yield [
+        yield [ // It's @param, we care only about @var
             '<?php
 /** @param $foo Foo */
 ',
         ];
 
-        yield [
+        yield [ // This is already fine
             '<?php
 /** @var Foo $foo */
 ',
         ];
 
-        yield [
+        yield [ // What? Two variables, I'm not touching this
             '<?php
 /** @var $foo $bar */
 ',
@@ -66,6 +66,19 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
 
         yield [
             '<?php
+/**
+ * @var Foo $foo Some description
+ */
+',
+            '<?php
+/**
+ * @var $foo Foo Some description
+ */
+',
+        ];
+
+        yield [
+            '<?php
 /** @var Foo $foo */
 ',
             '<?php
@@ -75,10 +88,19 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
 
         yield [
             '<?php
-/**@var Foo $foo*/
+/** @var Foo $foo*/
 ',
             '<?php
-/**@var $foo Foo*/
+/** @var $foo Foo*/
+',
+        ];
+
+        yield [
+            '<?php
+/** @var Foo[] $foos */
+',
+            '<?php
+/** @var $foos Foo[] */
 ',
         ];
 
