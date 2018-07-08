@@ -126,7 +126,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
-- **PhpdocNoIncorrectVarAnnotationFixer** - `@var` should be correct in the code.
+- **PhpdocNoIncorrectVarAnnotationFixer** - `@var` must be correct in the code.
 ```diff
  <?php
 -/** @var Foo $foo */
