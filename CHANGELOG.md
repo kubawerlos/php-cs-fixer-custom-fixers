@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Add ImplodeCallFixer
+
 ## v1.5.0 - *2018-06-26*
 - Add NoUselessDoctrineRepositoryCommentFixer
 
