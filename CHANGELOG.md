@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add ImplodeCallFixer
+- Add PhpdocSingleLineVarFixer
 
 ## v1.5.0 - *2018-06-26*
 - Add NoUselessDoctrineRepositoryCommentFixer

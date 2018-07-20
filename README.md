@@ -154,6 +154,16 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 ```
 
+- **PhpdocSingleLineVarFixer** - `@var` annotation must be in single line when is the only content.
+```diff
+ <?php
+-/**
+- * @var Foo
+- */
++/** @var Foo */
+
+```
+
 - **PhpdocVarAnnotationCorrectOrderFixer** - `@var` annotation must have type and name in the correct order.
 ```diff
  <?php
