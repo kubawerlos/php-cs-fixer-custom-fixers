@@ -13,9 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractFixerTestCase extends TestCase
 {
-    /**
-     * @var DefinedFixerInterface
-     */
+    /** @var DefinedFixerInterface */
     protected $fixer;
 
     final protected function setUp() : void
