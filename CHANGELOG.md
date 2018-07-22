@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.6.0 - *2018-07-22*
 - Add ImplodeCallFixer
 - Add PhpdocSingleLineVarFixer
 
