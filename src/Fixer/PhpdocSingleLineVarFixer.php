@@ -16,9 +16,12 @@ final class PhpdocSingleLineVarFixer extends AbstractFixer
         return new FixerDefinition(
             '`@var` annotation must be in single line when is the only content.',
             [new CodeSample('<?php
-/**
- * @var Foo
- */
+class Foo {
+    /**
+     * @var string
+     */
+    private $name;
+}
 ')]
         );
     }

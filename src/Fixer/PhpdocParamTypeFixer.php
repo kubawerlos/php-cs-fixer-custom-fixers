@@ -20,6 +20,7 @@ final class PhpdocParamTypeFixer extends AbstractFixer
  * @param string $foo
  * @param        $bar
  */
+function a($foo, $bar) {}
 ')]
         );
     }

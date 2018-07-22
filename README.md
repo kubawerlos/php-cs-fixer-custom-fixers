@@ -151,16 +151,20 @@ In your PHP CS Fixer configuration register fixers and use them:
 - * @param        $bar
 + * @param mixed  $bar
   */
+ function a($foo, $bar) {}
 
 ```
 
 - **PhpdocSingleLineVarFixer** - `@var` annotation must be in single line when is the only content.
 ```diff
  <?php
--/**
-- * @var Foo
-- */
-+/** @var Foo */
+ class Foo {
+-    /**
+-     * @var string
+-     */
++    /** @var string */
+     private $name;
+ }
 
 ```
 
