@@ -6,8 +6,8 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
-use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -52,40 +52,42 @@ implode($foo, "") . implode($bar);
             $argumentsIndices = $this->getArgumentIndices($tokens, $index);
 
             if (\count($argumentsIndices) === 1) {
-                $firstArgumentIndex = \reset($argumentsIndices);
-                $tokens->insertAt($firstArgumentIndex, new Token([T_WHITESPACE, ' ']));
-                $tokens->insertAt($firstArgumentIndex, new Token(','));
-                $tokens->insertAt($firstArgumentIndex, new Token([T_CONSTANT_ENCAPSED_STRING, "''"]));
+                $firstArgumentIndex = \key($argumentsIndices);
+                $tokens->insertAt($firstArgumentIndex, [
+                    new Token([T_CONSTANT_ENCAPSED_STRING, "''"]),
+                    new Token(','),
+                    new Token([T_WHITESPACE, ' ']),
+                ]);
+
                 continue;
             }
 
             if (\count($argumentsIndices) === 2) {
-                list($firstArgumentIndex, $secondArgumentIndex) = $argumentsIndices;
+                list($firstArgumentIndex, $secondArgumentIndex) = \array_keys($argumentsIndices);
+
+                // If the first argument is string we have nothing to do
                 if ($tokens[$firstArgumentIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                     continue;
                 }
+                // If the second argument is not string we cannot make a swap
                 if (!$tokens[$secondArgumentIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                     continue;
                 }
 
-                $insideCommaIndex = $tokens->getPrevTokenOfKind($secondArgumentIndex, [',']);
-
-                $indicesToMove = [$secondArgumentIndex, $insideCommaIndex];
-
-                $insideWhitespaceIndex = $tokens->getPrevTokenOfKind($secondArgumentIndex, [[T_WHITESPACE]]);
-                if ($insideWhitespaceIndex > $insideCommaIndex) {
-                    $indicesToMove[] = $insideWhitespaceIndex;
+                // collect tokens from first argument
+                $firstArgumenteEndIndex  = $argumentsIndices[\key($argumentsIndices)];
+                $newSecondArgumentTokens = [];
+                for ($i = \key($argumentsIndices); $i <= $firstArgumenteEndIndex; $i++) {
+                    $newSecondArgumentTokens[] = clone $tokens[$i];
+                    $tokens->clearAt($i);
                 }
 
-                $tokensToInsert = [];
-                foreach ($indicesToMove as $indexToRemove) {
-                    $tokensToInsert[] = clone $tokens[$indexToRemove];
-                    $tokens->clearAt($indexToRemove);
-                }
+                $tokens->insertAt($firstArgumentIndex, clone $tokens[$secondArgumentIndex]);
 
-                foreach (\array_reverse($tokensToInsert) as $tokenToInsert) {
-                    $tokens->insertAt($firstArgumentIndex, $tokenToInsert);
-                }
+                // insert above increased the second argument index
+                $secondArgumentIndex++;
+                $tokens->clearAt($secondArgumentIndex);
+                $tokens->insertAt($secondArgumentIndex, $newSecondArgumentTokens);
             }
         }
     }
@@ -95,40 +97,22 @@ implode($foo, "") . implode($bar);
         return 0;
     }
 
+    /**
+     * @return array<int, int> In the format: startIndex => endIndex
+     */
     private function getArgumentIndices(Tokens $tokens, int $functionNameIndex) : array
     {
-        $startBracketIndex = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
-        $endBracketIndex   = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $startBracketIndex);
-        $argumentsIndices  = [];
-        $parameterRecorded = false;
+        $argumentsAnalyzer = new ArgumentsAnalyzer();
 
-        $index = $startBracketIndex;
-        while ($index < $endBracketIndex) {
-            $index++;
-            $token = $tokens[$index];
+        $openParenthesis  = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
+        $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
-            if (!$parameterRecorded && !$token->isWhitespace() && !$token->isComment()) {
-                $argumentsIndices[] = $index;
-                $parameterRecorded  = true;
-            }
+        $indices = [];
 
-            if ($token->equals('(')) {
-                $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
-
-                continue;
-            }
-
-            if ($token->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
-                $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index);
-
-                continue;
-            }
-
-            if ($token->equals(',')) {
-                $parameterRecorded = false;
-            }
+        foreach ($argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis) as $startIndexCandidate => $endIndex) {
+            $indices[$tokens->getNextMeaningfulToken($startIndexCandidate - 1)] = $tokens->getPrevMeaningfulToken($endIndex + 1);
         }
 
-        return $argumentsIndices;
+        return $indices;
     }
 }
