@@ -64,13 +64,13 @@ final class ImplodeCallFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php implode("", $weirdStuff[mt_rand($min, getMac()) + 200]);',
-            '<?php implode($weirdStuff[mt_rand($min, getMac()) + 200], "");',
+            '<?php implode("",$foo);',
+            '<?php implode($foo,"");',
         ];
 
         yield [
-            '<?php implode("",$foo);',
-            '<?php implode($foo,"");',
+            '<?php implode("", $weirdStuff[mt_rand($min, getMax()) + 200]);',
+            '<?php implode($weirdStuff[mt_rand($min, getMax()) + 200], "");',
         ];
 
         yield [
@@ -84,6 +84,47 @@ final class ImplodeCallFixerTest extends AbstractFixerTestCase
                     $foo,
                     ""
                 );',
+        ];
+
+        yield [
+            '<?php
+                implode(
+                    \'\', $foo
+                );',
+            '<?php
+                implode(
+                    $foo
+                );',
+        ];
+
+        yield [
+            '<?php
+implode(# 1
+""/* 2.1 */,# 2.2
+$foo# 3
+);',
+            '<?php
+implode(# 1
+$foo/* 2.1 */,# 2.2
+""# 3
+);',
+        ];
+
+        yield [
+            '<?php
+implode(# 1
+# 2
+\'\', $foo# 3
+# 4
+)# 5
+;',
+            '<?php
+implode(# 1
+# 2
+$foo# 3
+# 4
+)# 5
+;',
         ];
     }
 }

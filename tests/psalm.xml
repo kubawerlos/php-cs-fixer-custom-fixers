@@ -9,6 +9,8 @@
     </projectFiles>
 
     <issueHandlers>
+        <InvalidReturnStatement errorLevel='suppress' />
+        <InvalidReturnType errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
