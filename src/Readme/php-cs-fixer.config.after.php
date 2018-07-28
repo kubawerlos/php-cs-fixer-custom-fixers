@@ -1,5 +1,4 @@
 <?php
-
 return PhpCsFixer\Config::create()
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->setRules([

@@ -18,7 +18,6 @@ final class NoDoctrineMigrationsGeneratedCommentFixer extends AbstractFixer
             [new CodeSample('<?php
 namespace Migrations;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */

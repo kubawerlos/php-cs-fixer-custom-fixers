@@ -139,14 +139,14 @@ In your PHP CS Fixer configuration register fixers and use them:
 
     private function diff(string $from, string $to) : string
     {
-        return \str_replace(
+        return \rtrim(\str_replace(
             "@@ @@\n",
             '',
             (new Differ(new UnifiedDiffOutputBuilder('')))->diff(
                 $from,
                 $to
             )
-        );
+        ));
     }
 
     private function contributing() : string
