@@ -121,5 +121,32 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
 /** @var $someWeirdLongNAME__123 Foo|Bar|mixed|int */
 ',
         ];
+
+        yield [
+            '<?php
+/** @var array<int, int> $foo */
+',
+            '<?php
+/** @var $foo array<int, int> */
+',
+        ];
+
+        yield [
+            '<?php
+/** @var array<int, int> $foo Array of something */
+',
+            '<?php
+/** @var $foo array<int, int> Array of something */
+',
+        ];
+
+        yield [
+            '<?php
+/** @var Foo|array<int, int>|null $foo */
+',
+            '<?php
+/** @var $foo Foo|array<int, int>|null */
+',
+        ];
     }
 }
