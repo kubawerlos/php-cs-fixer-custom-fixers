@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add NoReferenceInFunctionDefinitionFixer
+- Add NoImportFromGlobalNamespaceFixer
 
 ## v1.6.0 - *2018-07-22*
 - Add ImplodeCallFixer

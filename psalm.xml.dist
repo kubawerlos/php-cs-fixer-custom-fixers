@@ -11,6 +11,7 @@
     <issueHandlers>
         <InvalidReturnStatement errorLevel='suppress' />
         <InvalidReturnType errorLevel='suppress' />
+        <LoopInvalidation errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
