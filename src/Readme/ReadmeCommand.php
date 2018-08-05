@@ -128,7 +128,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
-                    "*Risky: %s*\n",
+                    "\n*Risky: %s*\n",
                     \lcfirst($fixer->getDefinition()->getRiskyDescription())
                 );
             }
