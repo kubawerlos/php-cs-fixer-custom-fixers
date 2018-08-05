@@ -19,13 +19,20 @@ final class ImplodeCallFixer extends AbstractFixer
             'Function `implode` must be called with 2 arguments in the documented order.',
             [new CodeSample('<?php
 implode($foo, "") . implode($bar);
-')]
+')],
+            null,
+            'When the function `implode` is overridden.'
         );
     }
 
     public function isCandidate(Tokens $tokens) : bool
     {
         return $tokens->isTokenKindFound(T_STRING);
+    }
+
+    public function isRisky() : bool
+    {
+        return true;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens) : void

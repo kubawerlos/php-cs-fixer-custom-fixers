@@ -120,6 +120,19 @@ In your PHP CS Fixer configuration register fixers and use them:
         foreach (new Fixers() as $fixer) {
             $reflection = new \ReflectionClass($fixer);
 
+            $output .= \sprintf(
+                "\n- **%s** - %s\n",
+                $reflection->getShortName(),
+                \lcfirst($fixer->getDefinition()->getSummary())
+            );
+
+            if ($fixer->isRisky()) {
+                $output .= \sprintf(
+                    "\n  *Risky: %s*\n",
+                    \lcfirst($fixer->getDefinition()->getRiskyDescription())
+                );
+            }
+
             $originalCode = $fixer->getDefinition()->getCodeSamples()[0]->getCode();
             Tokens::clearCache();
             $tokens = Tokens::fromCode($originalCode);
@@ -127,9 +140,7 @@ In your PHP CS Fixer configuration register fixers and use them:
             $fixedCode = $tokens->generateCode();
 
             $output .= \sprintf(
-                "\n- **%s** - %s\n```diff\n%s\n```\n",
-                $reflection->getShortName(),
-                \lcfirst($fixer->getDefinition()->getSummary()),
+                "```diff\n%s\n```\n",
                 $this->diff($originalCode, $fixedCode)
             );
         }

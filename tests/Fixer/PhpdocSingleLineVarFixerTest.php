@@ -16,6 +16,11 @@ final class PhpdocSingleLineVarFixerTest extends AbstractFixerTestCase
         static::assertSame(0, $this->fixer->getPriority());
     }
 
+    public function testIsRisky() : void
+    {
+        static::assertFalse($this->fixer->isRisky());
+    }
+
     /**
      * @param string      $expected
      * @param string|null $input

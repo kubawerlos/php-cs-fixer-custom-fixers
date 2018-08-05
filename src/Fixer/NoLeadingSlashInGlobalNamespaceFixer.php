@@ -27,6 +27,11 @@ $y = new \Baz();
         return $tokens->isTokenKindFound(T_NS_SEPARATOR);
     }
 
+    public function isRisky() : bool
+    {
+        return false;
+    }
+
     public function fix(\SplFileInfo $file, Tokens $tokens) : void
     {
         foreach ($tokens as $index => $token) {

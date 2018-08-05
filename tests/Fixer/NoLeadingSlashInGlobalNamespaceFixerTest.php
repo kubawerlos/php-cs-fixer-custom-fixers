@@ -15,9 +15,12 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
 {
     public function testPriority() : void
     {
-        $phpdocToCommentFixer = new PhpdocToCommentFixer();
+        static::assertGreaterThan((new PhpdocToCommentFixer())->getPriority(), $this->fixer->getPriority());
+    }
 
-        static::assertGreaterThan($phpdocToCommentFixer->getPriority(), $this->fixer->getPriority());
+    public function testIsRisky() : void
+    {
+        static::assertFalse($this->fixer->isRisky());
     }
 
     /**
