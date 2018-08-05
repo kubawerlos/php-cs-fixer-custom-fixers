@@ -22,7 +22,7 @@
     "require-dev": {
         "kubawerlos/composer-json-fixer": "^2.1",
         "kubawerlos/types-checker": "^1.1",
-        "phpunit/phpunit": "^7.2",
+        "phpunit/phpunit": "^7.3",
         "sebastian/diff": "^3.0",
         "squizlabs/php_codesniffer": "^3.3",
         "symfony/console": "^4.1",
@@ -48,12 +48,12 @@
         "analyse": [
             "vendor/bin/composer-json-fixer",
             "vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 src tests",
-            "vendor/bin/php-cs-fixer fix --config=tests/php-cs-fixer.config.php --diff --dry-run",
+            "vendor/bin/php-cs-fixer fix --diff --dry-run",
             "vendor/bin/types-checker src tests",
-            "vendor/bin/psalm --config=tests/psalm.xml --find-dead-code"
+            "vendor/bin/psalm --find-dead-code"
         ],
         "phpunit": [
-            "phpdbg -qrr vendor/bin/phpunit --configuration=tests/phpunit.xml"
+            "phpdbg -qrr vendor/bin/phpunit"
         ]
     }
 }

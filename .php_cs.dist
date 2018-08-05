@@ -2,15 +2,12 @@
 
 declare(strict_types = 1);
 
-// PHP-CS-Fixer v2.11
 return PhpCsFixer\Config::create()
-    ->setUsingCache(false)
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->files()
-            ->in(__DIR__ . '/../src')
-            ->in(__DIR__ . '/../tests')
-            ->name('*.php')
+            ->in(__DIR__ . '/src')
+            ->in(__DIR__ . '/tests')
             ->notName('php-cs-fixer.config.*.php')
     )
     ->setRiskyAllowed(true)
