@@ -17,13 +17,20 @@ final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
             'There must be no reference in function definition.',
             [new CodeSample('<?php
 function foo(&$x) {}
-')]
+')],
+            null,
+            'When rely on reference.'
         );
     }
 
     public function isCandidate(Tokens $tokens) : bool
     {
         return $tokens->isAnyTokenKindsFound([T_FUNCTION]);
+    }
+
+    public function isRisky() : bool
+    {
+        return true;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens) : void

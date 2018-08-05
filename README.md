@@ -85,6 +85,8 @@ In your PHP CS Fixer configuration register fixers and use them:
 ```
 
 - **NoReferenceInFunctionDefinitionFixer** - there must be no reference in function definition.
+
+  *Risky: when rely on reference.*
 ```diff
  <?php
 -function foo(&$x) {}
