@@ -56,13 +56,6 @@ final class AutoReviewTest extends TestCase
         );
     }
 
-    public function testFixerIsRiskyByDefault() : void
-    {
-        $fixer = $this->getMockForAbstractClass(AbstractFixer::class);
-
-        static::assertFalse($fixer->isRisky());
-    }
-
     public function testFixerSupportsAllFilesByDefault() : void
     {
         $fixer = $this->getMockForAbstractClass(AbstractFixer::class);

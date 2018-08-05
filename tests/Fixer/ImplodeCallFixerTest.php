@@ -16,6 +16,11 @@ final class ImplodeCallFixerTest extends AbstractFixerTestCase
         static::assertSame(0, $this->fixer->getPriority());
     }
 
+    public function testIsRisky() : void
+    {
+        static::assertTrue($this->fixer->isRisky());
+    }
+
     /**
      * @param string      $expected
      * @param string|null $input

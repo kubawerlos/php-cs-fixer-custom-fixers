@@ -24,11 +24,6 @@ abstract class AbstractFixer implements DefinedFixerInterface
         return self::name();
     }
 
-    final public function isRisky() : bool
-    {
-        return false;
-    }
-
     final public function supports(\SplFileInfo $file) : bool
     {
         return true;

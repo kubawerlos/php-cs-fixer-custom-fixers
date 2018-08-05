@@ -29,6 +29,11 @@ class Bar {};
         return true;
     }
 
+    public function isRisky() : bool
+    {
+        return false;
+    }
+
     public function fix(\SplFileInfo $file, Tokens $tokens) : void
     {
         foreach ($tokens as $index => $token) {

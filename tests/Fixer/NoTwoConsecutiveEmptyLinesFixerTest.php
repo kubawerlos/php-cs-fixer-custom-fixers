@@ -20,6 +20,11 @@ final class NoTwoConsecutiveEmptyLinesFixerTest extends AbstractFixerTestCase
         static::assertLessThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
     }
 
+    public function testIsRisky() : void
+    {
+        static::assertFalse($this->fixer->isRisky());
+    }
+
     /**
      * @param string      $expected
      * @param string|null $input

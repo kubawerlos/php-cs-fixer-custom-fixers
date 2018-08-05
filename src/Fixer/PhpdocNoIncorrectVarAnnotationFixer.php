@@ -28,6 +28,11 @@ $bar = new Foo();
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
     }
 
+    public function isRisky() : bool
+    {
+        return false;
+    }
+
     public function fix(\SplFileInfo $file, Tokens $tokens) : void
     {
         foreach ($tokens as $index => $token) {

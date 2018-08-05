@@ -22,6 +22,11 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
         static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
     }
 
+    public function testIsRisky() : void
+    {
+        static::assertFalse($this->fixer->isRisky());
+    }
+
     /**
      * @param string      $expected
      * @param string|null $input

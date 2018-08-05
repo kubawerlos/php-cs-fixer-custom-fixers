@@ -30,6 +30,11 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
         static::assertLessThan((new PhpdocVarAnnotationCorrectOrderFixer())->getPriority(), $this->fixer->getPriority());
     }
 
+    public function testIsRisky() : void
+    {
+        static::assertFalse($this->fixer->isRisky());
+    }
+
     /**
      * @param string      $expected
      * @param string|null $input

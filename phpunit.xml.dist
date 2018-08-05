@@ -20,6 +20,10 @@
         </testsuite>
     </testsuites>
 
+    <logging>
+        <log type="coverage-text" target="php://stdout" showOnlySummary="true" />
+    </logging>
+
     <filter>
         <whitelist>
             <directory>src</directory>
