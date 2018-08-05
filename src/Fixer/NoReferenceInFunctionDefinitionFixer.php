@@ -60,7 +60,7 @@ function foo(&$x) {}
 
         $indices = [];
 
-        foreach ($argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis) as $startIndexCandidate => $endIndex) {
+        foreach (\array_keys($argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis)) as $startIndexCandidate) {
             $indices[] = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
         }
 
