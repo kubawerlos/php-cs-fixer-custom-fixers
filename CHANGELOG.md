@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.7.0 - *2018-08-06*
 - Add NoReferenceInFunctionDefinitionFixer
 - Add NoImportFromGlobalNamespaceFixer
 
