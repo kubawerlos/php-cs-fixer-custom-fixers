@@ -84,6 +84,15 @@ In your PHP CS Fixer configuration register fixers and use them:
  namespace Foo;
 ```
 
+- **NoReferenceInFunctionDefinitionFixer** - there must be no reference in function definition.
+
+  *Risky: when rely on reference.*
+```diff
+ <?php
+-function foo(&$x) {}
++function foo($x) {}
+```
+
 - **NoTwoConsecutiveEmptyLinesFixer** - there must be no two consecutive empty lines in code.
 ```diff
  <?php
