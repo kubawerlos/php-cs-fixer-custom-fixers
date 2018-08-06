@@ -63,7 +63,7 @@ In your PHP CS Fixer configuration register fixers and use them:
  }
 ```
 
-- **NoImportFromGlobalNamespaceFixer** - there must be no import of class from global namespace.
+- **NoImportFromGlobalNamespaceFixer** - there must be no import from global namespace.
 ```diff
  <?php
  namespace Foo;

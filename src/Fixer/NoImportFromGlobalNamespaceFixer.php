@@ -16,7 +16,7 @@ final class NoImportFromGlobalNamespaceFixer extends AbstractFixer
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
-            'There must be no import of class from global namespace.',
+            'There must be no import from global namespace.',
             [new CodeSample('<?php
 namespace Foo;
 use DateTime;
