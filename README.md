@@ -63,6 +63,17 @@ In your PHP CS Fixer configuration register fixers and use them:
  }
 ```
 
+- **NoImportFromGlobalNamespaceFixer** - there must be no import of class from global namespace.
+```diff
+ <?php
+ namespace Foo;
+-use DateTime;
+ class Bar {
+-    public function __construct(DateTime $dateTime) {}
++    public function __construct(\DateTime $dateTime) {}
+ }
+```
+
 - **NoLeadingSlashInGlobalNamespaceFixer** - when in global namespace there must be no leading slash for class.
 ```diff
  <?php
