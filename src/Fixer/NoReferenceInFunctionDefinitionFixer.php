@@ -40,7 +40,7 @@ function foo(&$x) {}
                 continue;
             }
 
-            $indices = $this->getArgumentIndices($tokens, $index);
+            $indices = $this->getArgumentStartIndices($tokens, $index);
 
             foreach ($indices as $i) {
                 if ($tokens[$i]->getContent() === '&') {
@@ -56,9 +56,9 @@ function foo(&$x) {}
     }
 
     /**
-     * @return array<int, int> In the format: startIndex => endIndex
+     * @return int[]
      */
-    private function getArgumentIndices(Tokens $tokens, int $functionNameIndex) : array
+    private function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex) : array
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
