@@ -10,13 +10,13 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @internal
  */
-final class CommentRemover
+final class TokenRemover
 {
-    public static function removeCommentWithLinesIfPossible(Tokens $tokens, int $index): void
+    public static function removeWithLinesIfPossible(Tokens $tokens, int $index): void
     {
-        self::removeTrailingHorizontalWhitespaces($tokens, $index - 1);
+        self::removeTrailingHorizontalWhitespaces($tokens, $tokens->getNonEmptySibling($index, -1));
 
-        self::removeLeadingNewline($tokens, $index + 1);
+        self::removeLeadingNewline($tokens, $tokens->getNonEmptySibling($index, 1));
 
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
     }

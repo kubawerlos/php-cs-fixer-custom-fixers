@@ -7,7 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\CommentRemover;
+use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoPhpStormGeneratedCommentFixer extends AbstractFixer
 {
@@ -48,7 +48,7 @@ namespace Foo;
                 continue;
             }
 
-            CommentRemover::removeCommentWithLinesIfPossible($tokens, $index);
+            TokenRemover::removeWithLinesIfPossible($tokens, $index);
         }
     }
 

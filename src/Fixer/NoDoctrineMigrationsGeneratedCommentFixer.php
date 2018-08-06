@@ -7,7 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\CommentRemover;
+use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoDoctrineMigrationsGeneratedCommentFixer extends AbstractFixer
 {
@@ -62,7 +62,7 @@ final class Version20180609123456 extends AbstractMigration
                 continue;
             }
 
-            CommentRemover::removeCommentWithLinesIfPossible($tokens, $index);
+            TokenRemover::removeWithLinesIfPossible($tokens, $index);
         }
     }
 

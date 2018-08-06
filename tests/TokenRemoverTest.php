@@ -5,15 +5,15 @@ declare(strict_types = 1);
 namespace Tests;
 
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\CommentRemover;
+use PhpCsFixerCustomFixers\TokenRemover;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\CommentRemover
+ * @covers \PhpCsFixerCustomFixers\TokenRemover
  */
-final class CommentRemoverTest extends TestCase
+final class TokenRemoverTest extends TestCase
 {
     /**
      * @param string      $expected
@@ -27,7 +27,7 @@ final class CommentRemoverTest extends TestCase
 
         foreach ($tokens as $index => $token) {
             if ($token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
-                CommentRemover::removeCommentWithLinesIfPossible($tokens, $index);
+                TokenRemover::removeWithLinesIfPossible($tokens, $index);
                 break;
             }
         }
