@@ -15,14 +15,14 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
  */
 final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority() : void
+    public function testPriority(): void
     {
         static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
     }
 
-    public function testIsRisky() : void
+    public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
     }
@@ -33,12 +33,12 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null) : void
+    public function testFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases() : \Iterator
+    public function provideFixCases(): \Iterator
     {
         yield [
             '<?php

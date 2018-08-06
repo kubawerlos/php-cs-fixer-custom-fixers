@@ -16,7 +16,7 @@ abstract class AbstractFixerTestCase extends TestCase
     /** @var DefinedFixerInterface */
     protected $fixer;
 
-    final protected function setUp() : void
+    final protected function setUp(): void
     {
         $reflectionClass = new \ReflectionClass(static::class);
 
@@ -25,12 +25,12 @@ abstract class AbstractFixerTestCase extends TestCase
         $this->fixer = new $className();
     }
 
-    final public function testFixerDefinitionHasExactlyOneCodeSample() : void
+    final public function testFixerDefinitionHasExactlyOneCodeSample(): void
     {
         static::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
     }
 
-    final public function testCodeSampleIsChangedDuringFixing() : void
+    final public function testCodeSampleIsChangedDuringFixing(): void
     {
         $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
 
@@ -41,7 +41,7 @@ abstract class AbstractFixerTestCase extends TestCase
         static::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
 
-    final protected function doTest(string $expected, string $input = null) : void
+    final protected function doTest(string $expected, string $input = null): void
     {
         if ($input === null) {
             $input = $expected;

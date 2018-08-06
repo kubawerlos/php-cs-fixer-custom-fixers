@@ -17,7 +17,7 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class FixersTest extends TestCase
 {
-    public function testCollectionIsSortedByName() : void
+    public function testCollectionIsSortedByName(): void
     {
         $fixerNames = $this->fixerNamesFromCollection();
 
@@ -30,15 +30,15 @@ final class FixersTest extends TestCase
     /**
      * @dataProvider providerFixersInFixerDirectoryCases
      */
-    public function testFixerIsInCollection(FixerInterface $fixer) : void
+    public function testFixerIsInCollection(FixerInterface $fixer): void
     {
         static::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
     }
 
-    public function providerFixersInFixerDirectoryCases() : array
+    public function providerFixersInFixerDirectoryCases(): array
     {
         return \array_map(
-            static function (SplFileInfo $fileInfo) : array {
+            static function (SplFileInfo $fileInfo): array {
                 $className = 'PhpCsFixerCustomFixers\\Fixer\\' . $fileInfo->getBasename('.php');
 
                 return [new $className()];
@@ -51,10 +51,10 @@ final class FixersTest extends TestCase
         );
     }
 
-    private function fixerNamesFromCollection() : array
+    private function fixerNamesFromCollection(): array
     {
         return \array_map(
-            static function (FixerInterface $fixer) : string {
+            static function (FixerInterface $fixer): string {
                 return $fixer->getName();
             },
             \iterator_to_array(new Fixers())

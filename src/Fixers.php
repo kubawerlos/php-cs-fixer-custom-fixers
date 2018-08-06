@@ -8,7 +8,7 @@ use Symfony\Component\Finder\Finder;
 
 final class Fixers implements \IteratorAggregate
 {
-    public function getIterator() : \ArrayIterator
+    public function getIterator(): \ArrayIterator
     {
         $finder = Finder::create()
             ->files()

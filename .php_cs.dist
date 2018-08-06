@@ -127,9 +127,6 @@ return PhpCsFixer\Config::create()
             'sort_algorithm'  => 'alpha',
         ],
         'return_assignment'       => true,
-        'return_type_declaration' => [
-            'space_before' => 'one',
-        ],
         'static_lambda'         => true,
         'strict_comparison'     => true,
         'strict_param'          => true,

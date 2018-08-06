@@ -11,7 +11,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoTwoConsecutiveEmptyLinesFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             'There must be no two consecutive empty lines in code.',
@@ -24,17 +24,17 @@ class Bar {};
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return true;
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_WHITESPACE)) {
@@ -51,13 +51,13 @@ class Bar {};
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         // must be run after NoTrailingWhitespaceFixer and NoWhitespaceInBlankLineFixer
         return -20;
     }
 
-    private function removeConsecutiveNewLines(Tokens $tokens, int $index, int $numberOfLinesToRemove) : void
+    private function removeConsecutiveNewLines(Tokens $tokens, int $index, int $numberOfLinesToRemove): void
     {
         $content = $tokens[$index]->getContent();
 

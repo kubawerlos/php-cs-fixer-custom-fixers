@@ -12,7 +12,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             '`@var` must be correct in the code.',
@@ -23,17 +23,17 @@ $bar = new Foo();
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
@@ -72,14 +72,14 @@ $bar = new Foo();
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
         // must be after PhpdocVarAnnotationCorrectOrderFixer
         return 6;
     }
 
-    private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables) : void
+    private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void
     {
         $this->removeVarAnnotationNotMatchingPattern(
             $tokens,
@@ -87,7 +87,7 @@ $bar = new Foo();
             '/' . \implode(
                 '|',
                 \array_map(
-                    static function (string $variable) : string {
+                    static function (string $variable): string {
                         return \preg_quote($variable, '/') . '\b';
                     },
                     $allowedVariables
@@ -96,7 +96,7 @@ $bar = new Foo();
         );
     }
 
-    private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex) : void
+    private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex): void
     {
         $index    = $tokens->getNextMeaningfulToken($controlIndex);
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
@@ -114,7 +114,7 @@ $bar = new Foo();
         $this->removeVarAnnotation($tokens, $commentIndex, $variables);
     }
 
-    private function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern) : void
+    private function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
     {
         $doc = new DocBlock($tokens[$index]->getContent());
 

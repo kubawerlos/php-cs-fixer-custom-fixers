@@ -11,7 +11,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocParamTypeFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             '`@param` must have type.',
@@ -25,17 +25,17 @@ function a($foo, $bar) {}
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind([T_DOC_COMMENT])) {
@@ -60,7 +60,7 @@ function a($foo, $bar) {}
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
         // must be run before PhpdocAlignFixer

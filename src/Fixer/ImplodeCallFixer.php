@@ -13,7 +13,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class ImplodeCallFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             'Function `implode` must be called with 2 arguments in the documented order.',
@@ -25,17 +25,17 @@ implode($foo, "") . implode($bar);
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_STRING);
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return true;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         $functionsAnalyzer = new FunctionsAnalyzer();
 
@@ -99,7 +99,7 @@ implode($foo, "") . implode($bar);
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         return 0;
     }
@@ -107,7 +107,7 @@ implode($foo, "") . implode($bar);
     /**
      * @return array<int, int> In the format: startIndex => endIndex
      */
-    private function getArgumentIndices(Tokens $tokens, int $functionNameIndex) : array
+    private function getArgumentIndices(Tokens $tokens, int $functionNameIndex): array
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 

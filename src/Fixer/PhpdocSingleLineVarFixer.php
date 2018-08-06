@@ -11,7 +11,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocSingleLineVarFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             '`@var` annotation must be in single line when is the only content.',
@@ -26,17 +26,17 @@ class Foo {
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
@@ -61,7 +61,7 @@ class Foo {
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         return 0;
     }

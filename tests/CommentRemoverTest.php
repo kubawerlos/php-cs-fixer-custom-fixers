@@ -21,7 +21,7 @@ final class CommentRemoverTest extends TestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null) : void
+    public function testFix(string $expected, string $input = null): void
     {
         $tokens = Tokens::fromCode($input);
 
@@ -35,7 +35,7 @@ final class CommentRemoverTest extends TestCase
         static::assertSame($expected, $tokens->generateCode());
     }
 
-    public function provideFixCases() : \Iterator
+    public function provideFixCases(): \Iterator
     {
         yield [
             '<?php

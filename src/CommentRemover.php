@@ -12,7 +12,7 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class CommentRemover
 {
-    public static function removeCommentWithLinesIfPossible(Tokens $tokens, int $index) : void
+    public static function removeCommentWithLinesIfPossible(Tokens $tokens, int $index): void
     {
         self::removeTrailingHorizontalWhitespaces($tokens, $index - 1);
 
@@ -21,7 +21,7 @@ final class CommentRemover
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
     }
 
-    private static function removeTrailingHorizontalWhitespaces(Tokens $tokens, int $index) : void
+    private static function removeTrailingHorizontalWhitespaces(Tokens $tokens, int $index): void
     {
         if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
             return;
@@ -42,7 +42,7 @@ final class CommentRemover
         $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
     }
 
-    private static function removeLeadingNewline(Tokens $tokens, int $index) : void
+    private static function removeLeadingNewline(Tokens $tokens, int $index): void
     {
         if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
             return;

@@ -13,12 +13,12 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocToCommentFixer;
  */
 final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority() : void
+    public function testPriority(): void
     {
         static::assertGreaterThan((new PhpdocToCommentFixer())->getPriority(), $this->fixer->getPriority());
     }
 
-    public function testIsRisky() : void
+    public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
     }
@@ -29,12 +29,12 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null) : void
+    public function testFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases() : \Iterator
+    public function provideFixCases(): \Iterator
     {
         yield [
             '<?php $foo = new Bar();',

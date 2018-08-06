@@ -14,13 +14,13 @@ use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
  */
 final class NoTwoConsecutiveEmptyLinesFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority() : void
+    public function testPriority(): void
     {
         static::assertLessThan((new NoTrailingWhitespaceFixer())->getPriority(), $this->fixer->getPriority());
         static::assertLessThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
     }
 
-    public function testIsRisky() : void
+    public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
     }
@@ -31,12 +31,12 @@ final class NoTwoConsecutiveEmptyLinesFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null) : void
+    public function testFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases() : \Iterator
+    public function provideFixCases(): \Iterator
     {
         yield [
             '<?php

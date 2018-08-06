@@ -11,7 +11,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             '`@var` annotation must have type and name in the correct order.',
@@ -22,17 +22,17 @@ $foo = 2 + 2;
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
@@ -57,7 +57,7 @@ $foo = 2 + 2;
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         // must be before PhpdocNoIncorrectVarAnnotationFixer
         return 7;

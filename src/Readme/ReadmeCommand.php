@@ -19,7 +19,7 @@ class ReadmeCommand extends BaseCommand
 
     private const SHIELDS_HOST = 'https://img.shields.io';
 
-    protected function execute(InputInterface $input, OutputInterface $output) : void
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln(\sprintf('# %s', self::NAME));
         $output->writeln($this->badges());
@@ -30,7 +30,7 @@ class ReadmeCommand extends BaseCommand
         $output->writeln($this->contributing());
     }
 
-    private function badges() : string
+    private function badges(): string
     {
         return "\n" . \implode("\n", [
             $this->badge(
@@ -61,7 +61,7 @@ class ReadmeCommand extends BaseCommand
         ]) . "\n";
     }
 
-    private function badge(string $description, string $imageUrl, string $targetUrl) : string
+    private function badge(string $description, string $imageUrl, string $targetUrl): string
     {
         return
             \sprintf(
@@ -72,7 +72,7 @@ class ReadmeCommand extends BaseCommand
             );
     }
 
-    private function description() : string
+    private function description(): string
     {
         return \str_replace(
             'PHP CS Fixer',
@@ -81,7 +81,7 @@ class ReadmeCommand extends BaseCommand
         ) . '.';
     }
 
-    private function installation() : string
+    private function installation(): string
     {
         return \sprintf(
             '
@@ -96,7 +96,7 @@ composer require --dev %s
         );
     }
 
-    private function usage() : string
+    private function usage(): string
     {
         return \sprintf(
             '
@@ -113,7 +113,7 @@ In your PHP CS Fixer configuration register fixers and use them:
         );
     }
 
-    private function fixers() : string
+    private function fixers(): string
     {
         $output = "\n## Fixers";
 
@@ -148,7 +148,7 @@ In your PHP CS Fixer configuration register fixers and use them:
         return $output;
     }
 
-    private function diff(string $from, string $to) : string
+    private function diff(string $from, string $to): string
     {
         return \rtrim(\str_replace(
             "@@ @@\n",
@@ -160,7 +160,7 @@ In your PHP CS Fixer configuration register fixers and use them:
         ));
     }
 
-    private function contributing() : string
+    private function contributing(): string
     {
         return \sprintf(
             '
@@ -180,7 +180,7 @@ and submit a pull request.',
         );
     }
 
-    private function composer() : \stdClass
+    private function composer(): \stdClass
     {
         return \json_decode(\file_get_contents(__DIR__ . '/../../composer.json'));
     }

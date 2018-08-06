@@ -11,12 +11,12 @@ namespace Tests\Fixer;
  */
 final class ImplodeCallFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority() : void
+    public function testPriority(): void
     {
         static::assertSame(0, $this->fixer->getPriority());
     }
 
-    public function testIsRisky() : void
+    public function testIsRisky(): void
     {
         static::assertTrue($this->fixer->isRisky());
     }
@@ -27,12 +27,12 @@ final class ImplodeCallFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null) : void
+    public function testFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases() : \Iterator
+    public function provideFixCases(): \Iterator
     {
         yield ["<?php implode('', [1,2,3]);"];
         yield ['<?php implode("", $foo);'];

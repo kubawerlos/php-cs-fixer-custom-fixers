@@ -10,7 +10,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoLeadingSlashInGlobalNamespaceFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             'When in global namespace there must be no leading slash for class.',
@@ -22,17 +22,17 @@ $y = new \Baz();
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_NS_SEPARATOR);
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if ($token->isGivenKind(T_NAMESPACE)) {
@@ -52,7 +52,7 @@ $y = new \Baz();
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         // must be run before PhpdocToCommentFixer
         return 26;

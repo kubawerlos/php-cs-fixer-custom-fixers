@@ -15,14 +15,14 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
  */
 final class PhpdocParamTypeFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority() : void
+    public function testPriority(): void
     {
         static::assertLessThan((new CommentToPhpdocFixer())->getPriority(), $this->fixer->getPriority());
         static::assertLessThan((new PhpdocAddMissingParamAnnotationFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new PhpdocAlignFixer())->getPriority(), $this->fixer->getPriority());
     }
 
-    public function testIsRisky() : void
+    public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
     }
@@ -33,12 +33,12 @@ final class PhpdocParamTypeFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null) : void
+    public function testFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases() : \Iterator
+    public function provideFixCases(): \Iterator
     {
         yield [
             '<?php

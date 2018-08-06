@@ -16,7 +16,7 @@ use Symfony\Component\Console\Tester\ApplicationTester;
  */
 final class ReadmeCommandTest extends TestCase
 {
-    public function testReadmeIsUpToDate() : void
+    public function testReadmeIsUpToDate(): void
     {
         $application = new Application();
         $command     = new ReadmeCommand('readme');

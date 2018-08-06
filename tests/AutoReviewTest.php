@@ -20,7 +20,7 @@ final class AutoReviewTest extends TestCase
     /**
      * @dataProvider provideFixerCases
      */
-    public function testFixerExtendsAbstractFixer(FixerInterface $fixer) : void
+    public function testFixerExtendsAbstractFixer(FixerInterface $fixer): void
     {
         static::assertInstanceOf(AbstractFixer::class, $fixer);
     }
@@ -28,7 +28,7 @@ final class AutoReviewTest extends TestCase
     /**
      * @dataProvider provideFixerCases
      */
-    public function testFixerHasValidName(FixerInterface $fixer) : void
+    public function testFixerHasValidName(FixerInterface $fixer): void
     {
         $validator = new FixerNameValidator();
 
@@ -41,22 +41,22 @@ final class AutoReviewTest extends TestCase
     /**
      * @dataProvider provideFixerCases
      */
-    public function testFixerIsFinal(FixerInterface $fixer) : void
+    public function testFixerIsFinal(FixerInterface $fixer): void
     {
         static::assertTrue((new \ReflectionClass($fixer))->isFinal());
     }
 
-    public function provideFixerCases() : array
+    public function provideFixerCases(): array
     {
         return \array_map(
-            static function (FixerInterface $fixer) : array {
+            static function (FixerInterface $fixer): array {
                 return [new $fixer()];
             },
             \iterator_to_array(new Fixers())
         );
     }
 
-    public function testFixerSupportsAllFilesByDefault() : void
+    public function testFixerSupportsAllFilesByDefault(): void
     {
         $fixer = $this->getMockForAbstractClass(AbstractFixer::class);
 

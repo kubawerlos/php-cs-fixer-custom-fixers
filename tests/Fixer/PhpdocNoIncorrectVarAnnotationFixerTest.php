@@ -19,7 +19,7 @@ use PhpCsFixerCustomFixers\Fixer\PhpdocVarAnnotationCorrectOrderFixer;
  */
 final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority() : void
+    public function testPriority(): void
     {
         static::assertGreaterThan((new NoExtraBlankLinesFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
@@ -30,7 +30,7 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
         static::assertLessThan((new PhpdocVarAnnotationCorrectOrderFixer())->getPriority(), $this->fixer->getPriority());
     }
 
-    public function testIsRisky() : void
+    public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
     }
@@ -41,12 +41,12 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null) : void
+    public function testFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases() : \Iterator
+    public function provideFixCases(): \Iterator
     {
         yield [
             '<?php
