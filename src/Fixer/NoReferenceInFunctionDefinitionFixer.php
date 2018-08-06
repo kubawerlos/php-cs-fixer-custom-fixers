@@ -11,7 +11,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
 {
-    public function getDefinition() : FixerDefinition
+    public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
             'There must be no reference in function definition.',
@@ -23,17 +23,17 @@ function foo(&$x) {}
         );
     }
 
-    public function isCandidate(Tokens $tokens) : bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_FUNCTION]);
     }
 
-    public function isRisky() : bool
+    public function isRisky(): bool
     {
         return true;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens) : void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_FUNCTION)) {
@@ -50,7 +50,7 @@ function foo(&$x) {}
         }
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         return 0;
     }
@@ -58,7 +58,7 @@ function foo(&$x) {}
     /**
      * @return int[]
      */
-    private function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex) : array
+    private function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex): array
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
