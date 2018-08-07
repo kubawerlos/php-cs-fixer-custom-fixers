@@ -44,7 +44,7 @@ $foo = 2 + 2;
             }
 
             $newContent = \preg_replace(
-                '/(@var\s*)(\$\S+)(\s+)([^\$](?:[^<\s]|<[^>]*>)*)(\s|\*)/i',
+                '/(@var\s*)(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\s+)([^\$](?:[^<\s]|<[^>]*>)*)(\s|\*)/i',
                 '$1$4$3$2$5',
                 $token->getContent()
             );

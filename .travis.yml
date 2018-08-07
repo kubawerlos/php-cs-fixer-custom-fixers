@@ -13,7 +13,7 @@ notifications:
     email: false
 
 before_install:
-    - composer self-update 1.6.5
+    - composer self-update
     - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
 
 install: composer install
