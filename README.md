@@ -165,6 +165,18 @@ In your PHP CS Fixer configuration register fixers and use them:
  function a($foo, $bar) {}
 ```
 
+- **PhpdocSelfAccessorFixer** - in PHPDoc inside class or interface element `self` should be preferred over the class name itself.
+```diff
+ <?php
+ class Foo {
+     /**
+-     * @var Foo
++     * @var self
+      */
+      private $instance;
+ }
+```
+
 - **PhpdocSingleLineVarFixer** - `@var` annotation must be in single line when is the only content.
 ```diff
  <?php
