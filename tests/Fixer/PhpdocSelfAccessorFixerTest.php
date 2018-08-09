@@ -67,6 +67,8 @@ class Foo {
       * @param self|int $x
       * @param bool|self|int $x
       * @param bool|self|int $x
+      * @param self[] $foos
+      * @param self[] $foos
       *
       * @return self
       */
@@ -86,6 +88,8 @@ class Foo {
       * @param Foo|int $x
       * @param bool|Foo|int $x
       * @param bool|\Foo|int $x
+      * @param Foo[] $foos
+      * @param \Foo[] $foos
       *
       * @return Foo
       */
@@ -105,6 +109,7 @@ class Foo {
       * @param Foo\Some $x
       * @param Foo\Some\Thing $x
       * @param Foo\Some\Thing\Foo $x
+      * @param \Foo[] $foos
       */
       public function bar(...$params) {}
 }',
@@ -120,6 +125,8 @@ class Foo {
       * @param bool|self $x
       * @param self|int $x
       * @param bool|self|int $x
+      * @param self[] $foos
+      * @param self[] $foos
       */
       public function bar(...$params) {}
 }',
@@ -132,6 +139,8 @@ class Foo {
       * @param bool|\Some\Thing\Foo $x
       * @param \Some\Thing\Foo|int $x
       * @param bool|\Some\Thing\Foo|int $x
+      * @param Foo[] $foos
+      * @param \Some\Thing\Foo[] $foos
       */
       public function bar(...$params) {}
 }',
