@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.8.0 - *2018-08-09*
 - Add PhpdocSelfAccessorFixer
 
 ## v1.7.0 - *2018-08-06*
