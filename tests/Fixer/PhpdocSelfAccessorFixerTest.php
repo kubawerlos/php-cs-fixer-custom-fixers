@@ -34,7 +34,7 @@ final class PhpdocSelfAccessorFixerTest extends AbstractFixerTestCase
 
     public function provideFixCases(): \Iterator
     {
-        yield [
+        yield [ // no namespace - do not change
             '<?php
 class Foo {
     /**
@@ -43,15 +43,16 @@ class Foo {
      private $instance;
      
      /**
-      * @param Foo\Bar $bar
-      *
-      * @return Bar\Foo
+      * @param Foo\Bar $x
+      * @param Bar\Foo $x
+      * @param int $x count of Foo
+      * @see Foo documentation
       */
-      public function bar() {}
+      public function bar(...$params) {}
 }',
         ];
 
-        yield [
+        yield [ // no namespace - change
             '<?php
 class Foo {
     /**
@@ -60,11 +61,16 @@ class Foo {
      private $instance;
      
      /**
-      * @param self $foo
+      * @param self $x
+      * @param self $x
+      * @param bool|self $x
+      * @param self|int $x
+      * @param bool|self|int $x
+      * @param bool|self|int $x
       *
       * @return self
       */
-      public function bar() {}
+      public function bar(...$params) {}
 }',
             '<?php
 class Foo {
@@ -74,11 +80,60 @@ class Foo {
      private $instance;
      
      /**
-      * @param Foo $foo
+      * @param Foo $x
+      * @param \Foo $x
+      * @param bool|Foo $x
+      * @param Foo|int $x
+      * @param bool|Foo|int $x
+      * @param bool|\Foo|int $x
       *
       * @return Foo
       */
-      public function bar() {}
+      public function bar(...$params) {}
+}',
+        ];
+
+        yield [ // with namespace - do not change
+            '<?php
+namespace Some\Thing;
+class Foo {
+     /**
+      * @param \Foo $x
+      * @param Some\Foo $x
+      * @param Thing\Foo $x
+      * @param Some\Thing\Foo $x
+      * @param Foo\Some $x
+      * @param Foo\Some\Thing $x
+      * @param Foo\Some\Thing\Foo $x
+      */
+      public function bar(...$params) {}
+}',
+        ];
+
+        yield [ // with namespace - change
+            '<?php
+namespace Some\Thing;
+class Foo {
+     /**
+      * @param self $x
+      * @param self $x
+      * @param bool|self $x
+      * @param self|int $x
+      * @param bool|self|int $x
+      */
+      public function bar(...$params) {}
+}',
+            '<?php
+namespace Some\Thing;
+class Foo {
+     /**
+      * @param Foo $x
+      * @param \Some\Thing\Foo $x
+      * @param bool|\Some\Thing\Foo $x
+      * @param \Some\Thing\Foo|int $x
+      * @param bool|\Some\Thing\Foo|int $x
+      */
+      public function bar(...$params) {}
 }',
         ];
     }

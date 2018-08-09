@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
@@ -41,20 +43,22 @@ class Foo {
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
-        for ($index = 0, $c = $tokens->count(); $index < $c; $index++) {
-            if (!$tokens[$index]->isGivenKind([T_CLASS, T_INTERFACE]) || $tokensAnalyzer->isAnonymousClass($index)) {
-                continue;
+        foreach ((new NamespacesAnalyzer())->getDeclarations($tokens) as $namespace) {
+            for ($index = $namespace->getScopeStartIndex(); $index < $namespace->getScopeEndIndex(); $index++) {
+                if (!$tokens[$index]->isGivenKind([T_CLASS, T_INTERFACE]) || $tokensAnalyzer->isAnonymousClass($index)) {
+                    continue;
+                }
+
+                $nameIndex  = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
+                $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
+                $endIndex   = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
+
+                $name = $tokens[$nameIndex]->getContent();
+
+                $this->replaceNameOccurrences($tokens, $namespace->getFullName(), $name, $startIndex, $endIndex);
+
+                $index = $endIndex;
             }
-
-            $nameIndex  = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
-            $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
-            $endIndex   = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
-
-            $name = $tokens[$nameIndex]->getContent();
-
-            $this->replaceNameOccurrences($tokens, $name, $startIndex, $endIndex);
-
-            $index = $endIndex;
         }
     }
 
@@ -63,24 +67,33 @@ class Foo {
         return 0;
     }
 
-    private function replaceNameOccurrences(Tokens $tokens, string $name, int $startIndex, int $endIndex): void
+    private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $name, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
 
-            $newContent = \preg_replace(
-                \sprintf('/(@[a-zA-Z]+) %s\b(?!\\\\)/i', $name),
-                '$1 self',
-                $tokens[$index]->getContent()
-            );
+            $docBlock = new DocBlock($tokens[$index]->getContent());
 
-            if ($newContent === $tokens[$index]->getContent()) {
-                continue;
+            $fqcn = ($namespace !== '' ? '\\' . $namespace : '') . '\\' . $name;
+
+            foreach ($docBlock->getAnnotations() as $annotation) {
+                if (!$annotation->supportTypes()) {
+                    continue;
+                }
+
+                $types = [];
+                foreach ($annotation->getTypes() as $type) {
+                    $types[] = $type === $name || $type === $fqcn ? 'self' : $type;
+                }
+
+                if ($types === $annotation->getTypes()) {
+                    continue;
+                }
+                $annotation->setTypes($types);
+                $tokens[$index] = new Token([T_DOC_COMMENT, $docBlock->getContent()]);
             }
-
-            $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
         }
     }
 }
