@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.9.0 - *2018-08-10*
 - Add NoNullableBooleanTypeFixer
 
 ## v1.8.0 - *2018-08-09*
