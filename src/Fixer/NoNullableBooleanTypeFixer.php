@@ -1,0 +1,63 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace PhpCsFixerCustomFixers\Fixer;
+
+use PhpCsFixer\FixerDefinition\CodeSample;
+use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Tokenizer\Tokens;
+
+final class NoNullableBooleanTypeFixer extends AbstractFixer
+{
+    public function getDefinition(): FixerDefinition
+    {
+        return new FixerDefinition(
+            'There must be no nullable boolean type.',
+            [new CodeSample('<?php
+function foo(?bool $bar) : ?bool
+{
+     return $bar;
+ }
+')],
+            null,
+            'When the null is used.'
+        );
+    }
+
+    public function isCandidate(Tokens $tokens): bool
+    {
+        return $tokens->isTokenKindFound(T_STRING);
+    }
+
+    public function isRisky(): bool
+    {
+        return true;
+    }
+
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        foreach ($tokens as $index => $token) {
+            if ($token->getContent() !== '?') {
+                continue;
+            }
+
+            $nextIndex = $tokens->getNextMeaningfulToken($index);
+            if (!$tokens[$nextIndex]->equals([T_STRING, 'bool'], false) && !$tokens[$nextIndex]->equals([T_STRING, 'boolean'], false)) {
+                continue;
+            }
+
+            $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
+            if (!$tokens[$nextNextIndex]->isGivenKind(T_VARIABLE) && $tokens[$nextNextIndex]->getContent() !== '{') {
+                continue;
+            }
+
+            $tokens->clearTokenAndMergeSurroundingWhitespace($index);
+        }
+    }
+
+    public function getPriority(): int
+    {
+        return 0;
+    }
+}

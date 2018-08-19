@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Add NoNullableBooleanTypeFixer
+
 ## v1.8.0 - *2018-08-09*
 - Add PhpdocSelfAccessorFixer
 
