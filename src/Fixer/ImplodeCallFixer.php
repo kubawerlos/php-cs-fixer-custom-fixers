@@ -40,14 +40,7 @@ implode($foo, "") . implode($bar);
         $functionsAnalyzer = new FunctionsAnalyzer();
 
         foreach ($tokens as $index => $token) {
-            if (!$functionsAnalyzer->isGlobalFunctionIndex($tokens, $index)) {
-                continue;
-            }
-
-            // Temporary: fix until https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3895 is done
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
-            if ($tokens[$prevIndex]->isGivenKind(T_FUNCTION) || !$tokens[$nextIndex]->equals('(')) {
+            if (!$functionsAnalyzer->isGlobalFunctionCall($tokens, $index)) {
                 continue;
             }
 
