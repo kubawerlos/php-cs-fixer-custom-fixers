@@ -17,7 +17,7 @@
         "php": "^7.1",
         "ext-json": "*",
         "ext-tokenizer": "*",
-        "friendsofphp/php-cs-fixer": "^2.12.3"
+        "friendsofphp/php-cs-fixer": "^2.13"
     },
     "require-dev": {
         "kubawerlos/composer-json-fixer": "^2.1",

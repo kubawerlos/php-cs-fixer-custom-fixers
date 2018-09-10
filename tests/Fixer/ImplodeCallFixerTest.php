@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer;
+use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
+
 /**
  * @internal
  *
@@ -13,12 +16,18 @@ final class ImplodeCallFixerTest extends AbstractFixerTestCase
 {
     public function testPriority(): void
     {
-        static::assertSame(0, $this->fixer->getPriority());
+        static::assertLessThan((new NoAliasFunctionsFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new MethodArgumentSpaceFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     public function testIsRisky(): void
     {
         static::assertTrue($this->fixer->isRisky());
+    }
+
+    public function testSuccessorName(): void
+    {
+        static::assertContains('implode_call', $this->fixer->getSuccessorsNames());
     }
 
     /**

@@ -31,7 +31,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 
 ## Fixers
-- **ImplodeCallFixer** - function `implode` must be called with 2 arguments in the documented order.
+- **ImplodeCallFixer** - function `implode` must be called with 2 arguments in the documented order. DEPRECATED: use `implode_call` instead.
 
   *Risky: when the function `implode` is overridden.*
 ```diff
