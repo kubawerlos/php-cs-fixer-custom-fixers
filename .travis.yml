@@ -55,6 +55,7 @@ jobs:
                 - cp src/Fixer/* tmp/src/Fixer/CustomFixers
                 - rm tmp/src/Fixer/CustomFixers/AbstractFixer.php
                 - sed -i -- 's/namespace PhpCsFixerCustomFixers\\Fixer;/namespace PhpCsFixer\\Fixer\\CustomFixers;use PhpCsFixer\\AbstractFixer;use PhpCsFixer\\Preg;/g' tmp/src/Fixer/CustomFixers/*
+                - sed -i -- 's/class /class Custom/g' tmp/src/Fixer/CustomFixers/*
                 - sed -i -- 's/use PhpCsFixerCustomFixers\\TokenRemover;/use PhpCsFixer\\TokenRemover;/g' tmp/src/Fixer/CustomFixers/*
                 - sed -i -- 's/public function fix/protected function applyFix/g' tmp/src/Fixer/CustomFixers/*
                 - sed -i -- 's/\\preg_/Preg::/g' tmp/src/Fixer/CustomFixers/*
@@ -68,7 +69,7 @@ jobs:
                 - cp tests/Fixer/* tmp/tests/Fixer/CustomFixers
                 - rm tmp/tests/Fixer/CustomFixers/AbstractFixerTestCase.php
                 - sed -i -- 's/namespace Tests\\Fixer;/namespace PhpCsFixer\\Tests\\Fixer\\CustomFixers;use PhpCsFixer\\Tests\\Test\\AbstractFixerTestCase;/g' tmp/tests/Fixer/CustomFixers/*
-                - sed -i -- 's/PhpCsFixerCustomFixers\\Fixer/PhpCsFixer\\Fixer\\CustomFixers/g' tmp/tests/Fixer/CustomFixers/*
+                - sed -i -- 's/PhpCsFixerCustomFixers\\Fixer\\/PhpCsFixer\\Fixer\\CustomFixers\\Custom/g' tmp/tests/Fixer/CustomFixers/*
                 - cp tests/TokenRemoverTest.php tmp/tests/TokenRemoverTest.php
                 - sed -i -- 's/namespace Tests;/namespace PhpCsFixer\\Tests;/g' tmp/tests/TokenRemoverTest.php
                 - sed -i -- 's/use PhpCsFixerCustomFixers\\TokenRemover;/use PhpCsFixer\\TokenRemover;/g' tmp/tests/TokenRemoverTest.php
