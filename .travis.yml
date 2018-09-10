@@ -75,11 +75,11 @@ jobs:
                 - sed -i -- 's/use PHPUnit\\Framework\\TestCase;/use PhpCsFixer\\Tests\\TestCase;/g' tmp/tests/TokenRemoverTest.php
                 - sed -i -- 's/@covers \\PhpCsFixerCustomFixers/@covers \\PhpCsFixer/g' tmp/tests/TokenRemoverTest.php
                 # prepare for testing
-                - cd tmp/src/Fixer
+                - cd tmp/src/Fixer/CustomFixers
                 - rename 's/^/Custom/' *
-                - cd ../../tests/Fixer
+                - cd ../../../tests/Fixer/CustomFixers
                 - rename 's/^/Custom/' *
-                - cd ../..
+                - cd ../../..
                 - php php-cs-fixer fix src/Fixer/CustomFixers
                 - php php-cs-fixer fix tests/Fixer/CustomFixers
                 - php php-cs-fixer readme > README.rst
