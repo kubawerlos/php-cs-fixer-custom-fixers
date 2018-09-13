@@ -36,6 +36,8 @@ final class AutoReviewTest extends TestCase
             $validator->isValid($fixer->getName(), true),
             \sprintf('Fixer name "%s" is incorrect', $fixer->getName())
         );
+
+        static::assertStringEndsWith('.', $fixer->getDefinition()->getSummary(), \sprintf('Description for "%s" must end with dot.', $fixer->getName()));
     }
 
     /**
