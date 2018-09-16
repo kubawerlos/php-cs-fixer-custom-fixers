@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Readme;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixers;
@@ -121,10 +122,19 @@ In your PHP CS Fixer configuration register fixers and use them:
             $reflection = new \ReflectionClass($fixer);
 
             $output .= \sprintf(
-                "\n- **%s** - %s\n",
+                "\n- **%s** - %s",
                 $reflection->getShortName(),
                 \lcfirst($fixer->getDefinition()->getSummary())
             );
+
+            if ($fixer instanceof DeprecatedFixerInterface) {
+                $output .= \sprintf(
+                    ' DEPRECATED: use `%s` instead.',
+                    \implode('`, `', $fixer->getSuccessorsNames())
+                );
+            }
+
+            $output .= "\n";
 
             if ($fixer->isRisky()) {
                 $output .= \sprintf(

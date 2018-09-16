@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Deprecate ImplodeCallFixer
+
 ## v1.9.0 - *2018-08-10*
 - Add NoNullableBooleanTypeFixer
 
