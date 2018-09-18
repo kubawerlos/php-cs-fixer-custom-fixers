@@ -125,6 +125,12 @@ In your PHP CS Fixer configuration register fixers and use them:
  class Bar {};
 ```
 
+- **NoUnneededConcatenationFixer** - there should not be inline concatenation of strings.
+```diff
+-<?php 'foo' . 'bar';
++<?php 'foobar';
+```
+
 - **NoUselessClassCommentFixer** - there must be no comment like: "Class FooBar".
 ```diff
  <?php
