@@ -4,13 +4,25 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class NoTwoConsecutiveEmptyLinesFixer extends AbstractFixer
+/**
+ * @deprecated use "no_extra_blank_lines" instead
+ */
+final class NoTwoConsecutiveEmptyLinesFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    /** @var FixerInterface */
+    private $fixer;
+
+    public function __construct()
+    {
+        $this->fixer = new \PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer();
+    }
+
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
@@ -26,45 +38,29 @@ class Bar {};
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return true;
+        return $this->fixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return false;
+        return $this->fixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind(T_WHITESPACE)) {
-                continue;
-            }
-
-            $prevToken = $tokens[$index - 1];
-            if ($prevToken->isGivenKind(T_OPEN_TAG)) {
-                $this->removeConsecutiveNewLines($tokens, $index, 1);
-                continue;
-            }
-
-            $this->removeConsecutiveNewLines($tokens, $index, 2);
-        }
+        $this->fixer->fix($file, $tokens);
     }
 
     public function getPriority(): int
     {
-        // must be run after NoTrailingWhitespaceFixer and NoWhitespaceInBlankLineFixer
-        return -20;
+        return $this->fixer->getPriority();
     }
 
-    private function removeConsecutiveNewLines(Tokens $tokens, int $index, int $numberOfLinesToRemove): void
+    /**
+     * @return string[]
+     */
+    public function getSuccessorsNames(): array
     {
-        $content = $tokens[$index]->getContent();
-
-        $newContent = \preg_replace(\sprintf('/(\R{%d})\R+/', $numberOfLinesToRemove), '$1', $content);
-
-        if ($newContent !== $content) {
-            $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
-        }
+        return [$this->fixer->getName()];
     }
 }

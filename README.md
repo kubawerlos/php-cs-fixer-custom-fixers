@@ -116,7 +116,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 +function foo($x) {}
 ```
 
-- **NoTwoConsecutiveEmptyLinesFixer** - there must be no two consecutive empty lines in code.
+- **NoTwoConsecutiveEmptyLinesFixer** - there must be no two consecutive empty lines in code. DEPRECATED: use `no_extra_blank_lines` instead.
 ```diff
  <?php
  namespace Foo;
