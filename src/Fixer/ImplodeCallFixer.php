@@ -60,6 +60,6 @@ implode($foo, "") . implode($bar);
      */
     public function getSuccessorsNames(): array
     {
-        return [(new \PhpCsFixer\Fixer\FunctionNotation\ImplodeCallFixer())->getName()];
+        return [$this->fixer->getName()];
     }
 }
