@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Deprecate ImplodeCallFixer
+- Add NoUnneededConcatenationFixer
 
 ## v1.9.0 - *2018-08-10*
 - Add NoNullableBooleanTypeFixer
