@@ -1,9 +1,10 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
-- Deprecate ImplodeCallFixer
+## v1.10.0 - *2018-09-19*
 - Add NoUnneededConcatenationFixer
 - Add PhpdocNoSuperfluousParamFixer
+- Deprecate ImplodeCallFixer
+- Deprecate NoTwoConsecutiveEmptyLinesFixer
 
 ## v1.9.0 - *2018-08-10*
 - Add NoNullableBooleanTypeFixer
