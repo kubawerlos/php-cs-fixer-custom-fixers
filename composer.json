@@ -28,7 +28,7 @@
         "symfony/console": "^4.1",
         "symfony/finder": "^4.1",
         "symfony/yaml": "^4.1",
-        "vimeo/psalm": "^2.0"
+        "vimeo/psalm": "^2.0.11"
     },
     "autoload": {
         "psr-4": {

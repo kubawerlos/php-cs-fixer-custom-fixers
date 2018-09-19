@@ -25,7 +25,7 @@ In your PHP CS Fixer configuration register fixers and use them:
          '@PSR2' => true,
          'array_syntax' => ['syntax' => 'short'],
 +        PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => true,
-+        PhpCsFixerCustomFixers\Fixer\NoTwoConsecutiveEmptyLinesFixer::name() => true,
++        PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer::name() => true,
      ]);
 ```
 
@@ -170,6 +170,18 @@ In your PHP CS Fixer configuration register fixers and use them:
 -/** @var Foo $foo */
 +
  $bar = new Foo();
+```
+
+- **PhpdocNoSuperfluousParamFixer** - there must be no superfluous parameters in PHPDoc.
+```diff
+ <?php
+ /**
+  * @param bool $b
+- * @param int $i
+  * @param string $s this is string
+- * @param string $s duplicated
+  */
+ function foo($b, $s) {}
 ```
 
 - **PhpdocParamTypeFixer** - `@param` must have type.

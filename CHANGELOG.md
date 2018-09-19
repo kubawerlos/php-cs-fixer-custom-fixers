@@ -3,6 +3,7 @@
 ## [Unreleased]
 - Deprecate ImplodeCallFixer
 - Add NoUnneededConcatenationFixer
+- Add PhpdocNoSuperfluousParamFixer
 
 ## v1.9.0 - *2018-08-10*
 - Add NoNullableBooleanTypeFixer
