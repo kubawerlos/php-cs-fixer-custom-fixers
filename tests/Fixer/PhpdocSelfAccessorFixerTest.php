@@ -41,7 +41,7 @@ class Foo {
      * @var FooBar
      */
      private $instance;
-     
+
      /**
       * @param Foo\Bar $x
       * @param Bar\Foo $x
@@ -59,7 +59,7 @@ class Foo {
      * @var self
      */
      private $instance;
-     
+
      /**
       * @param self $x
       * @param self $x
@@ -82,7 +82,7 @@ class Foo {
      * @var Foo
      */
      private $instance;
-     
+
      /**
       * @param Foo $x
       * @param \Foo $x

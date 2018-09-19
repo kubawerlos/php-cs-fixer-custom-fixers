@@ -147,7 +147,7 @@ class Bar {
             '<?php
 namespace Foo;
 class Bar {
-    /** 
+    /**
      * @param \DateTime $a
      * @param \DateTime $b
      * @param NotDateTime $c
@@ -165,7 +165,7 @@ class Bar {
 namespace Foo;
 use DateTime;
 class Bar {
-    /** 
+    /**
      * @param DateTime $a
      * @param \DateTime $b
      * @param NotDateTime $c

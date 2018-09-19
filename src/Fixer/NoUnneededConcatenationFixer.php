@@ -15,7 +15,7 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
     {
         return new FixerDefinition(
             'There should not be inline concatenation of strings.',
-            [new CodeSample("<?php 'foo' . 'bar';\n")]
+            [new CodeSample("<?php\necho 'foo' . 'bar';\n")]
         );
     }
 

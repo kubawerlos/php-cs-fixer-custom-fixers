@@ -31,8 +31,8 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 
 ## Fixers
-- **ImplodeCallFixer** - function `implode` must be called with 2 arguments in the documented order. DEPRECATED: use `implode_call` instead.
-
+- **ImplodeCallFixer** - function `implode` must be called with 2 arguments in the documented order.  
+  DEPRECATED: use `implode_call` instead.  
   *Risky: when the function `implode` is overridden.*
 ```diff
  <?php
@@ -83,8 +83,7 @@ In your PHP CS Fixer configuration register fixers and use them:
  $y = new \Baz();
 ```
 
-- **NoNullableBooleanTypeFixer** - there must be no nullable boolean type.
-
+- **NoNullableBooleanTypeFixer** - there must be no nullable boolean type.  
   *Risky: when the null is used.*
 ```diff
  <?php
@@ -107,8 +106,7 @@ In your PHP CS Fixer configuration register fixers and use them:
  namespace Foo;
 ```
 
-- **NoReferenceInFunctionDefinitionFixer** - there must be no reference in function definition.
-
+- **NoReferenceInFunctionDefinitionFixer** - there must be no reference in function definition.  
   *Risky: when rely on reference.*
 ```diff
  <?php
@@ -116,7 +114,8 @@ In your PHP CS Fixer configuration register fixers and use them:
 +function foo($x) {}
 ```
 
-- **NoTwoConsecutiveEmptyLinesFixer** - there must be no two consecutive empty lines in code. DEPRECATED: use `no_extra_blank_lines` instead.
+- **NoTwoConsecutiveEmptyLinesFixer** - there must be no two consecutive empty lines in code.  
+  DEPRECATED: use `no_extra_blank_lines` instead.
 ```diff
  <?php
  namespace Foo;
@@ -127,8 +126,9 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 - **NoUnneededConcatenationFixer** - there should not be inline concatenation of strings.
 ```diff
--<?php 'foo' . 'bar';
-+<?php 'foobar';
+ <?php
+-echo 'foo' . 'bar';
++echo 'foobar';
 ```
 
 - **NoUselessClassCommentFixer** - there must be no comment like: "Class FooBar".

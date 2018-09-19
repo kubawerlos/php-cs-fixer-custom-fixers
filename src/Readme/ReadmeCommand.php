@@ -129,16 +129,14 @@ In your PHP CS Fixer configuration register fixers and use them:
 
             if ($fixer instanceof DeprecatedFixerInterface) {
                 $output .= \sprintf(
-                    ' DEPRECATED: use `%s` instead.',
+                    "  \n  DEPRECATED: use `%s` instead.",
                     \implode('`, `', $fixer->getSuccessorsNames())
                 );
             }
 
-            $output .= "\n";
-
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
-                    "\n  *Risky: %s*\n",
+                    "  \n  *Risky: %s*",
                     \lcfirst($fixer->getDefinition()->getRiskyDescription())
                 );
             }
@@ -150,7 +148,7 @@ In your PHP CS Fixer configuration register fixers and use them:
             $fixedCode = $tokens->generateCode();
 
             $output .= \sprintf(
-                "```diff\n%s\n```\n",
+                "\n```diff\n%s\n```\n",
                 $this->diff($originalCode, $fixedCode)
             );
         }
