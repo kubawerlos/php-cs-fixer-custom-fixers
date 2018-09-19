@@ -13,31 +13,22 @@ notifications:
     email: false
 
 before_install:
+    - phpenv config-rm xdebug.ini || return 0
     - composer self-update
     - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
 
-install: composer install
+install: composer update $COMPOSER_FLAGS
 
 script: composer check
 
 jobs:
     include:
-        - &STANDARD_TEST_JOB
-            stage: Test
-            php: '7.1'
-            install: composer update --prefer-lowest
-        -
-            <<: *STANDARD_TEST_JOB
-            stage: Test
-            php: '7.1'
-        -
-            <<: *STANDARD_TEST_JOB
-            stage: Test
-            php: '7.2'
-        -
-            <<: *STANDARD_TEST_JOB
-            stage: Test
-            php: '7.2'
-            install: composer require --dev php-coveralls/php-coveralls
-            script: composer phpunit -- --coverage-clover=build/logs/clover.xml
-            after_success: vendor/bin/php-coveralls
+        - php: '7.1'
+          env: COMPOSER_FLAGS="--prefer-lowest"
+        - php: '7.1'
+        - php: '7.2'
+          env: COMPOSER_FLAGS="--prefer-lowest"
+        - php: '7.2'
+          install: composer require --dev php-coveralls/php-coveralls
+          script: composer phpunit -- --coverage-clover=build/logs/clover.xml
+          after_success: vendor/bin/php-coveralls
