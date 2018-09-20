@@ -9,6 +9,7 @@ return PhpCsFixer\Config::create()
             ->in(__DIR__ . '/src')
             ->in(__DIR__ . '/tests')
             ->notName('php-cs-fixer.config.*.php')
+            ->append([__FILE__])
     )
     ->setRiskyAllowed(true)
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
@@ -78,17 +79,17 @@ return PhpCsFixer\Config::create()
         ],
         'logical_operators'     => true,
         'method_argument_space' => [
-            'ensure_fully_multiline'           => true,
-            'keep_multiple_spaces_after_comma' => false,
+            'on_multiline' => 'ensure_fully_multiline',
         ],
-        'method_chaining_indentation'       => true,
-        'multiline_comment_opening_closing' => true,
-        'native_function_invocation'        => [
+        'method_chaining_indentation'            => true,
+        'multiline_comment_opening_closing'      => true,
+        'multiline_whitespace_before_semicolons' => true,
+        'native_function_invocation'             => [
             'include' => ['@all'],
         ],
-        'no_alternative_syntax'            => true,
-        'no_binary_string'                 => true,
-        'no_extra_consecutive_blank_lines' => [
+        'no_alternative_syntax' => true,
+        'no_binary_string'      => true,
+        'no_extra_blank_lines'  => [
             'tokens' => [
                 'continue',
                 'curly_brace_block',
@@ -101,16 +102,15 @@ return PhpCsFixer\Config::create()
                 'use_trait',
             ],
         ],
-        'no_multiline_whitespace_before_semicolons' => true,
-        'no_null_property_initialization'           => true,
-        'no_php4_constructor'                       => true,
-        'no_superfluous_elseif'                     => true,
-        'no_unreachable_default_argument_value'     => true,
-        'no_unset_on_property'                      => true,
-        'no_useless_else'                           => true,
-        'no_useless_return'                         => true,
-        'ordered_class_elements'                    => true,
-        'ordered_imports'                           => [
+        'no_null_property_initialization'       => true,
+        'no_php4_constructor'                   => true,
+        'no_superfluous_elseif'                 => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_unset_on_property'                  => true,
+        'no_useless_else'                       => true,
+        'no_useless_return'                     => true,
+        'ordered_class_elements'                => true,
+        'ordered_imports'                       => [
             'sortAlgorithm' => 'alpha',
         ],
         'php_unit_internal_class'                       => true,
@@ -126,7 +126,7 @@ return PhpCsFixer\Config::create()
             'null_adjustment' => 'always_last',
             'sort_algorithm'  => 'alpha',
         ],
-        'return_assignment'       => true,
+        'return_assignment'     => true,
         'static_lambda'         => true,
         'strict_comparison'     => true,
         'strict_param'          => true,
@@ -146,8 +146,10 @@ return PhpCsFixer\Config::create()
         ],
     ] + \array_reduce(
         \iterator_to_array(new PhpCsFixerCustomFixers\Fixers()),
-        static function (array $carry, PhpCsFixer\Fixer\DefinedFixerInterface $item) : array {
-            $carry[$item->getName()] = true;
+        static function (array $carry, PhpCsFixer\Fixer\DefinedFixerInterface $fixer): array {
+            if (!$fixer instanceof PhpCsFixer\Fixer\DeprecatedFixerInterface) {
+                $carry[$fixer->getName()] = true;
+            }
 
             return $carry;
         },
