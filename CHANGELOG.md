@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Add PhpdocParamOrderFixer
+
 ## v1.10.0 - *2018-09-19*
 - Add NoUnneededConcatenationFixer
 - Add PhpdocNoSuperfluousParamFixer
