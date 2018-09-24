@@ -15,6 +15,7 @@
         <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
+        <PossiblyNullReference errorLevel='suppress' />
         <UnusedClass errorLevel='suppress' />
         <UnusedMethod errorLevel='suppress' />
     </issueHandlers>

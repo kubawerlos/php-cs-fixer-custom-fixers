@@ -184,6 +184,18 @@ In your PHP CS Fixer configuration register fixers and use them:
  function foo($b, $s) {}
 ```
 
+- **PhpdocParamOrderFixer** - `@param` annotations must be in the same order as function's parameters.
+```diff
+ <?php
+ /**
++ * @param int $a
+  * @param int $b
+- * @param int $a
+  * @param int $c
+  */
+ function foo($a, $b, $c) {}
+```
+
 - **PhpdocParamTypeFixer** - `@param` must have type.
 ```diff
  <?php
