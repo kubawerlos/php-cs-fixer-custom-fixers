@@ -86,7 +86,7 @@ function foo($b, $s) {}
             }
         }
 
-        return \array_unique($paramNames);
+        return $paramNames;
     }
 
     private function getFilteredDocComment(string $comment, array $paramNames): string
