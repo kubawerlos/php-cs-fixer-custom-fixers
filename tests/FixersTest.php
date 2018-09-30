@@ -47,6 +47,7 @@ final class FixersTest extends TestCase
                 ->files()
                 ->in(__DIR__ . '/../src/Fixer/')
                 ->notName('AbstractFixer.php')
+                ->notName('DeprecatingFixerInterface.php')
                 ->getIterator())
         );
     }

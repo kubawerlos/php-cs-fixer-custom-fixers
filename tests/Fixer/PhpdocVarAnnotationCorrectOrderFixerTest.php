@@ -23,6 +23,11 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
         static::assertFalse($this->fixer->isRisky());
     }
 
+    public function testDeprecatingPullRequest(): void
+    {
+        static::assertSame(3881, $this->fixer->getPullRequestId());
+    }
+
     /**
      * @param string      $expected
      * @param string|null $input

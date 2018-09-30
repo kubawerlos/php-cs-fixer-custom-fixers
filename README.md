@@ -231,7 +231,8 @@ In your PHP CS Fixer configuration register fixers and use them:
  }
 ```
 
-- **PhpdocVarAnnotationCorrectOrderFixer** - `@var` annotation must have type and name in the correct order.
+- **PhpdocVarAnnotationCorrectOrderFixer** - `@var` annotation must have type and name in the correct order.  
+  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3881) is merged and released.*
 ```diff
  <?php
 -/** @var $foo int */

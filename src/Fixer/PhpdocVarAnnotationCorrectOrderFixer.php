@@ -9,7 +9,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer
+final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer implements DeprecatingFixerInterface
 {
     public function getDefinition(): FixerDefinition
     {
@@ -61,5 +61,10 @@ $foo = 2 + 2;
     {
         // must be before PhpdocNoIncorrectVarAnnotationFixer
         return 7;
+    }
+
+    public function getPullRequestId(): int
+    {
+        return 3881;
     }
 }

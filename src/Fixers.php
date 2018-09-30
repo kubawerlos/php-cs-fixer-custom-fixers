@@ -14,6 +14,7 @@ final class Fixers implements \IteratorAggregate
             ->files()
             ->in(__DIR__ . '/Fixer/')
             ->notName('AbstractFixer.php')
+            ->notName('DeprecatingFixerInterface.php')
             ->sortByName();
 
         $arrayIterator = new \ArrayIterator();
