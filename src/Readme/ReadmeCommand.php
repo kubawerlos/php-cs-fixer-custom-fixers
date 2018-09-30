@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Readme;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
@@ -126,6 +127,13 @@ In your PHP CS Fixer configuration register fixers and use them:
                 $reflection->getShortName(),
                 \lcfirst($fixer->getDefinition()->getSummary())
             );
+
+            if ($fixer instanceof DeprecatingFixerInterface) {
+                $output .= \sprintf(
+                    "  \n  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
+                    $fixer->getPullRequestId()
+                );
+            }
 
             if ($fixer instanceof DeprecatedFixerInterface) {
                 $output .= \sprintf(

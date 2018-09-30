@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace Tests;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerNameValidator;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
+use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use PHPUnit\Framework\TestCase;
 
@@ -46,6 +48,14 @@ final class AutoReviewTest extends TestCase
     public function testFixerIsFinal(FixerInterface $fixer): void
     {
         static::assertTrue((new \ReflectionClass($fixer))->isFinal());
+    }
+
+    /**
+     * @dataProvider provideFixerCases
+     */
+    public function testFixerIsNotBothDeprecatingAndDeprecated(FixerInterface $fixer): void
+    {
+        static::assertFalse($fixer instanceof DeprecatingFixerInterface && $fixer instanceof DeprecatedFixerInterface);
     }
 
     public function provideFixerCases(): array
