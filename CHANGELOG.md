@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add PhpdocParamOrderFixer
+- Add InternalClassCasingFixer
 
 ## v1.10.0 - *2018-09-19*
 - Add NoUnneededConcatenationFixer
