@@ -46,7 +46,7 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): \Generator
     {
         yield [
             '<?php

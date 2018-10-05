@@ -8,7 +8,7 @@ use Symfony\Component\Finder\Finder;
 
 final class Fixers implements \IteratorAggregate
 {
-    public function getIterator(): \ArrayIterator
+    public function getIterator(): \Generator
     {
         $finder = Finder::create()
             ->files()
@@ -17,13 +17,9 @@ final class Fixers implements \IteratorAggregate
             ->notName('DeprecatingFixerInterface.php')
             ->sortByName();
 
-        $arrayIterator = new \ArrayIterator();
-
         foreach ($finder as $fileInfo) {
             $className = __NAMESPACE__ . '\\Fixer\\' . $fileInfo->getBasename('.php');
-            $arrayIterator->append(new $className());
+            yield new $className();
         }
-
-        return $arrayIterator;
     }
 }

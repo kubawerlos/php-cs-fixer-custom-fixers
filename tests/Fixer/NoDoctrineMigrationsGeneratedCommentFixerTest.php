@@ -32,7 +32,7 @@ final class NoDoctrineMigrationsGeneratedCommentFixerTest extends AbstractFixerT
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): \Generator
     {
         yield [
             '<?php

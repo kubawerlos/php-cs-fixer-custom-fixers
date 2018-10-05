@@ -38,7 +38,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): \Generator
     {
         yield [
             '<?php

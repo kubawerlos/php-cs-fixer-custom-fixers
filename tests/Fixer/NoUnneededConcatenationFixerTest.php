@@ -34,7 +34,7 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): \Generator
     {
         yield ['<?php $foo. "bar";'];
         yield ['<?php "foo" .$bar;'];

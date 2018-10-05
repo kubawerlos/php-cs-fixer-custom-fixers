@@ -62,7 +62,7 @@ final class AutoReviewTest extends TestCase
     {
         return \array_map(
             static function (FixerInterface $fixer): array {
-                return [new $fixer()];
+                return [$fixer];
             },
             \iterator_to_array(new Fixers())
         );

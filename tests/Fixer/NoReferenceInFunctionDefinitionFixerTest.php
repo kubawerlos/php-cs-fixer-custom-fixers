@@ -32,7 +32,7 @@ final class NoReferenceInFunctionDefinitionFixerTest extends AbstractFixerTestCa
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): \Generator
     {
         yield [
             '<?php function foo($x) {}',
