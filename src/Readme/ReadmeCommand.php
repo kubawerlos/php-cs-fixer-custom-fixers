@@ -65,13 +65,12 @@ class ReadmeCommand extends BaseCommand
 
     private function badge(string $description, string $imageUrl, string $targetUrl): string
     {
-        return
-            \sprintf(
-                '[![%s](%s)](%s)',
-                $description,
-                $imageUrl,
-                $targetUrl
-            );
+        return \sprintf(
+            '[![%s](%s)](%s)',
+            $description,
+            $imageUrl,
+            $targetUrl
+        );
     }
 
     private function description(): string

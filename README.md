@@ -247,6 +247,15 @@ In your PHP CS Fixer configuration register fixers and use them:
  $foo = 2 + 2;
 ```
 
+- **SingleSpaceAfterStatementFixer** - a single space must follow any - not followed by semicolon - statement.
+```diff
+ <?php
+-$foo = new    Foo();
+-echo$foo->__toString();
++$foo = new Foo();
++echo $foo->__toString();
+```
+
 
 ## Contributing
 Request a feature or report a bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
