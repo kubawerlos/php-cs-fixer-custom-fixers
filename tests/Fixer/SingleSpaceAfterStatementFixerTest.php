@@ -134,6 +134,8 @@ interface    FooInterface {
         yield ['<?php echo 1; isset($foo["bar"]);'];
         yield ['<?php echo (self::class);'];
         yield ['<?php return;'];
+        yield ['<?php if (true): echo "yes"; else: echo "no"; endif;'];
+        yield ['<?php new class() {};'];
 
         yield [
             '<?php echo "100";',
@@ -164,6 +166,11 @@ interface    FooInterface {
         yield [
             '<?php return $x;',
             '<?php return$x;',
+        ];
+
+        yield [
+            '<?php new class extends Exception {};',
+            '<?php new class    extends Exception {};',
         ];
 
         yield [
