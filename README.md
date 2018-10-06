@@ -258,6 +258,13 @@ In your PHP CS Fixer configuration register fixers and use them:
 +echo $foo->__toString();
 ```
 
+- **SingleSpaceBeforeStatementFixer** - a single space must precede - not preceded by linebreak - statement.
+```diff
+ <?php
+-$foo =new Foo();
++$foo = new Foo();
+```
+
 
 ## Contributing
 Request a feature or report a bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
