@@ -9,10 +9,12 @@
     </projectFiles>
 
     <issueHandlers>
+        <DeprecatedInterface errorLevel='suppress' />
         <InvalidReturnStatement errorLevel='suppress' />
         <InvalidReturnType errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
+        <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
         <PossiblyNullReference errorLevel='suppress' />

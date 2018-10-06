@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Readme;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -146,6 +147,20 @@ In your PHP CS Fixer configuration register fixers and use them:
                     "  \n  *Risky: %s*",
                     \lcfirst($fixer->getDefinition()->getRiskyDescription())
                 );
+            }
+
+            if ($fixer instanceof ConfigurationDefinitionFixerInterface) {
+                $output .= "\n  Configuration options:";
+
+                foreach ($fixer->getConfigurationDefinition()->getOptions() as $option) {
+                    $output .= \sprintf(
+                        "\n  - `%s` (`%s`): %s; defaults to `%s`",
+                        $option->getName(),
+                        \implode('`, `', $option->getAllowedTypes()),
+                        $option->getDescription(),
+                        $option->getDefault() ? 'true' : 'false'
+                    );
+                }
             }
 
             $originalCode = $fixer->getDefinition()->getCodeSamples()[0]->getCode();
