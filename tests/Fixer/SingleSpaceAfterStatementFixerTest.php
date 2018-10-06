@@ -98,6 +98,13 @@ interface    FooInterface {
         static::assertSame(0, $this->fixer->getPriority());
     }
 
+    public function testConfiguration(): void
+    {
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        static::assertArrayHasKey(0, $options);
+        static::assertSame('allow_linebreak', $options[0]->getName());
+    }
+
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
@@ -106,11 +113,16 @@ interface    FooInterface {
     /**
      * @param string      $expected
      * @param string|null $input
+     * @param array       $configuration
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null): void
+    public function testFix(string $expected, string $input = null, array $configuration = null): void
     {
+        if ($configuration !== null) {
+            $this->fixer->configure($configuration);
+        }
+
         $this->doTest($expected, $input);
     }
 
@@ -141,6 +153,12 @@ interface    FooInterface {
         yield [
             "<?php echo '100';",
             "<?php echo\n'100';",
+        ];
+
+        yield [
+            "<?php echo\n'100';",
+            null,
+            ['allow_linebreak' => true],
         ];
 
         yield [

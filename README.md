@@ -247,7 +247,9 @@ In your PHP CS Fixer configuration register fixers and use them:
  $foo = 2 + 2;
 ```
 
-- **SingleSpaceAfterStatementFixer** - a single space must follow any - not followed by semicolon - statement.
+- **SingleSpaceAfterStatementFixer** - a single space must follow - not followed by semicolon - statement.
+  Configuration options:
+  - `allow_linebreak` (`bool`): whether to allow statement followed by linebreak; defaults to `false`
 ```diff
  <?php
 -$foo = new    Foo();

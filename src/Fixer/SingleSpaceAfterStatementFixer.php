@@ -4,13 +4,16 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class SingleSpaceAfterStatementFixer extends AbstractFixer
+final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
     /** @var int[] */
     private $tokens = [
@@ -66,12 +69,30 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer
         CT::T_USE_LAMBDA,
     ];
 
+    /** @var bool */
+    private $allowLinebreak = false;
+
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
-            'A single space must follow any - not followed by semicolon - statement.',
+            'A single space must follow - not followed by semicolon - statement.',
             [new CodeSample("<?php\n\$foo = new    Foo();\necho\$foo->__toString();\n")]
         );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolver
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('allow_linebreak', 'whether to allow statement followed by linebreak'))
+                ->setDefault($this->allowLinebreak)
+                ->setAllowedTypes(['bool'])
+                ->getOption(),
+        ]);
+    }
+
+    public function configure(array $configuration = null): void
+    {
+        $this->allowLinebreak = $configuration['allow_linebreak'];
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -95,6 +116,10 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer
                 if ($tokens[$index + 1]->getContent() !== ';') {
                     $tokens->insertAt($index + 1, new Token([T_WHITESPACE, ' ']));
                 }
+                continue;
+            }
+
+            if ($this->allowLinebreak && \preg_match('/\R/u', $tokens[$index + 1]->getContent()) === 1) {
                 continue;
             }
 
