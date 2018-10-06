@@ -113,7 +113,10 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
             }
 
             if (!$tokens[$index + 1]->isGivenKind(T_WHITESPACE)) {
-                if ($tokens[$index + 1]->getContent() !== ';') {
+                if ($token->isGivenKind(T_CLASS) && $tokens[$index + 1]->getContent() === '(') {
+                    continue;
+                }
+                if (!\in_array($tokens[$index + 1]->getContent(), [';', ':'], true)) {
                     $tokens->insertAt($index + 1, new Token([T_WHITESPACE, ' ']));
                 }
                 continue;
