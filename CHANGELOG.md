@@ -4,6 +4,7 @@
 - Add PhpdocParamOrderFixer
 - Add InternalClassCasingFixer
 - Add SingleSpaceAfterStatementFixer
+- Add SingleSpaceBeforeStatementFixer
 
 ## v1.10.0 - *2018-09-19*
 - Add NoUnneededConcatenationFixer
