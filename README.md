@@ -171,6 +171,20 @@ In your PHP CS Fixer configuration register fixers and use them:
  class FooRepository extends EntityRepository {}
 ```
 
+- **OperatorLinebreakFixer** - binary operators must always be at the beginning or at the end of the line.
+  Configuration options:
+  - `only_booleans` (`bool`): whether to limit operators to only boolean ones; defaults to `false`
+  - `position` (`beginning`, `end`): whether to place operators at the beginning or at the end of the line; defaults to `true`
+```diff
+ <?php
+ function foo() {
+-    return $bar ||
+-        $baz;
++    return $bar
++        || $baz;
+ }
+```
+
 - **PhpdocNoIncorrectVarAnnotationFixer** - `@var` must be correct in the code.
 ```diff
  <?php
