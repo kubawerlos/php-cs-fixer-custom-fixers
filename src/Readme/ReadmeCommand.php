@@ -153,10 +153,17 @@ In your PHP CS Fixer configuration register fixers and use them:
                 $output .= "\n  Configuration options:";
 
                 foreach ($fixer->getConfigurationDefinition()->getOptions() as $option) {
+                    if ($option->getAllowedValues() !== null) {
+                        $allowed = \array_map(static function (string $value): string {
+                            return \sprintf('\'%s\'', $value);
+                        }, $option->getAllowedValues());
+                    } else {
+                        $allowed = $option->getAllowedTypes();
+                    }
                     $output .= \sprintf(
                         "\n  - `%s` (`%s`): %s; defaults to `%s`",
                         $option->getName(),
-                        \implode('`, `', $option->getAllowedTypes()),
+                        \implode('`, `', $allowed),
                         $option->getDescription(),
                         $option->getDefault() ? 'true' : 'false'
                     );

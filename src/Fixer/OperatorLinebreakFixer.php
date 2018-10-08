@@ -12,7 +12,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
+final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatingFixerInterface
 {
     private const BOOLEAN_OPERATORS = [
         '&&',
@@ -94,7 +94,7 @@ function foo() {
                 ->getOption(),
             (new FixerOptionBuilder('position', 'whether to place operators at the beginning or at the end of the line'))
                 ->setDefault($this->position)
-                ->setAllowedTypes(['beginning', 'end'])
+                ->setAllowedValues(['beginning', 'end'])
                 ->getOption(),
         ]);
     }
@@ -129,6 +129,11 @@ function foo() {
     public function getPriority(): int
     {
         return 0;
+    }
+
+    public function getPullRequestId(): int
+    {
+        return 4021;
     }
 
     private function fixMoveToTheBeginning(Tokens $tokens): void
