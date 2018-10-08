@@ -122,17 +122,14 @@ return PhpCsFixer\Config::create()
         'php_unit_test_class_requires_covers'           => true,
         'phpdoc_order'                                  => true,
         'phpdoc_trim_consecutive_blank_line_separation' => true,
-        'phpdoc_types_order'                            => [
-            'null_adjustment' => 'always_last',
-            'sort_algorithm'  => 'alpha',
-        ],
-        'return_assignment'     => true,
-        'static_lambda'         => true,
-        'strict_comparison'     => true,
-        'strict_param'          => true,
-        'string_line_ending'    => true,
-        'unary_operator_spaces' => false,
-        'visibility_required'   => [
+        'phpdoc_types_order'                            => true,
+        'return_assignment'                             => true,
+        'static_lambda'                                 => true,
+        'strict_comparison'                             => true,
+        'strict_param'                                  => true,
+        'string_line_ending'                            => true,
+        'unary_operator_spaces'                         => false,
+        'visibility_required'                           => [
             'elements' => [
                 'const',
                 'property',

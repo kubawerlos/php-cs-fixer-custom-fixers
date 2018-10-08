@@ -37,7 +37,7 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
 
     /**
      * @param string      $expected
-     * @param string|null $input
+     * @param null|string $input
      *
      * @dataProvider provideFixCases
      */

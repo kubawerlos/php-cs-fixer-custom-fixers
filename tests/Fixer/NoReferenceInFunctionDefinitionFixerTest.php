@@ -23,7 +23,7 @@ final class NoReferenceInFunctionDefinitionFixerTest extends AbstractFixerTestCa
 
     /**
      * @param string      $expected
-     * @param string|null $input
+     * @param null|string $input
      *
      * @dataProvider provideFixCases
      */

@@ -131,7 +131,7 @@ function foo() {
         return 0;
     }
 
-    private function fixMoveToTheBeginning(tokens $tokens): void
+    private function fixMoveToTheBeginning(Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
             $tokenContent = \strtolower($tokens[$index]->getContent());
@@ -156,7 +156,7 @@ function foo() {
         }
     }
 
-    private function fixMoveToTheEnd(tokens $tokens): void
+    private function fixMoveToTheEnd(Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             $tokenContent = \strtolower($tokens[$index]->getContent());

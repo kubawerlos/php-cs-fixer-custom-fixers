@@ -32,8 +32,8 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
 
     /**
      * @param string      $expected
-     * @param string|null $input
-     * @param array       $configuration
+     * @param null|string $input
+     * @param null|array  $configuration
      *
      * @dataProvider provideFixCases
      */

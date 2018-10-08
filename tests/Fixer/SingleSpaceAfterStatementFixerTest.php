@@ -112,7 +112,7 @@ interface    FooInterface {
 
     /**
      * @param string      $expected
-     * @param string|null $input
+     * @param null|string $input
      * @param array       $configuration
      *
      * @dataProvider provideFixCases
