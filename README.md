@@ -190,7 +190,6 @@ In your PHP CS Fixer configuration register fixers and use them:
 ```diff
  <?php
 -/** @var Foo $foo */
-+
  $bar = new Foo();
 ```
 

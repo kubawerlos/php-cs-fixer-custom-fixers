@@ -9,6 +9,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
 {
@@ -25,7 +26,7 @@ $bar = new Foo();
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
     public function isRisky(): bool
@@ -36,7 +37,7 @@ $bar = new Foo();
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
 
@@ -125,9 +126,9 @@ $bar = new Foo();
         }
 
         if ($doc->getContent() === '') {
-            $tokens->clearTokenAndMergeSurroundingWhitespace($index);
+            TokenRemover::removeWithLinesIfPossible($tokens, $index);
         } else {
-            $tokens[$index] = new Token([$tokens[$index]->getId(), $doc->getContent()]);
+            $tokens[$index] = new Token([T_DOC_COMMENT, $doc->getContent()]);
         }
     }
 }

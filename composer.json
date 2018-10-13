@@ -48,9 +48,9 @@
         "analyse": [
             "vendor/bin/composer-json-fixer",
             "vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 src tests",
-            "PHP_CS_FIXER_FUTURE_MODE=1 vendor/bin/php-cs-fixer fix --diff --dry-run",
+            "PHP_CS_FIXER_FUTURE_MODE=1 vendor/bin/php-cs-fixer fix --diff --dry-run -v",
             "vendor/bin/types-checker src tests",
-            "vendor/bin/psalm --find-dead-code"
+            "vendor/bin/psalm --find-dead-code -v"
         ],
         "phpunit": [
             "phpdbg -qrr vendor/bin/phpunit"

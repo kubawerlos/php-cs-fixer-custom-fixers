@@ -71,7 +71,6 @@ $foo = new Foo();
 
         yield [
             '<?php
-
 $bar = new Logger();
 ',
             '<?php
@@ -108,7 +107,6 @@ $bar = new Logger();
 
         yield [
             '<?php
-
 return true;
 ',
             '<?php
@@ -119,7 +117,6 @@ return true;
 
         yield [
             '<?php
-
 ',
             '<?php
 /** @var LoggerInterface $foo */
@@ -181,39 +178,23 @@ class Foo
             '<?php
 class Foo
 {
-    
-    static $a;
-
-    /*
-     */
-    public $b;
-
-    
-    protected $c;
+    private $a;
 
     /**
      */
-    private $d;
+    private $b;
 }
 ',
             '<?php
 class Foo
 {
-    /* @var */
-    static $a;
-
-    /*
-     * @var
-     */
-    public $b;
-
     /** @var */
-    protected $c;
+    private $a;
 
     /**
      * @var
      */
-    private $d;
+    private $b;
 }
 ',
         ];
