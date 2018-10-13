@@ -125,10 +125,24 @@ $bar = new Foo();
             }
         }
 
-        if ($doc->getContent() === '') {
-            TokenRemover::removeWithLinesIfPossible($tokens, $index);
-        } else {
-            $tokens[$index] = new Token([T_DOC_COMMENT, $doc->getContent()]);
+        $content = $doc->getContent();
+
+        if ($content === $tokens[$index]->getContent()) {
+            return;
         }
+
+        if ($content === '') {
+            TokenRemover::removeWithLinesIfPossible($tokens, $index);
+
+            return;
+        }
+
+        if (\strpos($content, '/**') !== 0) {
+            $content = '/** ' . $content;
+        }
+        if (\strpos($content, '*/') === false) {
+            $content .= \str_replace(\ltrim($content), '', $content) . '*/';
+        }
+        $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
     }
 }
