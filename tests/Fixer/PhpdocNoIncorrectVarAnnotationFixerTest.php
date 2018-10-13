@@ -183,6 +183,13 @@ class Foo
     /**
      */
     private $b;
+
+    /**      */
+    private $c;
+
+    /**
+*/
+    private $d;
 }
 ',
             '<?php
@@ -195,6 +202,14 @@ class Foo
      * @var
      */
     private $b;
+
+    /** @var $foo
+     */
+    private $c;
+
+    /**
+      * @var $foo */
+    private $d;
 }
 ',
         ];
