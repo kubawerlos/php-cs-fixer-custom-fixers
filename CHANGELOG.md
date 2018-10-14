@@ -6,6 +6,7 @@
 - Add SingleSpaceAfterStatementFixer
 - Add SingleSpaceBeforeStatementFixer
 - Add OperatorLinebreakFixer
+- Add MultilineCommentOpeningClosingAloneFixer
 
 ## v1.10.0 - *2018-09-19*
 - Add NoUnneededConcatenationFixer
