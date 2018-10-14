@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.11.0 - *2018-10-14*
 - Add PhpdocParamOrderFixer
 - Add InternalClassCasingFixer
 - Add SingleSpaceAfterStatementFixer
