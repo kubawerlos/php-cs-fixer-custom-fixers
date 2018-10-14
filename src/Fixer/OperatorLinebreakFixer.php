@@ -148,7 +148,7 @@ function foo() {
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);
             for ($i = $nextIndex - 1; $i > $index; $i--) {
-                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/', $tokens[$i]->getContent()) === 1) {
                     $operator = clone $tokens[$index];
                     $tokens->clearAt($index);
                     if ($tokens[$index - 1]->isWhitespace()) {
@@ -173,7 +173,7 @@ function foo() {
 
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             for ($i = $prevIndex + 1; $i < $index; $i++) {
-                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/', $tokens[$i]->getContent()) === 1) {
                     $operator = clone $tokens[$index];
                     $tokens->clearAt($index);
                     if ($tokens[$index + 1]->isWhitespace()) {

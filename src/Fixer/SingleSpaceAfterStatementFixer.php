@@ -123,7 +123,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
                 continue;
             }
 
-            if ($this->allowLinebreak && Preg::match('/\R/u', $tokens[$index + 1]->getContent()) === 1) {
+            if ($this->allowLinebreak && Preg::match('/\R/', $tokens[$index + 1]->getContent()) === 1) {
                 continue;
             }
 

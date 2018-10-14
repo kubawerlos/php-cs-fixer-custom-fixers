@@ -105,7 +105,7 @@ function foo($a, $b, $c) {}
 
             if ($annotation->getTag()->getName() === 'param') {
                 foreach ($paramNames as $paramName) {
-                    if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(%s)\b/u', \preg_quote($paramName, '/')), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
+                    if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(%s)\b/', \preg_quote($paramName, '/')), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
                         $paramsByName[$matches[1]] = $annotation->getContent();
                         continue 2;
                     }

@@ -37,11 +37,11 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
                 continue;
             }
 
-            if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/u', $tokens[$index - 1]->getContent()) === 1) {
+            if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index - 1]->getContent()) === 1) {
                 continue;
             }
 
-            if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/u', $tokens[$index + 1]->getContent()) === 1) {
+            if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index + 1]->getContent()) === 1) {
                 continue;
             }
 

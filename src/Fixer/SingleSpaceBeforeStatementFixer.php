@@ -99,12 +99,12 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
                 continue;
             }
 
-            if (Preg::match('/\R/u', $tokens[$index - 1]->getContent()) === 1) {
+            if (Preg::match('/\R/', $tokens[$index - 1]->getContent()) === 1) {
                 continue;
             }
 
             if ($tokens[$index - 2]->isGivenKind(T_OPEN_TAG)) {
-                if (Preg::match('/\R/u', $tokens[$index - 2]->getContent()) !== 1) {
+                if (Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
                     $tokens->clearAt($index - 1);
                 }
                 continue;
