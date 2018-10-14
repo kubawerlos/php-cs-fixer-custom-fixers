@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -51,7 +52,7 @@ class FooBar {}
                 continue;
             }
 
-            $newContent = \preg_replace(
+            $newContent = Preg::replace(
                 '/(\*)?\h*Class\h+[A-Za-z0-1\\\\_]+\.?(\h*\R\h*|\h*$)/i',
                 '',
                 $token->getContent()

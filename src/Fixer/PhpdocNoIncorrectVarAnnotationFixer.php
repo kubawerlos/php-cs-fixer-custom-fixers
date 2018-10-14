@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -120,7 +121,7 @@ $bar = new Foo();
         $doc = new DocBlock($tokens[$index]->getContent());
 
         foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
-            if ($pattern === null || \preg_match($pattern, $annotation->getContent()) !== 1) {
+            if ($pattern === null || Preg::match($pattern, $annotation->getContent()) !== 1) {
                 $annotation->remove();
             }
         }

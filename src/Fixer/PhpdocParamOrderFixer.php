@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -104,7 +105,7 @@ function foo($a, $b, $c) {}
 
             if ($annotation->getTag()->getName() === 'param') {
                 foreach ($paramNames as $paramName) {
-                    if (\preg_match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(%s)\b/u', \preg_quote($paramName, '/')), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
+                    if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(%s)\b/', \preg_quote($paramName, '/')), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
                         $paramsByName[$matches[1]] = $annotation->getContent();
                         continue 2;
                     }

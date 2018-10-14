@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -47,7 +48,7 @@ class Foo {
                 continue;
             }
 
-            $newContent = \preg_replace(
+            $newContent = Preg::replace(
                 '/(\*|\/\/)\h*(\h+[A-Za-z0-1\\\\_]+\h*)?\hconstructor\.?(\h*\R\h*\*|\h*$)/i',
                 '$1',
                 $token->getContent()

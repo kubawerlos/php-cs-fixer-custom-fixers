@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -98,12 +99,12 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
                 continue;
             }
 
-            if (\preg_match('/\R/u', $tokens[$index - 1]->getContent()) === 1) {
+            if (Preg::match('/\R/', $tokens[$index - 1]->getContent()) === 1) {
                 continue;
             }
 
             if ($tokens[$index - 2]->isGivenKind(T_OPEN_TAG)) {
-                if (\preg_match('/\R/u', $tokens[$index - 2]->getContent()) !== 1) {
+                if (Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
                     $tokens->clearAt($index - 1);
                 }
                 continue;

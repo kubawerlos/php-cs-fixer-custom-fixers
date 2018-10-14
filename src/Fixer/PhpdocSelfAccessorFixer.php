@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -85,7 +86,7 @@ class Foo {
 
                 $types = [];
                 foreach ($annotation->getTypes() as $type) {
-                    $types[] = \preg_replace(
+                    $types[] = Preg::replace(
                         \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $name, \preg_quote($fqcn, '/')),
                         'self',
                         $type

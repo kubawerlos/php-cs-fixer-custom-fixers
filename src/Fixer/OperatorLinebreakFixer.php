@@ -9,6 +9,7 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -147,7 +148,7 @@ function foo() {
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);
             for ($i = $nextIndex - 1; $i > $index; $i--) {
-                if ($tokens[$i]->isWhitespace() && \preg_match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/', $tokens[$i]->getContent()) === 1) {
                     $operator = clone $tokens[$index];
                     $tokens->clearAt($index);
                     if ($tokens[$index - 1]->isWhitespace()) {
@@ -172,7 +173,7 @@ function foo() {
 
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             for ($i = $prevIndex + 1; $i < $index; $i++) {
-                if ($tokens[$i]->isWhitespace() && \preg_match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/', $tokens[$i]->getContent()) === 1) {
                     $operator = clone $tokens[$index];
                     $tokens->clearAt($index);
                     if ($tokens[$index + 1]->isWhitespace()) {

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers;
 
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -27,7 +28,7 @@ final class TokenRemover
             return;
         }
 
-        $newContent = \preg_replace('/\h+$/', '', $tokens[$index]->getContent());
+        $newContent = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
 
         if (empty($newContent)) {
             $tokens->clearAt($index);
@@ -48,7 +49,7 @@ final class TokenRemover
             return;
         }
 
-        $newContent = \preg_replace('/^\h*\R/', '', $tokens[$index]->getContent());
+        $newContent = Preg::replace('/^\h*\R/', '', $tokens[$index]->getContent());
 
         if ($newContent === $tokens[$index]->getContent()) {
             return;

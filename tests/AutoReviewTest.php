@@ -7,10 +7,13 @@ namespace Tests;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerNameValidator;
+use PhpCsFixer\Tokenizer\Token;
+use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
 use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Finder\Finder;
 
 /**
  * @internal
@@ -73,5 +76,55 @@ final class AutoReviewTest extends TestCase
         $fixer = $this->getMockForAbstractClass(AbstractFixer::class);
 
         static::assertTrue($fixer->supports($this->createMock(\SplFileInfo::class)));
+    }
+
+    /**
+     * @dataProvider provideThereIsNoPregFunctionUsedDirectlyCases
+     */
+    public function testThereIsNoPregFunctionUsedDirectly(string $className): void
+    {
+        $rc           = new \ReflectionClass($className);
+        $tokens       = Tokens::fromCode(\file_get_contents($rc->getFileName()));
+        $stringTokens = \array_filter(
+            $tokens->toArray(),
+            static function (Token $token) {
+                return $token->isGivenKind(T_STRING);
+            }
+        );
+        $strings = \array_map(
+            static function (Token $token) {
+                return $token->getContent();
+            },
+            $stringTokens
+        );
+        $strings = \array_unique($strings);
+        $message = \sprintf('Class %s must not use preg_*, it shall use Preg::* instead.', $className);
+        static::assertNotContains('preg_filter', $strings, $message);
+        static::assertNotContains('preg_grep', $strings, $message);
+        static::assertNotContains('preg_match', $strings, $message);
+        static::assertNotContains('preg_match_all', $strings, $message);
+        static::assertNotContains('preg_replace', $strings, $message);
+        static::assertNotContains('preg_replace_callback', $strings, $message);
+        static::assertNotContains('preg_split', $strings, $message);
+    }
+
+    public function provideThereIsNoPregFunctionUsedDirectlyCases(): \Generator
+    {
+        $finder = Finder::create()
+            ->files()
+            ->in(__DIR__ . '/../src')
+            ->notName('php-cs-fixer.config.*.php')
+            ->notName('run')
+            ->sortByName();
+
+        foreach ($finder as $file) {
+            $parts = ['PhpCsFixerCustomFixers'];
+            if ($file->getRelativePath() !== '') {
+                $parts[] = $file->getRelativePath();
+            }
+            $parts[]   = $file->getBasename('.php');
+            $className = \implode('\\', $parts);
+            yield [$className];
+        }
     }
 }

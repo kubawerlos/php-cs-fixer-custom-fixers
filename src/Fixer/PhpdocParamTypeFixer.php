@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -46,7 +47,7 @@ function a($foo, $bar) {}
                 continue;
             }
 
-            $newContent = \preg_replace(
+            $newContent = Preg::replace(
                 '/(@param) {0,7}( *\$)/i',
                 '$1 mixed $2',
                 $token->getContent()
