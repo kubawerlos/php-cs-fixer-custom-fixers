@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -68,7 +69,7 @@ class Bar {
             if ($token->isGivenKind(T_DOC_COMMENT)) {
                 $content = $token->getContent();
                 foreach ($imports as $import) {
-                    $content = \preg_replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
+                    $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
                 }
                 if ($content !== $token->getContent()) {
                     $tokens[$index] = new Token([T_DOC_COMMENT, $content]);

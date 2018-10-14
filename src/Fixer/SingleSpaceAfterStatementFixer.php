@@ -9,6 +9,7 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -122,7 +123,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
                 continue;
             }
 
-            if ($this->allowLinebreak && \preg_match('/\R/u', $tokens[$index + 1]->getContent()) === 1) {
+            if ($this->allowLinebreak && Preg::match('/\R/u', $tokens[$index + 1]->getContent()) === 1) {
                 continue;
             }
 

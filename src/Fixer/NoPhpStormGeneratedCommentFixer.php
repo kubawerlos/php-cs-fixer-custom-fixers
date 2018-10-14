@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
@@ -44,7 +45,7 @@ namespace Foo;
                 continue;
             }
 
-            if (\preg_match('/\*\h+Created by PhpStorm/i', $token->getContent(), $matches) !== 1) {
+            if (Preg::match('/\*\h+Created by PhpStorm/i', $token->getContent(), $matches) !== 1) {
                 continue;
             }
 

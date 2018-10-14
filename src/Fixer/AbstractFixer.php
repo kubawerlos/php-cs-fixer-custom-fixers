@@ -5,17 +5,18 @@ declare(strict_types = 1);
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DefinedFixerInterface;
+use PhpCsFixer\Preg;
 
 abstract class AbstractFixer implements DefinedFixerInterface
 {
     final public static function name(): string
     {
-        return 'PhpCsFixerCustomFixers/' . \preg_replace_callback(
+        return 'PhpCsFixerCustomFixers/' . Preg::replaceCallback(
             '/(^|[a-z0-9])([A-Z])/',
             static function (array $matches): string {
                 return \strtolower($matches[1] !== '' ? $matches[1] . '_' . $matches[2] : $matches[2]);
             },
-            \preg_replace('/^.*\\\\([a-zA-Z0-1]+)Fixer$/', '$1', static::class)
+            Preg::replace('/^.*\\\\([a-zA-Z0-1]+)Fixer$/', '$1', static::class)
         );
     }
 

@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -36,11 +37,11 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
                 continue;
             }
 
-            if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && \preg_match('/\R/u', $tokens[$index - 1]->getContent()) === 1) {
+            if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/u', $tokens[$index - 1]->getContent()) === 1) {
                 continue;
             }
 
-            if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE) && \preg_match('/\R/u', $tokens[$index + 1]->getContent()) === 1) {
+            if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/u', $tokens[$index + 1]->getContent()) === 1) {
                 continue;
             }
 

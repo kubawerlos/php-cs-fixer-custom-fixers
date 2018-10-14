@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -43,7 +44,7 @@ $foo = 2 + 2;
                 continue;
             }
 
-            $newContent = \preg_replace(
+            $newContent = Preg::replace(
                 '/(@var\s*)(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\s+)([^\$](?:[^<\s]|<[^>]*>)*)(\s|\*)/i',
                 '$1$4$3$2$5',
                 $token->getContent()
