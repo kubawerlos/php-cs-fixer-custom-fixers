@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -38,16 +39,24 @@ class Bar {
         return false;
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        foreach (\array_reverse((new NamespacesAnalyzer())->getDeclarations($tokens)) as $namespace) {
+            $this->fixImports($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
+        }
+    }
+
+    private function fixImports(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
     {
         $imports = [];
 
-        for ($index = 0; $index < $tokens->count(); $index++) {
+        for ($index = $startIndex; $index < $endIndex; $index++) {
             $token = $tokens[$index];
-            if ($token->isGivenKind(T_NAMESPACE)) {
-                $imports = [];
-                continue;
-            }
 
             if ($token->isGivenKind(T_USE)) {
                 $classNameIndex = $tokens->getNextMeaningfulToken($index);
@@ -90,13 +99,10 @@ class Bar {
                 continue;
             }
 
-            $tokens->insertAt($index, new Token([T_NS_SEPARATOR, '\\']));
-            $index++;
+            if (!$isInGlobalNamespace) {
+                $tokens->insertAt($index, new Token([T_NS_SEPARATOR, '\\']));
+                $index++;
+            }
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }

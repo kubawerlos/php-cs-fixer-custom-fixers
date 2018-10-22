@@ -63,6 +63,21 @@ class Bar {
 }
 ',
         ];
+
+        yield [
+            '<?php
+class Bar {
+    public function __construct(DateTime $dateTime) {}
+}
+',
+            '<?php
+use DateTime;
+class Bar {
+    public function __construct(DateTime $dateTime) {}
+}
+',
+        ];
+
         yield [
             '<?php
 namespace Foo;
@@ -177,6 +192,39 @@ class Bar {
      * @param DateTimeBaz $i
      */
     public function __construct($a, $b, $c, $d, $e, $f, $g, $h, $i) {}
+}
+',
+        ];
+
+        yield [
+            '<?php
+namespace Foo;
+class A {
+    public function __construct(\DateTime $d) {}
+}
+namespace Bar;
+class A {
+    public function __construct(DateTime $d) {}
+}
+namespace Baz;
+class A {
+    public function __construct(\DateTime $d) {}
+}
+',
+            '<?php
+namespace Foo;
+use DateTime;
+class A {
+    public function __construct(DateTime $d) {}
+}
+namespace Bar;
+class A {
+    public function __construct(DateTime $d) {}
+}
+namespace Baz;
+use DateTime;
+class A {
+    public function __construct(DateTime $d) {}
 }
 ',
         ];
