@@ -78,7 +78,7 @@ function foo($b, $s) {}
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
-        $paramBlockEndIndex   = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
+        $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 
         $paramNames = [];
         for ($index = $paramBlockStartIndex; $index < $paramBlockEndIndex; $index++) {
@@ -92,7 +92,7 @@ function foo($b, $s) {}
 
     private function getFilteredDocComment(string $comment, array $paramNames): string
     {
-        $doc             = new DocBlock($comment);
+        $doc = new DocBlock($comment);
         $foundParamNames = [];
 
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {

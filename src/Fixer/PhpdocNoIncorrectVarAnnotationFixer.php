@@ -100,7 +100,7 @@ $bar = new Foo();
 
     private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex): void
     {
-        $index    = $tokens->getNextMeaningfulToken($controlIndex);
+        $index = $tokens->getNextMeaningfulToken($controlIndex);
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
 
         $variables = [];

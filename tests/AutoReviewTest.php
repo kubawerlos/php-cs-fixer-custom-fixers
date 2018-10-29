@@ -83,8 +83,8 @@ final class AutoReviewTest extends TestCase
      */
     public function testThereIsNoPregFunctionUsedDirectly(string $className): void
     {
-        $rc           = new \ReflectionClass($className);
-        $tokens       = Tokens::fromCode(\file_get_contents($rc->getFileName()));
+        $rc = new \ReflectionClass($className);
+        $tokens = Tokens::fromCode(\file_get_contents($rc->getFileName()));
         $stringTokens = \array_filter(
             $tokens->toArray(),
             static function (Token $token) {
@@ -122,7 +122,7 @@ final class AutoReviewTest extends TestCase
             if ($file->getRelativePath() !== '') {
                 $parts[] = $file->getRelativePath();
             }
-            $parts[]   = $file->getBasename('.php');
+            $parts[] = $file->getBasename('.php');
             $className = \implode('\\', $parts);
             yield [$className];
         }

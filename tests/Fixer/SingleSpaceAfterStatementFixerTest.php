@@ -270,7 +270,7 @@ do    {
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
 
         $reflection = new \ReflectionClass($this->fixer);
-        $property   = $reflection->getProperty('tokens');
+        $property = $reflection->getProperty('tokens');
         $property->setAccessible(true);
         $property->setValue($this->fixer, \array_diff($property->getValue($this->fixer), [$token]));
 
@@ -286,9 +286,9 @@ do    {
 
     public function provideTokenIsUsefulCases(): \Generator
     {
-        $fixer      = new SingleSpaceAfterStatementFixer();
+        $fixer = new SingleSpaceAfterStatementFixer();
         $reflection = new \ReflectionClass($fixer);
-        $property   = $reflection->getProperty('tokens');
+        $property = $reflection->getProperty('tokens');
         $property->setAccessible(true);
 
         foreach ($property->getValue($fixer) as $token) {

@@ -19,7 +19,7 @@ final class ReadmeCommandTest extends TestCase
     public function testReadmeIsUpToDate(): void
     {
         $application = new Application();
-        $command     = new ReadmeCommand('readme');
+        $command = new ReadmeCommand('readme');
 
         $application->add($command);
         $application->setDefaultCommand($command->getName(), true);

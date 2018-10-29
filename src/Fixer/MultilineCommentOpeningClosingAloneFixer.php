@@ -43,7 +43,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
                 continue;
             }
 
-            $toFixOpening = Preg::match('#^/\*+\R#', $content)    !== 1;
+            $toFixOpening = Preg::match('#^/\*+\R#', $content) !== 1;
             $toFixClosing = Preg::match('#\R\h*\*+/$#', $content) !== 1;
 
             if (!$toFixOpening && !$toFixClosing) {

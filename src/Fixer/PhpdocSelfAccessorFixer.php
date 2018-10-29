@@ -50,9 +50,9 @@ class Foo {
                     continue;
                 }
 
-                $nameIndex  = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
+                $nameIndex = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
                 $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
-                $endIndex   = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
+                $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
                 $name = $tokens[$nameIndex]->getContent();
 

@@ -73,7 +73,7 @@ function foo($a, $b, $c) {}
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
-        $paramBlockEndIndex   = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
+        $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 
         $paramNames = [];
         for ($index = $paramBlockStartIndex; $index < $paramBlockEndIndex; $index++) {
@@ -87,12 +87,12 @@ function foo($a, $b, $c) {}
 
     private function getSortedDocComment(string $comment, array $paramNames): string
     {
-        $docBlock                = new DocBlock($comment);
-        $firstParamIndex         = null;
+        $docBlock = new DocBlock($comment);
+        $firstParamIndex = null;
         $annotationsBeforeParams = [];
-        $paramsByName            = \array_combine($paramNames, \array_fill(0, \count($paramNames), null));
-        $superfluousParams       = [];
-        $annotationsAfterParams  = [];
+        $paramsByName = \array_combine($paramNames, \array_fill(0, \count($paramNames), null));
+        $superfluousParams = [];
+        $annotationsAfterParams = [];
 
         foreach ($docBlock->getAnnotations() as $index => $annotation) {
             if ($firstParamIndex === null) {
