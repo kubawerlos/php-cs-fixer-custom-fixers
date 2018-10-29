@@ -31,6 +31,13 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 
 ## Fixers
+- **EmptyFixer** - replaces `empty($var)` expression with `[] == $var`.
+```diff
+ <?php
+-$x = empty($var);
++$x = [] == $var;
+```
+
 - **ImplodeCallFixer** - function `implode` must be called with 2 arguments in the documented order.  
   DEPRECATED: use `implode_call` instead.  
   *Risky: when the function `implode` is overridden.*
