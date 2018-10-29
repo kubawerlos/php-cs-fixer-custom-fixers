@@ -30,7 +30,7 @@ final class TokenRemover
 
         $newContent = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
 
-        if (empty($newContent)) {
+        if ($newContent === '') {
             $tokens->clearAt($index);
 
             return;
@@ -55,7 +55,7 @@ final class TokenRemover
             return;
         }
 
-        if (empty($newContent)) {
+        if ($newContent === '') {
             $tokens->clearAt($index);
 
             return;

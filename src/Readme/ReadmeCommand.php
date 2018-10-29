@@ -165,7 +165,7 @@ In your PHP CS Fixer configuration register fixers and use them:
                         $option->getName(),
                         \implode('`, `', $allowed),
                         $option->getDescription(),
-                        $option->getDefault() ? 'true' : 'false'
+                        \is_bool($option->getDefault()) ? ($option->getDefault() ? 'true' : 'false') : $option->getDefault()
                     );
                 }
             }

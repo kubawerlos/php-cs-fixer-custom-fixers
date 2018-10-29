@@ -60,11 +60,11 @@ class Bar {
 
             if ($token->isGivenKind(T_USE)) {
                 $classNameIndex = $tokens->getNextMeaningfulToken($index);
-                if ($tokens[$classNameIndex] !== null && $tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
+                if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
                     $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
                 }
                 $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
-                if ($tokens[$semicolonIndex] !== null && $tokens[$semicolonIndex]->getContent() === ';') {
+                if ($tokens[$semicolonIndex]->getContent() === ';') {
                     $imports[] = $tokens[$classNameIndex]->getContent();
                     for ($i = $index; $i < $semicolonIndex; $i++) {
                         $tokens->clearTokenAndMergeSurroundingWhitespace($i);

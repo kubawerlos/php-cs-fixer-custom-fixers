@@ -185,7 +185,7 @@ In your PHP CS Fixer configuration register fixers and use them:
   *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/4021) is merged and released.*
   Configuration options:
   - `only_booleans` (`bool`): whether to limit operators to only boolean ones; defaults to `false`
-  - `position` (`'beginning'`, `'end'`): whether to place operators at the beginning or at the end of the line; defaults to `true`
+  - `position` (`'beginning'`, `'end'`): whether to place operators at the beginning or at the end of the line; defaults to `beginning`
 ```diff
  <?php
  function foo() {
