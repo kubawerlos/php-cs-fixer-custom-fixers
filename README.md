@@ -31,11 +31,11 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 
 ## Fixers
-- **EmptyFixer** - replaces `empty($var)` expression with `[] == $var`.
+- **EmptyFixer** - replaces `empty($var)` expression with `false == $var`.
 ```diff
  <?php
 -$x = empty($var);
-+$x = [] == $var;
++$x = false == $var;
 ```
 
 - **ImplodeCallFixer** - function `implode` must be called with 2 arguments in the documented order.  
