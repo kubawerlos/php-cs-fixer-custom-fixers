@@ -22,7 +22,9 @@
     "require-dev": {
         "kubawerlos/composer-json-fixer": "^2.1",
         "kubawerlos/types-checker": "^1.1",
-        "phpunit/phpunit": "^7.3",
+        "phpstan/phpstan": "^0.10.5",
+        "phpstan/phpstan-strict-rules": "^0.10.1",
+        "phpunit/phpunit": "^7.4",
         "sebastian/diff": "^3.0",
         "squizlabs/php_codesniffer": "^3.3",
         "symfony/console": "^4.1",
@@ -48,8 +50,9 @@
         "analyse": [
             "vendor/bin/composer-json-fixer",
             "vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 src tests",
-            "PHP_CS_FIXER_FUTURE_MODE=1 vendor/bin/php-cs-fixer fix --diff --dry-run -v",
             "vendor/bin/types-checker src tests",
+            "PHP_CS_FIXER_FUTURE_MODE=1 vendor/bin/php-cs-fixer fix --ansi --diff --dry-run -v",
+            "vendor/bin/phpstan analyse --ansi --level=max src",
             "vendor/bin/psalm --find-dead-code -v"
         ],
         "phpunit": [
