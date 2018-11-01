@@ -6,6 +6,8 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
 
 /**
@@ -19,6 +21,8 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
     {
         static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new PhpdocSeparationFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new PhpdocTrimConsecutiveBlankLineSeparationFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
     }
 
@@ -58,13 +62,13 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
             '<?php
             /**
              */
-            class Foo {}
+            class Bar {}
              ',
             '<?php
             /**
              * Class Foo\Bar.
              */
-            class Foo {}
+            class Bar {}
              ',
         ];
 
@@ -176,6 +180,24 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
             if (true) {
                 return false;
             }
+             ',
+        ];
+
+        yield [
+            '<?php
+             /**
+              * @coversDefaultClass CoveredClass
+              */
+             class Foo {}
+             ',
+        ];
+
+        yield [
+            '<?php
+             /**
+              * @coversDefaultClass ClassCovered
+              */
+             class Foo {}
              ',
         ];
     }
