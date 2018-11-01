@@ -2,7 +2,6 @@ parameters:
     ignoreErrors:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\NoReferenceInFunctionDefinitionFixer::getArgumentStartIndices\(\) should return array<int> but returns array<int, int|null>\.$#'
         - '#^Cannot call method [a-zA-Z]+\(\) on [a-zA-Z\\]+\|null\.$#'
-        - '#^Binary operation "\."#'
         - '#^Parameter .+ expects .+, .+ given\.$#'
         - '#^Only numeric types are allowed in (\-|\+|post\-decrement|post\-increment), int\|null given( on the left side)?\.$#'
 includes:
