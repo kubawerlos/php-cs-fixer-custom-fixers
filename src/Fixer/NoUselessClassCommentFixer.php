@@ -53,7 +53,7 @@ class FooBar {}
             }
 
             $newContent = Preg::replace(
-                '/(\*)?\h*Class\h+[A-Za-z0-1\\\\_]+\.?(\h*\R\h*|\h*$)/i',
+                '/(\*)?\h*\bClass\h+[A-Za-z0-1\\\\_]+\.?(\h*\R\h*|\h*$)/i',
                 '',
                 $token->getContent()
             );
@@ -68,7 +68,8 @@ class FooBar {}
 
     public function getPriority(): int
     {
-        // must be run before NoEmptyPhpdocFixer, NoEmptyCommentFixer and PhpdocTrimFixer
+        // must be run before NoEmptyPhpdocFixer, NoEmptyCommentFixer
+        // PhpdocSeparationFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer and PhpdocTrimFixer
         return 6;
     }
 }
