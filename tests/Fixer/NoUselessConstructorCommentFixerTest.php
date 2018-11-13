@@ -42,165 +42,240 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
     {
         yield [
             '<?php
-            /**
-             * Destructor
-             */
+            class Foo {
+                /**
+                 * Destructor
+                 */
+                 public function __constructor () {}
+             }
              ',
         ];
         yield [
             '<?php
-            /**
-             * Reconstructor
-             */
-             ',
-        ];
-
-        yield [
-            '<?php
-            /**
-             */
-             ',
-            '<?php
-            /**
-             * Constructor
-             */
+            class Foo {
+                /**
+                 * Reconstructor
+                 */
+                 public function __constructor () {}
+             }
              ',
         ];
 
         yield [
             '<?php
-            /**
-             */
+            class Foo {
+                /**
+                 */
+                 public function __constructor () {}
+             }
              ',
             '<?php
-            /**
-             * constructor
-             */
-             ',
-        ];
-
-        yield [
-            '<?php
-            /**
-             */
-             ',
-            '<?php
-            /**
-             * Constructor.
-             */
+            class Foo {
+                /**
+                 * Constructor
+                 */
+                 public function __constructor () {}
+             }
              ',
         ];
 
         yield [
             '<?php
-            /**
-             */
+            class Foo {
+                /**
+                 */
+                 public function __constructor () {}
+             }
              ',
             '<?php
-            /**
-             * Foo Constructor
-             */
-             ',
-        ];
-
-        yield [
-            '<?php
-            /**
-             */
-             ',
-            '<?php
-            /**
-             * FooBar Constructor
-             */
+            class Foo {
+                /**
+                 * constructor
+                 */
+                 public function __constructor () {}
+             }
              ',
         ];
 
         yield [
             '<?php
-            /**
-             */
+            class Foo {
+                /**
+                 */
+                 public function __constructor () {}
+             }
              ',
             '<?php
-            /**
-             * Foo\Bar Constructor
-             */
-             ',
-        ];
-
-        yield [
-            '<?php
-            /**
-             *
-             * This class has awesome Constructor
-             */
-             ',
-            '<?php
-            /**
-             * Foo Constructor
-             *
-             * This class has awesome Constructor
-             */
+            class Foo {
+                /**
+                 * Constructor.
+                 */
+                 public function __constructor () {}
+             }
              ',
         ];
 
         yield [
             '<?php
-            /**
-             * This class has awesome Constructor.
-             *
-             */
+            class Foo {
+                /**
+                 */
+                 public function __constructor () {}
+             }
              ',
             '<?php
-            /**
-             * This class has awesome Constructor.
-             *
-             * Foo Constructor
-             */
-             ',
-        ];
-
-        yield [
-            '<?php
-            /**
-             * @author John Doe
-             * This class has awesome Constructor
-             */
-             ',
-            '<?php
-            /**
-             * @author John Doe
-             * Foo Constructor.
-             * This class has awesome Constructor
-             */
+            class Foo {
+                /**
+                 * Foo Constructor
+                 */
+                 public function __constructor () {}
+             }
              ',
         ];
 
         yield [
             '<?php
-            /** @see example.com
-             */
+            class Foo {
+                /**
+                 */
+                 public function __constructor () {}
+             }
              ',
             '<?php
-            /** Foo Constructor
-             * @see example.com
-             */
-             ',
-        ];
-
-        yield [
-            '<?php
-            //
-            // This class has awesome Constructor.
-             ',
-            '<?php
-            // Foo Constructor
-            // This class has awesome Constructor.
+            class Foo {
+                /**
+                 * FooBar Constructor
+                 */
+                 public function __constructor () {}
+             }
              ',
         ];
 
         yield [
             '<?php
-            // Foo is constructor
+            class Foo {
+                /**
+                 */
+                 public function __constructor () {}
+             }
+             ',
+            '<?php
+            class Foo {
+                /**
+                 * Foo\Bar Constructor
+                 */
+                 public function __constructor () {}
+             }
+             ',
+        ];
+
+        yield [
+            '<?php
+            class Foo {
+                /**
+                 *
+                 * This class has awesome Constructor
+                 */
+                 public function __constructor () {}
+             }
+             ',
+            '<?php
+            class Foo {
+                /**
+                 * Foo Constructor
+                 *
+                 * This class has awesome Constructor
+                 */
+                 public function __constructor () {}
+             }
+             ',
+        ];
+
+        yield [
+            '<?php
+            class Foo {
+                /**
+                 * This class has awesome Constructor.
+                 *
+                 */
+                 public function __constructor () {}
+             }
+             ',
+            '<?php
+            class Foo {
+                /**
+                 * This class has awesome Constructor.
+                 *
+                 * Foo Constructor
+                 */
+                 public function __constructor () {}
+             }
+             ',
+        ];
+
+        yield [
+            '<?php
+            class Foo {
+                /**
+                 * @author John Doe
+                 * This class has awesome Constructor
+                 */
+                 public function __constructor () {}
+             }
+             ',
+            '<?php
+            class Foo {
+                /**
+                 * @author John Doe
+                 * Foo Constructor.
+                 * This class has awesome Constructor
+                 */
+                 public function __constructor () {}
+             }
+             ',
+        ];
+
+        yield [
+            '<?php
+            class Foo {
+                /** @see example.com
+                 */
+                 public function __constructor () {}
+             }
+             ',
+            '<?php
+            class Foo {
+                /** Foo Constructor
+                 * @see example.com
+                 */
+                 public function __constructor () {}
+             }
+             ',
+        ];
+
+        yield [
+            '<?php
+            class Foo {
+                //
+                // This class has awesome Constructor.
+                 public function __constructor () {}
+             }
+             ',
+            '<?php
+            class Foo {
+                // Foo Constructor
+                // This class has awesome Constructor.
+                 public function __constructor () {}
+             }
+             ',
+        ];
+
+        yield [
+            '<?php
+            class Foo {
+                // Foo is constructor
+                 public function __constructor () {}
+             }
              ',
         ];
     }
