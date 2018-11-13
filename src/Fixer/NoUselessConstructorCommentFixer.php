@@ -4,14 +4,21 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class NoUselessConstructorCommentFixer extends AbstractFixer
+final class NoUselessConstructorCommentFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    /** @var NoUselessCommentFixer */
+    private $fixer;
+
+    public function __construct()
+    {
+        $this->fixer = new NoUselessCommentFixer();
+    }
+
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
@@ -29,42 +36,29 @@ class Foo {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $this->fixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return false;
+        return $this->fixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
-                continue;
-            }
-
-            if (\stripos($token->getContent(), 'constructor') === false) {
-                continue;
-            }
-
-            $newContent = Preg::replace(
-                '/(\*|\/\/)\h*(\h+[A-Za-z0-1\\\\_]+\h*)?\hconstructor\.?(\h*\R\h*\*|\h*$)/i',
-                '$1',
-                $token->getContent()
-            );
-
-            if ($newContent === $token->getContent()) {
-                continue;
-            }
-
-            $tokens[$index] = new Token([$token->getId(), $newContent]);
-        }
+        $this->fixer->fix($file, $tokens);
     }
 
     public function getPriority(): int
     {
-        // must be run before NoEmptyPhpdocFixer, NoEmptyCommentFixer and PhpdocTrimFixer
-        return 6;
+        return $this->fixer->getPriority();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSuccessorsNames(): array
+    {
+        return [$this->fixer->getName()];
     }
 }

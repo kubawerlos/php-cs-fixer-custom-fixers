@@ -148,7 +148,8 @@ In your PHP CS Fixer configuration register fixers and use them:
 +echo 'foobar';
 ```
 
-- **NoUselessClassCommentFixer** - there must be no comment like: "Class FooBar".
+- **NoUselessClassCommentFixer** - there must be no comment like: "Class FooBar".  
+  DEPRECATED: use `PhpCsFixerCustomFixers/no_useless_comment` instead.
 ```diff
  <?php
  /**
@@ -158,7 +159,23 @@ In your PHP CS Fixer configuration register fixers and use them:
  class FooBar {}
 ```
 
-- **NoUselessConstructorCommentFixer** - there must be no comment like: "Foo constructor".
+- **NoUselessCommentFixer** - there must be no comment like "Class Foo".
+```diff
+ <?php
+ /**
+- * Class Foo
+  * Class to do something
+  */
+ class Foo {
+     /**
+-     * Get bar
+      */
+     function getBar() {}
+ }
+```
+
+- **NoUselessConstructorCommentFixer** - there must be no comment like: "Foo constructor".  
+  DEPRECATED: use `PhpCsFixerCustomFixers/no_useless_comment` instead.
 ```diff
  <?php
  class Foo {

@@ -6,22 +6,20 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
 
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\NoUselessClassCommentFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer
  */
-final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
+final class NoUselessCommentFixerTest extends AbstractFixerTestCase
 {
     public function testPriority(): void
     {
-        static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new PhpdocSeparationFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new PhpdocTrimConsecutiveBlankLineSeparationFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
     }
@@ -31,24 +29,27 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
         static::assertFalse($this->fixer->isRisky());
     }
 
-    public function testSuccessorName(): void
-    {
-        static::assertContains('PhpCsFixerCustomFixers/no_useless_comment', $this->fixer->getSuccessorsNames());
-    }
-
     /**
      * @param string      $expected
      * @param null|string $input
      *
-     * @dataProvider provideFixCases
+     * @dataProvider provideTestCases
      */
     public function testFix(string $expected, string $input = null): void
     {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Generator
+    public function provideTestCases(): \Generator
     {
+        yield [
+            '<?php
+            /**
+             * Class Foo.
+             */
+             ',
+        ];
+
         yield [
             '<?php
             /**
@@ -88,6 +89,34 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
              * Class Foo
              */
             class Foo {}
+             ',
+        ];
+
+        yield [
+            '<?php
+            /**
+             */
+            interface Foo {}
+             ',
+            '<?php
+            /**
+             * Interface Foo
+             */
+            interface Foo {}
+             ',
+        ];
+
+        yield [
+            '<?php
+            /**
+             */
+            trait Foo {}
+             ',
+            '<?php
+            /**
+             * Trait Foo
+             */
+            trait Foo {}
              ',
         ];
 
@@ -174,6 +203,19 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
+            #
+            # Class that does something
+            final class Foo {}
+             ',
+            '<?php
+            # Class Foo
+            # Class that does something
+            final class Foo {}
+             ',
+        ];
+
+        yield [
+            '<?php
             // I am class Foo
             class Foo {}
              ',
@@ -203,6 +245,107 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
               * @coversDefaultClass ClassCovered
               */
              class Foo {}
+             ',
+        ];
+
+        yield [
+            '<?php
+             class Foo {
+                 /**
+                  */
+                 public function __constructor() {}
+             }
+             ',
+            '<?php
+             class Foo {
+                 /**
+                  * Foo constructor.
+                  */
+                 public function __constructor() {}
+             }
+             ',
+        ];
+
+        yield [
+            '<?php
+             class Foo {
+                 /**
+                  */
+                 public function setA() {}
+                 /**
+                  */
+                 public static function setB() {}
+                 /**
+                  */
+                 static public function setC() {}
+                 /**
+                  */
+                 protected function setD() {}
+                 /**
+                  */
+                 private function setE() {}
+                 /**
+                  */
+                 private function getF() {}
+                 /**
+                  */
+                 private function setG() {}
+                 /**
+                  */
+                 private function getH() {}
+                 /**
+                  * Does not really gets I
+                  */
+                 private function getI() {}
+                 /**
+                  * Get J in a fancy way
+                  */
+                 private function getJ() {}
+             }
+             ',
+            '<?php
+             class Foo {
+                 /**
+                  * Set A
+                  */
+                 public function setA() {}
+                 /**
+                  * Set B.
+                  */
+                 public static function setB() {}
+                 /**
+                  * Set C
+                  */
+                 static public function setC() {}
+                 /**
+                  * Set D
+                  */
+                 protected function setD() {}
+                 /**
+                  * Sets E
+                  */
+                 private function setE() {}
+                 /**
+                  * Get F
+                  */
+                 private function getF() {}
+                 /**
+                  * Gets G
+                  */
+                 private function setG() {}
+                 /**
+                  * Gets H.
+                  */
+                 private function getH() {}
+                 /**
+                  * Does not really gets I
+                  */
+                 private function getI() {}
+                 /**
+                  * Get J in a fancy way
+                  */
+                 private function getJ() {}
+             }
              ',
         ];
     }

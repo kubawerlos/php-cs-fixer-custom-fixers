@@ -27,6 +27,11 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
         static::assertFalse($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        static::assertContains('PhpCsFixerCustomFixers/no_useless_comment', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @param string      $expected
      * @param null|string $input
@@ -50,6 +55,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
              }
              ',
         ];
+
         yield [
             '<?php
             class Foo {
