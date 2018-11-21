@@ -61,6 +61,18 @@ final class AutoReviewTest extends TestCase
         static::assertFalse($fixer instanceof DeprecatingFixerInterface && $fixer instanceof DeprecatedFixerInterface);
     }
 
+    /**
+     * @dataProvider provideFixerCases
+     */
+    public function testDeprecatedFixerHasAnnotation(FixerInterface $fixer): void
+    {
+        $comment = (new \ReflectionClass($fixer))->getDocComment();
+        static::assertSame(
+            $fixer instanceof DeprecatedFixerInterface,
+            \strpos($comment === false ? '' : $comment, '@deprecated') !== false
+        );
+    }
+
     public function provideFixerCases(): array
     {
         return \array_map(
