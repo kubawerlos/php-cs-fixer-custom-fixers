@@ -145,5 +145,12 @@ namespace Foo;
 /** Some comment */    namespace Foo;
 ',
         ];
+
+        yield [
+            '<?php
+',
+            '<?php
+// comment as last element',
+        ];
     }
 }

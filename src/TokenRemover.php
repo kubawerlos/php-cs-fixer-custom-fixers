@@ -17,7 +17,10 @@ final class TokenRemover
     {
         self::removeTrailingHorizontalWhitespaces($tokens, $tokens->getNonEmptySibling($index, -1));
 
-        self::removeLeadingNewline($tokens, $tokens->getNonEmptySibling($index, 1));
+        $nextIndex = $tokens->getNonEmptySibling($index, 1);
+        if ($nextIndex !== null) {
+            self::removeLeadingNewline($tokens, $tokens->getNonEmptySibling($index, 1));
+        }
 
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
     }
