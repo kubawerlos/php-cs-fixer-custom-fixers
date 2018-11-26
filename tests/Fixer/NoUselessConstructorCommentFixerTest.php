@@ -46,7 +46,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * Destructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -56,7 +56,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * Reconstructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -66,7 +66,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 /**
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -74,7 +74,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -84,7 +84,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 /**
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -92,7 +92,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -102,7 +102,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 /**
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -110,7 +110,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * Constructor.
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -120,7 +120,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 /**
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -128,7 +128,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * Foo Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -138,7 +138,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 /**
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -146,7 +146,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * FooBar Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -156,7 +156,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 /**
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -164,7 +164,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /**
                  * Foo\Bar Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -176,7 +176,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                  *
                  * This class has awesome Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -186,7 +186,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                  *
                  * This class has awesome Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -198,7 +198,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                  * This class has awesome Constructor.
                  *
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -208,7 +208,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                  *
                  * Foo Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -220,7 +220,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                  * @author John Doe
                  * This class has awesome Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -230,7 +230,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                  * Foo Constructor.
                  * This class has awesome Constructor
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -240,7 +240,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 /** @see example.com
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
@@ -248,7 +248,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
                 /** Foo Constructor
                  * @see example.com
                  */
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -258,14 +258,14 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             class Foo {
                 //
                 // This class has awesome Constructor.
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
             '<?php
             class Foo {
                 // Foo Constructor
                 // This class has awesome Constructor.
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
@@ -274,7 +274,7 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
             '<?php
             class Foo {
                 // Foo is constructor
-                 public function __constructor () {}
+                 public function __constructor() {}
              }
              ',
         ];
