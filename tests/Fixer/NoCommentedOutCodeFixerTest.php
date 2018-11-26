@@ -71,6 +71,16 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
+              ',
+            '<?php
+                  // if (true) {
+                  //     return 42;
+                  // }
+              ',
+        ];
+
+        yield [
+            '<?php
                   // This line is a comment
               ',
             '<?php
@@ -80,16 +90,6 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
                   // This line is a comment
                   // if (false) {
                   //     return 100;
-                  // }
-              ',
-        ];
-
-        yield [
-            '<?php
-              ',
-            '<?php
-                  // if (true) {
-                  //     return 42;
                   // }
               ',
         ];
