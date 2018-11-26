@@ -244,7 +244,8 @@ final class NoUselessConstructorCommentFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
             class Foo {
-                /** @see example.com
+                /**
+                 * @see example.com
                  */
                  public function __constructor () {}
              }

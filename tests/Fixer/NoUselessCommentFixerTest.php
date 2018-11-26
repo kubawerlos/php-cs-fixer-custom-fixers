@@ -176,7 +176,8 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-            /** @see example.com
+            /**
+             * @see example.com
              */
             abstract class Foo {}
              ',
@@ -347,6 +348,31 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
                  private function getJ() {}
              }
              ',
+        ];
+
+        yield [
+            '<?php
+                class Foo {
+                    /**
+                     */
+                    public function baz() {}
+                }
+            ',
+            '<?php
+                class Foo {
+                    /**
+                     * Add baz
+                     * Adds baz
+                     * Get baz
+                     * Gets baz
+                     * Remove baz
+                     * Removes baz
+                     * Set baz
+                     * Sets baz
+                     */
+                    public function baz() {}
+                }
+            ',
         ];
     }
 }

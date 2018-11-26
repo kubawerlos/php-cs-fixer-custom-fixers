@@ -9,6 +9,9 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @deprecated use NoUselessCommentFixer instead
+ */
 final class NoUselessClassCommentFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
     /** @var NoUselessCommentFixer */
