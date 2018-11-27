@@ -19,7 +19,7 @@ final class TokenRemover
 
         $nextIndex = $tokens->getNonEmptySibling($index, 1);
         if ($nextIndex !== null) {
-            self::removeLeadingNewline($tokens, $tokens->getNonEmptySibling($index, 1));
+            self::removeLeadingNewline($tokens, $nextIndex);
         }
 
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
