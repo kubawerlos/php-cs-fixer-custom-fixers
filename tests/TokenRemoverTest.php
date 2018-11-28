@@ -48,6 +48,7 @@ namespace Foo;
 namespace Foo;
 ',
         ];
+
         yield [
             '<?php
 namespace Foo;
@@ -151,6 +152,44 @@ namespace Foo;
 ',
             '<?php
 // comment as last element',
+        ];
+
+        yield [
+            '<?php
+foo();
+',
+            '<?php
+// Foo
+foo();
+',
+        ];
+
+        yield [
+            '<?php 
+foo();
+',
+            '<?php // Foo
+foo();
+',
+        ];
+        yield [
+            '<?php    
+foo();
+',
+            '<?php    // Foo
+foo();
+',
+        ];
+
+        yield [
+            "<?php
+            foo();
+            'b';
+            ",
+            "<?php
+            foo();// Foo
+            'b';
+            ",
         ];
     }
 }
