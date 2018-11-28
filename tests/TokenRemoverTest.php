@@ -182,14 +182,14 @@ foo();
         ];
 
         yield [
-            "<?php
+            '<?php
             foo();
-            'b';
-            ",
-            "<?php
+            bar();
+            ',
+            '<?php
             foo();// Foo
-            'b';
-            ",
+            bar();
+            ',
         ];
     }
 }

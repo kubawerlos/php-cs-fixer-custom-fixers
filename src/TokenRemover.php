@@ -15,20 +15,58 @@ final class TokenRemover
 {
     public static function removeWithLinesIfPossible(Tokens $tokens, int $index): void
     {
-        self::removeTrailingHorizontalWhitespaces($tokens, $tokens->getNonEmptySibling($index, -1));
+        if (self::isTokenOnlyMeaningfulInLine($tokens, $index)) {
+            self::handleWhitespaceBefore($tokens, $tokens->getNonEmptySibling($index, -1));
 
-        $nextIndex = $tokens->getNonEmptySibling($index, 1);
-        if ($nextIndex !== null) {
-            self::removeLeadingNewline($tokens, $nextIndex);
+            $nextIndex = $tokens->getNonEmptySibling($index, 1);
+            if ($nextIndex !== null) {
+                self::handleWhitespaceAfter($tokens, $nextIndex);
+            }
         }
 
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
     }
 
-    private static function removeTrailingHorizontalWhitespaces(Tokens $tokens, int $index): void
+    private static function isTokenOnlyMeaningfulInLine(Tokens $tokens, int $index): bool
+    {
+        $prevIndex = $tokens->getNonEmptySibling($index, -1);
+        if (!$tokens[$prevIndex]->isGivenKind([T_OPEN_TAG, T_WHITESPACE])) {
+            return false;
+        }
+
+        if ($tokens[$prevIndex]->isGivenKind(T_OPEN_TAG) && Preg::match('/\R$/', $tokens[$prevIndex]->getContent()) !== 1) {
+            return false;
+        }
+
+        if (Preg::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
+            $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
+            if (!$tokens[$prevPrevIndex]->isGivenKind(T_OPEN_TAG) || Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
+                return false;
+            }
+        }
+
+        $nextIndex = $tokens->getNonEmptySibling($index, 1);
+        if ($nextIndex === null) {
+            return true;
+        }
+        if (!$tokens[$nextIndex]->isGivenKind(T_WHITESPACE)) {
+            return false;
+        }
+
+        return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) === 1;
+    }
+
+    private static function handleWhitespaceBefore(Tokens $tokens, int $index): void
     {
         if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
             return;
+        }
+
+        $content = $tokens[$index]->getContent();
+
+        $prevIndex = $tokens->getNonEmptySibling($index, -1);
+        if ($tokens[$prevIndex]->isGivenKind(T_OPEN_TAG)) {
+            $content = \substr($tokens[$prevIndex]->getContent(), 5) . $content;
         }
 
         $newContent = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
@@ -46,17 +84,9 @@ final class TokenRemover
         $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
     }
 
-    private static function removeLeadingNewline(Tokens $tokens, int $index): void
+    private static function handleWhitespaceAfter(Tokens $tokens, int $index): void
     {
-        if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
-            return;
-        }
-
         $newContent = Preg::replace('/^\h*\R/', '', $tokens[$index]->getContent());
-
-        if ($newContent === $tokens[$index]->getContent()) {
-            return;
-        }
 
         if ($newContent === '') {
             $tokens->clearAt($index);
