@@ -228,5 +228,23 @@ class A {
 }
 ',
         ];
+
+        yield [
+            '<?php
+namespace Foo;
+class Baz {
+    const Bar = "THE_BAR";
+    const C = 4;
+}
+',
+            '<?php
+namespace Foo;
+use Bar;
+class Baz {
+    const Bar = "THE_BAR";
+    const C = 4;
+}
+',
+        ];
     }
 }
