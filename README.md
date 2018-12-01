@@ -181,6 +181,16 @@ In your PHP CS Fixer configuration register fixers and use them:
  class FooRepository extends EntityRepository {}
 ```
 
+- **NullableParamStyleFixer** - nullable parameters must be written in the same style.
+  Configuration options:
+  - `style` (`'with'`, `'without'`): whether to nullable parameter should be with or without nullable type; defaults to `with`
+```diff
+ <?php
+-function foo(int $x = null) {
++function foo(?int $x = null) {
+ }
+```
+
 - **OperatorLinebreakFixer** - binary operators must always be at the beginning or at the end of the line.  
   *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/4021) is merged and released.*
   Configuration options:

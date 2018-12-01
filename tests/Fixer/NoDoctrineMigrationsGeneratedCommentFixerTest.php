@@ -27,7 +27,7 @@ final class NoDoctrineMigrationsGeneratedCommentFixerTest extends AbstractFixerT
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null): void
+    public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
     }

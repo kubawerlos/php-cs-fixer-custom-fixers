@@ -1,0 +1,75 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace Tests\Fixer;
+
+use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
+
+/**
+ * @internal
+ *
+ * @covers \PhpCsFixerCustomFixers\Fixer\NullableParamStyleFixer
+ */
+final class NullableParamStyleFixerTest extends AbstractFixerTestCase
+{
+    public function testPriority(): void
+    {
+        static::assertGreaterThan((new NoUnreachableDefaultArgumentValueFixer())->getPriority(), $this->fixer->getPriority());
+    }
+
+    public function testConfiguration(): void
+    {
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        static::assertArrayHasKey(0, $options);
+        static::assertSame('style', $options[0]->getName());
+    }
+
+    public function testIsRisky(): void
+    {
+        static::assertFalse($this->fixer->isRisky());
+    }
+
+    /**
+     * @param string      $expected
+     * @param null|string $input
+     * @param null|array  $configuration
+     *
+     * @dataProvider provideFixCases
+     */
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
+    {
+        if ($configuration !== null) {
+            $this->fixer->configure($configuration);
+        }
+
+        $this->doTest($expected, $input);
+    }
+
+    public function provideFixCases(): \Iterator
+    {
+        yield ['<?php function foo($x = null) {}'];
+        yield ['<?php function foo(int $x, ?int $y) {}'];
+
+        yield [
+            '<?php function foo(?int $x = null, ?string $y = NULL) {}',
+            '<?php function foo(int $x = null, string $y = NULL) {}',
+        ];
+
+        yield [
+            '<?php function foo(?int $x = null) {}',
+        ];
+
+        yield [
+            '<?php function foo(int $x = null, string $y = NULL) {}',
+            '<?php function foo(?int $x = null, ?string $y = NULL) {}',
+            ['style' => 'without'],
+        ];
+
+        yield [
+            '<?php function foo(int $x = null) {}',
+            null,
+            ['style' => 'without'],
+        ];
+    }
+}
