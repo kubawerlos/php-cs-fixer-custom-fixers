@@ -46,7 +46,7 @@ final class NullableParamStyleFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): \Generator
     {
         yield ['<?php function foo($x = null) {}'];
         yield ['<?php function foo(int $x, ?int $y) {}'];
