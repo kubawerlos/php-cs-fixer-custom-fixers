@@ -23,12 +23,12 @@ final class NullableParamStyleFixer extends AbstractFixer implements Configurati
     ];
 
     /** @var string */
-    private $style = 'with';
+    private $style = 'with_question_mark';
 
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
-            'Nullable parameters must be written in the same style.',
+            'Nullable parameters must be written in the consistent style.',
             [new CodeSample('<?php
 function foo(int $x = null) {
 }
@@ -39,9 +39,9 @@ function foo(int $x = null) {
     public function getConfigurationDefinition(): FixerConfigurationResolver
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('style', 'whether to nullable parameter should be with or without nullable type'))
+            (new FixerOptionBuilder('style', 'whether nullable parameter type should be prefixed or not with question mark'))
                 ->setDefault($this->style)
-                ->setAllowedValues(['with', 'without'])
+                ->setAllowedValues(['with_question_mark', 'without_question_mark'])
                 ->getOption(),
         ]);
     }
@@ -85,11 +85,12 @@ function foo(int $x = null) {
                     continue;
                 }
 
-                $nullableIndex = $tokens->getPrevMeaningfulToken($typeIndex);
+                $separatorIndex = $tokens->getPrevTokenOfKind($typeIndex, ['(', ',']);
+                $nullableIndex = $tokens->getNextMeaningfulToken($separatorIndex);
 
-                if ($this->style === 'with' && !$tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
-                    $tokens->insertAt($typeIndex, new Token([CT::T_NULLABLE_TYPE, '?']));
-                } elseif ($this->style === 'without' && $tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
+                if ($this->style === 'with_question_mark' && !$tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
+                    $tokens->insertAt($nullableIndex, new Token([CT::T_NULLABLE_TYPE, '?']));
+                } elseif ($this->style === 'without_question_mark' && $tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
                     $tokens->clearAt($nullableIndex);
                 }
             }

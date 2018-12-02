@@ -181,9 +181,9 @@ In your PHP CS Fixer configuration register fixers and use them:
  class FooRepository extends EntityRepository {}
 ```
 
-- **NullableParamStyleFixer** - nullable parameters must be written in the same style.
+- **NullableParamStyleFixer** - nullable parameters must be written in the consistent style.
   Configuration options:
-  - `style` (`'with'`, `'without'`): whether to nullable parameter should be with or without nullable type; defaults to `with`
+  - `style` (`'with_question_mark'`, `'without_question_mark'`): whether nullable parameter type should be prefixed or not with question mark; defaults to `with_question_mark`
 ```diff
  <?php
 -function foo(int $x = null) {
