@@ -202,6 +202,10 @@ function foo() {
             if ($tokens[$prevIndex]->getContent() === '?') {
                 return [$prevIndex, $index];
             }
+            $prevIndex = $tokens->getPrevTokenOfKind($prevIndex, [[T_SWITCH], '?']);
+            if ($prevIndex === null || $tokens[$prevIndex]->isGivenKind(T_SWITCH)) {
+                return null;
+            }
         }
 
         return [$index];
