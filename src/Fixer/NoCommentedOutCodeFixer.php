@@ -73,18 +73,16 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         $content = '<?php ';
 
         foreach ($commentIndices as $index) {
-            $newContent = $content . PHP_EOL . $this->getMessage($tokens[$index]->getContent());
+            $content .= PHP_EOL . $this->getMessage($tokens[$index]->getContent());
             $testedIndices[] = $index;
 
             try {
-                @Tokens::fromCode($newContent);
+                @Tokens::fromCode($content);
             } catch (\ParseError $error) {
-                $content = $newContent;
                 continue;
             }
 
             $indicesToRemove = $testedIndices;
-            $content = $newContent;
         }
 
         return $indicesToRemove;
