@@ -15,13 +15,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NullableParamStyleFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-    private const TYPEHINT_KINDS = [
-        CT::T_ARRAY_TYPEHINT,
-        T_CALLABLE,
-        T_NS_SEPARATOR,
-        T_STRING,
-    ];
-
     /** @var string */
     private $style = 'with_question_mark';
 
@@ -81,7 +74,7 @@ function foo(int $x = null) {
                 $variableIndex = $tokens->getPrevTokenOfKind($i, [[T_VARIABLE]]);
 
                 $typeIndex = $tokens->getPrevMeaningfulToken($variableIndex);
-                if (!$tokens[$typeIndex]->isGivenKind(self::TYPEHINT_KINDS)) {
+                if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_NS_SEPARATOR, T_STRING])) {
                     continue;
                 }
 
