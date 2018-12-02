@@ -99,7 +99,7 @@ function foo(int $x = null) {
 
     public function getPriority(): int
     {
-        // mus be run before NoUnreachableDefaultArgumentValueFixer
+        // must be run before NoUnreachableDefaultArgumentValueFixer
         return 1;
     }
 }
