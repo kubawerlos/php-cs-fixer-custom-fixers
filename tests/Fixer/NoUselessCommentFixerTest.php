@@ -35,7 +35,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideTestCases
      */
-    public function testFix(string $expected, string $input = null): void
+    public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
     }
