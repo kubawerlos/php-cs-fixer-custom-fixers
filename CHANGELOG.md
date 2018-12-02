@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.12.0 - *2018-12-02*
 - Add NoCommentedOutCodeFixer
 - Add NoUselessCommentFixer
 - Add NullableParamStyleFixer
