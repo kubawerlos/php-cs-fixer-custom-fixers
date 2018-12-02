@@ -17,7 +17,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     {
         return new FixerDefinition(
             'There should be no commented out code.',
-            [new CodeSample("<?php\n//var_dump(\$_POST);\n")]
+            [new CodeSample("<?php\n//var_dump(\$_POST);\nprint_r(\$_POST);\n")]
         );
     }
 
@@ -34,7 +34,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     public function getPriority(): int
     {
         // must be run before NoUnusedImportsFixer
-        return -2;
+        return 0;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
@@ -81,7 +81,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             }
 
             try {
-                $tokensForComment = @Tokens::fromCode($newContent);
+                @Tokens::fromCode($newContent);
             } catch (\ParseError $error) {
                 $content = $newContent;
                 continue;
