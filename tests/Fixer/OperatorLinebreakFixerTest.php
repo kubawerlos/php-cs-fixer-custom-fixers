@@ -300,5 +300,14 @@ return $foo ?/* Lorem ipsum */:
     $bar;
 ',
         ];
+
+        yield [
+            '<?php
+switch ($foo) {
+    case 1:
+        return true;
+}
+',
+        ];
     }
 }
