@@ -42,7 +42,7 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null, array $configuration = null): void
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
         if ($configuration !== null) {
             $this->fixer->configure($configuration);
@@ -51,7 +51,7 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): \Generator
     {
         yield [
             '<?php
@@ -63,6 +63,7 @@ $foo =
     $bar;
 ',
         ];
+
         yield [
             '<?php
 return $foo
@@ -81,6 +82,19 @@ return $foo +
 ',
             null,
             ['only_booleans' => true],
+        ];
+
+        yield [
+            '<?php
+return $foo
+    ? $bar
+    : $baz;
+',
+            '<?php
+return $foo ?
+    $bar :
+    $baz;
+',
         ];
 
         yield [
@@ -216,6 +230,74 @@ function foo() {
         // Third comment
         isThisJustFantasy();
 }
+',
+        ];
+
+        yield [
+            '<?php
+function foo() {
+    return $a
+        && (
+            $b
+            || $c
+        )
+        && $d;
+}
+',
+            '<?php
+function foo() {
+    return $a &&
+        (
+            $b ||
+            $c
+        ) &&
+        $d;
+}
+',
+        ];
+
+        yield [
+            '<?php
+return $foo
+    ?: $bar;
+',
+            '<?php
+return $foo ?:
+    $bar;
+',
+        ];
+
+        yield [
+            '<?php
+return $foo ?:
+    $bar;
+',
+            '<?php
+return $foo
+    ?: $bar;
+',
+            ['position' => 'end'],
+        ];
+
+        yield [
+            '<?php
+return $foo
+    ?: $bar;
+',
+            '<?php
+return $foo ? :
+    $bar;
+',
+        ];
+
+        yield [
+            '<?php
+return $foo/* Lorem ipsum */
+    ?: $bar;
+',
+            '<?php
+return $foo ?/* Lorem ipsum */:
+    $bar;
 ',
         ];
     }

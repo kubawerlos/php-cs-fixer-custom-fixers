@@ -21,7 +21,7 @@ final class TokenRemoverTest extends TestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null): void
+    public function testFix(string $expected, ?string $input = null): void
     {
         $tokens = Tokens::fromCode($input);
 
@@ -48,6 +48,7 @@ namespace Foo;
 namespace Foo;
 ',
         ];
+
         yield [
             '<?php
 namespace Foo;
@@ -144,6 +145,51 @@ namespace Foo;
             '<?php
 /** Some comment */    namespace Foo;
 ',
+        ];
+
+        yield [
+            '<?php
+',
+            '<?php
+// comment as last element',
+        ];
+
+        yield [
+            '<?php
+foo();
+',
+            '<?php
+// Foo
+foo();
+',
+        ];
+
+        yield [
+            '<?php 
+foo();
+',
+            '<?php // Foo
+foo();
+',
+        ];
+        yield [
+            '<?php    
+foo();
+',
+            '<?php    // Foo
+foo();
+',
+        ];
+
+        yield [
+            '<?php
+            foo();
+            bar();
+            ',
+            '<?php
+            foo();// Foo
+            bar();
+            ',
         ];
     }
 }

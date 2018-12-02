@@ -33,7 +33,7 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null): void
+    public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
     }

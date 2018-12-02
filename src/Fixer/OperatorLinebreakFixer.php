@@ -16,53 +16,55 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatingFixerInterface
 {
     private const BOOLEAN_OPERATORS = [
-        '&&',
-        '||',
-        'and',
-        'or',
-        'xor',
+        '&&' => T_BOOLEAN_AND,
+        '||' => T_BOOLEAN_OR,
+        'and' => T_LOGICAL_AND,
+        'or' => T_LOGICAL_OR,
+        'xor' => T_LOGICAL_XOR,
     ];
 
     private const NON_BOOLEAN_OPERATORS = [
-        '=',
-        '*',
-        '/',
-        '%',
-        '<',
-        '>',
-        '|',
-        '^',
-        '+',
-        '-',
-        '&',
-        '&=',
-        '.=',
-        '/=',
-        '=>',
-        '==',
-        '>=',
-        '===',
-        '!=',
-        '<>',
-        '!==',
-        '<=',
-        '-=',
-        '%=',
-        '*=',
-        '|=',
-        '+=',
-        '<<',
-        '<<=',
-        '>>',
-        '>>=',
-        '^=',
-        '**',
-        '**=',
-        '<=>',
-        '??',
+        '=' => true,
+        '*' => true,
+        '/' => true,
+        '%' => true,
+        '<' => true,
+        '>' => true,
+        '|' => true,
+        '^' => true,
+        '+' => true,
+        '-' => true,
+        '&' => true,
+        '&=' => true,
+        '.=' => true,
+        '/=' => true,
+        '=>' => true,
+        '==' => true,
+        '>=' => true,
+        '===' => true,
+        '!=' => true,
+        '<>' => true,
+        '!==' => true,
+        '<=' => true,
+        '-=' => true,
+        '%=' => true,
+        '*=' => true,
+        '|=' => true,
+        '+=' => true,
+        '<<' => true,
+        '<<=' => true,
+        '>>' => true,
+        '>>=' => true,
+        '^=' => true,
+        '**' => true,
+        '**=' => true,
+        '<=>' => true,
+        '??' => true,
+        '?' => true,
+        ':' => true,
     ];
 
-    /** @var string[] */
+    /** @var array<string, int|true> */
     private $operators;
 
     /** @var string */
@@ -100,7 +102,7 @@ function foo() {
         ]);
     }
 
-    public function configure(array $configuration = null): void
+    public function configure(?array $configuration = null): void
     {
         if (isset($configuration['only_booleans']) && $configuration['only_booleans']) {
             $this->operators = self::BOOLEAN_OPERATORS;
@@ -140,21 +142,17 @@ function foo() {
     private function fixMoveToTheBeginning(Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
-            $tokenContent = \strtolower($tokens[$index]->getContent());
-
-            if (!\in_array($tokenContent, $this->operators, true)) {
+            $indices = $this->getOperatorIndices($tokens, $index);
+            if ($indices === null) {
                 continue;
             }
 
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
+            $nextIndex = $tokens->getNextMeaningfulToken(\max($indices));
             for ($i = $nextIndex - 1; $i > $index; $i--) {
-                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/', $tokens[$i]->getContent()) === 1) {
-                    $operator = clone $tokens[$index];
-                    $tokens->clearAt($index);
-                    if ($tokens[$index - 1]->isWhitespace()) {
-                        $tokens->clearTokenAndMergeSurroundingWhitespace($index - 1);
-                    }
-                    $tokens->insertAt($nextIndex, [$operator, new Token([T_WHITESPACE, ' '])]);
+                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                    $operators = $this->getReplacementsAndClear($tokens, $indices, -1);
+                    $tokens->insertAt($nextIndex, \array_merge($operators, [new Token([T_WHITESPACE, ' '])]));
+
                     break;
                 }
             }
@@ -165,25 +163,68 @@ function foo() {
     private function fixMoveToTheEnd(Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            $tokenContent = \strtolower($tokens[$index]->getContent());
-
-            if (!\in_array($tokenContent, $this->operators, true)) {
+            $indices = $this->getOperatorIndices($tokens, $index);
+            if ($indices === null) {
                 continue;
             }
 
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            $prevIndex = $tokens->getPrevMeaningfulToken(\min($indices));
             for ($i = $prevIndex + 1; $i < $index; $i++) {
-                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/', $tokens[$i]->getContent()) === 1) {
-                    $operator = clone $tokens[$index];
-                    $tokens->clearAt($index);
-                    if ($tokens[$index + 1]->isWhitespace()) {
-                        $tokens->clearTokenAndMergeSurroundingWhitespace($index + 1);
-                    }
-                    $tokens->insertAt($prevIndex + 1, [new Token([T_WHITESPACE, ' ']), $operator]);
+                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                    $operators = $this->getReplacementsAndClear($tokens, $indices, 1);
+                    $tokens->insertAt($prevIndex + 1, \array_merge([new Token([T_WHITESPACE, ' '])], $operators));
+
                     break;
                 }
             }
             $index = $prevIndex;
         }
+    }
+
+    /**
+     * @return null|int[]
+     */
+    private function getOperatorIndices(Tokens $tokens, int $index): ?array
+    {
+        if (!isset($this->operators[\strtolower($tokens[$index]->getContent())])) {
+            return null;
+        }
+
+        if (isset($this->operators['?']) && $tokens[$index]->getContent() === '?') {
+            $nextIndex = $tokens->getNextMeaningfulToken($index);
+            if ($tokens[$nextIndex]->getContent() === ':') {
+                return [$index, $nextIndex];
+            }
+        }
+
+        if (isset($this->operators[':']) && $tokens[$index]->getContent() === ':') {
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            if ($tokens[$prevIndex]->getContent() === '?') {
+                return [$prevIndex, $index];
+            }
+        }
+
+        return [$index];
+    }
+
+    /**
+     * @param int[] $indices
+     *
+     * @return Token[]
+     */
+    private function getReplacementsAndClear(Tokens $tokens, array $indices, int $direction): array
+    {
+        return \array_map(
+            static function ($index) use ($tokens, $direction) {
+                $clone = $tokens[$index];
+                if ($tokens[$index + $direction]->isWhitespace()) {
+                    $tokens->clearAt($index + $direction);
+                }
+                $tokens->clearAt($index);
+
+                return $clone;
+            },
+            $indices
+        );
     }
 }
