@@ -31,6 +31,11 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
         static::assertFalse($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        static::assertContains('NoUselessCommentFixer', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @param string      $expected
      * @param null|string $input
@@ -142,7 +147,8 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-            /** @see example.com
+            /**
+             * @see example.com
              */
             abstract class Foo {}
              ',

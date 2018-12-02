@@ -4,14 +4,24 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class NoUselessClassCommentFixer extends AbstractFixer
+/**
+ * @deprecated use NoUselessCommentFixer instead
+ */
+final class NoUselessClassCommentFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    /** @var NoUselessCommentFixer */
+    private $fixer;
+
+    public function __construct()
+    {
+        $this->fixer = new NoUselessCommentFixer();
+    }
+
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
@@ -28,48 +38,29 @@ class FooBar {}
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $this->fixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return false;
+        return $this->fixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
-                continue;
-            }
-
-            if (\strpos($token->getContent(), 'Class ') === false) {
-                continue;
-            }
-
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
-            if ($nextIndex === null || !$tokens[$nextIndex]->isGivenKind([T_ABSTRACT, T_CLASS, T_FINAL])) {
-                continue;
-            }
-
-            $newContent = Preg::replace(
-                '/(\*)?\h*\bClass\h+[A-Za-z0-1\\\\_]+\.?(\h*\R\h*|\h*$)/i',
-                '',
-                $token->getContent()
-            );
-
-            if ($newContent === $token->getContent()) {
-                continue;
-            }
-
-            $tokens[$index] = new Token([$token->getId(), $newContent]);
-        }
+        $this->fixer->fix($file, $tokens);
     }
 
     public function getPriority(): int
     {
-        // must be run before NoEmptyPhpdocFixer, NoEmptyCommentFixer
-        // PhpdocSeparationFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer and PhpdocTrimFixer
-        return 6;
+        return $this->fixer->getPriority();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSuccessorsNames(): array
+    {
+        return [(new \ReflectionObject($this->fixer))->getShortName()];
     }
 }

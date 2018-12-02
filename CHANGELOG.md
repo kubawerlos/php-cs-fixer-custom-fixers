@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 - Add NoCommentedOutCodeFixer
+- Add NoUselessCommentFixer
 - Add NullableParamStyleFixer
+- Deprecate NoUselessClassCommentFixer
+- Deprecate NoUselessConstructorCommentFixer
 - Feature: OperatorLinebreakFixer - handle ternary operator
 - Fix: NoImportFromGlobalNamespaceFixer - class without  namespace
 - Fix: NoUselessClassCommentFixer - comment detection
