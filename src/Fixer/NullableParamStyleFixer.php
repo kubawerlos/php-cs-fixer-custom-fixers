@@ -74,7 +74,7 @@ function foo(int $x = null) {
                 $variableIndex = $tokens->getPrevTokenOfKind($i, [[T_VARIABLE]]);
 
                 $typeIndex = $tokens->getPrevMeaningfulToken($variableIndex);
-                if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_NS_SEPARATOR, T_STRING])) {
+                if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_STRING])) {
                     continue;
                 }
 
