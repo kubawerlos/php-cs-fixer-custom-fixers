@@ -124,5 +124,13 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
                   // // Bar
               ',
         ];
+
+        yield [
+            '<?php
+                  /* // Hello
+                   * @see www.example.com
+                   */
+              ',
+        ];
     }
 }

@@ -103,6 +103,6 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             return \substr($content, 2);
         }
 
-        return Preg::replace('/(^\/\*+|\R\h*\**\h*)(.*)((?=\R)|\*+\/$)/', '$2', $content);
+        return Preg::replace('/(^\/\*+|\R\h*\**\h*)(.*)((?=\R)|\*+\/$)/', PHP_EOL . '$2', $content);
     }
 }
