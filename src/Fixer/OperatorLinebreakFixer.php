@@ -202,8 +202,8 @@ function foo() {
             if ($tokens[$prevIndex]->getContent() === '?') {
                 return [$prevIndex, $index];
             }
-            $prevIndex = $tokens->getPrevTokenOfKind($prevIndex, [[T_SWITCH], '?']);
-            if ($prevIndex === null || $tokens[$prevIndex]->isGivenKind(T_SWITCH)) {
+            $prevIndex = $tokens->getPrevTokenOfKind($prevIndex, [[T_CASE], '?']);
+            if ($prevIndex === null || $tokens[$prevIndex]->isGivenKind(T_CASE)) {
                 return null;
             }
         }

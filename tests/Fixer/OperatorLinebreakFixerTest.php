@@ -305,7 +305,9 @@ return $foo ?/* Lorem ipsum */:
             '<?php
 switch ($foo) {
     case 1:
-        return true;
+        return $isOK ? 1 : -1;
+    case 2:
+        return 100;
 }
 ',
         ];
