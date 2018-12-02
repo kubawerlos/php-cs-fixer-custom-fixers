@@ -3,6 +3,7 @@
 ## [Unreleased]
 - Add NoCommentedOutCodeFixer
 - Add NullableParamStyleFixer
+- Feature: OperatorLinebreakFixer - handle ternary operator
 - Fix: NoImportFromGlobalNamespaceFixer - class without  namespace
 - Fix: NoUselessClassCommentFixer - comment detection
 - Fix: TokenRemover - remove last element of file
