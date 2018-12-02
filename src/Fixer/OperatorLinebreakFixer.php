@@ -100,7 +100,7 @@ function foo() {
         ]);
     }
 
-    public function configure(array $configuration = null): void
+    public function configure(?array $configuration = null): void
     {
         if (isset($configuration['only_booleans']) && $configuration['only_booleans']) {
             $this->operators = self::BOOLEAN_OPERATORS;

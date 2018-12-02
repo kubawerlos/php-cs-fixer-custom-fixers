@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## [Unreleased]
+- Add NullableParamStyleFixer
 - Fix: NoImportFromGlobalNamespaceFixer - class without  namespace
 - Fix: NoUselessClassCommentFixer - comment detection
 - Fix: TokenRemover - remove last element of file
