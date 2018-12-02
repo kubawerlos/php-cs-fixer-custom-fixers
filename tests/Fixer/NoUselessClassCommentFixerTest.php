@@ -33,7 +33,7 @@ final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
 
     public function testSuccessorName(): void
     {
-        static::assertContains('PhpCsFixerCustomFixers/no_useless_comment', $this->fixer->getSuccessorsNames());
+        static::assertContains('NoUselessCommentFixer', $this->fixer->getSuccessorsNames());
     }
 
     /**

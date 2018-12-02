@@ -156,7 +156,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 ```
 
 - **NoUselessClassCommentFixer** - there must be no comment like: "Class FooBar".  
-  DEPRECATED: use `PhpCsFixerCustomFixers/no_useless_comment` instead.
+  DEPRECATED: use `NoUselessCommentFixer` instead.
 ```diff
  <?php
  /**
@@ -182,7 +182,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 ```
 
 - **NoUselessConstructorCommentFixer** - there must be no comment like: "Foo constructor".  
-  DEPRECATED: use `PhpCsFixerCustomFixers/no_useless_comment` instead.
+  DEPRECATED: use `NoUselessCommentFixer` instead.
 ```diff
  <?php
  class Foo {

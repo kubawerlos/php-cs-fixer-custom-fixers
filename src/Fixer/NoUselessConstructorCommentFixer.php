@@ -62,6 +62,6 @@ class Foo {
      */
     public function getSuccessorsNames(): array
     {
-        return [$this->fixer->getName()];
+        return [(new \ReflectionObject($this->fixer))->getShortName()];
     }
 }
