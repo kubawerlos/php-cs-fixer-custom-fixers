@@ -76,10 +76,6 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             $newContent = $content . PHP_EOL . $this->getMessage($tokens[$index]->getContent());
             $testedIndices[] = $index;
 
-            if (\strlen(\rtrim($newContent)) === 5) {
-                continue;
-            }
-
             try {
                 @Tokens::fromCode($newContent);
             } catch (\ParseError $error) {

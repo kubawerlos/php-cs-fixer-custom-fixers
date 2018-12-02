@@ -36,7 +36,6 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
 
     public function provideFixCases(): \Generator
     {
-        yield ['<?php //'];
         yield ['<?php // do not remove me'];
         yield ['<?php # do not remove me'];
         yield ['<?php /* do not remove me */'];
@@ -45,6 +44,11 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
                     /**
                      * do not remove me
                      */',
+        ];
+
+        yield [
+            '<?php ',
+            '<?php //',
         ];
 
         yield ['<?php // var_dump("no semicolon after")'];
