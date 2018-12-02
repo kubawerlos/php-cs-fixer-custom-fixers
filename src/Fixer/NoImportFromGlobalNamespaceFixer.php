@@ -95,7 +95,7 @@ class Bar {
             }
 
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if ($tokens[$prevIndex]->isGivenKind([T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
+            if ($tokens[$prevIndex]->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
                 continue;
             }
 

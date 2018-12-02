@@ -29,7 +29,7 @@ final class NoImportFromGlobalNamespaceFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null): void
+    public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
     }
@@ -225,6 +225,24 @@ namespace Baz;
 use DateTime;
 class A {
     public function __construct(DateTime $d) {}
+}
+',
+        ];
+
+        yield [
+            '<?php
+namespace Foo;
+class Baz {
+    const Bar = "THE_BAR";
+    const C = 4;
+}
+',
+            '<?php
+namespace Foo;
+use Bar;
+class Baz {
+    const Bar = "THE_BAR";
+    const C = 4;
 }
 ',
         ];

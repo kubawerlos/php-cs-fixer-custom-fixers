@@ -41,7 +41,7 @@ abstract class AbstractFixerTestCase extends TestCase
         static::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
 
-    final protected function doTest(string $expected, string $input = null): void
+    final protected function doTest(string $expected, ?string $input = null): void
     {
         if ($input === null) {
             $input = $expected;

@@ -21,7 +21,7 @@ final class TokenRemoverTest extends TestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null): void
+    public function testFix(string $expected, ?string $input = null): void
     {
         $tokens = Tokens::fromCode($input);
 

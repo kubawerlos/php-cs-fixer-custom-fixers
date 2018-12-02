@@ -117,7 +117,7 @@ interface    FooInterface {
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, string $input = null, array $configuration = null): void
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
         if ($configuration !== null) {
             $this->fixer->configure($configuration);
