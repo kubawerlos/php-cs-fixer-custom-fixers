@@ -47,8 +47,11 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php ',
-            '<?php //',
+            '<?php
+                // To foo
+                //
+                // or not to foo?
+            ',
         ];
 
         yield ['<?php // var_dump("no semicolon after")'];
