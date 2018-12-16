@@ -20,6 +20,19 @@
         </testsuite>
     </testsuites>
 
+    <listeners>
+        <listener class='JohnKary\PHPUnit\Listener\SpeedTrapListener'>
+            <arguments>
+                <array>
+                    <element key='slowThreshold'>
+                        <integer>100</integer>
+                    </element>
+                </array>
+            </arguments>
+        </listener>
+        <listener class='Symfony\Bridge\PhpUnit\SymfonyTestsListener'/>
+    </listeners>
+
     <logging>
         <log type='coverage-text' target='php://stdout' showOnlySummary='true' />
     </logging>
