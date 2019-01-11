@@ -296,8 +296,8 @@ In your PHP CS Fixer configuration register fixers and use them:
  }
 ```
 
-- **PhpdocVarAnnotationCorrectOrderFixer** - `@var` annotation must have type and name in the correct order.  
-  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3881) is merged and released.*
+- **PhpdocVarAnnotationCorrectOrderFixer** - `@var` and `@type` annotations must have type and name in the correct order.  
+  DEPRECATED: use `phpdoc_var_annotation_correct_order` instead.
 ```diff
  <?php
 -/** @var $foo int */
