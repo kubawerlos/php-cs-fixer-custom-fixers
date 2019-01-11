@@ -4,68 +4,53 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\FixerDefinition\CodeSample;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer implements DeprecatingFixerInterface
+/**
+ * @deprecated use "phpdoc_var_annotation_correct_order" instead
+ */
+final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    /** @var \PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer */
+    private $fixer;
+
+    public function __construct()
+    {
+        $this->fixer = new \PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer();
+    }
+
     public function getDefinition(): FixerDefinition
     {
-        return new FixerDefinition(
-            '`@var` annotation must have type and name in the correct order.',
-            [new CodeSample('<?php
-/** @var $foo int */
-$foo = 2 + 2;
-')]
-        );
+        return $this->fixer->getDefinition();
     }
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT);
+        return $this->fixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return false;
+        return $this->fixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind(T_DOC_COMMENT)) {
-                continue;
-            }
-
-            if (\stripos($token->getContent(), '@var') === false) {
-                continue;
-            }
-
-            $newContent = Preg::replace(
-                '/(@var\s*)(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\s+)([^\$](?:[^<\s]|<[^>]*>)*)(\s|\*)/i',
-                '$1$4$3$2$5',
-                $token->getContent()
-            );
-
-            if ($newContent === $token->getContent()) {
-                continue;
-            }
-
-            $tokens[$index] = new Token([$token->getId(), $newContent]);
-        }
+        $this->fixer->fix($file, $tokens);
     }
 
     public function getPriority(): int
     {
-        // must be before PhpdocNoIncorrectVarAnnotationFixer
-        return 7;
+        return $this->fixer->getPriority();
     }
 
-    public function getPullRequestId(): int
+    /**
+     * @return string[]
+     */
+    public function getSuccessorsNames(): array
     {
-        return 3881;
+        return [$this->fixer->getName()];
     }
 }

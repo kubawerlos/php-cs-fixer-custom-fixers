@@ -10,7 +10,6 @@ use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
 use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocVarAnnotationCorrectOrderFixer;
 
 /**
  * @internal
@@ -27,7 +26,6 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
         static::assertGreaterThan((new NoTrailingWhitespaceFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoUnusedImportsFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertLessThan((new PhpdocVarAnnotationCorrectOrderFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     public function testIsRisky(): void

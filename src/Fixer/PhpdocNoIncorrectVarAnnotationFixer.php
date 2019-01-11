@@ -77,7 +77,6 @@ $bar = new Foo();
     public function getPriority(): int
     {
         // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
-        // must be after PhpdocVarAnnotationCorrectOrderFixer
         return 6;
     }
 

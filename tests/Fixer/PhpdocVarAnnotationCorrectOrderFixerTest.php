@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
-
 /**
  * @internal
  *
@@ -15,7 +13,7 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
 {
     public function testPriority(): void
     {
-        static::assertGreaterThan((new PhpdocNoIncorrectVarAnnotationFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertSame(0, $this->fixer->getPriority());
     }
 
     public function testIsRisky(): void
@@ -23,9 +21,9 @@ final class PhpdocVarAnnotationCorrectOrderFixerTest extends AbstractFixerTestCa
         static::assertFalse($this->fixer->isRisky());
     }
 
-    public function testDeprecatingPullRequest(): void
+    public function testSuccessorName(): void
     {
-        static::assertSame(3881, $this->fixer->getPullRequestId());
+        static::assertContains('phpdoc_var_annotation_correct_order', $this->fixer->getSuccessorsNames());
     }
 
     /**
