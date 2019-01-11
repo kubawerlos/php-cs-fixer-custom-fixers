@@ -3,6 +3,7 @@
 ## [Unreleased]
 - Update PHP CS Fixer to v2.14
 - OperatorLinebreakFixer - respect no whitespace around operator
+- OperatorLinebreakFixer - support concatenation operator
 - Deprecate PhpdocVarAnnotationCorrectOrderFixer
 
 ## v1.12.0 - *2018-12-02*

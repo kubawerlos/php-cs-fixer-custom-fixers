@@ -77,6 +77,17 @@ return $foo +
 
         yield [
             '<?php
+return $foo
+    .$bar;
+',
+            '<?php
+return $foo.
+    $bar;
+',
+        ];
+
+        yield [
+            '<?php
 return $foo +
     $bar;
 ',

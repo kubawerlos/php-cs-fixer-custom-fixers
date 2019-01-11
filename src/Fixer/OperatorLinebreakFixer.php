@@ -25,6 +25,7 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
 
     private const NON_BOOLEAN_OPERATORS = [
         '=' => true,
+        '.' => true,
         '*' => true,
         '/' => true,
         '%' => true,
