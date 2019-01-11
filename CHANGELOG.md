@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- OperatorLinebreakFixer - respect no whitespace around operator
+
 ## v1.12.0 - *2018-12-02*
 - Add NoCommentedOutCodeFixer
 - Add NoUselessCommentFixer

@@ -147,11 +147,16 @@ function foo() {
                 continue;
             }
 
+            $prevIndex = $tokens->getNonEmptySibling(\min($indices), -1);
             $nextIndex = $tokens->getNextMeaningfulToken(\max($indices));
             for ($i = $nextIndex - 1; $i > $index; $i--) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
-                    $operators = $this->getReplacementsAndClear($tokens, $indices, -1);
-                    $tokens->insertAt($nextIndex, \array_merge($operators, [new Token([T_WHITESPACE, ' '])]));
+                    $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
+                    $inserts = $this->getReplacementsAndClear($tokens, $indices, -1);
+                    if ($isWhitespaceBefore) {
+                        $inserts[] = new Token([T_WHITESPACE, ' ']);
+                    }
+                    $tokens->insertAt($nextIndex, $inserts);
 
                     break;
                 }
@@ -169,10 +174,15 @@ function foo() {
             }
 
             $prevIndex = $tokens->getPrevMeaningfulToken(\min($indices));
+            $nextIndex = $tokens->getNonEmptySibling(\max($indices), 1);
             for ($i = $prevIndex + 1; $i < $index; $i++) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
-                    $operators = $this->getReplacementsAndClear($tokens, $indices, 1);
-                    $tokens->insertAt($prevIndex + 1, \array_merge([new Token([T_WHITESPACE, ' '])], $operators));
+                    $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
+                    $inserts = $this->getReplacementsAndClear($tokens, $indices, 1);
+                    if ($isWhitespaceAfter) {
+                        \array_unshift($inserts, new Token([T_WHITESPACE, ' ']));
+                    }
+                    $tokens->insertAt($prevIndex + 1, $inserts);
 
                     break;
                 }
