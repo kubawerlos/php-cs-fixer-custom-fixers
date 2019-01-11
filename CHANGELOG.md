@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.13.0 - *2019-01-11*
 - Update PHP CS Fixer to v2.14
 - OperatorLinebreakFixer - respect no whitespace around operator
 - OperatorLinebreakFixer - support concatenation operator
