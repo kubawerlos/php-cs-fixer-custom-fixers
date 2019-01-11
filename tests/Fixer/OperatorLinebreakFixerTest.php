@@ -153,7 +153,7 @@ return $foo
             '<?php
 function foo() {
     return $a
-        || $b;
+        ||$b;
 }
 ',
             '<?php
@@ -167,7 +167,7 @@ function foo() {
         yield [
             '<?php
 function foo() {
-    return $a ||
+    return $a||
         $b;
 }
 ',
