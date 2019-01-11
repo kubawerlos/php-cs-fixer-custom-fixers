@@ -1,7 +1,9 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## [Unreleased]
+- Update PHP CS Fixer to v2.14
 - OperatorLinebreakFixer - respect no whitespace around operator
+- Deprecate PhpdocVarAnnotationCorrectOrderFixer
 
 ## v1.12.0 - *2018-12-02*
 - Add NoCommentedOutCodeFixer
