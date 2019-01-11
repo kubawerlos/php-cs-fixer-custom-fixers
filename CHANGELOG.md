@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - OperatorLinebreakFixer - respect no whitespace around operator
+- OperatorLinebreakFixer - support concatenation operator
 
 ## v1.12.0 - *2018-12-02*
 - Add NoCommentedOutCodeFixer
