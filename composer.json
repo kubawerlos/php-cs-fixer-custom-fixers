@@ -1,7 +1,7 @@
 {
     "name": "kubawerlos/php-cs-fixer-custom-fixers",
-    "description": "A set of custom fixers for PHP CS Fixer",
     "type": "library",
+    "description": "A set of custom fixers for PHP CS Fixer",
     "keywords": [
         "fixer",
         "php-cs-fixer"
@@ -20,14 +20,15 @@
         "friendsofphp/php-cs-fixer": "^2.14"
     },
     "require-dev": {
+        "composer/composer": "^1.7",
         "johnkary/phpunit-speedtrap": "^3.1",
-        "kubawerlos/composer-json-fixer": "^2.1",
         "kubawerlos/types-checker": "^1.1",
+        "localheinz/composer-normalize": "^1.1",
         "phpstan/phpstan": "^0.10.5",
         "phpstan/phpstan-strict-rules": "^0.10.1",
         "phpunit/phpunit": "^7.4 || ^8.0",
         "sebastian/diff": "^3.0",
-        "squizlabs/php_codesniffer": "^3.3",
+        "squizlabs/php_codesniffer": "^3.4",
         "symfony/console": "^4.1",
         "symfony/finder": "^4.1",
         "symfony/phpunit-bridge": "^4.2",
@@ -45,17 +46,18 @@
         }
     },
     "scripts": {
-        "check": [
-            "@analyse",
-            "@phpunit"
-        ],
         "analyse": [
-            "vendor/bin/composer-json-fixer",
+            "composer validate --strict",
+            "composer normalize --dry-run",
             "vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 src tests",
             "vendor/bin/types-checker src tests",
             "PHP_CS_FIXER_FUTURE_MODE=1 vendor/bin/php-cs-fixer fix --ansi --diff --dry-run -v",
             "vendor/bin/phpstan analyse --ansi --level=max src",
             "vendor/bin/psalm --find-dead-code -v"
+        ],
+        "check": [
+            "@analyse",
+            "@phpunit"
         ],
         "phpunit": [
             "vendor/bin/phpunit"
