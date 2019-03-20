@@ -1,6 +1,7 @@
 {
     "require-dev": {
         "localheinz/composer-normalize": "^1.1",
+        "maglnet/composer-require-checker": "^2.0",
         "phpstan/phpstan": "^0.10.5",
         "phpstan/phpstan-strict-rules": "^0.10.1",
         "squizlabs/php_codesniffer": "^3.4",
