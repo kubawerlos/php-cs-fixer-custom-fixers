@@ -7,4 +7,4 @@ parameters:
         - '#^Only numeric types are allowed in (\-|\+|post\-decrement|post\-increment), int\|null given( on the left side)?\.$#'
         - '#^Parameter .+ expects .+, .+ given\.$#'
 includes:
-    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon
