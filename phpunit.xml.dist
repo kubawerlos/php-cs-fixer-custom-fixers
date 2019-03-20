@@ -15,7 +15,7 @@
     </php>
 
     <testsuites>
-        <testsuite name='All'>
+        <testsuite name='all'>
             <directory>tests</directory>
         </testsuite>
     </testsuites>
@@ -30,7 +30,6 @@
                 </array>
             </arguments>
         </listener>
-        <listener class='Symfony\Bridge\PhpUnit\SymfonyTestsListener' />
     </listeners>
 
     <logging>
