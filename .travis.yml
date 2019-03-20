@@ -18,11 +18,19 @@ before_install:
 
 install: composer update $COMPOSER_FLAGS
 
-script: composer check
+script: composer test
 
 jobs:
     include:
-        - php: 7.1
+        - stage: Static code analysis
+          php: 7.3
+          install:
+            - composer update # TODO: remove this
+            - composer update -d dev-tools
+          script: composer analyse
+
+        - stage: Test
+          php: 7.1
           env: COMPOSER_FLAGS="--prefer-lowest"
 
         - php: 7.1
@@ -42,7 +50,7 @@ jobs:
                 echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
                 cd $TRAVIS_BUILD_DIR
           install: composer require --dev php-coveralls/php-coveralls
-          script: composer phpunit -- --coverage-clover=build/logs/clover.xml
+          script: composer test -- --coverage-clover=build/logs/clover.xml
           after_success: vendor/bin/php-coveralls
 
         - php: 7.4snapshot
