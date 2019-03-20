@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PhpCsFixerCustomFixers\Readme;
+namespace PhpCsFixerCustomFixersDev\Readme;
 
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
