@@ -30,7 +30,7 @@
                 </array>
             </arguments>
         </listener>
-        <listener class='Symfony\Bridge\PhpUnit\SymfonyTestsListener'/>
+        <listener class='Symfony\Bridge\PhpUnit\SymfonyTestsListener' />
     </listeners>
 
     <logging>
@@ -40,9 +40,10 @@
     <filter>
         <whitelist>
             <directory>src</directory>
+            <directory>src-dev</directory>
             <exclude>
-                <file>src/Readme/php-cs-fixer.config.after.php</file>
-                <file>src/Readme/php-cs-fixer.config.before.php</file>
+                <file>src-dev/Readme/php-cs-fixer.config.after.php</file>
+                <file>src-dev/Readme/php-cs-fixer.config.before.php</file>
             </exclude>
         </whitelist>
     </filter>

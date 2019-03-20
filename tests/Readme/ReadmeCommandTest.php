@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Tests\Readme;
 
-use PhpCsFixerCustomFixers\Readme\ReadmeCommand;
+use PhpCsFixerCustomFixersDev\Readme\ReadmeCommand;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Tester\ApplicationTester;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Readme\ReadmeCommand
+ * @covers \PhpCsFixerCustomFixersDev\Readme\ReadmeCommand
  */
 final class ReadmeCommandTest extends TestCase
 {
