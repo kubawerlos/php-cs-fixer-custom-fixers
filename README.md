@@ -333,6 +333,6 @@ src/Readme/run > README.md
 ```
 make sure all checks pass:
 ```bash
-composer check
+composer analyse
 ```
 and submit a pull request.
