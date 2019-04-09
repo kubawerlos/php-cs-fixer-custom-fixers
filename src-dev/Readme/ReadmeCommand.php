@@ -206,11 +206,12 @@ Request a feature or report a bug by creating [issue](https://github.com/%s/issu
 
 Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```bash
-src/Readme/run > README.md
+src-dev/Readme/run > README.md
 ```
 make sure all checks pass:
 ```bash
-composer check
+composer analyse
+composer test
 ```
 and submit a pull request.',
             $this->composer()->name
