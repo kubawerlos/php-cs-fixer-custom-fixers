@@ -55,6 +55,9 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
             if ($toFixOpening) {
                 Preg::match('#^(/\*+)(.*?)(\R)(.*)$#s', $content, $matches);
+                if ($matches === []) {
+                    continue;
+                }
                 if ($matches[2][0] === '/') {
                     $matches[2] = ' ' . $matches[2];
                 }
