@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
@@ -115,7 +115,7 @@ $bar = new Foo();
         $doc = new DocBlock($tokens[$index]->getContent());
         $content = $doc->getContent();
 
-        if (substr_count($content, '@') > 1) {
+        if (\substr_count($content, '@') > 1) {
             return;
         }
 

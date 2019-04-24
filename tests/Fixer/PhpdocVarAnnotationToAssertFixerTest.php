@@ -48,7 +48,7 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php assert($foo instanceof Foo); // This is foo',
-            '<?php /** @var Foo $foo This is foo */'
+            '<?php /** @var Foo $foo This is foo */',
         ];
 
         yield [ // Only single @var can be fixed
