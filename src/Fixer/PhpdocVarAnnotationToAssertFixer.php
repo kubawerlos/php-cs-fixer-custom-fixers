@@ -77,7 +77,7 @@ $bar = new Foo();
      *
      * @return string
      */
-    private function convertTypeHelper($tmpType, string $variable): string
+    private function convertTypeHelper(string $tmpType, string $variable): string
     {
         // init
         $str = '';
@@ -110,7 +110,7 @@ $bar = new Foo();
      * @param int                          $index
      * @param null|string                  $pattern
      */
-    private function convertVarAnnotationMatchingPattern(Tokens $tokens, int $index, $pattern): void
+    private function convertVarAnnotationMatchingPattern(Tokens $tokens, int $index, string $pattern): void
     {
         $doc = new DocBlock($tokens[$index]->getContent());
         $content = $doc->getContent();
