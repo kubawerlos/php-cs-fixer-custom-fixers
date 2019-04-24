@@ -47,7 +47,7 @@ $bar = new Foo();
             $this->convertVarAnnotationMatchingPattern(
                 $tokens,
                 $index,
-                '/@var\s+(?<type>[\|\?\\\\a-z_\x7f-\xff]*)\s+(?<variable>[$a-z_\x7f-\xff]*)\s+(?<comment>[^\*]*)/isu'
+                '/@var\s+(?<type>[\|\?\\\\a-zA-Z_\x7f-\xff]*)\s+(?<variable>[$a-zA-Z_\x7f-\xff]*)\s+(?<comment>[^\*]*)/'
             );
         }
     }
@@ -178,8 +178,7 @@ $bar = new Foo();
         // remove the "@var" comment
         foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
             \assert($annotation instanceof \PhpCsFixer\DocBlock\Annotation);
-            if (
-                $pattern === null
+            if ($pattern === null
                 || Preg::match($pattern, $annotation->getContent()) !== 1
             ) {
                 $annotation->remove();
