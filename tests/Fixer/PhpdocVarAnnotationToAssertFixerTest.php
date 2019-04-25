@@ -137,6 +137,16 @@ assert($foo instanceof Foo);
 
         yield [
             '<?php
+// TODO -> move assert after "$foo"?
+',
+            '<?php
+/** @var int $foo */
+$foo = 1;
+',
+        ];
+
+        yield [
+            '<?php
 assert(false === $foo || true === $foo || is_bool($foo) || is_float($foo) || is_array($foo));
 ',
             '<?php
