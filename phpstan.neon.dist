@@ -6,5 +6,7 @@ parameters:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\OperatorLinebreakFixer::getOperatorIndices\(\) should return array<int>\|null but returns array<int, int\|null>\.$#'
         - '#^Only numeric types are allowed in (\-|\+|post\-decrement|post\-increment), int\|null given( on the left side)?\.$#'
         - '#^Parameter .+ expects .+, .+ given\.$#'
+        - '#Call to function assert\(\) with true will always evaluate to true\.#'
+        - '#Instanceof between .* and .* will always evaluate to true\.#'
 includes:
     - dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon

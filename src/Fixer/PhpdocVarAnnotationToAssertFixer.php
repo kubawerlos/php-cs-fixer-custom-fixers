@@ -110,7 +110,7 @@ $bar = new Foo();
      * @param int                          $index
      * @param null|string                  $pattern
      */
-    private function convertVarAnnotationMatchingPattern(Tokens $tokens, int $index, string $pattern): void
+    private function convertVarAnnotationMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
     {
         $doc = new DocBlock($tokens[$index]->getContent());
         $content = $doc->getContent();
@@ -129,7 +129,7 @@ $bar = new Foo();
         $variable = \trim($matches['variable']);
         $type = \trim($matches['type']);
 
-        if (!$variable || !$type) {
+        if ($variable === '' || $type === '') {
             return;
         }
 
@@ -150,7 +150,7 @@ $bar = new Foo();
                 $str .= $this->convertTypeHelper($tmpType, $variable);
             }
 
-            if ($str) {
+            if ($str !== '') {
                 $str .= ');';
             }
         } elseif (\strpos($type, '&') !== false) {
@@ -168,7 +168,7 @@ $bar = new Foo();
                 $str .= $this->convertTypeHelper($tmpType, $variable);
             }
 
-            if ($str) {
+            if ($str !== '') {
                 $str .= ');';
             }
         } else {
@@ -186,7 +186,7 @@ $bar = new Foo();
         }
 
         // re-add comment, if needed
-        if ($comment) {
+        if ($comment !== '') {
             $str .= ' // ' . $comment;
         }
 

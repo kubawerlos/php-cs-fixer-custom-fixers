@@ -86,11 +86,13 @@ class Foo {
 
                 $types = [];
                 foreach ($annotation->getTypes() as $type) {
-                    $types[] = Preg::replace(
+                    $typeTmp = Preg::replace(
                         \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $name, \preg_quote($fqcn, '/')),
                         'self',
                         $type
                     );
+                    \assert(\is_string($typeTmp));
+                    $types[] = $typeTmp;
                 }
 
                 if ($types === $annotation->getTypes()) {
