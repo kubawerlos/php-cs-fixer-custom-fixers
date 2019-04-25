@@ -47,7 +47,7 @@ $bar = new Foo();
             $this->convertVarAnnotationMatchingPattern(
                 $tokens,
                 $index,
-                '/@var\s+(?<type>[\|\?\\\\a-zA-Z_\x7f-\xff]*)\s+(?<variable>[$a-zA-Z_\x7f-\xff]*)\s+(?<comment>[^\*]*)/'
+                '/@var\s+(?<type>[\|&\?\\\\a-zA-Z_\x7f-\xff]*)\s+(?<variable>[$a-zA-Z_\x7f-\xff]*)\s+(?<comment>[^\*]*)/'
             );
         }
     }
@@ -175,22 +175,12 @@ $bar = new Foo();
             $str = 'assert(' . $this->convertTypeHelper($type, $variable) . ');';
         }
 
-        // remove the "@var" comment
-        foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
-            \assert($annotation instanceof \PhpCsFixer\DocBlock\Annotation);
-            if ($pattern === null
-                || Preg::match($pattern, $annotation->getContent()) !== 1
-            ) {
-                $annotation->remove();
-            }
-        }
-
         // re-add comment, if needed
         if ($comment !== '') {
             $str .= ' // ' . $comment;
         }
 
-        // add new assert call
+        // replace "@var" with assert call
         $tokens[$index] = new Token([\T_STRING, $str]);
     }
 }

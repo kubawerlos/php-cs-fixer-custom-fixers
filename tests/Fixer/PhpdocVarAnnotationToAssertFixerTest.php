@@ -115,9 +115,7 @@ assert($foo instanceof Foo || $foo instanceof Bar || $foo instanceof Baz || is_n
 
         yield [
             '<?php
-/**
- * @var Foo&Bar $foo
- */
+assert($foo instanceof Foo && $foo instanceof Bar);
 ',
             '<?php
 /**
@@ -133,6 +131,17 @@ assert($foo instanceof Foo);
             '<?php
 /**
  * @var Foo $foo
+ */
+',
+        ];
+
+        yield [
+            '<?php
+assert(false === $foo || true === $foo || is_bool($foo) || is_float($foo) || is_array($foo));
+',
+            '<?php
+/**
+ * @var false|true|bool|float|array $foo
  */
 ',
         ];
