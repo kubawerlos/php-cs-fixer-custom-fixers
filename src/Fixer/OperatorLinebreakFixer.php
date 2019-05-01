@@ -150,8 +150,12 @@ function foo() {
                 continue;
             }
 
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getNonEmptySibling(\min($indices), -1);
+
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken(\max($indices));
+
             for ($i = $nextIndex - 1; $i > $index; $i--) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
                     $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
@@ -176,8 +180,12 @@ function foo() {
                 continue;
             }
 
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken(\min($indices));
+
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNonEmptySibling(\max($indices), 1);
+
             for ($i = $prevIndex + 1; $i < $index; $i++) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
                     $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();

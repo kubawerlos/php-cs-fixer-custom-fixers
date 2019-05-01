@@ -64,6 +64,7 @@ class Bar {
                 if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
                     $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
                 }
+                /** @var int $semicolonIndex */
                 $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
                 if ($tokens[$semicolonIndex]->getContent() === ';') {
                     $imports[] = $tokens[$classNameIndex]->getContent();
