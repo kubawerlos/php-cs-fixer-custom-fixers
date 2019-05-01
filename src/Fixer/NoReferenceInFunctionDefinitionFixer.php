@@ -68,7 +68,10 @@ function foo(&$x) {}
         $indices = [];
 
         foreach (\array_keys($argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis)) as $startIndexCandidate) {
-            $indices[] = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
+            /** @var int $index */
+            $index = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
+
+            $indices[] = $index;
         }
 
         return $indices;
