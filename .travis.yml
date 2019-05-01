@@ -5,7 +5,10 @@ cache:
     directories:
         - $HOME/.composer
 
-sudo: false
+addons:
+    apt:
+        packages:
+            - libonig-dev
 
 language: php
 
@@ -23,21 +26,21 @@ script: composer test
 jobs:
     include:
         - stage: Static code analysis
-          php: 7.3
+          php: '7.3'
           install:
             - composer update # TODO: remove this
             - composer update -d dev-tools
           script: composer analyse
 
         - stage: Test
-          php: 7.1
+          php: '7.1'
           env: COMPOSER_FLAGS="--prefer-lowest"
 
-        - php: 7.1
+        - php: '7.1'
 
-        - php: 7.2
+        - php: '7.2'
 
-        - php: 7.3
+        - php: '7.3'
           before_install:
             - phpenv config-rm xdebug.ini || return 0
             - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
@@ -53,8 +56,5 @@ jobs:
           script: composer test -- --coverage-clover=build/logs/clover.xml
           after_success: vendor/bin/php-coveralls
 
-        - php: 7.4snapshot
+        - php: '7.4snapshot'
           env: COMPOSER_FLAGS="--ignore-platform-reqs" PHP_CS_FIXER_IGNORE_ENV=1
-
-    allow_failures:
-        - php: 7.4snapshot
