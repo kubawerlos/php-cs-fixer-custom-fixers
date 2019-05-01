@@ -97,10 +97,11 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         if (\strpos($content, '#') === 0) {
             return \substr($content, 1);
         }
+
         if (\strpos($content, '//') === 0) {
             return \substr($content, 2);
         }
 
-        return Preg::replace('/^\/\*+|\R\s*\*\s*|\*+\/$/', PHP_EOL, $content);
+        return Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
     }
 }
