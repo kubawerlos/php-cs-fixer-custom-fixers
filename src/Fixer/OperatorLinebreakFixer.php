@@ -9,6 +9,7 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -76,7 +77,7 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
         $this->operators = \array_merge(self::BOOLEAN_OPERATORS, self::NON_BOOLEAN_OPERATORS);
     }
 
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'Binary operators must always be at the beginning or at the end of the line.',
@@ -105,9 +106,10 @@ function foo() {
 
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['only_booleans']) && $configuration['only_booleans']) {
+        if (isset($configuration['only_booleans']) && $configuration['only_booleans'] === true) {
             $this->operators = self::BOOLEAN_OPERATORS;
         }
+
         $this->position = $configuration['position'] ?? $this->position;
     }
 
@@ -148,8 +150,12 @@ function foo() {
                 continue;
             }
 
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getNonEmptySibling(\min($indices), -1);
+
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken(\max($indices));
+
             for ($i = $nextIndex - 1; $i > $index; $i--) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
                     $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
@@ -174,8 +180,12 @@ function foo() {
                 continue;
             }
 
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken(\min($indices));
+
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNonEmptySibling(\max($indices), 1);
+
             for ($i = $prevIndex + 1; $i < $index; $i++) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
                     $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
@@ -202,6 +212,7 @@ function foo() {
         }
 
         if (isset($this->operators['?']) && $tokens[$index]->getContent() === '?') {
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
             if ($tokens[$nextIndex]->getContent() === ':') {
                 return [$index, $nextIndex];
@@ -209,6 +220,7 @@ function foo() {
         }
 
         if (isset($this->operators[':']) && $tokens[$index]->getContent() === ':') {
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if ($tokens[$prevIndex]->getContent() === '?') {
                 return [$prevIndex, $index];

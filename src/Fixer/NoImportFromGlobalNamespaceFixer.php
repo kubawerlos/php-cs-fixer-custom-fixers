@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
@@ -15,7 +16,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoImportFromGlobalNamespaceFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There must be no import from global namespace.',
@@ -59,10 +60,14 @@ class Bar {
             $token = $tokens[$index];
 
             if ($token->isGivenKind(T_USE)) {
+                /** @var int $classNameIndex */
                 $classNameIndex = $tokens->getNextMeaningfulToken($index);
+
                 if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
+                    /** @var int $classNameIndex */
                     $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
                 }
+                /** @var int $semicolonIndex */
                 $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
                 if ($tokens[$semicolonIndex]->getContent() === ';') {
                     $imports[] = $tokens[$classNameIndex]->getContent();

@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -14,7 +15,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             '`@var` must be correct in the code.',
@@ -99,7 +100,9 @@ $bar = new Foo();
 
     private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex): void
     {
+        /** @var int $index */
         $index = $tokens->getNextMeaningfulToken($controlIndex);
+
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
 
         $variables = [];

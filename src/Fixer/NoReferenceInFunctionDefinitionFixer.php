@@ -6,12 +6,13 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There must be no reference in function definition.',
@@ -62,13 +63,18 @@ function foo(&$x) {}
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
+        /** @var int $openParenthesis */
         $openParenthesis = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
+
         $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
         $indices = [];
 
         foreach (\array_keys($argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis)) as $startIndexCandidate) {
-            $indices[] = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
+            /** @var int $index */
+            $index = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
+
+            $indices[] = $index;
         }
 
         return $indices;

@@ -63,6 +63,11 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
 
         yield [
             "<?php\n",
+            "<?php\n/// var_dump('x');",
+        ];
+
+        yield [
+            "<?php\n",
             "<?php\n# var_dump('x');",
         ];
 
@@ -83,6 +88,27 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
                   // if (true) {
                   //     return 42;
                   // }
+              ',
+        ];
+
+        yield [
+            '<?php
+              ',
+            '<?php
+                  // // if (true) {
+                  // //     return 42;
+                  // // }
+              ',
+        ];
+
+        yield [
+            '<?php
+              ',
+            '<?php
+                  /* if (true) {
+                   *     return 42;
+                   * }
+                   */
               ',
         ];
 

@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\CommentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -13,7 +14,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoCommentedOutCodeFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There should be no commented out code.',
@@ -49,6 +50,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             if (\strpos($tokens[$index]->getContent(), '/*') === 0) {
                 $commentIndices = [$index];
             } else {
+                /** @var int[] $commentIndices */
                 $commentIndices = $commentsAnalyzer->getCommentBlockIndices($tokens, $index);
             }
 
@@ -94,13 +96,9 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
     private function getMessage(string $content): string
     {
-        if (\strpos($content, '#') === 0) {
-            return \substr($content, 1);
-        }
-        if (\strpos($content, '//') === 0) {
-            return \substr($content, 2);
-        }
+        /** @var string $message */
+        $message = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
 
-        return Preg::replace('/^\/\*+|\R\s*\*\s*|\*+\/$/', PHP_EOL, $content);
+        return \ltrim($message, '#/');
     }
 }
