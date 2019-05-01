@@ -1,4 +1,7 @@
 parameters:
+    level: max
+    paths:
+        - src
     ignoreErrors:
         - '#^Cannot call method [a-zA-Z]+\(\) on [a-zA-Z\\]+\|null\.$#'
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\NoCommentedOutCodeFixer::getMessage\(\) should return string but returns array<string>\|string\.$#'
@@ -6,5 +9,6 @@ parameters:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\OperatorLinebreakFixer::getOperatorIndices\(\) should return array<int>\|null but returns array<int, int\|null>\.$#'
         - '#^Only numeric types are allowed in (\-|\+|post\-decrement|post\-increment), int\|null given( on the left side)?\.$#'
         - '#^Parameter .+ expects .+, .+ given\.$#'
+
 includes:
     - dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon
