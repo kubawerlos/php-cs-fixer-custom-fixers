@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
+use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Preg;
@@ -120,11 +122,13 @@ function foo($a, $b, $c) {}
         $sorted = \array_merge($annotationsBeforeParams, \array_values(\array_filter($paramsByName)), $superfluousParams, $annotationsAfterParams);
 
         foreach ($sorted as $index => $annotationContent) {
+            /** @var Annotation $annotation */
             $annotation = $docBlock->getAnnotation($index);
             $annotation->remove();
-            $docBlock
-                ->getLine($annotation->getStart())
-                ->setContent($annotationContent);
+
+            /** @var Line $line */
+            $line = $docBlock->getLine($annotation->getStart());
+            $line->setContent($annotationContent);
         }
 
         return $docBlock->getContent();
