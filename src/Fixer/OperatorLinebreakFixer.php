@@ -9,6 +9,7 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -76,7 +77,7 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
         $this->operators = \array_merge(self::BOOLEAN_OPERATORS, self::NON_BOOLEAN_OPERATORS);
     }
 
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'Binary operators must always be at the beginning or at the end of the line.',

@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
@@ -15,7 +16,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoImportFromGlobalNamespaceFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There must be no import from global namespace.',

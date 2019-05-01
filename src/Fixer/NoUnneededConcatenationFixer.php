@@ -6,13 +6,14 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoUnneededConcatenationFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There should not be inline concatenation of strings.',

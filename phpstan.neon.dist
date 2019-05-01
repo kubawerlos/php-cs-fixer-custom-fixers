@@ -4,7 +4,6 @@ parameters:
         - src
     ignoreErrors:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\NoCommentedOutCodeFixer::getMessage\(\) should return string but returns array<string>\|string\.$#'
-        - '#^Method PhpCsFixerCustomFixers\\Fixer\\PhpdocVarAnnotationCorrectOrderFixer::getDefinition\(\) should return PhpCsFixer\\FixerDefinition\\FixerDefinition but returns PhpCsFixer\\FixerDefinition\\FixerDefinitionInterface\.$#'
         - '#^Only numeric types are allowed in (\-|\+|post\-decrement|post\-increment), int\|null given( on the left side)?\.$#'
         - '#^Parameter .+ expects .+, .+ given\.$#'
 

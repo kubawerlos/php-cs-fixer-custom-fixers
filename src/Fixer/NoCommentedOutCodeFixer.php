@@ -6,6 +6,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\CommentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -13,7 +14,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoCommentedOutCodeFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There should be no commented out code.',

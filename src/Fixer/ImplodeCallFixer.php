@@ -8,6 +8,7 @@ use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -23,7 +24,7 @@ final class ImplodeCallFixer extends AbstractFixer implements DeprecatedFixerInt
         $this->fixer = new \PhpCsFixer\Fixer\FunctionNotation\ImplodeCallFixer();
     }
 
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'Function `implode` must be called with 2 arguments in the documented order.',

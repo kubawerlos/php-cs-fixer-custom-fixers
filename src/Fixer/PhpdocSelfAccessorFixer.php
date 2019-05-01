@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
@@ -15,7 +16,7 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
 final class PhpdocSelfAccessorFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'In PHPDoc inside class or interface element `self` should be preferred over the class name itself.',
