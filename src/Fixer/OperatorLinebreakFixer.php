@@ -242,7 +242,7 @@ function foo() {
     private function getReplacementsAndClear(Tokens $tokens, array $indices, int $direction): array
     {
         return \array_map(
-            static function ($index) use ($tokens, $direction) {
+            static function (int $index) use ($tokens, $direction): Token {
                 $clone = $tokens[$index];
                 if ($tokens[$index + $direction]->isWhitespace()) {
                     $tokens->clearAt($index + $direction);
