@@ -10,8 +10,12 @@
 
     <issueHandlers>
         <DeprecatedInterface errorLevel='suppress' />
+        <InternalClass errorLevel='suppress' />
+        <InternalMethod errorLevel='suppress' />
+        <InvalidArgument errorLevel='suppress' />
         <InvalidReturnStatement errorLevel='suppress' />
         <InvalidReturnType errorLevel='suppress' />
+        <InvalidStringClass errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />
