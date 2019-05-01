@@ -3,7 +3,6 @@ parameters:
     paths:
         - src
     ignoreErrors:
-        - '#^Method PhpCsFixerCustomFixers\\Fixer\\NoCommentedOutCodeFixer::getMessage\(\) should return string but returns array<string>\|string\.$#'
         - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::insertAt\(\) expects#'
 
 includes:
