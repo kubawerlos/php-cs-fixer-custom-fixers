@@ -105,9 +105,10 @@ function foo() {
 
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['only_booleans']) && $configuration['only_booleans']) {
+        if (isset($configuration['only_booleans']) && $configuration['only_booleans'] === true) {
             $this->operators = self::BOOLEAN_OPERATORS;
         }
+
         $this->position = $configuration['position'] ?? $this->position;
     }
 
