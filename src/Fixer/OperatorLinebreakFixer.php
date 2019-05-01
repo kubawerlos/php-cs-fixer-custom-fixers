@@ -203,6 +203,7 @@ function foo() {
         }
 
         if (isset($this->operators['?']) && $tokens[$index]->getContent() === '?') {
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
             if ($tokens[$nextIndex]->getContent() === ':') {
                 return [$index, $nextIndex];
@@ -210,6 +211,7 @@ function foo() {
         }
 
         if (isset($this->operators[':']) && $tokens[$index]->getContent() === ':') {
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if ($tokens[$prevIndex]->getContent() === '?') {
                 return [$prevIndex, $index];
