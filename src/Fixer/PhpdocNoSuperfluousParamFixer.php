@@ -7,13 +7,14 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocNoSuperfluousParamFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There must be no superfluous parameters in PHPDoc.',
@@ -77,7 +78,9 @@ function foo($b, $s) {}
      */
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
+        /** @var int $paramBlockStartIndex */
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
+
         $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 
         $paramNames = [];

@@ -6,11 +6,12 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoNullableBooleanTypeFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There must be no nullable boolean type.',
@@ -42,7 +43,9 @@ function foo(?bool $bar) : ?bool
                 continue;
             }
 
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
+
             if (!$tokens[$nextIndex]->equals([T_STRING, 'bool'], false) && !$tokens[$nextIndex]->equals([T_STRING, 'boolean'], false)) {
                 continue;
             }

@@ -4,16 +4,19 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
+use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocParamOrderFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             "`@param` annotations must be in the same order as function's parameters.",
@@ -72,7 +75,9 @@ function foo($a, $b, $c) {}
      */
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
+        /** @var int $paramBlockStartIndex */
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
+
         $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 
         $paramNames = [];
@@ -120,11 +125,13 @@ function foo($a, $b, $c) {}
         $sorted = \array_merge($annotationsBeforeParams, \array_values(\array_filter($paramsByName)), $superfluousParams, $annotationsAfterParams);
 
         foreach ($sorted as $index => $annotationContent) {
+            /** @var Annotation $annotation */
             $annotation = $docBlock->getAnnotation($index);
             $annotation->remove();
-            $docBlock
-                ->getLine($annotation->getStart())
-                ->setContent($annotationContent);
+
+            /** @var Line $line */
+            $line = $docBlock->getLine($annotation->getStart());
+            $line->setContent($annotationContent);
         }
 
         return $docBlock->getContent();

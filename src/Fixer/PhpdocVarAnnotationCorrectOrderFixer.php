@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -21,7 +21,7 @@ final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer implement
         $this->fixer = new \PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer();
     }
 
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return $this->fixer->getDefinition();
     }

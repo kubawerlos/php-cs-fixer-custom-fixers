@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
@@ -15,7 +16,7 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
 final class PhpdocSelfAccessorFixer extends AbstractFixer
 {
-    public function getDefinition(): FixerDefinition
+    public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'In PHPDoc inside class or interface element `self` should be preferred over the class name itself.',
@@ -50,8 +51,12 @@ class Foo {
                     continue;
                 }
 
+                /** @var int $nameIndex */
                 $nameIndex = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
+
+                /** @var int $startIndex */
                 $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
+
                 $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
                 $name = $tokens[$nameIndex]->getContent();
@@ -86,11 +91,14 @@ class Foo {
 
                 $types = [];
                 foreach ($annotation->getTypes() as $type) {
-                    $types[] = Preg::replace(
+                    /** @var string $type */
+                    $type = Preg::replace(
                         \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $name, \preg_quote($fqcn, '/')),
                         'self',
                         $type
                     );
+
+                    $types[] = $type;
                 }
 
                 if ($types === $annotation->getTypes()) {
