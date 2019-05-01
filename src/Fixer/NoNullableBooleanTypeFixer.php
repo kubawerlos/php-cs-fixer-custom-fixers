@@ -43,7 +43,9 @@ function foo(?bool $bar) : ?bool
                 continue;
             }
 
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
+
             if (!$tokens[$nextIndex]->equals([T_STRING, 'bool'], false) && !$tokens[$nextIndex]->equals([T_STRING, 'boolean'], false)) {
                 continue;
             }

@@ -60,8 +60,11 @@ class Bar {
             $token = $tokens[$index];
 
             if ($token->isGivenKind(T_USE)) {
+                /** @var int $classNameIndex */
                 $classNameIndex = $tokens->getNextMeaningfulToken($index);
+
                 if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
+                    /** @var int $classNameIndex */
                     $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
                 }
                 /** @var int $semicolonIndex */

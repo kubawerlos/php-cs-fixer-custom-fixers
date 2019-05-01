@@ -11,11 +11,14 @@ abstract class AbstractFixer implements DefinedFixerInterface
 {
     final public static function name(): string
     {
+        /** @var string $subject */
+        $subject = Preg::replace('/^.*\\\\([a-zA-Z0-1]+)Fixer$/', '$1', static::class);
+
         return 'PhpCsFixerCustomFixers/' . \implode(
             '_',
             \array_map(
                 'strtolower',
-                Preg::split('/(?=[A-Z])/', Preg::replace('/^.*\\\\([a-zA-Z0-1]+)Fixer$/', '$1', static::class), 0, PREG_SPLIT_NO_EMPTY)
+                Preg::split('/(?=[A-Z])/', $subject, 0, PREG_SPLIT_NO_EMPTY)
             )
         );
     }

@@ -50,6 +50,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             if (\strpos($tokens[$index]->getContent(), '/*') === 0) {
                 $commentIndices = [$index];
             } else {
+                /** @var int[] $commentIndices */
                 $commentIndices = $commentsAnalyzer->getCommentBlockIndices($tokens, $index);
             }
 

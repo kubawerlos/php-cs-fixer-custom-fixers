@@ -51,8 +51,12 @@ class Foo {
                     continue;
                 }
 
+                /** @var int $nameIndex */
                 $nameIndex = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
+
+                /** @var int $startIndex */
                 $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
+
                 $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
                 $name = $tokens[$nameIndex]->getContent();
@@ -87,11 +91,14 @@ class Foo {
 
                 $types = [];
                 foreach ($annotation->getTypes() as $type) {
-                    $types[] = Preg::replace(
+                    /** @var string $type */
+                    $type = Preg::replace(
                         \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $name, \preg_quote($fqcn, '/')),
                         'self',
                         $type
                     );
+
+                    $types[] = $type;
                 }
 
                 if ($types === $annotation->getTypes()) {

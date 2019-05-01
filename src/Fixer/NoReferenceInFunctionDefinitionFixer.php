@@ -63,7 +63,9 @@ function foo(&$x) {}
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
+        /** @var int $openParenthesis */
         $openParenthesis = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
+
         $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
         $indices = [];

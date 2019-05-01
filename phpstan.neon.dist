@@ -4,7 +4,7 @@ parameters:
         - src
     ignoreErrors:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\NoCommentedOutCodeFixer::getMessage\(\) should return string but returns array<string>\|string\.$#'
-        - '#^Parameter .+ expects .+, .+ given\.$#'
+        - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::insertAt\(\) expects#'
 
 includes:
     - dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon

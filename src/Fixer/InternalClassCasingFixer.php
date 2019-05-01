@@ -53,6 +53,7 @@ final class InternalClassCasingFixer extends AbstractFixer
                 continue;
             }
 
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
                 $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
