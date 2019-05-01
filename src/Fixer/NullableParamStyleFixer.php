@@ -87,6 +87,7 @@ function foo(int $x = null) {
                 /** @var int $separatorIndex */
                 $separatorIndex = $tokens->getPrevTokenOfKind($typeIndex, ['(', ',']);
 
+                /** @var int $nullableIndex */
                 $nullableIndex = $tokens->getNextMeaningfulToken($separatorIndex);
 
                 if ($this->style === 'with_question_mark' && !$tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
