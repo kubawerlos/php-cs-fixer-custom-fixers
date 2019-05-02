@@ -2,23 +2,27 @@
 
 <psalm xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
        xmlns='https://getpsalm.org/schema/config'
-       xsi:schemaLocation='https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd'
+       xsi:schemaLocation='https://getpsalm.org/schema/config dev-tools/vendor/vimeo/psalm/config.xsd'
 >
     <projectFiles>
         <directory name='src' />
+        <directory name='src-dev' />
     </projectFiles>
 
     <issueHandlers>
         <DeprecatedInterface errorLevel='suppress' />
-        <InvalidReturnStatement errorLevel='suppress' />
-        <InvalidReturnType errorLevel='suppress' />
+        <InternalClass errorLevel='suppress' />
+        <InternalMethod errorLevel='suppress' />
+        <InvalidArgument errorLevel='suppress' />
+        <InvalidStringClass>
+            <errorLevel type='suppress'>
+                <file name='src/Fixers.php' />
+            </errorLevel>
+        </InvalidStringClass>
         <LoopInvalidation errorLevel='suppress' />
-        <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
-        <PossiblyNullReference errorLevel='suppress' />
         <UnusedClass errorLevel='suppress' />
-        <UnusedMethod errorLevel='suppress' />
     </issueHandlers>
 </psalm>

@@ -66,13 +66,6 @@ final class TokenRemover
             return;
         }
 
-        $content = $tokens[$index]->getContent();
-
-        $prevIndex = $tokens->getNonEmptySibling($index, -1);
-        if ($tokens[$prevIndex]->isGivenKind(T_OPEN_TAG)) {
-            $content = \substr($tokens[$prevIndex]->getContent(), 5) . $content;
-        }
-
         $newContent = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
 
         if ($newContent === '') {

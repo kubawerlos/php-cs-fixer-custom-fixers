@@ -48,7 +48,7 @@
             "PHP_CS_FIXER_FUTURE_MODE=1 vendor/bin/php-cs-fixer fix --ansi --diff --dry-run -v",
             "dev-tools/vendor/bin/phpmd src text phpmd.xml",
             "dev-tools/vendor/bin/phpstan analyse --ansi",
-            "dev-tools/vendor/bin/psalm --find-dead-code -v"
+            "dev-tools/vendor/bin/psalm --find-dead-code"
         ],
         "test": [
             "vendor/bin/phpunit"
