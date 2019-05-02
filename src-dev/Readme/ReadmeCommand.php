@@ -81,6 +81,11 @@ class ReadmeCommand extends BaseCommand
                 \sprintf('https://badge.stryker-mutator.io/github.com/%s/master', $this->composer()->name),
                 'https://stryker-mutator.github.io'
             ),
+            $this->badge(
+                'Psalm type coverage',
+                \sprintf('https://shepherd.dev/github/%s/coverage.svg', $this->composer()->name),
+                \sprintf('https://shepherd.dev/github/%s', $this->composer()->name)
+            ),
         ]) . "\n";
     }
 
