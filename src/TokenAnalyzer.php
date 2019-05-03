@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace PhpCsFixerCustomFixers;
 
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\TokensAnalyzer as PhpCsFixerTokensAnalyzer;
 
 /**
  * @internal
@@ -15,21 +14,12 @@ final class TokenAnalyzer
     /** @var Tokens */
     private $tokens;
 
-    /** @var PhpCsFixerTokensAnalyzer */
-    private $analyzer;
-
     /**
      * @param Tokens $tokens
      */
     public function __construct(Tokens $tokens)
     {
         $this->tokens = $tokens;
-        $this->analyzer = new PhpCsFixerTokensAnalyzer($tokens);
-    }
-
-    public function getPhpCsFixerTokensAnalyzer(): PhpCsFixerTokensAnalyzer
-    {
-        return $this->analyzer;
     }
 
     public function getClosingParenthesis(int $index): ?int
@@ -53,6 +43,8 @@ final class TokenAnalyzer
                 return $i;
             }
         }
+
+        return null;
     }
 
     public function getClosingBracket(int $index): ?int
@@ -108,11 +100,7 @@ final class TokenAnalyzer
     public function getNextVariable(int $index, string $variableName, bool $ignoreBrackets): ?int
     {
         do {
-            if ($index === null) {
-                return null;
-            }
-
-            $index = $this->tokens->getNextMeaningfulToken($index);
+            $index = $this->tokens->getNextMeaningfulToken((int) $index);
 
             if ($index === null) {
                 return null;
@@ -128,6 +116,52 @@ final class TokenAnalyzer
                 }
             }
         } while ($this->tokens[$index]->getContent() !== $variableName);
+
+        return $index;
+    }
+
+    public function getPreviousVariable(int $index, string $variableName, bool $ignoreBrackets): ?int
+    {
+        do {
+            $index = $this->tokens->getPrevMeaningfulToken((int) $index);
+
+            if ($index === null) {
+                return null;
+            }
+
+            if ($ignoreBrackets === true) {
+                if ($this->tokens[$index]->equals('(') === true) {
+                    $index = $this->getClosingParenthesis($index);
+                } elseif ($this->tokens[$index]->equals('[') === true) {
+                    $index = $this->getClosingBracket($index);
+                } elseif ($this->tokens[$index]->equals('{') === true) {
+                    $index = $this->getClosingCurlyBracket($index);
+                }
+            }
+        } while ($this->tokens[$index]->getContent() !== $variableName);
+
+        return $index;
+    }
+
+    public function getNextString(string $string, int $index, bool $ignoreBrackets): ?int
+    {
+        do {
+            $index = $this->tokens->getNextMeaningfulToken((int) $index);
+
+            if ($index === null) {
+                return null;
+            }
+
+            if ($ignoreBrackets === true) {
+                if ($this->tokens[$index]->equals('(') === true) {
+                    $index = $this->getClosingParenthesis($index);
+                } elseif ($this->tokens[$index]->equals('[') === true) {
+                    $index = $this->getClosingBracket($index);
+                } elseif ($this->tokens[$index]->equals('{') === true) {
+                    $index = $this->getClosingCurlyBracket($index);
+                }
+            }
+        } while ($this->tokens[$index]->equals($string) === false);
 
         return $index;
     }
@@ -156,59 +190,5 @@ final class TokenAnalyzer
         $explodedContent = \explode("\n", $whitespaceToken->getContent());
 
         return (string) \end($explodedContent);
-    }
-
-    public function getPreviousVariable(int $index, string $variableName, bool $ignoreBrackets): ?int
-    {
-        do {
-            if ($index === null) {
-                return null;
-            }
-
-            $index = $this->tokens->getPrevMeaningfulToken($index);
-
-            if ($index === null) {
-                return null;
-            }
-
-            if ($ignoreBrackets === true) {
-                if ($this->tokens[$index]->equals('(') === true) {
-                    $index = $this->getClosingParenthesis($index);
-                } elseif ($this->tokens[$index]->equals('[') === true) {
-                    $index = $this->getClosingBracket($index);
-                } elseif ($this->tokens[$index]->equals('{') === true) {
-                    $index = $this->getClosingCurlyBracket($index);
-                }
-            }
-        } while ($this->tokens[$index]->getContent() !== $variableName);
-
-        return $index;
-    }
-
-    public function getNextString(string $string, int $index, bool $ignoreBrackets): ?int
-    {
-        do {
-            if ($index === null) {
-                return null;
-            }
-
-            $index = $this->tokens->getNextMeaningfulToken($index);
-
-            if ($index === null) {
-                return null;
-            }
-
-            if ($ignoreBrackets === true) {
-                if ($this->tokens[$index]->equals('(') === true) {
-                    $index = $this->getClosingParenthesis($index);
-                } elseif ($this->tokens[$index]->equals('[') === true) {
-                    $index = $this->getClosingBracket($index);
-                } elseif ($this->tokens[$index]->equals('{') === true) {
-                    $index = $this->getClosingCurlyBracket($index);
-                }
-            }
-        } while ($this->tokens[$index]->equals($string) === false);
-
-        return $index;
     }
 }
