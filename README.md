@@ -308,9 +308,11 @@ In your PHP CS Fixer configuration register fixers and use them:
 - **PhpdocVarAnnotationToAssertFixer** - `@var` can be replaced with assert() call.
 ```diff
  <?php
--/** @var Foo|Bar $fooOrBar */
+ $fooOrBar = new Foo();
 +assert($fooOrBar instanceof Foo || $fooOrBar instanceof Bar);
- $bar = new Foo();
+ // ...
+-/** @var Foo|Bar $fooOrBar */
++
 ```
 
 - **SingleSpaceAfterStatementFixer** - a single space must follow - not followed by semicolon - statement.

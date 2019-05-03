@@ -137,11 +137,63 @@ assert($foo instanceof Foo);
 
         yield [
             '<?php
-// TODO -> move assert after "$foo"?
+
+$foo = 1;
+assert(is_int($foo));
 ',
             '<?php
 /** @var int $foo */
 $foo = 1;
+',
+        ];
+
+        yield [
+            '<?php
+    
+    if ($foo === 1) {
+       $bar = $lall;
+       assert(is_int($bar));
+    }
+',
+            '<?php
+    /** @var int $bar */
+    if ($foo === 1) {
+       $bar = $lall;
+    }
+',
+        ];
+
+        yield [
+            '<?php
+    
+    if ($foo === 1) {
+       // ...
+    }
+    
+    $bar = $lall;
+    assert(is_int($bar));
+',
+            '<?php
+    /** @var int $bar */
+    if ($foo === 1) {
+       // ...
+    }
+    
+    $bar = $lall;
+',
+        ];
+
+        yield [
+            '<?php
+    $bar = $lall;
+    assert(is_int($bar));
+    
+    
+',
+            '<?php
+    $bar = $lall;
+    
+    /** @var int $bar */
 ',
         ];
 

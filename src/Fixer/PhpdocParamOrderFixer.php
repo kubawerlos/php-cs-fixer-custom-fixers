@@ -4,9 +4,7 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -75,8 +73,8 @@ function foo($a, $b, $c) {}
      */
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
-        /** @var int $paramBlockStartIndex */
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
+        \assert(\is_int($paramBlockStartIndex));
 
         $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 
@@ -125,12 +123,14 @@ function foo($a, $b, $c) {}
         $sorted = \array_merge($annotationsBeforeParams, \array_values(\array_filter($paramsByName)), $superfluousParams, $annotationsAfterParams);
 
         foreach ($sorted as $index => $annotationContent) {
-            /** @var Annotation $annotation */
             $annotation = $docBlock->getAnnotation($index);
+            \assert($annotation instanceof \PhpCsFixer\DocBlock\Annotation);
+
             $annotation->remove();
 
-            /** @var Line $line */
             $line = $docBlock->getLine($annotation->getStart());
+            \assert($line instanceof \PhpCsFixer\DocBlock\Line);
+
             $line->setContent($annotationContent);
         }
 

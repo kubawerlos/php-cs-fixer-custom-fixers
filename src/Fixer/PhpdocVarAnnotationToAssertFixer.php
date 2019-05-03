@@ -18,8 +18,9 @@ final class PhpdocVarAnnotationToAssertFixer extends AbstractFixer
         return new FixerDefinition(
             '`@var` can be replaced with assert() call.',
             [new CodeSample('<?php
+$fooOrBar = new Foo();
+// ...
 /** @var Foo|Bar $fooOrBar */
-$bar = new Foo();
 ')]
         );
     }
@@ -41,6 +42,10 @@ $bar = new Foo();
             }
 
             if (\stripos($token->getContent(), '@var') === false) {
+                continue;
+            }
+
+            if (\stripos($token->getContent(), '- skip converting into "assert()"-call') !== false) {
                 continue;
             }
 
@@ -108,12 +113,11 @@ $bar = new Foo();
     /**
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @param int                          $index
-     * @param null|string                  $pattern
+     * @param string                       $pattern
      */
-    private function convertVarAnnotationMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
+    private function convertVarAnnotationMatchingPattern(Tokens $tokens, int $index, string $pattern): void
     {
-        $doc = new DocBlock($tokens[$index]->getContent());
-        $content = $doc->getContent();
+        $content = (new DocBlock($tokens[$index]->getContent()))->getContent();
 
         if (\substr_count($content, '@') > 1) {
             return;
@@ -181,6 +185,33 @@ $bar = new Foo();
         }
 
         // replace "@var" with assert call
+
+        $foundPreviousVariable = $this->analyze($tokens)->getPreviousVariable($index, $matches['variable'], false);
+        if ($foundPreviousVariable !== null) {
+            $tokens->clearAt($index);
+
+            $indention = $this->analyze($tokens)->detectIndent($foundPreviousVariable);
+            $foundSemiColonAfterNextVariable = $this->analyze($tokens)->getNextString(';', $foundPreviousVariable, true);
+            if ($foundSemiColonAfterNextVariable !== null) {
+                $tokens->insertAt($foundSemiColonAfterNextVariable + 1, new Token([\T_STRING, "\n" . $indention . $str]));
+
+                return;
+            }
+        }
+
+        $foundNextVariable = $this->analyze($tokens)->getNextVariable($index, $matches['variable'], false);
+        if ($foundNextVariable !== null) {
+            $tokens->clearAt($index);
+
+            $indention = $this->analyze($tokens)->detectIndent($foundNextVariable);
+            $foundSemiColonAfterNextVariable = $this->analyze($tokens)->getNextString(';', $foundNextVariable, true);
+            if ($foundSemiColonAfterNextVariable !== null) {
+                $tokens->insertAt($foundSemiColonAfterNextVariable + 1, new Token([\T_STRING, "\n" . $indention . $str]));
+
+                return;
+            }
+        }
+
         $tokens[$index] = new Token([\T_STRING, $str]);
     }
 }

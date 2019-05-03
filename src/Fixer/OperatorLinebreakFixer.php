@@ -150,11 +150,11 @@ function foo() {
                 continue;
             }
 
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getNonEmptySibling(\min($indices), -1);
+            \assert(\is_int($prevIndex));
 
-            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken(\max($indices));
+            \assert(\is_int($nextIndex));
 
             for ($i = $nextIndex - 1; $i > $index; $i--) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
@@ -180,11 +180,11 @@ function foo() {
                 continue;
             }
 
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken(\min($indices));
+            \assert(\is_int($prevIndex));
 
-            /** @var int $nextIndex */
             $nextIndex = $tokens->getNonEmptySibling(\max($indices), 1);
+            \assert(\is_int($nextIndex));
 
             for ($i = $prevIndex + 1; $i < $index; $i++) {
                 if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
@@ -212,19 +212,22 @@ function foo() {
         }
 
         if (isset($this->operators['?']) && $tokens[$index]->getContent() === '?') {
-            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($nextIndex));
+
             if ($tokens[$nextIndex]->getContent() === ':') {
                 return [$index, $nextIndex];
             }
         }
 
         if (isset($this->operators[':']) && $tokens[$index]->getContent() === ':') {
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($prevIndex));
+
             if ($tokens[$prevIndex]->getContent() === '?') {
                 return [$prevIndex, $index];
             }
+
             $prevIndex = $tokens->getPrevTokenOfKind($prevIndex, [[T_CASE], '?']);
             if ($prevIndex === null || $tokens[$prevIndex]->isGivenKind(T_CASE)) {
                 return null;

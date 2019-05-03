@@ -6,13 +6,16 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\TokenAnalyzer;
 
 abstract class AbstractFixer implements DefinedFixerInterface
 {
     final public static function name(): string
     {
-        /** @var string $name */
         $name = Preg::replace('/^.*\\\\([a-zA-Z0-1]+)Fixer$/', '$1', static::class);
+
+        \assert(\is_string($name));
 
         return 'PhpCsFixerCustomFixers/' . \strtolower($name);
     }
@@ -25,5 +28,10 @@ abstract class AbstractFixer implements DefinedFixerInterface
     final public function supports(\SplFileInfo $file): bool
     {
         return true;
+    }
+
+    protected function analyze(Tokens $tokens): TokenAnalyzer
+    {
+        return new TokenAnalyzer($tokens);
     }
 }
