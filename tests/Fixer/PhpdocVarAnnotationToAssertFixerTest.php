@@ -7,9 +7,8 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
- *
- * @covers \PhpCsFixerCustomFixers\TokenAnalyzer
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocVarAnnotationToAssertFixer
+ * @covers \PhpCsFixerCustomFixers\TokenAnalyzer
  */
 final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
 {
