@@ -7,6 +7,8 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
+ *
+ * @covers \PhpCsFixerCustomFixers\TokenAnalyzer
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocVarAnnotationToAssertFixer
  */
 final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
@@ -270,6 +272,17 @@ assert($foo instanceof Foo);
 ',
             '<?php
 /**    @var Foo        */
+',
+        ];
+
+        yield [
+            '<?php
+/**
+ * @var Foo $foo - skip converting into "assert()"-call */
+',
+            '<?php
+/**
+ * @var Foo $foo - skip converting into "assert()"-call */
 ',
         ];
     }
