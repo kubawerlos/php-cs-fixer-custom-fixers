@@ -184,29 +184,47 @@ $fooOrBar = new Foo();
             $str .= ' // ' . $comment;
         }
 
+        $analyze = $this->analyze($tokens);
+
         // replace "@var" with assert call
 
-        $foundPreviousVariable = $this->analyze($tokens)->getPreviousVariable($index, $matches['variable'], false);
+        $foundPreviousVariable = $analyze->getPreviousVariable($index, $matches['variable'], false);
         if ($foundPreviousVariable !== null) {
             $tokens->clearAt($index);
 
-            $indention = $this->analyze($tokens)->detectIndent($foundPreviousVariable);
-            $foundSemiColonAfterNextVariable = $this->analyze($tokens)->getNextString(';', $foundPreviousVariable, true);
+            $indention = $analyze->detectIndent($foundPreviousVariable);
+            $foundSemiColonAfterNextVariable = $analyze->getNextString(';', $foundPreviousVariable, true);
             if ($foundSemiColonAfterNextVariable !== null) {
-                $tokens->insertAt($foundSemiColonAfterNextVariable + 1, new Token([\T_STRING, "\n" . $indention . $str]));
+                $tokens->insertAt(
+                    $foundSemiColonAfterNextVariable + 1,
+                    new Token(
+                        [
+                            \T_STRING,
+                            "\n" . $indention . $str,
+                        ]
+                    )
+                );
 
                 return;
             }
         }
 
-        $foundNextVariable = $this->analyze($tokens)->getNextVariable($index, $matches['variable'], false);
+        $foundNextVariable = $analyze->getNextVariable($index, $matches['variable'], false);
         if ($foundNextVariable !== null) {
             $tokens->clearAt($index);
 
-            $indention = $this->analyze($tokens)->detectIndent($foundNextVariable);
-            $foundSemiColonAfterNextVariable = $this->analyze($tokens)->getNextString(';', $foundNextVariable, true);
+            $indention = $analyze->detectIndent($foundNextVariable);
+            $foundSemiColonAfterNextVariable = $analyze->getNextString(';', $foundNextVariable, true);
             if ($foundSemiColonAfterNextVariable !== null) {
-                $tokens->insertAt($foundSemiColonAfterNextVariable + 1, new Token([\T_STRING, "\n" . $indention . $str]));
+                $tokens->insertAt(
+                    $foundSemiColonAfterNextVariable + 1,
+                    new Token(
+                        [
+                            \T_STRING,
+                            "\n" . $indention . $str,
+                        ]
+                    )
+                );
 
                 return;
             }
