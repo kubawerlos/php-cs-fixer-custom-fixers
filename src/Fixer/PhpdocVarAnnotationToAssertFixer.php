@@ -137,6 +137,10 @@ $fooOrBar = new Foo();
             return;
         }
 
+        if (\strpos($type, 'mixed') !== false) {
+            return;
+        }
+
         $comment = \trim($matches['comment']);
 
         if (\strpos($type, '|') !== false) {

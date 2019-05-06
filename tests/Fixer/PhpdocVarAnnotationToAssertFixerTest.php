@@ -284,5 +284,16 @@ assert($foo instanceof Foo);
  * @var Foo $foo - skip converting into "assert()"-call */
 ',
         ];
+
+        yield [
+            '<?php
+/**
+ * @var mixed|Foo $foo */
+',
+            '<?php
+/**
+ * @var mixed|Foo $foo */
+',
+        ];
     }
 }
