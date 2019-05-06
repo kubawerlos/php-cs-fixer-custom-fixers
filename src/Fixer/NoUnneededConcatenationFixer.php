@@ -46,11 +46,13 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
                 continue;
             }
 
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($prevIndex));
+
             if (!$tokens[$prevIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
+
             $stringBorder = $tokens[$prevIndex]->getContent()[0];
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);

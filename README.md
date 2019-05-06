@@ -305,6 +305,16 @@ In your PHP CS Fixer configuration register fixers and use them:
  $foo = 2 + 2;
 ```
 
+- **PhpdocVarAnnotationToAssertFixer** - `@var` can be replaced with assert() call.
+```diff
+ <?php
+ $fooOrBar = new Foo();
++assert($fooOrBar instanceof Foo || $fooOrBar instanceof Bar);
+ // ...
+-/** @var Foo|Bar $fooOrBar */
++
+```
+
 - **SingleSpaceAfterStatementFixer** - a single space must follow - not followed by semicolon - statement.
   Configuration options:
   - `allow_linebreak` (`bool`): whether to allow statement followed by linebreak; defaults to `false`

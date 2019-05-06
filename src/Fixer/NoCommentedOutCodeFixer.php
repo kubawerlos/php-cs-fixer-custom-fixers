@@ -96,8 +96,9 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
     private function getMessage(string $content): string
     {
-        /** @var string $message */
         $message = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
+
+        \assert(\is_string($message));
 
         return \ltrim($message, '#/');
     }

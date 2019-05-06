@@ -64,9 +64,9 @@ function foo(int $x = null) {
                 continue;
             }
 
-            /** @var int $paramBlockStartIndex */
             $paramBlockStartIndex = $tokens->getNextTokenOfKind($index, ['(']);
 
+            \assert(\is_int($paramBlockStartIndex));
             $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 
             for ($i = $paramBlockEndIndex; $i > $paramBlockStartIndex; $i--) {
@@ -74,21 +74,21 @@ function foo(int $x = null) {
                     continue;
                 }
 
-                /** @var int $variableIndex */
                 $variableIndex = $tokens->getPrevTokenOfKind($i, [[T_VARIABLE]]);
 
-                /** @var int $typeIndex */
+                \assert(\is_int($variableIndex));
                 $typeIndex = $tokens->getPrevMeaningfulToken($variableIndex);
 
+                \assert(\is_int($typeIndex));
                 if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_STRING])) {
                     continue;
                 }
 
-                /** @var int $separatorIndex */
                 $separatorIndex = $tokens->getPrevTokenOfKind($typeIndex, ['(', ',']);
+                \assert(\is_int($separatorIndex));
 
-                /** @var int $nullableIndex */
                 $nullableIndex = $tokens->getNextMeaningfulToken($separatorIndex);
+                \assert(\is_int($nullableIndex));
 
                 if ($this->style === 'with_question_mark' && !$tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
                     $tokens->insertAt($nullableIndex, new Token([CT::T_NULLABLE_TYPE, '?']));

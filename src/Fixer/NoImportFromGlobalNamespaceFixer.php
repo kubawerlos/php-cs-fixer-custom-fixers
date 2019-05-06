@@ -60,15 +60,16 @@ class Bar {
             $token = $tokens[$index];
 
             if ($token->isGivenKind(T_USE)) {
-                /** @var int $classNameIndex */
                 $classNameIndex = $tokens->getNextMeaningfulToken($index);
+                \assert(\is_int($classNameIndex));
 
                 if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
-                    /** @var int $classNameIndex */
                     $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+                    \assert(\is_int($classNameIndex));
                 }
-                /** @var int $semicolonIndex */
+
                 $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+                \assert(\is_int($semicolonIndex));
                 if ($tokens[$semicolonIndex]->getContent() === ';') {
                     $imports[] = $tokens[$classNameIndex]->getContent();
                     for ($i = $index; $i < $semicolonIndex; $i++) {
