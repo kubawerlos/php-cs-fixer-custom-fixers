@@ -45,14 +45,16 @@ jobs:
             - phpenv config-rm xdebug.ini || return 0
             - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
             - |
-                git clone --branch=release --depth=1 https://github.com/krakjoe/pcov
+                git clone --branch=develop --depth=1 https://github.com/krakjoe/pcov
                 cd pcov
                 phpize
                 ./configure
                 make clean install
                 echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
                 cd $TRAVIS_BUILD_DIR
-          install: composer require --dev php-coveralls/php-coveralls
+          install:
+            - composer require --dev php-coveralls/php-coveralls
+            - cp _tmp/PCOV.php vendor/phpunit/php-code-coverage/src/Driver/PCOV.php
           script: composer test -- --coverage-clover=build/logs/clover.xml
           after_success: vendor/bin/php-coveralls
 
