@@ -305,6 +305,16 @@ In your PHP CS Fixer configuration register fixers and use them:
  $foo = 2 + 2;
 ```
 
+- **SingleLineThrowFixer** - `throw` must be single line.
+```diff
+ <?php
+-throw new Exception(
+-    'Error',
+-    500
+-);
++throw new Exception('Error', 500);
+```
+
 - **SingleSpaceAfterStatementFixer** - a single space must follow - not followed by semicolon - statement.
   Configuration options:
   - `allow_linebreak` (`bool`): whether to allow statement followed by linebreak; defaults to `false`
