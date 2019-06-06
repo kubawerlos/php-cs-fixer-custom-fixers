@@ -41,17 +41,28 @@
     "scripts": {
         "analyse": [
             "composer validate --strict",
-            "composer normalize -d ./dev-tools ./../composer.json --dry-run",
-            "dev-tools/vendor/bin/composer-require-checker check composer.json",
-            "dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 src tests",
-            "vendor/bin/types-checker src tests",
-            "PHP_CS_FIXER_FUTURE_MODE=1 vendor/bin/php-cs-fixer fix --ansi --diff --dry-run -v",
-            "dev-tools/vendor/bin/phpmd src text phpmd.xml",
-            "dev-tools/vendor/bin/phpstan analyse --ansi",
-            "dev-tools/vendor/bin/psalm --find-dead-code"
+            "composer normalize --working-dir=./dev-tools/ ./../composer.json --dry-run",
+            "./dev-tools/vendor/bin/composer-require-checker check ./composer.json",
+            "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src/ ./tests/",
+            "./vendor/bin/types-checker ./src/ ./tests/",
+            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --diff --dry-run --verbose",
+            "./dev-tools/vendor/bin/phpcpd ./src/",
+            "./dev-tools/vendor/bin/phpmd ./src/ text ./phpmd.xml",
+            "./dev-tools/vendor/bin/phpstan analyse --ansi",
+            "./dev-tools/vendor/bin/psalm --find-dead-code"
+        ],
+        "fix": [
+            "composer normalize --working-dir=./dev-tools ./../composer.json",
+            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src/ ./tests/",
+            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi -v",
+            "./src-dev/Readme/run > README.md"
         ],
         "test": [
-            "vendor/bin/phpunit"
+            "./vendor/bin/phpunit"
+        ],
+        "verify": [
+            "@analyse",
+            "@test"
         ]
     }
 }

@@ -28,8 +28,8 @@ jobs:
         - stage: Static code analysis
           php: '7.3'
           install:
-            - composer update # TODO: remove this
-            - composer update -d dev-tools
+            - composer update
+            - composer update --working-dir=./dev-tools/
           script: composer analyse
 
         - stage: Test
@@ -46,7 +46,7 @@ jobs:
             - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
             - |
                 git clone --branch=v1.0.4 --depth=1 https://github.com/krakjoe/pcov
-                cd pcov
+                cd pcov/
                 phpize
                 ./configure
                 make clean install
@@ -54,7 +54,7 @@ jobs:
                 cd $TRAVIS_BUILD_DIR
           install: composer require --dev php-coveralls/php-coveralls
           script: composer test -- --coverage-clover=build/logs/clover.xml
-          after_success: vendor/bin/php-coveralls
+          after_success: ./vendor/bin/php-coveralls
 
         - php: '7.4snapshot'
           env: COMPOSER_FLAGS="--ignore-platform-reqs" PHP_CS_FIXER_IGNORE_ENV=1
