@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add SingleLineThrowFixer
+- Add PhpUnitNoUselessReturnFixer
 
 ## v1.13.0 - *2019-01-11*
 - Update PHP CS Fixer to v2.14
