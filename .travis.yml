@@ -17,7 +17,7 @@ notifications:
 
 before_install:
     - phpenv config-rm xdebug.ini || return 0
-    - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
+    - composer global show hirak/prestissimo --quiet || composer global require hirak/prestissimo
 
 install: composer update $COMPOSER_FLAGS
 
@@ -43,7 +43,7 @@ jobs:
         - php: '7.3'
           before_install:
             - phpenv config-rm xdebug.ini || return 0
-            - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
+            - composer global show hirak/prestissimo --quiet || composer global require hirak/prestissimo
             - |
                 git clone --branch=v1.0.4 --depth=1 https://github.com/krakjoe/pcov
                 cd ./pcov/
