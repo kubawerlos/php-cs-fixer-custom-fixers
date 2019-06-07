@@ -75,7 +75,7 @@ class FooTest extends TestCase {
             '];
 
         yield ['
-                $this->getSomeObject()->markAsRisky();
+                $this->getSomeObject()->markTestSkipped();
                 return;
             '];
 
