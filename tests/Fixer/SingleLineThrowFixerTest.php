@@ -100,6 +100,15 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php throw $this->getExceptionFactory()->createAnException("Foo");',
+            '<?php throw $this
+                ->getExceptionFactory()
+                ->createAnException(
+                    "Foo"
+                );',
+        ];
+
+        yield [
             '<?php throw ExceptionFactory::createAnException("Foo");',
             '<?php throw ExceptionFactory
                     ::
@@ -125,6 +134,13 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
             '<?php throw new $exceptionName(
                 "Foo"
             );',
+        ];
+
+        yield [
+            '<?php throw new $exceptions[4];',
+            '<?php throw new $exceptions[
+                4
+            ];',
         ];
 
         yield [
