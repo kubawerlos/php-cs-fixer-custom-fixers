@@ -80,7 +80,7 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Binary operators must always be at the beginning or at the end of the line.',
+            'binary operators must always be at the beginning or at the end of the line',
             [new CodeSample('<?php
 function foo() {
     return $bar ||

@@ -230,6 +230,17 @@ In your PHP CS Fixer configuration register fixers and use them:
  }
 ```
 
+- **PhpUnitNoUselessReturnFixer** - PHPUnit's functions `fail`, `markTestIncomplete` and `markTestSkipped` should not be followed directly by return.  
+  *Risky: when PHPUnit's native methods are overridden.*
+```diff
+ class FooTest extends TestCase {
+     public function testFoo() {
+         $this->markTestSkipped();
+-        return;
+     }
+ }
+```
+
 - **PhpdocNoIncorrectVarAnnotationFixer** - `@var` must be correct in the code.
 ```diff
  <?php
@@ -315,7 +326,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 +throw new Exception('Error', 500);
 ```
 
-- **SingleSpaceAfterStatementFixer** - a single space must follow - not followed by semicolon - statement.
+- **SingleSpaceAfterStatementFixer** - single space must follow - not followed by semicolon - statement.
   Configuration options:
   - `allow_linebreak` (`bool`): whether to allow statement followed by linebreak; defaults to `false`
 ```diff
@@ -326,7 +337,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 +echo $foo->__toString();
 ```
 
-- **SingleSpaceBeforeStatementFixer** - a single space must precede - not preceded by linebreak - statement.
+- **SingleSpaceBeforeStatementFixer** - single space must precede - not preceded by linebreak - statement.
 ```diff
  <?php
 -$foo =new Foo();
@@ -335,7 +346,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
 
 ## Contributing
-Request a feature or report a bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
+Request feature or report bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
 
 Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```bash
@@ -345,4 +356,4 @@ make sure all checks pass:
 ```bash
 composer verify
 ```
-and submit a pull request.
+and submit pull request.

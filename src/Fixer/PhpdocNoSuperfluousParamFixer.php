@@ -17,7 +17,7 @@ final class PhpdocNoSuperfluousParamFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'There must be no superfluous parameters in PHPDoc.',
+            'there must be no superfluous parameters in PHPDoc',
             [new CodeSample('<?php
 /**
  * @param bool $b

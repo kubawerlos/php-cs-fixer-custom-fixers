@@ -36,26 +36,34 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Iterator
+    public function provideFixCases(): iterable
     {
         yield ['<?php throw new Exception; foo(
-                    "Boo"
+                    "Foo"
                 );'];
 
         yield ['<?php throw new $exceptionName; foo(
-                    "Boo"
+                    "Foo"
                 );'];
 
         yield ['<?php throw $exception; foo(
-                    "Boo"
+                    "Foo"
                 );'];
 
-        yield ['<?php throw new Exception("Boo",0);'];
+        yield ['<?php throw new Exception("Foo", 0);'];
 
         yield [
-            '<?php throw new Exception("Boo", 0);',
+            '<?php throw new Exception("Foo", 0);',
             '<?php throw new Exception(
-                "Boo",
+                "Foo",
+                0
+            );',
+        ];
+        yield [
+            '<?php throw new Exception(new ExceptionReport("Foo"), 0);',
+            '<?php throw new Exception(
+                new
+                    ExceptionReport("Foo"),
                 0
             );',
         ];
@@ -69,34 +77,126 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php throw new Vendor\\Exception("Boo");',
+            '<?php throw new Vendor\\Exception("Foo");',
             '<?php throw new Vendor\\Exception(
-                "Boo"
+                "Foo"
             );',
         ];
 
         yield [
-            '<?php throw new \\Vendor\\Exception("Boo");',
-            '<?php throw new \\Vendor\\Exception(
-                "Boo"
+            '<?php throw new \Vendor\\Exception("Foo");',
+            '<?php throw new \Vendor\\Exception(
+                "Foo"
             );',
         ];
 
         yield [
-            '<?php throw new $exceptionName("Boo");',
+            '<?php throw $this->exceptionFactory->createAnException("Foo");',
+            '<?php throw $this
+                ->exceptionFactory
+                ->createAnException(
+                    "Foo"
+                );',
+        ];
+
+        yield [
+            '<?php throw $this->getExceptionFactory()->createAnException("Foo");',
+            '<?php throw $this
+                ->getExceptionFactory()
+                ->createAnException(
+                    "Foo"
+                );',
+        ];
+
+        yield [
+            '<?php throw $this->getExceptionFactory()->createAnException(function ($x, $y) { return $x <=> $y + 2; });',
+            '<?php throw $this
+                ->getExceptionFactory()
+                ->createAnException(
+                    function
+                    (
+                        $x,
+                        $y
+                    )
+                    {
+                        return $x <=> $y + 2
+                        ;
+                    }
+                );',
+        ];
+
+        yield [
+            '<?php throw ExceptionFactory::createAnException("Foo");',
+            '<?php throw ExceptionFactory
+                    ::
+                    createAnException(
+                        "Foo"
+                    );',
+        ];
+
+        yield [
+            '<?php throw new Exception("Foo", 0);',
+            '<?php throw
+                new
+                    Exception
+                        (
+                            "Foo"
+                                ,
+                            0
+                        );',
+        ];
+
+        yield [
+            '<?php throw new $exceptionName("Foo");',
             '<?php throw new $exceptionName(
-                "Boo"
+                "Foo"
             );',
         ];
 
         yield [
-            '<?php throw new WeirdException("Boo", -20, "An elephant", 1, 2, 3, 4, 5, 6, 7, 8);',
-            '<?php throw new WeirdException("Boo", -20, "An elephant",
+            '<?php throw new $exceptions[4];',
+            '<?php throw new $exceptions[
+                4
+            ];',
+        ];
+
+        yield [
+            '<?php throw clone $exceptionName("Foo");',
+            '<?php throw clone $exceptionName(
+                "Foo"
+            );',
+        ];
+
+        yield [
+            '<?php throw new WeirdException("Foo", -20, "An elephant", 1, 2, 3, 4, 5, 6, 7, 8);',
+            '<?php throw new WeirdException("Foo", -20, "An elephant",
 
                 1,
         2,
                                     3, 4, 5, 6, 7, 8
             );',
+        ];
+
+        yield [
+            '<?php
+                if ($foo) {
+                    throw new Exception("It is foo", 1);
+                } else {
+                    throw new \Exception("It is not foo", 0);
+                }
+            ',
+            '<?php
+                if ($foo) {
+                    throw new Exception(
+                        "It is foo",
+                        1
+                    );
+                } else {
+                    throw new \Exception(
+                        "It is not foo", 0
+                    );
+                }
+            ',
         ];
     }
 }
