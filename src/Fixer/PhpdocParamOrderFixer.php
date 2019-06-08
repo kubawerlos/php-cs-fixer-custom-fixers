@@ -19,7 +19,7 @@ final class PhpdocParamOrderFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            "`@param` annotations must be in the same order as function's parameters.",
+            "`@param` annotations must be in the same order as function's parameters",
             [new CodeSample('<?php
 /**
  * @param int $b

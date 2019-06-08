@@ -22,7 +22,7 @@ final class NullableParamStyleFixer extends AbstractFixer implements Configurati
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Nullable parameters must be written in the consistent style.',
+            'nullable parameters must be written in the consistent style',
             [new CodeSample('<?php
 function foo(int $x = null) {
 }

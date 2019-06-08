@@ -15,12 +15,12 @@ final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'There must be no reference in function definition.',
+            'there must be no reference in function definition',
             [new CodeSample('<?php
 function foo(&$x) {}
 ')],
             null,
-            'When rely on reference.'
+            'when rely on reference'
         );
     }
 

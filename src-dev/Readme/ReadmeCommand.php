@@ -123,9 +123,9 @@ In your PHP CS Fixer configuration register fixers and use them:
             $reflection = new \ReflectionClass($fixer);
 
             $output .= \sprintf(
-                "\n- **%s** - %s",
+                "\n- **%s** - %s.",
                 $reflection->getShortName(),
-                \lcfirst($fixer->getDefinition()->getSummary())
+                $fixer->getDefinition()->getSummary()
             );
 
             if ($fixer instanceof DeprecatingFixerInterface) {
@@ -144,8 +144,8 @@ In your PHP CS Fixer configuration register fixers and use them:
 
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
-                    "  \n  *Risky: %s*",
-                    \lcfirst($fixer->getDefinition()->getRiskyDescription())
+                    "  \n  *Risky: %s.*",
+                    $fixer->getDefinition()->getRiskyDescription()
                 );
             }
 
@@ -202,7 +202,7 @@ In your PHP CS Fixer configuration register fixers and use them:
         return \sprintf(
             '
 ## Contributing
-Request a feature or report a bug by creating [issue](https://github.com/%s/issues).
+Request feature or report bug by creating [issue](https://github.com/%s/issues).
 
 Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```bash
@@ -213,7 +213,7 @@ make sure all checks pass:
 composer analyse
 composer test
 ```
-and submit a pull request.',
+and submit pull request.',
             $this->composer()->name
         );
     }

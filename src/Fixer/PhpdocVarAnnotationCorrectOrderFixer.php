@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -23,7 +24,10 @@ final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer implement
 
     public function getDefinition(): FixerDefinitionInterface
     {
-        return $this->fixer->getDefinition();
+        return new FixerDefinition(
+            \rtrim($this->fixer->getDefinition()->getSummary(), '.'),
+            $this->fixer->getDefinition()->getCodeSamples()
+        );
     }
 
     public function isCandidate(Tokens $tokens): bool
