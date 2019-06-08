@@ -29,7 +29,7 @@ jobs:
           php: '7.3'
           install:
             - composer update
-            - composer update --working-dir=./dev-tools/
+            - composer update --working-dir=./dev-tools
           script: composer analyse
 
         - stage: Test
