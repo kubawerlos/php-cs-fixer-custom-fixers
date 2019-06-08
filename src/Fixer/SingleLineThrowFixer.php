@@ -12,6 +12,9 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class SingleLineThrowFixer extends AbstractFixer
 {
+    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['(', ')', '[', ']', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
+    private const REMOVE_WHITESPACE_BEFORE_TOKENS = [','];
+
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
@@ -39,13 +42,17 @@ final class SingleLineThrowFixer extends AbstractFixer
                 continue;
             }
 
-            /** @var int $openBraceCandidateIndex */
-            $openBraceCandidateIndex = $tokens->getNextTokenOfKind($index, [';', '(']);
-            if (!$tokens[$openBraceCandidateIndex]->equals('(')) {
-                continue;
+            /** @var int $openingBraceCandidateIndex */
+            $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($index, [';', '(']);
+
+            while ($tokens[$openingBraceCandidateIndex]->equals('(')) {
+                /** @var int $closingBraceIndex */
+                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBraceCandidateIndex);
+                /** @var int $openingBraceCandidateIndex */
+                $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
             }
 
-            $this->trimNewLines($tokens, $openBraceCandidateIndex, $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openBraceCandidateIndex));
+            $this->trimNewLines($tokens, $index, $openingBraceCandidateIndex);
         }
     }
 
@@ -72,12 +79,18 @@ final class SingleLineThrowFixer extends AbstractFixer
             }
 
             $prevIndex = $tokens->getNonEmptySibling($index, -1);
-            if ($tokens[$prevIndex]->equals(',')) {
-                $tokens[$index] = new Token([T_WHITESPACE, ' ']);
+            if ($tokens[$prevIndex]->equalsAny(self::REMOVE_WHITESPACE_AROUND_TOKENS)) {
+                $tokens->clearAt($index);
                 continue;
             }
 
-            $tokens->clearAt($index);
+            $nextIndex = $tokens->getNonEmptySibling($index, 1);
+            if ($tokens[$nextIndex]->equalsAny(\array_merge(self::REMOVE_WHITESPACE_AROUND_TOKENS, self::REMOVE_WHITESPACE_BEFORE_TOKENS))) {
+                $tokens->clearAt($index);
+                continue;
+            }
+
+            $tokens[$index] = new Token([T_WHITESPACE, ' ']);
         }
     }
 }
