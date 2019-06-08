@@ -19,7 +19,7 @@ final class PhpdocSelfAccessorFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'In PHPDoc inside class or interface element `self` should be preferred over the class name itself.',
+            'in PHPDoc inside class or interface element `self` should be preferred over the class name itself',
             [new CodeSample('<?php
 class Foo {
     /**

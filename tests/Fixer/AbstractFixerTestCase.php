@@ -25,6 +25,46 @@ abstract class AbstractFixerTestCase extends TestCase
         $this->fixer = new $className();
     }
 
+    final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
+    {
+        $summary = $this->fixer->getDefinition()->getSummary();
+
+        if (\preg_match('/^[A-Z]$/', $summary[1]) === 1) {
+            static::assertRegExp('/^[A-Z]$/', $summary[0]);
+        } else {
+            static::assertRegExp('/^[a-z`]$/', $summary[0]);
+        }
+    }
+
+    final public function testFixerDefinitionSummaryDoesNotEndWithDot(): void
+    {
+        $summary = $this->fixer->getDefinition()->getSummary();
+
+        static::assertStringEndsNotWith('.', $summary);
+    }
+
+    final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void
+    {
+        if (!$this->fixer->isRisky()) {
+            $this->addToAssertionCount(1);
+
+            return;
+        }
+
+        static::assertRegExp('/^[a-z]/', $this->fixer->getDefinition()->getRiskyDescription());
+    }
+
+    final public function testFixerDefinitionRiskyDescriptionDoesNotEndWithDot(): void
+    {
+        if (!$this->fixer->isRisky()) {
+            $this->addToAssertionCount(1);
+
+            return;
+        }
+
+        static::assertStringEndsNotWith('.', $this->fixer->getDefinition()->getRiskyDescription());
+    }
+
     final public function testFixerDefinitionHasExactlyOneCodeSample(): void
     {
         static::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
