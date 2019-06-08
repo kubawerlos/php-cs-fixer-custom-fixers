@@ -18,7 +18,7 @@ final class PhpUnitNoUselessReturnFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'PHPUnit\'s functions "fail", "markTestIncomplete" and "markTestSkipped" should not be followed directly by return.',
+            'PHPUnit\'s functions "fail", "markTestIncomplete" and "markTestSkipped" should not be followed directly by return',
             [new CodeSample('<?php
 class FooTest extends TestCase {
     public function testFoo() {
@@ -27,7 +27,7 @@ class FooTest extends TestCase {
     }
 }')],
             'They will throw exception anyway.',
-            "when PHPUnit's native methods are overridden."
+            "when PHPUnit's native methods are overridden"
         );
     }
 
