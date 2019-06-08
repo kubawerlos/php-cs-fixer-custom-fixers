@@ -230,7 +230,7 @@ In your PHP CS Fixer configuration register fixers and use them:
  }
 ```
 
-- **PhpUnitNoUselessReturnFixer** - functions of PHPUnit "fail", "markTestIncomplete" and "markTestSkipped" should not be followed directly by return.  
+- **PhpUnitNoUselessReturnFixer** - pHPUnit's functions "fail", "markTestIncomplete" and "markTestSkipped" should not be followed directly by return.  
   *Risky: when PHPUnit's native methods are overridden.*
 ```diff
  class FooTest extends TestCase {
