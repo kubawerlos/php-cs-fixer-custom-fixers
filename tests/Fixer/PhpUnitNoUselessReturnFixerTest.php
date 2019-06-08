@@ -132,6 +132,14 @@ class FooTest extends TestCase {
         ];
 
         yield [
+            '   $this->markTestSkipped(sprintf("skipped because of %s", "the reason"));
+            ',
+            '   $this->markTestSkipped(sprintf("skipped because of %s", "the reason"));
+                return;
+            ',
+        ];
+
+        yield [
             '   if ($x > 42) {
                     $this->markTestSkipped();
                 }
