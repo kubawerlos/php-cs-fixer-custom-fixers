@@ -46,7 +46,7 @@ jobs:
             - composer global show hirak/prestissimo --quiet || composer global require hirak/prestissimo
             - |
                 git clone --branch=v1.0.4 --depth=1 https://github.com/krakjoe/pcov
-                cd ./pcov/
+                cd ./pcov
                 phpize
                 ./configure
                 make clean install
