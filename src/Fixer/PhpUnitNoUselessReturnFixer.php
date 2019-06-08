@@ -100,12 +100,16 @@ class FooTest extends TestCase {
             }
 
             /** @var int $semicolonAfterReturnIndex */
-            $semicolonAfterReturnIndex = $tokens->getNextMeaningfulToken($returnIndex);
-            if (!$tokens[$semicolonAfterReturnIndex]->equals(';')) {
-                continue;
+            $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($returnIndex, [';', '(']);
+
+            while ($tokens[$semicolonAfterReturnIndex]->equals('(')) {
+                /** @var int $closingBraceIndex */
+                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $semicolonAfterReturnIndex);
+                /** @var int $semicolonAfterReturnIndex */
+                $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
             }
 
-            TokenRemover::removeWithLinesIfPossible($tokens, $returnIndex);
+            $tokens->clearRange($returnIndex, $semicolonAfterReturnIndex - 1);
             TokenRemover::removeWithLinesIfPossible($tokens, $semicolonAfterReturnIndex);
         }
     }

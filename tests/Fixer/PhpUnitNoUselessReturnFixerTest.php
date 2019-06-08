@@ -61,7 +61,6 @@ class FooTest extends TestCase {
         yield ['
                 $this->markAsRisky();
                 return;
-                $this->assertTrue($x);
             '];
 
         yield ['
@@ -84,15 +83,42 @@ class FooTest extends TestCase {
                 return;
             '];
 
-        yield ['
-            $this->markTestSkipped();
-            return 5;
-        '];
+        yield [
+            '   $this->markTestSkipped();
+            ',
+            '   $this->markTestSkipped();
+                return;
+            ',
+        ];
 
         yield [
             '   $this->markTestSkipped();
             ',
             '   $this->markTestSkipped();
+                return 5;
+            ',
+        ];
+
+        yield [
+            '   $this->markTestSkipped();
+            ',
+            '   $this->markTestSkipped();
+                return $this->getErrorCodeFactory()->createErrorCodeForSkippedTest()->getValue();
+            ',
+        ];
+
+        yield [
+            '   $this->markTestSkipped();
+            ',
+            '   $this->markTestSkipped();
+                return $this->getErrorCodeFactory()->createErrorCodeForSkippedTest(function ($x) { return $x > 3; })->getValue();
+            ',
+        ];
+
+        yield [
+            '   $this->markTestSkipped(); // marking as skipped
+            ',
+            '   $this->markTestSkipped(); // marking as skipped
                 return;
             ',
         ];
