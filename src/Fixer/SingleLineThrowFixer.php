@@ -19,7 +19,7 @@ final class SingleLineThrowFixer extends AbstractFixer
     public function getDefinition(): FixerDefinition
     {
         return new FixerDefinition(
-            '`throw` must be single line.',
+            '`throw` must be single line',
             [
                 new CodeSample("<?php\nthrow new Exception(\n    'Error',\n    500\n);\n"),
             ]
