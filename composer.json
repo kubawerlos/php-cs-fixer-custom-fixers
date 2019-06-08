@@ -41,7 +41,7 @@
     "scripts": {
         "analyse": [
             "composer validate --strict",
-            "composer normalize --working-dir=./dev-tools ./../composer.json --dry-run",
+            "composer normalize --dry-run --working-dir=./dev-tools ./../composer.json",
             "./dev-tools/vendor/bin/composer-require-checker check ./composer.json",
             "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./tests",
             "./vendor/bin/types-checker ./src ./tests",
@@ -54,7 +54,7 @@
         "fix": [
             "composer normalize --working-dir=./dev-tools ./../composer.json",
             "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./tests",
-            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi -v",
+            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --verbose",
             "./src-dev/Readme/run > README.md"
         ],
         "test": [
