@@ -9,16 +9,25 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Utils;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpUnitNoUselessReturnFixer extends AbstractFixer
 {
-    private const FUNCTIONS = ['fail', 'marktestincomplete', 'marktestskipped'];
+    private const FUNCTION_TOKENS = [[T_STRING, 'fail'], [T_STRING, 'markTestIncomplete'], [T_STRING, 'markTestSkipped']];
 
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'PHPUnit\'s functions "fail", "markTestIncomplete" and "markTestSkipped" should not be followed directly by return',
+            \sprintf(
+                "PHPUnit's functions %s should not be followed directly by return",
+                Utils::naturalLanguageJoinWithBackticks(\array_map(
+                    static function (array $token): string {
+                        return $token[1];
+                    },
+                    self::FUNCTION_TOKENS
+                ))
+            ),
             [new CodeSample('<?php
 class FooTest extends TestCase {
     public function testFoo() {
@@ -57,11 +66,7 @@ class FooTest extends TestCase {
     private function removeUselessReturns(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $endIndex; $index > $startIndex; $index--) {
-            if (!$tokens[$index]->isGivenKind(T_STRING)) {
-                continue;
-            }
-
-            if (!\in_array(\strtolower($tokens[$index]->getContent()), self::FUNCTIONS, true)) {
+            if (!$tokens[$index]->equalsAny(self::FUNCTION_TOKENS, false)) {
                 continue;
             }
 
