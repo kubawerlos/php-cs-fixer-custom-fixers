@@ -17,7 +17,7 @@ notifications:
 
 before_install:
     - phpenv config-rm xdebug.ini || return 0
-    - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
+    - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
 
 install: composer update $COMPOSER_FLAGS
 
@@ -28,8 +28,8 @@ jobs:
         - stage: Static code analysis
           php: '7.3'
           install:
-            - composer update # TODO: remove this
-            - composer update -d dev-tools
+            - composer update
+            - composer update --working-dir=./dev-tools
           script: composer analyse
 
         - stage: Test
@@ -43,18 +43,18 @@ jobs:
         - php: '7.3'
           before_install:
             - phpenv config-rm xdebug.ini || return 0
-            - composer global show hirak/prestissimo -q || composer global require hirak/prestissimo
+            - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
             - |
                 git clone --branch=v1.0.4 --depth=1 https://github.com/krakjoe/pcov
-                cd pcov
+                cd ./pcov
                 phpize
                 ./configure
                 make clean install
                 echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
                 cd $TRAVIS_BUILD_DIR
           install: composer require --dev php-coveralls/php-coveralls
-          script: composer test -- --coverage-clover=build/logs/clover.xml
-          after_success: vendor/bin/php-coveralls
+          script: composer test -- --coverage-clover=./build/logs/clover.xml
+          after_success: ./vendor/bin/php-coveralls
 
         - php: '7.4snapshot'
           env: COMPOSER_FLAGS="--ignore-platform-reqs" PHP_CS_FIXER_IGNORE_ENV=1

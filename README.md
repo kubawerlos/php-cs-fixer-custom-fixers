@@ -350,11 +350,10 @@ Request feature or report bug by creating [issue](https://github.com/kubawerlos/
 
 Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```bash
-src-dev/Readme/run > README.md
+./src-dev/Readme/run > README.md
 ```
 make sure all checks pass:
 ```bash
-composer analyse
-composer test
+composer verify
 ```
 and submit pull request.

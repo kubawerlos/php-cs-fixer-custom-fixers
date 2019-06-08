@@ -206,15 +206,15 @@ Request feature or report bug by creating [issue](https://github.com/%s/issues).
 
 Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```bash
-src-dev/Readme/run > README.md
+%s
 ```
 make sure all checks pass:
 ```bash
-composer analyse
-composer test
+composer verify
 ```
 and submit pull request.',
-            $this->composer()->name
+            $this->composer()->name,
+            end($this->composer()->scripts->fix)
         );
     }
 
