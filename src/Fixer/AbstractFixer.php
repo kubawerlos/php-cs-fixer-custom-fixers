@@ -14,6 +14,9 @@ abstract class AbstractFixer implements DefinedFixerInterface
         /** @var string $name */
         $name = Preg::replace('/^.*\\\\([a-zA-Z0-1]+)Fixer$/', '$1', static::class);
 
+        /** @var string $name */
+        $name = Preg::replace('/[A-Z]/', '_$0', \lcfirst($name));
+
         return 'PhpCsFixerCustomFixers/' . \strtolower($name);
     }
 

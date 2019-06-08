@@ -109,6 +109,23 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php throw $this->getExceptionFactory()->createAnException(function ($x, $y) { return $x <=> $y + 2; });',
+            '<?php throw $this
+                ->getExceptionFactory()
+                ->createAnException(
+                    function
+                    (
+                        $x,
+                        $y
+                    )
+                    {
+                        return $x <=> $y + 2
+                        ;
+                    }
+                );',
+        ];
+
+        yield [
             '<?php throw ExceptionFactory::createAnException("Foo");',
             '<?php throw ExceptionFactory
                     ::

@@ -12,8 +12,9 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class SingleLineThrowFixer extends AbstractFixer
 {
-    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['(', ')', '[', ']', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
-    private const REMOVE_WHITESPACE_BEFORE_TOKENS = [','];
+    private const REMOVE_WHITESPACE_AFTER_TOKENS = ['['];
+    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['(', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
+    private const REMOVE_WHITESPACE_BEFORE_TOKENS = [')',  ']', ',', ';'];
 
     public function getDefinition(): FixerDefinition
     {
@@ -79,15 +80,17 @@ final class SingleLineThrowFixer extends AbstractFixer
             }
 
             $prevIndex = $tokens->getNonEmptySibling($index, -1);
-            if ($tokens[$prevIndex]->equalsAny(self::REMOVE_WHITESPACE_AROUND_TOKENS)) {
+            if ($tokens[$prevIndex]->equalsAny(\array_merge(self::REMOVE_WHITESPACE_AFTER_TOKENS, self::REMOVE_WHITESPACE_AROUND_TOKENS))) {
                 $tokens->clearAt($index);
                 continue;
             }
 
             $nextIndex = $tokens->getNonEmptySibling($index, 1);
             if ($tokens[$nextIndex]->equalsAny(\array_merge(self::REMOVE_WHITESPACE_AROUND_TOKENS, self::REMOVE_WHITESPACE_BEFORE_TOKENS))) {
-                $tokens->clearAt($index);
-                continue;
+                if (!$tokens[$prevIndex]->isGivenKind(T_FUNCTION)) {
+                    $tokens->clearAt($index);
+                    continue;
+                }
             }
 
             $tokens[$index] = new Token([T_WHITESPACE, ' ']);
