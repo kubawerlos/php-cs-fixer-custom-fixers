@@ -12,7 +12,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class SingleLineThrowFixer extends AbstractFixer
 {
-    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['(', ')', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
+    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['(', ')', '[', ']', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
     private const REMOVE_WHITESPACE_BEFORE_TOKENS = [','];
 
     public function getDefinition(): FixerDefinition
@@ -42,13 +42,17 @@ final class SingleLineThrowFixer extends AbstractFixer
                 continue;
             }
 
-            /** @var int $openBraceCandidateIndex */
-            $openBraceCandidateIndex = $tokens->getNextTokenOfKind($index, [';', '(']);
-            if (!$tokens[$openBraceCandidateIndex]->equals('(')) {
-                continue;
+            /** @var int $openingBraceCandidateIndex */
+            $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($index, [';', '(']);
+
+            while ($tokens[$openingBraceCandidateIndex]->equals('(')) {
+                /** @var int $closingBraceIndex */
+                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBraceCandidateIndex);
+                /** @var int $openingBraceCandidateIndex */
+                $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
             }
 
-            $this->trimNewLines($tokens, $index, $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openBraceCandidateIndex));
+            $this->trimNewLines($tokens, $index, $openingBraceCandidateIndex);
         }
     }
 
