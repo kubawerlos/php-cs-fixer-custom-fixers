@@ -6,6 +6,7 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
+use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
 
 /**
  * @internal
@@ -18,6 +19,7 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
     {
         static::assertGreaterThan((new ConcatSpaceFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new MethodArgumentSpaceFixer())->getPriority(), $this->fixer->getPriority());
+        static::assertGreaterThan((new NoUnneededConcatenationFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     public function testIsRisky(): void
