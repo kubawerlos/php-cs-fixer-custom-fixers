@@ -59,7 +59,7 @@ final class SingleLineThrowFixer extends AbstractFixer
 
     public function getPriority(): int
     {
-        // must be fun before ConcatSpaceFixer and MethodArgumentSpaceFixer
+        // must be fun before ConcatSpaceFixer, MethodArgumentSpaceFixer and NoUnneededConcatenationFixer
         return 1;
     }
 
