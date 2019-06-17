@@ -32,7 +32,7 @@ final class SingleSpaceBeforeStatementFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Generator
+    public function provideFixCases(): iterable
     {
         yield ['<?php !include "foo.php";'];
         yield ['<?php foo(new stdClass());'];

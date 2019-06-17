@@ -71,7 +71,7 @@ final class SourceCodeTest extends TestCase
         );
     }
 
-    public function provideFixerCases(): array
+    public function provideFixerCases(): iterable
     {
         return \array_map(
             static function (FixerInterface $fixer): array {
@@ -118,7 +118,7 @@ final class SourceCodeTest extends TestCase
         static::assertNotContains('preg_split', $strings, $message);
     }
 
-    public function provideThereIsNoPregFunctionUsedDirectlyCases(): \Generator
+    public function provideThereIsNoPregFunctionUsedDirectlyCases(): iterable
     {
         $finder = Finder::create()
             ->files()

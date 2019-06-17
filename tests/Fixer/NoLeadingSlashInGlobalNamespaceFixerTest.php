@@ -34,7 +34,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Generator
+    public function provideFixCases(): iterable
     {
         yield [
             '<?php $foo = new Bar();',

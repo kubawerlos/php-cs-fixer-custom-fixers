@@ -126,7 +126,7 @@ interface    FooInterface {
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Generator
+    public function provideFixCases(): iterable
     {
         yield ['<?php echo 1; array(1, 2, 3);'];
         yield ['<?php echo 1; foo(2);'];
@@ -284,7 +284,7 @@ do    {
         );
     }
 
-    public function provideTokenIsUsefulCases(): \Generator
+    public function provideTokenIsUsefulCases(): iterable
     {
         $fixer = new SingleSpaceAfterStatementFixer();
         $reflection = new \ReflectionClass($fixer);

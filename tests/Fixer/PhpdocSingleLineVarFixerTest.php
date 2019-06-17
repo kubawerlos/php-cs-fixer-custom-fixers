@@ -32,7 +32,7 @@ final class PhpdocSingleLineVarFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Generator
+    public function provideFixCases(): iterable
     {
         yield [ // Wrong annotation
             '<?php

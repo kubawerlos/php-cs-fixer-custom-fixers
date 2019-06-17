@@ -28,6 +28,16 @@ final class TestCodeTest extends TestCase
         ));
     }
 
+    /**
+     * @dataProvider provideDataProviderCases
+     */
+    public function testThatDataProviderReturnTypeNamed(string $dataProviderName, string $className): void
+    {
+        $reflection = new \ReflectionMethod($className, $dataProviderName);
+
+        static::assertSame('iterable', $reflection->getReturnType()->getName());
+    }
+
     public function provideDataProviderCases(): iterable
     {
         static $dataProviders;

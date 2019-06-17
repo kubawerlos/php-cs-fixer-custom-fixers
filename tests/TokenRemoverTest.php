@@ -35,7 +35,7 @@ final class TokenRemoverTest extends TestCase
         static::assertSame($expected, $tokens->generateCode());
     }
 
-    public function provideFixCases(): \Generator
+    public function provideFixCases(): iterable
     {
         yield [
             '<?php

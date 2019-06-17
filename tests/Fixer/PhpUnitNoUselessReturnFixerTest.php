@@ -54,7 +54,7 @@ class FooTest extends TestCase {
         );
     }
 
-    private function getFixCases(): \Generator
+    private function getFixCases(): iterable
     {
         yield ['$this->markTestSkipped = true;'];
 
