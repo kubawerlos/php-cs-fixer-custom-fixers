@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Tests;
+namespace Tests\AutoReview;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
  */
-final class AutoReviewTest extends TestCase
+final class SourceCodeTest extends TestCase
 {
     /**
      * @dataProvider provideFixerCases
@@ -122,7 +122,7 @@ final class AutoReviewTest extends TestCase
     {
         $finder = Finder::create()
             ->files()
-            ->in(__DIR__ . '/../src')
+            ->in(__DIR__ . '/../../src')
             ->notName('php-cs-fixer.config.*.php')
             ->notName('run')
             ->sortByName();

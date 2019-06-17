@@ -28,14 +28,14 @@ final class FixersTest extends TestCase
     }
 
     /**
-     * @dataProvider providerFixersInFixerDirectoryCases
+     * @dataProvider provideFixersInFixerDirectoryCases
      */
     public function testFixerIsInCollection(FixerInterface $fixer): void
     {
         static::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
     }
 
-    public function providerFixersInFixerDirectoryCases(): array
+    public function provideFixersInFixerDirectoryCases(): array
     {
         return \array_map(
             static function (SplFileInfo $fileInfo): array {

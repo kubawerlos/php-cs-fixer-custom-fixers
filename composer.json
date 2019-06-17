@@ -53,8 +53,8 @@
         ],
         "fix": [
             "composer normalize --working-dir=./dev-tools ./../composer.json",
-            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./tests",
             "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --verbose",
+            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./tests",
             "./src-dev/Readme/run > README.md"
         ],
         "test": [
