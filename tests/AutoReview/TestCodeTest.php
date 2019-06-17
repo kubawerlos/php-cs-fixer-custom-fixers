@@ -52,12 +52,11 @@ final class TestCodeTest extends TestCase
 
             /** @var SplFileInfo $file */
             foreach ($finder as $file) {
-                $parts = ['Tests'];
+                $className = 'Tests';
                 if ($file->getRelativePath() !== '') {
-                    $parts[] = $file->getRelativePath();
+                    $className .= '\\' . $file->getRelativePath();
                 }
-                $parts[] = $file->getBasename('.php');
-                $className = \implode('\\', $parts);
+                $className .= '\\' . $file->getBasename('.php');
                 foreach ($this->getDataProviderMethodNames($className) as $dataProviderName) {
                     $dataProviders[\sprintf('%s::%s', $className, $dataProviderName)] = [$dataProviderName, $className];
                 }

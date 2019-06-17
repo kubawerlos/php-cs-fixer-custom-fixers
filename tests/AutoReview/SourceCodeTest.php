@@ -14,6 +14,7 @@ use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -109,6 +110,7 @@ final class SourceCodeTest extends TestCase
         );
         $strings = \array_unique($strings);
         $message = \sprintf('Class %s must not use preg_*, it shall use Preg::* instead.', $className);
+
         static::assertNotContains('preg_filter', $strings, $message);
         static::assertNotContains('preg_grep', $strings, $message);
         static::assertNotContains('preg_match', $strings, $message);
@@ -127,14 +129,14 @@ final class SourceCodeTest extends TestCase
             ->notName('run')
             ->sortByName();
 
+        /** @var SplFileInfo $file */
         foreach ($finder as $file) {
-            $parts = ['PhpCsFixerCustomFixers'];
+            $className = 'PhpCsFixerCustomFixers';
             if ($file->getRelativePath() !== '') {
-                $parts[] = $file->getRelativePath();
+                $className .= '\\' . $file->getRelativePath();
             }
-            $parts[] = $file->getBasename('.php');
-            $className = \implode('\\', $parts);
-            yield [$className];
+
+            yield [$className . '\\' . $file->getBasename('.php')];
         }
     }
 }
