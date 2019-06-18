@@ -38,7 +38,7 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): \Generator
+    public function provideFixCases(): iterable
     {
         yield [
             '<?php /* Foo */',

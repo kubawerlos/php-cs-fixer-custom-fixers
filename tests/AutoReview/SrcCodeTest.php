@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Tests;
+namespace Tests\AutoReview;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
@@ -14,13 +14,14 @@ use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
  */
-final class AutoReviewTest extends TestCase
+final class SrcCodeTest extends TestCase
 {
     /**
      * @dataProvider provideFixerCases
@@ -71,7 +72,7 @@ final class AutoReviewTest extends TestCase
         );
     }
 
-    public function provideFixerCases(): array
+    public function provideFixerCases(): iterable
     {
         return \array_map(
             static function (FixerInterface $fixer): array {
@@ -109,6 +110,7 @@ final class AutoReviewTest extends TestCase
         );
         $strings = \array_unique($strings);
         $message = \sprintf('Class %s must not use preg_*, it shall use Preg::* instead.', $className);
+
         static::assertNotContains('preg_filter', $strings, $message);
         static::assertNotContains('preg_grep', $strings, $message);
         static::assertNotContains('preg_match', $strings, $message);
@@ -118,23 +120,23 @@ final class AutoReviewTest extends TestCase
         static::assertNotContains('preg_split', $strings, $message);
     }
 
-    public function provideThereIsNoPregFunctionUsedDirectlyCases(): \Generator
+    public function provideThereIsNoPregFunctionUsedDirectlyCases(): iterable
     {
         $finder = Finder::create()
             ->files()
-            ->in(__DIR__ . '/../src')
+            ->in(__DIR__ . '/../../src')
             ->notName('php-cs-fixer.config.*.php')
             ->notName('run')
             ->sortByName();
 
+        /** @var SplFileInfo $file */
         foreach ($finder as $file) {
-            $parts = ['PhpCsFixerCustomFixers'];
+            $namespace = 'PhpCsFixerCustomFixers';
             if ($file->getRelativePath() !== '') {
-                $parts[] = $file->getRelativePath();
+                $namespace .= '\\' . $file->getRelativePath();
             }
-            $parts[] = $file->getBasename('.php');
-            $className = \implode('\\', $parts);
-            yield [$className];
+
+            yield [$namespace . '\\' . $file->getBasename('.php')];
         }
     }
 }
