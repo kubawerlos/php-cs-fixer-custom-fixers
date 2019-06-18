@@ -133,7 +133,7 @@ final class SourceCodeTest extends TestCase
         foreach ($finder as $file) {
             $namespace = 'PhpCsFixerCustomFixers';
             if ($file->getRelativePath() !== '') {
-                $className .= '\\' . $file->getRelativePath();
+                $namespace .= '\\' . $file->getRelativePath();
             }
 
             yield [$className . '\\' . $file->getBasename('.php')];
