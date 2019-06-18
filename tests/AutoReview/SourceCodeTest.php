@@ -136,7 +136,7 @@ final class SourceCodeTest extends TestCase
                 $namespace .= '\\' . $file->getRelativePath();
             }
 
-            yield [$className . '\\' . $file->getBasename('.php')];
+            yield [$namespace . '\\' . $file->getBasename('.php')];
         }
     }
 }
