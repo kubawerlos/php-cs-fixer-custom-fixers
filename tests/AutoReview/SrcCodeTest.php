@@ -21,7 +21,7 @@ use Symfony\Component\Finder\SplFileInfo;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
  */
-final class SourceCodeTest extends TestCase
+final class SrcCodeTest extends TestCase
 {
     /**
      * @dataProvider provideFixerCases

@@ -14,7 +14,7 @@ use Symfony\Component\Finder\SplFileInfo;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
  */
-final class TestCodeTest extends TestCase
+final class TestsCodeTest extends TestCase
 {
     /**
      * @dataProvider provideDataProviderCases
@@ -22,7 +22,7 @@ final class TestCodeTest extends TestCase
     public function testThatDataProviderIsCorrectlyNamed(string $dataProviderName, string $className): void
     {
         static::assertRegExp('/^provide[A-Z]\S+Cases$/', $dataProviderName, \sprintf(
-            'Data provider "%s" in  class "%s"  is not correctly named.',
+            'Data provider "%s" in class "%s" is not correctly named.',
             $dataProviderName,
             $className
         ));
