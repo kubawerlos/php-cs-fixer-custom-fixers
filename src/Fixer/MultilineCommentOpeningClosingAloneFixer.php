@@ -66,7 +66,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
             }
 
             if ($toFixClosing) {
-                $content = Preg::replace('#(\R)([^\R]+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $content);
+                $content = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $content);
             }
 
             $tokens[$index] = new Token([$token->getId(), $content]);

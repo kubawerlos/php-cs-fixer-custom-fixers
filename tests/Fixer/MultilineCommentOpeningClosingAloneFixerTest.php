@@ -95,6 +95,16 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
         ];
 
         yield [
+            \str_replace("\n", "\r", '<?php
+                /**
+                 * Foo
+                 */'),
+            \str_replace("\n", "\r", '<?php
+                /**
+                 * Foo */'),
+        ];
+
+        yield [
             '<?php
                 /**
                  * Foo
@@ -105,6 +115,19 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
                 /** Foo
                  * Bar
                  * Baz */',
+        ];
+
+        yield [
+            \str_replace("\n", "\r", '<?php
+                /**
+                 * Foo
+                 * Bar
+                 * Baz
+                 */'),
+            \str_replace("\n", "\r", '<?php
+                /** Foo
+                 * Bar
+                 * Baz */'),
         ];
 
         yield [
