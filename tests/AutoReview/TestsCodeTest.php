@@ -19,7 +19,7 @@ final class TestsCodeTest extends TestCase
     /**
      * @dataProvider provideDataProviderCases
      */
-    public function testThatDataProviderIsCorrectlyNamed(string $dataProviderName, string $className): void
+    public function testDataProviderName(string $dataProviderName, string $className): void
     {
         static::assertRegExp('/^provide[A-Z]\S+Cases$/', $dataProviderName, \sprintf(
             'Data provider "%s" in class "%s" is not correctly named.',
@@ -31,7 +31,7 @@ final class TestsCodeTest extends TestCase
     /**
      * @dataProvider provideDataProviderCases
      */
-    public function testThatDataProviderReturnTypeNamed(string $dataProviderName, string $className): void
+    public function testDataProviderReturnType(string $dataProviderName, string $className): void
     {
         $reflection = new \ReflectionMethod($className, $dataProviderName);
 
