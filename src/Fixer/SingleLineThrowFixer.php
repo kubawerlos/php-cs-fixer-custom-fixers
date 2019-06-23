@@ -10,10 +10,10 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class SingleLineThrowFixer extends AbstractFixer
+final class SingleLineThrowFixer extends AbstractFixer implements DeprecatingFixerInterface
 {
     private const REMOVE_WHITESPACE_AFTER_TOKENS = ['['];
-    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['(', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
+    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['.', '(', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
     private const REMOVE_WHITESPACE_BEFORE_TOKENS = [')',  ']', ',', ';'];
 
     public function getDefinition(): FixerDefinition
@@ -24,6 +24,11 @@ final class SingleLineThrowFixer extends AbstractFixer
                 new CodeSample("<?php\nthrow new Exception(\n    'Error',\n    500\n);\n"),
             ]
         );
+    }
+
+    public function getPullRequestId(): int
+    {
+        return 4452;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -59,7 +64,7 @@ final class SingleLineThrowFixer extends AbstractFixer
 
     public function getPriority(): int
     {
-        // must be fun before ConcatSpaceFixer, MethodArgumentSpaceFixer and NoUnneededConcatenationFixer
+        // must be fun before ConcatSpaceFixer and NoUnneededConcatenationFixer
         return 1;
     }
 
