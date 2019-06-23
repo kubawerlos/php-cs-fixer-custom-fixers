@@ -10,7 +10,10 @@ return PhpCsFixer\Config::create()
             ->in(__DIR__ . '/src-dev')
             ->in(__DIR__ . '/tests')
             ->notName('php-cs-fixer.config.*.php')
-            ->append([__FILE__])
+            ->append([
+                __FILE__,
+                __DIR__ . '/src-dev/Readme/run',
+            ])
     )
     ->setRiskyAllowed(true)
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())

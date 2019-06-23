@@ -7,6 +7,10 @@
     <projectFiles>
         <directory name='src' />
         <directory name='src-dev' />
+        <ignoreFiles>
+            <file name='src-dev/Readme/php-cs-fixer.config.after.php' />
+            <file name='src-dev/Readme/php-cs-fixer.config.before.php' />
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
