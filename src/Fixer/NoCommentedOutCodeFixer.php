@@ -72,33 +72,41 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     {
         $indicesToRemove = [];
         $testedIndices = [];
-        $content = '<?php ';
+        $content = '';
 
         foreach ($commentIndices as $index) {
-            $content .= PHP_EOL . $this->getMessage($tokens[$index]->getContent());
+            $content .= PHP_EOL . $this->getContent($tokens[$index]->getContent());
             $testedIndices[] = $index;
 
-            if (\strlen(\rtrim($content)) === 5) {
+            if (\rtrim($content) === '') {
                 continue;
             }
 
-            try {
-                @Tokens::fromCode($content);
-            } catch (\ParseError $error) {
-                continue;
+            if ($this->isCorrectSyntax('<?php' . $content)
+                || $this->isCorrectSyntax('<?php class Foo {' . $content . PHP_EOL . '}')) {
+                $indicesToRemove = $testedIndices;
             }
-
-            $indicesToRemove = $testedIndices;
         }
 
         return $indicesToRemove;
     }
 
-    private function getMessage(string $content): string
+    private function getContent(string $content): string
     {
-        /** @var string $message */
-        $message = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
+        /** @var string $content */
+        $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
 
-        return \ltrim($message, '#/');
+        return \ltrim($content, '#/');
+    }
+
+    private function isCorrectSyntax(string $content): bool
+    {
+        try {
+            @Tokens::fromCode($content);
+        } catch (\ParseError $error) {
+            return false;
+        }
+
+        return true;
     }
 }
