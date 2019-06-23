@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
 
@@ -18,13 +17,17 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
     public function testPriority(): void
     {
         static::assertGreaterThan((new ConcatSpaceFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new MethodArgumentSpaceFixer())->getPriority(), $this->fixer->getPriority());
         static::assertGreaterThan((new NoUnneededConcatenationFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
+    }
+
+    public function testDeprecatingPullRequest(): void
+    {
+        static::assertSame(4452, $this->fixer->getPullRequestId());
     }
 
     /**
@@ -61,6 +64,16 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
                 0
             );',
         ];
+
+        yield [
+            '<?php throw new Exception("Foo"."Bar");',
+            '<?php throw new Exception(
+                "Foo"
+                .
+                "Bar"
+            );',
+        ];
+
         yield [
             '<?php throw new Exception(new ExceptionReport("Foo"), 0);',
             '<?php throw new Exception(
@@ -79,15 +92,15 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php throw new Vendor\\Exception("Foo");',
-            '<?php throw new Vendor\\Exception(
+            '<?php throw new SomeVendor\\Exception("Foo");',
+            '<?php throw new SomeVendor\\Exception(
                 "Foo"
             );',
         ];
 
         yield [
-            '<?php throw new \Vendor\\Exception("Foo");',
-            '<?php throw new \Vendor\\Exception(
+            '<?php throw new \SomeVendor\\Exception("Foo");',
+            '<?php throw new \SomeVendor\\Exception(
                 "Foo"
             );',
         ];
