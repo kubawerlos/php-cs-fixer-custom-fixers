@@ -7,7 +7,7 @@
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-927-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-928-brightgreen.svg)
 [![Last commit](https://img.shields.io/github/last-commit/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/commits)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).

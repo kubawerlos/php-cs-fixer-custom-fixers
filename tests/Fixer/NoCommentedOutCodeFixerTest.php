@@ -165,5 +165,28 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
                    */
               ',
         ];
+
+        yield [
+            '<?php
+                  class Foo {
+                      public function f1()
+                      {
+                          return 1;
+                      }
+                  }
+              ',
+            '<?php
+                  class Foo {
+                      public function f1()
+                      {
+                          return 1;
+                      }
+                      //public function f2()
+                      //{
+                      //    return 2;
+                      //}
+                  }
+              ',
+        ];
     }
 }
