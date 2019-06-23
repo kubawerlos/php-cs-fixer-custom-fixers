@@ -15,6 +15,7 @@ use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 class ReadmeCommand extends BaseCommand
 {
@@ -37,22 +38,28 @@ class ReadmeCommand extends BaseCommand
     {
         return "\n" . \implode("\n", [
             $this->badge(
-                'Latest Stable Version',
-                \sprintf('%s/packagist/v/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
+                'Latest stable version',
+                \sprintf('%s/packagist/v/%s.svg?label=current%%20version', self::SHIELDS_HOST, $this->composer()->name),
                 \sprintf('https://packagist.org/packages/%s', $this->composer()->name)
             ),
             $this->badge(
-                'PHP Version',
-                \sprintf('%s/badge/php-%s-8892BF.svg', self::SHIELDS_HOST, \rawurlencode($this->composer()->require->php)),
+                'PHP version',
+                \sprintf('%s/packagist/php-v/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
+                //\sprintf('%s/badge/php-%s-8892BF.svg', self::SHIELDS_HOST, \rawurlencode($this->composer()->require->php)),
                 'https://php.net'
             ),
             $this->badge(
                 'License',
                 \sprintf('%s/github/license/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
-                \sprintf('https://packagist.org/packages/%s', $this->composer()->name)
+                'LICENSE'
             ),
             $this->badge(
-                'Build Status',
+                'Repository size',
+                \sprintf('https://github-size-badge.herokuapp.com/%s.svg', $this->composer()->name)
+            ),
+            '',
+            $this->badge(
+                'Build status',
                 \sprintf('%s/travis/%s/master.svg', self::SHIELDS_HOST, $this->composer()->name),
                 \sprintf('https://travis-ci.org/%s', $this->composer()->name)
             ),
@@ -61,17 +68,35 @@ class ReadmeCommand extends BaseCommand
                 \sprintf('%s/coveralls/github/%s/master.svg', self::SHIELDS_HOST, $this->composer()->name),
                 \sprintf('https://coveralls.io/github/%s?branch=master', $this->composer()->name)
             ),
+            $this->badge(
+                'Tests',
+                \sprintf('%s/badge/tests-%d-brightgreen.svg', self::SHIELDS_HOST, $this->numberOfTests())
+            ),
+            $this->badge(
+                'Last commit',
+                \sprintf('%s/github/last-commit/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://github.com/%s/commits', $this->composer()->name)
+            ),
         ]) . "\n";
     }
 
-    private function badge(string $description, string $imageUrl, string $targetUrl): string
+    private function badge(string $description, string $imageUrl, ?string $targetUrl = null): string
     {
-        return \sprintf(
-            '[![%s](%s)](%s)',
-            $description,
-            $imageUrl,
-            $targetUrl
-        );
+        $badge = \sprintf('![%s](%s)', $description, $imageUrl);
+
+        if ($targetUrl !== null) {
+            $badge = \sprintf('[%s](%s)', $badge, $targetUrl);
+        }
+
+        return $badge;
+    }
+
+    private function numberOfTests(): int
+    {
+        $process = new Process([__DIR__ . '/../../vendor/bin/phpunit', '--list-tests']);
+        $process->run();
+
+        return \substr_count($process->getOutput(), PHP_EOL) - 3; // 3 is for header
     }
 
     private function description(): string
@@ -214,7 +239,7 @@ composer verify
 ```
 and submit pull request.',
             $this->composer()->name,
-            end($this->composer()->scripts->fix)
+            \end($this->composer()->scripts->fix)
         );
     }
 
