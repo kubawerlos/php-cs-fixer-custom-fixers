@@ -17,7 +17,7 @@
         "php": "^7.1",
         "ext-tokenizer": "*",
         "friendsofphp/php-cs-fixer": "^2.14",
-        "symfony/finder": "^4.0"
+        "symfony/finder": "^3.0 || ^4.0"
     },
     "require-dev": {
         "ext-json": "*",
@@ -25,7 +25,7 @@
         "kubawerlos/types-checker": "^1.1",
         "phpunit/phpunit": "^7.4 || ^8.0",
         "sebastian/diff": "^3.0",
-        "symfony/console": "^3.4.17 || ^4.1.6"
+        "symfony/console": "^4.0"
     },
     "autoload": {
         "psr-4": {
