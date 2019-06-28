@@ -58,6 +58,9 @@
             "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./src-dev ./tests",
             "./src-dev/Readme/run > README.md"
         ],
+        "infection": [
+            "./vendor/bin/infection run --ansi --threads=16"
+        ],
         "test": [
             "./vendor/bin/phpunit"
         ],
