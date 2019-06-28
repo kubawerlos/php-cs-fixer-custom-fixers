@@ -19,11 +19,11 @@ final class TokenRemover
             /** @var int $prevIndex */
             $prevIndex = $tokens->getNonEmptySibling($index, -1);
 
-            self::handleWhitespaceBefore($tokens, $prevIndex);
+            $wasNewlineRemoved = self::handleWhitespaceBefore($tokens, $prevIndex);
 
             $nextIndex = $tokens->getNonEmptySibling($index, 1);
             if ($nextIndex !== null) {
-                self::handleWhitespaceAfter($tokens, $nextIndex);
+                self::handleWhitespaceAfter($tokens, $nextIndex, $wasNewlineRemoved);
             }
         }
 
@@ -60,30 +60,29 @@ final class TokenRemover
         return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) === 1;
     }
 
-    private static function handleWhitespaceBefore(Tokens $tokens, int $index): void
+    private static function handleWhitespaceBefore(Tokens $tokens, int $index): bool
     {
         if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
-            return;
+            return false;
         }
+        $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
 
-        $newContent = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
+        $contentWithoutTrailingSpacesAndNewline = Preg::replace('/\R$/', '', $contentWithoutTrailingSpaces, 1);
 
-        if ($newContent === '') {
+        if ($contentWithoutTrailingSpacesAndNewline === '') {
             $tokens->clearAt($index);
-
-            return;
+        } else {
+            $tokens[$index] = new Token([T_WHITESPACE, $contentWithoutTrailingSpacesAndNewline]);
         }
 
-        if ($newContent === $tokens[$index]->getContent()) {
-            return;
-        }
-
-        $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
+        return $contentWithoutTrailingSpaces !== $contentWithoutTrailingSpacesAndNewline;
     }
 
-    private static function handleWhitespaceAfter(Tokens $tokens, int $index): void
+    private static function handleWhitespaceAfter(Tokens $tokens, int $index, bool $wasNewlineRemoved): void
     {
-        $newContent = Preg::replace('/^\h*\R/', '', $tokens[$index]->getContent());
+        $pattern = $wasNewlineRemoved ? '/^\h+/' : '/^\h*\R/';
+
+        $newContent = Preg::replace($pattern, '', $tokens[$index]->getContent());
 
         if ($newContent === '') {
             $tokens->clearAt($index);

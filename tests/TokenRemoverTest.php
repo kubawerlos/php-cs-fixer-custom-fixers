@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Tests;
 
+use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 use PHPUnit\Framework\TestCase;
@@ -15,6 +16,8 @@ use PHPUnit\Framework\TestCase;
  */
 final class TokenRemoverTest extends TestCase
 {
+    use AssertTokensTrait;
+
     /**
      * @param string      $expected
      * @param null|string $input
@@ -32,24 +35,14 @@ final class TokenRemoverTest extends TestCase
             }
         }
 
-        static::assertSame($expected, $tokens->generateCode());
+        $tokens->clearEmptyTokens();
+
+        static::assertTokens(Tokens::fromCode($expected), $tokens);
     }
 
     public function provideFixCases(): iterable
     {
-        yield [
-            '<?php
-namespace Foo;
-',
-            '<?php
-/**
- * Some comment
- */
-namespace Foo;
-',
-        ];
-
-        yield [
+        yield 'one-line comment after open tag' => [
             '<?php
 namespace Foo;
 ',
@@ -59,7 +52,19 @@ namespace Foo;
 ',
         ];
 
-        yield [
+        yield 'PHPDoc after open tag' => [
+            '<?php
+namespace Foo;
+',
+            '<?php
+/**
+ * Some comment
+ */
+namespace Foo;
+',
+        ];
+
+        yield 'single empty line before PHPDoc' => [
             '<?php
 
 namespace Foo;
@@ -73,7 +78,23 @@ namespace Foo;
 ',
         ];
 
-        yield [
+        yield 'multiple empty lines before PHPDoc' => [
+            '<?php
+
+
+namespace Foo;
+',
+            '<?php
+
+
+/**
+ * Some comment
+ */
+namespace Foo;
+',
+        ];
+
+        yield 'single empty line after PHPDoc' => [
             '<?php
 
 namespace Foo;
@@ -87,7 +108,37 @@ namespace Foo;
 ',
         ];
 
-        yield [
+        yield 'multiple empty lines after PHPDoc' => [
+            '<?php
+
+
+namespace Foo;
+',
+            '<?php
+/**
+ * Some comment
+ */
+
+
+namespace Foo;
+',
+        ];
+
+        yield 'indented one-line comment' => [
+            '<?php
+
+
+    namespace Foo;
+',
+            '<?php
+
+    // Some comment
+
+    namespace Foo;
+',
+        ];
+
+        yield 'indented PHPDoc' => [
             '<?php
 
 
@@ -103,21 +154,7 @@ namespace Foo;
 ',
         ];
 
-        yield [
-            '<?php
-
-
-    namespace Foo;
-',
-            '<?php
-
-    // Some comment
-
-    namespace Foo;
-',
-        ];
-
-        yield [
+        yield 'indented after open tag' => [
             '<?php
                 namespace Foo;
 ',
@@ -129,7 +166,7 @@ namespace Foo;
 ',
         ];
 
-        yield [
+        yield 'code after PHPDoc' => [
             '<?php
 namespace Foo;
 ',
@@ -138,7 +175,7 @@ namespace Foo;
 ',
         ];
 
-        yield [
+        yield 'spaces and code after PHPDoc' => [
             '<?php
     namespace Foo;
 ',
@@ -147,24 +184,7 @@ namespace Foo;
 ',
         ];
 
-        yield [
-            '<?php
-',
-            '<?php
-// comment as last element',
-        ];
-
-        yield [
-            '<?php
-foo();
-',
-            '<?php
-// Foo
-foo();
-',
-        ];
-
-        yield [
+        yield 'code and space before comment' => [
             '<?php 
 foo();
 ',
@@ -172,7 +192,8 @@ foo();
 foo();
 ',
         ];
-        yield [
+
+        yield 'comment after open tag with only spaces' => [
             '<?php    
 foo();
 ',
@@ -181,7 +202,7 @@ foo();
 ',
         ];
 
-        yield [
+        yield 'code before comment' => [
             '<?php
             foo();
             bar();
@@ -190,6 +211,25 @@ foo();
             foo();// Foo
             bar();
             ',
+        ];
+
+        yield 'comment as last token' => [
+            '<?php
+',
+            '<?php
+
+// Some comment',
+        ];
+
+        yield 'comment with newlines after token' => [
+            '<?php
+/* 
+    second comment */
+',
+            '<?php
+/* first comment *//* 
+    second comment */
+',
         ];
     }
 }
