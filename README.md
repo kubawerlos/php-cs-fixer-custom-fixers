@@ -4,11 +4,12 @@
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
 ![Repository size](https://github-size-badge.herokuapp.com/kubawerlos/php-cs-fixer-custom-fixers.svg)
+[![Last commit](https://img.shields.io/github/last-commit/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/commits)
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
 ![Tests](https://img.shields.io/badge/tests-930-brightgreen.svg)
-[![Last commit](https://img.shields.io/github/last-commit/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/commits)
+[![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 

@@ -53,7 +53,9 @@ jobs:
                 echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
                 cd $TRAVIS_BUILD_DIR
           install: composer require --dev php-coveralls/php-coveralls
-          script: composer test -- --coverage-clover=./build/logs/clover.xml
+          script:
+            - composer test -- --coverage-clover=./build/logs/clover.xml
+            - vendor/bin/infection run --threads=16
           after_success: ./vendor/bin/php-coveralls
 
         - php: '7.4snapshot'
