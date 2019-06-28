@@ -200,7 +200,6 @@ In your PHP CS Fixer configuration register fixers and use them:
             }
 
             $originalCode = $fixer->getDefinition()->getCodeSamples()[0]->getCode();
-            Tokens::clearCache();
             $tokens = Tokens::fromCode($originalCode);
             $fixer->fix(new StdinFileInfo(), $tokens);
             $fixedCode = $tokens->generateCode();
