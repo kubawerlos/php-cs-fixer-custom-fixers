@@ -1,0 +1,18 @@
+{
+    "source": {
+        "directories": [
+            "src",
+            "src-dev"
+        ]
+    },
+    "timeout": 10,
+    "logs": {
+        "text": "infection.log",
+        "badge": {
+            "branch": "master"
+        }
+    },
+    "mutators": {
+        "@default": true
+    }
+}

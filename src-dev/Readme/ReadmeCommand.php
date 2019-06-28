@@ -45,7 +45,6 @@ class ReadmeCommand extends BaseCommand
             $this->badge(
                 'PHP version',
                 \sprintf('%s/packagist/php-v/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
-                //\sprintf('%s/badge/php-%s-8892BF.svg', self::SHIELDS_HOST, \rawurlencode($this->composer()->require->php)),
                 'https://php.net'
             ),
             $this->badge(
@@ -56,6 +55,11 @@ class ReadmeCommand extends BaseCommand
             $this->badge(
                 'Repository size',
                 \sprintf('https://github-size-badge.herokuapp.com/%s.svg', $this->composer()->name)
+            ),
+            $this->badge(
+                'Last commit',
+                \sprintf('%s/github/last-commit/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://github.com/%s/commits', $this->composer()->name)
             ),
             '',
             $this->badge(
@@ -73,9 +77,9 @@ class ReadmeCommand extends BaseCommand
                 \sprintf('%s/badge/tests-%d-brightgreen.svg', self::SHIELDS_HOST, $this->numberOfTests())
             ),
             $this->badge(
-                'Last commit',
-                \sprintf('%s/github/last-commit/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
-                \sprintf('https://github.com/%s/commits', $this->composer()->name)
+                'Mutation testing badge',
+                \sprintf('https://badge.stryker-mutator.io/github.com/%s/master', $this->composer()->name),
+                'https://stryker-mutator.github.io'
             ),
         ]) . "\n";
     }
