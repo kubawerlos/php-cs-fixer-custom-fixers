@@ -119,5 +119,17 @@ class FooTest extends TestCase {
     private $prop;
 }',
         ];
+
+        yield 'data provider target name already used' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testFoo() {}
+    public function dataProvider() {}
+    public function provideFooCases() {}
+}',
+        ];
     }
 }

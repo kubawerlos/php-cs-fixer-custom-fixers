@@ -104,7 +104,9 @@ class FooTest extends TestCase {
                     $dataProviderUsagesCounts[$match] = 0;
                 }
                 $dataProviderUsagesCounts[$match]++;
+
                 $dataProviderIndices[$match] = $index;
+
                 $functionNameIndex = $tokens->getNextNonWhitespace($functionIndex);
                 if ($tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
                     $dataProviderUsingFunctionNames[$match] = $tokens[$functionNameIndex]->getContent();
@@ -122,6 +124,9 @@ class FooTest extends TestCase {
             }
 
             $dataProviderNewName = $this->getProviderNameForTestName($dataProviderUsingFunctionNames[$dataProviderName]);
+            if (isset($functionDefinitionIndices[$dataProviderNewName])) {
+                continue;
+            }
             if ($dataProviderName === $dataProviderNewName) {
                 continue;
             }
