@@ -131,5 +131,18 @@ class FooTest extends TestCase {
     public function provideFooCases() {}
 }',
         ];
+
+        yield 'data provider defined for anonymous function' => [
+            '<?php
+class FooTest extends TestCase {
+    public function testFoo()
+    {
+        /**
+         * @dataProvider dataProvider
+         */
+        function () { return true; };
+    }
+}',
+        ];
     }
 }

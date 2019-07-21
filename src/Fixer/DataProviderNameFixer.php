@@ -64,7 +64,7 @@ class FooTest extends TestCase {
 
     private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        $dataProviderIndices = [];
+        $dataProviderCallIndices = [];
         $dataProviderUsagesCounts = [];
         $dataProviderUsingFunctionNames = [];
         $functionDefinitionIndices = [];
@@ -94,6 +94,11 @@ class FooTest extends TestCase {
                 continue;
             }
 
+            $functionNameIndex = $tokens->getNextNonWhitespace($functionIndex);
+            if (!$tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
+                continue;
+            }
+
             Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$index]->getContent(), $matches);
 
             /** @var string[] $matches */
@@ -105,12 +110,9 @@ class FooTest extends TestCase {
                 }
                 $dataProviderUsagesCounts[$match]++;
 
-                $dataProviderIndices[$match] = $index;
+                $dataProviderCallIndices[$match] = $index;
 
-                $functionNameIndex = $tokens->getNextNonWhitespace($functionIndex);
-                if ($tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
-                    $dataProviderUsingFunctionNames[$match] = $tokens[$functionNameIndex]->getContent();
-                }
+                $dataProviderUsingFunctionNames[$match] = $tokens[$functionNameIndex]->getContent();
             }
         }
 
@@ -127,9 +129,6 @@ class FooTest extends TestCase {
             if (isset($functionDefinitionIndices[$dataProviderNewName])) {
                 continue;
             }
-            if ($dataProviderName === $dataProviderNewName) {
-                continue;
-            }
 
             $tokens[$functionDefinitionIndices[$dataProviderName]] = new Token([T_STRING, $dataProviderNewName]);
 
@@ -137,10 +136,10 @@ class FooTest extends TestCase {
             $newCommentContent = Preg::replace(
                 \sprintf('/(@dataProvider\s+)%s/', $dataProviderName),
                 \sprintf('$1%s', $dataProviderNewName),
-                $tokens[$dataProviderIndices[$dataProviderName]]->getContent()
+                $tokens[$dataProviderCallIndices[$dataProviderName]]->getContent()
             );
 
-            $tokens[$dataProviderIndices[$dataProviderName]] = new Token([T_DOC_COMMENT, $newCommentContent]);
+            $tokens[$dataProviderCallIndices[$dataProviderName]] = new Token([T_DOC_COMMENT, $newCommentContent]);
         }
     }
 
