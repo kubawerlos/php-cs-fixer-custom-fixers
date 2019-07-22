@@ -68,7 +68,7 @@ class FooTest extends TestCase {
         $dataProviderUsagesCounts = [];
         $dataProviderUsingFunctionNames = [];
         $functionDefinitionIndices = [];
-        for ($index = $endIndex; $index > $startIndex; $index--) {
+        for ($index = $startIndex; $index < $endIndex; $index++) {
             // if it's the function and string follows then it's function's definition
             if ($tokens[$index]->isGivenKind(T_FUNCTION)) {
                 $functionNameIndex = $tokens->getNextNonWhitespace($index);

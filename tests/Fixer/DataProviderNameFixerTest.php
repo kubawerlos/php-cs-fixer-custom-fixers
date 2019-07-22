@@ -89,7 +89,7 @@ class FooTest extends TestCase {
             '<?php
 class FooTest extends TestCase {
     /**
-     * @dataProvider fooDataProvider
+     * @dataProvider notExistingFunction
      */
     public function testFoo() {}
 }',
@@ -138,10 +138,65 @@ class FooTest extends TestCase {
     public function testFoo()
     {
         /**
-         * @dataProvider dataProvider
+         * @dataProvider notDataProvider
          */
         function () { return true; };
     }
+    public function notDataProvider() {}
+}',
+        ];
+
+        //yield 'complex example' => [
+        yield 'last' => [
+            '<?php
+class FooTest extends TestCase {
+    /** @dataProvider notExistingFunction */
+    public function testClosure()
+    {
+        /** Preparing data */
+        $x = 0;
+        /** @dataProvider notDataProvider */
+        function () { return true; };
+    }
+
+    /** @dataProvider reusedDataProvider */
+    public function testFoo() {}
+    /** @dataProvider reusedDataProvider */
+    public function testBar() {}
+    public function reusedDataProvider() {}
+
+    /** @dataProvider provideBazCases */
+    public function testBaz() {}
+    public function provideBazCases() {}
+
+    /** @dataProvider provideSomethingCases */
+    public function testSomething() {}
+    public function provideSomethingCases() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /** @dataProvider notExistingFunction */
+    public function testClosure()
+    {
+        /** Preparing data */
+        $x = 0;
+        /** @dataProvider notDataProvider */
+        function () { return true; };
+    }
+
+    /** @dataProvider reusedDataProvider */
+    public function testFoo() {}
+    /** @dataProvider reusedDataProvider */
+    public function testBar() {}
+    public function reusedDataProvider() {}
+
+    /** @dataProvider provideBazCases */
+    public function testBaz() {}
+    public function provideBazCases() {}
+
+    /** @dataProvider someDataProvider */
+    public function testSomething() {}
+    public function someDataProvider() {}
 }',
         ];
     }
