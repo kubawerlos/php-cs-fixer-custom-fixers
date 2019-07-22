@@ -146,8 +146,7 @@ class FooTest extends TestCase {
 }',
         ];
 
-        //yield 'complex example' => [
-        yield 'last' => [
+        yield 'complex example' => [
             '<?php
 class FooTest extends TestCase {
     /** @dataProvider notExistingFunction */
