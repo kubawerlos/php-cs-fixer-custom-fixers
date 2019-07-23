@@ -140,6 +140,7 @@ class FooTest extends TestCase {
             );
 
             $tokens[$dataProviderCallIndices[$dataProviderName]] = new Token([T_DOC_COMMENT, $newCommentContent]);
+            $functionDefinitionIndices[$dataProviderNewName] = $dataProviderCallIndices[$dataProviderName];
         }
     }
 

@@ -146,6 +146,29 @@ class FooTest extends TestCase {
 }',
         ];
 
+        yield 'multiple data providers for test' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     * @dataProvider foo2DataProvider
+     */
+    public function testFoo() {}
+    public function provideFooCases() {}
+    public function foo2DataProvider() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider foo1DataProvider
+     * @dataProvider foo2DataProvider
+     */
+    public function testFoo() {}
+    public function foo1DataProvider() {}
+    public function foo2DataProvider() {}
+}',
+        ];
+
         yield 'complex example' => [
             '<?php
 class FooTest extends TestCase {
