@@ -4,6 +4,7 @@
 - Add SingleLineThrowFixer
 - Add PhpUnitNoUselessReturnFixer
 - Add DataProviderNameFixer
+- Add NoUselessSprintfFixer
 - Feature: NoCommentedOutCodeFixer - handle class method
 - Deprecate SingleLineThrowFixer
 
