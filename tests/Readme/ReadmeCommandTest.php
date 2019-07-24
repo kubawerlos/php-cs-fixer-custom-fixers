@@ -6,8 +6,7 @@ namespace Tests\Readme;
 
 use PhpCsFixerCustomFixersDev\Readme\ReadmeCommand;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\ApplicationTester;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @internal
@@ -18,17 +17,9 @@ final class ReadmeCommandTest extends TestCase
 {
     public function testReadmeIsUpToDate(): void
     {
-        $application = new Application();
-        $command = new ReadmeCommand('readme');
+        $tester = new CommandTester(new ReadmeCommand());
 
-        $application->add($command);
-        $application->setDefaultCommand($command->getName(), true);
-        $application->setAutoExit(false);
-        $application->setCatchExceptions(false);
-
-        $tester = new ApplicationTester($application);
-
-        $tester->run([]);
+        $tester->execute([]);
 
         static::assertStringEqualsFile(
             __DIR__ . '/../../README.md',
