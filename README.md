@@ -8,7 +8,7 @@
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-957-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-988-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
@@ -223,6 +223,14 @@ In your PHP CS Fixer configuration register fixers and use them:
 - * repository methods below.
 - */
  class FooRepository extends EntityRepository {}
+```
+
+- **NoUselessSprintfFixer** - function `sprintf` without parameters should not be used.  
+  *Risky: when the function `sprintf` is overridden.*
+```diff
+ <?php
+-$foo = sprintf('Foo');
++$foo = 'Foo';
 ```
 
 - **NullableParamStyleFixer** - nullable parameters must be written in the consistent style.
