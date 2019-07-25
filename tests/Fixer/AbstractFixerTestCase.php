@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\DefinedFixerInterface;
+use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,8 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractFixerTestCase extends TestCase
 {
+    use AssertTokensTrait;
+
     /** @var DefinedFixerInterface */
     protected $fixer;
 
@@ -93,6 +96,9 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
+        $tokens->clearEmptyTokens();
+
         static::assertSame($expected, $tokens->generateCode());
+        static::assertTokens(Tokens::fromCode($expected), $tokens);
     }
 }
