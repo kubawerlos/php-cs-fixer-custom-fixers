@@ -52,9 +52,7 @@ final class NoUselessSprintfFixer extends AbstractFixer
 
             $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
-            $arguments = $argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis);
-
-            if (\count($arguments) > 1) {
+            if ($argumentsAnalyzer->countArguments($tokens, $openParenthesis, $closeParenthesis) !== 1) {
                 continue;
             }
 
