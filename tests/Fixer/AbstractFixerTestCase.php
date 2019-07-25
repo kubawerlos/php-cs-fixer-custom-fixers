@@ -98,6 +98,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $tokens->clearEmptyTokens();
 
+        static::assertSame($expected, $tokens->generateCode());
         static::assertTokens(Tokens::fromCode($expected), $tokens);
     }
 }
