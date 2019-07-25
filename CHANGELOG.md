@@ -1,10 +1,10 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
-- Add SingleLineThrowFixer
-- Add PhpUnitNoUselessReturnFixer
+## v1.14.0 - *2019-07-25*
 - Add DataProviderNameFixer
 - Add NoUselessSprintfFixer
+- Add PhpUnitNoUselessReturnFixer
+- Add SingleLineThrowFixer
 - Feature: NoCommentedOutCodeFixer - handle class method
 - Deprecate SingleLineThrowFixer
 
