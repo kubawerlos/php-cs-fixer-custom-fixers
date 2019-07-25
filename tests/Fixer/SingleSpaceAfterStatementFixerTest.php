@@ -251,6 +251,26 @@ do    {
 } while (isEnough());
 ',
         ];
+
+        yield [
+            '<?php
+                $a = new class() {};
+                continue;
+                foo();
+                break
+                ;
+                class Baz {}
+            ',
+            '<?php
+                $a = new class() {};
+                continue;
+                foo();
+                break
+                ;
+                class    Baz {}
+            ',
+            ['allow_linebreak' => true],
+        ];
     }
 
     public function testExampleWithAllTokensHasAllSpacesFixed(): void

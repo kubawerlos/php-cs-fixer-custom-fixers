@@ -51,14 +51,14 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
             if (!$tokens[$prevIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
-            $stringBorder = $tokens[$prevIndex]->getContent()[0];
+            $prevStringBorder = $tokens[$prevIndex]->getContent()[0];
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);
             if (!$tokens[$nextIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
 
-            if ($stringBorder !== $tokens[$nextIndex]->getContent()[0]) {
+            if ($prevStringBorder !== $tokens[$nextIndex]->getContent()[0]) {
                 continue;
             }
 

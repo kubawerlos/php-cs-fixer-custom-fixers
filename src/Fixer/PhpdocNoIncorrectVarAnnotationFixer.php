@@ -54,7 +54,8 @@ $bar = new Foo();
 
             if ($nextIndex === null) {
                 $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
-                continue;
+
+                return;
             }
 
             if ($tokens[$nextIndex]->isGivenKind([T_PRIVATE, T_PROTECTED, T_PUBLIC, T_VAR, T_STATIC])) {

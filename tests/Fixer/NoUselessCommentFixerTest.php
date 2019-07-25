@@ -374,5 +374,24 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
                 }
             ',
         ];
+
+        yield [
+            '<?php
+                // Useless comment
+                foo();
+                // @author: John Doe
+                class Bar {}
+                //
+                class Baz {}
+            ',
+            '<?php
+                // Useless comment
+                foo();
+                // @author: John Doe
+                class Bar {}
+                // Class Baz
+                class Baz {}
+            ',
+        ];
     }
 }

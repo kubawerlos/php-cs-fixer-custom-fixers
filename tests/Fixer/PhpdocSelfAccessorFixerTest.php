@@ -154,5 +154,28 @@ class Foo {
       public function bar(...$params) {}
 }',
         ];
+
+        yield [
+            '<?php
+namespace Some\Thing;
+class Foo {
+     /**
+      * @author Jon Doe
+      * @param self $x
+      * @param self $x
+      */
+      public function bar(...$params) {}
+}',
+            '<?php
+namespace Some\Thing;
+class Foo {
+     /**
+      * @author Jon Doe
+      * @param self $x
+      * @param Foo $x
+      */
+      public function bar(...$params) {}
+}',
+        ];
     }
 }

@@ -132,5 +132,30 @@ final class PhpdocParamTypeFixerTest extends AbstractFixerTestCase
              */
              ',
         ];
+
+        yield [
+            '<?php
+                /** first comment */
+                /**
+                 * @param bool $a
+                 */
+                function foo($a) {}
+                /**
+                 * @param mixed $a
+                 */
+                function bar($a) {}
+',
+            '<?php
+                /** first comment */
+                /**
+                 * @param bool $a
+                 */
+                function foo($a) {}
+                /**
+                 * @param $a
+                 */
+                function bar($a) {}
+',
+        ];
     }
 }

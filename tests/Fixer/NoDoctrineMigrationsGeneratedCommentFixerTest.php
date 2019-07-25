@@ -66,6 +66,7 @@ final class Version20180609123456 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
+        // Doing this is important
         $this->addSql("UPDATE t1 SET col1 = col1 + 1");
     }
     public function down(Schema $schema) : void
@@ -86,6 +87,7 @@ final class Version20180609123456 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        // Doing this is important
         $this->addSql("UPDATE t1 SET col1 = col1 + 1");
     }
     public function down(Schema $schema) : void

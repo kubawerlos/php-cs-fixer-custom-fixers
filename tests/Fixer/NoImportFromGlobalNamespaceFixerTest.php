@@ -246,5 +246,33 @@ class Baz {
 }
 ',
         ];
+
+        yield [
+            '<?php
+namespace Foo;
+/** 
+ * The class
+ */
+class Bar {
+    /**
+     * @param \DateTime $a
+     */
+    public function __construct($a) {}
+}
+',
+            '<?php
+namespace Foo;
+/** 
+ * The class
+ */
+use DateTime;
+class Bar {
+    /**
+     * @param DateTime $a
+     */
+    public function __construct($a) {}
+}
+',
+        ];
     }
 }

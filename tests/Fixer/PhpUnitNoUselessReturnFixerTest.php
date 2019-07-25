@@ -198,5 +198,21 @@ class FooTest extends TestCase {
                 return;
             ',
         ];
+
+        yield [
+            '   static::markTestSkipped;
+                parent::markTestSkipped();
+                static::markTestSkipped()[0];
+                static::markTestIncomplete();
+                static::markTestIncomplete();
+            ',
+            '   static::markTestSkipped;
+                parent::markTestSkipped();
+                static::markTestSkipped()[0];
+                static::markTestIncomplete();
+                static::markTestIncomplete();
+                return;
+            ',
+        ];
     }
 }

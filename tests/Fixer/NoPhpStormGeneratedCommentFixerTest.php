@@ -51,6 +51,23 @@ namespace Foo;
 
         yield [
             '<?php
+// Author: John Doe
+namespace Foo;
+',
+            '<?php
+// Author: John Doe
+/**
+ * Created by PhpStorm.
+ * User: root
+ * Date: 01.01.70
+ * Time: 12:34
+ */
+namespace Foo;
+',
+        ];
+
+        yield [
+            '<?php
 
 namespace Foo;
 ',

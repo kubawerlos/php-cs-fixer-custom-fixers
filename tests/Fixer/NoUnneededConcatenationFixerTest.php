@@ -41,10 +41,13 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
         yield ['<?php "foo".\'bar\';'];
         yield ['<?php "foo" . \'bar\';'];
         yield ['<?php \'bar\' . "foo";'];
+
         yield ['<?php "foo"
                       . "bar";'];
+
         yield ['<?php "foo" .
                       "bar";'];
+
         yield ['<?php "foo" // comment
                       . "bar";'];
 
@@ -61,6 +64,29 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
         yield [
             '<?php "foobarbazqux";',
             '<?php "foo" . "bar" . "baz" . "qux";',
+        ];
+
+        yield [
+            '<?php
+                $a = "a"
+                   . "a";
+                $b = "b" .
+                     "b";
+                $c = $c . "c";
+                $d = "d" . $d;
+                $e = \'e\' . "e";
+                $f = "ff";
+            ',
+            '<?php
+                $a = "a"
+                   . "a";
+                $b = "b" .
+                     "b";
+                $c = $c . "c";
+                $d = "d" . $d;
+                $e = \'e\' . "e";
+                $f = "f" . "f";
+            ',
         ];
     }
 }

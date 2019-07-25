@@ -59,5 +59,20 @@ final class SingleSpaceBeforeStatementFixerTest extends AbstractFixerTestCase
             '<?php $items = [new Item(), new Item()];',
             '<?php $items = [new Item(),new Item()];',
         ];
+
+        yield [
+            '<?php
+                $x = new stdClass();
+                $bar. require("bar_description.txt");
+                $baz = 
+                       new Baz();
+            ',
+            '<?php
+                $x =   new stdClass();
+                $bar.require("bar_description.txt");
+                $baz = 
+                       new Baz();
+            ',
+        ];
     }
 }
