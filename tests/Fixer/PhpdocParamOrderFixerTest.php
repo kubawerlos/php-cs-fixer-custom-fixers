@@ -105,6 +105,44 @@ final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 /**
+                 * @param $a
+                 * @param $c
+                 */
+                function foo($a, int $b, $c) {}
+            ',
+            '<?php
+                /**
+                 * @param $c
+                 * @param $a
+                 */
+                function foo($a, int $b, $c) {}
+            ',
+        ];
+
+        yield [
+            '<?php
+                /**
+                 * @param $a Description
+                 *           of $a
+                 * @param $b Description
+                 *           of $b
+                 */
+                function foo($a, $b) {}
+            ',
+            '<?php
+                /**
+                 * @param $b Description
+                 *           of $b
+                 * @param $a Description
+                 *           of $a
+                 */
+                function foo($a, $b) {}
+            ',
+        ];
+
+        yield [
+            '<?php
+                /**
                  * @see www.example.com
                  * @param int $a
                  * @param int $b

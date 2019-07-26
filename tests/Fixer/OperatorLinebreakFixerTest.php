@@ -78,6 +78,17 @@ return $foo +
         yield [
             '<?php
 return $foo
+    AND $bar;
+',
+            '<?php
+return $foo AND
+    $bar;
+',
+        ];
+
+        yield [
+            '<?php
+return $foo
     .$bar;
 ',
             '<?php
