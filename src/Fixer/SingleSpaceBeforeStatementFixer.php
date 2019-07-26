@@ -108,7 +108,8 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
                 if (Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
                     $tokens->clearAt($index - 1);
                 }
-                continue;
+
+                return;
             }
 
             $tokens[$index - 1] = new Token([T_WHITESPACE, ' ']);

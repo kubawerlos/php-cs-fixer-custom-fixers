@@ -66,7 +66,7 @@ class Foo {
                 [[T_WHITESPACE], [T_COMMENT], [T_DOC_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC], [T_VAR]]
             );
             if ($nextIndex === null) {
-                continue;
+                return;
             }
 
             if ($tokens[$nextIndex]->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {

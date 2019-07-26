@@ -72,5 +72,20 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
             '<?php class Foo extends Exception {}',
             '<?php class Foo extends EXCEPTION {}',
         ];
+
+        yield [
+            '<?php
+                $a = STDCLASS();
+                $b = new Foo\STDCLASS();
+                $c = new \stdClass();
+                $d = new \stdClass();
+            ',
+            '<?php
+                $a = STDCLASS();
+                $b = new Foo\STDCLASS();
+                $c = new \stdClass();
+                $d = new \STDCLASS();
+            ',
+        ];
     }
 }

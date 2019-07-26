@@ -211,5 +211,39 @@ class Foo
 }
 ',
         ];
+
+        yield [
+            '<?php
+/** Class Foo */
+class Foo
+{
+    public function hello()
+    {
+        $b = [1, 2, 3];
+        
+        foreach ($b as $x) {}
+    }
+
+    private $b;
+}
+',
+            '<?php
+/** Class Foo */
+class Foo
+{
+    public function hello()
+    {
+        /** @var $a */
+        $b = [1, 2, 3];
+        
+        /** @var $y */
+        foreach ($b as $x) {}
+    }
+
+    /** @var */
+    private $b;
+}
+',
+        ];
     }
 }

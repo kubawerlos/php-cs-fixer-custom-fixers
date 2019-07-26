@@ -59,5 +59,16 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
         yield [
             '<?php $x = \getcwd();',
         ];
+
+        yield [
+            '<?php
+                $a = new Foo\Bar();
+                $b = new Baz();
+            ',
+            '<?php
+                $a = new \Foo\Bar();
+                $b = new \Baz();
+            ',
+        ];
     }
 }

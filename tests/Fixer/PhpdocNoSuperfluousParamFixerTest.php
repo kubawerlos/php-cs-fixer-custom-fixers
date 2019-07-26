@@ -177,5 +177,29 @@ function foo() {}
 function foo() {}
 ',
         ];
+
+        yield [
+            '<?php
+/** first comment */
+/**
+ * @param bool $a
+ */
+function foo($a) {}
+/**
+ */
+function bar($a) {}
+',
+            '<?php
+/** first comment */
+/**
+ * @param bool $a
+ */
+function foo($a) {}
+/**
+ * @param bool $b
+ */
+function bar($a) {}
+',
+        ];
     }
 }

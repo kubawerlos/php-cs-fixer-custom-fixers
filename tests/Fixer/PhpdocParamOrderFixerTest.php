@@ -124,5 +124,32 @@ function foo($a, $b, $c) {}
 function foo($a, $b, $c) {}
 ',
         ];
+
+        yield [
+            '<?php
+/** first comment */
+/**
+ * @param bool $a
+ */
+function foo($a) {}
+/**
+ * @param bool $a
+ * @param bool $b
+ */
+function bar($a, $b) {}
+',
+            '<?php
+/** first comment */
+/**
+ * @param bool $a
+ */
+function foo($a) {}
+/**
+ * @param bool $b
+ * @param bool $a
+ */
+function bar($a, $b) {}
+',
+        ];
     }
 }

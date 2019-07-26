@@ -55,7 +55,7 @@ jobs:
           install: composer require --dev php-coveralls/php-coveralls
           script:
             - composer test -- --coverage-clover=./build/logs/clover.xml
-            - vendor/bin/infection run --threads=16
+            - composer infection
           after_success: ./vendor/bin/php-coveralls
 
         - php: '7.4snapshot'

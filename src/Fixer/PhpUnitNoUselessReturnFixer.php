@@ -65,7 +65,7 @@ class FooTest extends TestCase {
 
     private function removeUselessReturns(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        for ($index = $endIndex; $index > $startIndex; $index--) {
+        for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->equalsAny(self::FUNCTION_TOKENS, false)) {
                 continue;
             }
