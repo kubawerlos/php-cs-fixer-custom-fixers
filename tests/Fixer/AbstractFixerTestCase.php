@@ -92,7 +92,9 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $tokens = Tokens::fromCode($input);
 
-        static::assertTrue($this->fixer->isCandidate($tokens));
+        if ($input !== $expected) {
+            static::assertTrue($this->fixer->isCandidate($tokens));
+        }
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 

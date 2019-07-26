@@ -41,115 +41,123 @@ final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
     {
         yield [
             '<?php
-/**
- * @param bool $b
- * @param int $i
- * @param string $s
- */
-function foo($b, $i, $s) {}
-',
-        ];
-        yield [
-            '<?php
-function foo($a, $b) {}
-/**
- * @param int $b
- * @param int $a
- */
-',
-        ];
-
-        yield ['<?php
-/**
- * @param bool $b
- * @param int $i
- * @param string $s
- */
-function foo($b, $i, $s) {}
-',
-            '<?php
-/**
- * @param bool $b
- * @param string $s
- * @param int $i
- */
-function foo($b, $i, $s) {}
-',
-        ];
-
-        yield ['<?php
-/**
- * @param bool $b
- * @param int $i
- * @param string $s
- */
-function foo(bool $b, ?int $i, string $s = null) {}
-',
-            '<?php
-/**
- * @param bool $b
- * @param string $s
- * @param int $i
- */
-function foo(bool $b, ?int $i, string $s = null) {}
-',
-        ];
-
-        yield ['<?php
-/**
- * @see www.example.com
- * @param int $a
- * @param int $b
- * @param int $c
- * @param int $begin
- * @param int $aaa
- * @param int $end
- *
- * @return int
- */
-function foo($a, $b, $c) {}
-',
-            '<?php
-/**
- * @see www.example.com
- * @param int $begin
- * @param int $a
- * @param int $aaa
- * @param int $b
- * @param int $c
- * @param int $end
- *
- * @return int
- */
-function foo($a, $b, $c) {}
-',
+                /**
+                 * @param bool $b
+                 * @param int $i
+                 * @param string $s
+                 */
+                function foo($b, $i, $s) {}
+            ',
         ];
 
         yield [
             '<?php
-/** first comment */
-/**
- * @param bool $a
- */
-function foo($a) {}
-/**
- * @param bool $a
- * @param bool $b
- */
-function bar($a, $b) {}
-',
+                function foo($a, $b) {}
+                /**
+                 * @param int $b
+                 * @param int $a
+                 */
+            ',
+        ];
+
+        yield [
             '<?php
-/** first comment */
-/**
- * @param bool $a
- */
-function foo($a) {}
-/**
- * @param bool $b
- * @param bool $a
- */
-function bar($a, $b) {}
-',
+                class Foo {
+                    /**
+                     * @param bool $b
+                     * @param int $i
+                     * @param string $s
+                     */
+                    abstract function bar($b, $i, $s) {}
+                }
+            ',
+            '<?php
+                class Foo {
+                    /**
+                     * @param bool $b
+                     * @param string $s
+                     * @param int $i
+                     */
+                    abstract function bar($b, $i, $s) {}
+                }
+            ',
+        ];
+
+        yield [
+            '<?php
+                /**
+                 * @param bool $b
+                 * @param int $i
+                 * @param string $s
+                 */
+                function foo(bool $b, ?int $i, string $s = null) {}
+            ',
+            '<?php
+                /**
+                 * @param bool $b
+                 * @param string $s
+                 * @param int $i
+                 */
+                function foo(bool $b, ?int $i, string $s = null) {}
+            ',
+        ];
+
+        yield [
+            '<?php
+                /**
+                 * @see www.example.com
+                 * @param int $a
+                 * @param int $b
+                 * @param int $c
+                 * @param int $begin
+                 * @param int $aaa
+                 * @param int $end
+                 *
+                 * @return int
+                 */
+                function foo($a, $b, $c) {}
+            ',
+            '<?php
+                /**
+                 * @see www.example.com
+                 * @param int $begin
+                 * @param int $a
+                 * @param int $aaa
+                 * @param int $b
+                 * @param int $c
+                 * @param int $end
+                 *
+                 * @return int
+                 */
+                function foo($a, $b, $c) {}
+            ',
+        ];
+
+        yield [
+            '<?php
+                /** first comment */
+                /**
+                 * @param bool $a
+                 */
+                function foo($a) {}
+                /**
+                 * @param bool $a
+                 * @param bool $b
+                 */
+                function bar($a, $b) {}
+            ',
+            '<?php
+                /** first comment */
+                /**
+                 * @param bool $a
+                 */
+                function foo($a) {}
+                /**
+                 * @param bool $b
+                 * @param bool $a
+                 */
+                function bar($a, $b) {}
+            ',
         ];
     }
 }

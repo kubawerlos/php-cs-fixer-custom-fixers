@@ -99,6 +99,22 @@ function foo($x) {}
         yield [
             '<?php
 /**
+ * @param $x
+ */
+/* private */ function foo($x) {}
+',
+            '<?php
+/**
+ * @param $x
+ * @param $y
+ */
+/* private */ function foo($x) {}
+',
+        ];
+
+        yield [
+            '<?php
+/**
  * @param Type $x First one
  */
 function foo($x) {}
