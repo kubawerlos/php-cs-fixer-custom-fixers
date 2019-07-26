@@ -41,7 +41,7 @@ class FooTest extends TestCase {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_CLASS, T_DOC_COMMENT]);
+        return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
     public function getPriority(): int

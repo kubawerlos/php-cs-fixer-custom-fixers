@@ -89,6 +89,23 @@ $bar = new Logger();
 
         yield [
             '<?php
+for ($i = 0; $i < 100; $i++) {}
+',
+            '<?php
+/** @var int $index */
+for ($i = 0; $i < 100; $i++) {}
+',
+        ];
+
+        yield [
+            '<?php
+/** @var int $i */
+for ($i = 0; $i < 100; $i++) {}
+',
+        ];
+
+        yield [
+            '<?php
 /**
  * We create here new instance here
  */

@@ -34,7 +34,7 @@ final class NoDoctrineMigrationsGeneratedCommentFixerTest extends AbstractFixerT
 
     public function provideFixCases(): iterable
     {
-        yield [
+        yield 'do not remove when comments were changed' => [
             '<?php
 namespace Migrations;
 use Doctrine\DBAL\Schema\Schema;
@@ -57,7 +57,86 @@ final class Version20180609123456 extends AbstractMigration
 ',
         ];
 
-        yield [
+        yield 'handle standard case' => [
+            '<?php
+namespace Migrations;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+final class Version20180609123456 extends AbstractMigration
+{
+    public function up(Schema $schema) : void
+    {
+        $this->addSql("UPDATE t1 SET col1 = col1 + 1");
+    }
+    public function down(Schema $schema) : void
+    {
+        $this->addSql("UPDATE t1 SET col1 = col1 - 1");
+    }
+}
+',
+            '<?php
+namespace Migrations;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20180609123456 extends AbstractMigration
+{
+    public function up(Schema $schema) : void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql("UPDATE t1 SET col1 = col1 + 1");
+    }
+    public function down(Schema $schema) : void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql("UPDATE t1 SET col1 = col1 - 1");
+    }
+}
+',
+        ];
+
+        yield 'handle without class comment' => [
+            '<?php
+namespace Migrations;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+final class Version20180609123456 extends AbstractMigration
+{
+    public function up(Schema $schema) : void
+    {
+        // Doing this is important
+        $this->addSql("UPDATE t1 SET col1 = col1 + 1");
+    }
+    public function down(Schema $schema) : void
+    {
+        $this->addSql("UPDATE t1 SET col1 = col1 - 1");
+    }
+}
+',
+            '<?php
+namespace Migrations;
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+final class Version20180609123456 extends AbstractMigration
+{
+    public function up(Schema $schema) : void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        // Doing this is important
+        $this->addSql("UPDATE t1 SET col1 = col1 + 1");
+    }
+    public function down(Schema $schema) : void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql("UPDATE t1 SET col1 = col1 - 1");
+    }
+}
+',
+        ];
+
+        yield 'handle with mixed comments' => [
             '<?php
 namespace Migrations;
 use Doctrine\DBAL\Schema\Schema;
