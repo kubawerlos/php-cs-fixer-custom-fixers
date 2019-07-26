@@ -19,6 +19,11 @@
                 "PhpCsFixerCustomFixers\\Fixer\\*::getConfigurationDefinition",
                 "PhpCsFixerCustomFixers\\Fixer\\*::isCandidate"
             ]
+        },
+        "PublicVisibility": {
+            "ignore": [
+                "PhpCsFixerCustomFixers\\Fixer\\AbstractFixer::name"
+            ]
         }
     }
 }
