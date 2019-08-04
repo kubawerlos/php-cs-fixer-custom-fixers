@@ -40,8 +40,8 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
                 continue;
             }
 
-            $newContent = Preg::replace('/^(\/\/|#|\/\*+)((?!(?:\/|\*| )).+)$/', '$1 $2', $token->getContent());
-            $newContent = Preg::replace('/^(.+(?<!(?:\/|\*| )))(\*+\/)$/', '$1 $2', $newContent);
+            $newContent = Preg::replace('/^(\/\/|#|\/\*+)((?!(?:\/|\*|\h)).+)$/', '$1 $2', $token->getContent());
+            $newContent = Preg::replace('/^(.+(?<!(?:\/|\*|\h)))(\*+\/)$/', '$1 $2', $newContent);
 
             if ($newContent === $token->getContent()) {
                 continue;
