@@ -152,34 +152,34 @@ In your PHP CS Fixer configuration register fixers and use them:
             $reflection = new \ReflectionClass($fixer);
 
             $output .= \sprintf(
-                "\n- #### %s\n  %s.",
+                "\n#### %s\n%s.",
                 $reflection->getShortName(),
                 $fixer->getDefinition()->getSummary()
             );
 
             if ($fixer instanceof DeprecatingFixerInterface) {
                 $output .= \sprintf(
-                    "  \n  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
+                    "  \n*To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
                     $fixer->getPullRequestId()
                 );
             }
 
             if ($fixer instanceof DeprecatedFixerInterface) {
                 $output .= \sprintf(
-                    "  \n  DEPRECATED: use `%s` instead.",
+                    "  \nDEPRECATED: use `%s` instead.",
                     \implode('`, `', $fixer->getSuccessorsNames())
                 );
             }
 
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
-                    "  \n  *Risky: %s.*",
+                    "  \n*Risky: %s.*",
                     $fixer->getDefinition()->getRiskyDescription()
                 );
             }
 
             if ($fixer instanceof ConfigurationDefinitionFixerInterface) {
-                $output .= "\n  Configuration options:";
+                $output .= "\nConfiguration options:";
 
                 foreach ($fixer->getConfigurationDefinition()->getOptions() as $option) {
                     if ($option->getAllowedValues() !== null) {
@@ -190,7 +190,7 @@ In your PHP CS Fixer configuration register fixers and use them:
                         $allowed = $option->getAllowedTypes();
                     }
                     $output .= \sprintf(
-                        "\n  - `%s` (`%s`): %s; defaults to `%s`",
+                        "\n- `%s` (`%s`): %s; defaults to `%s`",
                         $option->getName(),
                         \implode('`, `', $allowed),
                         $option->getDescription(),
@@ -205,8 +205,8 @@ In your PHP CS Fixer configuration register fixers and use them:
             $fixedCode = $tokens->generateCode();
 
             $output .= \sprintf(
-                "\n  ```diff\n  %s\n  ```\n",
-                \str_replace("\n", "\n  ", $this->diff($originalCode, $fixedCode))
+                "\n```diff\n%s\n```\n",
+                $this->diff($originalCode, $fixedCode)
             );
         }
 
