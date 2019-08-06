@@ -26,7 +26,7 @@ final class NoUselessClassCommentFixer extends AbstractFixer implements Deprecat
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'there must be no comment like: "Class FooBar"',
+            'There must be no comment like: "Class FooBar"',
             [new CodeSample('<?php
 /**
  * Class FooBar

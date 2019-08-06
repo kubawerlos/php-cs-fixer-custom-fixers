@@ -17,7 +17,7 @@ final class InternalClassCasingFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'class defined internally by an extension, or the core should be called using the correct casing',
+            'Class defined internally by an extension, or the core should be called using the correct casing',
             [new CodeSample("<?php\n\$foo = new STDClass();\n")]
         );
     }

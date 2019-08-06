@@ -152,7 +152,7 @@ In your PHP CS Fixer configuration register fixers and use them:
             $reflection = new \ReflectionClass($fixer);
 
             $output .= \sprintf(
-                "\n- **%s** - %s.",
+                "\n- #### %s\n  %s.",
                 $reflection->getShortName(),
                 $fixer->getDefinition()->getSummary()
             );
@@ -205,8 +205,8 @@ In your PHP CS Fixer configuration register fixers and use them:
             $fixedCode = $tokens->generateCode();
 
             $output .= \sprintf(
-                "\n```diff\n%s\n```\n",
-                $this->diff($originalCode, $fixedCode)
+                "\n  ```diff\n  %s\n  ```\n",
+                \str_replace("\n", "\n  ", $this->diff($originalCode, $fixedCode))
             );
         }
 
