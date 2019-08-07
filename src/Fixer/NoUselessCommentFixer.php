@@ -19,7 +19,7 @@ final class NoUselessCommentFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'there must be no comment like "Class Foo"',
+            'There must be no comment like "Class Foo"',
             [
                 new CodeSample('<?php
 /**
