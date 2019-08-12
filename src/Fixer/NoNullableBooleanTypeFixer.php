@@ -14,7 +14,7 @@ final class NoNullableBooleanTypeFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'there must be no nullable boolean type',
+            'There must be no nullable boolean type',
             [new CodeSample('<?php
 function foo(?bool $bar) : ?bool
 {

@@ -26,7 +26,7 @@ final class NoUselessConstructorCommentFixer extends AbstractFixer implements De
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'there must be no comment like: "Foo constructor"',
+            'There must be no comment like: "Foo constructor"',
             [new CodeSample('<?php
 class Foo {
     /**
