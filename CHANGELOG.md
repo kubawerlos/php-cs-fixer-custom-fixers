@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Add CommentSurroundedBySpacesFixer
+
 ## v1.14.0 - *2019-07-25*
 - Add DataProviderNameFixer
 - Add NoUselessSprintfFixer
