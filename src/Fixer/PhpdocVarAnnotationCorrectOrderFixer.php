@@ -25,7 +25,7 @@ final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer implement
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            \rtrim($this->fixer->getDefinition()->getSummary(), '.'),
+            $this->fixer->getDefinition()->getSummary(),
             $this->fixer->getDefinition()->getCodeSamples()
         );
     }

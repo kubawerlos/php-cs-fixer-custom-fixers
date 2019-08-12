@@ -20,7 +20,7 @@ final class DataProviderNameFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Name of data provider that is used only once must match name of test',
+            'Name of data provider that is used only once must match name of test.',
             [
                 new CodeSample(
                     '<?php

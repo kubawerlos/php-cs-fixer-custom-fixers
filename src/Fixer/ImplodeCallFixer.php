@@ -27,7 +27,7 @@ final class ImplodeCallFixer extends AbstractFixer implements DeprecatedFixerInt
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Function `implode` must be called with 2 arguments in the documented order',
+            'Function `implode` must be called with 2 arguments in the documented order.',
             [new CodeSample('<?php
 implode($foo, "") . implode($bar);
 ')],

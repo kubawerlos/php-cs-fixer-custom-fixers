@@ -16,7 +16,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Comment must be surrounded by spaces',
+            'Comment must be surrounded by spaces.',
             [new CodeSample('<?php
 /*foo*/
 ')]

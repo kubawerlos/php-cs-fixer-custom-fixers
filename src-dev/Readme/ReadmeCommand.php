@@ -152,7 +152,7 @@ In your PHP CS Fixer configuration register fixers and use them:
             $reflection = new \ReflectionClass($fixer);
 
             $output .= \sprintf(
-                "\n#### %s\n%s.",
+                "\n#### %s\n%s",
                 $reflection->getShortName(),
                 $fixer->getDefinition()->getSummary()
             );

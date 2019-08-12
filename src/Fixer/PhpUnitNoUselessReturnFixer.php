@@ -20,7 +20,7 @@ final class PhpUnitNoUselessReturnFixer extends AbstractFixer
     {
         return new FixerDefinition(
             \sprintf(
-                "PHPUnit's functions %s should not be followed directly by return",
+                "PHPUnit's functions %s should not be followed directly by return.",
                 Utils::naturalLanguageJoinWithBackticks(\array_map(
                     static function (array $token): string {
                         return $token[1];

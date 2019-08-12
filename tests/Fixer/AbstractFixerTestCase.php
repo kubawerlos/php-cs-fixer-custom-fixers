@@ -30,14 +30,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
     {
-        static::assertRegExp('/^[A-Z`]/', $summary = $this->fixer->getDefinition()->getSummary());
-    }
-
-    final public function testFixerDefinitionSummaryDoesNotEndWithDot(): void
-    {
-        $summary = $this->fixer->getDefinition()->getSummary();
-
-        static::assertStringEndsNotWith('.', $summary);
+        static::assertRegExp('/^[A-Z`].*\.$/', $this->fixer->getDefinition()->getSummary());
     }
 
     final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void

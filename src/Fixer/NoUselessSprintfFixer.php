@@ -16,7 +16,7 @@ final class NoUselessSprintfFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Function `sprintf` without parameters should not be used',
+            'Function `sprintf` without parameters should not be used.',
             [new CodeSample("<?php\n\$foo = sprintf('Foo');\n")],
             null,
             'when the function `sprintf` is overridden'
