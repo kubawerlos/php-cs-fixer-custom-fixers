@@ -56,6 +56,10 @@ final class NoUselessSprintfFixer extends AbstractFixer
                 continue;
             }
 
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
+                $tokens->clearAt($prevIndex);
+            }
             $tokens->clearAt($index);
             $tokens->clearAt($openParenthesis);
             if ($tokens[$openParenthesis + 1]->isWhitespace()) {
