@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add CommentSurroundedBySpacesFixer
+- Add DataProviderReturnTypeFixer
 - Add NoDuplicatedImportsFixer
 
 ## v1.14.0 - *2019-07-25*
