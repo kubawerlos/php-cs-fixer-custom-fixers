@@ -95,18 +95,19 @@ function foo($b, $s) {}
 
     private function getFilteredDocComment(string $comment, array $paramNames): string
     {
+        $regexParamNamesPattern = \implode('|', \array_map(static function (string $paramName): string {
+            return \preg_quote($paramName, '/');
+        }, $paramNames));
+
         $doc = new DocBlock($comment);
         $foundParamNames = [];
 
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
-            $regexParamNamesPattern = \implode('|', \array_map(static function (string $paramName): string {
-                return \preg_quote($paramName, '/');
-            }, $paramNames));
-
-            if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(%s)\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) === 1 && !isset($foundParamNames[$matches[1]])) {
+            if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(?=\$)(%s)\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) === 1 && !isset($foundParamNames[$matches[1]])) {
                 $foundParamNames[$matches[1]] = true;
                 continue;
             }
+
             $annotation->remove();
         }
 
