@@ -55,7 +55,6 @@ return PhpCsFixer\Config::create()
         ],
         'general_phpdoc_annotation_remove' => [
             'annotations' => [
-                'author',
                 'category',
                 'codeCoverageIgnore',
                 'codeCoverageIgnoreEnd',
