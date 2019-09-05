@@ -34,7 +34,8 @@ class FooTest extends TestCase {
         $this->markTestSkipped();
         return;
     }
-}')],
+}
+')],
             'They will throw exception anyway.',
             "when PHPUnit's native methods are overridden"
         );

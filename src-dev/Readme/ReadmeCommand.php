@@ -11,7 +11,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use SebastianBergmann\Diff\Differ;
-use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
+use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -215,14 +215,22 @@ In your PHP CS Fixer configuration register fixers and use them:
 
     private function diff(string $from, string $to): string
     {
-        return \rtrim(\str_replace(
-            "@@ @@\n",
-            '',
-            (new Differ(new UnifiedDiffOutputBuilder('')))->diff(
-                $from,
-                $to
-            )
-        ));
+        static $differ;
+
+        if ($differ === null) {
+            $differ = new Differ(new StrictUnifiedDiffOutputBuilder([
+                'contextLines' => 1024,
+                'fromFile' => '',
+                'toFile' => '',
+            ]));
+        }
+
+        $diff = $differ->diff($from, $to);
+
+        /** @var int $start */
+        $start = \strpos($diff, "\n", 10);
+
+        return \trim(\substr($diff, $start), "\n");
     }
 
     private function contributing(): string
