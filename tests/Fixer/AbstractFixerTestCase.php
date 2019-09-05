@@ -60,6 +60,13 @@ abstract class AbstractFixerTestCase extends TestCase
         static::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
     }
 
+    final public function testCodeSampleEndsWithNewLine(): void
+    {
+        $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
+
+        static::assertRegExp('/\n$/', $codeSample->getCode());
+    }
+
     final public function testCodeSampleIsChangedDuringFixing(): void
     {
         $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];

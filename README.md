@@ -8,7 +8,7 @@
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-1077-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-1111-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
@@ -64,6 +64,9 @@ Name of data provider that is used only once must match name of test.
 Return type of data provider must be `iterable`.  
 *Risky: when relying on signature of data provider.*
 ```diff
+ <?php
+ class FooTest extends TestCase {
+     /**
       * @dataProvider provideHappyPathCases
       */
      function testHappyPath() {}
@@ -312,6 +315,7 @@ Configuration options:
 PHPUnit's functions `fail`, `markTestIncomplete` and `markTestSkipped` should not be followed directly by return.  
 *Risky: when PHPUnit's native methods are overridden.*
 ```diff
+ <?php
  class FooTest extends TestCase {
      public function testFoo() {
          $this->markTestSkipped();
