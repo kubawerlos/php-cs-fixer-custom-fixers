@@ -115,6 +115,7 @@ final class SrcCodeTest extends TestCase
         static::assertNotContains('preg_grep', $strings, $message);
         static::assertNotContains('preg_match', $strings, $message);
         static::assertNotContains('preg_match_all', $strings, $message);
+        static::assertNotContains('preg_quote', $strings, \sprintf('Class %s must not use preg_quote, it shall use \Q and \E escape sequences instead.', $className));
         static::assertNotContains('preg_replace', $strings, $message);
         static::assertNotContains('preg_replace_callback', $strings, $message);
         static::assertNotContains('preg_split', $strings, $message);

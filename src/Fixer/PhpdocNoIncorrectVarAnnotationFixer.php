@@ -87,15 +87,7 @@ $bar = new Foo();
         $this->removeVarAnnotationNotMatchingPattern(
             $tokens,
             $index,
-            '/' . \implode(
-                '|',
-                \array_map(
-                    static function (string $variable): string {
-                        return \preg_quote($variable, '/') . '\b';
-                    },
-                    $allowedVariables
-                )
-            ) . '/i'
+            '/(\Q' . \implode('\E|\Q', $allowedVariables) . '\E)\b/i'
         );
     }
 
