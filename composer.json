@@ -50,7 +50,7 @@
             "./dev-tools/vendor/bin/phpcpd ./src",
             "./dev-tools/vendor/bin/phpmd ./src text ./phpmd.xml",
             "./dev-tools/vendor/bin/phpstan analyse --ansi",
-            "./dev-tools/vendor/bin/psalm --find-dead-code"
+            "./dev-tools/vendor/bin/psalm --find-dead-code --shepherd"
         ],
         "fix": [
             "composer normalize --working-dir=./dev-tools ./../composer.json",
