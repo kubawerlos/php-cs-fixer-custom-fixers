@@ -98,12 +98,12 @@ final class SrcCodeTest extends TestCase
         $tokens = Tokens::fromCode(\file_get_contents($rc->getFileName()));
         $stringTokens = \array_filter(
             $tokens->toArray(),
-            static function (Token $token) {
+            static function (Token $token): bool {
                 return $token->isGivenKind(T_STRING);
             }
         );
         $strings = \array_map(
-            static function (Token $token) {
+            static function (Token $token): string {
                 return $token->getContent();
             },
             $stringTokens
