@@ -8,7 +8,7 @@
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-1111-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-1134-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -344,6 +344,21 @@ There must be no superfluous parameters in PHPDoc.
 - * @param string $s duplicated
   */
  function foo($b, $s) {}
+```
+
+#### PhpdocOnlyAllowedAnnotationsFixer
+Only listed annotations can be in PHPDoc.
+Configuration options:
+- `elements` (`array`): list of annotations to keep in PHPDoc; defaults to `[]`
+```diff
+ <?php
+ /**
+  * @author John Doe
+- * @package foo
+- * @subpackage bar
+  * @version 1.0
+  */
+ function foo_bar() {}
 ```
 
 #### PhpdocParamOrderFixer

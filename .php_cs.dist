@@ -53,24 +53,6 @@ return PhpCsFixer\Config::create()
         'function_to_constant' => [
             'functions' => ['get_class', 'get_called_class', 'php_sapi_name', 'phpversion', 'pi'],
         ],
-        'general_phpdoc_annotation_remove' => [
-            'annotations' => [
-                'category',
-                'codeCoverageIgnore',
-                'codeCoverageIgnoreEnd',
-                'codeCoverageIgnoreStart',
-                'copyright',
-                'date',
-                'expectedException',
-                'expectedExceptionCode',
-                'expectedExceptionMessage',
-                'expectedExceptionMessageRegExp',
-                'license',
-                'since',
-                'static',
-                'version',
-            ],
-        ],
         'heredoc_to_nowdoc' => true,
         'increment_style' => [
             'style' => 'post',
@@ -148,6 +130,18 @@ return PhpCsFixer\Config::create()
         static function (array $carry, PhpCsFixer\Fixer\DefinedFixerInterface $fixer): array {
             if (!$fixer instanceof PhpCsFixer\Fixer\DeprecatedFixerInterface) {
                 $carry[$fixer->getName()] = true;
+            }
+
+            if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer) {
+                $carry[$fixer->getName()] = ['elements' => [
+                    'covers',
+                    'dataProvider',
+                    'deprecated',
+                    'internal',
+                    'param',
+                    'return',
+                    'var',
+                ]];
             }
 
             return $carry;
