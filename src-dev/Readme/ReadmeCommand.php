@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixersDev\Readme;
 
+use PhpCsFixer\Console\Command\HelpCommand;
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\StdinFileInfo;
@@ -199,7 +200,7 @@ In your PHP CS Fixer configuration register fixers and use them:
                         $option->getName(),
                         \implode('`, `', $allowed),
                         $option->getDescription(),
-                        \is_bool($option->getDefault()) ? ($option->getDefault() ? 'true' : 'false') : $option->getDefault()
+                        HelpCommand::toString($option->getDefault())
                     );
                 }
             }
