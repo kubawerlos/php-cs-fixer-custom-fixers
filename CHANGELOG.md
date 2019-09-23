@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Add PhpdocOnlyAllowedAnnotationsFixer
+
 ## v1.15.0 - *2019-08-19*
 - Add CommentSurroundedBySpacesFixer
 - Add DataProviderReturnTypeFixer

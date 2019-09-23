@@ -214,7 +214,6 @@ In your PHP CS Fixer configuration register fixers and use them:
             if ($fixer instanceof ConfigurableFixerInterface) {
                 $fixer->configure($codeSample->getConfiguration());
             }
-
             $tokens = Tokens::fromCode($originalCode);
             $fixer->fix(new StdinFileInfo(), $tokens);
             $fixedCode = $tokens->generateCode();
