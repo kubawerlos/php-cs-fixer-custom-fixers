@@ -42,9 +42,7 @@ function foo(int $x = null) {
 
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['style'])) {
-            $this->style = $configuration['style'];
-        }
+        $this->style = $configuration['style'] ?? $this->style;
     }
 
     public function isCandidate(Tokens $tokens): bool

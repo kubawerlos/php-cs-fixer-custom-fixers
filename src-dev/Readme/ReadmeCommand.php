@@ -5,8 +5,10 @@ declare(strict_types = 1);
 namespace PhpCsFixerCustomFixersDev\Readme;
 
 use PhpCsFixer\Console\Command\HelpCommand;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
@@ -205,7 +207,14 @@ In your PHP CS Fixer configuration register fixers and use them:
                 }
             }
 
-            $originalCode = $fixer->getDefinition()->getCodeSamples()[0]->getCode();
+            /** @var CodeSample $codeSample */
+            $codeSample = $fixer->getDefinition()->getCodeSamples()[0];
+
+            $originalCode = $codeSample->getCode();
+            if ($fixer instanceof ConfigurableFixerInterface) {
+                $fixer->configure($codeSample->getConfiguration());
+            }
+
             $tokens = Tokens::fromCode($originalCode);
             $fixer->fix(new StdinFileInfo(), $tokens);
             $fixedCode = $tokens->generateCode();

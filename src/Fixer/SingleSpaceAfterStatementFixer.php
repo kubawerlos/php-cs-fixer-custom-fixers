@@ -94,7 +94,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     public function configure(?array $configuration = null): void
     {
-        $this->allowLinebreak = $configuration['allow_linebreak'];
+        $this->allowLinebreak = $configuration['allow_linebreak'] ?? $this->allowLinebreak;
     }
 
     public function isCandidate(Tokens $tokens): bool
