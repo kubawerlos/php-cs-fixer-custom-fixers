@@ -1,5 +1,4 @@
 /dev-tools/ export-ignore
-/src-dev/ export-ignore
 /tests/ export-ignore
 /.* export-ignore
 /infection.json.dist export-ignore

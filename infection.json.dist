@@ -2,7 +2,7 @@
     "source": {
         "directories": [
             "src",
-            "src-dev"
+            "dev-tools/src"
         ]
     },
     "timeout": 10,

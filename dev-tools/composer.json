@@ -33,7 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PhpCsFixerCustomFixersDev\\": "../src-dev",
+            "PhpCsFixerCustomFixersDev\\": "./src",
             "Tests\\": "../tests"
         }
     }
