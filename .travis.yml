@@ -49,6 +49,7 @@ jobs:
                 ./configure
                 make clean install
                 echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
+                echo "pcov.directory = ." >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
                 cd $TRAVIS_BUILD_DIR
           install: composer require --dev php-coveralls/php-coveralls
           script:
