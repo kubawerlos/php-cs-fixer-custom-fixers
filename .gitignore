@@ -1,9 +1,5 @@
 /vendor/
-/.php_cs
 /.php_cs.cache
 /.phpunit.result.cache
 /composer.lock
-/infection.json
 /infection.log
-/phpunit.xml
-/psalm.xml

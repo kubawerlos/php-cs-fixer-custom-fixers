@@ -20,7 +20,7 @@
         <InvalidArgument errorLevel='suppress' />
         <InvalidStringClass>
             <errorLevel type='suppress'>
-                <file name='src/Fixers.php' />
+                <file name='./src/Fixers.php' />
             </errorLevel>
         </InvalidStringClass>
         <LoopInvalidation errorLevel='suppress' />

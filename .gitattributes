@@ -1,8 +1,8 @@
 /dev-tools/ export-ignore
 /tests/ export-ignore
 /.* export-ignore
-/infection.json.dist export-ignore
+/infection.json export-ignore
 /phpmd.xml export-ignore
-/phpstan.neon.dist export-ignore
-/phpunit.xml.dist export-ignore
-/psalm.xml.dist export-ignore
+/phpstan.neon export-ignore
+/phpunit.xml export-ignore
+/psalm.xml export-ignore
