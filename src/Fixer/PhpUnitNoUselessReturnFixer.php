@@ -90,7 +90,6 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            /** @var int $closingBraceIndex */
             $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBraceIndex);
 
             /** @var int $semicolonIndex */
@@ -109,7 +108,6 @@ class FooTest extends TestCase {
             $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($returnIndex, [';', '(']);
 
             while ($tokens[$semicolonAfterReturnIndex]->equals('(')) {
-                /** @var int $closingBraceIndex */
                 $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $semicolonAfterReturnIndex);
                 /** @var int $semicolonAfterReturnIndex */
                 $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
