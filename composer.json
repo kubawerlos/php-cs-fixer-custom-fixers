@@ -2,10 +2,6 @@
     "name": "kubawerlos/php-cs-fixer-custom-fixers",
     "type": "library",
     "description": "A set of custom fixers for PHP CS Fixer",
-    "keywords": [
-        "fixer",
-        "php-cs-fixer"
-    ],
     "license": "MIT",
     "authors": [
         {
@@ -19,24 +15,9 @@
         "friendsofphp/php-cs-fixer": "^2.14",
         "symfony/finder": "^3.0 || ^4.0"
     },
-    "require-dev": {
-        "ext-json": "*",
-        "infection/infection": "^0.13.3",
-        "johnkary/phpunit-speedtrap": "^3.1",
-        "kubawerlos/types-checker": "^1.1",
-        "phpunit/phpunit": "^7.4 || ^8.0",
-        "sebastian/diff": "^3.0",
-        "symfony/console": "^4.0"
-    },
     "autoload": {
         "psr-4": {
             "PhpCsFixerCustomFixers\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "PhpCsFixerCustomFixersDev\\": "src-dev",
-            "Tests\\": "tests"
         }
     },
     "scripts": {
@@ -46,7 +27,7 @@
             "composer normalize --dry-run --working-dir=./dev-tools ./../composer.json",
             "./dev-tools/vendor/bin/composer-require-checker check ./composer.json",
             "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./src-dev ./tests",
-            "./vendor/bin/types-checker ./src ./src-dev ./tests",
+            "./dev-tools/vendor/bin/types-checker ./src ./src-dev ./tests",
             "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --diff --dry-run --verbose",
             "./dev-tools/vendor/bin/phpcpd ./src",
             "./dev-tools/vendor/bin/phpmd ./src text ./phpmd.xml",
@@ -60,10 +41,10 @@
             "./src-dev/Readme/run > README.md"
         ],
         "infection": [
-            "./vendor/bin/infection run --ansi --threads=16"
+            "./dev-tools/vendor/bin/infection run --ansi --threads=16"
         ],
         "test": [
-            "./vendor/bin/phpunit"
+            "./dev-tools/vendor/bin/phpunit"
         ],
         "verify": [
             "@analyse",
