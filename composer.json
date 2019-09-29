@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpCsFixerCustomFixers\\": "src"
+            "PhpCsFixerCustomFixers\\": "./src"
         }
     },
     "scripts": {
@@ -26,8 +26,8 @@
             "composer validate --strict",
             "composer normalize --dry-run --working-dir=./dev-tools ./../composer.json",
             "./dev-tools/vendor/bin/composer-require-checker check ./composer.json",
-            "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./src-dev ./tests",
-            "./dev-tools/vendor/bin/types-checker ./src ./src-dev ./tests",
+            "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
+            "./dev-tools/vendor/bin/types-checker ./src ./dev-tools/src ./tests",
             "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --diff --dry-run --verbose",
             "./dev-tools/vendor/bin/phpcpd ./src",
             "./dev-tools/vendor/bin/phpmd ./src text ./phpmd.xml",
@@ -37,8 +37,8 @@
         "fix": [
             "composer normalize --working-dir=./dev-tools ./../composer.json",
             "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --verbose",
-            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./src-dev ./tests",
-            "./src-dev/Readme/run > README.md"
+            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
+            "./dev-tools/readme > README.md"
         ],
         "infection": [
             "./dev-tools/vendor/bin/infection run --ansi --threads=16"

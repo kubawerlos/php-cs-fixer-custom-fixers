@@ -38,11 +38,11 @@
 
     <filter>
         <whitelist>
-            <directory>src</directory>
-            <directory>src-dev</directory>
+            <directory>./src</directory>
+            <directory>./dev-tools/src</directory>
             <exclude>
-                <file>src-dev/Readme/php-cs-fixer.config.after.php</file>
-                <file>src-dev/Readme/php-cs-fixer.config.before.php</file>
+                <file>./dev-tools/src/Readme/php-cs-fixer.config.after.php</file>
+                <file>./dev-tools/src/Readme/php-cs-fixer.config.before.php</file>
             </exclude>
         </whitelist>
     </filter>

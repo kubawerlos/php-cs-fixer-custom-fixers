@@ -105,7 +105,7 @@ class ReadmeCommand extends BaseCommand
 
     private function numberOfTests(): int
     {
-        $process = new Process([__DIR__ . '/../../dev-tools/vendor/bin/phpunit', '--list-tests']);
+        $process = new Process([__DIR__ . '/../../vendor/bin/phpunit', '--list-tests']);
         $process->run();
 
         return \substr_count($process->getOutput(), PHP_EOL) - 3; // 3 is for header
@@ -270,6 +270,6 @@ and submit pull request.',
 
     private function composer(): \stdClass
     {
-        return \json_decode(\file_get_contents(__DIR__ . '/../../composer.json'));
+        return \json_decode(\file_get_contents(__DIR__ . '/../../../composer.json'));
     }
 }

@@ -5,11 +5,11 @@
        xsi:schemaLocation='https://getpsalm.org/schema/config dev-tools/vendor/vimeo/psalm/config.xsd'
 >
     <projectFiles>
-        <directory name='src' />
-        <directory name='src-dev' />
+        <directory name='./src' />
+        <directory name='./dev-tools/src' />
         <ignoreFiles>
-            <file name='src-dev/Readme/php-cs-fixer.config.after.php' />
-            <file name='src-dev/Readme/php-cs-fixer.config.before.php' />
+            <file name='./dev-tools/src/Readme/php-cs-fixer.config.after.php' />
+            <file name='./dev-tools/src/Readme/php-cs-fixer.config.before.php' />
         </ignoreFiles>
     </projectFiles>
 
