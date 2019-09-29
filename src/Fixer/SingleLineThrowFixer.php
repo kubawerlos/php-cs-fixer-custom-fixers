@@ -52,7 +52,6 @@ final class SingleLineThrowFixer extends AbstractFixer implements DeprecatingFix
             $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($index, [';', '(']);
 
             while ($tokens[$openingBraceCandidateIndex]->equals('(')) {
-                /** @var int $closingBraceIndex */
                 $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBraceCandidateIndex);
                 /** @var int $openingBraceCandidateIndex */
                 $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
