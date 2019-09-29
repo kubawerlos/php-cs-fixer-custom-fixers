@@ -27,9 +27,7 @@ jobs:
     include:
         - stage: Static code analysis
           php: '7.3'
-          install:
-            - composer update
-            - composer update --working-dir=./dev-tools
+          install: composer update
           script: composer analyse
 
         - stage: Test
