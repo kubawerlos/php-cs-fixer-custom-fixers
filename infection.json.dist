@@ -12,6 +12,9 @@
             "branch": "master"
         }
     },
+    "phpUnit": {
+        "customPath": "./dev-tools/vendor/bin/phpunit"
+    },
     "mutators": {
         "@default": true,
         "ArrayItemRemoval": {
