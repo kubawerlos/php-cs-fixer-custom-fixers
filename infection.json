@@ -1,8 +1,8 @@
 {
     "source": {
         "directories": [
-            "src",
-            "dev-tools/src"
+            "./src",
+            "./dev-tools/src"
         ]
     },
     "timeout": 10,

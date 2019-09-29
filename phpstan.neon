@@ -1,9 +1,9 @@
 parameters:
     level: max
     paths:
-        - src
+        - ./src
     ignoreErrors:
         - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::insertAt\(\) expects#'
 
 includes:
-    - dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon
+    - ./dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon
