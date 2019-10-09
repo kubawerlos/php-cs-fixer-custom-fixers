@@ -16,15 +16,21 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatingFixerInterface
 {
-    private const BOOLEAN_OPERATORS = [
-        '&&' => T_BOOLEAN_AND,
-        '||' => T_BOOLEAN_OR,
-        'and' => T_LOGICAL_AND,
-        'or' => T_LOGICAL_OR,
-        'xor' => T_LOGICAL_XOR,
+    private const CONFIG_ONLY_BOOLEANS = 'only_booleans';
+    private const CONFIG_POSITION = 'position';
+
+    private const CONFIG_POSITION_BEGINNING = 'beginning';
+    private const CONFIG_POSITION_END = 'end';
+
+    private const OPERATORS_BOOLEANS = [
+        '&&' => true,
+        '||' => true,
+        'and' => true,
+        'or' => true,
+        'xor' => true,
     ];
 
-    private const NON_BOOLEAN_OPERATORS = [
+    private const OPERATORS_NON_BOOLEANS = [
         '=' => true,
         '.' => true,
         '*' => true,
@@ -66,16 +72,11 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
         ':' => true,
     ];
 
-    /** @var array<string, int|true> */
-    private $operators;
-
     /** @var string */
-    private $position = 'beginning';
+    private $position = self::CONFIG_POSITION_BEGINNING;
 
-    public function __construct()
-    {
-        $this->operators = \array_merge(self::BOOLEAN_OPERATORS, self::NON_BOOLEAN_OPERATORS);
-    }
+    /** @var array<string, true> */
+    private $operators = [];
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -93,24 +94,25 @@ function foo() {
     public function getConfigurationDefinition(): FixerConfigurationResolver
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('only_booleans', 'whether to limit operators to only boolean ones'))
+            (new FixerOptionBuilder(self::CONFIG_ONLY_BOOLEANS, 'whether to limit operators to only boolean ones'))
                 ->setDefault(false)
                 ->setAllowedTypes(['bool'])
                 ->getOption(),
-            (new FixerOptionBuilder('position', 'whether to place operators at the beginning or at the end of the line'))
+            (new FixerOptionBuilder(self::CONFIG_POSITION, 'whether to place operators at the beginning or at the end of the line'))
                 ->setDefault($this->position)
-                ->setAllowedValues(['beginning', 'end'])
+                ->setAllowedValues([self::CONFIG_POSITION_BEGINNING, self::CONFIG_POSITION_END])
                 ->getOption(),
         ]);
     }
 
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['only_booleans']) && $configuration['only_booleans'] === true) {
-            $this->operators = self::BOOLEAN_OPERATORS;
+        $this->operators = self::OPERATORS_BOOLEANS;
+        if (!isset($configuration[self::CONFIG_ONLY_BOOLEANS]) || $configuration[self::CONFIG_ONLY_BOOLEANS] !== true) {
+            $this->operators = \array_merge($this->operators, self::OPERATORS_NON_BOOLEANS);
         }
 
-        $this->position = $configuration['position'] ?? $this->position;
+        $this->position = $configuration[self::CONFIG_POSITION] ?? $this->position;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -125,7 +127,7 @@ function foo() {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        if ($this->position === 'beginning') {
+        if ($this->position === self::CONFIG_POSITION_BEGINNING) {
             $this->fixMoveToTheBeginning($tokens);
         } else {
             $this->fixMoveToTheEnd($tokens);

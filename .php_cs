@@ -48,6 +48,7 @@ return PhpCsFixer\Config::create()
         ],
         'explicit_indirect_variable' => true,
         'explicit_string_variable' => true,
+        'final_class' => true,
         'final_internal_class' => true,
         'fully_qualified_strict_types' => true,
         'function_to_constant' => [

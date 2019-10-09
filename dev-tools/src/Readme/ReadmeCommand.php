@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-class ReadmeCommand extends BaseCommand
+final class ReadmeCommand extends BaseCommand
 {
     private const NAME = 'PHP CS Fixer: custom fixers';
 

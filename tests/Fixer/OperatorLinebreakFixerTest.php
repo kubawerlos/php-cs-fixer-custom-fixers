@@ -45,13 +45,12 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
         $this->fixer->configure($configuration);
-
         $this->doTest($expected, $input);
     }
 
     public function provideFixCases(): iterable
     {
-        yield [
+        yield 'handle equal sign' => [
             '<?php
 $foo
     = $bar;
@@ -62,7 +61,7 @@ $foo =
 ',
         ];
 
-        yield [
+        yield 'handle add operator' => [
             '<?php
 return $foo
     + $bar;
@@ -73,7 +72,7 @@ return $foo +
 ',
         ];
 
-        yield [
+        yield 'handle uppercase operator' => [
             '<?php
 return $foo
     AND $bar;
@@ -84,7 +83,7 @@ return $foo AND
 ',
         ];
 
-        yield [
+        yield 'handle concatenation operator' => [
             '<?php
 return $foo
     .$bar;
@@ -95,7 +94,7 @@ return $foo.
 ',
         ];
 
-        yield [
+        yield 'ignore add operator when only booleans enabled' => [
             '<?php
 return $foo +
     $bar;
@@ -104,7 +103,7 @@ return $foo +
             ['only_booleans' => true],
         ];
 
-        yield [
+        yield 'handle ternary operator' => [
             '<?php
 return $foo
     ? $bar
@@ -117,7 +116,7 @@ return $foo ?
 ',
         ];
 
-        yield [
+        yield 'handle multiple operators' => [
             '<?php
 return $foo
     || $bar
@@ -130,7 +129,7 @@ return $foo ||
 ',
         ];
 
-        yield [
+        yield 'handle operator when on separate line' => [
             '<?php
 return $foo
     || $bar;
@@ -142,7 +141,7 @@ return $foo
 ',
         ];
 
-        yield [
+        yield 'handle multiline operator when position is "end"' => [
             '<?php
 return $foo ||
     $bar ||
@@ -156,7 +155,7 @@ return $foo
             ['position' => 'end'],
         ];
 
-        yield [
+        yield 'handle operator when on its own line and position is "end"' => [
             '<?php
 return $foo ||
     $bar;
@@ -169,7 +168,7 @@ return $foo
             ['position' => 'end'],
         ];
 
-        yield [
+        yield 'handle operator when no whitespace is before' => [
             '<?php
 function foo() {
     return $a
@@ -184,7 +183,7 @@ function foo() {
 ',
         ];
 
-        yield [
+        yield 'handle operator when no whitespace is after and position is "end"' => [
             '<?php
 function foo() {
     return $a||
@@ -200,7 +199,7 @@ function foo() {
             ['position' => 'end'],
         ];
 
-        yield [
+        yield 'handle operator with one-line comments' => [
             '<?php
 function getNewCuyamaTotal() {
     return 562 // Population
@@ -217,24 +216,24 @@ function getNewCuyamaTotal() {
 ',
         ];
 
-        yield [
+        yield 'handle operator with PHPDoc comments' => [
             '<?php
 function getNewCuyamaTotal() {
-    return 562 /* Population */
-        + 2150 /* Ft. above sea level */
-        + 1951; /* Established */
+    return 562 /** Population */
+        + 2150 /** Ft. above sea level */
+        + 1951; /** Established */
 }
 ',
             '<?php
 function getNewCuyamaTotal() {
-    return 562 + /* Population */
-        2150 + /* Ft. above sea level */
-        1951; /* Established */
+    return 562 + /** Population */
+        2150 + /** Ft. above sea level */
+        1951; /** Established */
 }
 ',
         ];
 
-        yield [
+        yield 'handle operator with multiple comments next to each other' => [
             '<?php
 function foo() {
     return isThisTheRealLife() // First comment
@@ -253,7 +252,7 @@ function foo() {
 ',
         ];
 
-        yield [
+        yield 'handle nested operators' => [
             '<?php
 function foo() {
     return $a
@@ -276,7 +275,7 @@ function foo() {
 ',
         ];
 
-        yield [
+        yield 'handle Elvis operator' => [
             '<?php
 return $foo
     ?: $bar;
@@ -287,7 +286,7 @@ return $foo ?:
 ',
         ];
 
-        yield [
+        yield 'handle Elvis operator when position is "end"' => [
             '<?php
 return $foo ?:
     $bar;
@@ -299,7 +298,7 @@ return $foo
             ['position' => 'end'],
         ];
 
-        yield [
+        yield 'handle Elvis operator with space inside' => [
             '<?php
 return $foo
     ?: $bar;
@@ -310,7 +309,7 @@ return $foo ? :
 ',
         ];
 
-        yield [
+        yield 'handle Elvis operator with comment inside' => [
             '<?php
 return $foo/* Lorem ipsum */
     ?: $bar;
@@ -321,7 +320,7 @@ return $foo ?/* Lorem ipsum */:
 ',
         ];
 
-        yield [
+        yield 'ignore ternary operator inside of switch' => [
             '<?php
 switch ($foo) {
     case 1:

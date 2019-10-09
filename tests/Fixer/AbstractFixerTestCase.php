@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -70,6 +71,9 @@ abstract class AbstractFixerTestCase extends TestCase
     final public function testCodeSampleIsChangedDuringFixing(): void
     {
         $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
+        if ($this->fixer instanceof ConfigurableFixerInterface) {
+            $this->fixer->configure($codeSample->getConfiguration());
+        }
 
         $tokens = Tokens::fromCode($codeSample->getCode());
 
