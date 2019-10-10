@@ -134,7 +134,7 @@ final class SrcCodeTest extends TestCase
         foreach ($finder as $file) {
             $namespace = 'PhpCsFixerCustomFixers';
             if ($file->getRelativePath() !== '') {
-                $namespace .= '\\' . $file->getRelativePath();
+                $namespace .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
             }
 
             yield [$namespace . '\\' . $file->getBasename('.php')];

@@ -9,6 +9,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Analyzer\Analysis\TypeAnalysis;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
@@ -104,7 +105,7 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            if ($typeAnalysis->getName() !== 'iterable') {
+            if ($this->getTypeName($tokens, $typeAnalysis) !== 'iterable') {
                 /** @var int $startIndex */
                 $startIndex = $tokens->getNextMeaningfulToken($typeAnalysis->getStartIndex() - 1);
                 $tokens->clearRange($startIndex, $typeAnalysis->getEndIndex());
@@ -153,5 +154,22 @@ class FooTest extends TestCase {
         }
 
         return $dataProviderNames;
+    }
+
+    /**
+     * TODO: remove this function after https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/4581 is released.
+     */
+    private function getTypeName(Tokens $tokens, TypeAnalysis $typeAnalysis): string
+    {
+        $type = '';
+        for ($index = $typeAnalysis->getStartIndex(); $index <= $typeAnalysis->getEndIndex(); $index++) {
+            if ($tokens[$index]->isWhitespace() || $tokens[$index]->isComment()) {
+                continue;
+            }
+
+            $type .= $tokens[$index]->getContent();
+        }
+
+        return $type;
     }
 }

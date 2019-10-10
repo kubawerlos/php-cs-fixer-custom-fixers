@@ -54,7 +54,7 @@ final class TestsCodeTest extends TestCase
             foreach ($finder as $file) {
                 $className = 'Tests';
                 if ($file->getRelativePath() !== '') {
-                    $className .= '\\' . $file->getRelativePath();
+                    $className .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
                 }
                 $className .= '\\' . $file->getBasename('.php');
                 foreach ($this->getDataProviderMethodNames($className) as $dataProviderName) {

@@ -6,6 +6,7 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
+use PhpCsFixer\Linter\TokenizerLinter;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
@@ -84,21 +85,33 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final protected function doTest(string $expected, ?string $input = null): void
     {
-        if ($input === null) {
-            $input = $expected;
+        if ($expected === $input) {
+            throw new \InvalidArgumentException('Expected must be different to input.');
         }
 
-        $tokens = Tokens::fromCode($input);
+        $linter = new TokenizerLinter();
 
-        if ($input !== $expected) {
+        static::assertNull($linter->lintSource($expected)->check());
+
+        if ($input !== null) {
+            static::assertNull($linter->lintSource($input)->check());
+
+            $tokens = Tokens::fromCode($input);
+
             static::assertTrue($this->fixer->isCandidate($tokens));
+
+            $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+
+            $tokens->clearEmptyTokens();
+
+            static::assertSame($expected, $tokens->generateCode());
+            static::assertTokens(Tokens::fromCode($expected), $tokens);
         }
+
+        $tokens = Tokens::fromCode($expected);
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        $tokens->clearEmptyTokens();
-
-        static::assertSame($expected, $tokens->generateCode());
-        static::assertTokens(Tokens::fromCode($expected), $tokens);
+        static::assertFalse($tokens->isChanged());
     }
 }
