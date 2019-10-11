@@ -167,21 +167,21 @@ In your PHP CS Fixer configuration register fixers and use them:
 
             if ($fixer instanceof DeprecatingFixerInterface) {
                 $output .= \sprintf(
-                    "  \n*To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
+                    "\n  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
                     $fixer->getPullRequestId()
                 );
             }
 
             if ($fixer instanceof DeprecatedFixerInterface) {
                 $output .= \sprintf(
-                    "  \nDEPRECATED: use `%s` instead.",
+                    "\n  DEPRECATED: use `%s` instead.",
                     \implode('`, `', $fixer->getSuccessorsNames())
                 );
             }
 
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
-                    "  \n*Risky: %s.*",
+                    "\n  *Risky: %s.*",
                     $fixer->getDefinition()->getRiskyDescription()
                 );
             }
@@ -244,7 +244,7 @@ In your PHP CS Fixer configuration register fixers and use them:
         /** @var int $start */
         $start = \strpos($diff, "\n", 10);
 
-        return \trim(\substr($diff, $start), "\n");
+        return \preg_replace('/\h+(?=\R)/', '', \substr($diff, $start + 1, -1));
     }
 
     private function contributing(): string
