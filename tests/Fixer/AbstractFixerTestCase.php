@@ -76,6 +76,7 @@ abstract class AbstractFixerTestCase extends TestCase
             $this->fixer->configure($codeSample->getConfiguration());
         }
 
+        Tokens::clearCache();
         $tokens = Tokens::fromCode($codeSample->getCode());
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
@@ -96,6 +97,7 @@ abstract class AbstractFixerTestCase extends TestCase
         if ($input !== null) {
             static::assertNull($linter->lintSource($input)->check());
 
+            Tokens::clearCache();
             $tokens = Tokens::fromCode($input);
 
             static::assertTrue($this->fixer->isCandidate($tokens));
@@ -105,9 +107,12 @@ abstract class AbstractFixerTestCase extends TestCase
             $tokens->clearEmptyTokens();
 
             static::assertSame($expected, $tokens->generateCode());
+
+            Tokens::clearCache();
             static::assertTokens(Tokens::fromCode($expected), $tokens);
         }
 
+        Tokens::clearCache();
         $tokens = Tokens::fromCode($expected);
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
