@@ -26,6 +26,7 @@ final class TokenRemoverTest extends TestCase
      */
     public function testFix(string $expected, ?string $input = null): void
     {
+        Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
 
         foreach ($tokens as $index => $token) {
@@ -37,6 +38,7 @@ final class TokenRemoverTest extends TestCase
 
         $tokens->clearEmptyTokens();
 
+        Tokens::clearCache();
         static::assertTokens(Tokens::fromCode($expected), $tokens);
     }
 
