@@ -400,5 +400,58 @@ switch ($foo) {
                     false;
             ',
         ];
+
+        yield 'nullable type' => [
+            '<?php
+                function foo(
+                    ?int $x,
+                    ?int $y,
+                    ?int $z
+                ) {};',
+            null,
+            ['position' => 'end'],
+        ];
+
+        yield 'return type' => [
+            '<?php
+                function foo()
+                :
+                bool
+                {};',
+        ];
+
+        foreach ([
+            '+', '-', '*', '/', '%', '**', // Arithmetic
+            '+=', '-=', '*=', '/=', '%=', '**=', // Arithmetic assignment
+            '=', // Assignment
+            '&', '|', '^',  '<<', '>>', // Bitwise
+            '&=', '|=', '^=',  '<<=', '>>=', // Bitwise assignment
+            '==', '===', '!=', '<>', '!==', '<', '>', '<=', '>=', '<=>', // Comparison
+            'and', 'or', 'xor', '&&', '||', // Logical
+            '.', '.=', // String
+            '??', // Null Coalescing
+        ] as $operator) {
+            yield \sprintf('handle %s operator', $operator) => [
+                \sprintf('<?php
+                    $foo
+                        %s $bar;
+                ', $operator),
+                \sprintf('<?php
+                    $foo %s
+                        $bar;
+                ', $operator),
+            ];
+        }
+
+        yield 'handle => operator' => [
+            '<?php
+[$foo
+    => $bar];
+',
+            '<?php
+[$foo =>
+    $bar];
+',
+        ];
     }
 }
