@@ -318,17 +318,87 @@ return $foo/* Lorem ipsum */
 return $foo ?/* Lorem ipsum */:
     $bar;
 ',
+            ['position' => 'beginning'],
         ];
 
-        yield 'ignore ternary operator inside of switch' => [
+        yield 'handle Elvis operators with comment inside to end' => [
+            '<?php
+return $foo ?:
+    /* Lorem ipsum */$bar;
+',
+            '<?php
+return $foo
+    ?/* Lorem ipsum */: $bar;
+',
+            ['position' => 'end'],
+        ];
+
+        yield 'handle ternary operator inside of switch' => [
             '<?php
 switch ($foo) {
     case 1:
         return $isOK ? 1 : -1;
-    case 2:
-        return 100;
+    case (
+            $a 
+            ? 2
+            : 3
+        ) :
+        return 23;
+    case $b[
+            $a 
+            ? 4
+            : 5
+        ]
+        : return 45;
 }
 ',
+            '<?php
+switch ($foo) {
+    case 1:
+        return $isOK ? 1 : -1;
+    case (
+            $a 
+            ? 2
+            : 3
+        ) :
+        return 23;
+    case $b[
+            $a ? 
+            4 :
+            5
+        ]
+        : return 45;
+}
+',
+        ];
+
+        yield 'handle ternary operator with switch inside' => [
+            '<?php
+                $a
+                    ? array_map(
+                        function () {
+                            switch (true) {
+                                case 1:
+                                    return true;
+                            }
+                        },
+                        [1, 2, 3]
+                    )
+                    : false;
+            ',
+            '<?php
+                $a ?
+                    array_map(
+                        function () {
+                            switch (true) {
+                                case 1:
+                                    return true;
+                            }
+                        },
+                        [1, 2, 3]
+                    ) :
+                    false;
+            ',
         ];
     }
 }

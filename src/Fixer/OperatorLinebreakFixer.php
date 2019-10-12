@@ -13,69 +13,15 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
+use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
 
 final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatingFixerInterface
 {
-    private const CONFIG_ONLY_BOOLEANS = 'only_booleans';
-    private const CONFIG_POSITION = 'position';
-
-    private const CONFIG_POSITION_BEGINNING = 'beginning';
-    private const CONFIG_POSITION_END = 'end';
-
-    private const OPERATORS_BOOLEANS = [
-        '&&' => true,
-        '||' => true,
-        'and' => true,
-        'or' => true,
-        'xor' => true,
-    ];
-
-    private const OPERATORS_NON_BOOLEANS = [
-        '=' => true,
-        '.' => true,
-        '*' => true,
-        '/' => true,
-        '%' => true,
-        '<' => true,
-        '>' => true,
-        '|' => true,
-        '^' => true,
-        '+' => true,
-        '-' => true,
-        '&' => true,
-        '&=' => true,
-        '.=' => true,
-        '/=' => true,
-        '=>' => true,
-        '==' => true,
-        '>=' => true,
-        '===' => true,
-        '!=' => true,
-        '<>' => true,
-        '!==' => true,
-        '<=' => true,
-        '-=' => true,
-        '%=' => true,
-        '*=' => true,
-        '|=' => true,
-        '+=' => true,
-        '<<' => true,
-        '<<=' => true,
-        '>>' => true,
-        '>>=' => true,
-        '^=' => true,
-        '**' => true,
-        '**=' => true,
-        '<=>' => true,
-        '??' => true,
-        '?' => true,
-        ':' => true,
-    ];
-
     /** @var string */
-    private $position = self::CONFIG_POSITION_BEGINNING;
+    private $position = 'beginning';
 
-    /** @var array<string, true> */
+    /** @var array<string, int> */
     private $operators = [];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -94,25 +40,25 @@ function foo() {
     public function getConfigurationDefinition(): FixerConfigurationResolver
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder(self::CONFIG_ONLY_BOOLEANS, 'whether to limit operators to only boolean ones'))
-                ->setDefault(false)
+            (new FixerOptionBuilder('only_booleans', 'whether to limit operators to only boolean ones'))
                 ->setAllowedTypes(['bool'])
+                ->setDefault(false)
                 ->getOption(),
-            (new FixerOptionBuilder(self::CONFIG_POSITION, 'whether to place operators at the beginning or at the end of the line'))
+            (new FixerOptionBuilder('position', 'whether to place operators at the beginning or at the end of the line'))
+                ->setAllowedValues(['beginning', 'end'])
                 ->setDefault($this->position)
-                ->setAllowedValues([self::CONFIG_POSITION_BEGINNING, self::CONFIG_POSITION_END])
                 ->getOption(),
         ]);
     }
 
     public function configure(?array $configuration = null): void
     {
-        $this->operators = self::OPERATORS_BOOLEANS;
-        if (!isset($configuration[self::CONFIG_ONLY_BOOLEANS]) || $configuration[self::CONFIG_ONLY_BOOLEANS] !== true) {
-            $this->operators = \array_merge($this->operators, self::OPERATORS_NON_BOOLEANS);
+        $this->operators = \array_flip(['&&', '||', 'and', 'or', 'xor']);
+        if (!isset($configuration['only_booleans']) || $configuration['only_booleans'] === false) {
+            $this->operators += \array_flip(['=', '.', '*', '/', '%', '<', '>', '|', '^', '+', '-', '&', '&=', '.=', '/=', '=>', '==', '>=', '===', '!=', '<>', '!==', '<=', '-=', '%=', '*=', '|=', '+=', '<<', '<<=', '>>', '>>=', '^=', '**', '**=', '<=>', '??', '?', ':']);
         }
 
-        $this->position = $configuration[self::CONFIG_POSITION] ?? $this->position;
+        $this->position = $configuration['position'] ?? $this->position;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -125,15 +71,6 @@ function foo() {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
-    {
-        if ($this->position === self::CONFIG_POSITION_BEGINNING) {
-            $this->fixMoveToTheBeginning($tokens);
-        } else {
-            $this->fixMoveToTheEnd($tokens);
-        }
-    }
-
     public function getPriority(): int
     {
         return 0;
@@ -144,96 +81,146 @@ function foo() {
         return 4021;
     }
 
-    private function fixMoveToTheBeginning(Tokens $tokens): void
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        for ($index = 0; $index < $tokens->count(); $index++) {
-            $indices = $this->getOperatorIndices($tokens, $index);
-            if ($indices === null) {
+        $excludedIndices = $this->getExcludedIndices($tokens);
+
+        $index = $tokens->count();
+        while ($index > 1) {
+            $index--;
+
+            if (!isset($this->operators[\strtolower($tokens[$index]->getContent())])) {
                 continue;
             }
 
-            /** @var int $prevIndex */
-            $prevIndex = $tokens->getNonEmptySibling(\min($indices), -1);
-
-            /** @var int $nextIndex */
-            $nextIndex = $tokens->getNextMeaningfulToken(\max($indices));
-
-            for ($i = $nextIndex - 1; $i > $index; $i--) {
-                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
-                    $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
-                    $inserts = $this->getReplacementsAndClear($tokens, $indices, -1);
-                    if ($isWhitespaceBefore) {
-                        $inserts[] = new Token([T_WHITESPACE, ' ']);
-                    }
-                    $tokens->insertAt($nextIndex, $inserts);
-
-                    break;
-                }
-            }
-            $index = $nextIndex;
-        }
-    }
-
-    private function fixMoveToTheEnd(Tokens $tokens): void
-    {
-        for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            $indices = $this->getOperatorIndices($tokens, $index);
-            if ($indices === null) {
+            if (\in_array($index, $excludedIndices, true)) {
                 continue;
             }
 
-            /** @var int $prevIndex */
-            $prevIndex = $tokens->getPrevMeaningfulToken(\min($indices));
-
-            /** @var int $nextIndex */
-            $nextIndex = $tokens->getNonEmptySibling(\max($indices), 1);
-
-            for ($i = $prevIndex + 1; $i < $index; $i++) {
-                if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
-                    $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
-                    $inserts = $this->getReplacementsAndClear($tokens, $indices, 1);
-                    if ($isWhitespaceAfter) {
-                        \array_unshift($inserts, new Token([T_WHITESPACE, ' ']));
-                    }
-                    $tokens->insertAt($prevIndex + 1, $inserts);
-
-                    break;
+            $operatorIndices = [$index];
+            if ($tokens[$index]->equals(':')) {
+                /** @var int $prevIndex */
+                $prevIndex = $tokens->getPrevMeaningfulToken($index);
+                if ($tokens[$prevIndex]->equals('?')) {
+                    $operatorIndices = [$prevIndex, $index];
+                    $index = $prevIndex;
                 }
             }
-            $index = $prevIndex;
+
+            $this->fixOperatorLinebreak($tokens, $operatorIndices);
         }
     }
 
     /**
-     * @return null|int[]
+     * Currently only colons from "switch".
+     *
+     * @return int[]
      */
-    private function getOperatorIndices(Tokens $tokens, int $index): ?array
+    private function getExcludedIndices(Tokens $tokens): array
     {
-        if (!isset($this->operators[\strtolower($tokens[$index]->getContent())])) {
-            return null;
-        }
-
-        if (isset($this->operators['?']) && $tokens[$index]->getContent() === '?') {
-            /** @var int $nextIndex */
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
-            if ($tokens[$nextIndex]->getContent() === ':') {
-                return [$index, $nextIndex];
+        $indices = [];
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if ($tokens[$index]->isGivenKind(T_SWITCH)) {
+                $indices += $this->getCasesColonsForSwitch($tokens, $index);
             }
         }
 
-        if (isset($this->operators[':']) && $tokens[$index]->getContent() === ':') {
-            /** @var int $prevIndex */
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if ($tokens[$prevIndex]->getContent() === '?') {
-                return [$prevIndex, $index];
-            }
-            $prevIndex = $tokens->getPrevTokenOfKind($prevIndex, [[T_CASE], '?']);
-            if ($prevIndex === null || $tokens[$prevIndex]->isGivenKind(T_CASE)) {
-                return null;
-            }
+        return $indices;
+    }
+
+    /**
+     * @return int[]
+     */
+    private function getCasesColonsForSwitch(Tokens $tokens, int $switchIndex): array
+    {
+        return \array_map(
+            static function (CaseAnalysis $caseAnalysis): int {
+                return $caseAnalysis->getColonIndex();
+            },
+            (new SwitchAnalyzer())->getSwitchAnalysis($tokens, $switchIndex)->getCases()
+        );
+    }
+
+    /**
+     * @param int[] $operatorIndices
+     */
+    private function fixOperatorLinebreak(Tokens $tokens, array $operatorIndices): void
+    {
+        /** @var int $prevIndex */
+        $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
+        $indexStart = $prevIndex + 1;
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
+        $indexEnd = $nextIndex - 1;
+
+        if (!$this->isMultiline($tokens, $indexStart, $indexEnd)) {
+            return; // operator is not surrounded by multiline whitespaces, do not touch it
         }
 
-        return [$index];
+        if ($this->position === 'beginning') {
+            if (!$this->isMultiline($tokens, \max($operatorIndices), $indexEnd)) {
+                return; // operator already is placed correctly
+            }
+            $this->fixMoveToTheBeginning($tokens, $operatorIndices);
+
+            return;
+        }
+
+        if (!$this->isMultiline($tokens, $indexStart, \min($operatorIndices))) {
+            return; // operator already is placed correctly
+        }
+        $this->fixMoveToTheEnd($tokens, $operatorIndices);
+    }
+
+    /**
+     * @param int[] $operatorIndices
+     */
+    private function fixMoveToTheBeginning(Tokens $tokens, array $operatorIndices): void
+    {
+        /** @var int $prevIndex */
+        $prevIndex = $tokens->getNonEmptySibling(\min($operatorIndices), -1);
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
+
+        for ($i = $nextIndex - 1; $i > \max($operatorIndices); $i--) {
+            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
+                $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, -1);
+                if ($isWhitespaceBefore) {
+                    $inserts[] = new Token([T_WHITESPACE, ' ']);
+                }
+                $tokens->insertAt($nextIndex, $inserts);
+
+                break;
+            }
+        }
+    }
+
+    /**
+     * @param int[] $operatorIndices
+     */
+    private function fixMoveToTheEnd(Tokens $tokens, array $operatorIndices): void
+    {
+        /** @var int $prevIndex */
+        $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNonEmptySibling(\max($operatorIndices), 1);
+
+        for ($i = $prevIndex + 1; $i < \max($operatorIndices); $i++) {
+            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+                $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
+                $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, 1);
+                if ($isWhitespaceAfter) {
+                    \array_unshift($inserts, new Token([T_WHITESPACE, ' ']));
+                }
+                $tokens->insertAt($prevIndex + 1, $inserts);
+
+                break;
+            }
+        }
     }
 
     /**
@@ -255,5 +242,16 @@ function foo() {
             },
             $indices
         );
+    }
+
+    private function isMultiline(Tokens $tokens, int $indexStart, int $indexEnd): bool
+    {
+        for ($index = $indexStart; $index <= $indexEnd; $index++) {
+            if (\strpos($tokens[$index]->getContent(), "\n") !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

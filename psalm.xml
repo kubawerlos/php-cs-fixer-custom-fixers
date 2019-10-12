@@ -27,6 +27,11 @@
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
+        <PossiblyUnusedMethod>
+            <errorLevel type='suppress'>
+                <file name='./src/Analyzer/Analysis/SwitchAnalysis.php' />
+            </errorLevel>
+        </PossiblyUnusedMethod>
         <UnusedClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>
