@@ -430,6 +430,8 @@ switch ($foo) {
             'and', 'or', 'xor', '&&', '||', // Logical
             '.', '.=', // String
             '??', // Null Coalescing
+            '->', // Object
+            '::', // Scope Resolution
         ] as $operator) {
             yield \sprintf('handle %s operator', $operator) => [
                 \sprintf('<?php
