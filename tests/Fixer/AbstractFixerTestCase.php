@@ -117,6 +117,8 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
+        static::assertSame($expected, $tokens->generateCode());
+
         static::assertFalse($tokens->isChanged());
     }
 }
