@@ -21,7 +21,7 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
     /** @var string */
     private $position = 'beginning';
 
-    /** @var array<string, int> */
+    /** @var Token[] */
     private $operators = [];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -53,9 +53,63 @@ function foo() {
 
     public function configure(?array $configuration = null): void
     {
-        $this->operators = \array_flip(['&&', '||', 'and', 'or', 'xor']);
+        $this->operators = [
+            new Token([T_LOGICAL_AND, 'and']),
+            new Token([T_LOGICAL_OR, 'or']),
+            new Token([T_LOGICAL_XOR, 'xor']),
+            new Token('&&'),
+            new Token('||'),
+        ];
         if (!isset($configuration['only_booleans']) || $configuration['only_booleans'] === false) {
-            $this->operators += \array_flip(['=', '.', '*', '/', '%', '<', '>', '|', '^', '+', '-', '&', '&=', '.=', '/=', '=>', '==', '>=', '===', '!=', '<>', '!==', '<=', '-=', '%=', '*=', '|=', '+=', '<<', '<<=', '>>', '>>=', '^=', '**', '**=', '<=>', '??', '?', ':']);
+            $this->operators = \array_merge(
+                $this->operators,
+                [
+                    new Token('+'),
+                    new Token('-'),
+                    new Token('*'),
+                    new Token('/'),
+                    new Token('%'),
+                    new Token([T_POW, '**']),
+                    new Token([T_PLUS_EQUAL, '+=']),
+                    new Token([T_MINUS_EQUAL, '-=']),
+                    new Token([T_MUL_EQUAL, '*=']),
+                    new Token([T_DIV_EQUAL, '/=']),
+                    new Token([T_MOD_EQUAL, '%=']),
+                    new Token([T_POW_EQUAL, '**=']),
+                    new Token('='),
+                    new Token('&'),
+                    new Token('|'),
+                    new Token('^'),
+                    new Token([T_SL, '<<']),
+                    new Token([T_SR, '>>']),
+                    new Token([T_AND_EQUAL, '&=']),
+                    new Token([T_OR_EQUAL, '|=']),
+                    new Token([T_XOR_EQUAL, '^=']),
+                    new Token([T_SL_EQUAL, '<<=']),
+                    new Token([T_SR_EQUAL, '>>=']),
+                    new Token([T_IS_EQUAL, '==']),
+                    new Token([T_IS_IDENTICAL, '===']),
+                    new Token([T_IS_NOT_EQUAL, '!=']),
+                    new Token([T_IS_NOT_EQUAL, '<>']),
+                    new Token([T_IS_NOT_IDENTICAL, '!==']),
+                    new Token('<'),
+                    new Token('>'),
+                    new Token([T_IS_SMALLER_OR_EQUAL, '<=']),
+                    new Token([T_IS_GREATER_OR_EQUAL, '>=']),
+                    new Token([T_SPACESHIP, '<=>']),
+                    new Token('and'),
+                    new Token('or'),
+                    new Token('xor'),
+                    new Token([T_BOOLEAN_AND, '&&']),
+                    new Token([T_BOOLEAN_OR, '||']),
+                    new Token('.'),
+                    new Token([T_CONCAT_EQUAL, '.=']),
+                    new Token([T_COALESCE, '??']),
+                    new Token([T_DOUBLE_ARROW, '=>']),
+                    new Token('?'),
+                    new Token(':'),
+                ]
+            );
         }
 
         $this->position = $configuration['position'] ?? $this->position;
@@ -89,7 +143,7 @@ function foo() {
         while ($index > 1) {
             $index--;
 
-            if (!isset($this->operators[\strtolower($tokens[$index]->getContent())])) {
+            if (!$tokens[$index]->equalsAny($this->operators, false)) {
                 continue;
             }
 
