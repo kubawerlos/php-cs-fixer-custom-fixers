@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add PhpdocOnlyAllowedAnnotationsFixer
+- Feature: OperatorLinebreakFixer - handle object operators
 
 ## v1.15.0 - *2019-08-19*
 - Add CommentSurroundedBySpacesFixer

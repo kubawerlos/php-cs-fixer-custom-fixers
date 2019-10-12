@@ -106,6 +106,8 @@ function foo() {
                     new Token([T_CONCAT_EQUAL, '.=']),
                     new Token([T_COALESCE, '??']),
                     new Token([T_DOUBLE_ARROW, '=>']),
+                    new Token([T_OBJECT_OPERATOR, '->']),
+                    new Token([T_PAAMAYIM_NEKUDOTAYIM, '::']),
                     new Token('?'),
                     new Token(':'),
                 ]
