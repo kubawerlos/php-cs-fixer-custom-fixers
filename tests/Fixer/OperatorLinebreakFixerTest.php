@@ -455,5 +455,36 @@ switch ($foo) {
     $bar];
 ',
         ];
+
+        yield 'assign by reference' => [
+            '<?php
+                $a =&
+                    $b;',
+        ];
+
+        yield 'passing by reference' => [
+            '<?php
+                function foo(
+                    &$a,
+                    &$b,
+                    int
+                        &$c,
+                    \Bar\Baz
+                        &$d
+                ) {};',
+            null,
+            ['position' => 'end'],
+        ];
+
+        yield 'handle & operator with constant' => [
+            '<?php
+\Foo::bar
+    & $baz;
+',
+            '<?php
+\Foo::bar &
+    $baz;
+',
+        ];
     }
 }

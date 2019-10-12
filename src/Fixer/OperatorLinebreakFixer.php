@@ -14,6 +14,7 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
+use PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer;
 use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
 
 final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatingFixerInterface
@@ -139,6 +140,8 @@ function foo() {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
+        $referenceAnalyzer = new ReferenceAnalyzer();
+
         $excludedIndices = $this->getExcludedIndices($tokens);
 
         $index = $tokens->count();
@@ -146,6 +149,10 @@ function foo() {
             $index--;
 
             if (!$tokens[$index]->equalsAny($this->operators, false)) {
+                continue;
+            }
+
+            if ($referenceAnalyzer->isReference($tokens, $index)) {
                 continue;
             }
 
