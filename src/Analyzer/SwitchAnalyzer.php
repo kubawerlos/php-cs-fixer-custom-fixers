@@ -28,7 +28,7 @@ final class SwitchAnalyzer
         $indexCurlyBracesEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $indexCurlyBracesStart);
 
         $cases = [];
-        $ternaryDepth = 0;
+        $ternaryOperatorDepth = 0;
         $index = $indexCurlyBracesStart;
         while ($index < $indexCurlyBracesEnd) {
             $index++;
@@ -37,14 +37,14 @@ final class SwitchAnalyzer
                 continue;
             }
             if ($tokens[$index]->equals('?')) {
-                $ternaryDepth++;
-                continue;
-            }
-            if ($ternaryDepth > 0 && $tokens[$index]->equals(':')) {
-                $ternaryDepth--;
+                $ternaryOperatorDepth++;
                 continue;
             }
             if (!$tokens[$index]->equals(':')) {
+                continue;
+            }
+            if ($ternaryOperatorDepth > 0) {
+                $ternaryOperatorDepth--;
                 continue;
             }
             $cases[] = new CaseAnalysis($index);
