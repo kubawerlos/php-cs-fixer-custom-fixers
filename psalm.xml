@@ -32,6 +32,11 @@
                 <file name='./src/Analyzer/Analysis/SwitchAnalysis.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
+        <PossiblyUnusedParam>
+            <errorLevel type='suppress'>
+                <file name='./src/Analyzer/ReferenceAnalyzer.php' />
+            </errorLevel>
+        </PossiblyUnusedParam>
         <UnusedClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>

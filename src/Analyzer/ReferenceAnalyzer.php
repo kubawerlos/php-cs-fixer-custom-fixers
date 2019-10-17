@@ -22,21 +22,21 @@ final class ReferenceAnalyzer
             return false;
         }
 
-        return $this->isPrevReference($tokens, $index);
-    }
-
-    private function isPrevReference(Tokens $tokens, int $index): bool
-    {
+        /** @var int $index */
         $index = $tokens->getPrevMeaningfulToken($index);
-
-        if ($index === null || $tokens[$index]->equalsAny([')', ';'])) {
-            return false;
-        }
-
-        if ($tokens[$index]->equalsAny(['=', '(', ','])) {
+        if ($tokens[$index]->equalsAny(['=', [T_AS], [T_CALLABLE], [T_DOUBLE_ARROW], [CT::T_ARRAY_TYPEHINT]])) {
             return true;
         }
 
-        return $this->isPrevReference($tokens, $index);
+        do {
+            if ($tokens[$index]->equalsAny(['(', ',', [CT::T_NULLABLE_TYPE]])) {
+                return true;
+            }
+            if (!$tokens[$index]->equalsAny([[T_NS_SEPARATOR], [T_STRING]])) {
+                break;
+            }
+        } while (($index = $tokens->getPrevMeaningfulToken($index)) !== null);
+
+        return false;
     }
 }
