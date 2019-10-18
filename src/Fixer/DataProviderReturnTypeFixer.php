@@ -108,9 +108,7 @@ class FooTest extends TestCase {
             if ($this->getTypeName($tokens, $typeAnalysis) !== 'iterable') {
                 /** @var int $startIndex */
                 $startIndex = $tokens->getNextMeaningfulToken($typeAnalysis->getStartIndex() - 1);
-                $tokens->clearRange($startIndex, $typeAnalysis->getEndIndex());
-
-                $tokens->insertAt($typeAnalysis->getEndIndex(), new Token([T_STRING, 'iterable']));
+                $tokens->overrideRange($startIndex, $typeAnalysis->getEndIndex(), [new Token([T_STRING, 'iterable'])]);
             }
         }
     }

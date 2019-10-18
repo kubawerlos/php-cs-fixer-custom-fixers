@@ -4,6 +4,7 @@ parameters:
         - ./src
     ignoreErrors:
         - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::insertAt\(\) expects#'
+        - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::overrideRange\(\) expects#'
 
 includes:
     - ./dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon
