@@ -26,20 +26,24 @@ final class ReadmeCommand extends BaseCommand
 
     private const SHIELDS_HOST = 'https://img.shields.io';
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $output->writeln(\sprintf('# %s', self::NAME));
-        $output->writeln($this->badges());
-        $output->writeln($this->description());
-        $output->writeln($this->installation());
-        $output->writeln($this->usage());
-        $output->writeln($this->fixers());
-        $output->writeln($this->contributing());
+        $output->write(
+            \sprintf('# %s', self::NAME) . "\n\n"
+            . $this->badges() . "\n\n"
+            . $this->description() . "\n\n"
+            . $this->installation() . "\n\n"
+            . $this->usage() . "\n\n"
+            . $this->fixers() . "\n\n"
+            . $this->contributing() . "\n"
+        );
+
+        return 0;
     }
 
     private function badges(): string
     {
-        return "\n" . \implode("\n", [
+        return \implode("\n", [
             $this->badge(
                 'Latest stable version',
                 \sprintf('%s/packagist/v/%s.svg?label=current%%20version', self::SHIELDS_HOST, $this->composer()->name),
@@ -89,7 +93,7 @@ final class ReadmeCommand extends BaseCommand
                 \sprintf('https://shepherd.dev/github/%s/coverage.svg', $this->composer()->name),
                 \sprintf('https://shepherd.dev/github/%s', $this->composer()->name)
             ),
-        ]) . "\n";
+        ]);
     }
 
     private function badge(string $description, string $imageUrl, ?string $targetUrl = null): string
@@ -123,8 +127,7 @@ final class ReadmeCommand extends BaseCommand
     private function installation(): string
     {
         return \sprintf(
-            '
-## Installation
+            '## Installation
 %s can be installed by running:
 ```bash
 composer require --dev %s
@@ -138,8 +141,7 @@ composer require --dev %s
     private function usage(): string
     {
         return \sprintf(
-            '
-## Usage
+            '## Usage
 In your PHP CS Fixer configuration register fixers and use them:
 ```diff
 %s
@@ -154,7 +156,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
     private function fixers(): string
     {
-        $output = "\n## Fixers";
+        $output = '## Fixers';
 
         foreach (new Fixers() as $fixer) {
             $reflection = new \ReflectionClass($fixer);
@@ -244,14 +246,13 @@ In your PHP CS Fixer configuration register fixers and use them:
         /** @var int $start */
         $start = \strpos($diff, "\n", 10);
 
-        return \preg_replace('/\h+(?=\R)/', '', \substr($diff, $start + 1, -1));
+        return \str_replace(" \n", "\n", \substr($diff, $start + 1, -1));
     }
 
     private function contributing(): string
     {
         return \sprintf(
-            '
-## Contributing
+            '## Contributing
 Request feature or report bug by creating [issue](https://github.com/%s/issues).
 
 Alternatively, fork the repo, develop your changes, regenerate `README.md`:
