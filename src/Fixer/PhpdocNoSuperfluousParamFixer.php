@@ -40,6 +40,11 @@ function foo($b, $s) {}
         return false;
     }
 
+    public function getPriority(): int
+    {
+        return 6;
+    }
+
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
@@ -47,7 +52,7 @@ function foo($b, $s) {}
                 continue;
             }
 
-            $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_COMMENT], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]);
+            $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]);
             if ($functionIndex === null || !$tokens[$functionIndex]->isGivenKind(T_FUNCTION)) {
                 continue;
             }
@@ -66,11 +71,6 @@ function foo($b, $s) {}
                 $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
             }
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 6;
     }
 
     /**

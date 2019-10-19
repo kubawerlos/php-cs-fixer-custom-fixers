@@ -50,6 +50,121 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
 
     public function provideFixCases(): iterable
     {
+        foreach ($this->pairs() as $key => $value) {
+            yield \sprintf('%s when position is "beginning"', $key) => $value;
+        }
+
+        foreach ($this->pairs() as $key => $value) {
+            yield \sprintf('%s when position is "end"', $key) => [
+                $value[1],
+                $value[0],
+                ['position' => 'end'],
+            ];
+        }
+
+        yield 'ignore add operator when only booleans enabled' => [
+            '<?php
+return $foo
+    +
+    $bar;
+',
+            null,
+            ['only_booleans' => true],
+        ];
+
+        yield 'handle operator when on separate line when position is "beginning"' => [
+            '<?php
+return $foo
+    || $bar;
+',
+            '<?php
+return $foo
+    ||
+    $bar;
+',
+        ];
+
+        yield 'handle operator when on separate line when position is "end"' => [
+            '<?php
+return $foo ||
+    $bar;
+',
+            '<?php
+return $foo
+    ||
+    $bar;
+',
+            ['position' => 'end'],
+        ];
+
+        yield 'handle Elvis operator with space inside' => [
+            '<?php
+return $foo
+    ?: $bar;
+',
+            '<?php
+return $foo ? :
+    $bar;
+',
+        ];
+
+        yield 'handle Elvis operator with space inside when position is "end"' => [
+            '<?php
+return $foo ?:
+    $bar;
+',
+            '<?php
+return $foo
+    ? : $bar;
+',
+            ['position' => 'end'],
+        ];
+
+        yield 'handle Elvis operator with comment inside' => [
+            '<?php
+return $foo/* Lorem ipsum */
+    ?: $bar;
+',
+            '<?php
+return $foo ?/* Lorem ipsum */:
+    $bar;
+',
+        ];
+
+        yield 'handle Elvis operators with comment inside when position is "end"' => [
+            '<?php
+return $foo ?:
+    /* Lorem ipsum */$bar;
+',
+            '<?php
+return $foo
+    ?/* Lorem ipsum */: $bar;
+',
+            ['position' => 'end'],
+        ];
+
+        yield 'nullable type when position is "end"' => [
+            '<?php
+                function foo(
+                    ?int $x,
+                    ?int $y,
+                    ?int $z
+                ) {};',
+            null,
+            ['position' => 'end'],
+        ];
+
+        yield 'return type' => [
+            '<?php
+                function foo()
+                :
+                bool
+                {};',
+        ];
+    }
+
+    private function pairs(): iterable
+    {
         yield 'handle equal sign' => [
             '<?php
 $foo
@@ -94,15 +209,6 @@ return $foo.
 ',
         ];
 
-        yield 'ignore add operator when only booleans enabled' => [
-            '<?php
-return $foo +
-    $bar;
-',
-            null,
-            ['only_booleans' => true],
-        ];
-
         yield 'handle ternary operator' => [
             '<?php
 return $foo
@@ -129,45 +235,6 @@ return $foo ||
 ',
         ];
 
-        yield 'handle operator when on separate line' => [
-            '<?php
-return $foo
-    || $bar;
-',
-            '<?php
-return $foo
-    ||
-    $bar;
-',
-        ];
-
-        yield 'handle multiline operator when position is "end"' => [
-            '<?php
-return $foo ||
-    $bar ||
-    $baz;
-',
-            '<?php
-return $foo
-    || $bar
-    || $baz;
-',
-            ['position' => 'end'],
-        ];
-
-        yield 'handle operator when on its own line and position is "end"' => [
-            '<?php
-return $foo ||
-    $bar;
-',
-            '<?php
-return $foo
-    ||
-    $bar;
-',
-            ['position' => 'end'],
-        ];
-
         yield 'handle operator when no whitespace is before' => [
             '<?php
 function foo() {
@@ -181,22 +248,6 @@ function foo() {
         $b;
 }
 ',
-        ];
-
-        yield 'handle operator when no whitespace is after and position is "end"' => [
-            '<?php
-function foo() {
-    return $a||
-        $b;
-}
-',
-            '<?php
-function foo() {
-    return $a
-        ||$b;
-}
-',
-            ['position' => 'end'],
         ];
 
         yield 'handle operator with one-line comments' => [
@@ -286,66 +337,19 @@ return $foo ?:
 ',
         ];
 
-        yield 'handle Elvis operator when position is "end"' => [
-            '<?php
-return $foo ?:
-    $bar;
-',
-            '<?php
-return $foo
-    ?: $bar;
-',
-            ['position' => 'end'],
-        ];
-
-        yield 'handle Elvis operator with space inside' => [
-            '<?php
-return $foo
-    ?: $bar;
-',
-            '<?php
-return $foo ? :
-    $bar;
-',
-        ];
-
-        yield 'handle Elvis operator with comment inside' => [
-            '<?php
-return $foo/* Lorem ipsum */
-    ?: $bar;
-',
-            '<?php
-return $foo ?/* Lorem ipsum */:
-    $bar;
-',
-            ['position' => 'beginning'],
-        ];
-
-        yield 'handle Elvis operators with comment inside to end' => [
-            '<?php
-return $foo ?:
-    /* Lorem ipsum */$bar;
-',
-            '<?php
-return $foo
-    ?/* Lorem ipsum */: $bar;
-',
-            ['position' => 'end'],
-        ];
-
         yield 'handle ternary operator inside of switch' => [
             '<?php
 switch ($foo) {
     case 1:
         return $isOK ? 1 : -1;
     case (
-            $a 
+            $a
             ? 2
             : 3
         ) :
         return 23;
     case $b[
-            $a 
+            $a
             ? 4
             : 5
         ]
@@ -357,13 +361,13 @@ switch ($foo) {
     case 1:
         return $isOK ? 1 : -1;
     case (
-            $a 
-            ? 2
-            : 3
+            $a ?
+            2 :
+            3
         ) :
         return 23;
     case $b[
-            $a ? 
+            $a ?
             4 :
             5
         ]
@@ -401,31 +405,12 @@ switch ($foo) {
             ',
         ];
 
-        yield 'nullable type' => [
-            '<?php
-                function foo(
-                    ?int $x,
-                    ?int $y,
-                    ?int $z
-                ) {};',
-            null,
-            ['position' => 'end'],
-        ];
-
-        yield 'return type' => [
-            '<?php
-                function foo()
-                :
-                bool
-                {};',
-        ];
-
         foreach ([
             '+', '-', '*', '/', '%', '**', // Arithmetic
             '+=', '-=', '*=', '/=', '%=', '**=', // Arithmetic assignment
             '=', // Assignment
-            '&', '|', '^',  '<<', '>>', // Bitwise
-            '&=', '|=', '^=',  '<<=', '>>=', // Bitwise assignment
+            '&', '|', '^', '<<', '>>', // Bitwise
+            '&=', '|=', '^=', '<<=', '>>=', // Bitwise assignment
             '==', '===', '!=', '<>', '!==', '<', '>', '<=', '>=', '<=>', // Comparison
             'and', 'or', 'xor', '&&', '||', // Logical
             '.', '.=', // String

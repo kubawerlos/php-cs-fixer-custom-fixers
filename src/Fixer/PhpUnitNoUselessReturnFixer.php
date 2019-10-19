@@ -83,9 +83,9 @@ class FooTest extends TestCase {
             /** @var int $referenceIndex */
             $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
 
-            if (!($tokens[$operatorIndex]->equals([T_OBJECT_OPERATOR, '->']) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this']))
-                && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STRING, 'self']))
-                && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STATIC, 'static']))
+            if (!($tokens[$operatorIndex]->isGivenKind(T_OBJECT_OPERATOR) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this'], false))
+                && !($tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->equals([T_STRING, 'self'], false))
+                && !($tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->isGivenKind(T_STATIC))
             ) {
                 continue;
             }

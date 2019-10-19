@@ -22,7 +22,7 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
     /** @var string */
     private $position = 'beginning';
 
-    /** @var Token[] */
+    /** @var array<array<int|string>|string> */
     private $operators = [];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -54,63 +54,52 @@ function foo() {
 
     public function configure(?array $configuration = null): void
     {
-        $this->operators = [
-            new Token([T_LOGICAL_AND, 'and']),
-            new Token([T_LOGICAL_OR, 'or']),
-            new Token([T_LOGICAL_XOR, 'xor']),
-            new Token('&&'),
-            new Token('||'),
-        ];
+        $this->operators = [[T_BOOLEAN_AND], [T_BOOLEAN_OR], [T_LOGICAL_AND], [T_LOGICAL_OR], [T_LOGICAL_XOR]];
+
         if (!isset($configuration['only_booleans']) || $configuration['only_booleans'] === false) {
             $this->operators = \array_merge(
                 $this->operators,
                 [
-                    new Token('+'),
-                    new Token('-'),
-                    new Token('*'),
-                    new Token('/'),
-                    new Token('%'),
-                    new Token([T_POW, '**']),
-                    new Token([T_PLUS_EQUAL, '+=']),
-                    new Token([T_MINUS_EQUAL, '-=']),
-                    new Token([T_MUL_EQUAL, '*=']),
-                    new Token([T_DIV_EQUAL, '/=']),
-                    new Token([T_MOD_EQUAL, '%=']),
-                    new Token([T_POW_EQUAL, '**=']),
-                    new Token('='),
-                    new Token('&'),
-                    new Token('|'),
-                    new Token('^'),
-                    new Token([T_SL, '<<']),
-                    new Token([T_SR, '>>']),
-                    new Token([T_AND_EQUAL, '&=']),
-                    new Token([T_OR_EQUAL, '|=']),
-                    new Token([T_XOR_EQUAL, '^=']),
-                    new Token([T_SL_EQUAL, '<<=']),
-                    new Token([T_SR_EQUAL, '>>=']),
-                    new Token([T_IS_EQUAL, '==']),
-                    new Token([T_IS_IDENTICAL, '===']),
-                    new Token([T_IS_NOT_EQUAL, '!=']),
-                    new Token([T_IS_NOT_EQUAL, '<>']),
-                    new Token([T_IS_NOT_IDENTICAL, '!==']),
-                    new Token('<'),
-                    new Token('>'),
-                    new Token([T_IS_SMALLER_OR_EQUAL, '<=']),
-                    new Token([T_IS_GREATER_OR_EQUAL, '>=']),
-                    new Token([T_SPACESHIP, '<=>']),
-                    new Token('and'),
-                    new Token('or'),
-                    new Token('xor'),
-                    new Token([T_BOOLEAN_AND, '&&']),
-                    new Token([T_BOOLEAN_OR, '||']),
-                    new Token('.'),
-                    new Token([T_CONCAT_EQUAL, '.=']),
-                    new Token([T_COALESCE, '??']),
-                    new Token([T_DOUBLE_ARROW, '=>']),
-                    new Token([T_OBJECT_OPERATOR, '->']),
-                    new Token([T_PAAMAYIM_NEKUDOTAYIM, '::']),
-                    new Token('?'),
-                    new Token(':'),
+                    '%',
+                    '&',
+                    '*',
+                    '+',
+                    '-',
+                    '.',
+                    '/',
+                    ':',
+                    '<',
+                    '=',
+                    '>',
+                    '?',
+                    '^',
+                    '|',
+                    [T_AND_EQUAL],
+                    [T_COALESCE],
+                    [T_CONCAT_EQUAL],
+                    [T_DIV_EQUAL],
+                    [T_DOUBLE_ARROW],
+                    [T_IS_EQUAL],
+                    [T_IS_GREATER_OR_EQUAL],
+                    [T_IS_IDENTICAL],
+                    [T_IS_NOT_EQUAL],
+                    [T_IS_NOT_IDENTICAL],
+                    [T_IS_SMALLER_OR_EQUAL],
+                    [T_MINUS_EQUAL],
+                    [T_MOD_EQUAL],
+                    [T_MUL_EQUAL],
+                    [T_OBJECT_OPERATOR],
+                    [T_OR_EQUAL],
+                    [T_PAAMAYIM_NEKUDOTAYIM],
+                    [T_PLUS_EQUAL],
+                    [T_POW],
+                    [T_POW_EQUAL],
+                    [T_SL],
+                    [T_SL_EQUAL],
+                    [T_SPACESHIP],
+                    [T_SR],
+                    [T_SR_EQUAL],
+                    [T_XOR_EQUAL],
                 ]
             );
         }

@@ -177,5 +177,24 @@ class Foo {
       public function bar(...$params) {}
 }',
         ];
+
+        yield [
+            '<?php
+namespace Some\Thing;
+interface Foo {
+     /**
+      * @return self
+      */
+      public function getInstance();
+}',
+            '<?php
+namespace Some\Thing;
+interface Foo {
+     /**
+      * @return Foo
+      */
+      public function getInstance();
+}',
+        ];
     }
 }

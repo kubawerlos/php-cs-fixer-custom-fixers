@@ -60,28 +60,30 @@ final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
             ',
         ];
 
-        yield [
-            '<?php
-                class Foo {
-                    /**
-                     * @param bool $b
-                     * @param int $i
-                     * @param string $s
-                     */
-                    abstract function bar($b, $i, $s) {}
-                }
-            ',
-            '<?php
-                class Foo {
-                    /**
-                     * @param bool $b
-                     * @param string $s
-                     * @param int $i
-                     */
-                    abstract function bar($b, $i, $s) {}
-                }
-            ',
-        ];
+        foreach (['abstract', 'final', 'private', 'protected', 'public', 'static', '/* private */'] as $modifier) {
+            yield [
+                \sprintf('<?php
+                    class Foo {
+                        /**
+                         * @param bool $b
+                         * @param int $i
+                         * @param string $s
+                         */
+                        %s function bar($b, $i, $s) {}
+                    }
+                ', $modifier),
+                \sprintf('<?php
+                    class Foo {
+                        /**
+                         * @param bool $b
+                         * @param string $s
+                         * @param int $i
+                         */
+                        %s function bar($b, $i, $s) {}
+                    }
+                ', $modifier),
+            ];
+        }
 
         yield [
             '<?php

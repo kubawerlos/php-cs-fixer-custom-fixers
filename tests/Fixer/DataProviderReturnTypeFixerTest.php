@@ -53,7 +53,13 @@ class FooTest extends TestCase {
      * @dataProvider provideFooCases
      */
     public function testFoo() {}
+    /**
+     * @dataProvider provider
+     */
+    public function testBar() {}
     public function provideFooCases()%s {}
+    public function provider()%s {}
+    public function notProvider(): array {}
 }';
 
         $cases = [
@@ -73,6 +79,10 @@ class FooTest extends TestCase {
                 ': iterable',
                 ': Foo\Bar',
             ],
+            'data provider with return type namespaced class starting with iterable' => [
+                ': iterable',
+                ': iterable \ Foo',
+            ],
             'data provider with return type namespaced class and comments' => [
                 ': iterable',
                 ': Foo/* Some info */\/* More info */Bar',
@@ -86,7 +96,7 @@ class FooTest extends TestCase {
         foreach ($cases as $key => $case) {
             yield $key => \array_map(
                 static function (string $code) use ($template): string {
-                    return \sprintf($template, $code);
+                    return \sprintf($template, $code, $code);
                 },
                 $case
             );
@@ -150,5 +160,28 @@ class FooTest extends TestCase {
     public function someFunction2() {}
 }',
         ];
+
+        foreach (['abstract', 'final', 'private', 'protected', 'static', '/* private */'] as $modifier) {
+            yield \sprintf('test function with %s modifier', $modifier) => [
+                \sprintf('<?php
+                    class FooTest extends TestCase {
+                        /**
+                         * @dataProvider provideFooCases
+                         */
+                        %s function testFoo() {}
+                        public function provideFooCases(): iterable {}
+                    }
+                ', $modifier),
+                \sprintf('<?php
+                    class FooTest extends TestCase {
+                        /**
+                         * @dataProvider provideFooCases
+                         */
+                        %s function testFoo() {}
+                        public function provideFooCases() {}
+                    }
+                ', $modifier),
+            ];
+        }
     }
 }

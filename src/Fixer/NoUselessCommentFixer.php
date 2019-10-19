@@ -63,7 +63,7 @@ class Foo {
             $nextIndex = $tokens->getTokenNotOfKindSibling(
                 $index,
                 1,
-                [[T_WHITESPACE], [T_COMMENT], [T_DOC_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC], [T_VAR]]
+                [[T_WHITESPACE], [T_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC]]
             );
             if ($nextIndex === null) {
                 return;

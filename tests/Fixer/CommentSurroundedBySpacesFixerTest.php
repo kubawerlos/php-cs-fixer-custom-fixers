@@ -98,6 +98,11 @@ final class CommentSurroundedBySpacesFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php $a; /** foo */',
+            '<?php $a; /** foo*/',
+        ];
+
+        yield [
             '<?php $a; /**** foo ****/',
             '<?php $a; /****foo****/',
         ];

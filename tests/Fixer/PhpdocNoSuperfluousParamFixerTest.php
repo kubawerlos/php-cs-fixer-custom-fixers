@@ -231,5 +231,27 @@ function foo($a) {}
 function bar($a) {}
 ',
         ];
+
+        foreach (['abstract', 'final', 'private', 'protected', 'public', 'static', '/* private */'] as $modifier) {
+            yield [
+                \sprintf('<?php
+                    class Foo {
+                        /**
+                         * @param $a
+                         */
+                        %s function bar($a) {}
+                    }
+                ', $modifier),
+                \sprintf('<?php
+                    class Foo {
+                        /**
+                         * @param $a
+                         * @param $b
+                         */
+                        %s function bar($a) {}
+                    }
+                ', $modifier),
+            ];
+        }
     }
 }

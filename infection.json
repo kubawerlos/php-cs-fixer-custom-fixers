@@ -1,4 +1,5 @@
 {
+    "$schema": "./dev-tools/vendor/infection/infection/resources/schema.json",
     "source": {
         "directories": [
             "./src",
@@ -18,15 +19,40 @@
     "mutators": {
         "@default": true,
         "ArrayItemRemoval": {
+            "settings": {
+                "remove": "all"
+            },
             "ignore": [
                 "PhpCsFixerCustomFixers\\Fixer\\*::getConfigurationDefinition",
+                "PhpCsFixerCustomFixers\\Fixer\\*::getDefinition",
                 "PhpCsFixerCustomFixers\\Fixer\\*::isCandidate"
             ]
         },
+        "Assignment": false,
+        "Decrement": false,
+        "DecrementInteger": false,
+        "FalseValue": false,
+        "For_": false,
+        "GreaterThan": false,
+        "GreaterThanOrEqualTo": false,
+        "Increment": false,
+        "IncrementInteger": false,
+        "IntegerNegation": false,
+        "LessThan": false,
+        "LessThanOrEqualTo": false,
+        "LessThanOrEqualToNegotiation": false,
+        "LogicalAnd": false,
+        "LogicalNot": false,
+        "LogicalOr": false,
+        "Minus": false,
+        "NotIdentical": false,
+        "OneZeroInteger": false,
+        "Plus": false,
         "PublicVisibility": {
             "ignore": [
                 "PhpCsFixerCustomFixers\\Fixer\\AbstractFixer::name"
             ]
-        }
+        },
+        "TrueValue": false
     }
 }
