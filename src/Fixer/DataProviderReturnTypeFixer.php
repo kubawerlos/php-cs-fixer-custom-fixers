@@ -129,7 +129,7 @@ class FooTest extends TestCase {
             $functionIndex = $tokens->getTokenNotOfKindSibling(
                 $index,
                 1,
-                [[T_WHITESPACE], [T_COMMENT], [T_DOC_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC]]
+                [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
             );
 
             if (!$tokens[$functionIndex]->isGivenKind(T_FUNCTION)) {

@@ -150,5 +150,28 @@ class FooTest extends TestCase {
     public function someFunction2() {}
 }',
         ];
+
+        foreach (['abstract', 'final', 'private', 'protected', 'static', '/* private */'] as $modifier) {
+            yield \sprintf('test function with %s modifier', $modifier) => [
+                \sprintf('<?php
+                    class FooTest extends TestCase {
+                        /**
+                         * @dataProvider provideFooCases
+                         */
+                        %s function testFoo() {}
+                        public function provideFooCases(): iterable {}
+                    }
+                ', $modifier),
+                \sprintf('<?php
+                    class FooTest extends TestCase {
+                        /**
+                         * @dataProvider provideFooCases
+                         */
+                        %s function testFoo() {}
+                        public function provideFooCases() {}
+                    }
+                ', $modifier),
+            ];
+        }
     }
 }

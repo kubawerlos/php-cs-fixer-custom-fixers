@@ -92,6 +92,14 @@ class FooTest extends TestCase {
         ];
 
         yield [
+            '   $THIS->markTestSkipped();
+            ',
+            '   $THIS->markTestSkipped();
+                return;
+            ',
+        ];
+
+        yield [
             '   $this->markTestSkipped();
             ',
             '   $this->markTestSkipped();
@@ -164,6 +172,20 @@ class FooTest extends TestCase {
             '   self::markTestIncomplete();
             ',
             '   self::markTestIncomplete();
+                return;
+            ',
+        ];
+
+        yield [
+            '   SELF::markTestIncomplete();
+            ',
+            '   SELF::markTestIncomplete();
+                return;
+            ',
+        ];
+
+        yield [
+            '   parent::markTestIncomplete();
                 return;
             ',
         ];

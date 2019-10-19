@@ -64,7 +64,7 @@ final class InternalClassCasingFixer extends AbstractFixer
                 continue;
             }
 
-            if ($tokens[$prevIndex]->isGivenKind([T_AS, T_CLASS, T_CONST, T_DOUBLE_COLON, T_FUNCTION, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
+            if ($tokens[$prevIndex]->isGivenKind([T_AS, T_CLASS, T_CONST, T_DOUBLE_COLON, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
                 continue;
             }
 

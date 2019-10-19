@@ -49,7 +49,7 @@ $y = new \Baz();
                 continue;
             }
 
-            $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE], [T_COMMENT], [T_DOC_COMMENT]]);
+            $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_COMMENT], [T_DOC_COMMENT], [T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE]]);
             if ($tokens[$prevIndex]->isGivenKind(T_NEW) || $tokens[$nextIndex]->isGivenKind(T_DOUBLE_COLON)) {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }

@@ -106,6 +106,74 @@ for ($i = 0; $i < 100; $i++) {}
 
         yield [
             '<?php
+foreach ($foo as $v) {}
+',
+            '<?php
+/** @var int $value */
+foreach ($foo as $v) {}
+',
+        ];
+
+        yield [
+            '<?php
+/** @var int $value */
+foreach ($foo as $value) {}
+',
+        ];
+
+        yield [
+            '<?php
+if (($v = getValue()) !== null) {}
+',
+            '<?php
+/** @var int $value */
+if (($v = getValue()) !== null) {}
+',
+        ];
+
+        yield [
+            '<?php
+/** @var int $value */
+if (($value = getValue()) !== null) {}
+',
+        ];
+
+        yield [
+            '<?php
+switch ($v = getValue()) { default: break; }
+',
+            '<?php
+/** @var int $value */
+switch ($v = getValue()) { default: break; }
+',
+        ];
+
+        yield [
+            '<?php
+/** @var int $value */
+switch ($value = getValue()) { default: break; }
+',
+        ];
+
+        yield [
+            '<?php
+while ($i < 0) { $i++; }
+',
+            '<?php
+/** @var int $index */
+while ($i < 0) { $i++; }
+',
+        ];
+
+        yield [
+            '<?php
+/** @var int $index */
+while ($index < 0) { $i++; }
+',
+        ];
+
+        yield [
+            '<?php
 /**
  * We create here new instance here
  */
@@ -170,10 +238,10 @@ $Bar = 2;
             '<?php
 class Foo
 {
-    /* @var int */
+    /** @var int */
     static $a;
 
-    /*
+    /**
      * @var int
      */
     public $b;
@@ -185,6 +253,11 @@ class Foo
      * @var int
      */
     private $d;
+
+    /**
+     * @var int
+     */
+    var $d;
 }
 ',
         ];
@@ -193,38 +266,49 @@ class Foo
             '<?php
 class Foo
 {
-    private $a;
+    static $a;
 
     /**
      */
-    private $b;
+    public $b;
 
     /**      */
-    private $c;
+    protected $c;
 
     /**
 */
     private $d;
+
+    /**
+      *
+      */
+    var $e;
 }
 ',
             '<?php
 class Foo
 {
     /** @var */
-    private $a;
+    static $a;
 
     /**
      * @var
      */
-    private $b;
+    public $b;
 
     /** @var $foo
      */
-    private $c;
+    protected $c;
 
     /**
       * @var $foo */
     private $d;
+
+    /**
+      * @var $foo
+      *
+      */
+    var $e;
 }
 ',
         ];

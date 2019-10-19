@@ -42,7 +42,9 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
         yield ['<?php namespace Foo; new STDClass();'];
         yield ['<?php namespace STDClass; new Foo();'];
         yield ['<?php $foo->STDCLASS();'];
+        yield ['<?php $foo->STDCLASS;'];
         yield ['<?php Foo::STDCLASS();'];
+        yield ['<?php Foo::STDCLASS;'];
         yield ['<?php function STDCLASS() { return 42; }; '];
         yield ['<?php STDCLASS();'];
         yield ['<?php \STDCLASS();'];
