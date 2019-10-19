@@ -22,6 +22,7 @@ final class SwitchAnalyzerTest extends TestCase
         $analyzer = new SwitchAnalyzer();
 
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Index 3 is not "switch".');
 
         $analyzer->getSwitchAnalysis(Tokens::fromCode('<?php $a;$b;$c;'), 3);
     }
