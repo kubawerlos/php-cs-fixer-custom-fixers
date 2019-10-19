@@ -29,8 +29,6 @@
             ]
         },
         "Assignment": false,
-        "Break_": false,
-        "Continue_": false,
         "Decrement": false,
         "DecrementInteger": false,
         "FalseValue": false,

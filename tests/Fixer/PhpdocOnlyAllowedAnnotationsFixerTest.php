@@ -49,9 +49,11 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
 
+
 ',
             '<?php
 /** @var string */
+/** @author John Doe */
 ',
         ];
 
