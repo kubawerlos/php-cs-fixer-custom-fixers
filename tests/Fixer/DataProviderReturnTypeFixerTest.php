@@ -152,7 +152,7 @@ class FooTest extends TestCase {
         ];
 
         foreach (['abstract', 'final', 'private', 'protected', 'static', '/* private */'] as $modifier) {
-            yield \sprintf('test class with %s modifier', $modifier) => [
+            yield \sprintf('test function with %s modifier', $modifier) => [
                 \sprintf('<?php
                     class FooTest extends TestCase {
                         /**
