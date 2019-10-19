@@ -28,15 +28,10 @@ final class ReferenceAnalyzer
             return true;
         }
 
-        do {
-            if ($tokens[$index]->equalsAny(['(', ',', [CT::T_NULLABLE_TYPE]])) {
-                return true;
-            }
-            if (!$tokens[$index]->equalsAny([[T_NS_SEPARATOR], [T_STRING]])) {
-                break;
-            }
-        } while (($index = $tokens->getPrevMeaningfulToken($index)) !== null);
+        if ($tokens[$index]->isGivenKind(T_STRING)) {
+            $index = $tokens->getPrevMeaningfulToken($index);
+        }
 
-        return false;
+        return $tokens[$index]->equalsAny(['(', ',', [T_NS_SEPARATOR], [CT::T_NULLABLE_TYPE]]);
     }
 }

@@ -92,10 +92,12 @@ class Foo {
         yield ['<?php foo("bar" & $baz);'];
         yield ['<?php foo($bar = BAZ & $qux);'];
         yield ['<?php function foo($bar = BAZ & QUX) {};'];
+        yield ['<?php function foo($bar = BAZ::QUX & QUUX) {};'];
         yield ['<?php function foo(array $bar = BAZ & QUX) {};'];
         yield ['<?php function foo(callable $bar = BAZ & QUX) {};'];
         yield ['<?php function foo(?int $bar = BAZ & QUX) {};'];
         yield ['<?php foreach($foos as $foo) { $foo & $bar; }'];
+        yield ['<?php if ($foo instanceof Bar & 0b01010101) {}'];
     }
 
     private function doTestCode(bool $expected, string $code): void
