@@ -164,8 +164,17 @@ return $foo
 
         yield 'assign by reference' => [
             '<?php
-                $a =&
-                    $b;',
+                $a
+                    = $b;
+                $c =&
+                     $d;
+            ',
+            '<?php
+                $a =
+                    $b;
+                $c =&
+                     $d;
+            ',
         ];
 
         yield 'passing by reference' => [
