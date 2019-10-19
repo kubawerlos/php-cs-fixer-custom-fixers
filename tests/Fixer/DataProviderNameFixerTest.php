@@ -221,5 +221,26 @@ class FooTest extends TestCase {
     public function someDataProvider() {}
 }',
         ];
+
+        foreach (['abstract', 'final', 'private', 'protected', 'static', '/* private */'] as $modifier) {
+            yield \sprintf('test class with %s modifier', $modifier) => [
+                \sprintf('<?php
+                class FooTest extends TestCase {
+                    /**
+                     * @dataProvider provideFooCases
+                     */
+                    %s function testFoo() {}
+                    public function provideFooCases() {}
+                }', $modifier),
+                \sprintf('<?php
+                class FooTest extends TestCase {
+                    /**
+                     * @dataProvider fooDataProvider
+                     */
+                    %s function testFoo() {}
+                    public function fooDataProvider() {}
+                }', $modifier),
+            ];
+        }
     }
 }

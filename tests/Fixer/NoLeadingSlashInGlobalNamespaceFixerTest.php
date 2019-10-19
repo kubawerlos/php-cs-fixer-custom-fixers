@@ -38,42 +38,57 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     {
         yield [
             '<?php $foo = new Bar();',
-            '<?php $foo = new \Bar();',
+            '<?php $foo = new \\Bar();',
         ];
 
         yield [
-            '<?php $foo = new Bar\Baz();',
-            '<?php $foo = new \Bar\Baz();',
+            '<?php $foo = new Bar\\Baz();',
+            '<?php $foo = new \\Bar\\Baz();',
         ];
 
         yield [
             '<?php $foo = Bar::NAME;',
-            '<?php $foo = \Bar::NAME;',
+            '<?php $foo = \\Bar::NAME;',
         ];
 
         yield [
-            '<?php $foo = Bar\Baz::NAME;',
-            '<?php $foo = \Bar\Baz::NAME;',
+            '<?php $foo = Bar\\Baz::NAME;',
+            '<?php $foo = \\Bar\\Baz::NAME;',
         ];
 
         yield [
-            '<?php $x = new Foo(); namespace Bar; $y = new \Baz();',
-            '<?php $x = new \Foo(); namespace Bar; $y = new \Baz();',
+            '<?php $x = new Foo(); namespace Bar; $y = new \\Baz();',
+            '<?php $x = new \\Foo(); namespace Bar; $y = new \\Baz();',
         ];
 
         yield [
-            '<?php $x = \getcwd();',
+            '<?php $x = \\getcwd();',
         ];
 
         yield [
             '<?php
-                $a = new Foo\Bar();
+                $a = new Foo\\Bar();
                 $b = new Baz();
             ',
             '<?php
-                $a = new \Foo\Bar();
-                $b = new \Baz();
+                $a = new \\Foo\\Bar();
+                $b = new \\Baz();
             ',
+        ];
+
+        yield [
+            '<?php $foo =  Bar::value();',
+            '<?php $foo = \\ Bar::value();',
+        ];
+
+        yield [
+            '<?php $foo = /* comment */Bar::value();',
+            '<?php $foo = \\/* comment */Bar::value();',
+        ];
+
+        yield [
+            '<?php $foo = /** comment */Bar::value();',
+            '<?php $foo = \\/** comment */Bar::value();',
         ];
     }
 }
