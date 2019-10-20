@@ -161,6 +161,35 @@ return $foo
                 bool
                 {};',
         ];
+
+        yield 'assign by reference' => [
+            '<?php
+                $a
+                    = $b;
+                $c =&
+                     $d;
+            ',
+            '<?php
+                $a =
+                    $b;
+                $c =&
+                     $d;
+            ',
+        ];
+
+        yield 'passing by reference' => [
+            '<?php
+                function foo(
+                    &$a,
+                    &$b,
+                    int
+                        &$c,
+                    \Bar\Baz
+                        &$d
+                ) {};',
+            null,
+            ['position' => 'end'],
+        ];
     }
 
     private function pairs(): iterable
@@ -438,6 +467,17 @@ switch ($foo) {
             '<?php
 [$foo =>
     $bar];
+',
+        ];
+
+        yield 'handle & operator with constant' => [
+            '<?php
+\Foo::bar
+    & $baz;
+',
+            '<?php
+\Foo::bar &
+    $baz;
 ',
         ];
     }
