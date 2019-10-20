@@ -71,9 +71,7 @@ class Bar {
                 $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
                 if ($tokens[$semicolonIndex]->getContent() === ';') {
                     $imports[] = $tokens[$classNameIndex]->getContent();
-                    for ($i = $index; $i < $semicolonIndex; $i++) {
-                        $tokens->clearTokenAndMergeSurroundingWhitespace($i);
-                    }
+                    $tokens->clearRange($index, $semicolonIndex);
                     TokenRemover::removeWithLinesIfPossible($tokens, $semicolonIndex);
                     $index = $semicolonIndex + 1;
                 }

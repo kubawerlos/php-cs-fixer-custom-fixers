@@ -57,91 +57,97 @@ class FooTest extends TestCase {
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
-            $this->fixNames($tokens, $indexes[0], $indexes[1]);
+        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
+            $this->fixNames($tokens, $indices[0], $indices[1]);
         }
     }
 
     private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        $dataProviderCallIndices = [];
-        $dataProviderUsagesCounts = [];
-        $dataProviderUsingFunctionNames = [];
-        $functionDefinitionIndices = [];
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            // if it's the function and string follows then it's function's definition
-            if ($tokens[$index]->isGivenKind(T_FUNCTION)) {
-                $functionNameIndex = $tokens->getNextNonWhitespace($index);
-                if ($tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
-                    $functionDefinitionIndices[$tokens[$functionNameIndex]->getContent()] = $functionNameIndex;
-                }
+        $functions = $this->getFunctions($tokens, $startIndex, $endIndex);
+
+        $dataProvidersToRename = $this->getDataProvidersToRename($functions);
+
+        foreach ($dataProvidersToRename as $dataProviderName => $testName) {
+            if (!\array_key_exists($dataProviderName, $functions)) {
                 continue;
             }
 
-            // as it's not function's definition we search for data provider usage
-
-            if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
+            $dataProviderNewName = $this->getProviderNameForTestName($testName);
+            if (\array_key_exists($dataProviderNewName, $functions)) {
                 continue;
             }
 
-            /** @var int $functionIndex */
-            $functionIndex = $tokens->getTokenNotOfKindSibling(
-                $index,
-                1,
-                [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
-            );
-            if (!$tokens[$functionIndex]->isGivenKind(T_FUNCTION)) {
-                continue;
-            }
-
-            $functionNameIndex = $tokens->getNextNonWhitespace($functionIndex);
-            if (!$tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
-                continue;
-            }
-
-            Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$index]->getContent(), $matches);
-
-            /** @var string[] $matches */
-            $matches = $matches[1];
-
-            foreach ($matches as $match) {
-                if (!isset($dataProviderUsagesCounts[$match])) {
-                    $dataProviderUsagesCounts[$match] = 0;
-                }
-                $dataProviderUsagesCounts[$match]++;
-
-                $dataProviderCallIndices[$match] = $index;
-
-                $dataProviderUsingFunctionNames[$match] = $tokens[$functionNameIndex]->getContent();
-            }
-        }
-
-        foreach ($dataProviderUsagesCounts as $dataProviderName => $numberOfCalls) {
-            if ($numberOfCalls > 1) {
-                continue;
-            }
-
-            if (!isset($functionDefinitionIndices[$dataProviderName])) {
-                continue;
-            }
-
-            $dataProviderNewName = $this->getProviderNameForTestName($dataProviderUsingFunctionNames[$dataProviderName]);
-            if (isset($functionDefinitionIndices[$dataProviderNewName])) {
-                continue;
-            }
-
-            $tokens[$functionDefinitionIndices[$dataProviderName]] = new Token([T_STRING, $dataProviderNewName]);
+            $tokens[$functions[$dataProviderName]['name_index']] = new Token([T_STRING, $dataProviderNewName]);
+            $functions[$dataProviderNewName] = [];
 
             /** @var string $newCommentContent */
             $newCommentContent = Preg::replace(
                 \sprintf('/(@dataProvider\s+)%s/', $dataProviderName),
                 \sprintf('$1%s', $dataProviderNewName),
-                $tokens[$dataProviderCallIndices[$dataProviderName]]->getContent()
+                $tokens[$functions[$testName]['doc_comment_index']]->getContent()
             );
 
-            $tokens[$dataProviderCallIndices[$dataProviderName]] = new Token([T_DOC_COMMENT, $newCommentContent]);
-            $functionDefinitionIndices[$dataProviderNewName] = $dataProviderCallIndices[$dataProviderName];
+            $tokens[$functions[$testName]['doc_comment_index']] = new Token([T_DOC_COMMENT, $newCommentContent]);
         }
+    }
+
+    private function getFunctions(Tokens $tokens, int $startIndex, int $endIndex): array
+    {
+        $functions = [];
+        for ($index = $startIndex; $index < $endIndex; $index++) {
+            if (!$tokens[$index]->isGivenKind(T_FUNCTION)) {
+                continue;
+            }
+
+            /** @var int $functionNameIndex */
+            $functionNameIndex = $tokens->getNextNonWhitespace($index);
+            if (!$tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
+                continue;
+            }
+            $indices = ['name_index' => $functionNameIndex];
+
+            /** @var int $docCommentIndex */
+            $docCommentIndex = $tokens->getTokenNotOfKindSibling(
+                $index,
+                -1,
+                [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
+            );
+            if ($tokens[$docCommentIndex]->isGivenKind(T_DOC_COMMENT)) {
+                Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$docCommentIndex]->getContent(), $matches);
+
+                $indices['doc_comment_index'] = $docCommentIndex;
+                $indices['data_provider_names'] = $matches[1];
+            }
+
+            $functions[$tokens[$functionNameIndex]->getContent()] = $indices;
+        }
+
+        return $functions;
+    }
+
+    private function getDataProvidersToRename(array $functions): array
+    {
+        $dataProvidersUses = [];
+        foreach ($functions as $name => $indices) {
+            if (!\array_key_exists('data_provider_names', $indices)) {
+                continue;
+            }
+            foreach ($indices['data_provider_names'] as $provider) {
+                if (\array_key_exists($provider, $dataProvidersUses)) {
+                    $dataProvidersUses[$provider] = '';
+                    continue;
+                }
+                $dataProvidersUses[$provider] = $name;
+            }
+        }
+
+        return \array_filter(
+            $dataProvidersUses,
+            static function (string $name): bool {
+                return $name !== '';
+            }
+        );
     }
 
     private function getProviderNameForTestName(string $name): string
