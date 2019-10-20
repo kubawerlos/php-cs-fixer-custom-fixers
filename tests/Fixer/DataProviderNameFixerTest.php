@@ -181,10 +181,18 @@ class FooTest extends TestCase {
         function () { return true; };
     }
 
-    /** @dataProvider reusedDataProvider */
+    /**
+     * @dataProvider reusedDataProvider
+     * @dataProvider provideFooCases
+     */
     public function testFoo() {}
-    /** @dataProvider reusedDataProvider */
+
+    /**
+     * @dataProvider reusedDataProvider
+     * @dataProvider provideBarCases
+     */
     public function testBar() {}
+
     public function reusedDataProvider() {}
 
     /** @dataProvider provideBazCases */
@@ -194,6 +202,8 @@ class FooTest extends TestCase {
     /** @dataProvider provideSomethingCases */
     public function testSomething() {}
     public function provideSomethingCases() {}
+    public function provideFooCases() {}
+    public function provideBarCases() {}
 }',
             '<?php
 class FooTest extends TestCase {
@@ -206,10 +216,18 @@ class FooTest extends TestCase {
         function () { return true; };
     }
 
-    /** @dataProvider reusedDataProvider */
+    /**
+     * @dataProvider reusedDataProvider
+     * @dataProvider testFooProvider
+     */
     public function testFoo() {}
-    /** @dataProvider reusedDataProvider */
+
+    /**
+     * @dataProvider reusedDataProvider
+     * @dataProvider testBarProvider
+     */
     public function testBar() {}
+
     public function reusedDataProvider() {}
 
     /** @dataProvider provideBazCases */
@@ -219,6 +237,8 @@ class FooTest extends TestCase {
     /** @dataProvider someDataProvider */
     public function testSomething() {}
     public function someDataProvider() {}
+    public function testFooProvider() {}
+    public function testBarProvider() {}
 }',
         ];
 
