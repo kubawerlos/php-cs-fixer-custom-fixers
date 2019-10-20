@@ -77,16 +77,7 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            /** @var int $operatorIndex */
-            $operatorIndex = $tokens->getPrevMeaningfulToken($index);
-
-            /** @var int $referenceIndex */
-            $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
-
-            if (!($tokens[$operatorIndex]->isGivenKind(T_OBJECT_OPERATOR) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this'], false))
-                && !($tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->equals([T_STRING, 'self'], false))
-                && !($tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->isGivenKind(T_STATIC))
-            ) {
+            if (!$this->isTheSameClassCall($tokens, $index)) {
                 continue;
             }
 
@@ -116,5 +107,18 @@ class FooTest extends TestCase {
             $tokens->clearRange($returnIndex, $semicolonAfterReturnIndex - 1);
             TokenRemover::removeWithLinesIfPossible($tokens, $semicolonAfterReturnIndex);
         }
+    }
+
+    private function isTheSameClassCall(Tokens $tokens, int $index): bool
+    {
+        /** @var int $operatorIndex */
+        $operatorIndex = $tokens->getPrevMeaningfulToken($index);
+
+        /** @var int $referenceIndex */
+        $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
+
+        return $tokens[$operatorIndex]->isGivenKind(T_OBJECT_OPERATOR) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this'], false)
+            || $tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->equals([T_STRING, 'self'], false)
+            || $tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->isGivenKind(T_STATIC);
     }
 }

@@ -277,12 +277,12 @@ class Bar {
 
         yield [
             '<?php
-                namespace N1;   new \DateTime();
-                namespace N2;   new \DateTime();
-                namespace N3;   new \DateTime();
-                namespace N4;   new \DateTime();
-                namespace N5;   new \DateTime();
-                namespace N6;   new \DateTime();
+                namespace N1;  new \DateTime();
+                namespace N2;  new \DateTime();
+                namespace N3;  new \DateTime();
+                namespace N4;  new \DateTime();
+                namespace N5;  new \DateTime();
+                namespace N6;  new \DateTime();
             ',
             '<?php
                 namespace N1; use DateTime; new DateTime();
