@@ -60,32 +60,16 @@ class Bar {
             $token = $tokens[$index];
 
             if ($token->isGivenKind(T_USE)) {
-                /** @var int $classNameIndex */
-                $classNameIndex = $tokens->getNextMeaningfulToken($index);
+                $imports = $this->removeImportFromGlobalNamespace($tokens, $imports, $index);
+                continue;
+            }
 
-                if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
-                    /** @var int $classNameIndex */
-                    $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
-                }
-                /** @var int $semicolonIndex */
-                $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
-                if ($tokens[$semicolonIndex]->getContent() === ';') {
-                    $imports[] = $tokens[$classNameIndex]->getContent();
-                    $tokens->clearRange($index, $semicolonIndex);
-                    TokenRemover::removeWithLinesIfPossible($tokens, $semicolonIndex);
-                    $index = $semicolonIndex + 1;
-                }
+            if ($isInGlobalNamespace) {
                 continue;
             }
 
             if ($token->isGivenKind(T_DOC_COMMENT)) {
-                $content = $token->getContent();
-                foreach ($imports as $import) {
-                    $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
-                }
-                if ($content !== $token->getContent()) {
-                    $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
-                }
+                $this->updateComment($tokens, $imports, $index);
                 continue;
             }
 
@@ -93,19 +77,55 @@ class Bar {
                 continue;
             }
 
-            if (!\in_array($token->getContent(), $imports, true)) {
-                continue;
-            }
-
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if ($tokens[$prevIndex]->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
-                continue;
-            }
-
-            if (!$isInGlobalNamespace) {
-                $tokens->insertAt($index, new Token([T_NS_SEPARATOR, '\\']));
-                $index++;
-            }
+            $this->updateUsage($tokens, $imports, $index);
         }
+    }
+
+    private function removeImportFromGlobalNamespace(Tokens $tokens, array $imports, int $index): array
+    {
+        /** @var int $classNameIndex */
+        $classNameIndex = $tokens->getNextMeaningfulToken($index);
+
+        if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
+            /** @var int $classNameIndex */
+            $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+        }
+
+        /** @var int $semicolonIndex */
+        $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+        if ($tokens[$semicolonIndex]->getContent() === ';') {
+            $imports[] = $tokens[$classNameIndex]->getContent();
+            $tokens->clearRange($index, $semicolonIndex);
+            TokenRemover::removeWithLinesIfPossible($tokens, $semicolonIndex);
+        }
+
+        return $imports;
+    }
+
+    private function updateComment(Tokens $tokens, array $imports, int $index): void
+    {
+        $content = $tokens[$index]->getContent();
+
+        foreach ($imports as $import) {
+            $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
+        }
+
+        if ($content !== $tokens[$index]->getContent()) {
+            $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
+        }
+    }
+
+    private function updateUsage(Tokens $tokens, array $imports, int $index): void
+    {
+        if (!\in_array($tokens[$index]->getContent(), $imports, true)) {
+            return;
+        }
+
+        $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        if ($tokens[$prevIndex]->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
+            return;
+        }
+
+        $tokens->insertAt($index, new Token([T_NS_SEPARATOR, '\\']));
     }
 }
