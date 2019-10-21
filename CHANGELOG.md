@@ -1,8 +1,9 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v2.1.0 - [Unreleased]
 - Add CommentedOutFunctionFixer
 - Add NoDuplicatedArrayKeyFixer
+- Add NumericLiteralSeparatorFixer
 
 ## v2.0.0 - *2020-03-01*
 - Drop PHP 7.1 support

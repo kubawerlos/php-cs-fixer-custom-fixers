@@ -137,6 +137,10 @@ return PhpCsFixer\Config::create()
                 return $carry;
             }
 
+            if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\NoNullableBooleanTypeFixer) {
+                return $carry;
+            }
+
             if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\NoReferenceInFunctionDefinitionFixer) {
                 return $carry;
             }
@@ -156,6 +160,7 @@ return PhpCsFixer\Config::create()
                     'implements',
                     'internal',
                     'param',
+                    'requires',
                     'return',
                     'var',
                 ]];
