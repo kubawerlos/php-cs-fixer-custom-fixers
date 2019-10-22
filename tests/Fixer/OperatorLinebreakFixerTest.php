@@ -213,6 +213,7 @@ return $foo
 return $foo +
     $bar;
 ',
+            ['only_booleans' => false],
         ];
 
         yield 'handle uppercase operator' => [
