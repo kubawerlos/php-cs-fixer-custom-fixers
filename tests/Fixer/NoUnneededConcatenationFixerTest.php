@@ -95,5 +95,22 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
                 $f = "f" . "f";
             ',
         ];
+
+        yield [
+            '<?php
+                "ab";
+                $c . "d";
+                "f"/* f */ . "g";
+                "h" . $i;
+                "j"./** k */"l";
+            ',
+            '<?php
+                "a" . "b";
+                $c . "d";
+                "f"/* f */ . "g";
+                "h" . $i;
+                "j"./** k */"l";
+            ',
+        ];
     }
 }
