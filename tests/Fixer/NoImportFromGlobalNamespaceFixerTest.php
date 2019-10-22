@@ -282,7 +282,7 @@ class Bar {
                 namespace N3;  new \DateTime();
                 namespace N4;  new \DateTime();
                 namespace N5;  new \DateTime();
-                namespace N6;  new \DateTime();
+                namespace N6;   new \DateTime(); new \stdClass();
             ',
             '<?php
                 namespace N1; use DateTime; new DateTime();
@@ -290,7 +290,7 @@ class Bar {
                 namespace N3; use DateTime; new DateTime();
                 namespace N4; use DateTime; new DateTime();
                 namespace N5; use DateTime; new DateTime();
-                namespace N6; use DateTime; new DateTime();
+                namespace N6; use DateTime; use stdClass; new DateTime(); new stdClass();
             ',
         ];
     }
