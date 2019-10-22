@@ -84,8 +84,12 @@ abstract class AbstractFixerTestCase extends TestCase
         static::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
 
-    final protected function doTest(string $expected, ?string $input = null): void
+    final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
     {
+        if ($configuration !== null) {
+            $this->fixer->configure($configuration);
+        }
+
         if ($expected === $input) {
             throw new \InvalidArgumentException('Expected must be different to input.');
         }
