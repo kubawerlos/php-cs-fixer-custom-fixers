@@ -44,8 +44,7 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->fixer->configure($configuration);
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     public function provideFixCases(): iterable
@@ -214,6 +213,7 @@ return $foo
 return $foo +
     $bar;
 ',
+            ['only_booleans' => false],
         ];
 
         yield 'handle uppercase operator' => [

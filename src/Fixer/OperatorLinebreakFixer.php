@@ -19,11 +19,19 @@ use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
 
 final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatingFixerInterface
 {
+    private const BOOLEAN_OPERATORS = [[T_BOOLEAN_AND], [T_BOOLEAN_OR], [T_LOGICAL_AND], [T_LOGICAL_OR], [T_LOGICAL_XOR]];
+    private const NON_BOOLEAN_OPERATORS = ['%', '&', '*', '+', '-', '.', '/', ':', '<', '=', '>', '?', '^', '|', [T_AND_EQUAL], [T_COALESCE], [T_CONCAT_EQUAL], [T_DIV_EQUAL], [T_DOUBLE_ARROW], [T_IS_EQUAL], [T_IS_GREATER_OR_EQUAL], [T_IS_IDENTICAL], [T_IS_NOT_EQUAL], [T_IS_NOT_IDENTICAL], [T_IS_SMALLER_OR_EQUAL], [T_MINUS_EQUAL], [T_MOD_EQUAL], [T_MUL_EQUAL], [T_OBJECT_OPERATOR], [T_OR_EQUAL], [T_PAAMAYIM_NEKUDOTAYIM], [T_PLUS_EQUAL], [T_POW], [T_POW_EQUAL], [T_SL], [T_SL_EQUAL], [T_SPACESHIP], [T_SR], [T_SR_EQUAL], [T_XOR_EQUAL]];
+
     /** @var string */
     private $position = 'beginning';
 
     /** @var array<array<int|string>|string> */
     private $operators = [];
+
+    public function __construct()
+    {
+        $this->operators = \array_merge(self::BOOLEAN_OPERATORS, self::NON_BOOLEAN_OPERATORS);
+    }
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -54,54 +62,8 @@ function foo() {
 
     public function configure(?array $configuration = null): void
     {
-        $this->operators = [[T_BOOLEAN_AND], [T_BOOLEAN_OR], [T_LOGICAL_AND], [T_LOGICAL_OR], [T_LOGICAL_XOR]];
-
-        if (!isset($configuration['only_booleans']) || $configuration['only_booleans'] === false) {
-            $this->operators = \array_merge(
-                $this->operators,
-                [
-                    '%',
-                    '&',
-                    '*',
-                    '+',
-                    '-',
-                    '.',
-                    '/',
-                    ':',
-                    '<',
-                    '=',
-                    '>',
-                    '?',
-                    '^',
-                    '|',
-                    [T_AND_EQUAL],
-                    [T_COALESCE],
-                    [T_CONCAT_EQUAL],
-                    [T_DIV_EQUAL],
-                    [T_DOUBLE_ARROW],
-                    [T_IS_EQUAL],
-                    [T_IS_GREATER_OR_EQUAL],
-                    [T_IS_IDENTICAL],
-                    [T_IS_NOT_EQUAL],
-                    [T_IS_NOT_IDENTICAL],
-                    [T_IS_SMALLER_OR_EQUAL],
-                    [T_MINUS_EQUAL],
-                    [T_MOD_EQUAL],
-                    [T_MUL_EQUAL],
-                    [T_OBJECT_OPERATOR],
-                    [T_OR_EQUAL],
-                    [T_PAAMAYIM_NEKUDOTAYIM],
-                    [T_PLUS_EQUAL],
-                    [T_POW],
-                    [T_POW_EQUAL],
-                    [T_SL],
-                    [T_SL_EQUAL],
-                    [T_SPACESHIP],
-                    [T_SR],
-                    [T_SR_EQUAL],
-                    [T_XOR_EQUAL],
-                ]
-            );
+        if (isset($configuration['only_booleans']) && $configuration['only_booleans'] === true) {
+            $this->operators = self::BOOLEAN_OPERATORS;
         }
 
         $this->position = $configuration['position'] ?? $this->position;

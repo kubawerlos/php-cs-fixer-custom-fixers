@@ -39,9 +39,7 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->fixer->configure($configuration);
-
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     public function provideFixCases(): iterable
