@@ -31,18 +31,15 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
         return false;
     }
 
+    public function getPriority(): int
+    {
+        return -1;
+    }
+
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        for ($index = 0; $index < $tokens->count(); $index++) {
-            if ($tokens[$index]->getContent() !== '.') {
-                continue;
-            }
-
-            if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index - 1]->getContent()) === 1) {
-                continue;
-            }
-
-            if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index + 1]->getContent()) === 1) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if (!$tokens[$index]->equals('.')) {
                 continue;
             }
 
@@ -51,26 +48,47 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
             if (!$tokens[$prevIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
-            $prevStringBorder = $tokens[$prevIndex]->getContent()[0];
+            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $prevIndex, $index)) {
+                continue;
+            }
 
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
             if (!$tokens[$nextIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
-
-            if ($prevStringBorder !== $tokens[$nextIndex]->getContent()[0]) {
+            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $nextIndex)) {
                 continue;
             }
 
-            $tokens[$prevIndex] = new Token([T_CONSTANT_ENCAPSED_STRING, \substr($tokens[$prevIndex]->getContent(), 0, -1) . \substr($tokens[$nextIndex]->getContent(), 1)]);
-            for ($i = $prevIndex + 1; $i <= $nextIndex; $i++) {
-                $tokens->clearAt($i);
-            }
+            $this->fixConcat($tokens, $prevIndex, $nextIndex);
         }
     }
 
-    public function getPriority(): int
+    private function areOnlyHorizontalWhitespacesBetween(Tokens $tokens, int $indexStart, int $indexEnd): bool
     {
-        return -1;
+        for ($index = $indexStart + 1; $index < $indexEnd; $index++) {
+            if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
+                return false;
+            }
+            if (Preg::match('/\R/', $tokens[$index]->getContent()) === 1) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private function fixConcat(Tokens $tokens, int $prevIndex, int $nextIndex): void
+    {
+        if ($tokens[$prevIndex]->getContent()[0] !== $tokens[$nextIndex]->getContent()[0]) {
+            return;
+        }
+
+        $tokens->overrideRange(
+            $prevIndex,
+            $nextIndex,
+            [new Token([T_CONSTANT_ENCAPSED_STRING, \substr($tokens[$prevIndex]->getContent(), 0, -1) . \substr($tokens[$nextIndex]->getContent(), 1)])]
+        );
     }
 }
