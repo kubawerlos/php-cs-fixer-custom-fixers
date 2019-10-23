@@ -21,6 +21,13 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         );
     }
 
+    public function getPriority(): int
+    {
+        // Must be run after MultilineCommentOpeningClosingFixer and NoTrailingWhitespaceInCommentFixer
+        // Must be run before PhpdocTrimFixer
+        return -1;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
@@ -38,45 +45,57 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
                 continue;
             }
 
-            $content = $token->getContent();
-
-            if (Preg::match('/\R/', $content) !== 1) {
+            if (Preg::match('/\R/', $token->getContent()) !== 1) {
                 continue;
             }
 
-            $toFixOpening = Preg::match('#^/\*+\R#', $content) !== 1;
-            $toFixClosing = Preg::match('#\R\h*\*+/$#', $content) !== 1;
-
-            if (!$toFixOpening && !$toFixClosing) {
-                continue;
-            }
-
-            Preg::match('#\R(\h*)#', $content, $matches);
-            $indent = $matches[1];
-
-            if ($toFixOpening) {
-                Preg::match('#^(/\*+)(.*?)(\R)(.*)$#s', $content, $matches);
-                if ($matches === []) {
-                    continue;
-                }
-                if ($matches[2][0] === '/') {
-                    $matches[2] = ' ' . $matches[2];
-                }
-                $content = $matches[1] . $matches[3] . $indent . '*' . $matches[2] . $matches[3] . $matches[4];
-            }
-
-            if ($toFixClosing) {
-                $content = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $content);
-            }
-
-            $tokens[$index] = new Token([$token->getId(), $content]);
+            $this->fixOpening($tokens, $index);
+            $this->fixClosing($tokens, $index);
         }
     }
 
-    public function getPriority(): int
+    private function fixOpening(Tokens $tokens, int $index): void
     {
-        // Must be run after MultilineCommentOpeningClosingFixer and NoTrailingWhitespaceInCommentFixer
-        // Must be run before PhpdocTrimFixer
-        return -1;
+        $token = $tokens[$index];
+
+        if (Preg::match('#^/\*+\R#', $token->getContent()) === 1) {
+            return;
+        }
+
+        Preg::match('#\R(\h*)#', $token->getContent(), $matches);
+        $indent = $matches[1];
+
+        Preg::match('#^(/\*+)(.*?)(\R)(.*)$#s', $token->getContent(), $matches);
+        if ($matches === []) {
+            return;
+        }
+
+        if ($matches[2][0] === '/') {
+            $matches[2] = ' ' . $matches[2];
+        }
+
+        $newContent = $matches[1] . $matches[3] . $indent . '*' . $matches[2] . $matches[3] . $matches[4];
+
+        if ($newContent !== $token->getContent()) {
+            $tokens[$index] = new Token([$token->getId(), $newContent]);
+        }
+    }
+
+    private function fixClosing(Tokens $tokens, int $index): void
+    {
+        $token = $tokens[$index];
+
+        if (Preg::match('#\R\h*\*+/$#', $token->getContent()) === 1) {
+            return;
+        }
+
+        Preg::match('#\R(\h*)#', $token->getContent(), $matches);
+        $indent = $matches[1];
+
+        $newContent = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $token->getContent());
+
+        if ($newContent !== $token->getContent()) {
+            $tokens[$index] = new Token([$token->getId(), $newContent]);
+        }
     }
 }
