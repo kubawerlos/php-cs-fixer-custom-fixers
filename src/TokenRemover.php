@@ -32,32 +32,42 @@ final class TokenRemover
 
     private static function isTokenOnlyMeaningfulInLine(Tokens $tokens, int $index): bool
     {
+        return !self::hasMeaningTokenInLineBefore($tokens, $index) && !self::hasMeaningTokenInLineAfter($tokens, $index);
+    }
+
+    private static function hasMeaningTokenInLineBefore(Tokens $tokens, int $index): bool
+    {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getNonEmptySibling($index, -1);
         if (!$tokens[$prevIndex]->isGivenKind([T_OPEN_TAG, T_WHITESPACE])) {
-            return false;
+            return true;
         }
 
         if ($tokens[$prevIndex]->isGivenKind(T_OPEN_TAG) && Preg::match('/\R$/', $tokens[$prevIndex]->getContent()) !== 1) {
-            return false;
+            return true;
         }
 
         if (Preg::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
             $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
             if (!$tokens[$prevPrevIndex]->isGivenKind(T_OPEN_TAG) || Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
-                return false;
+                return true;
             }
         }
 
+        return false;
+    }
+
+    private static function hasMeaningTokenInLineAfter(Tokens $tokens, int $index): bool
+    {
         $nextIndex = $tokens->getNonEmptySibling($index, 1);
         if ($nextIndex === null) {
-            return true;
-        }
-        if (!$tokens[$nextIndex]->isGivenKind(T_WHITESPACE)) {
             return false;
         }
+        if (!$tokens[$nextIndex]->isGivenKind(T_WHITESPACE)) {
+            return true;
+        }
 
-        return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) === 1;
+        return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) !== 1;
     }
 
     private static function handleWhitespaceBefore(Tokens $tokens, int $index): bool
