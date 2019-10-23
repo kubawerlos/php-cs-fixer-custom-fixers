@@ -56,6 +56,11 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php   $foo ;',
+            '<?php \ sprintf ( $foo ) ;',
+        ];
+
+        yield [
             '<?php $foo;',
             '<?php SPRINTF($foo);',
         ];
