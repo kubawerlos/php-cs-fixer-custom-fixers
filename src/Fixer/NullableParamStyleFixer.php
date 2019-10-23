@@ -45,6 +45,12 @@ function foo(int $x = null) {
         $this->style = $configuration['style'] ?? $this->style;
     }
 
+    public function getPriority(): int
+    {
+        // must be run before NoUnreachableDefaultArgumentValueFixer
+        return 1;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAllTokenKindsFound([T_FUNCTION]);
@@ -67,39 +73,45 @@ function foo(int $x = null) {
 
             $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 
-            for ($i = $paramBlockEndIndex; $i > $paramBlockStartIndex; $i--) {
-                if (!$tokens[$i]->equals([T_STRING, 'null'], false)) {
-                    continue;
-                }
-
-                /** @var int $variableIndex */
-                $variableIndex = $tokens->getPrevTokenOfKind($i, [[T_VARIABLE]]);
-
-                /** @var int $typeIndex */
-                $typeIndex = $tokens->getPrevMeaningfulToken($variableIndex);
-
-                if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_STRING])) {
-                    continue;
-                }
-
-                /** @var int $separatorIndex */
-                $separatorIndex = $tokens->getPrevTokenOfKind($typeIndex, ['(', ',']);
-
-                /** @var int $nullableIndex */
-                $nullableIndex = $tokens->getNextMeaningfulToken($separatorIndex);
-
-                if ($this->style === 'with_question_mark' && !$tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
-                    $tokens->insertAt($nullableIndex, new Token([CT::T_NULLABLE_TYPE, '?']));
-                } elseif ($this->style === 'without_question_mark' && $tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
-                    $tokens->clearAt($nullableIndex);
-                }
-            }
+            $this->fixFunction($tokens, $paramBlockStartIndex, $paramBlockEndIndex);
         }
     }
 
-    public function getPriority(): int
+    private function fixFunction(Tokens $tokens, int $paramBlockStartIndex, int $paramBlockEndIndex): void
     {
-        // must be run before NoUnreachableDefaultArgumentValueFixer
-        return 1;
+        for ($i = $paramBlockEndIndex; $i > $paramBlockStartIndex; $i--) {
+            if (!$tokens[$i]->equals([T_STRING, 'null'], false)) {
+                continue;
+            }
+
+            /** @var int $variableIndex */
+            $variableIndex = $tokens->getPrevTokenOfKind($i, [[T_VARIABLE]]);
+
+            /** @var int $typeIndex */
+            $typeIndex = $tokens->getPrevMeaningfulToken($variableIndex);
+
+            if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_STRING])) {
+                continue;
+            }
+
+            /** @var int $separatorIndex */
+            $separatorIndex = $tokens->getPrevTokenOfKind($typeIndex, ['(', ',']);
+
+            /** @var int $nullableIndex */
+            $nullableIndex = $tokens->getNextMeaningfulToken($separatorIndex);
+
+            if ($this->style === 'with_question_mark') {
+                if (!$tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
+                    $tokens->insertAt($nullableIndex, new Token([CT::T_NULLABLE_TYPE, '?']));
+                }
+                continue;
+            }
+
+            if (!$tokens[$nullableIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
+                continue;
+            }
+
+            $tokens->clearAt($nullableIndex);
+        }
     }
 }
