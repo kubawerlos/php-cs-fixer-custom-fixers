@@ -11,7 +11,7 @@
 
     <rule ref='rulesets/codesize.xml/CyclomaticComplexity'>
         <properties>
-            <property name='reportLevel' value='11' />
+            <property name='reportLevel' value='10' />
         </properties>
     </rule>
     <rule ref='rulesets/codesize.xml/ExcessiveMethodLength' />
