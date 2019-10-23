@@ -52,8 +52,8 @@ jobs:
                 cd $TRAVIS_BUILD_DIR
           install: composer require --dev php-coveralls/php-coveralls
           script:
-            - composer test -- --coverage-clover=./build/logs/clover.xml
-            - composer infection
+            - composer test -- --coverage-clover=./build/logs/clover.xml --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/phpunit.junit.xml
+            - composer infection -- --coverage=./build/coverage/
           after_success: ./vendor/bin/php-coveralls
 
         - php: '7.4snapshot'

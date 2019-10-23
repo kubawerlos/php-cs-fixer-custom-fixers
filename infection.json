@@ -2,8 +2,7 @@
     "$schema": "./dev-tools/vendor/infection/infection/resources/schema.json",
     "source": {
         "directories": [
-            "./src",
-            "./dev-tools/src"
+            "./src"
         ]
     },
     "timeout": 10,
