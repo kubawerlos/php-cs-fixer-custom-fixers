@@ -23,6 +23,11 @@ final class NoUselessSprintfFixer extends AbstractFixer
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_STRING);
@@ -56,24 +61,22 @@ final class NoUselessSprintfFixer extends AbstractFixer
                 continue;
             }
 
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
-                $tokens->clearAt($prevIndex);
+                $this->removeTokenAndSiblingWhitespace($tokens, $prevIndex, 1);
             }
-            $tokens->clearAt($index);
-            $tokens->clearAt($openParenthesis);
-            if ($tokens[$openParenthesis + 1]->isWhitespace()) {
-                $tokens->clearAt($openParenthesis + 1);
-            }
-            if ($tokens[$closeParenthesis - 1]->isWhitespace()) {
-                $tokens->clearAt($closeParenthesis - 1);
-            }
-            $tokens->clearAt($closeParenthesis);
+            $this->removeTokenAndSiblingWhitespace($tokens, $index, 1);
+            $this->removeTokenAndSiblingWhitespace($tokens, $openParenthesis, 1);
+            $this->removeTokenAndSiblingWhitespace($tokens, $closeParenthesis, -1);
         }
     }
 
-    public function getPriority(): int
+    private function removeTokenAndSiblingWhitespace(Tokens $tokens, int $index, int $direction): void
     {
-        return 0;
+        $tokens->clearAt($index);
+        if ($tokens[$index + $direction]->isWhitespace()) {
+            $tokens->clearAt($index + $direction);
+        }
     }
 }
