@@ -22,6 +22,11 @@ final class InternalClassCasingFixer extends AbstractFixer
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_STRING);
@@ -39,11 +44,6 @@ final class InternalClassCasingFixer extends AbstractFixer
         foreach ($namespaces as $namespace) {
             $this->fixCasing($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 
     private function fixCasing(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void

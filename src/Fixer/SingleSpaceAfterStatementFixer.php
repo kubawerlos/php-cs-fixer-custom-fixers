@@ -97,6 +97,11 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
         $this->allowLinebreak = $configuration['allow_linebreak'] ?? $this->allowLinebreak;
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound($this->tokens);
@@ -130,10 +135,5 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
             $tokens[$index + 1] = new Token([T_WHITESPACE, ' ']);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }

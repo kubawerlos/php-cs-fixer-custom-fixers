@@ -23,6 +23,12 @@ $y = new \Baz();
         );
     }
 
+    public function getPriority(): int
+    {
+        // must be run before PhpdocToCommentFixer
+        return 26;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_NS_SEPARATOR);
@@ -54,11 +60,5 @@ $y = new \Baz();
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }
         }
-    }
-
-    public function getPriority(): int
-    {
-        // must be run before PhpdocToCommentFixer
-        return 26;
     }
 }

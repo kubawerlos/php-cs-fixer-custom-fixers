@@ -37,6 +37,11 @@ class FooBar {}
         );
     }
 
+    public function getPriority(): int
+    {
+        return $this->fixer->getPriority();
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $this->fixer->isCandidate($tokens);
@@ -50,11 +55,6 @@ class FooBar {}
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         $this->fixer->fix($file, $tokens);
-    }
-
-    public function getPriority(): int
-    {
-        return $this->fixer->getPriority();
     }
 
     /**

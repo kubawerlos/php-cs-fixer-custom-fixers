@@ -37,15 +37,15 @@ class Foo {
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
-    {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
-    }
-
     public function getPriority(): int
     {
         // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer and PhpdocTrimFixer
         return 6;
+    }
+
+    public function isCandidate(Tokens $tokens): bool
+    {
+        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
     }
 
     public function isRisky(): bool

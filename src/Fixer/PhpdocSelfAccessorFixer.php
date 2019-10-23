@@ -31,6 +31,11 @@ class Foo {
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_CLASS, T_INTERFACE]) && $tokens->isTokenKindFound(T_DOC_COMMENT);
@@ -66,11 +71,6 @@ class Foo {
                 $index = $endIndex;
             }
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 
     private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $name, int $startIndex, int $endIndex): void

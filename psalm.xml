@@ -21,6 +21,7 @@
         <InvalidStringClass>
             <errorLevel type='suppress'>
                 <file name='./src/Fixers.php' />
+                <file name='./dev-tools/src/Fixers.php' />
             </errorLevel>
         </InvalidStringClass>
         <LoopInvalidation errorLevel='suppress' />

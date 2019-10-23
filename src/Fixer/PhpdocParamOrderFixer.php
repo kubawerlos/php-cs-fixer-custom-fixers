@@ -31,6 +31,11 @@ function foo($a, $b, $c) {}
         );
     }
 
+    public function getPriority(): int
+    {
+        return 5;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAllTokenKindsFound([T_DOC_COMMENT, T_FUNCTION]);
@@ -63,11 +68,6 @@ function foo($a, $b, $c) {}
 
             $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 5;
     }
 
     /**

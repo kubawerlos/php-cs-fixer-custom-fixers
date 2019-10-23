@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+require_once __DIR__ . '/dev-tools/vendor/autoload.php';
+
 return PhpCsFixer\Config::create()
     ->setFinder(
         PhpCsFixer\Finder::create()
@@ -17,6 +19,7 @@ return PhpCsFixer\Config::create()
     )
     ->setRiskyAllowed(true)
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
+    ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
     ->setRules([
         '@PHP71Migration' => true,
         '@PHP71Migration:risky' => true,
@@ -94,7 +97,6 @@ return PhpCsFixer\Config::create()
         'no_unset_on_property' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
-        'ordered_class_elements' => true,
         'ordered_imports' => [
             'sortAlgorithm' => 'alpha',
         ],
@@ -129,6 +131,10 @@ return PhpCsFixer\Config::create()
     ] + \array_reduce(
         \iterator_to_array(new PhpCsFixerCustomFixers\Fixers()),
         static function (array $carry, PhpCsFixer\Fixer\DefinedFixerInterface $fixer): array {
+            if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\NoReferenceInFunctionDefinitionFixer) {
+                return $carry;
+            }
+
             if (!$fixer instanceof PhpCsFixer\Fixer\DeprecatedFixerInterface) {
                 $carry[$fixer->getName()] = true;
             }
@@ -144,6 +150,14 @@ return PhpCsFixer\Config::create()
                     'var',
                 ]];
             }
+
+            return $carry;
+        },
+        []
+    ) + \array_reduce(
+        \iterator_to_array(new PhpCsFixerCustomFixersDev\Fixers()),
+        static function (array $carry, PhpCsFixer\Fixer\FixerInterface $fixer): array {
+            $carry[$fixer->getName()] = true;
 
             return $carry;
         },

@@ -28,6 +28,11 @@ use Bar;
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_USE);
@@ -60,11 +65,6 @@ use Bar;
                 $used[$useDeclaration->getFullName()] = true;
             }
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 
     private function removeUseDeclaration(Tokens $tokens, NamespaceUseAnalysis $useDeclaration): void

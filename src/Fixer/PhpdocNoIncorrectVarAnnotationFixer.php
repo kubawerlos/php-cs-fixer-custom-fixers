@@ -26,6 +26,12 @@ $bar = new Foo();
         );
     }
 
+    public function getPriority(): int
+    {
+        // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
+        return 6;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
@@ -74,12 +80,6 @@ $bar = new Foo();
 
             $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
         }
-    }
-
-    public function getPriority(): int
-    {
-        // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
-        return 6;
     }
 
     private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void

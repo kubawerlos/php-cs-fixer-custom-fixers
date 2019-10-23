@@ -21,6 +21,11 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
         );
     }
 
+    public function getPriority(): int
+    {
+        return -1;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAllTokenKindsFound(['.', T_CONSTANT_ENCAPSED_STRING]);
@@ -29,11 +34,6 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
     public function isRisky(): bool
     {
         return false;
-    }
-
-    public function getPriority(): int
-    {
-        return -1;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void

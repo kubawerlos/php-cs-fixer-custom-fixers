@@ -39,6 +39,11 @@ final class Version20180609123456 extends AbstractMigration
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
@@ -65,10 +70,5 @@ final class Version20180609123456 extends AbstractMigration
 
             TokenRemover::removeWithLinesIfPossible($tokens, $index);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }

@@ -28,6 +28,11 @@ class Foo {
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
@@ -61,10 +66,5 @@ class Foo {
 
             $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }

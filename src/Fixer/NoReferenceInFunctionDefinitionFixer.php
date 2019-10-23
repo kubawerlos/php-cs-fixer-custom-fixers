@@ -24,6 +24,11 @@ function foo(&$x) {}
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_FUNCTION]);
@@ -49,11 +54,6 @@ function foo(&$x) {}
                 }
             }
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 
     /**

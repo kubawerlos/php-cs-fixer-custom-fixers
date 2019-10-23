@@ -54,6 +54,12 @@ function foo_bar() {}
         $this->elements = $configuration['elements'] ?? $this->elements;
     }
 
+    public function getPriority(): int
+    {
+        // must be run before NoEmptyPhpdocFixer
+        return 6;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
@@ -89,11 +95,5 @@ function foo_bar() {}
 
             $tokens[$index] = new Token([T_DOC_COMMENT, $docBlock->getContent()]);
         }
-    }
-
-    public function getPriority(): int
-    {
-        // must be run before NoEmptyPhpdocFixer
-        return 6;
     }
 }

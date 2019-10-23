@@ -30,6 +30,11 @@ function foo($b, $s) {}
         );
     }
 
+    public function getPriority(): int
+    {
+        return 6;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAllTokenKindsFound([T_DOC_COMMENT, T_FUNCTION]);
@@ -38,11 +43,6 @@ function foo($b, $s) {}
     public function isRisky(): bool
     {
         return false;
-    }
-
-    public function getPriority(): int
-    {
-        return 6;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void

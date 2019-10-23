@@ -42,15 +42,15 @@ class FooTest extends TestCase {
         );
     }
 
-    public function isCandidate(Tokens $tokens): bool
-    {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT);
-    }
-
     public function getPriority(): int
     {
         // must be run before MethodArgumentSpaceFixer
         return 0;
+    }
+
+    public function isCandidate(Tokens $tokens): bool
+    {
+        return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
     public function isRisky(): bool

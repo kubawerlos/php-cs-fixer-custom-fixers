@@ -76,6 +76,11 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound($this->tokens);
@@ -114,10 +119,5 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 
             $tokens[$index - 1] = new Token([T_WHITESPACE, ' ']);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }

@@ -27,6 +27,13 @@ function a($foo, $bar) {}
         );
     }
 
+    public function getPriority(): int
+    {
+        // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
+        // must be run before PhpdocAlignFixer
+        return -2;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
@@ -60,12 +67,5 @@ function a($foo, $bar) {}
 
             $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
         }
-    }
-
-    public function getPriority(): int
-    {
-        // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
-        // must be run before PhpdocAlignFixer
-        return -2;
     }
 }

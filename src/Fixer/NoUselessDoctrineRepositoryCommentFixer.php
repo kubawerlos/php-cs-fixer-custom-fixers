@@ -28,6 +28,11 @@ class FooRepository extends EntityRepository {}
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
@@ -51,10 +56,5 @@ class FooRepository extends EntityRepository {}
 
             TokenRemover::removeWithLinesIfPossible($tokens, $index);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }
