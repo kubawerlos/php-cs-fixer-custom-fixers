@@ -83,6 +83,20 @@ final class NullableParamStyleFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php function foo(
+                int $x = null,
+                int $y = null,
+                string $z = NULL
+            ) {}',
+            '<?php function foo(
+                ?int $x = null,
+                int $y = null,
+                ?string $z = NULL
+            ) {}',
+            ['style' => 'without_question_mark'],
+        ];
+
+        yield [
             '<?php function foo(int $x = null) {}',
             null,
             ['style' => 'without_question_mark'],
