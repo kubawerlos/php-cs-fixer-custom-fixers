@@ -183,6 +183,10 @@ class Foo {
 namespace Some\Thing;
 interface Foo {
      /**
+      * @return Bar
+      */
+      public function init();
+     /**
       * @return self
       */
       public function getInstance();
@@ -190,6 +194,10 @@ interface Foo {
             '<?php
 namespace Some\Thing;
 interface Foo {
+     /**
+      * @return Bar
+      */
+      public function init();
      /**
       * @return Foo
       */
