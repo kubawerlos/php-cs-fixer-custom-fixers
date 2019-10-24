@@ -85,9 +85,6 @@ class FooTest extends TestCase {
 
             /** @var int $semicolonIndex */
             $semicolonIndex = $tokens->getNextMeaningfulToken($closingBraceIndex);
-            if (!$tokens[$semicolonIndex]->equals(';')) {
-                continue;
-            }
 
             /** @var int $returnIndex */
             $returnIndex = $tokens->getNextMeaningfulToken($semicolonIndex);
