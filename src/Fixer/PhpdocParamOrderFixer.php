@@ -61,7 +61,7 @@ function foo($a, $b, $c) {}
             $paramNames = $this->getParamNames($tokens, $functionIndex);
 
             $docBlock = new DocBlock($tokens[$index]->getContent());
-            $sorted = $this->getSortedDocComment($docBlock->getAnnotations(), $paramNames);
+            $sorted = $this->getSortedAnnotations($docBlock->getAnnotations(), $paramNames);
 
             foreach ($sorted as $annotationIndex => $annotationContent) {
                 /** @var Annotation $annotation */
@@ -101,7 +101,7 @@ function foo($a, $b, $c) {}
         return $paramNames;
     }
 
-    private function getSortedDocComment(array $annotations, array $paramNames): array
+    private function getSortedAnnotations(array $annotations, array $paramNames): array
     {
         $paramFound = false;
         $annotationsBeforeParams = [];
