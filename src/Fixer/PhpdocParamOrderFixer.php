@@ -31,6 +31,11 @@ function foo($a, $b, $c) {}
         );
     }
 
+    public function getPriority(): int
+    {
+        return 5;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAllTokenKindsFound([T_DOC_COMMENT, T_FUNCTION]);
@@ -55,19 +60,25 @@ function foo($a, $b, $c) {}
 
             $paramNames = $this->getParamNames($tokens, $functionIndex);
 
-            $newContent = $this->getSortedDocComment($tokens[$index]->getContent(), $paramNames);
+            $docBlock = new DocBlock($tokens[$index]->getContent());
+            $sorted = $this->getSortedAnnotations($docBlock->getAnnotations(), $paramNames);
 
-            if ($newContent === $tokens[$index]->getContent()) {
+            foreach ($sorted as $annotationIndex => $annotationContent) {
+                /** @var Annotation $annotation */
+                $annotation = $docBlock->getAnnotation($annotationIndex);
+                $annotation->remove();
+
+                /** @var Line $line */
+                $line = $docBlock->getLine($annotation->getStart());
+                $line->setContent($annotationContent);
+            }
+
+            if ($docBlock->getContent() === $tokens[$index]->getContent()) {
                 continue;
             }
 
-            $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
+            $tokens[$index] = new Token([T_DOC_COMMENT, $docBlock->getContent()]);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 5;
     }
 
     /**
@@ -90,25 +101,17 @@ function foo($a, $b, $c) {}
         return $paramNames;
     }
 
-    private function getSortedDocComment(string $comment, array $paramNames): string
+    private function getSortedAnnotations(array $annotations, array $paramNames): array
     {
-        $docBlock = new DocBlock($comment);
-        $firstParamIndex = null;
+        $paramFound = false;
         $annotationsBeforeParams = [];
         $paramsByName = \array_combine($paramNames, \array_fill(0, \count($paramNames), null));
         $superfluousParams = [];
         $annotationsAfterParams = [];
 
-        foreach ($docBlock->getAnnotations() as $index => $annotation) {
-            if ($firstParamIndex === null) {
-                if ($annotation->getTag()->getName() !== 'param') {
-                    $annotationsBeforeParams[] = $annotation->getContent();
-                    continue;
-                }
-                $firstParamIndex = $index;
-            }
-
+        foreach ($annotations as $annotation) {
             if ($annotation->getTag()->getName() === 'param') {
+                $paramFound = true;
                 foreach ($paramNames as $paramName) {
                     if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(\Q%s\E)\b/', $paramName), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
                         $paramsByName[$matches[1]] = $annotation->getContent();
@@ -119,21 +122,14 @@ function foo($a, $b, $c) {}
                 continue;
             }
 
-            $annotationsAfterParams[] = $annotation->getContent();
+            if ($paramFound) {
+                $annotationsAfterParams[] = $annotation->getContent();
+                continue;
+            }
+
+            $annotationsBeforeParams[] = $annotation->getContent();
         }
 
-        $sorted = \array_merge($annotationsBeforeParams, \array_values(\array_filter($paramsByName)), $superfluousParams, $annotationsAfterParams);
-
-        foreach ($sorted as $index => $annotationContent) {
-            /** @var Annotation $annotation */
-            $annotation = $docBlock->getAnnotation($index);
-            $annotation->remove();
-
-            /** @var Line $line */
-            $line = $docBlock->getLine($annotation->getStart());
-            $line->setContent($annotationContent);
-        }
-
-        return $docBlock->getContent();
+        return \array_merge($annotationsBeforeParams, \array_values(\array_filter($paramsByName)), $superfluousParams, $annotationsAfterParams);
     }
 }

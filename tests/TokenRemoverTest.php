@@ -30,9 +30,8 @@ final class TokenRemoverTest extends TestCase
         $tokens = Tokens::fromCode($input);
 
         foreach ($tokens as $index => $token) {
-            if ($token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if ($token->equals([T_COMMENT, '/* to remove */'])) {
                 TokenRemover::removeWithLinesIfPossible($tokens, $index);
-                break;
             }
         }
 
@@ -44,89 +43,69 @@ final class TokenRemoverTest extends TestCase
 
     public function provideFixCases(): iterable
     {
-        yield 'one-line comment after open tag' => [
+        yield 'after open tag' => [
             '<?php
 namespace Foo;
 ',
             '<?php
-// Some comment
-namespace Foo;
-',
-        ];
-
-        yield 'PHPDoc after open tag' => [
-            '<?php
-namespace Foo;
-',
-            '<?php
-/**
- * Some comment
- */
+/* to remove */
 namespace Foo;
 ',
         ];
 
-        yield 'single empty line before PHPDoc' => [
+        yield 'with single empty line before' => [
             '<?php
 
 namespace Foo;
 ',
             '<?php
 
-/**
- * Some comment
- */
-namespace Foo;
-',
-        ];
-
-        yield 'multiple empty lines before PHPDoc' => [
-            '<?php
-
-
-namespace Foo;
-',
-            '<?php
-
-
-/**
- * Some comment
- */
+/* to remove */
 namespace Foo;
 ',
         ];
 
-        yield 'single empty line after PHPDoc' => [
+        yield 'with multiple empty lines before' => [
+            '<?php
+
+
+namespace Foo;
+',
+            '<?php
+
+
+/* to remove */
+namespace Foo;
+',
+        ];
+
+        yield 'with single empty line after' => [
             '<?php
 
 namespace Foo;
 ',
             '<?php
-/**
- * Some comment
- */
+/* to remove */
 
 namespace Foo;
 ',
         ];
 
-        yield 'multiple empty lines after PHPDoc' => [
+        yield 'with multiple empty lines after' => [
             '<?php
 
 
 namespace Foo;
 ',
             '<?php
-/**
- * Some comment
- */
+/* to remove */
 
 
 namespace Foo;
 ',
         ];
 
-        yield 'indented one-line comment' => [
+        yield 'indented' => [
             '<?php
 
 
@@ -134,23 +113,7 @@ namespace Foo;
 ',
             '<?php
 
-    // Some comment
-
-    namespace Foo;
-',
-        ];
-
-        yield 'indented PHPDoc' => [
-            '<?php
-
-
-    namespace Foo;
-',
-            '<?php
-
-    /**
-     * Some comment
-     */
+    /* to remove */
 
     namespace Foo;
 ',
@@ -161,76 +124,85 @@ namespace Foo;
                 namespace Foo;
 ',
             '<?php
-                /**
-                 * Some comment
-                 */
+                /* to remove */
                 namespace Foo;
 ',
         ];
 
-        yield 'code after PHPDoc' => [
+        yield 'with code after' => [
             '<?php
 namespace Foo;
 ',
             '<?php
-/** Some comment */namespace Foo;
+/* to remove */namespace Foo;
 ',
         ];
 
-        yield 'spaces and code after PHPDoc' => [
+        yield 'with spaces and code after' => [
             '<?php
     namespace Foo;
 ',
             '<?php
-/** Some comment */    namespace Foo;
+/* to remove */    namespace Foo;
 ',
         ];
 
-        yield 'code and space before comment' => [
+        yield 'with open tag before' => [
             '<?php 
 foo();
 ',
-            '<?php // Foo
+            '<?php /* to remove */
 foo();
 ',
         ];
 
-        yield 'comment after open tag with only spaces' => [
+        yield 'with open tag and spaces before' => [
             '<?php    
 foo();
 ',
-            '<?php    // Foo
+            '<?php    /* to remove */
 foo();
 ',
         ];
 
-        yield 'code before comment' => [
+        yield 'with code before' => [
             '<?php
             foo();
             bar();
             ',
             '<?php
-            foo();// Foo
+            foo();/* to remove */
             bar();
             ',
         ];
 
-        yield 'comment as last token' => [
+        yield 'as last token' => [
             '<?php
 ',
             '<?php
 
-// Some comment',
+/* to remove */',
         ];
 
-        yield 'comment with newlines after token' => [
+        yield 'with comment with newlines before' => [
             '<?php
-/* 
-    second comment */
+/* other comment 
+ */
 ',
             '<?php
-/* first comment *//* 
-    second comment */
+/* other comment 
+ *//* to remove */
+',
+        ];
+
+        yield 'with comment with newlines after' => [
+            '<?php
+/* 
+    other comment */
+',
+            '<?php
+/* to remove *//* 
+    other comment */
 ',
         ];
     }
