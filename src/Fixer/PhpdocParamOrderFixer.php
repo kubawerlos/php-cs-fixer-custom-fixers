@@ -122,12 +122,12 @@ function foo($a, $b, $c) {}
                 continue;
             }
 
-            if (!$paramFound) {
-                $annotationsBeforeParams[] = $annotation->getContent();
+            if ($paramFound) {
+                $annotationsAfterParams[] = $annotation->getContent();
                 continue;
             }
 
-            $annotationsAfterParams[] = $annotation->getContent();
+            $annotationsBeforeParams[] = $annotation->getContent();
         }
 
         return \array_merge($annotationsBeforeParams, \array_values(\array_filter($paramsByName)), $superfluousParams, $annotationsAfterParams);
