@@ -29,6 +29,11 @@ namespace Foo;
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
@@ -52,10 +57,5 @@ namespace Foo;
 
             TokenRemover::removeWithLinesIfPossible($tokens, $index);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }

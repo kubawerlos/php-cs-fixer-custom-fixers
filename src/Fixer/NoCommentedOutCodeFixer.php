@@ -22,6 +22,12 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         );
     }
 
+    public function getPriority(): int
+    {
+        // must be run before NoUnusedImportsFixer
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
@@ -30,12 +36,6 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     public function isRisky(): bool
     {
         return false;
-    }
-
-    public function getPriority(): int
-    {
-        // must be run before NoUnusedImportsFixer
-        return 0;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void

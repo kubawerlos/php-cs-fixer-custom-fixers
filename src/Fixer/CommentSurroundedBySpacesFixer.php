@@ -23,6 +23,12 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
         );
     }
 
+    public function getPriority(): int
+    {
+        // Must be run after MultilineCommentOpeningClosingFixer
+        return -1;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
@@ -56,11 +62,5 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
 
             $tokens[$index] = new Token([\strpos($newContent, '/** ') === 0 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
         }
-    }
-
-    public function getPriority(): int
-    {
-        // Must be run after MultilineCommentOpeningClosingFixer
-        return -1;
     }
 }

@@ -26,6 +26,12 @@ final class SingleLineThrowFixer extends AbstractFixer implements DeprecatingFix
         );
     }
 
+    public function getPriority(): int
+    {
+        // must be fun before ConcatSpaceFixer and NoUnneededConcatenationFixer
+        return 1;
+    }
+
     public function getPullRequestId(): int
     {
         return 4452;
@@ -59,12 +65,6 @@ final class SingleLineThrowFixer extends AbstractFixer implements DeprecatingFix
 
             $this->trimNewLines($tokens, $index, $openingBraceCandidateIndex);
         }
-    }
-
-    public function getPriority(): int
-    {
-        // must be fun before ConcatSpaceFixer and NoUnneededConcatenationFixer
-        return 1;
     }
 
     /**

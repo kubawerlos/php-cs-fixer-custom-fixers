@@ -26,6 +26,11 @@ function foo(?bool $bar) : ?bool
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_STRING);
@@ -57,10 +62,5 @@ function foo(?bool $bar) : ?bool
 
             $tokens->clearTokenAndMergeSurroundingWhitespace($index);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 }

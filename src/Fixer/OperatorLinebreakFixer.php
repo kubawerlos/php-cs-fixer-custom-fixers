@@ -69,16 +69,6 @@ function foo() {
         $this->position = $configuration['position'] ?? $this->position;
     }
 
-    public function isCandidate(Tokens $tokens): bool
-    {
-        return true;
-    }
-
-    public function isRisky(): bool
-    {
-        return false;
-    }
-
     public function getPriority(): int
     {
         return 0;
@@ -87,6 +77,16 @@ function foo() {
     public function getPullRequestId(): int
     {
         return 4021;
+    }
+
+    public function isCandidate(Tokens $tokens): bool
+    {
+        return true;
+    }
+
+    public function isRisky(): bool
+    {
+        return false;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void

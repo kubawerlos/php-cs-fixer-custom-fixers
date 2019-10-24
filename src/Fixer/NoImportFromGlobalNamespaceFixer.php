@@ -30,6 +30,11 @@ class Bar {
         );
     }
 
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_USE);
@@ -38,11 +43,6 @@ class Bar {
     public function isRisky(): bool
     {
         return false;
-    }
-
-    public function getPriority(): int
-    {
-        return 0;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
