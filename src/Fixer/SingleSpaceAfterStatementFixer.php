@@ -86,8 +86,8 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('allow_linebreak', 'whether to allow statement followed by linebreak'))
-                ->setDefault($this->allowLinebreak)
                 ->setAllowedTypes(['bool'])
+                ->setDefault($this->allowLinebreak)
                 ->getOption(),
         ]);
     }
@@ -119,21 +119,29 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
                 continue;
             }
 
-            if (!$tokens[$index + 1]->isGivenKind(T_WHITESPACE)) {
-                if ($token->isGivenKind(T_CLASS) && $tokens[$index + 1]->getContent() === '(') {
-                    continue;
-                }
-                if (!\in_array($tokens[$index + 1]->getContent(), [';', ':'], true)) {
-                    $tokens->insertAt($index + 1, new Token([T_WHITESPACE, ' ']));
-                }
+            if (!$this->canAddSpaceAfter($tokens, $index)) {
                 continue;
             }
 
-            if ($this->allowLinebreak && Preg::match('/\R/', $tokens[$index + 1]->getContent()) === 1) {
+            if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE)) {
+                $tokens[$index + 1] = new Token([T_WHITESPACE, ' ']);
                 continue;
             }
 
-            $tokens[$index + 1] = new Token([T_WHITESPACE, ' ']);
+            $tokens->insertAt($index + 1, new Token([T_WHITESPACE, ' ']));
         }
+    }
+
+    private function canAddSpaceAfter(Tokens $tokens, int $index): bool
+    {
+        if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE)) {
+            return !$this->allowLinebreak || Preg::match('/\R/', $tokens[$index + 1]->getContent()) !== 1;
+        }
+
+        if ($tokens[$index]->isGivenKind(T_CLASS) && $tokens[$index + 1]->getContent() === '(') {
+            return false;
+        }
+
+        return !\in_array($tokens[$index + 1]->getContent(), [';', ':'], true);
     }
 }

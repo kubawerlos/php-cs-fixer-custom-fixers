@@ -34,7 +34,7 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
 
         public function isCandidate(Tokens $tokens): bool
         {
-            return $this->orderedClassElementsFixer->isCandidate($tokens);
+            return $tokens->findSequence([[T_EXTENDS], [T_STRING, 'AbstractFixer']]) !== null;
         }
 
         public function isRisky(): bool

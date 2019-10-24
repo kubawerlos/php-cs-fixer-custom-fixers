@@ -34,9 +34,9 @@ final class SingleSpaceBeforeStatementFixerTest extends AbstractFixerTestCase
 
     public function provideFixCases(): iterable
     {
-        yield ['<?php !include "foo.php";'];
+        yield ['<?php $isNotFoo = !require "foo.php";'];
         yield ['<?php foo(new stdClass());'];
-        yield ['<?php @include "foo.php";'];
+        yield ['<?php $content = @include "foo.php";'];
         yield ['<?php $items = [new Item(), new Item()];'];
         yield ['<?php class Foo {public function bar() {}}'];
         yield ['<?php foo(
@@ -73,6 +73,16 @@ final class SingleSpaceBeforeStatementFixerTest extends AbstractFixerTestCase
                 $baz = 
                        new Baz();
             ',
+        ];
+
+        yield [
+            '<?php $items = [new Item(), new Item()]; ?> and <?php class Foo { public function bar() {} } ?>',
+            '<?php $items = [new Item(),new Item()]; ?> and <?php class Foo { public    function bar() {} } ?>',
+        ];
+
+        yield [
+            '<?php $items = [new Item(), new Item()]; ?> and <?php /* class: */class Foo { public function bar() {} } ?>',
+            '<?php $items = [new Item(),new Item()]; ?> and <?php /* class: */class Foo { public    function bar() {} } ?>',
         ];
     }
 }

@@ -98,26 +98,38 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
                 continue;
             }
 
-            if (!$tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
-                if (!\in_array($tokens[$index - 1]->getContent(), ['!', '(', '@', '[', '{'], true) && !$tokens[$index - 1]->isGivenKind(T_OPEN_TAG)) {
-                    $tokens->insertAt($index, new Token([T_WHITESPACE, ' ']));
-                }
-                continue;
-            }
-
-            if (Preg::match('/\R/', $tokens[$index - 1]->getContent()) === 1) {
+            if ($tokens[$index - 1]->isGivenKind(T_OPEN_TAG)) {
                 continue;
             }
 
             if ($tokens[$index - 2]->isGivenKind(T_OPEN_TAG)) {
-                if (Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
-                    $tokens->clearAt($index - 1);
-                }
-
-                return;
+                $this->fixTwoTokensAfterOpenTag($tokens, $index);
+                continue;
             }
 
-            $tokens[$index - 1] = new Token([T_WHITESPACE, ' ']);
+            $this->fixMoreThanTwoTokensAfterOpenTag($tokens, $index);
+        }
+    }
+
+    private function fixTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
+    {
+        if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
+            $tokens->clearAt($index - 1);
+        }
+    }
+
+    private function fixMoreThanTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
+    {
+        if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
+            if (Preg::match('/\R/', $tokens[$index - 1]->getContent()) !== 1) {
+                $tokens[$index - 1] = new Token([T_WHITESPACE, ' ']);
+            }
+
+            return;
+        }
+
+        if (!\in_array($tokens[$index - 1]->getContent(), ['!', '(', '@', '[', '{'], true)) {
+            $tokens->insertAt($index, new Token([T_WHITESPACE, ' ']));
         }
     }
 }
