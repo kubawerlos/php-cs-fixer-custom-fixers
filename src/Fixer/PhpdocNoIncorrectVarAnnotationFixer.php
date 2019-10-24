@@ -26,6 +26,12 @@ $bar = new Foo();
         );
     }
 
+    public function getPriority(): int
+    {
+        // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
+        return 6;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
@@ -39,11 +45,7 @@ $bar = new Foo();
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind(T_DOC_COMMENT)) {
-                continue;
-            }
-
-            if (\stripos($token->getContent(), '@var') === false) {
+            if (!$this->isTokenCandidate($token)) {
                 continue;
             }
 
@@ -76,10 +78,9 @@ $bar = new Foo();
         }
     }
 
-    public function getPriority(): int
+    private function isTokenCandidate(Token $token): bool
     {
-        // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer and NoWhitespaceInBlankLineFixer
-        return 6;
+        return $token->isGivenKind(T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
     }
 
     private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void
@@ -132,13 +133,18 @@ $bar = new Foo();
 
             return;
         }
+        $tokens[$index] = new Token([T_DOC_COMMENT, $this->ensureDocCommentContent($content)]);
+    }
 
+    private function ensureDocCommentContent(string $content): string
+    {
         if (\strpos($content, '/**') !== 0) {
             $content = '/** ' . $content;
         }
         if (\strpos($content, '*/') === false) {
             $content .= \str_replace(\ltrim($content), '', $content) . '*/';
         }
-        $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
+
+        return $content;
     }
 }

@@ -41,6 +41,11 @@ class FooTest extends TestCase {
         );
     }
 
+    public function getPriority(): int
+    {
+        return -21;
+    }
+
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_STRING);
@@ -57,11 +62,6 @@ class FooTest extends TestCase {
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
             $this->removeUselessReturns($tokens, $indexes[0], $indexes[1]);
         }
-    }
-
-    public function getPriority(): int
-    {
-        return -21;
     }
 
     private function removeUselessReturns(Tokens $tokens, int $startIndex, int $endIndex): void
