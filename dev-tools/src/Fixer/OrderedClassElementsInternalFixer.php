@@ -7,8 +7,25 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
     use PhpCsFixer\Fixer\FixerInterface;
     use PhpCsFixer\Tokenizer\Tokens;
 
+    /**
+     * @internal
+     */
     final class OrderedClassElementsInternalFixer implements FixerInterface
     {
+        public const PUBLIC_METHODS_ORDER = [
+            'getDefinition',
+            'getConfigurationDefinition',
+            'configure',
+            'getName',
+            'getPriority',
+            'getPullRequestId',
+            'supports',
+            'isCandidate',
+            'isRisky',
+            'fix',
+            'getSuccessorsNames',
+        ];
+
         /** @var OrderedClassElementsFixer */
         private $orderedClassElementsFixer;
 
@@ -50,24 +67,24 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
 }
 
 namespace PhpCsFixer\Fixer\ClassNotation {
+    use PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer;
+
+    /**
+     * @internal
+     */
     function usort(array &$elements): void
     {
         \usort($elements, static function (array $a, array $b) {
             if ($a['type'] === 'method' && $a['visibility'] === 'public'
                 && $b['type'] === 'method' && $b['visibility'] === 'public'
                 && isset($a['name'], $b['name'])) {
-                foreach ([
-                    'getDefinition',
-                    'getConfigurationDefinition',
-                    'configure',
-                    'getName',
-                    'getPriority',
-                    'getPullRequestId',
-                    'supports',
-                    'isCandidate',
-                    'isRisky',
-                    'fix',
-                ] as $name) {
+                if (!\in_array($a['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
+                    throw new \Exception(\sprintf('Method %s not in order list', $a['name']));
+                }
+                if (!\in_array($b['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
+                    throw new \Exception(\sprintf('Method %s not in order list', $b['name']));
+                }
+                foreach (OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER as $name) {
                     if ($a['name'] === $name) {
                         return -1;
                     }

@@ -38,6 +38,7 @@
 
     <filter>
         <whitelist>
+            <directory>./dev-tools/src/Readme</directory>
             <directory>./src</directory>
             <exclude>
                 <file>./dev-tools/src/Readme/php-cs-fixer.config.after.php</file>

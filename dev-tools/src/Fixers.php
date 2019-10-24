@@ -6,6 +6,9 @@ namespace PhpCsFixerCustomFixersDev;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @internal
+ */
 final class Fixers implements \IteratorAggregate
 {
     public function getIterator(): \Generator
