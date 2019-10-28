@@ -135,7 +135,7 @@ function foo() {
         $indices = [];
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             if ($tokens[$index]->isGivenKind(T_SWITCH)) {
-                $indices += $this->getCasesColonsForSwitch($tokens, $index);
+                $indices = \array_merge($indices, $this->getCasesColonsForSwitch($tokens, $index));
             }
         }
 
