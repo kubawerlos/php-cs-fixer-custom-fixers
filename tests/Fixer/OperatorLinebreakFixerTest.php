@@ -189,6 +189,22 @@ return $foo
             null,
             ['position' => 'end'],
         ];
+
+        yield 'multiple switches' => [
+            '<?php
+                switch ($foo) {
+                   case 1:
+                      break;
+                   case 2:
+                      break;
+                }
+                switch($bar) {
+                   case 1:
+                      break;
+                   case 2:
+                      break;
+                }',
+        ];
     }
 
     private function pairs(): iterable
