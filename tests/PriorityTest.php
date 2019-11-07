@@ -7,6 +7,7 @@ namespace Tests;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -102,6 +103,29 @@ final class PriorityTest extends TestCase
                 /**    
                  * foo
                  */
+            ',
+        ];
+
+        yield [
+            new NoUselessCommentFixer(),
+            new PhpdocTrimConsecutiveBlankLineSeparationFixer(),
+            '<?php
+                /**
+                 * @version 1.0
+                 *
+                 * @author John Doe
+                 */
+                 class Foo {}
+            ',
+            '<?php
+                /**
+                 * @version 1.0
+                 *
+                 * Class Foo
+                 *
+                 * @author John Doe
+                 */
+                 class Foo {}
             ',
         ];
 
