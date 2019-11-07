@@ -34,9 +34,6 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
     }
 
     /**
-     * @param string      $expected
-     * @param null|string $input
-     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null): void
