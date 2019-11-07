@@ -111,8 +111,6 @@ interface    FooInterface {
     }
 
     /**
-     * @param array $configuration
-     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
