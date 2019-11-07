@@ -201,5 +201,26 @@ interface Foo {
       public function getInstance();
 }',
         ];
+
+        yield [
+            '<?php
+                namespace Custom\Error;
+                class ReadingError {
+                     /**
+                      * @return self
+                      */
+                      public static function create() {}
+                }
+            ',
+            '<?php
+                namespace Custom\Error;
+                class ReadingError {
+                     /**
+                      * @return \Custom\Error\ReadingError
+                      */
+                      public static function create() {}
+                }
+            ',
+        ];
     }
 }
