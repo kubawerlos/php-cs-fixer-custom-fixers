@@ -4,11 +4,16 @@ declare(strict_types = 1);
 
 namespace Tests;
 
+use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
+use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
+use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
 use PhpCsFixerCustomFixers\Fixer\SingleLineThrowFixer;
 use PHPUnit\Framework\TestCase;
 
@@ -57,8 +62,68 @@ final class PriorityTest extends TestCase
         static::assertNotSame($expected, $tokens->generateCode());
     }
 
+    public function testProvidePriorityCasesIsSorted(): void
+    {
+        $cases = \array_map(
+            static function (array $case): string {
+                return \sprintf(
+                    '%s_%s',
+                    (new \ReflectionClass($case[0]))->getShortName(),
+                    (new \ReflectionClass($case[1]))->getShortName()
+                );
+            },
+            \iterator_to_array($this->providePriorityCases())
+        );
+
+        $sorted = $cases;
+        \sort($sorted);
+
+        static::assertSame($sorted, $cases);
+    }
+
     public function providePriorityCases(): iterable
     {
+        yield [
+            new CommentSurroundedBySpacesFixer(),
+            new MultilineCommentOpeningClosingFixer(),
+            '<?php /** foo */',
+            '<?php /**foo**/',
+        ];
+
+        yield [
+            new MultilineCommentOpeningClosingAloneFixer(),
+            new PhpdocTrimFixer(),
+            '<?php
+                /**
+                 * foo
+                 */
+            ',
+            '<?php
+                /**    
+                 * foo
+                 */
+            ',
+        ];
+
+        yield [
+            new NoUselessCommentFixer(),
+            new PhpdocTrimFixer(),
+            '<?php
+                /**
+                 * @author John Doe
+                 */
+                 class Foo {}
+            ',
+            '<?php
+                /**
+                 * Class Foo
+                 *
+                 * @author John Doe
+                 */
+                 class Foo {}
+            ',
+        ];
+
         yield [
             new SingleLineThrowFixer(),
             new ConcatSpaceFixer(),
