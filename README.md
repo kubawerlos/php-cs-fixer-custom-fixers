@@ -423,8 +423,8 @@ In PHPDoc inside class or interface element `self` should be preferred over the 
 ```
 
 #### SingleLineThrowFixer
-`throw` must be single line.
-  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/4452) is merged and released.*
+Throwing exception must be done in single line.
+  DEPRECATED: use `single_line_throw` instead.
 ```diff
  <?php
 -throw new Exception(

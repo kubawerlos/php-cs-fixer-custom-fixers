@@ -25,9 +25,9 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
         static::assertFalse($this->fixer->isRisky());
     }
 
-    public function testDeprecatingPullRequest(): void
+    public function testSuccessorName(): void
     {
-        static::assertSame(4452, $this->fixer->getPullRequestId());
+        static::assertContains('single_line_throw', $this->fixer->getSuccessorsNames());
     }
 
     /**
@@ -63,7 +63,7 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php throw new Exception("Foo"."Bar");',
+            '<?php throw new Exception("Foo" . "Bar");',
             '<?php throw new Exception(
                 "Foo"
                 .

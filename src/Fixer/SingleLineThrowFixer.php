@@ -4,95 +4,53 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class SingleLineThrowFixer extends AbstractFixer implements DeprecatingFixerInterface
+/**
+ * @deprecated use "single_line_throw" instead
+ */
+final class SingleLineThrowFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
-    private const REMOVE_WHITESPACE_AFTER_TOKENS = ['['];
-    private const REMOVE_WHITESPACE_AROUND_TOKENS = ['.', '(', [T_OBJECT_OPERATOR], [T_DOUBLE_COLON]];
-    private const REMOVE_WHITESPACE_BEFORE_TOKENS = [')',  ']', ',', ';'];
+    /** @var \PhpCsFixer\Fixer\FunctionNotation\SingleLineThrowFixer */
+    private $fixer;
 
-    public function getDefinition(): FixerDefinition
+    public function __construct()
     {
-        return new FixerDefinition(
-            '`throw` must be single line.',
-            [
-                new CodeSample("<?php\nthrow new Exception(\n    'Error',\n    500\n);\n"),
-            ]
-        );
+        $this->fixer = new \PhpCsFixer\Fixer\FunctionNotation\SingleLineThrowFixer();
+    }
+
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        return $this->fixer->getDefinition();
     }
 
     public function getPriority(): int
     {
-        // must be fun before ConcatSpaceFixer and NoUnneededConcatenationFixer
-        return 1;
-    }
-
-    public function getPullRequestId(): int
-    {
-        return 4452;
+        return $this->fixer->getPriority();
     }
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_THROW);
+        return $this->fixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return false;
+        return $this->fixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        for ($index = 0, $count = $tokens->count(); $index < $count; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_THROW)) {
-                continue;
-            }
-
-            /** @var int $openingBraceCandidateIndex */
-            $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($index, [';', '(']);
-
-            while ($tokens[$openingBraceCandidateIndex]->equals('(')) {
-                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBraceCandidateIndex);
-                /** @var int $openingBraceCandidateIndex */
-                $openingBraceCandidateIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
-            }
-
-            $this->trimNewLines($tokens, $index, $openingBraceCandidateIndex);
-        }
+        $this->fixer->fix($file, $tokens);
     }
 
-    private function trimNewLines(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @return string[]
+     */
+    public function getSuccessorsNames(): array
     {
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
-                continue;
-            }
-
-            if (Preg::match('/\R/', $tokens[$index]->getContent()) === 0) {
-                continue;
-            }
-
-            $prevIndex = $tokens->getNonEmptySibling($index, -1);
-            if ($tokens[$prevIndex]->equalsAny(\array_merge(self::REMOVE_WHITESPACE_AFTER_TOKENS, self::REMOVE_WHITESPACE_AROUND_TOKENS))) {
-                $tokens->clearAt($index);
-                continue;
-            }
-
-            $nextIndex = $tokens->getNonEmptySibling($index, 1);
-            if ($tokens[$nextIndex]->equalsAny(\array_merge(self::REMOVE_WHITESPACE_AROUND_TOKENS, self::REMOVE_WHITESPACE_BEFORE_TOKENS))) {
-                if (!$tokens[$prevIndex]->isGivenKind(T_FUNCTION)) {
-                    $tokens->clearAt($index);
-                    continue;
-                }
-            }
-
-            $tokens[$index] = new Token([T_WHITESPACE, ' ']);
-        }
+        return [$this->fixer->getName()];
     }
 }
