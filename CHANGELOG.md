@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Update PHP CS Fixer to v2.16
+- Deprecate SingleLineThrowFixer
 
 ## v1.16.0 - *2019-10-24*
 - Add PhpdocOnlyAllowedAnnotationsFixer
@@ -18,7 +19,6 @@
 - Add PhpUnitNoUselessReturnFixer
 - Add SingleLineThrowFixer
 - Feature: NoCommentedOutCodeFixer - handle class method
-- Deprecate SingleLineThrowFixer
 
 ## v1.13.0 - *2019-01-11*
 - Update PHP CS Fixer to v2.14
