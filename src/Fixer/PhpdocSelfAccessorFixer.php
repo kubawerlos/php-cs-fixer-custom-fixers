@@ -75,22 +75,22 @@ class Foo {
 
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
-            $name = $tokens[$nameIndex]->getContent();
+            $classyName = $tokens[$nameIndex]->getContent();
 
-            $this->replaceNameOccurrences($tokens, $fullName, $name, $startIndex, $endIndex);
+            $this->replaceNameOccurrences($tokens, $fullName, $classyName, $startIndex, $endIndex);
 
             $index = $endIndex;
         }
     }
 
-    private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $name, int $startIndex, int $endIndex): void
+    private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $classyName, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
 
-            $newContent = $this->getNewContent($tokens[$index]->getContent(), $namespace, $name);
+            $newContent = $this->getNewContent($tokens[$index]->getContent(), $namespace, $classyName);
 
             if ($newContent === $tokens[$index]->getContent()) {
                 continue;
@@ -99,11 +99,11 @@ class Foo {
         }
     }
 
-    private function getNewContent(string $content, string $namespace, string $name): string
+    private function getNewContent(string $content, string $namespace, string $classyName): string
     {
         $docBlock = new DocBlock($content);
 
-        $fqcn = ($namespace !== '' ? '\\' . $namespace : '') . '\\' . $name;
+        $fqcn = ($namespace !== '' ? '\\' . $namespace : '') . '\\' . $classyName;
 
         foreach ($docBlock->getAnnotations() as $annotation) {
             if (!$annotation->supportTypes()) {
@@ -114,7 +114,7 @@ class Foo {
             foreach ($annotation->getTypes() as $type) {
                 /** @var string $type */
                 $type = Preg::replace(
-                    \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|\Q%s\E)\b(?!\\\\)/', $name, $fqcn),
+                    \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $classyName, \preg_quote($fqcn, '/')),
                     'self',
                     $type
                 );
