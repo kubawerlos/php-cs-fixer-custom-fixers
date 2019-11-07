@@ -67,11 +67,6 @@ final class SingleLineThrowFixer extends AbstractFixer implements DeprecatingFix
         }
     }
 
-    /**
-     * @param Tokens $tokens
-     * @param int    $startIndex
-     * @param int    $endIndex
-     */
     private function trimNewLines(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {

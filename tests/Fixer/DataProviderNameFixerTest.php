@@ -22,9 +22,6 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param string      $expected
-     * @param null|string $input
-     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null): void

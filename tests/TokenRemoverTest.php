@@ -19,9 +19,6 @@ final class TokenRemoverTest extends TestCase
     use AssertTokensTrait;
 
     /**
-     * @param string      $expected
-     * @param null|string $input
-     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null): void

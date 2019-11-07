@@ -111,9 +111,7 @@ interface    FooInterface {
     }
 
     /**
-     * @param string      $expected
-     * @param null|string $input
-     * @param array       $configuration
+     * @param array $configuration
      *
      * @dataProvider provideFixCases
      */
