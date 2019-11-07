@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Update PHP CS Fixer to v2.16
+
 ## v1.16.0 - *2019-10-24*
 - Add PhpdocOnlyAllowedAnnotationsFixer
 - Feature: OperatorLinebreakFixer - handle object operators
