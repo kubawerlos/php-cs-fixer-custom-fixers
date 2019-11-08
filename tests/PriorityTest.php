@@ -10,6 +10,7 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
+use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
@@ -23,6 +24,7 @@ use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
 use PhpCsFixerCustomFixers\Fixer\NullableParamStyleFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer;
 use PhpCsFixerCustomFixers\Fixer\SingleLineThrowFixer;
@@ -150,6 +152,21 @@ final class PriorityTest extends TestCase
 
         yield [
             new NoUselessCommentFixer(),
+            new NoEmptyPhpdocFixer(),
+            '<?php
+                
+                 class Foo {}
+            ',
+            '<?php
+                /**
+                 * Class Foo
+                 */
+                 class Foo {}
+            ',
+        ];
+
+        yield [
+            new NoUselessCommentFixer(),
             new PhpdocTrimConsecutiveBlankLineSeparationFixer(),
             '<?php
                 /**
@@ -233,6 +250,21 @@ final class PriorityTest extends TestCase
 
         yield [
             new PhpdocNoIncorrectVarAnnotationFixer(),
+            new NoEmptyPhpdocFixer(),
+            '<?php
+                
+                $y = 2;
+            ',
+            '<?php
+                /**
+                 * @var int $x
+                 */
+                $y = 2;
+            ',
+        ];
+
+        yield [
+            new PhpdocNoIncorrectVarAnnotationFixer(),
             new NoUnusedImportsFixer(),
             '<?php
                 $y = 2;
@@ -241,6 +273,21 @@ final class PriorityTest extends TestCase
                 use Foo\Bar;
                 /** @var Bar $x */
                 $y = 2;
+            ',
+        ];
+
+        yield [
+            new PhpdocOnlyAllowedAnnotationsFixer(),
+            new NoEmptyPhpdocFixer(),
+            '<?php
+                
+                class Foo {}
+            ',
+            '<?php
+                /**
+                 * @author John Doe
+                 */
+                class Foo {}
             ',
         ];
 
