@@ -30,6 +30,11 @@ final class NullableParamStyleFixerTest extends AbstractFixerTestCase
         static::assertFalse($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        static::assertContains('nullable_type_declaration_for_default_null_value', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @dataProvider provideFixCases
      */

@@ -8,7 +8,7 @@
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-1360-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-1361-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -287,6 +287,7 @@ Function `sprintf` without parameters should not be used.
 
 #### NullableParamStyleFixer
 Nullable parameters must be written in the consistent style.
+  DEPRECATED: use `nullable_type_declaration_for_default_null_value` instead.
 Configuration options:
 - `style` (`'with_question_mark'`, `'without_question_mark'`): whether nullable parameter type should be prefixed or not with question mark; defaults to `'with_question_mark'`
 ```diff

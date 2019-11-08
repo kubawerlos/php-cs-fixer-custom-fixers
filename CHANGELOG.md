@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Update PHP CS Fixer to v2.16
+- Deprecate NullableParamStyleFixer
 - Deprecate SingleLineThrowFixer
 
 ## v1.16.0 - *2019-10-24*
