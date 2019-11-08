@@ -4,17 +4,22 @@ declare(strict_types = 1);
 
 namespace Tests;
 
+use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
+use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer;
 use PhpCsFixerCustomFixers\Fixer\SingleLineThrowFixer;
 use PHPUnit\Framework\TestCase;
 
@@ -92,6 +97,23 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
+            new CommentToPhpdocFixer(),
+            new PhpdocParamTypeFixer(),
+            '<?php /* header comment */ $foo = true;
+                /**
+                 * @param mixed $x
+                 */
+                function bar($x) {}
+            ',
+            '<?php /* header comment */ $foo = true;
+                /*
+                 * @param $x
+                 */
+                function bar($x) {}
+            ',
+        ];
+
+        yield [
             new MultilineCommentOpeningClosingAloneFixer(),
             new PhpdocTrimFixer(),
             '<?php
@@ -145,6 +167,49 @@ final class PriorityTest extends TestCase
                  * @author John Doe
                  */
                  class Foo {}
+            ',
+        ];
+
+        $noExtraBlankLinesFixer = new NoExtraBlankLinesFixer();
+        $noExtraBlankLinesFixer->configure(['tokens' => ['curly_brace_block']]);
+        yield [
+            new PhpUnitNoUselessReturnFixer(),
+            $noExtraBlankLinesFixer,
+            '<?php
+                class FooTest extends TestCase {
+                    public function testFoo() {
+                        $this->markTestSkipped();
+                    }
+                }
+            ',
+            '<?php
+                class FooTest extends TestCase {
+                    public function testFoo() {
+                        $this->markTestSkipped();
+
+                        return;
+
+                    }
+                }
+            ',
+        ];
+
+        yield [
+            new PhpdocParamTypeFixer(),
+            new PhpdocAlignFixer(),
+            '<?php
+                /**
+                 * @param int   $x
+                 * @param mixed $y
+                 */
+                function foo($x, $y) {}
+            ',
+            '<?php
+                /**
+                 * @param int $x
+                 * @param     $y
+                 */
+                function foo($x, $y) {}
             ',
         ];
 
