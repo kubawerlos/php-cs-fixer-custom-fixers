@@ -24,8 +24,12 @@ final class PrioritiesYamlTest extends TestCase
             if (\in_array(
                 [$firstFixerName,  $secondFixerName],
                 [
+                    ['DataProviderReturnTypeFixer', 'MethodArgumentSpaceFixer'], // MethodArgumentSpaceFixer -> ReturnTypeDeclarationFixer
+                    ['MultilineCommentOpeningClosingFixer', 'CommentSurroundedBySpacesFixer'], // other order
+                    ['MultilineCommentOpeningClosingFixer', 'MultilineCommentOpeningClosingAloneFixer'],
                     ['NoExtraBlankLinesFixer', 'PhpUnitNoUselessReturnFixer'],
                     ['NoLeadingSlashInGlobalNamespaceFixer', 'PhpdocToCommentFixer'],
+                    ['NoTrailingWhitespaceInCommentFixer', 'MultilineCommentOpeningClosingAloneFixer'], // other order
                     ['PhpdocAddMissingParamAnnotationFixer', 'PhpdocParamTypeFixer'],
                     ['PhpdocNoIncorrectVarAnnotationFixer', 'NoEmptyCommentFixer'],
                     ['PhpdocNoIncorrectVarAnnotationFixer', 'NoExtraBlankLinesFixer'],

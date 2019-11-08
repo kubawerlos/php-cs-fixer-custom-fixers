@@ -6,8 +6,11 @@ namespace Tests;
 
 use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
+use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
+use PhpCsFixer\Fixer\Comment\NoTrailingWhitespaceInCommentFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
+use PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
@@ -18,6 +21,7 @@ use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
+use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
 use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
@@ -120,6 +124,47 @@ final class PriorityTest extends TestCase
             ',
         ];
 
+        $returnTypeDeclarationFixer = new ReturnTypeDeclarationFixer();
+        $returnTypeDeclarationFixer->configure(['space_before' => 'one']);
+        yield [
+            new DataProviderReturnTypeFixer(),
+            $returnTypeDeclarationFixer,
+            '<?php
+                class FooTest extends TestCase {
+                    /**
+                     * @dataProvider provideFooCases
+                     */
+                    function testFoo() {}
+                    function provideFooCases() : iterable {}
+                }
+            ',
+            '<?php
+                class FooTest extends TestCase {
+                    /**
+                     * @dataProvider provideFooCases
+                     */
+                    function testFoo() {}
+                    function provideFooCases() {}
+                }
+            ',
+        ];
+
+        yield [
+            new MultilineCommentOpeningClosingAloneFixer(),
+            new NoTrailingWhitespaceInCommentFixer(),
+            '<?php
+                /**
+                 *
+                 * foo
+                 */
+            ',
+            '<?php
+                /**    
+                 * foo
+                 */
+            ',
+        ];
+
         yield [
             new MultilineCommentOpeningClosingAloneFixer(),
             new PhpdocTrimFixer(),
@@ -147,6 +192,21 @@ final class PriorityTest extends TestCase
                 use Foo\Baz;
                 $x = new Bar();
                 // $y = new Baz();
+            ',
+        ];
+
+        yield [
+            new NoUselessCommentFixer(),
+            new NoEmptyCommentFixer(),
+            '<?php
+                
+                 class Foo {}
+            ',
+            '<?php
+                /*
+                 * Class Foo
+                 */
+                 class Foo {}
             ',
         ];
 
