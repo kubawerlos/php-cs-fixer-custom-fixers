@@ -27,6 +27,8 @@ final class PrioritiesYamlTest extends TestCase
                     ['NoExtraBlankLinesFixer', 'PhpUnitNoUselessReturnFixer'],
                     ['NoLeadingSlashInGlobalNamespaceFixer', 'PhpdocToCommentFixer'],
                     ['PhpdocAddMissingParamAnnotationFixer', 'PhpdocParamTypeFixer'],
+                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoTrailingWhitespaceFixer'],
+                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoWhitespaceInBlankLineFixer'],
                 ],
                 true
             )) {

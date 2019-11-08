@@ -7,6 +7,8 @@ namespace Tests;
 use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
+use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
@@ -16,8 +18,11 @@ use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
+use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
+use PhpCsFixerCustomFixers\Fixer\NullableParamStyleFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer;
 use PhpCsFixerCustomFixers\Fixer\SingleLineThrowFixer;
@@ -129,6 +134,21 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
+            new NoCommentedOutCodeFixer(),
+            new NoUnusedImportsFixer(),
+            '<?php
+                use Foo\Bar;
+                $x = new Bar();
+            ',
+            '<?php
+                use Foo\Bar;
+                use Foo\Baz;
+                $x = new Bar();
+                // $y = new Baz();
+            ',
+        ];
+
+        yield [
             new NoUselessCommentFixer(),
             new PhpdocTrimConsecutiveBlankLineSeparationFixer(),
             '<?php
@@ -170,6 +190,23 @@ final class PriorityTest extends TestCase
             ',
         ];
 
+        yield [
+            new NullableParamStyleFixer(),
+            new NoUnreachableDefaultArgumentValueFixer(),
+            '<?php
+                function foo(
+                    ?int $x,
+                    int $y
+                ) {}
+            ',
+            '<?php
+                function foo(
+                    int $x = null,
+                    int $y
+                ) {}
+            ',
+        ];
+
         $noExtraBlankLinesFixer = new NoExtraBlankLinesFixer();
         $noExtraBlankLinesFixer->configure(['tokens' => ['curly_brace_block']]);
         yield [
@@ -191,6 +228,19 @@ final class PriorityTest extends TestCase
 
                     }
                 }
+            ',
+        ];
+
+        yield [
+            new PhpdocNoIncorrectVarAnnotationFixer(),
+            new NoUnusedImportsFixer(),
+            '<?php
+                $y = 2;
+            ',
+            '<?php
+                use Foo\Bar;
+                /** @var Bar $x */
+                $y = 2;
             ',
         ];
 
