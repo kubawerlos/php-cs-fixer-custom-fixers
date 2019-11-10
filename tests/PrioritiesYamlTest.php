@@ -27,14 +27,14 @@ final class PrioritiesYamlTest extends TestCase
                     ['DataProviderReturnTypeFixer', 'MethodArgumentSpaceFixer'], // MethodArgumentSpaceFixer -> ReturnTypeDeclarationFixer
                     ['MultilineCommentOpeningClosingFixer', 'CommentSurroundedBySpacesFixer'], // reverted order
                     ['MultilineCommentOpeningClosingFixer', 'MultilineCommentOpeningClosingAloneFixer'], // reverted order
-                    ['NoExtraBlankLinesFixer', 'PhpUnitNoUselessReturnFixer'],
-                    ['NoLeadingSlashInGlobalNamespaceFixer', 'PhpdocToCommentFixer'],
+                    ['NoExtraBlankLinesFixer', 'PhpUnitNoUselessReturnFixer'], // reverted order
+                    ['NoLeadingSlashInGlobalNamespaceFixer', 'PhpdocToCommentFixer'], // not valid
                     ['NoTrailingWhitespaceInCommentFixer', 'MultilineCommentOpeningClosingAloneFixer'], // reverted order
-                    ['PhpdocAddMissingParamAnnotationFixer', 'PhpdocParamTypeFixer'],
-                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoEmptyCommentFixer'],
-                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoExtraBlankLinesFixer'],
-                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoTrailingWhitespaceFixer'],
-                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoWhitespaceInBlankLineFixer'],
+                    ['PhpdocAddMissingParamAnnotationFixer', 'PhpdocParamTypeFixer'], // not valid
+                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoEmptyCommentFixer'], // not valid
+                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoExtraBlankLinesFixer'], // not valid
+                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoTrailingWhitespaceFixer'], // not valid
+                    ['PhpdocNoIncorrectVarAnnotationFixer', 'NoWhitespaceInBlankLineFixer'], // not valid
                 ],
                 true
             )) {

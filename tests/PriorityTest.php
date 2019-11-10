@@ -347,6 +347,25 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
+            new PhpdocNoIncorrectVarAnnotationFixer(),
+            new PhpdocTrimFixer(),
+            '<?php
+                /**
+                 * Foo
+                 */
+                $y = 2;
+            ',
+            '<?php
+                /**
+                 * Foo
+                 *
+                 * @var int $x
+                 */
+                $y = 2;
+            ',
+        ];
+
+        yield [
             new PhpdocOnlyAllowedAnnotationsFixer(),
             new NoEmptyPhpdocFixer(),
             '<?php
