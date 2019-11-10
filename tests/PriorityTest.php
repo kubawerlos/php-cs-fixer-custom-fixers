@@ -14,9 +14,11 @@ use PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
+use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
 use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -24,11 +26,14 @@ use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
 use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
 use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
+use PhpCsFixerCustomFixers\Fixer\NoImportFromGlobalNamespaceFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
 use PhpCsFixerCustomFixers\Fixer\NullableParamStyleFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer;
 use PhpCsFixerCustomFixers\Fixer\SingleLineThrowFixer;
@@ -106,6 +111,41 @@ final class PriorityTest extends TestCase
             new MultilineCommentOpeningClosingFixer(),
             '<?php /** foo */',
             '<?php /**foo**/',
+        ];
+
+        yield [
+            new CommentToPhpdocFixer(),
+            new PhpdocNoSuperfluousParamFixer(),
+            '<?php /* header comment */ $foo = true;
+                /**
+                 */
+                 function bar() {}
+            ',
+            '<?php /* header comment */ $foo = true;
+                /*
+                 * @param $x
+                 */
+                 function bar() {}
+            ',
+        ];
+
+        yield [
+            new CommentToPhpdocFixer(),
+            new PhpdocParamOrderFixer(),
+            '<?php /* header comment */ $foo = true;
+                /**
+                 * @param $a
+                 * @param $b
+                 */
+                 function bar($a, $b) {}
+            ',
+            '<?php /* header comment */ $foo = true;
+                /*
+                 * @param $b
+                 * @param $a
+                 */
+                 function bar($a, $b) {}
+            ',
         ];
 
         yield [
@@ -203,6 +243,28 @@ final class PriorityTest extends TestCase
                 use Foo\Baz;
                 $x = new Bar();
                 // $y = new Baz();
+            ',
+        ];
+
+        yield [
+            new NoImportFromGlobalNamespaceFixer(),
+            new PhpdocAlignFixer(),
+            '<?php
+                namespace Foo;
+                /**
+                 * @param bool      $b
+                 * @param \DateTime $d
+                 */
+                 function bar($b, $d) {}
+            ',
+            '<?php
+                namespace Foo;
+                use DateTime;
+                /**
+                 * @param bool     $b
+                 * @param DateTime $d
+                 */
+                 function bar($b, $d) {}
             ',
         ];
 
@@ -320,6 +382,24 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
+            new PhpdocAddMissingParamAnnotationFixer(),
+            new PhpdocParamOrderFixer(),
+            '<?php /* header comment */ $foo = true;
+                /**
+                 * @param mixed $a
+                 * @param mixed $b
+                 */
+                 function bar($a, $b) {}
+            ',
+            '<?php /* header comment */ $foo = true;
+                /**
+                 * @param mixed $b
+                 */
+                 function bar($a, $b) {}
+            ',
+        ];
+
+        yield [
             new PhpdocNoIncorrectVarAnnotationFixer(),
             new NoEmptyPhpdocFixer(),
             '<?php
@@ -349,6 +429,29 @@ final class PriorityTest extends TestCase
 
         yield [
             new PhpdocNoIncorrectVarAnnotationFixer(),
+            new PhpdocTrimConsecutiveBlankLineSeparationFixer(),
+            '<?php
+                /**
+                 * Foo
+                 *
+                 * @see example.com
+                 */
+                $y = 2;
+            ',
+            '<?php
+                /**
+                 * Foo
+                 *
+                 * @var int $x
+                 *
+                 * @see example.com
+                 */
+                $y = 2;
+            ',
+        ];
+
+        yield [
+            new PhpdocNoIncorrectVarAnnotationFixer(),
             new PhpdocTrimFixer(),
             '<?php
                 /**
@@ -367,6 +470,21 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
+            new PhpdocNoSuperfluousParamFixer(),
+            new NoEmptyPhpdocFixer(),
+            '<?php
+                
+                 function foo() {}
+            ',
+            '<?php
+                /**
+                 * @param $x
+                 */
+                 function foo() {}
+            ',
+        ];
+
+        yield [
             new PhpdocOnlyAllowedAnnotationsFixer(),
             new NoEmptyPhpdocFixer(),
             '<?php
@@ -378,6 +496,27 @@ final class PriorityTest extends TestCase
                  * @author John Doe
                  */
                 class Foo {}
+            ',
+        ];
+
+        yield [
+            new PhpdocParamOrderFixer(),
+            new PhpdocAlignFixer(),
+            '<?php /* header comment */ $foo = true;
+                /**
+                 * @param int    $a
+                 * @param string $b
+                 * @author John Doe
+                 */
+                 function bar($a, $b) {}
+            ',
+            '<?php /* header comment */ $foo = true;
+                /**
+                 * @param string $b
+                 * @author John Doe
+                 * @param int $a
+                 */
+                 function bar($a, $b) {}
             ',
         ];
 
@@ -425,6 +564,17 @@ final class PriorityTest extends TestCase
                     "This should"
                     . " not happen"
                 );
+            ',
+        ];
+
+        yield [
+            new SingleQuoteFixer(),
+            new NoUnneededConcatenationFixer(),
+            '<?php
+                $x = \'FooBar\';
+            ',
+            '<?php
+                $x = "Foo" . \'Bar\';
             ',
         ];
     }

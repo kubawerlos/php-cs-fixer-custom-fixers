@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
-
 /**
  * @internal
  *
@@ -13,11 +11,6 @@ use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
  */
 final class PhpUnitNoUselessReturnFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertLessThan((new NoExtraBlankLinesFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertTrue($this->fixer->isRisky());

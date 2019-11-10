@@ -4,13 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
-use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
-use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
-use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
-use PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer;
-use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
-
 /**
  * @internal
  *
@@ -18,16 +11,6 @@ use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
  */
 final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertGreaterThan((new NoExtraBlankLinesFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new NoTrailingWhitespaceFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new NoUnusedImportsFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

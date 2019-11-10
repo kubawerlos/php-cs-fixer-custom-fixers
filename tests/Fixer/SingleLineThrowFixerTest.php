@@ -4,9 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
-use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
-
 /**
  * @internal
  *
@@ -14,12 +11,6 @@ use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
  */
 final class SingleLineThrowFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertGreaterThan((new ConcatSpaceFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new NoUnneededConcatenationFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
