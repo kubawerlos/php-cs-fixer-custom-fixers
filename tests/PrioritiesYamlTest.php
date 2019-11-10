@@ -25,11 +25,11 @@ final class PrioritiesYamlTest extends TestCase
                 [$firstFixerName,  $secondFixerName],
                 [
                     ['DataProviderReturnTypeFixer', 'MethodArgumentSpaceFixer'], // MethodArgumentSpaceFixer -> ReturnTypeDeclarationFixer
-                    ['MultilineCommentOpeningClosingFixer', 'CommentSurroundedBySpacesFixer'], // other order
-                    ['MultilineCommentOpeningClosingFixer', 'MultilineCommentOpeningClosingAloneFixer'],
+                    ['MultilineCommentOpeningClosingFixer', 'CommentSurroundedBySpacesFixer'], // reverted order
+                    ['MultilineCommentOpeningClosingFixer', 'MultilineCommentOpeningClosingAloneFixer'], // reverted order
                     ['NoExtraBlankLinesFixer', 'PhpUnitNoUselessReturnFixer'],
                     ['NoLeadingSlashInGlobalNamespaceFixer', 'PhpdocToCommentFixer'],
-                    ['NoTrailingWhitespaceInCommentFixer', 'MultilineCommentOpeningClosingAloneFixer'], // other order
+                    ['NoTrailingWhitespaceInCommentFixer', 'MultilineCommentOpeningClosingAloneFixer'], // reverted order
                     ['PhpdocAddMissingParamAnnotationFixer', 'PhpdocParamTypeFixer'],
                     ['PhpdocNoIncorrectVarAnnotationFixer', 'NoEmptyCommentFixer'],
                     ['PhpdocNoIncorrectVarAnnotationFixer', 'NoExtraBlankLinesFixer'],

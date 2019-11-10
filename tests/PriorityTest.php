@@ -45,7 +45,7 @@ final class PriorityTest extends TestCase
     /**
      * @dataProvider providePriorityCases
      */
-    public function testCorrectOrderWorks(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
+    public function testInOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
         Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
@@ -65,7 +65,7 @@ final class PriorityTest extends TestCase
     /**
      * @dataProvider providePriorityCases
      */
-    public function testIncorrectOrderDoesNotWork(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
+    public function testInRevertedOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
         Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
@@ -147,6 +147,16 @@ final class PriorityTest extends TestCase
                     function provideFooCases() {}
                 }
             ',
+        ];
+
+        yield [
+            new MultilineCommentOpeningClosingAloneFixer(),
+            new MultilineCommentOpeningClosingFixer(),
+            '<?php /**
+                    * foo
+                    */',
+            '<?php /**foo
+                    *******/',
         ];
 
         yield [
