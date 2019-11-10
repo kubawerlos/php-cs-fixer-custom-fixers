@@ -37,19 +37,12 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
 
     public function provideFixCases(): iterable
     {
-        yield [
-            '<?php /* Foo */',
-        ];
+        yield ['<?php /* Foo */'];
+        yield ['<?php /** Foo */'];
 
-        yield [
-            '<?php /** Foo */',
-        ];
-
-        yield [
-            '<?php /**
+        yield ['<?php /**
                     * Foo
-                    */',
-        ];
+                    */'];
 
         yield [
             '<?php
@@ -58,6 +51,26 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
                  */',
             '<?php
                 /* Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
+                /*
+                 * Foo
+                 */',
+            '<?php
+                /*Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
+                /*
+                 *    Foo
+                 */',
+            '<?php
+                /*    Foo
                  */',
         ];
 
@@ -73,6 +86,26 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
 
         yield [
             '<?php
+                /**
+                 * Foo
+                 */',
+            '<?php
+                /**Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
+                /****
+                 * Foo
+                 ****/',
+            '<?php
+                /**** Foo
+                 ****/',
+        ];
+
+        yield [
+            '<?php
                 /*
                  * Foo
                  */',
@@ -89,6 +122,16 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
             '<?php
                 /**
                  * Foo */',
+        ];
+
+        yield [
+            '<?php
+                /**
+                 * Foo
+                 */',
+            '<?php
+                /**
+                 * Foo*/',
         ];
 
         yield [
