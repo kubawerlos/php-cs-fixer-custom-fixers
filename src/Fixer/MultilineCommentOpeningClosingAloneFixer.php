@@ -65,19 +65,19 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         Preg::match('#\R(\h*)#', $token->getContent(), $matches);
         $indent = $matches[1];
 
-        Preg::match('#^(/\*+)(.*?)(\R)(.*)$#s', $token->getContent(), $matches);
+        Preg::match('#^(?<opening>/\*+)(?<before_newline>.*?)(?<newline>\R)(?<after_newline>.*)$#s', $token->getContent(), $matches);
         if ($matches === []) {
             return;
         }
 
-        if ($matches[2][0] === '/') {
-            $matches[2] = ' ' . $matches[2];
+        if ($matches['before_newline'][0] !== ' ') {
+            $matches['before_newline'] = ' ' . $matches['before_newline'];
         }
 
-        $newContent = $matches[1] . $matches[3] . $indent . '*' . $matches[2] . $matches[3] . $matches[4];
+        $newContent = $matches['opening'] . $matches['newline'] . $indent . '*' . $matches['before_newline'] . $matches['newline'] . $matches['after_newline'];
 
         if ($newContent !== $token->getContent()) {
-            $tokens[$index] = new Token([$token->getId(), $newContent]);
+            $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
         }
     }
 
