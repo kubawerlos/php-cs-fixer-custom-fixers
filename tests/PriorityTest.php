@@ -131,6 +131,22 @@ final class PriorityTest extends TestCase
 
         yield [
             new CommentToPhpdocFixer(),
+            new PhpdocOnlyAllowedAnnotationsFixer(),
+            '<?php /* header comment */ $foo = true;
+                /**
+                 */
+                 function bar() {}
+            ',
+            '<?php /* header comment */ $foo = true;
+                /*
+                 * @param $x
+                 */
+                 function bar() {}
+            ',
+        ];
+
+        yield [
+            new CommentToPhpdocFixer(),
             new PhpdocParamOrderFixer(),
             '<?php /* header comment */ $foo = true;
                 /**
@@ -410,6 +426,21 @@ final class PriorityTest extends TestCase
                 /**
                  * @var int $x
                  */
+                $y = 2;
+            ',
+        ];
+
+        yield [
+            new PhpdocNoIncorrectVarAnnotationFixer(),
+            new NoExtraBlankLinesFixer(),
+            '<?php
+
+                $y = 2;
+            ',
+            '<?php
+
+                /** @var int $x */
+
                 $y = 2;
             ',
         ];
