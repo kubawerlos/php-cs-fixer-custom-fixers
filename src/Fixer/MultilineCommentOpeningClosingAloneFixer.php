@@ -63,7 +63,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
 
         Preg::match('#\R(\h*)#', $token->getContent(), $matches);
-        $indent = $matches[1];
+        $indent = $matches[1] . '*';
 
         Preg::match('#^(?<opening>/\*+)(?<before_newline>.*?)(?<newline>\R)(?<after_newline>.*)$#s', $token->getContent(), $matches);
         if ($matches === []) {
@@ -71,10 +71,10 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
 
         if ($matches['before_newline'][0] !== ' ') {
-            $matches['before_newline'] = ' ' . $matches['before_newline'];
+            $indent .= ' ';
         }
 
-        $newContent = $matches['opening'] . $matches['newline'] . $indent . '*' . $matches['before_newline'] . $matches['newline'] . $matches['after_newline'];
+        $newContent = $matches['opening'] . $matches['newline'] . $indent . $matches['before_newline'] . $matches['newline'] . $matches['after_newline'];
 
         if ($newContent !== $token->getContent()) {
             $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);

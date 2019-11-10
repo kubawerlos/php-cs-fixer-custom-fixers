@@ -66,6 +66,16 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
 
         yield [
             '<?php
+                /*
+                 *    Foo
+                 */',
+            '<?php
+                /*    Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
                 /**
                  * Foo
                  */',
