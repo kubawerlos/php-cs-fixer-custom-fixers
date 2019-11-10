@@ -11,11 +11,6 @@ namespace Tests\Fixer;
  */
 final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertSame(0, $this->fixer->getPriority());
-    }
-
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();

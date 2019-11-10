@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
-
 /**
  * @internal
  *
@@ -13,11 +11,6 @@ use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
  */
 final class CommentSurroundedBySpacesFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertLessThan((new MultilineCommentOpeningClosingFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

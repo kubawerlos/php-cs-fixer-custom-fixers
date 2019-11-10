@@ -4,10 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
-use PhpCsFixer\Fixer\Comment\NoTrailingWhitespaceInCommentFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
-
 /**
  * @internal
  *
@@ -15,13 +11,6 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
  */
 final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertLessThan((new MultilineCommentOpeningClosingFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertLessThan((new NoTrailingWhitespaceInCommentFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

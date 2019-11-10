@@ -43,7 +43,7 @@ class FooTest extends TestCase {
 
     public function getPriority(): int
     {
-        return -21;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
