@@ -51,6 +51,14 @@ final class PriorityTest extends TestCase
     /**
      * @dataProvider providePriorityCases
      */
+    public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
+    {
+        static::assertLessThan($firstFixer->getPriority(), $secondFixer->getPriority());
+    }
+
+    /**
+     * @dataProvider providePriorityCases
+     */
     public function testInOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
         Tokens::clearCache();

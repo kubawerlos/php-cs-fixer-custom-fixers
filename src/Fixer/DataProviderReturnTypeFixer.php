@@ -43,8 +43,8 @@ class FooTest extends TestCase {
 
     public function getPriority(): int
     {
-        // must be run before MethodArgumentSpaceFixer
-        return 0;
+        // must be run before ReturnTypeDeclarationFixer
+        return 1;
     }
 
     public function isCandidate(Tokens $tokens): bool

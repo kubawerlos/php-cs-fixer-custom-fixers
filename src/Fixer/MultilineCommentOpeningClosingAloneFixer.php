@@ -24,8 +24,8 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
     public function getPriority(): int
     {
         // Must be run after MultilineCommentOpeningClosingFixer and NoTrailingWhitespaceInCommentFixer
-        // Must be run before PhpdocTrimFixer
-        return -1;
+        // Must be run after PhpdocTrimFixer
+        return 1;
     }
 
     public function isCandidate(Tokens $tokens): bool
