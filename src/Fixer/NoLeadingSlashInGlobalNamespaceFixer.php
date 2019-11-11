@@ -25,7 +25,6 @@ $y = new \Baz();
 
     public function getPriority(): int
     {
-        // must be run before PhpdocToCommentFixer
         return 26;
     }
 

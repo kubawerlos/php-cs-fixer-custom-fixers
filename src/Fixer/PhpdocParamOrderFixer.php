@@ -33,6 +33,8 @@ function foo($a, $b, $c) {}
 
     public function getPriority(): int
     {
+        // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
+        // must be run before PhpdocAlignFixer
         return 5;
     }
 
