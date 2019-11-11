@@ -43,6 +43,7 @@ class FooTest extends TestCase {
 
     public function getPriority(): int
     {
+        // must be run before NoExtraBlankLinesFixer
         return 0;
     }
 

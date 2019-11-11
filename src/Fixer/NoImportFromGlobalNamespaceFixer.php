@@ -32,6 +32,7 @@ class Bar {
 
     public function getPriority(): int
     {
+        // must be run before PhpdocAlignFixer
         return 0;
     }
 

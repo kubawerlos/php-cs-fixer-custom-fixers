@@ -23,6 +23,7 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
 
     public function getPriority(): int
     {
+        // must be run after SingleLineThrowFixer and SingleQuoteFixer
         return -1;
     }
 

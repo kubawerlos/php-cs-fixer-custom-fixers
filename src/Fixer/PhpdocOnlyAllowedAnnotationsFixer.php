@@ -56,6 +56,7 @@ function foo_bar() {}
 
     public function getPriority(): int
     {
+        // must be run after CommentToPhpdocFixer
         // must be run before NoEmptyPhpdocFixer
         return 6;
     }
