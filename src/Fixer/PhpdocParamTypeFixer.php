@@ -31,7 +31,7 @@ function a($foo, $bar) {}
     {
         // must be run after CommentToPhpdocFixer
         // must be run before PhpdocAlignFixer
-        return -2;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
