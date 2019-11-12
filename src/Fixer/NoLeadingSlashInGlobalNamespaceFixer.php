@@ -25,7 +25,7 @@ $y = new \Baz();
 
     public function getPriority(): int
     {
-        return 26;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool

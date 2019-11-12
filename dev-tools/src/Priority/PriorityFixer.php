@@ -8,29 +8,95 @@ use PhpCsFixer\Fixer\FixerInterface;
 
 final class PriorityFixer
 {
-    /** @var string[] */
+    /** @var FixerInterface */
+    private $fixer;
+
+    /** @var self[] */
     private $fixersToRunAfter = [];
 
-    /** @var string[] */
+    /** @var self[] */
     private $fixersToRunBefore = [];
 
-    public function addFixerToRunAfter(FixerInterface $fixer): void
+    /** @var null|int */
+    private $priority;
+
+    public function __construct(FixerInterface $fixer, ?int $priority)
     {
-        $this->fixersToRunAfter[] = (new \ReflectionObject($fixer))->getShortName();
+        $this->fixer = $fixer;
+        $this->priority = $priority;
     }
 
-    public function addFixerToRunBefore(FixerInterface $fixer): void
+    public function addFixerToRunAfter(self $priorityFixer): void
     {
-        $this->fixersToRunBefore[] = (new \ReflectionObject($fixer))->getShortName();
+        $this->fixersToRunAfter[] = $priorityFixer;
     }
 
-    public function getFixersToRunAfter(): array
+    public function addFixerToRunBefore(self $priorityFixer): void
     {
-        return $this->fixersToRunAfter;
+        $this->fixersToRunBefore[] = $priorityFixer;
     }
 
-    public function getFixersToRunBefore(): array
+    public function hasPriority(): bool
     {
-        return $this->fixersToRunBefore;
+        return $this->priority !== null;
+    }
+
+    public function getPriority(): int
+    {
+        if ($this->priority === null) {
+            throw new \Exception(\sprintf('Fixer %s has not priority calculated', $this->fixer->getName()));
+        }
+
+        return $this->priority;
+    }
+
+    public function getFixerToRunAfterNames(): array
+    {
+        return $this->getFixerNames($this->fixersToRunAfter);
+    }
+
+    public function getFixerToRunBeforeNames(): array
+    {
+        return $this->getFixerNames($this->fixersToRunBefore);
+    }
+
+    private function getFixerNames(array $priorityFixers): array
+    {
+        $fixers = \array_map(
+            static function (self $priorityFixer): string {
+                return (new \ReflectionObject($priorityFixer->fixer))->getShortName();
+            },
+            $priorityFixers
+        );
+
+        \sort($fixers);
+
+        return $fixers;
+    }
+
+    public function calculatePriority(bool $requireAllRelationHavePriority): bool
+    {
+        $priority = 0;
+        foreach ($this->fixersToRunBefore as $priorityFixer) {
+            if (!$priorityFixer->hasPriority()) {
+                if ($requireAllRelationHavePriority) {
+                    return false;
+                }
+                continue;
+            }
+            $priority = \min($priority, $priorityFixer->getPriority() - 1);
+        }
+        foreach ($this->fixersToRunAfter as $priorityFixer) {
+            if (!$priorityFixer->hasPriority()) {
+                if ($requireAllRelationHavePriority) {
+                    return false;
+                }
+                continue;
+            }
+            $priority = \max($priority, $priorityFixer->getPriority() + 1);
+        }
+        $this->priority = $priority;
+
+        return true;
     }
 }

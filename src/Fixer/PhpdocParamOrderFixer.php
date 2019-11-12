@@ -35,7 +35,7 @@ function foo($a, $b, $c) {}
     {
         // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
         // must be run before PhpdocAlignFixer
-        return 5;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool

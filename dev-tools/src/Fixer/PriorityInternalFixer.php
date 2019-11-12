@@ -84,6 +84,20 @@ final class PriorityInternalFixer implements FixerInterface
                 ]
             );
         }
+
+        $priorityStartIndex = $tokens->getNextTokenOfKind($startIndex, [[T_RETURN]]) + 2;
+        if ($tokens[$priorityStartIndex]->isGivenKind(T_VARIABLE)) {
+            return;
+        }
+        $priorityEndIndex = $tokens->getNextTokenOfKind($priorityStartIndex, [';']) - 1;
+
+        $priorityCollection = PriorityCollection::create();
+        $priority = $priorityCollection->getPriorityFixer($className)->getPriority();
+
+        $priorityTokens = $priority < 0 ? [new Token('-')] : [];
+        $priorityTokens[] = new Token([T_LNUMBER, (string) \abs($priority)]);
+
+        $tokens->overrideRange($priorityStartIndex, $priorityEndIndex, $priorityTokens);
     }
 
     /**
@@ -94,11 +108,7 @@ final class PriorityInternalFixer implements FixerInterface
         $comments = [];
         $priorityCollection = PriorityCollection::create();
 
-        if (!$priorityCollection->hasPriorityFixer($className)) {
-            return [];
-        }
-
-        $fixersToRunBefore = $priorityCollection->getPriorityFixer($className)->getFixersToRunBefore();
+        $fixersToRunBefore = $priorityCollection->getPriorityFixer($className)->getFixerToRunBeforeNames();
         if ([] !== $fixersToRunBefore) {
             $comments[] = new Token([
                 T_COMMENT,
@@ -106,9 +116,8 @@ final class PriorityInternalFixer implements FixerInterface
             ]);
         }
 
-        $fixersToRunAfter = $priorityCollection->getPriorityFixer($className)->getFixersToRunAfter();
+        $fixersToRunAfter = $priorityCollection->getPriorityFixer($className)->getFixerToRunAfterNames();
         if ([] !== $fixersToRunAfter) {
-            \sort($fixersToRunAfter);
             $comments[] = new Token([
                 T_COMMENT,
                 \sprintf('// must be run before %s', \str_replace('`', '', Utils::naturalLanguageJoinWithBackticks($fixersToRunAfter))),
