@@ -53,7 +53,6 @@ final class NoUselessSprintfFixer extends AbstractFixer
                 continue;
             }
 
-            /** @var int $openParenthesis */
             $openParenthesis = $tokens->getNextTokenOfKind($index, ['(']);
 
             $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
@@ -62,7 +61,6 @@ final class NoUselessSprintfFixer extends AbstractFixer
                 continue;
             }
 
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
                 $this->removeTokenAndSiblingWhitespace($tokens, $prevIndex, 1);

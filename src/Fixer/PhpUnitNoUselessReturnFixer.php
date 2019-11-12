@@ -75,7 +75,6 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            /** @var int $openingBraceIndex */
             $openingBraceIndex = $tokens->getNextMeaningfulToken($index);
             if (!$tokens[$openingBraceIndex]->equals('(')) {
                 continue;
@@ -87,21 +86,17 @@ class FooTest extends TestCase {
 
             $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBraceIndex);
 
-            /** @var int $semicolonIndex */
             $semicolonIndex = $tokens->getNextMeaningfulToken($closingBraceIndex);
 
-            /** @var int $returnIndex */
             $returnIndex = $tokens->getNextMeaningfulToken($semicolonIndex);
             if (!$tokens[$returnIndex]->isGivenKind(T_RETURN)) {
                 continue;
             }
 
-            /** @var int $semicolonAfterReturnIndex */
             $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($returnIndex, [';', '(']);
 
             while ($tokens[$semicolonAfterReturnIndex]->equals('(')) {
                 $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $semicolonAfterReturnIndex);
-                /** @var int $semicolonAfterReturnIndex */
                 $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
             }
 
@@ -112,10 +107,8 @@ class FooTest extends TestCase {
 
     private function isTheSameClassCall(TokensAdapter $tokens, int $index): bool
     {
-        /** @var int $operatorIndex */
         $operatorIndex = $tokens->getPrevMeaningfulToken($index);
 
-        /** @var int $referenceIndex */
         $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
 
         return $tokens[$operatorIndex]->isGivenKind(T_OBJECT_OPERATOR) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this'], false)

@@ -119,7 +119,6 @@ function foo() {
 
             $operatorIndices = [$index];
             if ($tokens[$index]->equals(':')) {
-                /** @var int $prevIndex */
                 $prevIndex = $tokens->getPrevMeaningfulToken($index);
                 if ($tokens[$prevIndex]->equals('?')) {
                     $operatorIndices = [$prevIndex, $index];
@@ -166,11 +165,9 @@ function foo() {
      */
     private function fixOperatorLinebreak(TokensAdapter $tokens, array $operatorIndices): void
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
         $indexStart = $prevIndex + 1;
 
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
         $indexEnd = $nextIndex - 1;
 
@@ -198,10 +195,8 @@ function foo() {
      */
     private function fixMoveToTheBeginning(TokensAdapter $tokens, array $operatorIndices): void
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevTokenNonEmpty(\min($operatorIndices));
 
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
 
         for ($i = $nextIndex - 1; $i > \max($operatorIndices); $i--) {
@@ -223,7 +218,6 @@ function foo() {
      */
     private function fixMoveToTheEnd(TokensAdapter $tokens, array $operatorIndices): void
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
 
         /** @var int $nextIndex */

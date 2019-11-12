@@ -68,10 +68,8 @@ class Foo {
                 continue;
             }
 
-            /** @var int $nameIndex */
             $nameIndex = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
 
-            /** @var int $startIndex */
             $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
 
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);

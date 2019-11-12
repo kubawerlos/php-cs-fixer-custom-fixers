@@ -89,7 +89,6 @@ function foo($a, $b, $c) {}
      */
     private function getParamNames(TokensAdapter $tokens, int $functionIndex): array
     {
-        /** @var int $paramBlockStartIndex */
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
 
         $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);

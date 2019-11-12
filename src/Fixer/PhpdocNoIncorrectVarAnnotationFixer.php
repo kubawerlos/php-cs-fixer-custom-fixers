@@ -94,7 +94,6 @@ $bar = new Foo();
 
     private function removeVarAnnotationForControl(TokensAdapter $tokens, int $commentIndex, int $controlIndex): void
     {
-        /** @var int $index */
         $index = $tokens->getNextMeaningfulToken($controlIndex);
 
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);

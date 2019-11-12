@@ -16,7 +16,6 @@ final class TokenRemover
     public static function removeWithLinesIfPossible(TokensAdapter $tokens, int $index): void
     {
         if (self::isTokenOnlyMeaningfulInLine($tokens, $index)) {
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevTokenNonEmpty($index);
 
             $wasNewlineRemoved = self::handleWhitespaceBefore($tokens, $prevIndex);
@@ -37,7 +36,6 @@ final class TokenRemover
 
     private static function hasMeaningTokenInLineBefore(TokensAdapter $tokens, int $index): bool
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevTokenNonEmpty($index);
         if (!$tokens[$prevIndex]->isGivenKind([T_OPEN_TAG, T_WHITESPACE])) {
             return true;

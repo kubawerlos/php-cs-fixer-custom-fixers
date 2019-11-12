@@ -70,7 +70,6 @@ final class InternalClassCasingFixer extends AbstractFixer
 
     private function isGlobalClassUsage(TokensAdapter $tokens, int $index, bool $isInGlobalNamespace): bool
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
         if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
             $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);

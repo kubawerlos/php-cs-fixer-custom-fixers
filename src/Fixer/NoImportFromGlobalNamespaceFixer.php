@@ -90,15 +90,12 @@ class Bar {
      */
     private function removeImportFromGlobalNamespace(TokensAdapter $tokens, array $imports, int $index): array
     {
-        /** @var int $classNameIndex */
         $classNameIndex = $tokens->getNextMeaningfulToken($index);
 
         if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
-            /** @var int $classNameIndex */
             $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
         }
 
-        /** @var int $semicolonIndex */
         $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
         if ($tokens[$semicolonIndex]->getContent() === ';') {
             $imports[] = $tokens[$classNameIndex]->getContent();

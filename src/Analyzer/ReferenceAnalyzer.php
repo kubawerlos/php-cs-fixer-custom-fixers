@@ -22,7 +22,6 @@ final class ReferenceAnalyzer
             return false;
         }
 
-        /** @var int $index */
         $index = $tokens->getPrevMeaningfulToken($index);
         if ($tokens[$index]->equalsAny(['=', [T_AS], [T_CALLABLE], [T_DOUBLE_ARROW], [CT::T_ARRAY_TYPEHINT]])) {
             return true;

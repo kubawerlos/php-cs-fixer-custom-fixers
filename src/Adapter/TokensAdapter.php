@@ -23,6 +23,11 @@ final class TokensAdapter extends \SplFixedArray
         $this->tokens->clearAt($index);
     }
 
+    public function clearEmptyTokens(): void
+    {
+        $this->tokens->clearEmptyTokens();
+    }
+
     public function clearRange(int $indexStart, int $indexEnd): void
     {
         $this->tokens->clearRange($indexStart, $indexEnd);

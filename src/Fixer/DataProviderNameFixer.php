@@ -105,14 +105,12 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            /** @var int $functionNameIndex */
             $functionNameIndex = $tokens->getNextNonWhitespace($index);
             if (!$tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
                 continue;
             }
             $indices = ['name_index' => $functionNameIndex];
 
-            /** @var int $docCommentIndex */
             $docCommentIndex = $tokens->getPrevTokenNotOfKind(
                 $index,
                 [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]

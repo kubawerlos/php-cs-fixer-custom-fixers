@@ -64,7 +64,6 @@ function foo(&$x) {}
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
-        /** @var int $openParenthesis */
         $openParenthesis = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
 
         $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
@@ -72,7 +71,6 @@ function foo(&$x) {}
         $indices = [];
 
         foreach (\array_keys($argumentsAnalyzer->getArguments($tokens->tokens(), $openParenthesis, $closeParenthesis)) as $startIndexCandidate) {
-            /** @var int $index */
             $index = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
 
             $indices[] = $index;

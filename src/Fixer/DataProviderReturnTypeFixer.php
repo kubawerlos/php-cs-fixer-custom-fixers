@@ -79,7 +79,6 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            /** @var int $functionNameIndex */
             $functionNameIndex = $tokens->getNextNonWhitespace($index);
 
             if (!$tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
@@ -93,7 +92,6 @@ class FooTest extends TestCase {
             $typeAnalysis = $functionsAnalyzer->getFunctionReturnType($tokens->tokens(), $functionNameIndex);
 
             if ($typeAnalysis === null) {
-                /** @var int $argumentsStart */
                 $argumentsStart = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
                 $argumentsEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $argumentsStart);
                 $tokens->insertAt(
@@ -108,7 +106,6 @@ class FooTest extends TestCase {
             }
 
             if ($typeAnalysis->getName() !== 'iterable') {
-                /** @var int $startIndex */
                 $startIndex = $tokens->getNextMeaningfulToken($typeAnalysis->getStartIndex() - 1);
                 $tokens->overrideRange($startIndex, $typeAnalysis->getEndIndex(), [new Token([T_STRING, 'iterable'])]);
             }

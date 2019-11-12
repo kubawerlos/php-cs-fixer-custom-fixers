@@ -74,7 +74,6 @@ function foo(int $x = null) {
                 continue;
             }
 
-            /** @var int $paramBlockStartIndex */
             $paramBlockStartIndex = $tokens->getNextTokenOfKind($index, ['(']);
 
             $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
@@ -90,20 +89,16 @@ function foo(int $x = null) {
                 continue;
             }
 
-            /** @var int $variableIndex */
             $variableIndex = $tokens->getPrevTokenOfKind($i, [[T_VARIABLE]]);
 
-            /** @var int $typeIndex */
             $typeIndex = $tokens->getPrevMeaningfulToken($variableIndex);
 
             if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_STRING])) {
                 continue;
             }
 
-            /** @var int $separatorIndex */
             $separatorIndex = $tokens->getPrevTokenOfKind($typeIndex, ['(', ',']);
 
-            /** @var int $nullableIndex */
             $nullableIndex = $tokens->getNextMeaningfulToken($separatorIndex);
 
             if ($this->style === 'with_question_mark') {

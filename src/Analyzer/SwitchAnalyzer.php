@@ -20,11 +20,9 @@ final class SwitchAnalyzer
             throw new \InvalidArgumentException(\sprintf('Index %d is not "switch".', $switchIndex));
         }
 
-        /** @var int $indexParenthesisStart */
         $indexParenthesisStart = $tokens->getNextMeaningfulToken($switchIndex);
         $indexParenthesisEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
 
-        /** @var int $indexCurlyBracesStart */
         $indexCurlyBracesStart = $tokens->getNextMeaningfulToken($indexParenthesisEnd);
         $indexCurlyBracesEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $indexCurlyBracesStart);
 

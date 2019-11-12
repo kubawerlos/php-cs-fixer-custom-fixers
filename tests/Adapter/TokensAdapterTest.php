@@ -50,6 +50,16 @@ final class TokensAdapterTest extends TestCase
         $tokensAdapter->clearAt(1);
     }
 
+    public function testClearEmptyTokens(): void
+    {
+        $tokens = $this->createMock(Tokens::class);
+        $tokens->method('count')->willReturn(0);
+        $tokens->expects(static::once())->method('clearEmptyTokens');
+
+        $tokensAdapter = new TokensAdapter($tokens);
+        $tokensAdapter->clearEmptyTokens();
+    }
+
     public function testClearRange(): void
     {
         $tokens = $this->createMock(Tokens::class);
