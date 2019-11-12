@@ -3,8 +3,11 @@ parameters:
     paths:
         - ./src
     ignoreErrors:
-        - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::insertAt\(\) expects#'
-        - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::overrideRange\(\) expects#'
+        - '#^Method PhpCsFixerCustomFixers\\Adapter\\TokensAdapter::insertAt\(\) has parameter \$items with no typehint specified\.$#'
+        - '#^Method PhpCsFixerCustomFixers\\Adapter\\TokensAdapter::offsetGet\(\) has parameter \$index with no typehint specified\.$#'
+        - '#^Method PhpCsFixerCustomFixers\\Adapter\\TokensAdapter::offsetSet\(\) has parameter \$index with no typehint specified\.$#'
+        - '#^Method PhpCsFixerCustomFixers\\Adapter\\TokensAdapter::offsetSet\(\) has parameter \$value with no typehint specified\.$#'
+        - '#^Method PhpCsFixerCustomFixers\\Adapter\\TokensAdapter::overrideRange\(\) has parameter \$items with no typehint specified\.$#'
 
 includes:
     - ./dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon

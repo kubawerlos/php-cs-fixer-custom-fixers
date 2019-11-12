@@ -13,6 +13,7 @@ use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class DataProviderReturnTypeFixer extends AbstractFixer
 {
@@ -57,15 +58,17 @@ class FooTest extends TestCase {
         return true;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
+
+        /** @var int[] $indexes */
+        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens->tokens()) as $indexes) {
             $this->fixNames($tokens, $indexes[0], $indexes[1]);
         }
     }
 
-    private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
+    private function fixNames(TokensAdapter $tokens, int $startIndex, int $endIndex): void
     {
         $functionsAnalyzer = new FunctionsAnalyzer();
 
@@ -87,7 +90,7 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            $typeAnalysis = $functionsAnalyzer->getFunctionReturnType($tokens, $functionNameIndex);
+            $typeAnalysis = $functionsAnalyzer->getFunctionReturnType($tokens->tokens(), $functionNameIndex);
 
             if ($typeAnalysis === null) {
                 /** @var int $argumentsStart */
@@ -115,7 +118,7 @@ class FooTest extends TestCase {
     /**
      * @return string[]
      */
-    private function getDataProviderNames(Tokens $tokens, int $startIndex, int $endIndex): array
+    private function getDataProviderNames(TokensAdapter $tokens, int $startIndex, int $endIndex): array
     {
         $dataProviderNames = [];
 
@@ -125,9 +128,8 @@ class FooTest extends TestCase {
             }
 
             /** @var int $functionIndex */
-            $functionIndex = $tokens->getTokenNotOfKindSibling(
+            $functionIndex = $tokens->getNextTokenNotOfKind(
                 $index,
-                1,
                 [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
             );
 

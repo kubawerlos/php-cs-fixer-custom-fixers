@@ -10,6 +10,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class NoUselessCommentFixer extends AbstractFixer
 {
@@ -53,16 +54,15 @@ class Foo {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
                 continue;
             }
 
-            $nextIndex = $tokens->getTokenNotOfKindSibling(
+            $nextIndex = $tokens->getNextTokenNotOfKind(
                 $index,
-                1,
                 [[T_WHITESPACE], [T_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC]]
             );
             if ($nextIndex === null) {

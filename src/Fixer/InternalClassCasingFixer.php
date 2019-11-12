@@ -11,6 +11,7 @@ use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class InternalClassCasingFixer extends AbstractFixer
 {
@@ -37,16 +38,16 @@ final class InternalClassCasingFixer extends AbstractFixer
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
+        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens->tokens());
 
         foreach ($namespaces as $namespace) {
             $this->fixCasing($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
         }
     }
 
-    private function fixCasing(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
+    private function fixCasing(TokensAdapter $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->isGivenKind(T_STRING)) {
@@ -67,7 +68,7 @@ final class InternalClassCasingFixer extends AbstractFixer
         }
     }
 
-    private function isGlobalClassUsage(Tokens $tokens, int $index, bool $isInGlobalNamespace): bool
+    private function isGlobalClassUsage(TokensAdapter $tokens, int $index, bool $isInGlobalNamespace): bool
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
@@ -94,6 +95,7 @@ final class InternalClassCasingFixer extends AbstractFixer
 
     private function getCorrectCase(string $className): string
     {
+        /** @var null|array<string, string> $classes */
         static $classes;
 
         if ($classes === null) {

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace PhpCsFixerCustomFixers\Analyzer;
 
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\SwitchAnalysis;
 
@@ -13,7 +14,7 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\SwitchAnalysis;
  */
 final class SwitchAnalyzer
 {
-    public function getSwitchAnalysis(Tokens $tokens, int $switchIndex): SwitchAnalysis
+    public function getSwitchAnalysis(TokensAdapter $tokens, int $switchIndex): SwitchAnalysis
     {
         if (!$tokens[$switchIndex]->isGivenKind(T_SWITCH)) {
             throw new \InvalidArgumentException(\sprintf('Index %d is not "switch".', $switchIndex));

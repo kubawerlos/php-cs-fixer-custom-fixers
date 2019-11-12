@@ -8,6 +8,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoUselessDoctrineRepositoryCommentFixer extends AbstractFixer
@@ -43,9 +44,9 @@ class FooRepository extends EntityRepository {}
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }

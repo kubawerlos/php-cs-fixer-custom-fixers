@@ -13,6 +13,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer;
 use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
@@ -66,7 +67,12 @@ function foo() {
             $this->operators = self::BOOLEAN_OPERATORS;
         }
 
-        $this->position = $configuration['position'] ?? $this->position;
+        if (isset($configuration['position'])) {
+            /** @var string $position */
+            $position = $configuration['position'];
+
+            $this->position = $position;
+        }
     }
 
     public function getPriority(): int
@@ -89,7 +95,7 @@ function foo() {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         $referenceAnalyzer = new ReferenceAnalyzer();
 
@@ -130,7 +136,7 @@ function foo() {
      *
      * @return int[]
      */
-    private function getExcludedIndices(Tokens $tokens): array
+    private function getExcludedIndices(TokensAdapter $tokens): array
     {
         $indices = [];
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
@@ -145,7 +151,7 @@ function foo() {
     /**
      * @return int[]
      */
-    private function getCasesColonsForSwitch(Tokens $tokens, int $switchIndex): array
+    private function getCasesColonsForSwitch(TokensAdapter $tokens, int $switchIndex): array
     {
         return \array_map(
             static function (CaseAnalysis $caseAnalysis): int {
@@ -158,7 +164,7 @@ function foo() {
     /**
      * @param int[] $operatorIndices
      */
-    private function fixOperatorLinebreak(Tokens $tokens, array $operatorIndices): void
+    private function fixOperatorLinebreak(TokensAdapter $tokens, array $operatorIndices): void
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
@@ -190,10 +196,10 @@ function foo() {
     /**
      * @param int[] $operatorIndices
      */
-    private function fixMoveToTheBeginning(Tokens $tokens, array $operatorIndices): void
+    private function fixMoveToTheBeginning(TokensAdapter $tokens, array $operatorIndices): void
     {
         /** @var int $prevIndex */
-        $prevIndex = $tokens->getNonEmptySibling(\min($operatorIndices), -1);
+        $prevIndex = $tokens->getPrevTokenNonEmpty(\min($operatorIndices));
 
         /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
@@ -215,13 +221,13 @@ function foo() {
     /**
      * @param int[] $operatorIndices
      */
-    private function fixMoveToTheEnd(Tokens $tokens, array $operatorIndices): void
+    private function fixMoveToTheEnd(TokensAdapter $tokens, array $operatorIndices): void
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
 
         /** @var int $nextIndex */
-        $nextIndex = $tokens->getNonEmptySibling(\max($operatorIndices), 1);
+        $nextIndex = $tokens->getNextTokenNonEmpty(\max($operatorIndices));
 
         for ($i = $prevIndex + 1; $i < \max($operatorIndices); $i++) {
             if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
@@ -242,7 +248,7 @@ function foo() {
      *
      * @return Token[]
      */
-    private function getReplacementsAndClear(Tokens $tokens, array $indices, int $direction): array
+    private function getReplacementsAndClear(TokensAdapter $tokens, array $indices, int $direction): array
     {
         return \array_map(
             static function (int $index) use ($tokens, $direction): Token {
@@ -258,7 +264,7 @@ function foo() {
         );
     }
 
-    private function isMultiline(Tokens $tokens, int $indexStart, int $indexEnd): bool
+    private function isMultiline(TokensAdapter $tokens, int $indexStart, int $indexEnd): bool
     {
         for ($index = $indexStart; $index <= $indexEnd; $index++) {
             if (\strpos($tokens[$index]->getContent(), "\n") !== false) {

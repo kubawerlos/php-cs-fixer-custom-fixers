@@ -5,14 +5,14 @@ declare(strict_types = 1);
 namespace PhpCsFixerCustomFixers\Analyzer;
 
 use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 /**
  * @internal
  */
 final class ReferenceAnalyzer
 {
-    public function isReference(Tokens $tokens, int $index): bool
+    public function isReference(TokensAdapter $tokens, int $index): bool
     {
         if ($tokens[$index]->isGivenKind(CT::T_RETURN_REF)) {
             return true;

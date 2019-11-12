@@ -14,6 +14,7 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
@@ -94,7 +95,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     public function configure(?array $configuration = null): void
     {
-        $this->allowLinebreak = $configuration['allow_linebreak'] ?? $this->allowLinebreak;
+        $this->allowLinebreak = (bool) ($configuration['allow_linebreak'] ?? $this->allowLinebreak);
     }
 
     public function getPriority(): int
@@ -112,9 +113,9 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$token->isGivenKind($this->tokens)) {
                 continue;
             }
@@ -132,7 +133,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
         }
     }
 
-    private function canAddSpaceAfter(Tokens $tokens, int $index): bool
+    private function canAddSpaceAfter(TokensAdapter $tokens, int $index): bool
     {
         if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE)) {
             return !$this->allowLinebreak || Preg::match('/\R/', $tokens[$index + 1]->getContent()) !== 1;

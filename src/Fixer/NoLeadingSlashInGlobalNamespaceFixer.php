@@ -8,6 +8,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class NoLeadingSlashInGlobalNamespaceFixer extends AbstractFixer
 {
@@ -38,9 +39,9 @@ $y = new \Baz();
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if ($token->isGivenKind(T_NAMESPACE)) {
                 return;
             }
@@ -54,7 +55,7 @@ $y = new \Baz();
                 continue;
             }
 
-            $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_COMMENT], [T_DOC_COMMENT], [T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE]]);
+            $nextIndex = $tokens->getNextTokenNotOfKind($index, [[T_COMMENT], [T_DOC_COMMENT], [T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE]]);
             if ($tokens[$prevIndex]->isGivenKind(T_NEW) || $tokens[$nextIndex]->isGivenKind(T_DOUBLE_COLON)) {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }

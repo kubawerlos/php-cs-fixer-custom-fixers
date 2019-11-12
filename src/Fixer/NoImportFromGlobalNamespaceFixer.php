@@ -12,6 +12,7 @@ use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoImportFromGlobalNamespaceFixer extends AbstractFixer
@@ -46,14 +47,14 @@ class Bar {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach (\array_reverse((new NamespacesAnalyzer())->getDeclarations($tokens)) as $namespace) {
+        foreach (\array_reverse((new NamespacesAnalyzer())->getDeclarations($tokens->tokens())) as $namespace) {
             $this->fixImports($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
         }
     }
 
-    private function fixImports(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
+    private function fixImports(TokensAdapter $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
     {
         $imports = [];
 
@@ -82,7 +83,12 @@ class Bar {
         }
     }
 
-    private function removeImportFromGlobalNamespace(Tokens $tokens, array $imports, int $index): array
+    /**
+     * @param string[] $imports
+     *
+     * @return string[]
+     */
+    private function removeImportFromGlobalNamespace(TokensAdapter $tokens, array $imports, int $index): array
     {
         /** @var int $classNameIndex */
         $classNameIndex = $tokens->getNextMeaningfulToken($index);
@@ -103,7 +109,10 @@ class Bar {
         return $imports;
     }
 
-    private function updateComment(Tokens $tokens, array $imports, int $index): void
+    /**
+     * @param string[] $imports
+     */
+    private function updateComment(TokensAdapter $tokens, array $imports, int $index): void
     {
         $content = $tokens[$index]->getContent();
 
@@ -116,7 +125,7 @@ class Bar {
         }
     }
 
-    private function updateUsage(Tokens $tokens, array $imports, int $index): void
+    private function updateUsage(TokensAdapter $tokens, array $imports, int $index): void
     {
         if (!\in_array($tokens[$index]->getContent(), $imports, true)) {
             return;

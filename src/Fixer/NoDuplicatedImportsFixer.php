@@ -12,6 +12,7 @@ use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis;
 use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class NoDuplicatedImportsFixer extends AbstractFixer
 {
@@ -43,11 +44,11 @@ use Bar;
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        $useDeclarations = (new NamespaceUsesAnalyzer())->getDeclarationsFromTokens($tokens);
+        $useDeclarations = (new NamespaceUsesAnalyzer())->getDeclarationsFromTokens($tokens->tokens());
 
-        foreach ((new NamespacesAnalyzer())->getDeclarations($tokens) as $namespace) {
+        foreach ((new NamespacesAnalyzer())->getDeclarations($tokens->tokens()) as $namespace) {
             $currentNamespaceUseDeclarations = \array_filter(
                 $useDeclarations,
                 static function (NamespaceUseAnalysis $useDeclaration) use ($namespace): bool {
@@ -67,17 +68,13 @@ use Bar;
         }
     }
 
-    private function removeUseDeclaration(Tokens $tokens, NamespaceUseAnalysis $useDeclaration): void
+    private function removeUseDeclaration(TokensAdapter $tokens, NamespaceUseAnalysis $useDeclaration): void
     {
-        static $noUnusedImportsFixer, $reflectionMethod;
+        $noUnusedImportsFixer = new NoUnusedImportsFixer();
 
-        if ($reflectionMethod === null) {
-            $noUnusedImportsFixer = new NoUnusedImportsFixer();
+        $reflectionMethod = new \ReflectionMethod($noUnusedImportsFixer, 'removeUseDeclaration');
+        $reflectionMethod->setAccessible(true);
 
-            $reflectionMethod = new \ReflectionMethod($noUnusedImportsFixer, 'removeUseDeclaration');
-            $reflectionMethod->setAccessible(true);
-        }
-
-        $reflectionMethod->invoke($noUnusedImportsFixer, $tokens, $useDeclaration);
+        $reflectionMethod->invoke($noUnusedImportsFixer, $tokens->tokens(), $useDeclaration);
     }
 }

@@ -7,6 +7,7 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
+ * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
  * @covers \PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer
  */
 final class CommentSurroundedBySpacesFixerTest extends AbstractFixerTestCase

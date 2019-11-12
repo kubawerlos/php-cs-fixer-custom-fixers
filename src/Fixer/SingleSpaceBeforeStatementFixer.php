@@ -11,6 +11,7 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 {
@@ -91,7 +92,7 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             if (!$tokens[$index]->isGivenKind($this->tokens)) {
@@ -111,14 +112,14 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
         }
     }
 
-    private function fixTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
+    private function fixTwoTokensAfterOpenTag(TokensAdapter $tokens, int $index): void
     {
         if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
             $tokens->clearAt($index - 1);
         }
     }
 
-    private function fixMoreThanTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
+    private function fixMoreThanTwoTokensAfterOpenTag(TokensAdapter $tokens, int $index): void
     {
         if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
             if (Preg::match('/\R/', $tokens[$index - 1]->getContent()) !== 1) {

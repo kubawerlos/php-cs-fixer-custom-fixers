@@ -11,6 +11,7 @@ use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class DataProviderNameFixer extends AbstractFixer
 {
@@ -54,18 +55,22 @@ class FooTest extends TestCase {
         return true;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
+
+        /** @var int[] $indices */
+        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens->tokens()) as $indices) {
             $this->fixNames($tokens, $indices[0], $indices[1]);
         }
     }
 
-    private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
+    private function fixNames(TokensAdapter $tokens, int $startIndex, int $endIndex): void
     {
+        /** @var array<string, array<string, int>> $functions */
         $functions = $this->getFunctions($tokens, $startIndex, $endIndex);
 
+        /** @var array<string, string> $dataProvidersToRename */
         $dataProvidersToRename = $this->getDataProvidersToRename($functions);
 
         foreach ($dataProvidersToRename as $dataProviderName => $testName) {
@@ -92,7 +97,7 @@ class FooTest extends TestCase {
         }
     }
 
-    private function getFunctions(Tokens $tokens, int $startIndex, int $endIndex): array
+    private function getFunctions(TokensAdapter $tokens, int $startIndex, int $endIndex): array
     {
         $functions = [];
         for ($index = $startIndex; $index < $endIndex; $index++) {
@@ -108,9 +113,8 @@ class FooTest extends TestCase {
             $indices = ['name_index' => $functionNameIndex];
 
             /** @var int $docCommentIndex */
-            $docCommentIndex = $tokens->getTokenNotOfKindSibling(
+            $docCommentIndex = $tokens->getPrevTokenNotOfKind(
                 $index,
-                -1,
                 [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
             );
             if ($tokens[$docCommentIndex]->isGivenKind(T_DOC_COMMENT)) {
@@ -126,6 +130,9 @@ class FooTest extends TestCase {
         return $functions;
     }
 
+    /**
+     * @param array<string, array> $functions
+     */
     private function getDataProvidersToRename(array $functions): array
     {
         $dataProvidersUses = [];
@@ -133,6 +140,7 @@ class FooTest extends TestCase {
             if (!\array_key_exists('data_provider_names', $indices)) {
                 continue;
             }
+            /** @var string $provider */
             foreach ($indices['data_provider_names'] as $provider) {
                 if (\array_key_exists($provider, $dataProvidersUses)) {
                     $dataProvidersUses[$provider] = '';

@@ -13,6 +13,7 @@ use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class PhpdocSelfAccessorFixer extends AbstractFixer
 {
@@ -46,18 +47,18 @@ class Foo {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
+        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens->tokens());
 
         foreach ($namespaces as $namespace) {
             $this->fixPhpdocSelfAccessor($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName());
         }
     }
 
-    private function fixPhpdocSelfAccessor(Tokens $tokens, int $namespaceStartIndex, int $namespaceEndIndex, string $fullName): void
+    private function fixPhpdocSelfAccessor(TokensAdapter $tokens, int $namespaceStartIndex, int $namespaceEndIndex, string $fullName): void
     {
-        $tokensAnalyzer = new TokensAnalyzer($tokens);
+        $tokensAnalyzer = new TokensAnalyzer($tokens->tokens());
 
         $index = $namespaceStartIndex;
         while ($index < $namespaceEndIndex) {
@@ -83,7 +84,7 @@ class Foo {
         }
     }
 
-    private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $classyName, int $startIndex, int $endIndex): void
+    private function replaceNameOccurrences(TokensAdapter $tokens, string $namespace, string $classyName, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {

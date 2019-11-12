@@ -13,6 +13,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class NullableParamStyleFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
@@ -42,7 +43,12 @@ function foo(int $x = null) {
 
     public function configure(?array $configuration = null): void
     {
-        $this->style = $configuration['style'] ?? $this->style;
+        if (isset($configuration['style'])) {
+            /** @var string $style */
+            $style = $configuration['style'];
+
+            $this->style = $style;
+        }
     }
 
     public function getPriority(): int
@@ -61,7 +67,7 @@ function foo(int $x = null) {
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             if (!$tokens[$index]->isGivenKind(T_FUNCTION)) {
@@ -77,7 +83,7 @@ function foo(int $x = null) {
         }
     }
 
-    private function fixFunction(Tokens $tokens, int $paramBlockStartIndex, int $paramBlockEndIndex): void
+    private function fixFunction(TokensAdapter $tokens, int $paramBlockStartIndex, int $paramBlockEndIndex): void
     {
         for ($i = $paramBlockEndIndex; $i > $paramBlockStartIndex; $i--) {
             if (!$tokens[$i]->equals([T_STRING, 'null'], false)) {

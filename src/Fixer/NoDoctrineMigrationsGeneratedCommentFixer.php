@@ -8,6 +8,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoDoctrineMigrationsGeneratedCommentFixer extends AbstractFixer
@@ -54,9 +55,9 @@ final class Version20180609123456 extends AbstractMigration
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
                 continue;
             }

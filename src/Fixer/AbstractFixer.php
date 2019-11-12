@@ -6,6 +6,8 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 abstract class AbstractFixer implements DefinedFixerInterface
 {
@@ -19,6 +21,13 @@ abstract class AbstractFixer implements DefinedFixerInterface
 
         return 'PhpCsFixerCustomFixers/' . \strtolower($name);
     }
+
+    final public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        $this->applyFix($file, new TokensAdapter($tokens));
+    }
+
+    abstract protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void;
 
     final public function getName(): string
     {

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Tests\Analyzer;
 
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\SwitchAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
@@ -24,7 +25,7 @@ final class SwitchAnalyzerTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Index 3 is not "switch".');
 
-        $analyzer->getSwitchAnalysis(Tokens::fromCode('<?php $a;$b;$c;'), 3);
+        $analyzer->getSwitchAnalysis(new TokensAdapter(Tokens::fromCode('<?php $a;$b;$c;')), 3);
     }
 
     /**
@@ -32,7 +33,7 @@ final class SwitchAnalyzerTest extends TestCase
      */
     public function testGettingSwitchAnalysis(SwitchAnalysis $expected, string $code, int $index): void
     {
-        $tokens = Tokens::fromCode($code);
+        $tokens = new TokensAdapter(Tokens::fromCode($code));
         $analyzer = new SwitchAnalyzer();
 
         static::assertSame(\serialize($expected), \serialize(($analyzer->getSwitchAnalysis($tokens, $index))));

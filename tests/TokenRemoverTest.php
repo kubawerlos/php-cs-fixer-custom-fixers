@@ -6,6 +6,7 @@ namespace Tests;
 
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 use PHPUnit\Framework\TestCase;
 
@@ -24,18 +25,18 @@ final class TokenRemoverTest extends TestCase
     public function testFix(string $expected, ?string $input = null): void
     {
         Tokens::clearCache();
-        $tokens = Tokens::fromCode($input);
+        $tokens = new TokensAdapter(Tokens::fromCode($input));
 
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if ($token->equals([T_COMMENT, '/* to remove */'])) {
                 TokenRemover::removeWithLinesIfPossible($tokens, $index);
             }
         }
 
-        $tokens->clearEmptyTokens();
+        $tokens->tokens()->clearEmptyTokens();
 
         Tokens::clearCache();
-        static::assertTokens(Tokens::fromCode($expected), $tokens);
+        static::assertTokens(Tokens::fromCode($expected), $tokens->tokens());
     }
 
     public function provideFixCases(): iterable

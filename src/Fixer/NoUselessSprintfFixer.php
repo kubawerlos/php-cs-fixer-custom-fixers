@@ -10,6 +10,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class NoUselessSprintfFixer extends AbstractFixer
 {
@@ -38,17 +39,17 @@ final class NoUselessSprintfFixer extends AbstractFixer
         return true;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
         $functionsAnalyzer = new FunctionsAnalyzer();
 
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$token->equals([T_STRING, 'sprintf'], false)) {
                 continue;
             }
 
-            if (!$functionsAnalyzer->isGlobalFunctionCall($tokens, $index)) {
+            if (!$functionsAnalyzer->isGlobalFunctionCall($tokens->tokens(), $index)) {
                 continue;
             }
 
@@ -57,7 +58,7 @@ final class NoUselessSprintfFixer extends AbstractFixer
 
             $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
-            if ($argumentsAnalyzer->countArguments($tokens, $openParenthesis, $closeParenthesis) !== 1) {
+            if ($argumentsAnalyzer->countArguments($tokens->tokens(), $openParenthesis, $closeParenthesis) !== 1) {
                 continue;
             }
 
@@ -72,7 +73,7 @@ final class NoUselessSprintfFixer extends AbstractFixer
         }
     }
 
-    private function removeTokenAndSiblingWhitespace(Tokens $tokens, int $index, int $direction): void
+    private function removeTokenAndSiblingWhitespace(TokensAdapter $tokens, int $index, int $direction): void
     {
         $tokens->clearAt($index);
         if ($tokens[$index + $direction]->isWhitespace()) {

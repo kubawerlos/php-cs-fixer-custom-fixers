@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Tests\Analyzer;
 
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer;
 use PHPUnit\Framework\TestCase;
 
@@ -19,14 +20,14 @@ final class ReferenceAnalyzerTest extends TestCase
     {
         $analyzer = new ReferenceAnalyzer();
 
-        static::assertFalse($analyzer->isReference(Tokens::fromCode('<?php $foo;$bar;$baz;'), 3));
+        static::assertFalse($analyzer->isReference(new TokensAdapter(Tokens::fromCode('<?php $foo;$bar;$baz;')), 3));
     }
 
     public function testReferenceAndNonReferenceTogether(): void
     {
         $analyzer = new ReferenceAnalyzer();
 
-        $tokens = Tokens::fromCode('<?php function foo(&$bar = BAZ & QUX) {};');
+        $tokens = new TokensAdapter(Tokens::fromCode('<?php function foo(&$bar = BAZ & QUX) {};'));
 
         static::assertTrue($analyzer->isReference($tokens, 5));
         static::assertFalse($analyzer->isReference($tokens, 12));
@@ -104,9 +105,9 @@ class Foo {
     {
         $analyzer = new ReferenceAnalyzer();
 
-        $tokens = Tokens::fromCode($code);
+        $tokens = new TokensAdapter(Tokens::fromCode($code));
 
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if ($token->getContent() === '&') {
                 static::assertSame($expected, $analyzer->isReference($tokens, $index));
             }

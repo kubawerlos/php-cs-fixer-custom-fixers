@@ -9,6 +9,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
 {
@@ -39,9 +40,9 @@ function foo(&$x) {}
         return true;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$token->isGivenKind(T_FUNCTION)) {
                 continue;
             }
@@ -59,7 +60,7 @@ function foo(&$x) {}
     /**
      * @return int[]
      */
-    private function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex): array
+    private function getArgumentStartIndices(TokensAdapter $tokens, int $functionNameIndex): array
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
@@ -70,7 +71,7 @@ function foo(&$x) {}
 
         $indices = [];
 
-        foreach (\array_keys($argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis)) as $startIndexCandidate) {
+        foreach (\array_keys($argumentsAnalyzer->getArguments($tokens->tokens(), $openParenthesis, $closeParenthesis)) as $startIndexCandidate) {
             /** @var int $index */
             $index = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
 

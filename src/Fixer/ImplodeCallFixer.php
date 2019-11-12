@@ -10,6 +10,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 /**
  * @deprecated use "implode_call" instead
@@ -51,16 +52,16 @@ implode($foo, "") . implode($bar);
         return $this->fixer->isRisky();
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
-    {
-        $this->fixer->fix($file, $tokens);
-    }
-
     /**
      * @return string[]
      */
     public function getSuccessorsNames(): array
     {
         return [$this->fixer->getName()];
+    }
+
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
+    {
+        $this->fixer->fix($file, $tokens->tokens());
     }
 }

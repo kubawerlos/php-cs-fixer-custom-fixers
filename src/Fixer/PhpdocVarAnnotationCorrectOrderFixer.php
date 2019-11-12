@@ -8,6 +8,7 @@ use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 /**
  * @deprecated use "phpdoc_var_annotation_correct_order" instead
@@ -45,16 +46,16 @@ final class PhpdocVarAnnotationCorrectOrderFixer extends AbstractFixer implement
         return $this->fixer->isRisky();
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
-    {
-        $this->fixer->fix($file, $tokens);
-    }
-
     /**
      * @return string[]
      */
     public function getSuccessorsNames(): array
     {
         return [$this->fixer->getName()];
+    }
+
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
+    {
+        $this->fixer->fix($file, $tokens->tokens());
     }
 }

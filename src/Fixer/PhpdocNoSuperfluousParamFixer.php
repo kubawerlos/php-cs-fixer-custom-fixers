@@ -11,6 +11,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class PhpdocNoSuperfluousParamFixer extends AbstractFixer
 {
@@ -47,14 +48,14 @@ function foo($b, $s) {}
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
             if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
 
-            $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]);
+            $functionIndex = $tokens->getNextTokenNotOfKind($index, [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]);
             if ($functionIndex === null || !$tokens[$functionIndex]->isGivenKind(T_FUNCTION)) {
                 continue;
             }
@@ -78,7 +79,7 @@ function foo($b, $s) {}
     /**
      * @return string[]
      */
-    private function getParamNames(Tokens $tokens, int $functionIndex): array
+    private function getParamNames(TokensAdapter $tokens, int $functionIndex): array
     {
         /** @var int $paramBlockStartIndex */
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);

@@ -10,6 +10,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 {
@@ -37,9 +38,9 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
                 continue;
             }
@@ -53,7 +54,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
     }
 
-    private function fixOpening(Tokens $tokens, int $index): void
+    private function fixOpening(TokensAdapter $tokens, int $index): void
     {
         $token = $tokens[$index];
 
@@ -80,7 +81,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
     }
 
-    private function fixClosing(Tokens $tokens, int $index): void
+    private function fixClosing(TokensAdapter $tokens, int $index): void
     {
         $token = $tokens[$index];
 

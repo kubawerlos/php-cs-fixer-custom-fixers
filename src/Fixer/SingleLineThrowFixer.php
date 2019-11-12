@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 /**
  * @deprecated use "single_line_throw" instead
@@ -42,16 +43,16 @@ final class SingleLineThrowFixer extends AbstractFixer implements DeprecatedFixe
         return $this->fixer->isRisky();
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
-    {
-        $this->fixer->fix($file, $tokens);
-    }
-
     /**
      * @return string[]
      */
     public function getSuccessorsNames(): array
     {
         return [$this->fixer->getName()];
+    }
+
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
+    {
+        $this->fixer->fix($file, $tokens->tokens());
     }
 }

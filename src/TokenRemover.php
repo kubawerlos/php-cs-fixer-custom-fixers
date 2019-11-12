@@ -6,22 +6,22 @@ namespace PhpCsFixerCustomFixers;
 
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
-use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 /**
  * @internal
  */
 final class TokenRemover
 {
-    public static function removeWithLinesIfPossible(Tokens $tokens, int $index): void
+    public static function removeWithLinesIfPossible(TokensAdapter $tokens, int $index): void
     {
         if (self::isTokenOnlyMeaningfulInLine($tokens, $index)) {
             /** @var int $prevIndex */
-            $prevIndex = $tokens->getNonEmptySibling($index, -1);
+            $prevIndex = $tokens->getPrevTokenNonEmpty($index);
 
             $wasNewlineRemoved = self::handleWhitespaceBefore($tokens, $prevIndex);
 
-            $nextIndex = $tokens->getNonEmptySibling($index, 1);
+            $nextIndex = $tokens->getNextTokenNonEmpty($index);
             if ($nextIndex !== null) {
                 self::handleWhitespaceAfter($tokens, $nextIndex, $wasNewlineRemoved);
             }
@@ -30,15 +30,15 @@ final class TokenRemover
         $tokens->clearTokenAndMergeSurroundingWhitespace($index);
     }
 
-    private static function isTokenOnlyMeaningfulInLine(Tokens $tokens, int $index): bool
+    private static function isTokenOnlyMeaningfulInLine(TokensAdapter $tokens, int $index): bool
     {
         return !self::hasMeaningTokenInLineBefore($tokens, $index) && !self::hasMeaningTokenInLineAfter($tokens, $index);
     }
 
-    private static function hasMeaningTokenInLineBefore(Tokens $tokens, int $index): bool
+    private static function hasMeaningTokenInLineBefore(TokensAdapter $tokens, int $index): bool
     {
         /** @var int $prevIndex */
-        $prevIndex = $tokens->getNonEmptySibling($index, -1);
+        $prevIndex = $tokens->getPrevTokenNonEmpty($index);
         if (!$tokens[$prevIndex]->isGivenKind([T_OPEN_TAG, T_WHITESPACE])) {
             return true;
         }
@@ -48,7 +48,7 @@ final class TokenRemover
         }
 
         if (Preg::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
-            $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
+            $prevPrevIndex = $tokens->getPrevTokenNonEmpty($prevIndex);
             if (!$tokens[$prevPrevIndex]->isGivenKind(T_OPEN_TAG) || Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
                 return true;
             }
@@ -57,9 +57,9 @@ final class TokenRemover
         return false;
     }
 
-    private static function hasMeaningTokenInLineAfter(Tokens $tokens, int $index): bool
+    private static function hasMeaningTokenInLineAfter(TokensAdapter $tokens, int $index): bool
     {
-        $nextIndex = $tokens->getNonEmptySibling($index, 1);
+        $nextIndex = $tokens->getNextTokenNonEmpty($index);
         if ($nextIndex === null) {
             return false;
         }
@@ -70,7 +70,7 @@ final class TokenRemover
         return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) !== 1;
     }
 
-    private static function handleWhitespaceBefore(Tokens $tokens, int $index): bool
+    private static function handleWhitespaceBefore(TokensAdapter $tokens, int $index): bool
     {
         if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
             return false;
@@ -88,7 +88,7 @@ final class TokenRemover
         return $contentWithoutTrailingSpaces !== $contentWithoutTrailingSpacesAndNewline;
     }
 
-    private static function handleWhitespaceAfter(Tokens $tokens, int $index, bool $wasNewlineRemoved): void
+    private static function handleWhitespaceAfter(TokensAdapter $tokens, int $index, bool $wasNewlineRemoved): void
     {
         $pattern = $wasNewlineRemoved ? '/^\h+/' : '/^\h*\R/';
 

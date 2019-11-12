@@ -11,6 +11,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
@@ -42,9 +43,9 @@ $bar = new Foo();
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        foreach ($tokens->toArray() as $index => $token) {
             if (!$this->isTokenCandidate($token)) {
                 continue;
             }
@@ -52,13 +53,12 @@ $bar = new Foo();
             // remove ones not having type at the beginning
             $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\s+[\?\\\\a-zA-Z_\x7f-\xff]/');
 
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
-
-            if ($nextIndex === null) {
+            if (!$tokens->hasNextMeaningfulToken($index)) {
                 $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
 
                 return;
             }
+            $nextIndex = $tokens->getNextMeaningfulToken($index);
 
             if ($tokens[$nextIndex]->isGivenKind([T_PRIVATE, T_PROTECTED, T_PUBLIC, T_VAR, T_STATIC])) {
                 continue;
@@ -83,7 +83,7 @@ $bar = new Foo();
         return $token->isGivenKind(T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
     }
 
-    private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void
+    private function removeVarAnnotation(TokensAdapter $tokens, int $index, array $allowedVariables): void
     {
         $this->removeVarAnnotationNotMatchingPattern(
             $tokens,
@@ -92,7 +92,7 @@ $bar = new Foo();
         );
     }
 
-    private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex): void
+    private function removeVarAnnotationForControl(TokensAdapter $tokens, int $commentIndex, int $controlIndex): void
     {
         /** @var int $index */
         $index = $tokens->getNextMeaningfulToken($controlIndex);
@@ -112,7 +112,7 @@ $bar = new Foo();
         $this->removeVarAnnotation($tokens, $commentIndex, $variables);
     }
 
-    private function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
+    private function removeVarAnnotationNotMatchingPattern(TokensAdapter $tokens, int $index, ?string $pattern): void
     {
         $doc = new DocBlock($tokens[$index]->getContent());
 

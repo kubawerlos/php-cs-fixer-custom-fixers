@@ -10,6 +10,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 final class NoUnneededConcatenationFixer extends AbstractFixer
 {
@@ -37,7 +38,7 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             if (!$tokens[$index]->equals('.')) {
@@ -66,7 +67,7 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
         }
     }
 
-    private function areOnlyHorizontalWhitespacesBetween(Tokens $tokens, int $indexStart, int $indexEnd): bool
+    private function areOnlyHorizontalWhitespacesBetween(TokensAdapter $tokens, int $indexStart, int $indexEnd): bool
     {
         for ($index = $indexStart + 1; $index < $indexEnd; $index++) {
             if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
@@ -80,7 +81,7 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
         return true;
     }
 
-    private function fixConcat(Tokens $tokens, int $prevIndex, int $nextIndex): void
+    private function fixConcat(TokensAdapter $tokens, int $prevIndex, int $nextIndex): void
     {
         if ($tokens[$prevIndex]->getContent()[0] !== $tokens[$nextIndex]->getContent()[0]) {
             return;

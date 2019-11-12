@@ -9,6 +9,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 
 /**
  * @deprecated use NoUselessCommentFixer instead
@@ -53,16 +54,16 @@ class Foo {
         return $this->fixer->isRisky();
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
-    {
-        $this->fixer->fix($file, $tokens);
-    }
-
     /**
      * @return string[]
      */
     public function getSuccessorsNames(): array
     {
         return [(new \ReflectionObject($this->fixer))->getShortName()];
+    }
+
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
+    {
+        $this->fixer->fix($file, $tokens->tokens());
     }
 }

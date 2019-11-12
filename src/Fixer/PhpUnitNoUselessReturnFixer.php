@@ -10,6 +10,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Utils;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpUnitNoUselessReturnFixer extends AbstractFixer
@@ -57,15 +58,17 @@ class FooTest extends TestCase {
         return true;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
+
+        /** @var int[] $indexes */
+        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens->tokens()) as $indexes) {
             $this->removeUselessReturns($tokens, $indexes[0], $indexes[1]);
         }
     }
 
-    private function removeUselessReturns(Tokens $tokens, int $startIndex, int $endIndex): void
+    private function removeUselessReturns(TokensAdapter $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->equalsAny(self::FUNCTION_TOKENS, false)) {
@@ -107,7 +110,7 @@ class FooTest extends TestCase {
         }
     }
 
-    private function isTheSameClassCall(Tokens $tokens, int $index): bool
+    private function isTheSameClassCall(TokensAdapter $tokens, int $index): bool
     {
         /** @var int $operatorIndex */
         $operatorIndex = $tokens->getPrevMeaningfulToken($index);

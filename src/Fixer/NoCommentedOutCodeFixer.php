@@ -10,6 +10,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\CommentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\TokensAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoCommentedOutCodeFixer extends AbstractFixer
@@ -38,7 +39,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         return false;
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    protected function applyFix(\SplFileInfo $file, TokensAdapter $tokens): void
     {
         $commentsAnalyzer = new CommentsAnalyzer();
 
@@ -51,7 +52,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
                 $commentIndices = [$index];
             } else {
                 /** @var int[] $commentIndices */
-                $commentIndices = $commentsAnalyzer->getCommentBlockIndices($tokens, $index);
+                $commentIndices = $commentsAnalyzer->getCommentBlockIndices($tokens->tokens(), $index);
             }
 
             $indicesToRemove = $this->getIndicesToRemove($tokens, $commentIndices);
@@ -68,7 +69,12 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         }
     }
 
-    private function getIndicesToRemove(Tokens $tokens, array $commentIndices): array
+    /**
+     * @param int[] $commentIndices
+     *
+     * @return int[]
+     */
+    private function getIndicesToRemove(TokensAdapter $tokens, array $commentIndices): array
     {
         $indicesToRemove = [];
         $testedIndices = [];
