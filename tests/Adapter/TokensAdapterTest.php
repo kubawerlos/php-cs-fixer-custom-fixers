@@ -16,6 +16,30 @@ use PHPUnit\Framework\TestCase;
  */
 final class TokensAdapterTest extends TestCase
 {
+    public function testMethodsAreSorted(): void
+    {
+        $reflection = new \ReflectionClass(TokensAdapter::class);
+
+        $methods = \array_filter(
+            $reflection->getMethods(),
+            static function (\ReflectionMethod $method) use ($reflection): bool {
+                return $method->getDeclaringClass()->getName() === $reflection->getName();
+            }
+        );
+
+        $methodNames = \array_map(
+            static function (\ReflectionMethod $method): string {
+                return $method->getName();
+            },
+            $methods
+        );
+
+        $sortedMethodNames = $methodNames;
+        \sort($sortedMethodNames);
+
+        static::assertSame($sortedMethodNames, $methodNames);
+    }
+
     public function testClearAt(): void
     {
         $tokens = $this->createMock(Tokens::class);
