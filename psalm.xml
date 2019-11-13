@@ -3,14 +3,12 @@
 <psalm xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
        xmlns='https://getpsalm.org/schema/config'
        xsi:schemaLocation='https://getpsalm.org/schema/config dev-tools/vendor/vimeo/psalm/config.xsd'
+       allowStringToStandInForClass='true'
+       findUnusedCode='true'
+       findUnusedVariablesAndParams='true'
 >
     <projectFiles>
         <directory name='./src' />
-        <directory name='./dev-tools/src' />
-        <ignoreFiles>
-            <file name='./dev-tools/src/Readme/php-cs-fixer.config.after.php' />
-            <file name='./dev-tools/src/Readme/php-cs-fixer.config.before.php' />
-        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
@@ -18,20 +16,14 @@
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
         <InvalidArgument errorLevel='suppress' />
-        <InvalidStringClass>
-            <errorLevel type='suppress'>
-                <file name='./dev-tools/src/Fixers.php' />
-                <file name='./src/Fixers.php' />
-            </errorLevel>
-        </InvalidStringClass>
         <LoopInvalidation errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
         <PossiblyUnusedMethod>
             <errorLevel type='suppress'>
-                <file name='./dev-tools/src/Fixer/OrderedClassElementsInternalFixer.php' />
                 <file name='./src/Analyzer/Analysis/SwitchAnalysis.php' />
+                <file name='./src/Fixer/DeprecatingFixerInterface.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
         <UnusedClass errorLevel='suppress' />
