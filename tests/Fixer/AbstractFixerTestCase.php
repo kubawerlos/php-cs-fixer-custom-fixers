@@ -84,6 +84,11 @@ abstract class AbstractFixerTestCase extends TestCase
         static::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
 
+    final public function testPriority(): void
+    {
+        static::assertIsInt($this->fixer->getPriority());
+    }
+
     final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
     {
         if ($configuration !== null) {

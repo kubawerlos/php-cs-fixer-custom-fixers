@@ -4,12 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
-use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
-
 /**
  * @internal
  *
@@ -17,15 +11,6 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
  */
 final class NoUselessClassCommentFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new NoEmptyCommentFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new PhpdocSeparationFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new PhpdocTrimConsecutiveBlankLineSeparationFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

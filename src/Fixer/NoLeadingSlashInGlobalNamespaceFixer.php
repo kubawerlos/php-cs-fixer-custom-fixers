@@ -25,8 +25,7 @@ $y = new \Baz();
 
     public function getPriority(): int
     {
-        // must be run before PhpdocToCommentFixer
-        return 26;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -41,7 +40,9 @@ $y = new \Baz();
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        for ($index = 0; $index < $tokens->count(); $index++) {
+            $token = $tokens[$index];
+
             if ($token->isGivenKind(T_NAMESPACE)) {
                 return;
             }

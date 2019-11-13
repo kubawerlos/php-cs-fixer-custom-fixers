@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
-
 /**
  * @internal
  *
@@ -13,11 +11,6 @@ use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
  */
 final class PhpdocNoSuperfluousParamFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertGreaterThan((new NoEmptyPhpdocFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

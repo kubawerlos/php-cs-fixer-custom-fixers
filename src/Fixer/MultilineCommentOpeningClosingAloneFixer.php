@@ -23,9 +23,8 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
     public function getPriority(): int
     {
-        // Must be run after MultilineCommentOpeningClosingFixer and NoTrailingWhitespaceInCommentFixer
-        // Must be run before PhpdocTrimFixer
-        return -1;
+        // must be run before MultilineCommentOpeningClosingFixer, NoTrailingWhitespaceInCommentFixer and PhpdocTrimFixer
+        return 1;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -40,7 +39,9 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            $token = $tokens[$index];
+
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
                 continue;
             }
@@ -63,21 +64,21 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
 
         Preg::match('#\R(\h*)#', $token->getContent(), $matches);
-        $indent = $matches[1];
+        $indent = $matches[1] . '*';
 
-        Preg::match('#^(/\*+)(.*?)(\R)(.*)$#s', $token->getContent(), $matches);
+        Preg::match('#^(?<opening>/\*+)(?<before_newline>.*?)(?<newline>\R)(?<after_newline>.*)$#s', $token->getContent(), $matches);
         if ($matches === []) {
             return;
         }
 
-        if ($matches[2][0] === '/') {
-            $matches[2] = ' ' . $matches[2];
+        if ($matches['before_newline'][0] !== ' ') {
+            $indent .= ' ';
         }
 
-        $newContent = $matches[1] . $matches[3] . $indent . '*' . $matches[2] . $matches[3] . $matches[4];
+        $newContent = $matches['opening'] . $matches['newline'] . $indent . $matches['before_newline'] . $matches['newline'] . $matches['after_newline'];
 
         if ($newContent !== $token->getContent()) {
-            $tokens[$index] = new Token([$token->getId(), $newContent]);
+            $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
         }
     }
 

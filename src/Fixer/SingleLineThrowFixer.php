@@ -28,6 +28,7 @@ final class SingleLineThrowFixer extends AbstractFixer implements DeprecatedFixe
 
     public function getPriority(): int
     {
+        // must be run before ConcatSpaceFixer and NoUnneededConcatenationFixer
         return $this->fixer->getPriority();
     }
 

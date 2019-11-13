@@ -4,11 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer;
-
 /**
  * @internal
  *
@@ -16,14 +11,6 @@ use PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer;
  */
 final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertLessThan((new CommentToPhpdocFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertLessThan((new PhpdocAddMissingParamAnnotationFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertLessThan((new PhpdocNoSuperfluousParamFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new PhpdocAlignFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

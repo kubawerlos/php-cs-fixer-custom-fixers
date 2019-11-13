@@ -94,7 +94,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     public function configure(?array $configuration = null): void
     {
-        $this->allowLinebreak = $configuration['allow_linebreak'] ?? $this->allowLinebreak;
+        $this->allowLinebreak = (bool) ($configuration['allow_linebreak'] ?? $this->allowLinebreak);
     }
 
     public function getPriority(): int
@@ -114,8 +114,8 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind($this->tokens)) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if (!$tokens[$index]->isGivenKind($this->tokens)) {
                 continue;
             }
 

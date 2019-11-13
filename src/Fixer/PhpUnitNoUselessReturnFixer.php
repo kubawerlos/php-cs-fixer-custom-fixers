@@ -43,7 +43,8 @@ class FooTest extends TestCase {
 
     public function getPriority(): int
     {
-        return -21;
+        // must be run before NoExtraBlankLinesFixer
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -59,6 +60,8 @@ class FooTest extends TestCase {
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
+
+        /** @var int[] $indexes */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
             $this->removeUselessReturns($tokens, $indexes[0], $indexes[1]);
         }

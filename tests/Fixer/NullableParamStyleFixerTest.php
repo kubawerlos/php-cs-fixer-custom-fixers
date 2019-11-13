@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
-
 /**
  * @internal
  *
@@ -13,11 +11,6 @@ use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
  */
 final class NullableParamStyleFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertGreaterThan((new NoUnreachableDefaultArgumentValueFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
@@ -106,6 +99,17 @@ final class NullableParamStyleFixerTest extends AbstractFixerTestCase
         yield [
             '<?php $foo = function (?int $x = null, $y = null) {};',
             '<?php $foo = function (int $x = null, $y = null) {};',
+        ];
+
+        yield [
+            '<?php $foo = function (?int &$x = null) {};',
+            '<?php $foo = function (int &$x = null) {};',
+        ];
+
+        yield [
+            '<?php $foo = function (int &$x = null) {};',
+            '<?php $foo = function (?int &$x = null) {};',
+            ['style' => 'without_question_mark'],
         ];
     }
 }

@@ -32,6 +32,7 @@ class Bar {
 
     public function getPriority(): int
     {
+        // must be run before PhpdocAlignFixer
         return 0;
     }
 
@@ -81,6 +82,11 @@ class Bar {
         }
     }
 
+    /**
+     * @param string[] $imports
+     *
+     * @return string[]
+     */
     private function removeImportFromGlobalNamespace(Tokens $tokens, array $imports, int $index): array
     {
         /** @var int $classNameIndex */
@@ -102,6 +108,9 @@ class Bar {
         return $imports;
     }
 
+    /**
+     * @param string[] $imports
+     */
     private function updateComment(Tokens $tokens, array $imports, int $index): void
     {
         $content = $tokens[$index]->getContent();

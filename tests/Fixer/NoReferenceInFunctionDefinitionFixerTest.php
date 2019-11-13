@@ -11,11 +11,6 @@ namespace Tests\Fixer;
  */
 final class NoReferenceInFunctionDefinitionFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertSame(0, $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertTrue($this->fixer->isRisky());

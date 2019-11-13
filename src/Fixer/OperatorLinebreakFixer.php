@@ -66,7 +66,11 @@ function foo() {
             $this->operators = self::BOOLEAN_OPERATORS;
         }
 
-        $this->position = $configuration['position'] ?? $this->position;
+        if (isset($configuration['position'])) {
+            /** @var string $position */
+            $position = $configuration['position'];
+            $this->position = $position;
+        }
     }
 
     public function getPriority(): int

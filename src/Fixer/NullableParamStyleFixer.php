@@ -57,6 +57,7 @@ function foo(int $x = null) {
 
     public function getPriority(): int
     {
+        // must be run before NoUnreachableDefaultArgumentValueFixer
         return $this->fixer->getPriority();
     }
 

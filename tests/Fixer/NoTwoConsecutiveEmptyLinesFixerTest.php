@@ -4,9 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer;
-use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
-
 /**
  * @internal
  *
@@ -14,12 +11,6 @@ use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
  */
 final class NoTwoConsecutiveEmptyLinesFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertLessThan((new NoTrailingWhitespaceFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertLessThan((new NoWhitespaceInBlankLineFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

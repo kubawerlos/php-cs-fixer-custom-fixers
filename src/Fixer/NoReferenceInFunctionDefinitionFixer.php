@@ -41,8 +41,8 @@ function foo(&$x) {}
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind(T_FUNCTION)) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if (!$tokens[$index]->isGivenKind(T_FUNCTION)) {
                 continue;
             }
 

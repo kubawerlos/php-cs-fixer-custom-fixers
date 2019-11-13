@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
-
 /**
  * @internal
  *
@@ -13,11 +11,6 @@ use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
  */
 final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertGreaterThan((new NoUnusedImportsFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());

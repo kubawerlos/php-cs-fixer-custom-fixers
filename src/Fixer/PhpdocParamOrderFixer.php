@@ -33,7 +33,9 @@ function foo($a, $b, $c) {}
 
     public function getPriority(): int
     {
-        return 5;
+        // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
+        // must be run before PhpdocAlignFixer
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -101,6 +103,12 @@ function foo($a, $b, $c) {}
         return $paramNames;
     }
 
+    /**
+     * @param Annotation[] $annotations
+     * @param string[]     $paramNames
+     *
+     * @return array<int, string>
+     */
     private function getSortedAnnotations(array $annotations, array $paramNames): array
     {
         $paramFound = false;

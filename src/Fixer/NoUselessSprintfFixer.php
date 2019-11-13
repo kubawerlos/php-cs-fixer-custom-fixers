@@ -43,8 +43,8 @@ final class NoUselessSprintfFixer extends AbstractFixer
         $argumentsAnalyzer = new ArgumentsAnalyzer();
         $functionsAnalyzer = new FunctionsAnalyzer();
 
-        foreach ($tokens as $index => $token) {
-            if (!$token->equals([T_STRING, 'sprintf'], false)) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if (!$tokens[$index]->equals([T_STRING, 'sprintf'], false)) {
                 continue;
             }
 

@@ -4,10 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
-use PhpCsFixer\Fixer\Comment\NoTrailingWhitespaceInCommentFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
-
 /**
  * @internal
  *
@@ -15,13 +11,6 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
  */
 final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTestCase
 {
-    public function testPriority(): void
-    {
-        static::assertLessThan((new MultilineCommentOpeningClosingFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertLessThan((new NoTrailingWhitespaceInCommentFixer())->getPriority(), $this->fixer->getPriority());
-        static::assertGreaterThan((new PhpdocTrimFixer())->getPriority(), $this->fixer->getPriority());
-    }
-
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
@@ -37,19 +26,12 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
 
     public function provideFixCases(): iterable
     {
-        yield [
-            '<?php /* Foo */',
-        ];
+        yield ['<?php /* Foo */'];
+        yield ['<?php /** Foo */'];
 
-        yield [
-            '<?php /** Foo */',
-        ];
-
-        yield [
-            '<?php /**
+        yield ['<?php /**
                     * Foo
-                    */',
-        ];
+                    */'];
 
         yield [
             '<?php
@@ -58,6 +40,26 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
                  */',
             '<?php
                 /* Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
+                /*
+                 * Foo
+                 */',
+            '<?php
+                /*Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
+                /*
+                 *    Foo
+                 */',
+            '<?php
+                /*    Foo
                  */',
         ];
 
@@ -73,6 +75,26 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
 
         yield [
             '<?php
+                /**
+                 * Foo
+                 */',
+            '<?php
+                /**Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
+                /****
+                 * Foo
+                 ****/',
+            '<?php
+                /**** Foo
+                 ****/',
+        ];
+
+        yield [
+            '<?php
                 /*
                  * Foo
                  */',
@@ -89,6 +111,16 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
             '<?php
                 /**
                  * Foo */',
+        ];
+
+        yield [
+            '<?php
+                /**
+                 * Foo
+                 */',
+            '<?php
+                /**
+                 * Foo*/',
         ];
 
         yield [

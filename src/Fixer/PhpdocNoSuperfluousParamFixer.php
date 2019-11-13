@@ -32,6 +32,8 @@ function foo($b, $s) {}
 
     public function getPriority(): int
     {
+        // must be run after CommentToPhpdocFixer
+        // must be run before NoEmptyPhpdocFixer
         return 6;
     }
 

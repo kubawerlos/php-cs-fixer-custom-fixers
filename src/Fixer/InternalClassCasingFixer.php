@@ -94,6 +94,7 @@ final class InternalClassCasingFixer extends AbstractFixer
 
     private function getCorrectCase(string $className): string
     {
+        /** @var null|array<string, string> $classes */
         static $classes;
 
         if ($classes === null) {

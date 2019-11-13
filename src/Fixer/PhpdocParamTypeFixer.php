@@ -29,9 +29,9 @@ function a($foo, $bar) {}
 
     public function getPriority(): int
     {
-        // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
+        // must be run after CommentToPhpdocFixer
         // must be run before PhpdocAlignFixer
-        return -2;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -46,7 +46,9 @@ function a($foo, $bar) {}
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            $token = $tokens[$index];
+
             if (!$token->isGivenKind([T_DOC_COMMENT])) {
                 continue;
             }

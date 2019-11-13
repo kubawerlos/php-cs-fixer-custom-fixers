@@ -57,6 +57,8 @@ class FooTest extends TestCase {
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
+
+        /** @var int[] $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
             $this->fixNames($tokens, $indices[0], $indices[1]);
         }
@@ -64,8 +66,10 @@ class FooTest extends TestCase {
 
     private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
     {
+        /** @var array<string, array<string, int>> $functions */
         $functions = $this->getFunctions($tokens, $startIndex, $endIndex);
 
+        /** @var array<string, string> $dataProvidersToRename */
         $dataProvidersToRename = $this->getDataProvidersToRename($functions);
 
         foreach ($dataProvidersToRename as $dataProviderName => $testName) {
@@ -126,6 +130,9 @@ class FooTest extends TestCase {
         return $functions;
     }
 
+    /**
+     * @param array<string, array> $functions
+     */
     private function getDataProvidersToRename(array $functions): array
     {
         $dataProvidersUses = [];
@@ -133,6 +140,7 @@ class FooTest extends TestCase {
             if (!\array_key_exists('data_provider_names', $indices)) {
                 continue;
             }
+            /** @var string $provider */
             foreach ($indices['data_provider_names'] as $provider) {
                 if (\array_key_exists($provider, $dataProvidersUses)) {
                     $dataProvidersUses[$provider] = '';
