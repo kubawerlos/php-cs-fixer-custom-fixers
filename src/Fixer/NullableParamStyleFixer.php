@@ -90,7 +90,7 @@ function foo(int $x = null) {
             /** @var int $typeIndex */
             $typeIndex = $tokens->getPrevMeaningfulToken($variableIndex);
 
-            if (!$tokens[$typeIndex]->isGivenKind([CT::T_ARRAY_TYPEHINT, T_CALLABLE, T_STRING])) {
+            if (!$tokens[$typeIndex]->equalsAny(['&', [CT::T_ARRAY_TYPEHINT], [T_CALLABLE], [T_STRING]])) {
                 continue;
             }
 
