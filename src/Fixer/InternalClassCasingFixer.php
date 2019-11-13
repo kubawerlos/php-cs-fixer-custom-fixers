@@ -7,10 +7,10 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\NamespacesAnalyzerAdapter;
 
 final class InternalClassCasingFixer extends AbstractFixer
 {
@@ -39,7 +39,7 @@ final class InternalClassCasingFixer extends AbstractFixer
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
+        $namespaces = NamespacesAnalyzerAdapter::getDeclarations($tokens);
 
         foreach ($namespaces as $namespace) {
             $this->fixCasing($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');

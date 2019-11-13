@@ -8,11 +8,11 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\TokensAnalyzer;
+use PhpCsFixerCustomFixers\Adapter\NamespacesAnalyzerAdapter;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
+use PhpCsFixerCustomFixers\Adapter\TokensAnalyzerAdapter;
 
 final class PhpdocSelfAccessorFixer extends AbstractFixer
 {
@@ -48,16 +48,14 @@ class Foo {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
-
-        foreach ($namespaces as $namespace) {
+        foreach (NamespacesAnalyzerAdapter::getDeclarations($tokens) as $namespace) {
             $this->fixPhpdocSelfAccessor($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName());
         }
     }
 
     private function fixPhpdocSelfAccessor(Tokens $tokens, int $namespaceStartIndex, int $namespaceEndIndex, string $fullName): void
     {
-        $tokensAnalyzer = new TokensAnalyzer($tokens);
+        $tokensAnalyzer = new TokensAnalyzerAdapter($tokens);
 
         $index = $namespaceStartIndex;
         while ($index < $namespaceEndIndex) {
@@ -113,7 +111,7 @@ class Foo {
             $types = [];
             foreach ($annotation->getTypes() as $type) {
                 /** @var string $type */
-                $type = Preg::replace(
+                $type = PregAdapter::replace(
                     \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $classyName, \preg_quote($fqcn, '/')),
                     'self',
                     $type

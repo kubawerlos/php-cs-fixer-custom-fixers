@@ -7,12 +7,12 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\FunctionsAnalyzerAdapter;
+use PhpCsFixerCustomFixers\Adapter\PhpUnitTestCaseIndicatorAdapter;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class DataProviderReturnTypeFixer extends AbstractFixer
 {
@@ -59,17 +59,15 @@ class FooTest extends TestCase {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-
         /** @var int[] $indices */
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
+        foreach (PhpUnitTestCaseIndicatorAdapter::findPhpUnitClasses($tokens) as $indices) {
             $this->fixNames($tokens, $indices[0], $indices[1]);
         }
     }
 
     private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        $functionsAnalyzer = new FunctionsAnalyzer();
+        $functionsAnalyzer = new FunctionsAnalyzerAdapter();
 
         $dataProviderNames = $this->getDataProviderNames($tokens, $startIndex, $endIndex);
 
@@ -142,7 +140,7 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$index]->getContent(), $matches);
+            PregAdapter::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$index]->getContent(), $matches);
 
             /** @var string[] $matches */
             $matches = $matches[1];

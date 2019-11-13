@@ -10,9 +10,9 @@ use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer;
 use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
@@ -203,7 +203,7 @@ function foo() {
         $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
 
         for ($i = $nextIndex - 1; $i > \max($operatorIndices); $i--) {
-            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+            if ($tokens[$i]->isWhitespace() && PregAdapter::match('/\R/u', $tokens[$i]->getContent()) === 1) {
                 $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, -1);
                 if ($isWhitespaceBefore) {
@@ -228,7 +228,7 @@ function foo() {
         $nextIndex = $tokens->getNonEmptySibling(\max($operatorIndices), 1);
 
         for ($i = $prevIndex + 1; $i < \max($operatorIndices); $i++) {
-            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+            if ($tokens[$i]->isWhitespace() && PregAdapter::match('/\R/u', $tokens[$i]->getContent()) === 1) {
                 $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, 1);
                 if ($isWhitespaceAfter) {

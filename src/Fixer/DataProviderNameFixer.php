@@ -7,10 +7,10 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PhpUnitTestCaseIndicatorAdapter;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class DataProviderNameFixer extends AbstractFixer
 {
@@ -56,10 +56,8 @@ class FooTest extends TestCase {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-
         /** @var int[] $indices */
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
+        foreach (PhpUnitTestCaseIndicatorAdapter::findPhpUnitClasses($tokens) as $indices) {
             $this->fixNames($tokens, $indices[0], $indices[1]);
         }
     }
@@ -86,7 +84,7 @@ class FooTest extends TestCase {
             $functions[$dataProviderNewName] = [];
 
             /** @var string $newCommentContent */
-            $newCommentContent = Preg::replace(
+            $newCommentContent = PregAdapter::replace(
                 \sprintf('/(@dataProvider\s+)%s/', $dataProviderName),
                 \sprintf('$1%s', $dataProviderNewName),
                 $tokens[$functions[$testName]['doc_comment_index']]->getContent()
@@ -118,7 +116,7 @@ class FooTest extends TestCase {
                 [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
             );
             if ($tokens[$docCommentIndex]->isGivenKind(T_DOC_COMMENT)) {
-                Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$docCommentIndex]->getContent(), $matches);
+                PregAdapter::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$docCommentIndex]->getContent(), $matches);
 
                 $indices['doc_comment_index'] = $docCommentIndex;
                 $indices['data_provider_names'] = $matches[1];
@@ -160,7 +158,7 @@ class FooTest extends TestCase {
 
     private function getProviderNameForTestName(string $name): string
     {
-        if (Preg::match('/^test/', $name) === 1) {
+        if (PregAdapter::match('/^test/', $name) === 1) {
             $name = \substr($name, 4);
         }
 

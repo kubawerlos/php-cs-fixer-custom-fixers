@@ -7,10 +7,10 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 {
@@ -113,7 +113,7 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 
     private function fixTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
     {
-        if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
+        if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && PregAdapter::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
             $tokens->clearAt($index - 1);
         }
     }
@@ -121,7 +121,7 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
     private function fixMoreThanTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
     {
         if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
-            if (Preg::match('/\R/', $tokens[$index - 1]->getContent()) !== 1) {
+            if (PregAdapter::match('/\R/', $tokens[$index - 1]->getContent()) !== 1) {
                 $tokens[$index - 1] = new Token([T_WHITESPACE, ' ']);
             }
 

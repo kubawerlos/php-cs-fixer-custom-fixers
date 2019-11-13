@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Utils;
+use PhpCsFixerCustomFixers\Adapter\PhpUnitTestCaseIndicatorAdapter;
+use PhpCsFixerCustomFixers\Adapter\UtilsAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpUnitNoUselessReturnFixer extends AbstractFixer
@@ -21,7 +21,7 @@ final class PhpUnitNoUselessReturnFixer extends AbstractFixer
         return new FixerDefinition(
             \sprintf(
                 "PHPUnit's functions %s should not be followed directly by return.",
-                Utils::naturalLanguageJoinWithBackticks(\array_map(
+                UtilsAdapter::naturalLanguageJoinWithBackticks(\array_map(
                     static function (array $token): string {
                         return $token[1];
                     },
@@ -59,10 +59,8 @@ class FooTest extends TestCase {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-
         /** @var int[] $indexes */
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
+        foreach (PhpUnitTestCaseIndicatorAdapter::findPhpUnitClasses($tokens) as $indexes) {
             $this->removeUselessReturns($tokens, $indexes[0], $indexes[1]);
         }
     }

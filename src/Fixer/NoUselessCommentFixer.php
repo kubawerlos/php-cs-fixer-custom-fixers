@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class NoUselessCommentFixer extends AbstractFixer
 {
@@ -72,13 +72,13 @@ class Foo {
             }
 
             if ($tokens[$nextIndex]->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
-                $newContent = Preg::replace(
+                $newContent = PregAdapter::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*(class|interface|trait)\h+[A-Za-z0-9\\\\_]+.?(?=\R|$)/i',
                     '',
                     $token->getContent()
                 );
             } elseif ($tokens[$nextIndex]->isGivenKind(T_FUNCTION)) {
-                $newContent = Preg::replace(
+                $newContent = PregAdapter::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
                     '',
                     $token->getContent()

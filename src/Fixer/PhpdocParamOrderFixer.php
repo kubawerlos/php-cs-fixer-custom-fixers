@@ -10,9 +10,9 @@ use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class PhpdocParamOrderFixer extends AbstractFixer
 {
@@ -121,7 +121,7 @@ function foo($a, $b, $c) {}
             if ($annotation->getTag()->getName() === 'param') {
                 $paramFound = true;
                 foreach ($paramNames as $paramName) {
-                    if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(\Q%s\E)\b/', $paramName), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
+                    if (PregAdapter::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(\Q%s\E)\b/', $paramName), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
                         $paramsByName[$matches[1]] = $annotation->getContent();
                         continue 2;
                     }

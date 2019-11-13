@@ -11,9 +11,9 @@ use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class PhpdocOnlyAllowedAnnotationsFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
@@ -87,7 +87,7 @@ function foo_bar() {}
             $docBlock = new DocBlock($token->getContent());
 
             foreach ($docBlock->getAnnotations() as $annotation) {
-                Preg::match('/@([a-zA-Z0-9\Q_-\\\E]+)/', $annotation->getContent(), $matches);
+                PregAdapter::match('/@([a-zA-Z0-9\Q_-\\\E]+)/', $annotation->getContent(), $matches);
 
                 if (\in_array($matches[1], $this->elements, true)) {
                     continue;

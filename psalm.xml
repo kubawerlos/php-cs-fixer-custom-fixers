@@ -16,7 +16,11 @@
 
     <issueHandlers>
         <DeprecatedInterface errorLevel='suppress' />
-        <InternalClass errorLevel='suppress' />
+        <InternalClass>
+            <errorLevel type='suppress'>
+                <directory name='./src/Adapter' />
+            </errorLevel>
+        </InternalClass>
         <InternalMethod errorLevel='suppress' />
         <InvalidArgument errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />

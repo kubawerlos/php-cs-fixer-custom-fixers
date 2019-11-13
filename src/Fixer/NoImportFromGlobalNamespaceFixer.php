@@ -7,11 +7,11 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\NamespacesAnalyzerAdapter;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoImportFromGlobalNamespaceFixer extends AbstractFixer
@@ -48,7 +48,7 @@ class Bar {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach (\array_reverse((new NamespacesAnalyzer())->getDeclarations($tokens)) as $namespace) {
+        foreach (\array_reverse(NamespacesAnalyzerAdapter::getDeclarations($tokens)) as $namespace) {
             $this->fixImports($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
         }
     }
@@ -116,7 +116,7 @@ class Bar {
         $content = $tokens[$index]->getContent();
 
         foreach ($imports as $import) {
-            $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
+            $content = PregAdapter::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
         }
 
         if ($content !== $tokens[$index]->getContent()) {

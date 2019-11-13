@@ -7,8 +7,8 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\ArgumentsAnalyzerAdapter;
 
 final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
 {
@@ -61,7 +61,7 @@ function foo(&$x) {}
      */
     private function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex): array
     {
-        $argumentsAnalyzer = new ArgumentsAnalyzer();
+        $argumentsAnalyzer = new ArgumentsAnalyzerAdapter();
 
         /** @var int $openParenthesis */
         $openParenthesis = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);

@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Analyzer\CommentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\CommentsAnalyzerAdapter;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoCommentedOutCodeFixer extends AbstractFixer
@@ -40,7 +40,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $commentsAnalyzer = new CommentsAnalyzer();
+        $commentsAnalyzer = new CommentsAnalyzerAdapter();
 
         for ($index = 0; $index < $tokens->count(); $index++) {
             if (!$tokens[$index]->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
@@ -99,7 +99,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     private function getContent(string $content): string
     {
         /** @var string $content */
-        $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
+        $content = PregAdapter::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
 
         return \ltrim($content, '#/');
     }

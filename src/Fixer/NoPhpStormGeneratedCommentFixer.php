@@ -7,8 +7,8 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoPhpStormGeneratedCommentFixer extends AbstractFixer
@@ -53,7 +53,7 @@ namespace Foo;
                 continue;
             }
 
-            if (Preg::match('/\*\h+Created by PhpStorm/i', $token->getContent(), $matches) !== 1) {
+            if (PregAdapter::match('/\*\h+Created by PhpStorm/i', $token->getContent(), $matches) !== 1) {
                 continue;
             }
 

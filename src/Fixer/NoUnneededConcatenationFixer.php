@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class NoUnneededConcatenationFixer extends AbstractFixer
 {
@@ -72,7 +72,7 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
             if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
                 return false;
             }
-            if (Preg::match('/\R/', $tokens[$index]->getContent()) === 1) {
+            if (PregAdapter::match('/\R/', $tokens[$index]->getContent()) === 1) {
                 return false;
             }
         }

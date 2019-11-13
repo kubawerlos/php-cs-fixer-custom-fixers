@@ -8,9 +8,9 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
@@ -117,7 +117,7 @@ $bar = new Foo();
         $doc = new DocBlock($tokens[$index]->getContent());
 
         foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
-            if ($pattern === null || Preg::match($pattern, $annotation->getContent()) !== 1) {
+            if ($pattern === null || PregAdapter::match($pattern, $annotation->getContent()) !== 1) {
                 $annotation->remove();
             }
         }

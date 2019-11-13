@@ -9,9 +9,9 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis;
-use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
-use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\NamespacesAnalyzerAdapter;
+use PhpCsFixerCustomFixers\Adapter\NamespaceUsesAnalyzerAdapter;
 
 final class NoDuplicatedImportsFixer extends AbstractFixer
 {
@@ -45,9 +45,9 @@ use Bar;
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $useDeclarations = (new NamespaceUsesAnalyzer())->getDeclarationsFromTokens($tokens);
+        $useDeclarations = NamespaceUsesAnalyzerAdapter::getDeclarationsFromTokens($tokens);
 
-        foreach ((new NamespacesAnalyzer())->getDeclarations($tokens) as $namespace) {
+        foreach (NamespacesAnalyzerAdapter::getDeclarations($tokens) as $namespace) {
             $currentNamespaceUseDeclarations = \array_filter(
                 $useDeclarations,
                 static function (NamespaceUseAnalysis $useDeclaration) use ($namespace): bool {

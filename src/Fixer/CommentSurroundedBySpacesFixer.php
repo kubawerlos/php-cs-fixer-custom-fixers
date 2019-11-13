@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class CommentSurroundedBySpacesFixer extends AbstractFixer
 {
@@ -49,7 +49,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
             }
 
             /** @var string $newContent */
-            $newContent = Preg::replace(
+            $newContent = PregAdapter::replace(
                 [
                     '/^(\/\/|#|\/\*+)((?!(?:\/|\*|\h)).+)$/',
                     '/^(.+(?<!(?:\/|\*|\h)))(\*+\/)$/',

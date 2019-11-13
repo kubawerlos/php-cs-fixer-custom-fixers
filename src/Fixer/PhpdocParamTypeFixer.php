@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class PhpdocParamTypeFixer extends AbstractFixer
 {
@@ -57,7 +57,7 @@ function a($foo, $bar) {}
                 continue;
             }
 
-            $newContent = Preg::replace(
+            $newContent = PregAdapter::replace(
                 '/(@param) {0,7}( *\$)/i',
                 '$1 mixed $2',
                 $token->getContent()

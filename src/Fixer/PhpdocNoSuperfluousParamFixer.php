@@ -8,9 +8,9 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class PhpdocNoSuperfluousParamFixer extends AbstractFixer
 {
@@ -103,7 +103,7 @@ function foo($b, $s) {}
         $foundParamNames = [];
 
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
-            if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(?=\$)%s\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) === 1 && !isset($foundParamNames[$matches[1]])) {
+            if (PregAdapter::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(?=\$)%s\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) === 1 && !isset($foundParamNames[$matches[1]])) {
                 $foundParamNames[$matches[1]] = true;
                 continue;
             }

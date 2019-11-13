@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers;
 
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 /**
  * @internal
@@ -43,13 +43,13 @@ final class TokenRemover
             return true;
         }
 
-        if ($tokens[$prevIndex]->isGivenKind(T_OPEN_TAG) && Preg::match('/\R$/', $tokens[$prevIndex]->getContent()) !== 1) {
+        if ($tokens[$prevIndex]->isGivenKind(T_OPEN_TAG) && PregAdapter::match('/\R$/', $tokens[$prevIndex]->getContent()) !== 1) {
             return true;
         }
 
-        if (Preg::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
+        if (PregAdapter::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
             $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
-            if (!$tokens[$prevPrevIndex]->isGivenKind(T_OPEN_TAG) || Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
+            if (!$tokens[$prevPrevIndex]->isGivenKind(T_OPEN_TAG) || PregAdapter::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
                 return true;
             }
         }
@@ -67,7 +67,7 @@ final class TokenRemover
             return true;
         }
 
-        return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) !== 1;
+        return PregAdapter::match('/\R/', $tokens[$nextIndex]->getContent()) !== 1;
     }
 
     private static function handleWhitespaceBefore(Tokens $tokens, int $index): bool
@@ -75,9 +75,9 @@ final class TokenRemover
         if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
             return false;
         }
-        $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
+        $contentWithoutTrailingSpaces = PregAdapter::replace('/\h+$/', '', $tokens[$index]->getContent());
 
-        $contentWithoutTrailingSpacesAndNewline = Preg::replace('/\R$/', '', $contentWithoutTrailingSpaces, 1);
+        $contentWithoutTrailingSpacesAndNewline = PregAdapter::replace('/\R$/', '', $contentWithoutTrailingSpaces, 1);
 
         if ($contentWithoutTrailingSpacesAndNewline === '') {
             $tokens->clearAt($index);
@@ -92,7 +92,7 @@ final class TokenRemover
     {
         $pattern = $wasNewlineRemoved ? '/^\h+/' : '/^\h*\R/';
 
-        $newContent = Preg::replace($pattern, '', $tokens[$index]->getContent());
+        $newContent = PregAdapter::replace($pattern, '', $tokens[$index]->getContent());
 
         if ($newContent === '') {
             $tokens->clearAt($index);

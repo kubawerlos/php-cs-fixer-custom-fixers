@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\PregAdapter;
 
 final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 {
@@ -46,7 +46,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
                 continue;
             }
 
-            if (Preg::match('/\R/', $token->getContent()) !== 1) {
+            if (PregAdapter::match('/\R/', $token->getContent()) !== 1) {
                 continue;
             }
 
@@ -59,14 +59,14 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
     {
         $token = $tokens[$index];
 
-        if (Preg::match('#^/\*+\R#', $token->getContent()) === 1) {
+        if (PregAdapter::match('#^/\*+\R#', $token->getContent()) === 1) {
             return;
         }
 
-        Preg::match('#\R(\h*)#', $token->getContent(), $matches);
+        PregAdapter::match('#\R(\h*)#', $token->getContent(), $matches);
         $indent = $matches[1] . '*';
 
-        Preg::match('#^(?<opening>/\*+)(?<before_newline>.*?)(?<newline>\R)(?<after_newline>.*)$#s', $token->getContent(), $matches);
+        PregAdapter::match('#^(?<opening>/\*+)(?<before_newline>.*?)(?<newline>\R)(?<after_newline>.*)$#s', $token->getContent(), $matches);
         if ($matches === []) {
             return;
         }
@@ -78,7 +78,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         $newContent = $matches['opening'] . $matches['newline'] . $indent . $matches['before_newline'] . $matches['newline'] . $matches['after_newline'];
 
         if ($newContent !== $token->getContent()) {
-            $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
+            $tokens[$index] = new Token([PregAdapter::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
         }
     }
 
@@ -86,14 +86,14 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
     {
         $token = $tokens[$index];
 
-        if (Preg::match('#\R\h*\*+/$#', $token->getContent()) === 1) {
+        if (PregAdapter::match('#\R\h*\*+/$#', $token->getContent()) === 1) {
             return;
         }
 
-        Preg::match('#\R(\h*)#', $token->getContent(), $matches);
+        PregAdapter::match('#\R(\h*)#', $token->getContent(), $matches);
         $indent = $matches[1];
 
-        $newContent = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $token->getContent());
+        $newContent = PregAdapter::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $token->getContent());
 
         if ($newContent !== $token->getContent()) {
             $tokens[$index] = new Token([$token->getId(), $newContent]);

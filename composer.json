@@ -27,7 +27,7 @@
             "composer normalize --dry-run --working-dir=./dev-tools ./../composer.json",
             "./dev-tools/vendor/bin/composer-require-checker check ./composer.json",
             "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
-            "./dev-tools/vendor/bin/types-checker ./src ./dev-tools/src ./tests",
+            "./dev-tools/vendor/bin/types-checker --exclude=\\\\PhpCsFixerCustomFixers\\\\Adapter\\\\PregAdapter ./src ./dev-tools/src ./tests",
             "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --diff --dry-run --verbose",
             "./dev-tools/vendor/bin/phpmd ./src text ./phpmd.xml",
             "./dev-tools/vendor/bin/phpstan analyse --ansi",

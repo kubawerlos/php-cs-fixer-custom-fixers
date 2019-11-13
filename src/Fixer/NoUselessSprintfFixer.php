@@ -7,9 +7,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
-use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Adapter\ArgumentsAnalyzerAdapter;
+use PhpCsFixerCustomFixers\Adapter\FunctionsAnalyzerAdapter;
 
 final class NoUselessSprintfFixer extends AbstractFixer
 {
@@ -40,8 +40,8 @@ final class NoUselessSprintfFixer extends AbstractFixer
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $argumentsAnalyzer = new ArgumentsAnalyzer();
-        $functionsAnalyzer = new FunctionsAnalyzer();
+        $argumentsAnalyzer = new ArgumentsAnalyzerAdapter();
+        $functionsAnalyzer = new FunctionsAnalyzerAdapter();
 
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             if (!$tokens[$index]->equals([T_STRING, 'sprintf'], false)) {
