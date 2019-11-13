@@ -43,8 +43,8 @@ function foo(?bool $bar) : ?bool
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if ($token->getContent() !== '?') {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if ($tokens[$index]->getContent() !== '?') {
                 continue;
             }
 

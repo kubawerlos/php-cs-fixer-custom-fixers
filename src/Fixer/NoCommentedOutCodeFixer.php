@@ -68,6 +68,11 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         }
     }
 
+    /**
+     * @param int[] $commentIndices
+     *
+     * @return int[]
+     */
     private function getIndicesToRemove(Tokens $tokens, array $commentIndices): array
     {
         $indicesToRemove = [];

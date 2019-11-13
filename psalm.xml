@@ -6,6 +6,9 @@
        allowStringToStandInForClass='true'
        findUnusedCode='true'
        findUnusedVariablesAndParams='true'
+       strictBinaryOperands='true'
+       totallyTyped='true'
+       usePhpDocMethodsWithoutMagicCall='true'
 >
     <projectFiles>
         <directory name='./src' />

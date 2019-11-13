@@ -42,7 +42,11 @@ function foo(int $x = null) {
 
     public function configure(?array $configuration = null): void
     {
-        $this->style = $configuration['style'] ?? $this->style;
+        if (isset($configuration['style'])) {
+            /** @var string $style */
+            $style = $configuration['style'];
+            $this->style = $style;
+        }
     }
 
     public function getPriority(): int

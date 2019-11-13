@@ -60,6 +60,8 @@ class FooTest extends TestCase {
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
+
+        /** @var int[] $indexes */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
             $this->removeUselessReturns($tokens, $indexes[0], $indexes[1]);
         }

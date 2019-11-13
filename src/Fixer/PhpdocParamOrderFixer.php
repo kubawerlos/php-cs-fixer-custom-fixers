@@ -103,6 +103,12 @@ function foo($a, $b, $c) {}
         return $paramNames;
     }
 
+    /**
+     * @param Annotation[] $annotations
+     * @param string[]     $paramNames
+     *
+     * @return array<int, string>
+     */
     private function getSortedAnnotations(array $annotations, array $paramNames): array
     {
         $paramFound = false;

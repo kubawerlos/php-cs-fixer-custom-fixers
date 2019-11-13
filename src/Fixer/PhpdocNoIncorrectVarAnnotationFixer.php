@@ -44,8 +44,8 @@ $bar = new Foo();
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$this->isTokenCandidate($token)) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if (!$this->isTokenCandidate($tokens[$index])) {
                 continue;
             }
 
