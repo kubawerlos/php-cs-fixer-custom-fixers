@@ -56,7 +56,9 @@ final class Version20180609123456 extends AbstractMigration
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            $token = $tokens[$index];
+
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
                 continue;
             }

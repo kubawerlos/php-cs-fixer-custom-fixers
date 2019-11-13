@@ -69,14 +69,10 @@ use Bar;
 
     private function removeUseDeclaration(Tokens $tokens, NamespaceUseAnalysis $useDeclaration): void
     {
-        static $noUnusedImportsFixer, $reflectionMethod;
+        $noUnusedImportsFixer = new NoUnusedImportsFixer();
 
-        if ($reflectionMethod === null) {
-            $noUnusedImportsFixer = new NoUnusedImportsFixer();
-
-            $reflectionMethod = new \ReflectionMethod($noUnusedImportsFixer, 'removeUseDeclaration');
-            $reflectionMethod->setAccessible(true);
-        }
+        $reflectionMethod = new \ReflectionMethod($noUnusedImportsFixer, 'removeUseDeclaration');
+        $reflectionMethod->setAccessible(true);
 
         $reflectionMethod->invoke($noUnusedImportsFixer, $tokens, $useDeclaration);
     }

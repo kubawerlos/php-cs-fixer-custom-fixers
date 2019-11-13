@@ -51,7 +51,11 @@ function foo_bar() {}
 
     public function configure(?array $configuration = null): void
     {
-        $this->elements = $configuration['elements'] ?? $this->elements;
+        if (isset($configuration['elements'])) {
+            /** @var string[] $elements */
+            $elements = $configuration['elements'];
+            $this->elements = $elements;
+        }
     }
 
     public function getPriority(): int
@@ -73,7 +77,9 @@ function foo_bar() {}
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            $token = $tokens[$index];
+
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
