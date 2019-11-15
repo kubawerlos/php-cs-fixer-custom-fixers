@@ -94,7 +94,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     public function configure(?array $configuration = null): void
     {
-        $this->allowLinebreak = (bool) ($configuration['allow_linebreak'] ?? $this->allowLinebreak);
+        $this->allowLinebreak = isset($configuration['allow_linebreak']) && $configuration['allow_linebreak'] === true;
     }
 
     public function getPriority(): int
