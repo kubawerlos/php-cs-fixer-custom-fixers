@@ -361,20 +361,22 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-                // Useless comment
-                foo();
-                // @author: John Doe
-                class Bar {}
                 //
-                class Baz {}
+                class Foo {
+                    public function calculation() { 
+                        // @author: John Doe
+                        return  42;
+                    }
+                }
             ',
             '<?php
-                // Useless comment
-                foo();
-                // @author: John Doe
-                class Bar {}
-                // Class Baz
-                class Baz {}
+                // Class Foo
+                class Foo {
+                    public function calculation() { 
+                        // @author: John Doe
+                        return  42;
+                    }
+                }
             ',
         ];
     }

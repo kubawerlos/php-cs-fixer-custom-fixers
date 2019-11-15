@@ -172,24 +172,26 @@ final class PhpdocSingleLineVarFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-/** first comment */
+/** comment */
+/** @var ChangedOne */
+/** @var AlreadyGood $baz */
 /**
  * @var Foo $foo
  * @var Bar $bar
  */
-/** @var Baz $baz */
-/** @var HelloWorld */
+/** another comment */
 ',
             '<?php
-/** first comment */
+/** comment */
+/**
+ * @var ChangedOne
+ */
+/** @var AlreadyGood $baz */
 /**
  * @var Foo $foo
  * @var Bar $bar
  */
-/** @var Baz $baz */
-/**
- * @var HelloWorld
- */
+/** another comment */
 ',
         ];
     }
