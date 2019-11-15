@@ -161,6 +161,29 @@ class FooTest extends TestCase {
 }',
         ];
 
+        yield 'data providers with new name as part of namespace' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {
+        $x = Foo\ProvideFooCases::X_DEFAULT;
+    }
+    public function provideFooCases() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider foo
+     */
+    public function testFoo() {
+        $x = Foo\ProvideFooCases::X_DEFAULT;
+    }
+    public function foo() {}
+}',
+        ];
+
         yield 'complex example' => [
             '<?php
 class FooTest extends TestCase {
