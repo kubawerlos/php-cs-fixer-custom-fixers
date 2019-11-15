@@ -33,9 +33,9 @@ final class TestsCodeTest extends TestCase
      */
     public function testDataProviderReturnType(string $dataProviderName, string $className): void
     {
-        $reflection = new \ReflectionMethod($className, $dataProviderName);
+        $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
 
-        static::assertSame('iterable', $reflection->getReturnType()->getName());
+        static::assertSame('iterable', $reflectionMethod->getReturnType()->getName());
     }
 
     public function provideDataProviderCases(): iterable
