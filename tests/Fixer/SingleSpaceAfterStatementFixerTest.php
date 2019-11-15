@@ -241,20 +241,16 @@ do    {
 
         yield [
             '<?php
-                $a = new class() {};
-                continue;
-                foo();
-                break
-                ;
-                class Baz {}
+                class Foo {}
+                $a = new Foo();
+                $b = new
+                         Foo();
             ',
             '<?php
-                $a = new class() {};
-                continue;
-                foo();
-                break
-                ;
-                class    Baz {}
+                class    Foo {}
+                $a = new Foo();
+                $b = new
+                         Foo();
             ',
             ['allow_linebreak' => true],
         ];
