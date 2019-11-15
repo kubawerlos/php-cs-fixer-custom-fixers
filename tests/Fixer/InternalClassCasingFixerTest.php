@@ -24,7 +24,7 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield ['<?php class STDCLASS {};'];
         yield ['<?php class STDCLASS { use EXCEPTION; };'];

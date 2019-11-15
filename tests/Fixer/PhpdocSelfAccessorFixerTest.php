@@ -24,7 +24,7 @@ final class PhpdocSelfAccessorFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield [ // no namespace - do not change
             '<?php

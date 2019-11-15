@@ -35,7 +35,7 @@ final class FixersTest extends TestCase
         static::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
     }
 
-    public function provideFixerIsInCollectionCases(): iterable
+    public static function provideFixerIsInCollectionCases(): iterable
     {
         return \array_map(
             static function (SplFileInfo $fileInfo): array {

@@ -24,7 +24,7 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield ['<?php // do not remove me'];
         yield ['<?php # do not remove me'];
