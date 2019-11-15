@@ -38,13 +38,11 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input, $configuration);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
-        foreach ($this->pairs() as $key => $value) {
+        foreach (static::pairs() as $key => $value) {
             yield \sprintf('%s when position is "beginning"', $key) => $value;
-        }
 
-        foreach ($this->pairs() as $key => $value) {
             yield \sprintf('%s when position is "end"', $key) => [
                 $value[1],
                 $value[0],
@@ -198,7 +196,7 @@ return $foo
         ];
     }
 
-    private function pairs(): iterable
+    private static function pairs(): iterable
     {
         yield 'handle equal sign' => [
             '<?php
