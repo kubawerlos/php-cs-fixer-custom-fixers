@@ -73,24 +73,26 @@ final class DataProviderAnalyzerTest extends TestCase
             }',
         ];
 
-        yield 'aaaa' => [
-            [
-                new DataProviderAnalysis('provider1', 54, [37]),
-                new DataProviderAnalysis('provider2', 65, [11]),
-                new DataProviderAnalysis('provider3', 76, [24]),
-            ],
-            '<?php class FooTest extends TestCase {
-                /** @dataProvider provider2 */
-                public function testFoo1() {}
-                /** @dataProvider provider3 */
-                public function testFoo2() {}
-                /** @dataProvider provider1 */
-                public function testFoo3() {}
-                public function provider1() {}
-                public function provider2() {}
-                public function provider3() {}
-            }',
-        ];
+        foreach (['abstract', 'final', 'private', 'protected', 'static', '/* private */'] as $modifier) {
+            yield \sprintf('test function with %s modifier', $modifier) => [
+                [
+                    new DataProviderAnalysis('provider1', 54, [37]),
+                    new DataProviderAnalysis('provider2', 65, [11]),
+                    new DataProviderAnalysis('provider3', 76, [24]),
+                ],
+                \sprintf('<?php class FooTest extends TestCase {
+                    /** @dataProvider provider2 */
+                    public function testFoo1() {}
+                    /** @dataProvider provider3 */
+                    %s function testFoo2() {}
+                    /** @dataProvider provider1 */
+                    public function testFoo3() {}
+                    public function provider1() {}
+                    public function provider2() {}
+                    public function provider3() {}
+                }', $modifier),
+            ];
+        }
 
         yield 'not existing data provider used' => [
             [],
@@ -99,6 +101,31 @@ final class DataProviderAnalyzerTest extends TestCase
                  * @dataProvider provider
                  */
                 public function testFoo() {}
+            }',
+        ];
+
+        yield 'ignore anonymous function' => [
+            [
+                new DataProviderAnalysis('provider2', 93, [65]),
+            ],
+            '<?php class FooTest extends TestCase {
+                public function testFoo0() {}
+                /**
+                 * @dataProvider provider0
+                 */
+                public function testFoo1()
+                {
+                    /**
+                     * @dataProvider provider1
+                     */
+                     $f = function ($x, $y) { return $x + $y; };
+                }
+                    /**
+                     * @dataProvider provider2
+                     */
+                public function testFoo2() {}
+                public function provider1() {}
+                public function provider2() {}
             }',
         ];
     }
