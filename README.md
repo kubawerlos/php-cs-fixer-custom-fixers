@@ -8,7 +8,7 @@
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-1478-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-1480-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -55,9 +55,9 @@ Name of data provider that is used only once must match name of test.
 -     * @dataProvider dataProvider
 +     * @dataProvider provideHappyPathCases
       */
-     function testHappyPath() {}
--    function dataProvider() {}
-+    function provideHappyPathCases() {}
+     public function testHappyPath() {}
+-    public function dataProvider() {}
++    public function provideHappyPathCases() {}
  }
 ```
 
@@ -70,9 +70,9 @@ Return type of data provider must be `iterable`.
      /**
       * @dataProvider provideHappyPathCases
       */
-     function testHappyPath() {}
--    function provideHappyPathCases(): array {}
-+    function provideHappyPathCases(): iterable {}
+     public function testHappyPath() {}
+-    public function provideHappyPathCases(): array {}
++    public function provideHappyPathCases(): iterable {}
  }
 ```
 
