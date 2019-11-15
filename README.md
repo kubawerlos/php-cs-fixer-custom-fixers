@@ -55,9 +55,9 @@ Name of data provider that is used only once must match name of test.
 -     * @dataProvider dataProvider
 +     * @dataProvider provideHappyPathCases
       */
-     function testHappyPath() {}
--    function dataProvider() {}
-+    function provideHappyPathCases() {}
+     public function testHappyPath() {}
+-    public function dataProvider() {}
++    public function provideHappyPathCases() {}
  }
 ```
 
@@ -70,9 +70,9 @@ Return type of data provider must be `iterable`.
      /**
       * @dataProvider provideHappyPathCases
       */
-     function testHappyPath() {}
--    function provideHappyPathCases(): array {}
-+    function provideHappyPathCases(): iterable {}
+     public function testHappyPath() {}
+-    public function provideHappyPathCases(): array {}
++    public function provideHappyPathCases(): iterable {}
  }
 ```
 

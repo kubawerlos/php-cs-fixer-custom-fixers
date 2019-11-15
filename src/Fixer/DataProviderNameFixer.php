@@ -29,8 +29,8 @@ class FooTest extends TestCase {
     /**
      * @dataProvider dataProvider
      */
-    function testHappyPath() {}
-    function dataProvider() {}
+    public function testHappyPath() {}
+    public function dataProvider() {}
 }
 '
                 ),

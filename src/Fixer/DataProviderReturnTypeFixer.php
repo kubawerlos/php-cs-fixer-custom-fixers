@@ -30,8 +30,8 @@ class FooTest extends TestCase {
     /**
      * @dataProvider provideHappyPathCases
      */
-    function testHappyPath() {}
-    function provideHappyPathCases(): array {}
+    public function testHappyPath() {}
+    public function provideHappyPathCases(): array {}
 }
 '
                 ),
