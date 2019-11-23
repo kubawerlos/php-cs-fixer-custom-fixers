@@ -38,7 +38,7 @@ final class SwitchAnalyzerTest extends TestCase
         static::assertSame(\serialize($expected), \serialize(($analyzer->getSwitchAnalysis($tokens, $index))));
     }
 
-    public function provideGettingSwitchAnalysisCases(): iterable
+    public static function provideGettingSwitchAnalysisCases(): iterable
     {
         yield 'two cases' => [
             new SwitchAnalysis(7, 29, [new CaseAnalysis(12), new CaseAnalysis(22)]),

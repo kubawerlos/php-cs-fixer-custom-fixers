@@ -38,7 +38,7 @@ final class TokenRemoverTest extends TestCase
         static::assertTokens(Tokens::fromCode($expected), $tokens);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield 'after open tag' => [
             '<?php

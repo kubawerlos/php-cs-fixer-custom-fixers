@@ -48,7 +48,7 @@ final class ReferenceAnalyzerTest extends TestCase
         $this->doTestCode(false, $code);
     }
 
-    public function provideReferenceCases(): iterable
+    public static function provideReferenceCases(): iterable
     {
         yield ['<?php $foo =& $bar;'];
         yield ['<?php $foo =& find_var($bar);'];
@@ -73,7 +73,7 @@ class Foo {
         yield ['<?php foreach($foos as $key => &$foo) {}'];
     }
 
-    public function provideNonReferenceCases(): iterable
+    public static function provideNonReferenceCases(): iterable
     {
         yield ['<?php $foo & $bar;'];
         yield ['<?php FOO & $bar;'];

@@ -24,7 +24,7 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield ['<?php /* Foo */'];
         yield ['<?php /** Foo */'];

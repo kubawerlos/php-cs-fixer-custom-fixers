@@ -49,7 +49,7 @@ class FooTest extends TestCase {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_STRING);
+        return $tokens->isAllTokenKindsFound([T_CLASS, T_EXTENDS, T_FUNCTION, T_STRING, T_RETURN]);
     }
 
     public function isRisky(): bool

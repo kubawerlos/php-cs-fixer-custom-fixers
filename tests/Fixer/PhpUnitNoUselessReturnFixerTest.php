@@ -24,7 +24,7 @@ final class PhpUnitNoUselessReturnFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         return \array_map(
             static function (array $args): array {
@@ -40,11 +40,11 @@ class FooTest extends TestCase {
                     $args
                 );
             },
-            \iterator_to_array($this->getFixCases())
+            \iterator_to_array(static::getFixCases())
         );
     }
 
-    private function getFixCases(): iterable
+    private static function getFixCases(): iterable
     {
         yield ['$this->markTestSkipped = true;'];
 

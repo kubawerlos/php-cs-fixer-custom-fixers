@@ -24,7 +24,7 @@ final class NoUselessDoctrineRepositoryCommentFixerTest extends AbstractFixerTes
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield [
             '<?php

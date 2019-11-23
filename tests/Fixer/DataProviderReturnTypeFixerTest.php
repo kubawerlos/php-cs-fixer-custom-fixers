@@ -24,7 +24,7 @@ final class DataProviderReturnTypeFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield 'data provider with iterable return type' => [
             '<?php

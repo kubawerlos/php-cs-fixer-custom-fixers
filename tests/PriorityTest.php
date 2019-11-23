@@ -112,7 +112,7 @@ final class PriorityTest extends TestCase
         static::assertSame($sorted, $cases);
     }
 
-    public function providePriorityCases(): iterable
+    public static function providePriorityCases(): iterable
     {
         yield [
             new CommentSurroundedBySpacesFixer(),

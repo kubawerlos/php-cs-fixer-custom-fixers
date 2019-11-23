@@ -24,7 +24,7 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield ['<?php $foo = sprintf($format, $value);'];
         yield ['<?php $foo = sprintf("My name is %s.", "Earl");'];
