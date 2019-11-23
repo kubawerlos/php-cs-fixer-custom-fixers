@@ -26,7 +26,7 @@ final class DataProviderStaticFixerTest extends AbstractFixerTestCase
 
     public static function provideFixCases(): iterable
     {
-        yield 'do not fix data provider containing dynamic calls' => [
+        yield 'do not fix when containing dynamic calls' => [
             '<?php
 class FooTest extends TestCase {
     /** 
@@ -37,7 +37,7 @@ class FooTest extends TestCase {
 }',
         ];
 
-        yield 'fix single data provider' => [
+        yield 'fix single' => [
             '<?php
 class FooTest extends TestCase {
     /**
@@ -56,7 +56,7 @@ class FooTest extends TestCase {
 }',
         ];
 
-        yield 'fix multiple data provider' => [
+        yield 'fix multiple' => [
             '<?php
 class FooTest extends TestCase {
     /** @dataProvider provider1 */
@@ -80,6 +80,29 @@ class FooTest extends TestCase {
     public function provider1() {}
     public function provider2() { $this->init(); }
     public static function provider3() {}
+}',
+        ];
+
+        yield 'fix with multilines' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {}
+    public
+        static function
+            provideFooCases() { $x->getData(); }
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {}
+    public
+        function
+            provideFooCases() { $x->getData(); }
 }',
         ];
     }
