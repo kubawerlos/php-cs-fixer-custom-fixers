@@ -80,16 +80,29 @@ final class NoUnneededConcatenationFixer extends AbstractFixer
         return true;
     }
 
-    private function fixConcat(Tokens $tokens, int $prevIndex, int $nextIndex): void
+    private function fixConcat(Tokens $tokens, int $firstIndex, int $secondIndex): void
     {
-        if ($tokens[$prevIndex]->getContent()[0] !== $tokens[$nextIndex]->getContent()[0]) {
+        $firstStringContent = $tokens[$firstIndex]->getContent();
+        $secondStringContent = $tokens[$secondIndex]->getContent();
+
+        if ($firstStringContent[\strlen($firstStringContent) - 1] !== $secondStringContent[\strlen($secondStringContent) - 1]) {
             return;
         }
 
         $tokens->overrideRange(
-            $prevIndex,
-            $nextIndex,
-            [new Token([T_CONSTANT_ENCAPSED_STRING, \substr($tokens[$prevIndex]->getContent(), 0, -1) . \substr($tokens[$nextIndex]->getContent(), 1)])]
+            $firstIndex,
+            $secondIndex,
+            [new Token([
+                T_CONSTANT_ENCAPSED_STRING,
+                \substr($firstStringContent, 0, -1) . $this->getStringContent($secondStringContent) . $firstStringContent[\strlen($firstStringContent) - 1],
+            ])]
         );
+    }
+
+    private function getStringContent(string $string): string
+    {
+        $offset = \strtolower($string[0]) === 'b' ? 2 : 1;
+
+        return \substr($string, $offset, -1);
     }
 }
