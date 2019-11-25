@@ -17,7 +17,7 @@ final class PhpdocTypesTrimFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'PHPDoc must be trimmed.',
+            'PHPDoc types must be trimmed.',
             [new CodeSample('<?php
 /**
  * @param null | string $x

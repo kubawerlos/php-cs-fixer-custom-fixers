@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
+ * @coversNothing
  */
 final class TestsCodeTest extends TestCase
 {
