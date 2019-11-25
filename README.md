@@ -427,7 +427,7 @@ In PHPDoc inside class or interface element `self` should be preferred over the 
 ```
 
 #### PhpdocTypesTrimFixer
-PHPDpc must be trimmed.
+PHPDoc must be trimmed.
 ```diff
  <?php
  /**
