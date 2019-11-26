@@ -24,7 +24,7 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield ['<?php $foo. "bar";'];
         yield ['<?php "foo" .$bar;'];
@@ -56,6 +56,26 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
         yield [
             "<?php 'foobar';",
             "<?php 'foo' . 'bar';",
+        ];
+
+        yield [
+            '<?php b"foobar";',
+            '<?php b"foo" . "bar";',
+        ];
+
+        yield [
+            '<?php B"foobar";',
+            '<?php B"foo" . "bar";',
+        ];
+
+        yield [
+            '<?php "foobar";',
+            '<?php "foo" . B"bar";',
+        ];
+
+        yield [
+            '<?php b"foobar";',
+            '<?php b"foo" . b"bar";',
         ];
 
         yield [

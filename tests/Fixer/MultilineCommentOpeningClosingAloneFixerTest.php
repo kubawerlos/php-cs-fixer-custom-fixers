@@ -24,7 +24,7 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield ['<?php /* Foo */'];
         yield ['<?php /** Foo */'];
@@ -173,22 +173,20 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
 
         yield [
             '<?php
-                // with invisible character at the end' . \chr(226) . \chr(128) . \chr(168) . '
-                /* Foo */
                 /*
                  * Foo
                  */
+                /* Bar */
                 /*
-                 * Foo
+                 * Baz
                  */
              ',
             '<?php
-                // with invisible character at the end' . \chr(226) . \chr(128) . \chr(168) . '
-                /* Foo */
-                /*
-                 * Foo
-                 */
                 /* Foo
+                 */
+                /* Bar */
+                /*
+                 * Baz
                  */
              ',
         ];

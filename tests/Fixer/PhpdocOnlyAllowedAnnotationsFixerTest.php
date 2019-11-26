@@ -31,7 +31,7 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input, $configuration);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield [
             '<?php

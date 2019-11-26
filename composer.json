@@ -40,7 +40,7 @@
             "./dev-tools/readme > README.md"
         ],
         "infection": [
-            "./dev-tools/vendor/bin/infection run --ansi --threads=16"
+            "./dev-tools/vendor/bin/infection run --ansi --min-msi=100 --threads=16"
         ],
         "test": [
             "./dev-tools/vendor/bin/phpunit"

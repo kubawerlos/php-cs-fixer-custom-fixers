@@ -8,11 +8,11 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
 final class DataProviderReturnTypeFixer extends AbstractFixer
 {
@@ -30,8 +30,8 @@ class FooTest extends TestCase {
     /**
      * @dataProvider provideHappyPathCases
      */
-    function testHappyPath() {}
-    function provideHappyPathCases(): array {}
+    public function testHappyPath() {}
+    public function provideHappyPathCases(): array {}
 }
 '
                 ),
@@ -49,7 +49,7 @@ class FooTest extends TestCase {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT);
+        return $tokens->isAllTokenKindsFound([T_CLASS, T_DOC_COMMENT, T_EXTENDS, T_FUNCTION, T_STRING]);
     }
 
     public function isRisky(): bool
@@ -63,37 +63,21 @@ class FooTest extends TestCase {
 
         /** @var int[] $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->fixNames($tokens, $indices[0], $indices[1]);
+            $this->fixReturnTypes($tokens, $indices[0], $indices[1]);
         }
     }
 
-    private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
+    private function fixReturnTypes(Tokens $tokens, int $startIndex, int $endIndex): void
     {
+        $dataProviderAnalyzer = new DataProviderAnalyzer();
         $functionsAnalyzer = new FunctionsAnalyzer();
 
-        $dataProviderNames = $this->getDataProviderNames($tokens, $startIndex, $endIndex);
-
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_FUNCTION)) {
-                continue;
-            }
-
-            /** @var int $functionNameIndex */
-            $functionNameIndex = $tokens->getNextNonWhitespace($index);
-
-            if (!$tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
-                continue;
-            }
-
-            if (!isset($dataProviderNames[$tokens[$functionNameIndex]->getContent()])) {
-                continue;
-            }
-
-            $typeAnalysis = $functionsAnalyzer->getFunctionReturnType($tokens, $functionNameIndex);
+        foreach (\array_reverse($dataProviderAnalyzer->getDataProviders($tokens, $startIndex, $endIndex)) as $dataProviderAnalysis) {
+            $typeAnalysis = $functionsAnalyzer->getFunctionReturnType($tokens, $dataProviderAnalysis->getNameIndex());
 
             if ($typeAnalysis === null) {
                 /** @var int $argumentsStart */
-                $argumentsStart = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
+                $argumentsStart = $tokens->getNextTokenOfKind($dataProviderAnalysis->getNameIndex(), ['(']);
                 $argumentsEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $argumentsStart);
                 $tokens->insertAt(
                     $argumentsEnd + 1,
@@ -112,46 +96,5 @@ class FooTest extends TestCase {
                 $tokens->overrideRange($startIndex, $typeAnalysis->getEndIndex(), [new Token([T_STRING, 'iterable'])]);
             }
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getDataProviderNames(Tokens $tokens, int $startIndex, int $endIndex): array
-    {
-        $dataProviderNames = [];
-
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
-                continue;
-            }
-
-            /** @var int $functionIndex */
-            $functionIndex = $tokens->getTokenNotOfKindSibling(
-                $index,
-                1,
-                [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
-            );
-
-            if (!$tokens[$functionIndex]->isGivenKind(T_FUNCTION)) {
-                continue;
-            }
-
-            $functionNameIndex = $tokens->getNextNonWhitespace($functionIndex);
-            if (!$tokens[$functionNameIndex]->isGivenKind(T_STRING)) {
-                continue;
-            }
-
-            Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$index]->getContent(), $matches);
-
-            /** @var string[] $matches */
-            $matches = $matches[1];
-
-            foreach ($matches as $match) {
-                $dataProviderNames[$match] = $match;
-            }
-        }
-
-        return $dataProviderNames;
     }
 }

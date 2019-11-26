@@ -72,7 +72,7 @@ final class SrcCodeTest extends TestCase
         );
     }
 
-    public function provideFixerCases(): iterable
+    public static function provideFixerCases(): iterable
     {
         return \array_map(
             static function (FixerInterface $fixer): array {
@@ -120,7 +120,7 @@ final class SrcCodeTest extends TestCase
         static::assertNotContains('preg_split', $strings, $message);
     }
 
-    public function provideThereIsNoPregFunctionUsedDirectlyCases(): iterable
+    public static function provideThereIsNoPregFunctionUsedDirectlyCases(): iterable
     {
         $finder = Finder::create()
             ->files()

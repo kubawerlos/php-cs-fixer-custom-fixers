@@ -24,7 +24,7 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield 'data provider correctly named' => [
             '<?php
@@ -158,6 +158,29 @@ class FooTest extends TestCase {
     public function testFoo() {}
     public function foo1DataProvider() {}
     public function foo2DataProvider() {}
+}',
+        ];
+
+        yield 'data providers with new name as part of namespace' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {
+        $x = Foo\ProvideFooCases::X_DEFAULT;
+    }
+    public function provideFooCases() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider foo
+     */
+    public function testFoo() {
+        $x = Foo\ProvideFooCases::X_DEFAULT;
+    }
+    public function foo() {}
 }',
         ];
 

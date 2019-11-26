@@ -131,12 +131,12 @@ return PhpCsFixer\Config::create()
     ] + \array_reduce(
         \iterator_to_array(new PhpCsFixerCustomFixers\Fixers()),
         static function (array $carry, PhpCsFixer\Fixer\DefinedFixerInterface $fixer): array {
-            if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\NoReferenceInFunctionDefinitionFixer) {
+            if ($fixer instanceof PhpCsFixer\Fixer\DeprecatedFixerInterface) {
                 return $carry;
             }
 
-            if (!$fixer instanceof PhpCsFixer\Fixer\DeprecatedFixerInterface) {
-                $carry[$fixer->getName()] = true;
+            if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\NoReferenceInFunctionDefinitionFixer) {
+                return $carry;
             }
 
             if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer) {

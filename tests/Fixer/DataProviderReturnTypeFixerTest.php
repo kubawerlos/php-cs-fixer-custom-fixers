@@ -24,7 +24,7 @@ final class DataProviderReturnTypeFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield 'data provider with iterable return type' => [
             '<?php
@@ -91,6 +91,43 @@ class FooTest extends TestCase {
                 $case
             );
         }
+
+        yield 'multiple data providers' => [
+            '<?php class FooTest extends TestCase {
+                /**
+                 * @dataProvider provider4
+                 * @dataProvider provider1
+                 * @dataProvider provider5
+                 * @dataProvider provider6
+                 * @dataProvider provider2
+                 * @dataProvider provider3
+                 */
+                public function testFoo() {}
+                public function provider1(): iterable {}
+                public function provider2(): iterable {}
+                public function provider3(): iterable {}
+                public function provider4(): iterable {}
+                public function provider5(): iterable {}
+                public function provider6(): iterable {}
+            }',
+            '<?php class FooTest extends TestCase {
+                /**
+                 * @dataProvider provider4
+                 * @dataProvider provider1
+                 * @dataProvider provider5
+                 * @dataProvider provider6
+                 * @dataProvider provider2
+                 * @dataProvider provider3
+                 */
+                public function testFoo() {}
+                public function provider1() {}
+                public function provider2() {}
+                public function provider3() {}
+                public function provider4() {}
+                public function provider5() {}
+                public function provider6() {}
+            }',
+        ];
 
         yield 'advanced case' => [
             '<?php

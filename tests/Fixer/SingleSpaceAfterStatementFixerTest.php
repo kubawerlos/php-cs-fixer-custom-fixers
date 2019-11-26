@@ -113,7 +113,7 @@ interface    FooInterface {
         $this->doTest($expected, $input, $configuration);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield ['<?php echo 1; array(1, 2, 3);'];
         yield ['<?php echo 1; foo(2);'];
@@ -241,20 +241,16 @@ do    {
 
         yield [
             '<?php
-                $a = new class() {};
-                continue;
-                foo();
-                break
-                ;
-                class Baz {}
+                class Foo {}
+                $a = new Foo();
+                $b = new
+                         Foo();
             ',
             '<?php
-                $a = new class() {};
-                continue;
-                foo();
-                break
-                ;
-                class    Baz {}
+                class    Foo {}
+                $a = new Foo();
+                $b = new
+                         Foo();
             ',
             ['allow_linebreak' => true],
         ];
@@ -291,7 +287,7 @@ do    {
         );
     }
 
-    public function provideTokenIsUsefulCases(): iterable
+    public static function provideTokenIsUsefulCases(): iterable
     {
         $fixer = new SingleSpaceAfterStatementFixer();
         $reflection = new \ReflectionClass($fixer);

@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
+ * @coversNothing
  */
 final class TestsCodeTest extends TestCase
 {
@@ -33,12 +33,22 @@ final class TestsCodeTest extends TestCase
      */
     public function testDataProviderReturnType(string $dataProviderName, string $className): void
     {
-        $reflection = new \ReflectionMethod($className, $dataProviderName);
+        $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
 
-        static::assertSame('iterable', $reflection->getReturnType()->getName());
+        static::assertSame('iterable', $reflectionMethod->getReturnType()->getName());
     }
 
-    public function provideDataProviderCases(): iterable
+    /**
+     * @dataProvider provideDataProviderCases
+     */
+    public function testDataProviderIsStatic(string $dataProviderName, string $className): void
+    {
+        $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
+
+        static::assertTrue($reflectionMethod->isStatic());
+    }
+
+    public static function provideDataProviderCases(): iterable
     {
         static $dataProviders;
 
@@ -57,7 +67,7 @@ final class TestsCodeTest extends TestCase
                     $className .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
                 }
                 $className .= '\\' . $file->getBasename('.php');
-                foreach ($this->getDataProviderMethodNames($className) as $dataProviderName) {
+                foreach (static::getDataProviderMethodNames($className) as $dataProviderName) {
                     $dataProviders[\sprintf('%s::%s', $className, $dataProviderName)] = [$dataProviderName, $className];
                 }
             }
@@ -71,7 +81,7 @@ final class TestsCodeTest extends TestCase
     /**
      * @return string[]
      */
-    private function getDataProviderMethodNames(string $className): array
+    private static function getDataProviderMethodNames(string $className): array
     {
         $reflection = new \ReflectionClass($className);
 

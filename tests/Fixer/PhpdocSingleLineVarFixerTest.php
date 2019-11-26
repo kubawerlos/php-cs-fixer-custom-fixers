@@ -24,7 +24,7 @@ final class PhpdocSingleLineVarFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield [ // Wrong annotation
             '<?php
@@ -172,24 +172,26 @@ final class PhpdocSingleLineVarFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-/** first comment */
+/** comment */
+/** @var ChangedOne */
+/** @var AlreadyGood $baz */
 /**
  * @var Foo $foo
  * @var Bar $bar
  */
-/** @var Baz $baz */
-/** @var HelloWorld */
+/** another comment */
 ',
             '<?php
-/** first comment */
+/** comment */
+/**
+ * @var ChangedOne
+ */
+/** @var AlreadyGood $baz */
 /**
  * @var Foo $foo
  * @var Bar $bar
  */
-/** @var Baz $baz */
-/**
- * @var HelloWorld
- */
+/** another comment */
 ',
         ];
     }

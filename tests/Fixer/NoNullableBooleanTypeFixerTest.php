@@ -24,7 +24,7 @@ final class NoNullableBooleanTypeFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield [
             '<?php function foo(bool $b) {}',
@@ -75,14 +75,14 @@ final class NoNullableBooleanTypeFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-                $foo = $a ? bool : bar;
-                function foo() : ?int {};
-                function bar() : bool {};
+                function foo() : bool {};
+                function bar() : ?int {};
+                $result = foo() ? bool : bar();
             ',
             '<?php
-                $foo = $a ? bool : bar;
-                function foo() : ?int {};
-                function bar() : ?bool {};
+                function foo() : ?bool {};
+                function bar() : ?int {};
+                $result = foo() ? bool : bar();
             ',
         ];
     }

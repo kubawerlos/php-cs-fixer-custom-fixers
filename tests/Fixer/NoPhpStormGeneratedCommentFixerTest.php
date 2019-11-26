@@ -24,7 +24,7 @@ final class NoPhpStormGeneratedCommentFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
-    public function provideFixCases(): iterable
+    public static function provideFixCases(): iterable
     {
         yield [
             '<?php
@@ -58,11 +58,11 @@ namespace Foo;
 
         yield [
             '<?php
-// Author: John Doe
 namespace Foo;
+/** class Bar */
+class Bar {}
 ',
             '<?php
-// Author: John Doe
 /**
  * Created by PhpStorm.
  * User: root
@@ -70,6 +70,8 @@ namespace Foo;
  * Time: 12:34
  */
 namespace Foo;
+/** class Bar */
+class Bar {}
 ',
         ];
 

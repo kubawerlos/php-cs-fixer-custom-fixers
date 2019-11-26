@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 - Update PHP CS Fixer to v2.16
+- Add DataProviderStaticFixer
+- Add PhpdocTypesTrimFixer
 - Deprecate NullableParamStyleFixer
 - Deprecate SingleLineThrowFixer
 
