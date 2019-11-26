@@ -20,36 +20,36 @@ script: composer test
 
 jobs:
     include:
-        - stage: Static code analysis
-          php: '7.3'
-          script: composer analyse
+        -   stage: Static code analysis
+            php: '7.3'
+            script: composer analyse
 
-        - stage: Test
-          php: '7.1'
-          env: COMPOSER_FLAGS="--prefer-lowest"
+        -   stage: Test
+            php: '7.1'
+            env: COMPOSER_FLAGS="--prefer-lowest"
 
-        - php: '7.1'
+        -   php: '7.1'
 
-        - php: '7.2'
+        -   php: '7.2'
 
-        - php: '7.3'
-          before_install:
-            - phpenv config-rm xdebug.ini || return 0
-            - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
-            - |
-                git clone --branch=v1.0.4 --depth=1 https://github.com/krakjoe/pcov
-                cd ./pcov
-                phpize
-                ./configure
-                make clean install
-                echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
-                echo "pcov.directory = ." >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
-                cd $TRAVIS_BUILD_DIR
-          install: composer require --dev php-coveralls/php-coveralls
-          script:
-            - composer test -- --coverage-clover=./build/logs/clover.xml --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/phpunit.junit.xml
-            - composer infection -- --coverage=./build/coverage/
-          after_success: ./vendor/bin/php-coveralls
+        -   php: '7.3'
+            before_install:
+                - phpenv config-rm xdebug.ini || return 0
+                - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
+                - |
+                    git clone --branch=v1.0.4 --depth=1 https://github.com/krakjoe/pcov
+                    cd ./pcov
+                    phpize
+                    ./configure
+                    make clean install
+                    echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
+                    echo "pcov.directory = ." >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
+                    cd $TRAVIS_BUILD_DIR
+            install: composer require --dev php-coveralls/php-coveralls
+            script:
+                - composer test -- --coverage-clover=./build/logs/clover.xml --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/phpunit.junit.xml
+                - composer infection -- --coverage=./build/coverage/
+            after_success: ./vendor/bin/php-coveralls
 
-        - php: '7.4snapshot'
-          env: COMPOSER_FLAGS="--ignore-platform-reqs" PHP_CS_FIXER_IGNORE_ENV=1
+        -   php: '7.4snapshot'
+            env: COMPOSER_FLAGS="--ignore-platform-reqs" PHP_CS_FIXER_IGNORE_ENV=1
