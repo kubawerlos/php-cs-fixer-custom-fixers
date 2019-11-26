@@ -6,6 +6,7 @@
 - Add PhpdocTypesTrimFixer
 - Deprecate NullableParamStyleFixer
 - Deprecate SingleLineThrowFixer
+- Allow symfony/finder 5.0
 
 ## v1.16.0 - *2019-10-24*
 - Add PhpdocOnlyAllowedAnnotationsFixer
