@@ -37,7 +37,7 @@ final class ChangelogTest extends TestCase
         static::assertChangelogContains('Deprecate ' . (new \ReflectionObject($fixer))->getShortName());
     }
 
-    private static function assertChangelogContains($content): void
+    private static function assertChangelogContains(string $content): void
     {
         static $changelog;
 
