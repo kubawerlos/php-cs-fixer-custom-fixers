@@ -30,6 +30,7 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
         yield ['<?php $foo = sprintf("My name is %s.", "Earl");'];
         yield ['<?php $foo = sprintf("Sum of %d and %d is %d.", 2, 2, 4);'];
         yield ['<?php $foo = sprintf();'];
+        yield ['<?php $foo = sprintf(...$pieces);'];
         yield ['<?php $foo = sprintf[0]("Bar");'];
         yield ['<?php $foo = $printingHelper->sprintf($bar);'];
         yield ['<?php $foo = PrintingHelper::sprintf($bar);'];
@@ -82,12 +83,14 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
                 PrintingHelper::sprintf("Bar");
                 $baz = "Baz";
                 PrintingHelper::sprintf("Qux");
+                sprintf(...$pieces);
             ',
             '<?php
                 $foo = sprintf("Foo");
                 PrintingHelper::sprintf("Bar");
                 $baz = sprintf("Baz");
                 PrintingHelper::sprintf("Qux");
+                sprintf(...$pieces);
             ',
         ];
     }
