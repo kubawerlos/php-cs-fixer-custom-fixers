@@ -52,17 +52,17 @@ final class NoUselessSprintfFixer extends AbstractFixer
                 continue;
             }
 
-            /** @var int $openParenthesis */
-            $openParenthesis = $tokens->getNextTokenOfKind($index, ['(']);
+            /** @var int $openParenthesisIndex */
+            $openParenthesisIndex = $tokens->getNextTokenOfKind($index, ['(']);
 
-            $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
 
-            if ($argumentsAnalyzer->countArguments($tokens, $openParenthesis, $closeParenthesis) !== 1) {
+            if ($argumentsAnalyzer->countArguments($tokens, $openParenthesisIndex, $closeParenthesisIndex) !== 1) {
                 continue;
             }
 
-            $afterOpenParenthesis = $tokens->getNextMeaningfulToken($openParenthesis);
-            if ($tokens[$afterOpenParenthesis]->isGivenKind(T_ELLIPSIS)) {
+            $afterOpenParenthesisIndex = $tokens->getNextMeaningfulToken($openParenthesisIndex);
+            if ($tokens[$afterOpenParenthesisIndex]->isGivenKind(T_ELLIPSIS)) {
                 continue;
             }
 
@@ -72,8 +72,8 @@ final class NoUselessSprintfFixer extends AbstractFixer
                 $this->removeTokenAndSiblingWhitespace($tokens, $prevIndex, 1);
             }
             $this->removeTokenAndSiblingWhitespace($tokens, $index, 1);
-            $this->removeTokenAndSiblingWhitespace($tokens, $openParenthesis, 1);
-            $this->removeTokenAndSiblingWhitespace($tokens, $closeParenthesis, -1);
+            $this->removeTokenAndSiblingWhitespace($tokens, $openParenthesisIndex, 1);
+            $this->removeTokenAndSiblingWhitespace($tokens, $closeParenthesisIndex, -1);
         }
     }
 
