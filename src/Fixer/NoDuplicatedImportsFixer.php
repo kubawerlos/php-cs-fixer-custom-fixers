@@ -59,12 +59,25 @@ use Bar;
             $used = [];
 
             foreach ($currentNamespaceUseDeclarations as $useDeclaration) {
-                if (isset($used[$useDeclaration->getFullName()])) {
+                $key = $this->getUniqueKey($useDeclaration);
+                if (isset($used[$key])) {
                     $this->removeUseDeclaration($tokens, $useDeclaration);
                 }
-                $used[$useDeclaration->getFullName()] = true;
+                $used[$key] = true;
             }
         }
+    }
+
+    private function getUniqueKey(NamespaceUseAnalysis $useDeclaration): string
+    {
+        if ($useDeclaration->isClass()) {
+            return 'class_' . $useDeclaration->getShortName();
+        }
+        if ($useDeclaration->isFunction()) {
+            return 'function_' . $useDeclaration->getShortName();
+        }
+
+        return 'constant_' . $useDeclaration->getShortName();
     }
 
     private function removeUseDeclaration(Tokens $tokens, NamespaceUseAnalysis $useDeclaration): void
