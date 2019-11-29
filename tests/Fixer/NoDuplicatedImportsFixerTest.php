@@ -74,9 +74,7 @@ final class NoDuplicatedImportsFixerTest extends AbstractFixerTestCase
             '<?php
                 namespace FooBar;
                 use Vendor\Project\Duplicated\Foo;
-                use Vendor\Foo;
                 use Vendor\Project\Duplicated\Bar;
-                use Vendor\Bar;
             ',
             '<?php
                 namespace FooBar;
@@ -109,6 +107,35 @@ final class NoDuplicatedImportsFixerTest extends AbstractFixerTestCase
                 use Vendor\Class1;
                 use Vendor\Class2;
                 use Vendor\Class2;
+            ',
+        ];
+
+        yield [
+            '<?php
+                namespace N;
+                use Foo\Bar;
+                use Foo\Bar as Baz;
+            ',
+        ];
+
+        yield [
+            '<?php
+                namespace N;
+                use Foo;
+                use function Foo;
+                use const Foo;
+            ',
+        ];
+
+        yield [
+            '<?php
+                namespace N;
+                use Foo\Bar;
+            ',
+            '<?php
+                namespace N;
+                use Foo\Bar;
+                use Foo\Baz as Bar;
             ',
         ];
     }
