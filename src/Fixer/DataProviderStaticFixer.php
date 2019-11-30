@@ -69,15 +69,14 @@ class FooTest extends TestCase {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
         foreach (\array_reverse($dataProviderAnalyzer->getDataProviders($tokens, $startIndex, $endIndex)) as $dataProviderAnalysis) {
-            /** @var int $methodStartIndex */
             $methodStartIndex = $tokens->getNextTokenOfKind($dataProviderAnalysis->getNameIndex(), ['{']);
+            if ($methodStartIndex !== null) {
+                $methodEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $methodStartIndex);
 
-            $methodEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $methodStartIndex);
-
-            if ($tokens->findSequence([[T_VARIABLE, '$this']], $methodStartIndex, $methodEndIndex) !== null) {
-                continue;
+                if ($tokens->findSequence([[T_VARIABLE, '$this']], $methodStartIndex, $methodEndIndex) !== null) {
+                    continue;
+                }
             }
-
             /** @var int $functionIndex */
             $functionIndex = $tokens->getPrevTokenOfKind($dataProviderAnalysis->getNameIndex(), [[T_FUNCTION]]);
 

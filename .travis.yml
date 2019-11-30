@@ -37,7 +37,7 @@ jobs:
                 - phpenv config-rm xdebug.ini || return 0
                 - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
                 - |
-                    git clone --branch=v1.0.4 --depth=1 https://github.com/krakjoe/pcov
+                    git clone --branch=v1.0.6 --depth=1 https://github.com/krakjoe/pcov
                     cd ./pcov
                     phpize
                     ./configure
