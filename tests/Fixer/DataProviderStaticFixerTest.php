@@ -29,7 +29,7 @@ final class DataProviderStaticFixerTest extends AbstractFixerTestCase
         yield 'do not fix when containing dynamic calls' => [
             '<?php
 class FooTest extends TestCase {
-    /** 
+    /**
      * @dataProvider provideFoo1Cases
      */
     public function testFoo1() {}
@@ -103,6 +103,25 @@ class FooTest extends TestCase {
     public
         function
             provideFooCases() { $x->getData(); }
+}',
+        ];
+
+        yield 'fix when data provider is abstract' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {}
+    abstract public static function provideFooCases();
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {}
+    abstract public function provideFooCases();
 }',
         ];
     }
