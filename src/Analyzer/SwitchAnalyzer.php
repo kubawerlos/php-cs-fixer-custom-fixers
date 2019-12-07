@@ -19,21 +19,16 @@ final class SwitchAnalyzer
             throw new \InvalidArgumentException(\sprintf('Index %d is not "switch".', $switchIndex));
         }
 
-        /** @var int $indexParenthesisStart */
-        $indexParenthesisStart = $tokens->getNextMeaningfulToken($switchIndex);
-        $indexParenthesisEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
-
-        /** @var int $indexCurlyBracesStart */
-        $indexCurlyBracesStart = $tokens->getNextMeaningfulToken($indexParenthesisEnd);
-        $indexCurlyBracesEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $indexCurlyBracesStart);
+        $casesStartIndex = $this->getCasesStart($tokens, $switchIndex);
+        $casesEndIndex = $this->getCasesEnd($tokens, $casesStartIndex);
 
         $cases = [];
         $ternaryOperatorDepth = 0;
-        $index = $indexCurlyBracesStart;
-        while ($index < $indexCurlyBracesEnd) {
+        $index = $casesStartIndex;
+        while ($index < $casesEndIndex) {
             $index++;
             if ($tokens[$index]->isGivenKind(T_SWITCH)) {
-                $index = (new self())->getSwitchAnalysis($tokens, $index)->getCurlyBracesEnd();
+                $index = (new self())->getSwitchAnalysis($tokens, $index)->getCasesEnd();
                 continue;
             }
             if ($tokens[$index]->equals('?')) {
@@ -50,6 +45,49 @@ final class SwitchAnalyzer
             $cases[] = new CaseAnalysis($index);
         }
 
-        return new SwitchAnalysis($indexCurlyBracesStart, $indexCurlyBracesEnd, $cases);
+        return new SwitchAnalysis($casesStartIndex, $casesEndIndex, $cases);
+    }
+
+    private function getCasesStart(Tokens $tokens, int $switchIndex): int
+    {
+        /** @var int $parenthesisStartIndex */
+        $parenthesisStartIndex = $tokens->getNextMeaningfulToken($switchIndex);
+        $parenthesisEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $parenthesisStartIndex);
+
+        $casesStartIndex = $tokens->getNextMeaningfulToken($parenthesisEndIndex);
+        \assert(\is_int($casesStartIndex));
+
+        return $casesStartIndex;
+    }
+
+    private function getCasesEnd(Tokens $tokens, int $casesStartIndex): int
+    {
+        if ($tokens[$casesStartIndex]->equals('{')) {
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $casesStartIndex);
+        }
+
+        $depth = 1;
+        $index = $casesStartIndex;
+        while ($depth > 0) {
+            /** @var int $index */
+            $index = $tokens->getNextMeaningfulToken($index);
+            if ($tokens[$index]->isGivenKind(T_ENDSWITCH)) {
+                $depth--;
+                continue;
+            }
+
+            if (!$tokens[$index]->isGivenKind(T_SWITCH)) {
+                continue;
+            }
+            $index = $this->getCasesStart($tokens, $index);
+            if ($tokens[$index]->equals(':')) {
+                $depth++;
+            }
+        }
+
+        /** @var int $casesEndIndex */
+        $casesEndIndex = $tokens->getNextMeaningfulToken($index);
+
+        return $tokens[$casesEndIndex]->equals(';') ? $casesEndIndex : $index;
     }
 }

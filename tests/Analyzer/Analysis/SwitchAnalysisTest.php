@@ -15,16 +15,16 @@ use PHPUnit\Framework\TestCase;
  */
 final class SwitchAnalysisTest extends TestCase
 {
-    public function testCurlyBracesStart(): void
+    public function testCasesStart(): void
     {
         $analysis = new SwitchAnalysis(10, 20, []);
-        static::assertSame(10, $analysis->getCurlyBracesStart());
+        static::assertSame(10, $analysis->getCasesStart());
     }
 
-    public function testCurlyBracesEnd(): void
+    public function testCasesEnd(): void
     {
         $analysis = new SwitchAnalysis(10, 20, []);
-        static::assertSame(20, $analysis->getCurlyBracesEnd());
+        static::assertSame(20, $analysis->getCasesEnd());
     }
 
     public function testCases(): void
