@@ -71,6 +71,7 @@ final class SwitchAnalyzer
         while ($depth > 0) {
             /** @var int $index */
             $index = $tokens->getNextMeaningfulToken($index);
+
             if ($tokens[$index]->isGivenKind(T_ENDSWITCH)) {
                 $depth--;
                 continue;
@@ -86,8 +87,8 @@ final class SwitchAnalyzer
         }
 
         /** @var int $casesEndIndex */
-        $casesEndIndex = $tokens->getNextMeaningfulToken($index);
+        $afterEndswitchIndex = $tokens->getNextMeaningfulToken($index);
 
-        return $tokens[$casesEndIndex]->equals(';') ? $casesEndIndex : $index;
+        return $tokens[$afterEndswitchIndex]->equals(';') ? $afterEndswitchIndex : $index;
     }
 }
