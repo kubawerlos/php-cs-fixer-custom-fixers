@@ -86,5 +86,26 @@ final class SwitchAnalyzerTest extends TestCase
             '<?php switch ($foo) { case 10: function foo($x): int {}; return true; case 100: return false; }',
             1,
         ];
+
+        yield 'alternative syntax' => [
+            new SwitchAnalysis(7, 30, [new CaseAnalysis(12), new CaseAnalysis(22)]),
+            '<?php switch ($foo) : case 10: return true; case 100: return false; endswitch;',
+            1,
+        ];
+
+        yield 'alternative syntax with closing tag' => [
+            new SwitchAnalysis(7, 29, [new CaseAnalysis(12), new CaseAnalysis(22)]),
+            '<?php switch ($foo) : case 10: return true; case 100: return false; endswitch ?>',
+            1,
+        ];
+
+        yield 'alternative syntax nested' => [
+            new SwitchAnalysis(7, 69, [new CaseAnalysis(12), new CaseAnalysis(61)]),
+            '<?php switch ($foo) : case 10:
+                switch ($bar) : case "a": return "b"; case "c": return "d"; case "e": return "f"; endswitch;
+                return;
+                case 100: return false; endswitch;',
+            1,
+        ];
     }
 }
