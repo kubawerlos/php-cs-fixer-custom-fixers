@@ -10,10 +10,10 @@ namespace PhpCsFixerCustomFixers\Analyzer\Analysis;
 final class SwitchAnalysis
 {
     /** @var int */
-    private $curlyBracesStart;
+    private $casesStart;
 
     /** @var int */
-    private $curlyBracesEnd;
+    private $casesEnd;
 
     /** @var CaseAnalysis[] */
     private $cases = [];
@@ -21,21 +21,21 @@ final class SwitchAnalysis
     /**
      * @param CaseAnalysis[] $cases
      */
-    public function __construct(int $curlyBracesStart, int $curlyBracesEnd, array $cases)
+    public function __construct(int $casesStart, int $casesEnd, array $cases)
     {
-        $this->curlyBracesStart = $curlyBracesStart;
-        $this->curlyBracesEnd = $curlyBracesEnd;
+        $this->casesStart = $casesStart;
+        $this->casesEnd = $casesEnd;
         $this->cases = $cases;
     }
 
-    public function getCurlyBracesStart(): int
+    public function getCasesStart(): int
     {
-        return $this->curlyBracesStart;
+        return $this->casesStart;
     }
 
-    public function getCurlyBracesEnd(): int
+    public function getCasesEnd(): int
     {
-        return $this->curlyBracesEnd;
+        return $this->casesEnd;
     }
 
     /**
