@@ -86,7 +86,7 @@ final class SwitchAnalyzer
             }
         }
 
-        /** @var int $casesEndIndex */
+        /** @var int $afterEndswitchIndex */
         $afterEndswitchIndex = $tokens->getNextMeaningfulToken($index);
 
         return $tokens[$afterEndswitchIndex]->equals(';') ? $afterEndswitchIndex : $index;
