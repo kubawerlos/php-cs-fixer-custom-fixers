@@ -58,7 +58,10 @@ function foo($x) {}
                     continue;
                 }
 
-                $content = $annotation->getContent();
+                /** @var Line $line */
+                $line = $docBlock->getLine($annotation->getStart());
+
+                $content = $line->getContent();
 
                 $variableStartPosition = \strpos($content, '$');
 
