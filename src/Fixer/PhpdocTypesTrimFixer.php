@@ -9,6 +9,7 @@ use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -69,7 +70,8 @@ function foo($x) {}
                     $variableStartPosition = \strlen($content);
                 }
 
-                $types = $this->trimTypes(\substr($content, 0, $variableStartPosition));
+                /** @var string $types */
+                $types = Preg::replace('/\h*\|\h*/', '|', \substr($content, 0, $variableStartPosition));
 
                 $newContent = $types . \substr($content, $variableStartPosition);
 
@@ -85,27 +87,5 @@ function foo($x) {}
 
             $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
         }
-    }
-
-    private function trimTypes(string $typesContent): string
-    {
-        $types = \explode('|', $typesContent);
-
-        if (\count($types) < 2) {
-            return $typesContent;
-        }
-        $lastIndex = \count($types) - 1;
-
-        foreach ($types as $key => $type) {
-            if ($key === 0) {
-                $types[$key] = \rtrim($type);
-            } elseif ($key === $lastIndex) {
-                $types[$key] = \ltrim($type);
-            } else {
-                $types[$key] = \trim($type);
-            }
-        }
-
-        return \implode('|', $types);
     }
 }
