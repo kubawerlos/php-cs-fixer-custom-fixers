@@ -71,7 +71,7 @@ function foo($x) {}
                 }
 
                 /** @var string $types */
-                $types = Preg::replace('/\h*\|\h*/', '|', \substr($content, 0, $variableStartPosition));
+                $types = Preg::replace('/\h*(\||&)\h*/', '$1', \substr($content, 0, $variableStartPosition));
 
                 $newContent = $types . \substr($content, $variableStartPosition);
 
