@@ -115,5 +115,20 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
                  function baz() {}
              ',
         ];
+
+        yield [
+            '<?php
+                /**
+                 * @return Foo|Bar Multiline
+                 *                   description
+                 */
+             ',
+            '<?php
+                /**
+                 * @return Foo | Bar Multiline
+                 *                   description
+                 */
+             ',
+        ];
     }
 }
