@@ -85,33 +85,37 @@ function foo($x) {}
             return $content;
         }
 
-        $variableStartPosition = \strpos($content, '$');
+        /** @var int $tagStartPosition */
+        $tagStartPosition = \strpos($content, '@');
+
+        /** @var int $typeStartPosition */
+        $typeStartPosition = \strpos($content, ' ', $tagStartPosition);
+        $typeStartPosition++;
+
+        $variableStartPosition = \strpos($content, '$', $typeStartPosition);
         if ($variableStartPosition !== false) {
             $variableStartPosition++;
         } else {
             $variableStartPosition = \strlen($content);
         }
 
-        /** @var int $tagStartPosition */
-        $tagStartPosition = \strpos($content, '@');
-
-        /** @var int $spaceAfterTag */
-        $spaceAfterTag = \strpos($content, ' ', $tagStartPosition);
-
-        Preg::match('/(?<!(&|\|))\h(?!(&(?!\h*\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $spaceAfterTag + 1);
+        Preg::match('/(?<!(&|\|))\h(?!(&(?!\h*\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $typeStartPosition + 1);
         if ($matches !== []) {
             $descriptionStartPosition = $matches[0][1];
         } else {
             $descriptionStartPosition = \strlen($content);
         }
-        $length = \min($variableStartPosition, $descriptionStartPosition);
 
-        $contentToUpdate = \substr($content, 0, $length);
-        $contentNotToUpdate = \substr($content, $length);
+        /** @var int $typeEndPosition */
+        $typeEndPosition = \min($variableStartPosition, $descriptionStartPosition);
 
-        /** @var string $trimmedContent */
-        $trimmedContent = Preg::replace('/\h*(&(?!\h*\$)|\|)\h*/', '$1', $contentToUpdate);
+        $contentBeforeTypes = \substr($content, 0, $typeStartPosition);
+        $contentTypes = \substr($content, $typeStartPosition, $typeEndPosition - $typeStartPosition);
+        $contentAfterTypes = \substr($content, $typeEndPosition);
 
-        return $trimmedContent . $contentNotToUpdate;
+        /** @var string $trimmedContentTypes */
+        $trimmedContentTypes = Preg::replace('/\h*(&(?!\h*\$)|\|)\h*/', '$1', $contentTypes);
+
+        return $contentBeforeTypes . $trimmedContentTypes . $contentAfterTypes;
     }
 }

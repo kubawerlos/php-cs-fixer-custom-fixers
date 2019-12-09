@@ -149,7 +149,11 @@ return PhpCsFixer\Config::create()
                     'return',
                     'var',
                 ]];
+
+                return $carry;
             }
+
+            $carry[$fixer->getName()] = true;
 
             return $carry;
         },
