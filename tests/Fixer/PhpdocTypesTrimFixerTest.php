@@ -171,6 +171,29 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 /**
+                 * @param Foo|Bar &$a
+                 * @param Foo&Bar &$b
+                 * @param Foo|Bar & $c
+                 * @param Foo&Bar & $d
+                 * @param &$e
+                 * @param & $f
+                 */
+             ',
+            '<?php
+                /**
+                 * @param Foo | Bar &$a
+                 * @param Foo & Bar &$b
+                 * @param Foo | Bar & $c
+                 * @param Foo & Bar & $d
+                 * @param &$e
+                 * @param & $f
+                 */
+             ',
+        ];
+
+        yield [
+            '<?php
+                /**
                  * @notParam Foo | Bar $x
                  * @param Foo|Bar $x
                  * @param Foo|Bar $y
@@ -198,6 +221,15 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
                   * @return Baz
                   */
                  function baz() {}
+             ',
+        ];
+
+        yield [
+            '<?php
+                /**
+                 * @param |Foo $foo
+                 * @param &Foo $bar
+                 */
              ',
         ];
     }
