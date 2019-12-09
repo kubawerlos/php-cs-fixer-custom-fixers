@@ -86,7 +86,9 @@ function foo($x) {}
         }
 
         $variableStartPosition = \strpos($content, '$');
-        if ($variableStartPosition === false) {
+        if ($variableStartPosition !== false) {
+            $variableStartPosition++;
+        } else {
             $variableStartPosition = \strlen($content);
         }
 
@@ -108,7 +110,7 @@ function foo($x) {}
         $contentNotToUpdate = \substr($content, $length);
 
         /** @var string $trimmedContent */
-        $trimmedContent = Preg::replace('/\h*(&|\|)\h*/', '$1', $contentToUpdate);
+        $trimmedContent = Preg::replace('/\h*(&(?!\h*\$)|\|)\h*/', '$1', $contentToUpdate);
 
         return $trimmedContent . $contentNotToUpdate;
     }

@@ -175,6 +175,8 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
                  * @param Foo&Bar &$b
                  * @param Foo|Bar & $c
                  * @param Foo&Bar & $d
+                 * @param &$e
+                 * @param & $f
                  */
              ',
             '<?php
@@ -183,6 +185,8 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
                  * @param Foo & Bar &$b
                  * @param Foo | Bar & $c
                  * @param Foo & Bar & $d
+                 * @param &$e
+                 * @param & $f
                  */
              ',
         ];
