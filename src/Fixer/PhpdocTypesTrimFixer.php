@@ -96,7 +96,7 @@ function foo($x) {}
         /** @var int $spaceAfterTag */
         $spaceAfterTag = \strpos($content, ' ', $tagStartPosition);
 
-        Preg::match('/(?<![&|])\h(?![&|])/', $content, $matches, PREG_OFFSET_CAPTURE, $spaceAfterTag + 1);
+        Preg::match('/(?<!(&|\|))\h(?!(&(?!\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $spaceAfterTag + 1);
         if ($matches !== []) {
             $descriptionStartPosition = $matches[0][1];
         } else {
@@ -108,7 +108,7 @@ function foo($x) {}
         $contentNotToUpdate = \substr($content, $length);
 
         /** @var string $trimmedContent */
-        $trimmedContent = Preg::replace('/\h*([|&])\h*/', '$1', $contentToUpdate);
+        $trimmedContent = Preg::replace('/\h*(&|\|)\h*/', '$1', $contentToUpdate);
 
         return $trimmedContent . $contentNotToUpdate;
     }
