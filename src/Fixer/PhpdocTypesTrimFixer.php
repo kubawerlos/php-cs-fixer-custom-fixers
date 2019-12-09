@@ -63,17 +63,7 @@ function foo($x) {}
                 $line = $docBlock->getLine($annotation->getStart());
 
                 $content = $line->getContent();
-
-                $variableStartPosition = \strpos($content, '$');
-
-                if ($variableStartPosition === false) {
-                    $variableStartPosition = \strlen($content);
-                }
-
-                /** @var string $types */
-                $types = Preg::replace('/\h*(\||&)\h*/', '$1', \substr($content, 0, $variableStartPosition));
-
-                $newContent = $types . \substr($content, $variableStartPosition);
+                $newContent = $this->trimTypes($content);
 
                 /** @var Line $line */
                 $line = $docBlock->getLine($annotation->getStart());
@@ -87,5 +77,39 @@ function foo($x) {}
 
             $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
         }
+    }
+
+    private function trimTypes(string $content): string
+    {
+        if (\strpos($content, '|') === false && \strpos($content, '&') === false) {
+            return $content;
+        }
+
+        $variableStartPosition = \strpos($content, '$');
+        if ($variableStartPosition === false) {
+            $variableStartPosition = \strlen($content);
+        }
+
+        /** @var int $tagStartPosition */
+        $tagStartPosition = \strpos($content, '@');
+
+        /** @var int $spaceAfterTag */
+        $spaceAfterTag = \strpos($content, ' ', $tagStartPosition);
+
+        Preg::match('/(?<![&|])\h(?![&|])/', $content, $matches, PREG_OFFSET_CAPTURE, $spaceAfterTag + 1);
+        if ($matches !== []) {
+            $descriptionStartPosition = $matches[0][1];
+        } else {
+            $descriptionStartPosition = \strlen($content);
+        }
+        $length = \min($variableStartPosition, $descriptionStartPosition);
+
+        $contentToUpdate = \substr($content, 0, $length);
+        $contentNotToUpdate = \substr($content, $length);
+
+        /** @var string $trimmedContent */
+        $trimmedContent = Preg::replace('/\h*([|&])\h*/', '$1', $contentToUpdate);
+
+        return $trimmedContent . $contentNotToUpdate;
     }
 }

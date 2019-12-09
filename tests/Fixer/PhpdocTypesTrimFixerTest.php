@@ -90,6 +90,19 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 /**
+                 * @return Foo&Bar|Baz Weird type witt & and | together
+                 */
+             ',
+            '<?php
+                /**
+                 * @return Foo & Bar | Baz Weird type witt & and | together
+                 */
+             ',
+        ];
+
+        yield [
+            '<?php
+                /**
                  * @param ClassA|ClassB|ClassC|ClassD|ClassE|ClassF|ClassG|ClassH $x should be 0 | 1
                  */
              ',
