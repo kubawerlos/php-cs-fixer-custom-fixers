@@ -18,6 +18,7 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTypesOrderFixer;
 use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
 use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
@@ -35,6 +36,7 @@ use PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocTypesTrimFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer;
 use PhpCsFixerCustomFixers\Fixer\SingleLineThrowFixer;
 use PHPUnit\Framework\TestCase;
@@ -575,6 +577,42 @@ final class PriorityTest extends TestCase
                  * @param     $y
                  */
                 function foo($x, $y) {}
+            ',
+        ];
+
+        yield [
+            new PhpdocTypesTrimFixer(),
+            new PhpdocAlignFixer(),
+            '<?php
+                /**
+                 * @param Foo|Bar $x
+                 * @param Foo     $y
+                 */
+                function foo($x, $y) {}
+            ',
+            '<?php
+                /**
+                 * @param Foo | Bar $x
+                 * @param Foo       $y
+                 */
+                function foo($x, $y) {}
+            ',
+        ];
+
+        yield [
+            new PhpdocTypesTrimFixer(),
+            new PhpdocTypesOrderFixer(),
+            '<?php
+                /**
+                 * @param Bar|Foo $x
+                 */
+                function foo($x) {}
+            ',
+            '<?php
+                /**
+                 * @param Foo | Bar $x
+                 */
+                function foo($x) {}
             ',
         ];
 
