@@ -96,7 +96,7 @@ function foo($x) {}
         /** @var int $spaceAfterTag */
         $spaceAfterTag = \strpos($content, ' ', $tagStartPosition);
 
-        Preg::match('/(?<!(&|\|))\h(?!(&(?!\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $spaceAfterTag + 1);
+        Preg::match('/(?<!(&|\|))\h(?!(&(?!\h*\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $spaceAfterTag + 1);
         if ($matches !== []) {
             $descriptionStartPosition = $matches[0][1];
         } else {
