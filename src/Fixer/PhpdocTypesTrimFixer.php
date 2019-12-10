@@ -30,7 +30,8 @@ function foo($x) {}
 
     public function getPriority(): int
     {
-        return 0;
+        // must be run before PhpdocAlignFixer and PhpdocTypesOrderFixer
+        return 1;
     }
 
     public function isCandidate(Tokens $tokens): bool
