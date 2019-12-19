@@ -100,7 +100,7 @@ function foo($x) {}
             $variableStartPosition = \strlen($content);
         }
 
-        Preg::match('/(?<!(&|\|))\h(?!(&(?!\h*\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $typeStartPosition + 1);
+        Preg::match('/(?<!(\h|&|\|))\h(?!(\h|&(?!\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $typeStartPosition + 1);
         if ($matches !== []) {
             $descriptionStartPosition = $matches[0][1];
         } else {
