@@ -25,6 +25,7 @@
         "analyse": [
             "composer validate --strict",
             "composer normalize --dry-run --working-dir=./dev-tools ./../composer.json",
+            "./check_trailing_whitespaces.sh",
             "./dev-tools/vendor/bin/composer-require-checker check ./composer.json",
             "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
             "./dev-tools/vendor/bin/types-checker ./src ./dev-tools/src ./tests",
