@@ -7,7 +7,6 @@ namespace Tests;
 use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
-use PhpCsFixer\Fixer\Comment\NoTrailingWhitespaceInCommentFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
 use PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer;
@@ -224,37 +223,6 @@ final class PriorityTest extends TestCase
                     */',
             '<?php /**foo
                     *******/',
-        ];
-
-        yield [
-            new MultilineCommentOpeningClosingAloneFixer(),
-            new NoTrailingWhitespaceInCommentFixer(),
-            '<?php
-                /**
-                 *
-                 * foo
-                 */
-            ',
-            '<?php
-                /**    
-                 * foo
-                 */
-            ',
-        ];
-
-        yield [
-            new MultilineCommentOpeningClosingAloneFixer(),
-            new PhpdocTrimFixer(),
-            '<?php
-                /**
-                 * foo
-                 */
-            ',
-            '<?php
-                /**    
-                 * foo
-                 */
-            ',
         ];
 
         yield [

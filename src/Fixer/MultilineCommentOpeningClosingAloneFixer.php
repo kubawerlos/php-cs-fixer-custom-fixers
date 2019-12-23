@@ -23,7 +23,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
     public function getPriority(): int
     {
-        // must be run before MultilineCommentOpeningClosingFixer, NoTrailingWhitespaceInCommentFixer and PhpdocTrimFixer
+        // must be run before MultilineCommentOpeningClosingFixer
         return 1;
     }
 
@@ -75,7 +75,13 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
             $indent .= ' ';
         }
 
-        $newContent = $matches['opening'] . $matches['newline'] . $indent . $matches['before_newline'] . $matches['newline'] . $matches['after_newline'];
+        if (Preg::match('#^\h+$#', $matches['before_newline']) === 1) {
+            $insert = '';
+        } else {
+            $insert = $matches['newline'] . $indent . $matches['before_newline'];
+        }
+
+        $newContent = $matches['opening'] . $insert . $matches['newline'] . $matches['after_newline'];
 
         if ($newContent !== $token->getContent()) {
             $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);

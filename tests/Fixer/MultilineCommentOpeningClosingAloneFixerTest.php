@@ -169,6 +169,29 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
                  */',
         ];
 
+        yield [
+            '<?php
+                /*
+                 * Foo
+                 */',
+            '<?php
+                /*    
+                 * Foo
+                 */',
+        ];
+
+        yield [
+            '<?php
+                /*
+                 *    Foo    
+                 * Bar
+                 */',
+            '<?php
+                /*    Foo    
+                 * Bar
+                 */',
+        ];
+
         yield ['<?php // with invisible character at the end' . \chr(226) . \chr(128) . \chr(168)];
 
         yield [
