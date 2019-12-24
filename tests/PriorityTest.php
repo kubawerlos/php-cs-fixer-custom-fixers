@@ -266,7 +266,7 @@ final class PriorityTest extends TestCase
             new NoUselessCommentFixer(),
             new NoEmptyCommentFixer(),
             '<?php
-                
+                ' . '
                  class Foo {}
             ',
             '<?php
@@ -281,7 +281,7 @@ final class PriorityTest extends TestCase
             new NoUselessCommentFixer(),
             new NoEmptyPhpdocFixer(),
             '<?php
-                
+                ' . '
                  class Foo {}
             ',
             '<?php
@@ -397,7 +397,7 @@ final class PriorityTest extends TestCase
             new PhpdocNoIncorrectVarAnnotationFixer(),
             new NoEmptyPhpdocFixer(),
             '<?php
-                
+                ' . '
                 $y = 2;
             ',
             '<?php
@@ -482,7 +482,7 @@ final class PriorityTest extends TestCase
             new PhpdocNoSuperfluousParamFixer(),
             new NoEmptyPhpdocFixer(),
             '<?php
-                
+                ' . '
                  function foo() {}
             ',
             '<?php
@@ -497,7 +497,7 @@ final class PriorityTest extends TestCase
             new PhpdocOnlyAllowedAnnotationsFixer(),
             new NoEmptyPhpdocFixer(),
             '<?php
-                
+                ' . '
                 class Foo {}
             ',
             '<?php

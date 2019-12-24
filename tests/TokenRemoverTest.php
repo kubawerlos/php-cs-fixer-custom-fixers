@@ -145,7 +145,7 @@ namespace Foo;
         ];
 
         yield 'with open tag before' => [
-            '<?php 
+            '<?php ' . '
 foo();
 ',
             '<?php /* to remove */
@@ -154,7 +154,7 @@ foo();
         ];
 
         yield 'with open tag and spaces before' => [
-            '<?php    
+            '<?php    ' . '
 foo();
 ',
             '<?php    /* to remove */
@@ -183,22 +183,22 @@ foo();
 
         yield 'with comment with newlines before' => [
             '<?php
-/* other comment 
+/* other comment
  */
 ',
             '<?php
-/* other comment 
+/* other comment
  *//* to remove */
 ',
         ];
 
         yield 'with comment with newlines after' => [
             '<?php
-/* 
+/*
     other comment */
 ',
             '<?php
-/* to remove *//* 
+/* to remove *//*
     other comment */
 ',
         ];

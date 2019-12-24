@@ -299,11 +299,11 @@ class Foo
 class Foo
 {
     private $a;
-    
+
     public function hello()
     {
         $b = [1, 2, 3];
-        
+
         foreach ($b as $x) {}
     }
 }
@@ -314,12 +314,12 @@ class Foo
 {
     /** @var $b */
     private $a;
-    
+
     public function hello()
     {
         /** @var $a */
         $b = [1, 2, 3];
-        
+
         /** @var $y */
         foreach ($b as $x) {}
     }
