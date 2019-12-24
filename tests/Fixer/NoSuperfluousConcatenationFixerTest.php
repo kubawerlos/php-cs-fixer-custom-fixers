@@ -16,12 +16,19 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         static::assertFalse($this->fixer->isRisky());
     }
 
+    public function testConfiguration(): void
+    {
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        static::assertArrayHasKey(0, $options);
+        static::assertSame('allow_preventing_trailing_spaces', $options[0]->getName());
+    }
+
     /**
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     public static function provideFixCases(): iterable
@@ -121,6 +128,27 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
                 "h" . $i;
                 "j"./** k */"l";
             ',
+        ];
+
+        yield [
+            '<?php echo "Foo  & Bar";',
+            '<?php echo "Foo " . " & Bar";',
+            ['allow_preventing_trailing_spaces' => true],
+        ];
+
+        yield [
+            '<?php echo "Foo
+                         & Bar";',
+            '<?php echo "Foo" . "
+                         & Bar";',
+            ['allow_preventing_trailing_spaces' => true],
+        ];
+
+        yield [
+            '<?php echo "Foo " . "
+                         & Bar";',
+            null,
+            ['allow_preventing_trailing_spaces' => true],
         ];
     }
 }

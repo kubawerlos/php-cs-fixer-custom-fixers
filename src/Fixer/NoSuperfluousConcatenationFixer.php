@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -11,14 +14,32 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class NoSuperfluousConcatenationFixer extends AbstractFixer
+final class NoSuperfluousConcatenationFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
+    /** @var bool */
+    private $allowPreventingTrailingSpaces = false;
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
             'There should not be superfluous inline concatenation of strings.',
             [new CodeSample("<?php\necho 'foo' . 'bar';\n")]
         );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolver
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('allow_preventing_trailing_spaces', 'whether to keep concatenation if it prevents having trailing spaces in string'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault($this->allowPreventingTrailingSpaces)
+                ->getOption(),
+        ]);
+    }
+
+    public function configure(?array $configuration = null): void
+    {
+        $this->allowPreventingTrailingSpaces = isset($configuration['allow_preventing_trailing_spaces']) && $configuration['allow_preventing_trailing_spaces'] === true;
     }
 
     public function getPriority(): int
@@ -84,6 +105,13 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer
     {
         $firstStringContent = $tokens[$firstIndex]->getContent();
         $secondStringContent = $tokens[$secondIndex]->getContent();
+
+        if ($this->allowPreventingTrailingSpaces
+            && Preg::match('/\h(\\\'|")$/', $firstStringContent) === 1
+            && Preg::match('/^(\\\'|")\R/', $secondStringContent) === 1
+        ) {
+            return;
+        }
 
         if ($firstStringContent[\strlen($firstStringContent) - 1] !== $secondStringContent[\strlen($secondStringContent) - 1]) {
             return;

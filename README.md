@@ -8,7 +8,7 @@
 
 [![Build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-1710-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-1714-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -219,6 +219,8 @@ There must be no reference in function definition.
 
 #### NoSuperfluousConcatenationFixer
 There should not be superfluous inline concatenation of strings.
+Configuration options:
+- `allow_preventing_trailing_spaces` (`bool`): whether to keep concatenation if it prevents having trailing spaces in string; defaults to `false`
 ```diff
  <?php
 -echo 'foo' . 'bar';
