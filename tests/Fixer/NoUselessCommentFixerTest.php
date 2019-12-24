@@ -363,7 +363,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             '<?php
                 //
                 class Foo {
-                    public function calculation() { 
+                    public function calculation() {
                         // @author: John Doe
                         return  42;
                     }
@@ -372,7 +372,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             '<?php
                 // Class Foo
                 class Foo {
-                    public function calculation() { 
+                    public function calculation() {
                         // @author: John Doe
                         return  42;
                     }

@@ -240,7 +240,7 @@ class Baz {
         yield [
             '<?php
 namespace Foo;
-/** 
+/** ' . '
  * The class
  */
 class Bar {
@@ -252,7 +252,7 @@ class Bar {
 ',
             '<?php
 namespace Foo;
-/** 
+/** ' . '
  * The class
  */
 use DateTime;

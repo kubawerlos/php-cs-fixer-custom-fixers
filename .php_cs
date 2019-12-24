@@ -139,6 +139,12 @@ return PhpCsFixer\Config::create()
                 return $carry;
             }
 
+            if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer) {
+                $carry[$fixer->getName()] = ['allow_preventing_trailing_spaces' => true];
+
+                return $carry;
+            }
+
             if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer) {
                 $carry[$fixer->getName()] = ['elements' => [
                     'covers',
