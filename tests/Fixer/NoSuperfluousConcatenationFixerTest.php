@@ -7,18 +7,13 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer
  */
-final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
+final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
-    }
-
-    public function testSuccessorName(): void
-    {
-        static::assertContains('NoSuperfluousConcatenationFixer', $this->fixer->getSuccessorsNames());
     }
 
     /**

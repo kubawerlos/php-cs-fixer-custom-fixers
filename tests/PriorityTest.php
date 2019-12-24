@@ -27,7 +27,7 @@ use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
 use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
 use PhpCsFixerCustomFixers\Fixer\NoImportFromGlobalNamespaceFixer;
-use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
+use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
 use PhpCsFixerCustomFixers\Fixer\NullableParamStyleFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
@@ -600,7 +600,7 @@ final class PriorityTest extends TestCase
 
         yield [
             new SingleLineThrowFixer(),
-            new NoUnneededConcatenationFixer(),
+            new NoSuperfluousConcatenationFixer(),
             '<?php
                 throw new Exception("This should not happen");
             ',
@@ -614,7 +614,7 @@ final class PriorityTest extends TestCase
 
         yield [
             new SingleQuoteFixer(),
-            new NoUnneededConcatenationFixer(),
+            new NoSuperfluousConcatenationFixer(),
             '<?php
                 $x = \'FooBar\';
             ',
