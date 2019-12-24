@@ -35,9 +35,21 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
     {
         yield ['<?php $foo. "bar";'];
         yield ['<?php "foo" .$bar;'];
-        yield ['<?php "foo".\'bar\';'];
-        yield ['<?php "foo" . \'bar\';'];
-        yield ['<?php \'foo\' . "bar";'];
+
+        yield [
+            '<?php "foobar";',
+            '<?php "foo".\'bar\';',
+        ];
+
+        yield [
+            '<?php "foobar";',
+            '<?php "foo" . \'bar\';',
+        ];
+
+        yield [
+            '<?php "foobar";',
+            '<?php \'foo\' . "bar";',
+        ];
 
         yield ['<?php "foo"
                       . "bar";'];
@@ -91,6 +103,11 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php b"你好世界";',
+            '<?php b"你好" . b"世界";',
+        ];
+
+        yield [
             '<?php
                 $a = "a"
                    . "a";
@@ -98,7 +115,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
                      "b";
                 $c = $c . "c";
                 $d = "d" . $d;
-                $e = \'e\' . "e";
+                $e = "ee";
                 $f = "ff";
             ',
             '<?php
@@ -150,5 +167,17 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
             null,
             ['allow_preventing_trailing_spaces' => true],
         ];
+
+        for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {
+            $char = \chr($bytevalue);
+            yield [
+                \sprintf('<?php $bytevalue%d = "a_%sb_c";', $bytevalue, \addcslashes($char, '"$')),
+                \sprintf('<?php $bytevalue%d = \'a_%sb\' . "_c";', $bytevalue, \addcslashes($char, "'")),
+            ];
+            yield [
+                \sprintf('<?php $bytevalue%d = "a_%sb_c";', $bytevalue, \addcslashes($char, '"$')),
+                \sprintf('<?php $bytevalue%d = "a_%sb" . \'_c\';', $bytevalue, \addcslashes($char, '"$')),
+            ];
+        }
     }
 }

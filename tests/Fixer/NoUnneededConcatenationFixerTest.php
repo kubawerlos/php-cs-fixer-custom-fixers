@@ -33,9 +33,21 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
     {
         yield ['<?php $foo. "bar";'];
         yield ['<?php "foo" .$bar;'];
-        yield ['<?php "foo".\'bar\';'];
-        yield ['<?php "foo" . \'bar\';'];
-        yield ['<?php \'foo\' . "bar";'];
+
+        yield [
+            '<?php "foobar";',
+            '<?php "foo".\'bar\';',
+        ];
+
+        yield [
+            '<?php "foobar";',
+            '<?php "foo" . \'bar\';',
+        ];
+
+        yield [
+            '<?php "foobar";',
+            '<?php \'foo\' . "bar";',
+        ];
 
         yield ['<?php "foo"
                       . "bar";'];
@@ -96,7 +108,7 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
                      "b";
                 $c = $c . "c";
                 $d = "d" . $d;
-                $e = \'e\' . "e";
+                $e = "ee";
                 $f = "ff";
             ',
             '<?php

@@ -18,7 +18,6 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTypesOrderFixer;
-use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
 use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -609,17 +608,6 @@ final class PriorityTest extends TestCase
                     "This should"
                     . " not happen"
                 );
-            ',
-        ];
-
-        yield [
-            new SingleQuoteFixer(),
-            new NoSuperfluousConcatenationFixer(),
-            '<?php
-                $x = \'FooBar\';
-            ',
-            '<?php
-                $x = "Foo" . \'Bar\';
             ',
         ];
     }

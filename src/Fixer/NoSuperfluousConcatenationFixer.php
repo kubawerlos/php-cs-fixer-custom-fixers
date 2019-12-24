@@ -44,8 +44,8 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
     public function getPriority(): int
     {
-        // must be run after SingleLineThrowFixer and SingleQuoteFixer
-        return -1;
+        // must be run after SingleLineThrowFixer
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -65,25 +65,25 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 continue;
             }
 
-            /** @var int $prevIndex */
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if (!$tokens[$prevIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
+            /** @var int $firstIndex */
+            $firstIndex = $tokens->getPrevMeaningfulToken($index);
+            if (!$tokens[$firstIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
-            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $prevIndex, $index)) {
-                continue;
-            }
-
-            /** @var int $nextIndex */
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
-            if (!$tokens[$nextIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
-                continue;
-            }
-            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $nextIndex)) {
+            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $firstIndex, $index)) {
                 continue;
             }
 
-            $this->fixConcat($tokens, $prevIndex, $nextIndex);
+            /** @var int $secondIndex */
+            $secondIndex = $tokens->getNextMeaningfulToken($index);
+            if (!$tokens[$secondIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
+                continue;
+            }
+            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
+                continue;
+            }
+
+            $this->fixConcat($tokens, $firstIndex, $secondIndex);
         }
     }
 
@@ -103,34 +103,62 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
     private function fixConcat(Tokens $tokens, int $firstIndex, int $secondIndex): void
     {
-        $firstStringContent = $tokens[$firstIndex]->getContent();
-        $secondStringContent = $tokens[$secondIndex]->getContent();
+        $prefix = '';
+        $firstContent = $tokens[$firstIndex]->getContent();
+        $secondContent = $tokens[$secondIndex]->getContent();
 
         if ($this->allowPreventingTrailingSpaces
-            && Preg::match('/\h(\\\'|")$/', $firstStringContent) === 1
-            && Preg::match('/^(\\\'|")\R/', $secondStringContent) === 1
+            && Preg::match('/\h(\\\'|")$/', $firstContent) === 1
+            && Preg::match('/^(\\\'|")\R/', $secondContent) === 1
         ) {
             return;
         }
 
-        if ($firstStringContent[\strlen($firstStringContent) - 1] !== $secondStringContent[\strlen($secondStringContent) - 1]) {
-            return;
+        if (\strtolower($firstContent[0]) === 'b') {
+            $prefix = $firstContent[0];
+            $firstContent = \ltrim($firstContent, 'bB');
         }
+
+        $secondContent = \ltrim($secondContent, 'bB');
+
+        $border = $firstContent[0] === '"' || $secondContent[0] === '"' ? '"' : "'";
 
         $tokens->overrideRange(
             $firstIndex,
             $secondIndex,
-            [new Token([
-                T_CONSTANT_ENCAPSED_STRING,
-                \substr($firstStringContent, 0, -1) . $this->getStringContent($secondStringContent) . $firstStringContent[\strlen($firstStringContent) - 1],
-            ])]
+            [
+                new Token(
+                    [T_CONSTANT_ENCAPSED_STRING,
+                        $prefix . $border . $this->getContentForBorder($firstContent, $border) . $this->getContentForBorder($secondContent, $border) . $border,
+                    ]
+                ),
+            ]
         );
     }
 
-    private function getStringContent(string $string): string
+    private function getContentForBorder(string $content, string $targetBorder): string
     {
-        $offset = \strtolower($string[0]) === 'b' ? 2 : 1;
+        $currentBorder = $content[0];
+        $content = \substr($content, 1, -1);
+        if ($currentBorder === '"') {
+            return $content;
+        }
+        if ($targetBorder === "'") {
+            return $content;
+        }
 
-        return \substr($string, $offset, -1);
+        return \str_replace(
+            [
+                "\\'",
+                '"',
+                '$',
+            ],
+            [
+                "'",
+                '\\"',
+                '\\$',
+            ],
+            $content
+        );
     }
 }
