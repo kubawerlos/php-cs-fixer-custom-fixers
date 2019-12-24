@@ -5,6 +5,7 @@
 - Add DataProviderStaticFixer
 - Add NoSuperfluousConcatenationFixer
 - Add PhpdocTypesTrimFixer
+- Feature: NoSuperfluousConcatenationFixer - add option "allow_preventing_trailing_spaces"
 - Deprecate NoUnneededConcatenationFixer
 - Deprecate NullableParamStyleFixer
 - Deprecate SingleLineThrowFixer
