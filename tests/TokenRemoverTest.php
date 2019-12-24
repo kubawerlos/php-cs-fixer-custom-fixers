@@ -194,11 +194,11 @@ foo();
 
         yield 'with comment with newlines after' => [
             '<?php
-/* ' . '
+/*
     other comment */
 ',
             '<?php
-/* to remove *//* ' . '
+/* to remove *//*
     other comment */
 ',
         ];
