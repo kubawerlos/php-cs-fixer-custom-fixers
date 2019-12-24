@@ -6,6 +6,7 @@
 - Add NoSuperfluousConcatenationFixer
 - Add PhpdocTypesTrimFixer
 - Feature: NoSuperfluousConcatenationFixer - add option "allow_preventing_trailing_spaces"
+- Feature: NoSuperfluousConcatenationFixer - handle concatenation of single and double quoted strings together
 - Deprecate NoUnneededConcatenationFixer
 - Deprecate NullableParamStyleFixer
 - Deprecate SingleLineThrowFixer
