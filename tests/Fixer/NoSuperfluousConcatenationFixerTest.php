@@ -7,26 +7,28 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer
  */
-final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
+final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
         static::assertFalse($this->fixer->isRisky());
     }
 
-    public function testSuccessorName(): void
+    public function testConfiguration(): void
     {
-        static::assertContains('NoSuperfluousConcatenationFixer', $this->fixer->getSuccessorsNames());
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        static::assertArrayHasKey(0, $options);
+        static::assertSame('allow_preventing_trailing_spaces', $options[0]->getName());
     }
 
     /**
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     public static function provideFixCases(): iterable
@@ -126,6 +128,27 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
                 "h" . $i;
                 "j"./** k */"l";
             ',
+        ];
+
+        yield [
+            '<?php echo "Foo  & Bar";',
+            '<?php echo "Foo " . " & Bar";',
+            ['allow_preventing_trailing_spaces' => true],
+        ];
+
+        yield [
+            '<?php echo "Foo
+                         & Bar";',
+            '<?php echo "Foo" . "
+                         & Bar";',
+            ['allow_preventing_trailing_spaces' => true],
+        ];
+
+        yield [
+            '<?php echo "Foo " . "
+                         & Bar";',
+            null,
+            ['allow_preventing_trailing_spaces' => true],
         ];
     }
 }

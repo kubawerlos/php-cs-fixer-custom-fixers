@@ -36,8 +36,8 @@
         ],
         "fix": [
             "composer normalize --working-dir=./dev-tools ./../composer.json",
-            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --verbose",
-            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
+            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --verbose || return 0",
+            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests || return 0",
             "./dev-tools/readme > README.md"
         ],
         "infection": [

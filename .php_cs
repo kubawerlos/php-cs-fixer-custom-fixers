@@ -142,6 +142,7 @@ return PhpCsFixer\Config::create()
             if ($fixer instanceof PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer) {
                 $carry[$fixer->getName()] = ['elements' => [
                     'covers',
+                    'coversNothing',
                     'dataProvider',
                     'deprecated',
                     'internal',

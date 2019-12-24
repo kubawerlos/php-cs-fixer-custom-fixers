@@ -3,7 +3,10 @@
 ## [Unreleased]
 - Update PHP CS Fixer to v2.16
 - Add DataProviderStaticFixer
+- Add NoSuperfluousConcatenationFixer
 - Add PhpdocTypesTrimFixer
+- Feature: NoSuperfluousConcatenationFixer - add option "allow_preventing_trailing_spaces"
+- Deprecate NoUnneededConcatenationFixer
 - Deprecate NullableParamStyleFixer
 - Deprecate SingleLineThrowFixer
 - Allow symfony/finder 5.0

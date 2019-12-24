@@ -7,7 +7,6 @@ namespace Tests;
 use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
-use PhpCsFixer\Fixer\Comment\NoTrailingWhitespaceInCommentFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\FunctionNotation\NoUnreachableDefaultArgumentValueFixer;
 use PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer;
@@ -28,7 +27,7 @@ use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
 use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
 use PhpCsFixerCustomFixers\Fixer\NoImportFromGlobalNamespaceFixer;
-use PhpCsFixerCustomFixers\Fixer\NoUnneededConcatenationFixer;
+use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
 use PhpCsFixerCustomFixers\Fixer\NullableParamStyleFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
@@ -224,37 +223,6 @@ final class PriorityTest extends TestCase
                     */',
             '<?php /**foo
                     *******/',
-        ];
-
-        yield [
-            new MultilineCommentOpeningClosingAloneFixer(),
-            new NoTrailingWhitespaceInCommentFixer(),
-            '<?php
-                /**
-                 *
-                 * foo
-                 */
-            ',
-            '<?php
-                /**    
-                 * foo
-                 */
-            ',
-        ];
-
-        yield [
-            new MultilineCommentOpeningClosingAloneFixer(),
-            new PhpdocTrimFixer(),
-            '<?php
-                /**
-                 * foo
-                 */
-            ',
-            '<?php
-                /**    
-                 * foo
-                 */
-            ',
         ];
 
         yield [
@@ -632,7 +600,7 @@ final class PriorityTest extends TestCase
 
         yield [
             new SingleLineThrowFixer(),
-            new NoUnneededConcatenationFixer(),
+            new NoSuperfluousConcatenationFixer(),
             '<?php
                 throw new Exception("This should not happen");
             ',
@@ -646,7 +614,7 @@ final class PriorityTest extends TestCase
 
         yield [
             new SingleQuoteFixer(),
-            new NoUnneededConcatenationFixer(),
+            new NoSuperfluousConcatenationFixer(),
             '<?php
                 $x = \'FooBar\';
             ',
