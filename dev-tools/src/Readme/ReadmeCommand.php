@@ -264,6 +264,7 @@ Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```
 make sure all checks pass:
 ```bash
+./check_trailing_whitespaces.sh
 composer verify
 ```
 and submit pull request.',

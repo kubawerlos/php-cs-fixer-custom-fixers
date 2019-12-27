@@ -497,10 +497,11 @@ Request feature or report bug by creating [issue](https://github.com/kubawerlos/
 
 Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```bash
-./dev-tools/readme > README.md
+php ./dev-tools/readme > README.md
 ```
 make sure all checks pass:
 ```bash
+./check_trailing_whitespaces.sh
 composer verify
 ```
 and submit pull request.
