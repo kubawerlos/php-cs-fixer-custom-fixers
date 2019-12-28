@@ -95,6 +95,9 @@ function foo($b, $s) {}
         return $paramNames;
     }
 
+    /**
+     * @param string[] $paramNames
+     */
     private function getFilteredDocComment(string $comment, array $paramNames): string
     {
         $regexParamNamesPattern = '(\Q' . \implode('\E|\Q', $paramNames) . '\E)';

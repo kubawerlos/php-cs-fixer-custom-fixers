@@ -20,6 +20,11 @@
         <InternalMethod errorLevel='suppress' />
         <InvalidArgument errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />
+        <MoreSpecificReturnType>
+            <errorLevel type='suppress'>
+                <file name='./src/Fixers.php' />
+            </errorLevel>
+        </MoreSpecificReturnType>
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />

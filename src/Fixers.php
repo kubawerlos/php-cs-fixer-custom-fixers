@@ -4,11 +4,15 @@ declare(strict_types = 1);
 
 namespace PhpCsFixerCustomFixers;
 
+use PhpCsFixer\Fixer\FixerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 final class Fixers implements \IteratorAggregate
 {
+    /**
+     * @return \Generator<FixerInterface>
+     */
     public function getIterator(): \Generator
     {
         $finder = Finder::create()

@@ -21,7 +21,7 @@ script: composer test
 jobs:
     include:
         -   stage: Static code analysis
-            php: '7.3'
+            php: '7.4'
             script:
                 - ./check_trailing_whitespaces.sh
                 - composer analyse

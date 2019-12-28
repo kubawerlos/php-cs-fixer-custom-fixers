@@ -124,6 +124,9 @@ class Bar {
         }
     }
 
+    /**
+     * @param string[] $imports
+     */
     private function updateUsage(Tokens $tokens, array $imports, int $index): void
     {
         if (!\in_array($tokens[$index]->getContent(), $imports, true)) {
