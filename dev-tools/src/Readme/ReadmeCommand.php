@@ -73,9 +73,14 @@ final class ReadmeCommand extends BaseCommand
             ),
             '',
             $this->badge(
-                'Build status',
-                \sprintf('%s/travis/%s/master.svg', self::SHIELDS_HOST, $this->composer()->name),
+                'Travis CI build status',
+                \sprintf('%s/travis/%s/master.svg?label=Travis+CI', self::SHIELDS_HOST, $this->composer()->name),
                 \sprintf('https://travis-ci.org/%s', $this->composer()->name)
+            ),
+            $this->badge(
+                'AppVeyor build status',
+                \sprintf('%s/appveyor/ci/%s?label=AppVeyor', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://ci.appveyor.com/project/%s', $this->composer()->name)
             ),
             $this->badge(
                 'Code coverage',
