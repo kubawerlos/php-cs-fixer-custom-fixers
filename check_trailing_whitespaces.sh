@@ -11,7 +11,7 @@ files_with_trailing_whitespaces=$(
         -exec grep -EIHn "\\s$" {} \;
 )
 
-if [[ "$files_with_trailing_whitespaces" ]]
+if [ "$files_with_trailing_whitespaces" ]
 then
     printf '\033[97;41mTrailing whitespaces detected:\033[0m\n'
     e=$(printf '\033')

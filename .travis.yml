@@ -14,7 +14,7 @@ before_install:
     - phpenv config-rm xdebug.ini || return 0
     - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
 
-install: composer update $COMPOSER_FLAGS --no-suggest
+install: composer update $COMPOSER_FLAGS --no-progress --no-suggest
 
 script: composer test
 
@@ -22,7 +22,9 @@ jobs:
     include:
         -   stage: Static code analysis
             php: '7.3'
-            script: composer analyse
+            script:
+                - ./check_trailing_whitespaces.sh
+                - composer analyse
 
         -   stage: Test
             php: '7.1'

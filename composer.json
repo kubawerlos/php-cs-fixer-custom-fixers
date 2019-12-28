@@ -15,36 +15,38 @@
         "friendsofphp/php-cs-fixer": "^2.16.1",
         "symfony/finder": "^3.0 || ^4.0 || ^5.0"
     },
+    "config": {
+        "bin-dir": "dev-tools/vendor/bin"
+    },
     "autoload": {
         "psr-4": {
             "PhpCsFixerCustomFixers\\": "./src"
         }
     },
     "scripts": {
-        "post-update-cmd": "composer --working-dir=./dev-tools update",
+        "post-update-cmd": "composer --no-ansi --no-progress --no-suggest --working-dir=./dev-tools update",
         "analyse": [
             "composer validate --strict",
             "composer normalize --dry-run --working-dir=./dev-tools ./../composer.json",
-            "./check_trailing_whitespaces.sh",
-            "./dev-tools/vendor/bin/composer-require-checker check ./composer.json",
-            "./dev-tools/vendor/bin/phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
-            "./dev-tools/vendor/bin/types-checker ./src ./dev-tools/src ./tests",
-            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --diff --dry-run --verbose",
-            "./dev-tools/vendor/bin/phpmd ./src text ./phpmd.xml",
-            "./dev-tools/vendor/bin/phpstan analyse --ansi",
-            "./dev-tools/vendor/bin/psalm --shepherd"
+            "composer-require-checker check ./composer.json",
+            "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
+            "types-checker ./src ./dev-tools/src ./tests",
+            "php-cs-fixer fix --ansi --diff --dry-run --verbose",
+            "phpmd ./src text ./phpmd.xml",
+            "phpstan analyse --ansi",
+            "psalm --shepherd"
         ],
         "fix": [
             "composer normalize --working-dir=./dev-tools ./../composer.json",
-            "PHP_CS_FIXER_FUTURE_MODE=1 ./vendor/bin/php-cs-fixer fix --ansi --verbose || return 0",
-            "./dev-tools/vendor/bin/phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests || return 0",
-            "./dev-tools/readme > README.md"
+            "php-cs-fixer fix --ansi --verbose || exit 0",
+            "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests || exit 0",
+            "php ./dev-tools/readme > README.md"
         ],
         "infection": [
-            "./dev-tools/vendor/bin/infection run --ansi --min-msi=100 --only-covered --threads=16"
+            "infection run --ansi --min-msi=100 --only-covered --threads=16"
         ],
         "test": [
-            "./dev-tools/vendor/bin/phpunit"
+            "phpunit"
         ],
         "verify": [
             "@analyse",
