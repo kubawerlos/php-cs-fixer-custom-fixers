@@ -83,6 +83,9 @@ $bar = new Foo();
         return $token->isGivenKind(T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
     }
 
+    /**
+     * @param string[] $allowedVariables
+     */
     private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void
     {
         $this->removeVarAnnotationNotMatchingPattern(
