@@ -1,10 +1,10 @@
 {
     "require-dev": {
         "ergebnis/composer-normalize": "^2.1.2",
-        "infection/infection": "^0.13.6 || ^0.15.0",
+        "infection/infection": "^0.13.6 || ^0.14.2",
         "johnkary/phpunit-speedtrap": "^3.1",
         "kubawerlos/types-checker": "^1.2.0",
-        "maglnet/composer-require-checker": "^2.1.0",
+        "maglnet/composer-require-checker": "^2.0",
         "mi-schi/phpmd-extension": "^4.3.0",
         "phpmd/phpmd": "^2.8.1",
         "phpstan/phpstan": "^0.12.3",
