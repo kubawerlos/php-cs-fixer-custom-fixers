@@ -7,7 +7,7 @@ cache:
 
 install:
     - ps: Set-Service wuauserv -StartupType Manual
-    - choco install php --version=7.4.1 --package-parameters='/InstallDir:C:\tools\php' --yes
+    - choco install php --package-parameters='/InstallDir:C:\tools\php' --yes
     - choco install composer --ia='/DEV=C:\tools\composer' --yes
     - refreshenv
     - cd C:\tools\php
