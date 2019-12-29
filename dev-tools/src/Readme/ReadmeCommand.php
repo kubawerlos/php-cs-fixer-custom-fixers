@@ -79,7 +79,7 @@ final class ReadmeCommand extends BaseCommand
             ),
             $this->badge(
                 'AppVeyor build status',
-                \sprintf('%s/appveyor/ci/%s?label=AppVeyor', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('%s/appveyor/ci/%s/master?label=AppVeyor', self::SHIELDS_HOST, $this->composer()->name),
                 \sprintf('https://ci.appveyor.com/project/%s', $this->composer()->name)
             ),
             $this->badge(

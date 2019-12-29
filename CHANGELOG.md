@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## [Unreleased]
+## v1.17.0 - *2019-12-29*
 - Update PHP CS Fixer to v2.16
 - Add DataProviderStaticFixer
 - Add NoSuperfluousConcatenationFixer
