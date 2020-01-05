@@ -19,11 +19,14 @@ jobs:
       - name: Check trailing whitespaces
         run: ./dev-tools/check_trailing_whitespaces.sh
 
+      - name: Composer config
+        run: composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install dependencies
-        run: composer update --no-progress --no-suggest
+        run: composer update --no-progress
 
       - name: Analyse
-        run: composer analyse
+        run: composer test
 
   test:
     strategy:
@@ -31,9 +34,6 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
         php-version: ['7.4']
         include:
-          - os: ubuntu-latest
-            php-version: '7.2'
-            composer_flags: '--prefer-lowest'
           - os: ubuntu-latest
             php-version: '7.2'
           - os: ubuntu-latest

@@ -12,7 +12,7 @@
     "require": {
         "php": "^7.2",
         "ext-tokenizer": "*",
-        "friendsofphp/php-cs-fixer": "^2.16.7",
+        "friendsofphp/php-cs-fixer": "dev-2_12_clean_line as 2.12.0",
         "symfony/finder": "^3.0 || ^4.0 || ^5.0"
     },
     "require-dev": {
@@ -30,6 +30,12 @@
             "Tests\\": "./tests"
         }
     },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "git@github.com:SpacePossum/PHP-CS-Fixer.git"
+        }
+    ],
     "scripts": {
         "analyse": [
             "@install-dev-tools",
@@ -50,7 +56,7 @@
             "composer --working-dir=./dev-tools --quiet install"
         ],
         "test": [
-            "phpunit"
+            "phpunit ./tests/Fixer/"
         ],
         "verify": [
             "@analyse",
