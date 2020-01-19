@@ -25,4 +25,4 @@ before_test:
 test_script:
     - cd %APPVEYOR_BUILD_FOLDER%
     - set PHP_CS_FIXER_FUTURE_MODE=1
-    - composer verify
+    - composer test
