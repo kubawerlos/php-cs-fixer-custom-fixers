@@ -40,7 +40,7 @@
             "composer normalize --working-dir=./dev-tools ./../composer.json",
             "php-cs-fixer fix --ansi --verbose || exit 0",
             "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests || exit 0",
-            "php ./dev-tools/readme > README.md"
+            "php ./dev-tools/readme > ./README.md"
         ],
         "infection": [
             "infection run --ansi --min-msi=100 --only-covered --threads=16"
