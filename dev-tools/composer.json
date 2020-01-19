@@ -18,12 +18,6 @@
             ]
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "PhpCsFixerCustomFixersDev\\": "./src"
-
-        }
-    },
     "scripts": {
         "analyse": [
             "composer install --quiet",

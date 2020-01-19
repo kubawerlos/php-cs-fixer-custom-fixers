@@ -9,8 +9,8 @@ return PhpCsFixer\Config::create()
         PhpCsFixer\Finder::create()
             ->files()
             ->in(__DIR__ . '/../src')
-            ->in(__DIR__ . '/src')
             ->in(__DIR__ . '/../tests')
+            ->in(__DIR__ . '/src')
             ->notName('php-cs-fixer.config.*.php')
             ->append([
                 __FILE__,
