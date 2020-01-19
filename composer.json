@@ -37,7 +37,7 @@
         ],
         "fix": [
             "composer fix --working-dir=./dev-tools",
-            "php ../dev-tools/readme > ../README.md"
+            "php ./dev-tools/readme > ./README.md"
         ],
         "infection": [
             "infection run --ansi --min-msi=100 --only-covered --threads=16"
