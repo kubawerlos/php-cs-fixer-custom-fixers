@@ -1,5 +1,5 @@
 {
-    "$schema": "./dev-tools/vendor/infection/infection/resources/schema.json",
+    "$schema": "./vendor/infection/infection/resources/schema.json",
     "source": {
         "directories": [
             "./src"
@@ -11,9 +11,6 @@
         "badge": {
             "branch": "master"
         }
-    },
-    "phpUnit": {
-        "customPath": "./dev-tools/vendor/bin/phpunit"
     },
     "mutators": {
         "@default": true,
