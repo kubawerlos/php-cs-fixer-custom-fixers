@@ -1,15 +1,12 @@
 {
     "require-dev": {
         "ergebnis/composer-normalize": "^2.1.2",
-        "infection/infection": "^0.13.6 || ^0.14.2",
-        "johnkary/phpunit-speedtrap": "^3.1",
         "kubawerlos/types-checker": "^1.2.0",
         "maglnet/composer-require-checker": "^2.0",
         "mi-schi/phpmd-extension": "^4.3.0",
         "phpmd/phpmd": "^2.8.1",
         "phpstan/phpstan": "^0.12.3",
         "phpstan/phpstan-strict-rules": "^0.12.0",
-        "phpunit/phpunit": "^7.4 || ^8.4",
         "squizlabs/php_codesniffer": "^3.5.3",
         "vimeo/psalm": "^3.8.0",
         "wikimedia/composer-merge-plugin": "^1.4.1"
@@ -23,8 +20,28 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PhpCsFixerCustomFixersDev\\": "./src",
-            "Tests\\": "../tests"
+            "PhpCsFixerCustomFixersDev\\": "./src"
+
         }
+    },
+    "scripts": {
+        "analyse": [
+            "composer install --quiet",
+            "composer validate --strict --working-dir=..",
+            "composer normalize --dry-run ../composer.json",
+            "composer-require-checker check ../composer.json",
+            "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests",
+            "types-checker ../src ../dev-tools/src ../tests",
+            "php-cs-fixer fix --ansi --diff --dry-run --verbose",
+            "phpmd ../src text ./phpmd.xml",
+            "phpstan analyse --ansi",
+            "psalm --shepherd"
+        ],
+        "fix": [
+            "composer install --quiet",
+            "composer normalize ../composer.json",
+            "php-cs-fixer fix --ansi --verbose || exit 0",
+            "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests || exit 0"
+        ]
     }
 }

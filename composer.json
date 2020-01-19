@@ -15,32 +15,29 @@
         "friendsofphp/php-cs-fixer": "^2.16.1",
         "symfony/finder": "^3.0 || ^4.0 || ^5.0"
     },
-    "config": {
-        "bin-dir": "dev-tools/vendor/bin"
+    "require-dev": {
+        "infection/infection": "^0.13.6 || ^0.14.2",
+        "johnkary/phpunit-speedtrap": "^3.1",
+        "phpunit/phpunit": "^7.4 || ^8.4"
     },
     "autoload": {
         "psr-4": {
             "PhpCsFixerCustomFixers\\": "./src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "./tests",
+            "PhpCsFixerCustomFixersDev\\": "./dev-tools/src"
+        }
+    },
     "scripts": {
-        "post-update-cmd": "composer --no-ansi --no-progress --no-suggest --working-dir=./dev-tools update",
         "analyse": [
-            "composer validate --strict",
-            "composer normalize --dry-run --working-dir=./dev-tools ./../composer.json",
-            "composer-require-checker check ./composer.json",
-            "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests",
-            "types-checker ./src ./dev-tools/src ./tests",
-            "php-cs-fixer fix --ansi --diff --dry-run --verbose",
-            "phpmd ./src text ./phpmd.xml",
-            "phpstan analyse --ansi",
-            "psalm --shepherd"
+            "composer analyse --working-dir=./dev-tools"
         ],
         "fix": [
-            "composer normalize --working-dir=./dev-tools ./../composer.json",
-            "php-cs-fixer fix --ansi --verbose || exit 0",
-            "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ./dev-tools/src ./tests || exit 0",
-            "php ./dev-tools/readme > ./README.md"
+            "composer fix --working-dir=./dev-tools",
+            "php ../dev-tools/readme > ../README.md"
         ],
         "infection": [
             "infection run --ansi --min-msi=100 --only-covered --threads=16"

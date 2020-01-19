@@ -22,6 +22,7 @@ jobs:
     include:
         -   stage: Analyse
             php: '7.4'
+            install: composer update --no-progress --no-suggest --working-dir=./dev-tools update
             script:
                 - ./check_trailing_whitespaces.sh
                 - composer analyse
