@@ -2,21 +2,19 @@
 
 declare(strict_types = 1);
 
-require_once __DIR__ . '/dev-tools/vendor/autoload.php';
-
 return PhpCsFixer\Config::create()
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->files()
+            ->in(__DIR__ . '/../src')
+            ->in(__DIR__ . '/../tests')
             ->in(__DIR__ . '/src')
-            ->in(__DIR__ . '/dev-tools/src')
-            ->in(__DIR__ . '/tests')
             ->notName('php-cs-fixer.config.*.php')
             ->append([
                 __FILE__,
-                __DIR__ . '/dev-tools/readme',
+                __DIR__ . '/readme',
             ])
     )
     ->setRiskyAllowed(true)

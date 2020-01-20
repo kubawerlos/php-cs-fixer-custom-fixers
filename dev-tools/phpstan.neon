@@ -1,7 +1,7 @@
 parameters:
     level: max
     paths:
-        - ./src
+        - ../src
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+::configure\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
@@ -9,4 +9,4 @@ parameters:
         - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::overrideRange\(\) expects#'
 
 includes:
-    - ./dev-tools/vendor/phpstan/phpstan-strict-rules/rules.neon
+    - ./vendor/phpstan/phpstan-strict-rules/rules.neon
