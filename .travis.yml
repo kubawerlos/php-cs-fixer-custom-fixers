@@ -26,7 +26,7 @@ jobs:
                 - composer update --no-progress --no-suggest $COMPOSER_FLAGS
                 - composer update --no-progress --no-suggest --working-dir=./dev-tools update
             script:
-                - ./check_trailing_whitespaces.sh
+                - ./dev-tools/check_trailing_whitespaces.sh
                 - composer analyse
 
         -   stage: Test
