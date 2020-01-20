@@ -1,6 +1,5 @@
 /dev-tools/ export-ignore
 /tests/ export-ignore
 /.* export-ignore
-/check_trailing_whitespaces.sh export-ignore
 /infection.json export-ignore
 /phpunit.xml export-ignore
