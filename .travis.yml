@@ -46,6 +46,6 @@ jobs:
                 - pecl install pcov
             install: composer require --dev php-coveralls/php-coveralls
             script:
-                - composer test -- --coverage-clover=./build/logs/clover.xml --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/phpunit.junit.xml
+                - composer test -- --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/junit.xml
                 - composer infection -- --coverage=./build/coverage/
             after_success: ./vendor/bin/php-coveralls
