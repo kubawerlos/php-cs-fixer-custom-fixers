@@ -44,7 +44,7 @@ jobs:
                 - phpenv config-rm xdebug.ini || return 0
                 - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
                 - pecl install pcov
-            install: composer require --dev php-coveralls/php-coveralls
+            install: composer require --dev php-coveralls/php-coveralls infection/infection:^0.15
             script:
                 - composer test -- --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/junit.xml
                 - composer infection -- --coverage=./build/coverage/
