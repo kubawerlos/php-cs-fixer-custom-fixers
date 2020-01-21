@@ -1,6 +1,10 @@
 {
+    "require": {
+        "php": "^7.3"
+    },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.1.2",
+        "infection/infection": "^0.15.0",
         "kubawerlos/types-checker": "^1.2.0",
         "maglnet/composer-require-checker": "^2.0",
         "mi-schi/phpmd-extension": "^4.3.0",
@@ -30,6 +34,9 @@
             "phpmd ../src text ./phpmd.xml",
             "phpstan analyse --ansi",
             "psalm --shepherd"
+        ],
+        "infection": [
+            "infection run --ansi --min-msi=100 --only-covered --threads=16"
         ],
         "fix": [
             "composer install --quiet",
