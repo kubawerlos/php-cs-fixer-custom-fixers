@@ -45,8 +45,8 @@ jobs:
                 - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
                 - ls -al $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d
                 - pecl install pcov
-                - ls -al $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d
                 - echo "pcov.directory = ." >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
+                - ls -al $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d
             install:
                 - composer install --no-progress --no-suggest --working-dir=./dev-tools
                 - composer require --dev php-coveralls/php-coveralls infection/infection:^0.15
