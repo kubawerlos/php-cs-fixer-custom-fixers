@@ -23,8 +23,8 @@ jobs:
         -   stage: Analyse
             php: '7.4'
             install:
+                - composer install --no-progress --no-suggest --working-dir=./dev-tools
                 - composer update --no-progress --no-suggest $COMPOSER_FLAGS
-                - composer update --no-progress --no-suggest --working-dir=./dev-tools update
             script:
                 - ./dev-tools/check_trailing_whitespaces.sh
                 - composer analyse
@@ -44,8 +44,10 @@ jobs:
                 - phpenv config-rm xdebug.ini || return 0
                 - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
                 - pecl install pcov
-            install: composer require --dev php-coveralls/php-coveralls infection/infection:^0.15
+            install:
+                - composer install --no-progress --no-suggest --working-dir=./dev-tools
+                - composer require --dev php-coveralls/php-coveralls infection/infection:^0.15
             script:
                 - composer test -- --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/junit.xml
-                - composer infection -- --coverage=./build/coverage/
+                - composer infection --working-dir=./dev-tools -- --coverage=../build/coverage/
             after_success: ./vendor/bin/php-coveralls

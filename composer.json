@@ -39,7 +39,7 @@
             "php ./dev-tools/readme > ./README.md"
         ],
         "infection": [
-            "infection run --ansi --min-msi=100 --only-covered --threads=16"
+            "composer infection --working-dir=./dev-tools"
         ],
         "test": [
             "phpunit"

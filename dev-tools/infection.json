@@ -2,7 +2,7 @@
     "$schema": "./vendor/infection/infection/resources/schema.json",
     "source": {
         "directories": [
-            "./src"
+            "../src"
         ]
     },
     "timeout": 10,
@@ -11,6 +11,10 @@
         "badge": {
             "branch": "master"
         }
+    },
+    "phpUnit": {
+        "configDir": "..",
+        "customPath": "../vendor/phpunit/phpunit/phpunit"
     },
     "mutators": {
         "@default": true,

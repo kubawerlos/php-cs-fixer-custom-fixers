@@ -117,7 +117,7 @@ final class ReadmeCommand extends BaseCommand
 
     private function numberOfTests(): int
     {
-        $process = new Process([__DIR__ . '/../../../vendor/bin/phpunit', '--list-tests']);
+        $process = new Process([__DIR__ . '/../../../vendor/bin/phpunit', '--list-tests'], __DIR__ . '/../../..');
         $process->run();
 
         return \substr_count($process->getOutput(), PHP_EOL) - 3; // 3 is for header
