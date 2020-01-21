@@ -30,7 +30,7 @@ jobs:
                 - composer analyse
 
         -   stage: Test
-            php: '7.1'
+            php: '7.1.0'
             env: COMPOSER_FLAGS="--prefer-lowest"
 
         -   php: '7.1'
@@ -44,8 +44,8 @@ jobs:
                 - phpenv config-rm xdebug.ini || return 0
                 - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
                 - pecl install pcov
-            install: composer require --dev php-coveralls/php-coveralls
+            install: composer require --dev php-coveralls/php-coveralls infection/infection:^0.15
             script:
-                - composer test -- --coverage-clover=./build/logs/clover.xml --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/phpunit.junit.xml
+                - composer test -- --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/junit.xml
                 - composer infection -- --coverage=./build/coverage/
             after_success: ./vendor/bin/php-coveralls
