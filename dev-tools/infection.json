@@ -14,7 +14,7 @@
     },
     "phpUnit": {
         "configDir": "..",
-        "customPath": "../vendor/bin/phpunit"
+        "customPath": "../vendor/phpunit/phpunit/phpunit"
     },
     "mutators": {
         "@default": true,
