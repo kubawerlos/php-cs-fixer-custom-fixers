@@ -49,6 +49,6 @@ jobs:
                 - composer install --no-progress --no-suggest --working-dir=./dev-tools
                 - composer require --dev php-coveralls/php-coveralls infection/infection:^0.15
             script:
-                - composer test -- --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/junit.xml
+                - composer test -- --coverage-clover=./build/logs/clover.xml --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/junit.xml
                 - composer infection --working-dir=./dev-tools -- --coverage=../build/coverage/
             after_success: ./vendor/bin/php-coveralls
