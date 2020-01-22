@@ -36,6 +36,7 @@
             "psalm --shepherd"
         ],
         "infection": [
+            "composer install --quiet",
             "infection run --ansi --min-msi=100 --only-covered --threads=16"
         ],
         "fix": [
