@@ -45,7 +45,7 @@
             "composer --working-dir=./dev-tools infection"
         ],
         "install-dev-tools": [
-            "composer --working-dir=./dev-tools install --quiet"
+            "composer --working-dir=./dev-tools install"
         ],
         "test": [
             "phpunit"
