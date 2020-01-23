@@ -41,7 +41,7 @@ jobs:
                 - phpenv config-rm xdebug.ini || return 0
                 - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
                 - pecl install pcov
-                - echo "pcov.directory = ." >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
+                - echo "pcov.directory = `pwd`" >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
             install: composer require --dev php-coveralls/php-coveralls
             script:
                 - composer test -- --coverage-clover=./build/logs/clover.xml
