@@ -41,6 +41,7 @@
             "php ./dev-tools/readme > ./README.md"
         ],
         "infection": [
+            "@install-dev-tools",
             "composer --working-dir=./dev-tools infection"
         ],
         "install-dev-tools": [
