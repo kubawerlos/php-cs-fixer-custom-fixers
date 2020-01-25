@@ -22,9 +22,6 @@ jobs:
     include:
         -   stage: Analyse
             php: '7.4'
-            install:
-                - composer install --no-progress --no-suggest --working-dir=./dev-tools
-                - composer update --no-progress --no-suggest $COMPOSER_FLAGS
             script:
                 - ./dev-tools/check_trailing_whitespaces.sh
                 - composer analyse
@@ -44,11 +41,9 @@ jobs:
                 - phpenv config-rm xdebug.ini || return 0
                 - composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
                 - pecl install pcov
-                - echo "pcov.directory = ." >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
-            install:
-                - composer install --no-progress --no-suggest --working-dir=./dev-tools
-                - composer require --dev php-coveralls/php-coveralls infection/infection:^0.15
+                - echo "pcov.directory = `pwd`" >> $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
+            install: composer require --dev php-coveralls/php-coveralls
             script:
-                - composer test -- --coverage-clover=./build/logs/clover.xml --coverage-xml=./build/coverage/coverage-xml --log-junit=./build/coverage/junit.xml
-                - composer infection --working-dir=./dev-tools -- --coverage=../build/coverage/
+                - composer test -- --coverage-clover=./build/logs/clover.xml
+                - composer infection
             after_success: ./vendor/bin/php-coveralls

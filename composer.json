@@ -32,14 +32,20 @@
     },
     "scripts": {
         "analyse": [
-            "composer analyse --working-dir=./dev-tools"
+            "@install-dev-tools",
+            "composer --working-dir=./dev-tools analyse"
         ],
         "fix": [
-            "composer fix --working-dir=./dev-tools",
+            "@install-dev-tools",
+            "composer --working-dir=./dev-tools fix",
             "php ./dev-tools/readme > ./README.md"
         ],
         "infection": [
-            "composer infection --working-dir=./dev-tools"
+            "@install-dev-tools",
+            "composer --working-dir=./dev-tools infection"
+        ],
+        "install-dev-tools": [
+            "composer --working-dir=./dev-tools install"
         ],
         "test": [
             "phpunit"
