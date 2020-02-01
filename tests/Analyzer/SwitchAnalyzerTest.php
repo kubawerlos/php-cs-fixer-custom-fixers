@@ -35,7 +35,7 @@ final class SwitchAnalyzerTest extends TestCase
         $tokens = Tokens::fromCode($code);
         $analyzer = new SwitchAnalyzer();
 
-        static::assertSame(\serialize($expected), \serialize(($analyzer->getSwitchAnalysis($tokens, $index))));
+        self::assertSame(\serialize($expected), \serialize(($analyzer->getSwitchAnalysis($tokens, $index))));
     }
 
     public static function provideGettingSwitchAnalysisCases(): iterable

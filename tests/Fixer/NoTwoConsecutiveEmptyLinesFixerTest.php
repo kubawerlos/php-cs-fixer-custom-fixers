@@ -13,12 +13,12 @@ final class NoTwoConsecutiveEmptyLinesFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     public function testSuccessorName(): void
     {
-        static::assertContains('no_extra_blank_lines', $this->fixer->getSuccessorsNames());
+        self::assertContains('no_extra_blank_lines', $this->fixer->getSuccessorsNames());
     }
 
     /**

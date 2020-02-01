@@ -20,7 +20,7 @@ final class ChangelogTest extends TestCase
      */
     public function testFixerAddingIsListed(FixerInterface $fixer): void
     {
-        static::assertChangelogContains('Add ' . (new \ReflectionObject($fixer))->getShortName());
+        self::assertChangelogContains('Add ' . (new \ReflectionObject($fixer))->getShortName());
     }
 
     /**
@@ -34,7 +34,7 @@ final class ChangelogTest extends TestCase
             return;
         }
 
-        static::assertChangelogContains('Deprecate ' . (new \ReflectionObject($fixer))->getShortName());
+        self::assertChangelogContains('Deprecate ' . (new \ReflectionObject($fixer))->getShortName());
     }
 
     private static function assertChangelogContains(string $content): void
@@ -45,6 +45,6 @@ final class ChangelogTest extends TestCase
             $changelog = \file_get_contents(__DIR__ . '/../../CHANGELOG.md');
         }
 
-        static::assertStringContainsString($content, $changelog);
+        self::assertStringContainsString($content, $changelog);
     }
 }

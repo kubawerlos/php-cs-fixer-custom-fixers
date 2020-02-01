@@ -17,18 +17,18 @@ final class DataProviderAnalysisTest extends TestCase
     public function testGetName(): void
     {
         $analysis = new DataProviderAnalysis('Foo', 1, [2, 3]);
-        static::assertSame('Foo', $analysis->getName());
+        self::assertSame('Foo', $analysis->getName());
     }
 
     public function testGetNameIndex(): void
     {
         $analysis = new DataProviderAnalysis('Foo', 1, [2, 3]);
-        static::assertSame(1, $analysis->getNameIndex());
+        self::assertSame(1, $analysis->getNameIndex());
     }
 
     public function testGetUsageIndices(): void
     {
         $analysis = new DataProviderAnalysis('Foo', 1, [2, 3]);
-        static::assertSame([2, 3], $analysis->getUsageIndices());
+        self::assertSame([2, 3], $analysis->getUsageIndices());
     }
 }

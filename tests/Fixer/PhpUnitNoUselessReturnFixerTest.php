@@ -13,7 +13,7 @@ final class PhpUnitNoUselessReturnFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertTrue($this->fixer->isRisky());
+        self::assertTrue($this->fixer->isRisky());
     }
 
     /**
@@ -40,7 +40,7 @@ class FooTest extends TestCase {
                     $args
                 );
             },
-            \iterator_to_array(static::getFixCases())
+            \iterator_to_array(self::getFixCases())
         );
     }
 

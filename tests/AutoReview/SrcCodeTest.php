@@ -28,7 +28,7 @@ final class SrcCodeTest extends TestCase
      */
     public function testFixerExtendsAbstractFixer(FixerInterface $fixer): void
     {
-        static::assertInstanceOf(AbstractFixer::class, $fixer);
+        self::assertInstanceOf(AbstractFixer::class, $fixer);
     }
 
     /**
@@ -38,7 +38,7 @@ final class SrcCodeTest extends TestCase
     {
         $validator = new FixerNameValidator();
 
-        static::assertTrue(
+        self::assertTrue(
             $validator->isValid($fixer->getName(), true),
             \sprintf('Fixer name "%s" is incorrect', $fixer->getName())
         );
@@ -49,7 +49,7 @@ final class SrcCodeTest extends TestCase
      */
     public function testFixerIsFinal(FixerInterface $fixer): void
     {
-        static::assertTrue((new \ReflectionClass($fixer))->isFinal());
+        self::assertTrue((new \ReflectionClass($fixer))->isFinal());
     }
 
     /**
@@ -57,7 +57,7 @@ final class SrcCodeTest extends TestCase
      */
     public function testFixerIsNotBothDeprecatingAndDeprecated(FixerInterface $fixer): void
     {
-        static::assertFalse($fixer instanceof DeprecatingFixerInterface && $fixer instanceof DeprecatedFixerInterface);
+        self::assertFalse($fixer instanceof DeprecatingFixerInterface && $fixer instanceof DeprecatedFixerInterface);
     }
 
     /**
@@ -66,7 +66,7 @@ final class SrcCodeTest extends TestCase
     public function testDeprecatedFixerHasAnnotation(FixerInterface $fixer): void
     {
         $comment = (new \ReflectionClass($fixer))->getDocComment();
-        static::assertSame(
+        self::assertSame(
             $fixer instanceof DeprecatedFixerInterface,
             \strpos($comment === false ? '' : $comment, '@deprecated') !== false
         );
@@ -86,7 +86,7 @@ final class SrcCodeTest extends TestCase
     {
         $fixer = $this->getMockForAbstractClass(AbstractFixer::class);
 
-        static::assertTrue($fixer->supports($this->createMock(\SplFileInfo::class)));
+        self::assertTrue($fixer->supports($this->createMock(\SplFileInfo::class)));
     }
 
     /**
@@ -111,13 +111,13 @@ final class SrcCodeTest extends TestCase
         $strings = \array_unique($strings);
         $message = \sprintf('Class %s must not use preg_*, it shall use Preg::* instead.', $className);
 
-        static::assertNotContains('preg_filter', $strings, $message);
-        static::assertNotContains('preg_grep', $strings, $message);
-        static::assertNotContains('preg_match', $strings, $message);
-        static::assertNotContains('preg_match_all', $strings, $message);
-        static::assertNotContains('preg_replace', $strings, $message);
-        static::assertNotContains('preg_replace_callback', $strings, $message);
-        static::assertNotContains('preg_split', $strings, $message);
+        self::assertNotContains('preg_filter', $strings, $message);
+        self::assertNotContains('preg_grep', $strings, $message);
+        self::assertNotContains('preg_match', $strings, $message);
+        self::assertNotContains('preg_match_all', $strings, $message);
+        self::assertNotContains('preg_replace', $strings, $message);
+        self::assertNotContains('preg_replace_callback', $strings, $message);
+        self::assertNotContains('preg_split', $strings, $message);
     }
 
     public static function provideThereIsNoPregFunctionUsedDirectlyCases(): iterable

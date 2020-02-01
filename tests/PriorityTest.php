@@ -53,7 +53,7 @@ final class PriorityTest extends TestCase
      */
     public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
-        static::assertLessThan($firstFixer->getPriority(), $secondFixer->getPriority());
+        self::assertLessThan($firstFixer->getPriority(), $secondFixer->getPriority());
     }
 
     /**
@@ -70,10 +70,10 @@ final class PriorityTest extends TestCase
         $secondFixer->fix($this->createMock(\SplFileInfo::class), $tokens);
         $tokens->clearEmptyTokens();
 
-        static::assertSame($expected, $tokens->generateCode());
+        self::assertSame($expected, $tokens->generateCode());
 
         Tokens::clearCache();
-        static::assertTokens(Tokens::fromCode($expected), $tokens);
+        self::assertTokens(Tokens::fromCode($expected), $tokens);
     }
 
     /**
@@ -90,7 +90,7 @@ final class PriorityTest extends TestCase
         $firstFixer->fix($this->createMock(\SplFileInfo::class), $tokens);
         $tokens->clearEmptyTokens();
 
-        static::assertNotSame($expected, $tokens->generateCode());
+        self::assertNotSame($expected, $tokens->generateCode());
     }
 
     public function testProvidePriorityCasesIsSorted(): void
@@ -109,7 +109,7 @@ final class PriorityTest extends TestCase
         $sorted = $cases;
         \sort($sorted);
 
-        static::assertSame($sorted, $cases);
+        self::assertSame($sorted, $cases);
     }
 
     public static function providePriorityCases(): iterable

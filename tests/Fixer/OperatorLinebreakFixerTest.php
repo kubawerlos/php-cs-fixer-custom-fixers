@@ -14,20 +14,20 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
-        static::assertArrayHasKey(0, $options);
-        static::assertSame('only_booleans', $options[0]->getName());
-        static::assertArrayHasKey(1, $options);
-        static::assertSame('position', $options[1]->getName());
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('only_booleans', $options[0]->getName());
+        self::assertArrayHasKey(1, $options);
+        self::assertSame('position', $options[1]->getName());
     }
 
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     public function testDeprecatingPullRequest(): void
     {
-        static::assertSame(4021, $this->fixer->getPullRequestId());
+        self::assertSame(4021, $this->fixer->getPullRequestId());
     }
 
     /**
@@ -40,7 +40,7 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
 
     public static function provideFixCases(): iterable
     {
-        foreach (static::pairs() as $key => $value) {
+        foreach (self::pairs() as $key => $value) {
             yield \sprintf('%s when position is "beginning"', $key) => $value;
 
             yield \sprintf('%s when position is "end"', $key) => [

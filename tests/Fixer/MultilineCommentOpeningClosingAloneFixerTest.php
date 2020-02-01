@@ -13,7 +13,7 @@ final class MultilineCommentOpeningClosingAloneFixerTest extends AbstractFixerTe
 {
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     /**

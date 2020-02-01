@@ -17,6 +17,6 @@ final class CaseAnalysisTest extends TestCase
     public function testColonIndex(): void
     {
         $analysis = new CaseAnalysis(20);
-        static::assertSame(20, $analysis->getColonIndex());
+        self::assertSame(20, $analysis->getColonIndex());
     }
 }

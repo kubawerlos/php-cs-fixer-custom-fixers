@@ -96,13 +96,13 @@ interface    FooInterface {
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
-        static::assertArrayHasKey(0, $options);
-        static::assertSame('allow_linebreak', $options[0]->getName());
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('allow_linebreak', $options[0]->getName());
     }
 
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     /**
@@ -261,7 +261,7 @@ do    {
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        static::assertNotRegExp('/[^\n ] {2,}/', $tokens->generateCode());
+        self::assertNotRegExp('/[^\n ] {2,}/', $tokens->generateCode());
     }
 
     /**
@@ -280,7 +280,7 @@ do    {
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        static::assertNotSame(
+        self::assertNotSame(
             $expectedTokens->generateCode(),
             $tokens->generateCode(),
             \sprintf('Removing token %s did not broke fixing', Token::getNameForId($token))
