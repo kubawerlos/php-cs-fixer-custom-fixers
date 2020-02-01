@@ -13,12 +13,12 @@ final class ImplodeCallFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertTrue($this->fixer->isRisky());
+        self::assertTrue($this->fixer->isRisky());
     }
 
     public function testSuccessorName(): void
     {
-        static::assertContains('implode_call', $this->fixer->getSuccessorsNames());
+        self::assertContains('implode_call', $this->fixer->getSuccessorsNames());
     }
 
     /**

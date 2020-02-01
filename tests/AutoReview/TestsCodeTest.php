@@ -21,7 +21,7 @@ final class TestsCodeTest extends TestCase
      */
     public function testDataProviderName(string $dataProviderName, string $className): void
     {
-        static::assertRegExp('/^provide[A-Z]\S+Cases$/', $dataProviderName, \sprintf(
+        self::assertRegExp('/^provide[A-Z]\S+Cases$/', $dataProviderName, \sprintf(
             'Data provider "%s" in class "%s" is not correctly named.',
             $dataProviderName,
             $className
@@ -35,7 +35,7 @@ final class TestsCodeTest extends TestCase
     {
         $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
 
-        static::assertSame('iterable', $reflectionMethod->getReturnType()->getName());
+        self::assertSame('iterable', $reflectionMethod->getReturnType()->getName());
     }
 
     /**
@@ -45,7 +45,7 @@ final class TestsCodeTest extends TestCase
     {
         $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
 
-        static::assertTrue($reflectionMethod->isStatic());
+        self::assertTrue($reflectionMethod->isStatic());
     }
 
     public static function provideDataProviderCases(): iterable
@@ -67,7 +67,7 @@ final class TestsCodeTest extends TestCase
                     $className .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
                 }
                 $className .= '\\' . $file->getBasename('.php');
-                foreach (static::getDataProviderMethodNames($className) as $dataProviderName) {
+                foreach (self::getDataProviderMethodNames($className) as $dataProviderName) {
                     $dataProviders[\sprintf('%s::%s', $className, $dataProviderName)] = [$dataProviderName, $className];
                 }
             }

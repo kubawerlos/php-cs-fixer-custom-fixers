@@ -13,7 +13,7 @@ final class NoUselessDoctrineRepositoryCommentFixerTest extends AbstractFixerTes
 {
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     /**

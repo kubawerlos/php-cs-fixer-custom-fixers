@@ -13,7 +13,7 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertTrue($this->fixer->isRisky());
+        self::assertTrue($this->fixer->isRisky());
     }
 
     /**

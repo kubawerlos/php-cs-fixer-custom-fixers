@@ -51,6 +51,8 @@ return PhpCsFixer\Config::create()
         'explicit_string_variable' => true,
         'final_class' => true,
         'final_internal_class' => true,
+        'final_public_method_for_abstract_class' => true,
+        'final_static_access' => true,
         'fully_qualified_strict_types' => true,
         'function_to_constant' => [
             'functions' => ['get_class', 'get_called_class', 'php_sapi_name', 'phpversion', 'pi'],
@@ -105,6 +107,7 @@ return PhpCsFixer\Config::create()
         'php_unit_test_annotation' => true,
         'php_unit_test_case_static_method_calls' => true,
         'php_unit_test_class_requires_covers' => true,
+        'phpdoc_line_span' => ['property' => 'single'],
         'phpdoc_order' => true,
         'phpdoc_trim_consecutive_blank_line_separation' => true,
         'phpdoc_types_order' => true,

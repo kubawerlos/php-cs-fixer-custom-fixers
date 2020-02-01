@@ -14,13 +14,13 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
-        static::assertArrayHasKey(0, $options);
-        static::assertSame('elements', $options[0]->getName());
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('elements', $options[0]->getName());
     }
 
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     /**

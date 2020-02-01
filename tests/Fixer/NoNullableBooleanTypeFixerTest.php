@@ -13,7 +13,7 @@ final class NoNullableBooleanTypeFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertTrue($this->fixer->isRisky());
+        self::assertTrue($this->fixer->isRisky());
     }
 
     /**

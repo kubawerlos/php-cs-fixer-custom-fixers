@@ -24,7 +24,7 @@ final class FixersTest extends TestCase
         $sortedFixerNames = $fixerNames;
         \sort($sortedFixerNames);
 
-        static::assertSame($sortedFixerNames, $fixerNames);
+        self::assertSame($sortedFixerNames, $fixerNames);
     }
 
     /**
@@ -32,7 +32,7 @@ final class FixersTest extends TestCase
      */
     public function testFixerIsInCollection(FixerInterface $fixer): void
     {
-        static::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
+        self::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
     }
 
     public static function provideFixerIsInCollectionCases(): iterable

@@ -13,12 +13,12 @@ final class NoUnneededConcatenationFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     public function testSuccessorName(): void
     {
-        static::assertContains('NoSuperfluousConcatenationFixer', $this->fixer->getSuccessorsNames());
+        self::assertContains('NoSuperfluousConcatenationFixer', $this->fixer->getSuccessorsNames());
     }
 
     /**

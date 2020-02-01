@@ -13,12 +13,12 @@ final class SingleLineThrowFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     public function testSuccessorName(): void
     {
-        static::assertContains('single_line_throw', $this->fixer->getSuccessorsNames());
+        self::assertContains('single_line_throw', $this->fixer->getSuccessorsNames());
     }
 
     /**

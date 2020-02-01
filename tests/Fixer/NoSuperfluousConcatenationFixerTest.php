@@ -13,14 +13,14 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        static::assertFalse($this->fixer->isRisky());
+        self::assertFalse($this->fixer->isRisky());
     }
 
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
-        static::assertArrayHasKey(0, $options);
-        static::assertSame('allow_preventing_trailing_spaces', $options[0]->getName());
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('allow_preventing_trailing_spaces', $options[0]->getName());
     }
 
     /**
