@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## [Unreleased]
+- Add CommentedOutFunctionFixer
+
 ## v2.0.0 - *2020-03-01*
 - Drop PHP 7.1 support
 - Remove ImplodeCallFixer - use "implode_call"

@@ -20,6 +20,7 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocTypesOrderFixer;
 use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer;
 use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
 use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
@@ -183,6 +184,35 @@ final class PriorityTest extends TestCase
                  * @param $x
                  */
                 function bar($x) {}
+            ',
+        ];
+
+        yield [
+            new CommentedOutFunctionFixer(),
+            new CommentSurroundedBySpacesFixer(),
+            '<?php
+$x = foo();
+// var_dump($x);
+bar($x);
+            ',
+            '<?php
+$x = foo();
+var_dump($x);
+bar($x);
+            ',
+        ];
+
+        yield [
+            new CommentedOutFunctionFixer(),
+            new NoCommentedOutCodeFixer(),
+            '<?php
+                $x = foo();
+                bar($x);
+            ',
+            '<?php
+                $x = foo();
+                var_dump($x);
+                bar($x);
             ',
         ];
 

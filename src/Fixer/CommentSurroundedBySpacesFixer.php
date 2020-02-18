@@ -25,6 +25,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
 
     public function getPriority(): int
     {
+        // must be run after CommentedOutFunctionFixer
         // must be run before MultilineCommentOpeningClosingFixer
         return 1;
     }
