@@ -23,6 +23,9 @@
         }
     },
     "scripts": {
+        "post-update-cmd": [
+            "composer update --lock --no-scripts"
+        ],
         "analyse": [
             "composer validate --strict --working-dir=..",
             "composer outdated --ignore=php-cs-fixer/diff --strict",
@@ -32,8 +35,8 @@
             "types-checker ../src ../dev-tools/src ../tests",
             "php-cs-fixer fix --ansi --diff --dry-run --verbose",
             "phpmd ../src text ./phpmd.xml",
-            "phpstan analyse --ansi --no-progress",
-            "psalm --shepherd --no-progress"
+            "phpstan analyse --no-progress",
+            "psalm --no-progress --shepherd"
         ],
         "fix": [
             "composer normalize ../composer.json",
