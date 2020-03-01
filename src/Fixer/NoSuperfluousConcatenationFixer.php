@@ -44,7 +44,6 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
     public function getPriority(): int
     {
-        // must be run after SingleLineThrowFixer
         return 0;
     }
 

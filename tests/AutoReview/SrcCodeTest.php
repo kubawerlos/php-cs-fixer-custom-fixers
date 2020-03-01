@@ -61,6 +61,16 @@ final class SrcCodeTest extends TestCase
     }
 
     /**
+     * TODO: temporary, for new major version.
+     *
+     * @dataProvider provideFixerCases
+     */
+    public function testFixerIsNotDeprecated(FixerInterface $fixer): void
+    {
+        self::assertFalse($fixer instanceof DeprecatedFixerInterface);
+    }
+
+    /**
      * @dataProvider provideFixerCases
      */
     public function testDeprecatedFixerHasAnnotation(FixerInterface $fixer): void

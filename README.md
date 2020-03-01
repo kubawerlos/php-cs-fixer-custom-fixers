@@ -9,7 +9,7 @@
 [![Travis CI build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg?label=Travis+CI)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![AppVeyor build status](https://img.shields.io/appveyor/ci/kubawerlos/php-cs-fixer-custom-fixers/master?label=AppVeyor)](https://ci.appveyor.com/project/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-2224-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-1960-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -89,16 +89,6 @@ Data provider must be static.
 -    public function provideHappyPathCases() {}
 +    public static function provideHappyPathCases() {}
  }
-```
-
-#### ImplodeCallFixer
-Function `implode` must be called with 2 arguments in the documented order.
-  DEPRECATED: use `implode_call` instead.
-  *Risky: when the function `implode` is overridden.*
-```diff
- <?php
--implode($foo, "") . implode($bar);
-+implode("", $foo) . implode('', $bar);
 ```
 
 #### InternalClassCasingFixer
@@ -228,38 +218,6 @@ Configuration options:
 +echo 'foobar';
 ```
 
-#### NoTwoConsecutiveEmptyLinesFixer
-There must be no two consecutive empty lines in code.
-  DEPRECATED: use `no_extra_blank_lines` instead.
-```diff
- <?php
- namespace Foo;
-
--
- class Bar {};
-```
-
-#### NoUnneededConcatenationFixer
-There should not be inline concatenation of strings.
-  DEPRECATED: use `NoSuperfluousConcatenationFixer` instead.
-```diff
- <?php
--echo 'foo' . 'bar';
-+echo 'foobar';
-```
-
-#### NoUselessClassCommentFixer
-There must be no comment like: "Class FooBar".
-  DEPRECATED: use `NoUselessCommentFixer` instead.
-```diff
- <?php
- /**
-- * Class FooBar
-  * Class to do something
-  */
- class FooBar {}
-```
-
 #### NoUselessCommentFixer
 There must be no comment like "Class Foo".
 ```diff
@@ -273,19 +231,6 @@ There must be no comment like "Class Foo".
 -     * Get bar
       */
      function getBar() {}
- }
-```
-
-#### NoUselessConstructorCommentFixer
-There must be no comment like: "Foo constructor".
-  DEPRECATED: use `NoUselessCommentFixer` instead.
-```diff
- <?php
- class Foo {
-     /**
--     * Foo constructor
-      */
-     public function __construct() {}
  }
 ```
 
@@ -309,18 +254,6 @@ Function `sprintf` without parameters should not be used.
  <?php
 -$foo = sprintf('Foo');
 +$foo = 'Foo';
-```
-
-#### NullableParamStyleFixer
-Nullable parameters must be written in the consistent style.
-  DEPRECATED: use `nullable_type_declaration_for_default_null_value` instead.
-Configuration options:
-- `style` (`'with_question_mark'`, `'without_question_mark'`): whether nullable parameter type should be prefixed or not with question mark; defaults to `'with_question_mark'`
-```diff
- <?php
--function foo(int $x = null) {
-+function foo(?int $x = null) {
- }
 ```
 
 #### OperatorLinebreakFixer
@@ -448,28 +381,6 @@ PHPDoc types must be trimmed.
 + * @param null|string $x
   */
  function foo($x) {}
-```
-
-#### PhpdocVarAnnotationCorrectOrderFixer
-`@var` and `@type` annotations must have type and name in the correct order.
-  DEPRECATED: use `phpdoc_var_annotation_correct_order` instead.
-```diff
- <?php
--/** @var $foo int */
-+/** @var int $foo */
- $foo = 2 + 2;
-```
-
-#### SingleLineThrowFixer
-Throwing exception must be done in single line.
-  DEPRECATED: use `single_line_throw` instead.
-```diff
- <?php
--throw new Exception(
--    'Error',
--    500
--);
-+throw new Exception('Error', 500);
 ```
 
 #### SingleSpaceAfterStatementFixer
