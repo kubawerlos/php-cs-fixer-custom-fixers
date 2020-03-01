@@ -31,8 +31,8 @@
             "types-checker ../src ../dev-tools/src ../tests",
             "php-cs-fixer fix --ansi --diff --dry-run --verbose",
             "phpmd ../src text ./phpmd.xml",
-            "phpstan analyse --ansi",
-            "psalm --shepherd"
+            "phpstan analyse --ansi --no-progress",
+            "psalm --shepherd --no-progress"
         ],
         "fix": [
             "composer normalize ../composer.json",
