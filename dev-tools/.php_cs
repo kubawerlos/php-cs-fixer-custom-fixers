@@ -5,6 +5,8 @@ declare(strict_types = 1);
 return PhpCsFixer\Config::create()
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
+    ->setRiskyAllowed(true)
+    ->setUsingCache(false)
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->files()
@@ -17,7 +19,6 @@ return PhpCsFixer\Config::create()
                 __DIR__ . '/readme',
             ])
     )
-    ->setRiskyAllowed(true)
     ->setRules([
         '@PHP71Migration' => true,
         '@PHP71Migration:risky' => true,
