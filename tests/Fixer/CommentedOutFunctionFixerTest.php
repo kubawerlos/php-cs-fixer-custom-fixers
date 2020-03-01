@@ -59,6 +59,19 @@ var_dump($x);
 ',
         ];
 
+        yield 'multiple' => [
+            '<?php
+//    var_dump($a);
+//    var_dump($b);
+//    var_dump($c);
+',
+            '<?php
+    var_dump($a);
+    var_dump($b);
+    var_dump($c);
+',
+        ];
+
         yield 'after few empty lines' => [
             '<?php
             ' . '
