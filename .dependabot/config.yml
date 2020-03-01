@@ -1,0 +1,12 @@
+version: 1
+
+update_configs:
+    -   package_manager: 'php:composer'
+        directory: '/dev-tools'
+        update_schedule: 'live'
+        default_assignees:
+            - 'kubawerlos'
+        allowed_updates:
+            -   match:
+                    update_type: 'all'
+        version_requirement_updates: 'increase_versions_if_necessary'
