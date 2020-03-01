@@ -253,6 +253,23 @@ bar($x);
 
         yield [
             new NoCommentedOutCodeFixer(),
+            new NoExtraBlankLinesFixer(),
+            '<?php
+                use Foo\Bar;
+
+                $y = new Bar();
+            ',
+            '<?php
+                use Foo\Bar;
+
+                // $x = new Bar();
+
+                $y = new Bar();
+            ',
+        ];
+
+        yield [
+            new NoCommentedOutCodeFixer(),
             new NoUnusedImportsFixer(),
             '<?php
                 use Foo\Bar;
