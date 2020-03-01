@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 - Drop PHP 7.1 support
+- Remove ImplodeCallFixer - use "implode_call"
+- Remove NoTwoConsecutiveEmptyLinesFixer - use "no_extra_blank_lines"
+- Remove NoUnneededConcatenationFixer - use NoSuperfluousConcatenationFixer
+- Remove NoUselessClassCommentFixer - use NoUselessCommentFixer
+- Remove NoUselessConstructorCommentFixer - use NoUselessCommentFixer
+- Remove NullableParamStyleFixer - use "nullable_type_declaration_for_default_null_value"
+- Remove PhpdocVarAnnotationCorrectOrderFixer - use "phpdoc_var_annotation_correct_order"
+- Remove SingleLineThrowFixer - use "single_line_throw"
 
 ## v1.17.0 - *2019-12-29*
 - Update PHP CS Fixer to v2.16

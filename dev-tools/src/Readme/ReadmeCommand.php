@@ -182,12 +182,7 @@ In your PHP CS Fixer configuration register fixers and use them:
                 );
             }
 
-            if ($fixer instanceof DeprecatedFixerInterface) {
-                $output .= \sprintf(
-                    "\n  DEPRECATED: use `%s` instead.",
-                    \implode('`, `', $fixer->getSuccessorsNames())
-                );
-            }
+            $output .= $fixer instanceof DeprecatedFixerInterface ? \sprintf("\n  DEPRECATED: use `%s` instead.", \implode('`, `', $fixer->getSuccessorsNames())) : '';
 
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
