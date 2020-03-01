@@ -25,6 +25,7 @@
     "scripts": {
         "analyse": [
             "composer validate --strict --working-dir=..",
+            "composer outdated --ignore=php-cs-fixer/diff --strict",
             "composer normalize --dry-run ../composer.json",
             "composer-require-checker check ../composer.json",
             "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests",
