@@ -203,6 +203,7 @@ var_dump($x);
 
         $newTokens = Tokens::fromCode('<?php ' . $codeToCommentOut);
         $newTokens->clearAt(0);
+        $newTokens->clearEmptyTokens();
 
         $tokens->overrideRange(
             $indexStart,
