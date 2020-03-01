@@ -104,7 +104,7 @@ class Bar {
             '<?php
 namespace Foo;
 class Baz {
-    use DateTime;
+    use \DateTime;
     public function __construct() {}
 }
 ',
