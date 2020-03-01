@@ -9,6 +9,7 @@ use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer;
+use PhpCsFixer\Fixer\FunctionNotation\SingleLineThrowFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer;
@@ -24,6 +25,7 @@ use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
 use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
 use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
 use PhpCsFixerCustomFixers\Fixer\NoImportFromGlobalNamespaceFixer;
+use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer;
@@ -558,6 +560,20 @@ final class PriorityTest extends TestCase
                  * @param Foo | Bar $x
                  */
                 function foo($x) {}
+            ',
+        ];
+
+        yield [
+            new SingleLineThrowFixer(),
+            new NoSuperfluousConcatenationFixer(),
+            '<?php
+                throw new Exception("This should not happen");
+            ',
+            '<?php
+                throw new Exception(
+                    "This should"
+                    . " not happen"
+                );
             ',
         ];
     }
