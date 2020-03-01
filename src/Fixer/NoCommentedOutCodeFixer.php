@@ -25,7 +25,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     public function getPriority(): int
     {
         // must be run after CommentedOutFunctionFixer
-        // must be run before NoUnusedImportsFixer
+        // must be run before NoExtraBlankLinesFixer and NoUnusedImportsFixer
         return 0;
     }
 
