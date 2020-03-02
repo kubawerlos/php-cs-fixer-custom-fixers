@@ -8,7 +8,6 @@
         "infection/infection": "^0.15.3",
         "kubawerlos/types-checker": "^1.2.0",
         "maglnet/composer-require-checker": "^2.1.0",
-        "malukenho/mcbumpface": "^1.1.2",
         "mi-schi/phpmd-extension": "^4.3.0",
         "phpmd/phpmd": "^2.8.2",
         "phpstan/phpstan": "^0.12.11",
@@ -16,11 +15,6 @@
         "phpunit/phpunit": "^9.0.1",
         "squizlabs/php_codesniffer": "^3.5.4",
         "vimeo/psalm": "^3.9.3"
-    },
-    "extra": {
-        "mc-bumpface": {
-            "stripVersionPrefixes": true
-        }
     },
     "autoload-dev": {
         "psr-4": {

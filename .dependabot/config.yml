@@ -9,4 +9,4 @@ update_configs:
         allowed_updates:
             -   match:
                     update_type: 'all'
-        version_requirement_updates: 'increase_versions_if_necessary'
+        version_requirement_updates: 'increase_versions'
