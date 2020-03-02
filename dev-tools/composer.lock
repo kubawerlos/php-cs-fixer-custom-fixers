@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ab9b3dd9220c2c00f2f050c5f51b214",
+    "content-hash": "de453b7367cf7a8e76bbb754aa06be9e",
     "packages": [],
     "packages-dev": [
         {
@@ -1120,54 +1120,6 @@
                 "requirements"
             ],
             "time": "2019-12-28T13:49:20+00:00"
-        },
-        {
-            "name": "malukenho/mcbumpface",
-            "version": "1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/malukenho/mcbumpface.git",
-                "reference": "b75a705b16fdb2adb20165ae58205349675ab6e1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/malukenho/mcbumpface/zipball/b75a705b16fdb2adb20165ae58205349675ab6e1",
-                "reference": "b75a705b16fdb2adb20165ae58205349675ab6e1",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0.0",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "composer/composer": "^1.9.3",
-                "doctrine/coding-standard": "^7.0.2",
-                "ext-json": "*",
-                "ext-zip": "*",
-                "infection/infection": "^0.15.0",
-                "phpunit/phpunit": "^8.5.2"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Malukenho\\McBumpface\\BumpInto"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Malukenho\\McBumpface\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jefersson Nathan",
-                    "email": "malukenho@phpse.net"
-                }
-            ],
-            "description": "Bumping into packages",
-            "time": "2020-02-20T14:45:13+00:00"
         },
         {
             "name": "mi-schi/phpmd-extension",
