@@ -26,17 +26,19 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "./tests",
-            "PhpCsFixerCustomFixersDev\\": "./dev-tools/src"
+            "PhpCsFixerCustomFixersDev\\": "./dev-tools/src",
+            "Tests\\": "./tests"
         }
     },
     "scripts": {
         "analyse": [
             "@install-dev-tools",
+            "php-cs-fixer fix --ansi --diff --dry-run --verbose",
             "composer --working-dir=./dev-tools analyse"
         ],
         "fix": [
             "@install-dev-tools",
+            "php-cs-fixer fix --ansi --verbose || exit 0",
             "composer --working-dir=./dev-tools fix",
             "php ./dev-tools/readme > ./README.md"
         ],

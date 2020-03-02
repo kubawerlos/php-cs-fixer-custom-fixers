@@ -10,13 +10,13 @@ return PhpCsFixer\Config::create()
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->files()
-            ->in(__DIR__ . '/../src')
-            ->in(__DIR__ . '/../tests')
+            ->in(__DIR__ . '/dev-tools/src')
             ->in(__DIR__ . '/src')
+            ->in(__DIR__ . '/tests')
             ->notName('php-cs-fixer.config.*.php')
             ->append([
+                __DIR__ . '/dev-tools/readme',
                 __FILE__,
-                __DIR__ . '/readme',
             ])
     )
     ->setRules([

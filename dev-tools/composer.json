@@ -4,43 +4,44 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.2.4",
+        "friendsofphp/php-cs-fixer": "^2.16.1",
         "infection/infection": "^0.15.3",
         "kubawerlos/types-checker": "^1.2.0",
         "maglnet/composer-require-checker": "^2.1.0",
+        "malukenho/mcbumpface": "^1.1.2",
         "mi-schi/phpmd-extension": "^4.3.0",
         "phpmd/phpmd": "^2.8.2",
         "phpstan/phpstan": "^0.12.11",
         "phpstan/phpstan-strict-rules": "^0.12.2",
+        "phpunit/phpunit": "^9.0.1",
         "squizlabs/php_codesniffer": "^3.5.4",
-        "vimeo/psalm": "^3.9.3",
-        "wikimedia/composer-merge-plugin": "^1.4.1"
+        "vimeo/psalm": "^3.9.3"
     },
     "extra": {
-        "merge-plugin": {
-            "include": [
-                "../composer.json"
-            ]
+        "mc-bumpface": {
+            "stripVersionPrefixes": true
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpCsFixerCustomFixers\\": "../src",
+            "PhpCsFixerCustomFixersDev\\": "./src",
+            "Tests\\": "../tests"
         }
     },
     "scripts": {
-        "post-update-cmd": [
-            "composer update --lock --no-scripts"
-        ],
         "analyse": [
             "composer validate --strict --working-dir=..",
-            "composer outdated --ignore=php-cs-fixer/diff --strict",
             "composer normalize --dry-run ../composer.json",
             "composer-require-checker check ../composer.json",
             "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests",
             "types-checker ../src ../dev-tools/src ../tests",
-            "php-cs-fixer fix --ansi --diff --dry-run --verbose",
             "phpmd ../src text ./phpmd.xml",
             "phpstan analyse --no-progress",
             "psalm --no-progress --shepherd"
         ],
         "fix": [
             "composer normalize ../composer.json",
-            "php-cs-fixer fix --ansi --verbose || exit 0",
             "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests || exit 0"
         ],
         "infection": [
