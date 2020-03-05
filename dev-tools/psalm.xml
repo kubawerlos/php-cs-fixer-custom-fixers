@@ -11,7 +11,11 @@
        usePhpDocMethodsWithoutMagicCall='true'
 >
     <projectFiles>
+        <directory name='./src' />
         <directory name='../src' />
+        <ignoreFiles>
+            <directory name='./src/Readme' />
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
@@ -22,6 +26,7 @@
         <LoopInvalidation errorLevel='suppress' />
         <MoreSpecificReturnType>
             <errorLevel type='suppress'>
+                <file name='./src/Fixers.php' />
                 <file name='../src/Fixers.php' />
             </errorLevel>
         </MoreSpecificReturnType>
@@ -30,6 +35,7 @@
         <PossiblyNullOperand errorLevel='suppress' />
         <PossiblyUnusedMethod>
             <errorLevel type='suppress'>
+                <file name='./src/Fixer/OrderedClassElementsInternalFixer.php' />
                 <file name='../src/Analyzer/Analysis/SwitchAnalysis.php' />
                 <file name='../src/Fixer/DeprecatingFixerInterface.php' />
             </errorLevel>

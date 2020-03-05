@@ -21,8 +21,8 @@
             "composer validate --strict --working-dir=..",
             "composer normalize --dry-run ../composer.json",
             "composer-require-checker check ../composer.json",
-            "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests",
-            "types-checker ../src ../dev-tools/src ../tests",
+            "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../dev-tools/src ../src ../tests",
+            "types-checker ../dev-tools/src ../src ../tests",
             "phpmd ../src text ./phpmd.xml",
             "phpstan analyse --no-progress",
             "psalm --no-progress --shepherd"

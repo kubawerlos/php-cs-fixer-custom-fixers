@@ -16,6 +16,7 @@ final class PriorityCollection
 
     public static function create(): self
     {
+        /** @var null|self $instance */
         static $instance;
 
         if ($instance === null) {
@@ -36,8 +37,7 @@ final class PriorityCollection
             $this->priorityFixers[(new \ReflectionObject($fixer))->getShortName()] = new PriorityFixer($fixer, null);
         }
 
-        $priorityTest = new PriorityTest();
-        foreach ($priorityTest->providePriorityCases() as [$firstFixer, $secondFixer]) {
+        foreach (PriorityTest::providePriorityCases() as [$firstFixer, $secondFixer]) {
             $this->priorityFixer($firstFixer)->addFixerToRunAfter($this->priorityFixer($secondFixer));
             $this->priorityFixer($secondFixer)->addFixerToRunBefore($this->priorityFixer($firstFixer));
         }
@@ -54,7 +54,7 @@ final class PriorityCollection
 
             foreach ($this->priorityFixers as $priorityFixer) {
                 if (!$priorityFixer->hasPriority()) {
-                    $anythingChanged |= $priorityFixer->calculatePriority(true);
+                    $anythingChanged = $anythingChanged || $priorityFixer->calculatePriority(true);
                 }
             }
         }

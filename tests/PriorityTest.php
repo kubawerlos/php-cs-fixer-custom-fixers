@@ -110,6 +110,9 @@ final class PriorityTest extends TestCase
         self::assertSame($sorted, $cases);
     }
 
+    /**
+     * @return array<array<FixerInterface>>
+     */
     public static function providePriorityCases(): iterable
     {
         yield [

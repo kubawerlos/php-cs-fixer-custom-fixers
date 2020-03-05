@@ -8,6 +8,7 @@ parameters:
         - '#has parameter \$tokens with no value type specified in iterable type PhpCsFixer\\Tokenizer\\Tokens\.#'
     level: max
     paths:
+        - ./src
         - ../src
 
 includes:
