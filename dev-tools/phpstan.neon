@@ -1,13 +1,14 @@
 parameters:
-    level: max
-    paths:
-        - ../src
-    checkGenericClassInNonGenericObjectType: false
+    autoload_files:
+        - ../vendor/autoload.php
     ignoreErrors:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+::configure\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
         - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::insertAt\(\) expects#'
         - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::overrideRange\(\) expects#'
         - '#has parameter \$tokens with no value type specified in iterable type PhpCsFixer\\Tokenizer\\Tokens\.#'
+    level: max
+    paths:
+        - ../src
 
 includes:
     - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon

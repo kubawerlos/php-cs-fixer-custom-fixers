@@ -8,6 +8,9 @@ use PhpCsFixer\Fixer\FixerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
+/**
+ * @implements \IteratorAggregate<FixerInterface>
+ */
 final class Fixers implements \IteratorAggregate
 {
     /**

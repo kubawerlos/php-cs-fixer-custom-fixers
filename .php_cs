@@ -153,6 +153,7 @@ return PhpCsFixer\Config::create()
                     'coversNothing',
                     'dataProvider',
                     'deprecated',
+                    'implements',
                     'internal',
                     'param',
                     'return',
