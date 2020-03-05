@@ -1,6 +1,8 @@
 parameters:
     autoload_files:
         - ../vendor/autoload.php
+    excludes_analyse:
+        - ./src/Readme
     ignoreErrors:
         - '#^Method PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+::configure\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
         - '#^Parameter \#\d+ \$[a-zA-Z]+ of method PhpCsFixer\\Tokenizer\\Tokens::insertAt\(\) expects#'

@@ -40,6 +40,11 @@
                 <file name='../src/Fixer/DeprecatingFixerInterface.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
+        <UndefinedClass>
+            <errorLevel type='suppress'>
+                <file name='./src/Priority/PriorityCollection.php' />
+            </errorLevel>
+        </UndefinedClass>
         <UnusedClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>
