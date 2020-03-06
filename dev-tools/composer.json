@@ -29,7 +29,7 @@
         ],
         "fix": [
             "composer normalize ../composer.json",
-            "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ./src ../tests || exit 0"
+            "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ../src ../tests || exit 0"
         ],
         "infection": [
             "infection run --ansi --min-msi=100 --only-covered --threads=16"
