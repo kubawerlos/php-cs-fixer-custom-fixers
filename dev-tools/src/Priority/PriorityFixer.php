@@ -50,16 +50,27 @@ final class PriorityFixer
         return $this->priority;
     }
 
+    /**
+     * @return string[]
+     */
     public function getFixerToRunAfterNames(): array
     {
         return $this->getFixerNames($this->fixersToRunAfter);
     }
 
+    /**
+     * @return string[]
+     */
     public function getFixerToRunBeforeNames(): array
     {
         return $this->getFixerNames($this->fixersToRunBefore);
     }
 
+    /**
+     * @param self[] $priorityFixers
+     *
+     * @return string[]
+     */
     private function getFixerNames(array $priorityFixers): array
     {
         $fixers = \array_map(

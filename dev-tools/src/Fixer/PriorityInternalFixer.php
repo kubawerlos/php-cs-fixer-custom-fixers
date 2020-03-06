@@ -43,19 +43,31 @@ final class PriorityInternalFixer implements FixerInterface
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
+        /** @var int[] $indices */
         $indices = $tokens->findSequence([[T_EXTENDS], [T_STRING, 'AbstractFixer']]);
 
-        $classNameIndex = $tokens->getPrevMeaningfulToken(\key($indices));
+        /** @var int $sequencesStartIndex */
+        $sequencesStartIndex = \key($indices);
+
+        /** @var int $classNameIndex */
+        $classNameIndex = $tokens->getPrevMeaningfulToken($sequencesStartIndex);
+
         $className = $tokens[$classNameIndex]->getContent();
 
         /** @var int $startIndex */
-        $startIndex = $tokens->getNextTokenOfKind(\key($indices), ['{']);
+        $startIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, ['{']);
+
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
+        /** @var int[] $indices */
         $indices = $tokens->findSequence([[T_PUBLIC], [T_FUNCTION], [T_STRING, 'getPriority']], $startIndex, $endIndex);
 
+        /** @var int $sequencesStartIndex */
+        $sequencesStartIndex = \key($indices);
+
         /** @var int $startIndex */
-        $startIndex = $tokens->getNextTokenOfKind(\key($indices), ['{']);
+        $startIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, ['{']);
+
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
         $commentsToInsert = $this->getCommentsToInsert($className);
@@ -73,6 +85,7 @@ final class PriorityInternalFixer implements FixerInterface
             $tokens[$index] = \array_shift($commentsToInsert);
         }
 
+        /** @var int $returnIndex */
         $returnIndex = $tokens->getNextTokenOfKind($startIndex, [[T_RETURN]]);
 
         foreach (\array_reverse($commentsToInsert) as $comment) {
@@ -85,11 +98,18 @@ final class PriorityInternalFixer implements FixerInterface
             );
         }
 
-        $priorityStartIndex = $tokens->getNextTokenOfKind($startIndex, [[T_RETURN]]) + 2;
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextTokenOfKind($startIndex, [[T_RETURN]]);
+
+        $priorityStartIndex = $nextIndex + 2;
         if ($tokens[$priorityStartIndex]->isGivenKind(T_VARIABLE)) {
             return;
         }
-        $priorityEndIndex = $tokens->getNextTokenOfKind($priorityStartIndex, [';']) - 1;
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextTokenOfKind($priorityStartIndex, [';']);
+
+        $priorityEndIndex = $nextIndex - 1;
 
         $priorityCollection = PriorityCollection::create();
         $priority = $priorityCollection->getPriorityFixer($className)->getPriority();

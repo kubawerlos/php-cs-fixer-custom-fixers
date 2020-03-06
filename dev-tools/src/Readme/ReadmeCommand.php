@@ -11,6 +11,7 @@ use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
 use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use SebastianBergmann\Diff\Differ;
@@ -29,7 +30,7 @@ final class ReadmeCommand extends BaseCommand
 
     private const SHIELDS_HOST = 'https://img.shields.io';
 
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->write(
             \sprintf('# %s', self::NAME) . "\n\n"
@@ -166,6 +167,7 @@ In your PHP CS Fixer configuration register fixers and use them:
     {
         $output = '## Fixers';
 
+        /** @var AbstractFixer $fixer */
         foreach (new Fixers() as $fixer) {
             $reflection = new \ReflectionClass($fixer);
 
@@ -200,6 +202,7 @@ In your PHP CS Fixer configuration register fixers and use them:
                             return \sprintf('\'%s\'', $value);
                         }, $option->getAllowedValues());
                     } else {
+                        /** @var string[] $allowed */
                         $allowed = $option->getAllowedTypes();
                     }
                     $output .= \sprintf(

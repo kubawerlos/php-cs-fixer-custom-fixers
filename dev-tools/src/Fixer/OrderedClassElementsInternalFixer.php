@@ -71,34 +71,43 @@ namespace PhpCsFixer\Fixer\ClassNotation {
 
     /**
      * @internal
+     *
+     * @param array<array<string>> $elements
      */
     function usort(array &$elements): void
     {
-        \usort($elements, static function (array $a, array $b) {
-            if ($a['type'] === 'method' && $a['visibility'] === 'public'
-                && $b['type'] === 'method' && $b['visibility'] === 'public'
-                && isset($a['name'], $b['name'])) {
-                if (!\in_array($a['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
-                    throw new \Exception(\sprintf('Method %s not in order list', $a['name']));
-                }
-                if (!\in_array($b['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
-                    throw new \Exception(\sprintf('Method %s not in order list', $b['name']));
-                }
-                foreach (OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER as $name) {
-                    if ($a['name'] === $name) {
-                        return -1;
+        \usort(
+            $elements,
+            /**
+             * @param string[] $a
+             * @param string[] $b
+             */
+            static function (array $a, array $b): int {
+                if ($a['type'] === 'method' && $a['visibility'] === 'public'
+                    && $b['type'] === 'method' && $b['visibility'] === 'public'
+                    && isset($a['name'], $b['name'])) {
+                    if (!\in_array($a['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
+                        throw new \Exception(\sprintf('Method %s not in order list', $a['name']));
                     }
-                    if ($b['name'] === $name) {
-                        return 1;
+                    if (!\in_array($b['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
+                        throw new \Exception(\sprintf('Method %s not in order list', $b['name']));
+                    }
+                    foreach (OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER as $name) {
+                        if ($a['name'] === $name) {
+                            return -1;
+                        }
+                        if ($b['name'] === $name) {
+                            return 1;
+                        }
                     }
                 }
-            }
 
-            if ($a['position'] === $b['position']) {
-                return $a['start'] <=> $b['start'];
-            }
+                if ($a['position'] === $b['position']) {
+                    return $a['start'] <=> $b['start'];
+                }
 
-            return $a['position'] <=> $b['position'];
-        });
+                return $a['position'] <=> $b['position'];
+            }
+        );
     }
 }

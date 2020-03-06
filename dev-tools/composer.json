@@ -21,15 +21,15 @@
             "composer validate --strict --working-dir=..",
             "composer normalize --dry-run ../composer.json",
             "composer-require-checker check ../composer.json",
-            "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests",
-            "types-checker ../src ../dev-tools/src ../tests",
+            "phpcs --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ../src ../tests",
+            "types-checker ./src ../src ../tests",
             "phpmd ../src text ./phpmd.xml",
             "phpstan analyse --no-progress",
             "psalm --no-progress --shepherd"
         ],
         "fix": [
             "composer normalize ../composer.json",
-            "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ../src ../dev-tools/src ../tests || exit 0"
+            "phpcbf --exclude=Generic.Files.LineLength --report-full --standard=PSR2 ./src ../src ../tests || exit 0"
         ],
         "infection": [
             "infection run --ansi --min-msi=100 --only-covered --threads=16"
