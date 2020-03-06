@@ -4,6 +4,7 @@
        xmlns='https://getpsalm.org/schema/config'
        xsi:schemaLocation='https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd'
        allowStringToStandInForClass='true'
+       autoloader='../vendor/autoload.php'
        findUnusedCode='true'
        findUnusedVariablesAndParams='true'
        strictBinaryOperands='true'
@@ -40,11 +41,6 @@
                 <file name='../src/Fixer/DeprecatingFixerInterface.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
-        <UndefinedClass>
-            <errorLevel type='suppress'>
-                <file name='./src/Priority/PriorityCollection.php' />
-            </errorLevel>
-        </UndefinedClass>
         <UnusedClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>
