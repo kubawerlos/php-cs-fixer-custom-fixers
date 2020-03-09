@@ -49,9 +49,6 @@ final class ArrayAnalyzer
      */
     private function getArgumentsForArrayContent(Tokens $tokens, int $startIndex, int $endIndex): array
     {
-        if ($tokens[$tokens->getNextMeaningfulToken($startIndex - 1)]->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_CLOSE)) {
-            return [];
-        }
         $arguments = [];
         $argumentStart = $startIndex;
         $index = $startIndex - 1;
