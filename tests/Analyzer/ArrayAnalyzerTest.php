@@ -115,5 +115,21 @@ final class ArrayAnalyzerTest extends TestCase
                 /* comment 1 */ (1 + 2) /* comment 2 */ => /* comment 3 */ foo(1, 2),  /* comment 4 */
             ];',
         ];
+
+        yield [
+            [
+                new ArrayArgumentAnalysis(9, 9, 13, 13),
+                new ArrayArgumentAnalysis(18, 18, 22, 26),
+                new ArrayArgumentAnalysis(31, 31, 37, 44),
+            ],
+            '<?php $a = [
+               // foo
+               "foo" => 1,
+               // bar
+               "bar" => 1 + 1,
+               // baz
+               "baz" /* TODO: something */ => 1 + 1+ 1,
+            ];',
+        ];
     }
 }

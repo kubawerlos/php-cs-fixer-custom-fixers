@@ -84,7 +84,7 @@ final class ArrayAnalyzer
         $keyEndIndex = null;
 
         /** @var int $argumentStartIndex */
-        $argumentStartIndex = $tokens->getNextNonWhitespace($startIndex - 1);
+        $argumentStartIndex = $tokens->getNextMeaningfulToken($startIndex - 1);
 
         /** @var int $argumentEndIndex */
         $argumentEndIndex = $tokens->getPrevNonWhitespace($endIndex + 1);

@@ -132,5 +132,45 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
                 ];
             ',
         ];
+
+        yield [
+            '<?php
+                $x = [
+                    // comment 1
+                    "foo" => 1,
+                    // comment 2
+                    // comment 3
+                    "bar" => 3,
+                    // comment 4
+                ];
+            ',
+            '<?php
+                $x = [
+                    // comment 1
+                    "foo" => 1,
+                    // comment 2
+                    "bar" => 2,
+                    // comment 3
+                    "bar" => 3,
+                    // comment 4
+                ];
+            ',
+        ];
+
+        yield [
+            '<?php
+                $x = [
+                    1 + 2 => 2,
+                    1 + 1 => 3,
+                ];
+            ',
+            '<?php
+                $x = [
+                    1 + 1 => 1,
+                    1 + 2 => 2,
+                    1 + 1 => 3,
+                ];
+            ',
+        ];
     }
 }
