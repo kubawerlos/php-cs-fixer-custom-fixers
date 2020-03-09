@@ -160,8 +160,9 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 $x = [
-                    1 + 2 => 2,
                     1 + 1 => 3,
+                    1 + 2 => 4,
+                    6 + 1 => 5,
                 ];
             ',
             '<?php
@@ -169,6 +170,8 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
                     1 + 1 => 1,
                     1 + 2 => 2,
                     1 + 1 => 3,
+                    1 + 2 => 4,
+                    6 + 1 => 5,
                 ];
             ',
         ];
