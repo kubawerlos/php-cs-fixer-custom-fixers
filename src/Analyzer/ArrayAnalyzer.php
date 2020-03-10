@@ -6,7 +6,7 @@ namespace PhpCsFixerCustomFixers\Analyzer;
 
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayArgumentAnalysis;
+use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 
 /**
  * @internal
@@ -14,9 +14,9 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayArgumentAnalysis;
 final class ArrayAnalyzer
 {
     /**
-     * @return ArrayArgumentAnalysis[]
+     * @return ArrayElementAnalysis[]
      */
-    public function getArguments(Tokens $tokens, int $index): array
+    public function getElements(Tokens $tokens, int $index): array
     {
         if ($tokens[$index]->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
             /** @var int $arrayContentStartIndex */
@@ -25,7 +25,7 @@ final class ArrayAnalyzer
             /** @var int $arrayContentEndIndex */
             $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index));
 
-            return $this->getArgumentsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
+            return $this->getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
         }
 
         if ($tokens[$index]->isGivenKind(T_ARRAY)) {
@@ -38,79 +38,66 @@ final class ArrayAnalyzer
             /** @var int $arrayContentEndIndex */
             $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $arrayOpenBraceIndex));
 
-            return $this->getArgumentsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
+            return $this->getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
         }
 
         throw new \InvalidArgumentException(\sprintf('Index %d is not an array.', $index));
     }
 
     /**
-     * @return ArrayArgumentAnalysis[]
+     * @return ArrayElementAnalysis[]
      */
-    private function getArgumentsForArrayContent(Tokens $tokens, int $startIndex, int $endIndex): array
+    private function getElementsForArrayContent(Tokens $tokens, int $startIndex, int $endIndex): array
     {
-        $arguments = [];
-        $argumentStart = $startIndex;
-        $index = $startIndex - 1;
-        while ($index < $endIndex) {
-            $index++;
-            $skippedIndex = $this->skipBlock($tokens, $index);
-            if ($skippedIndex !== $index) {
-                $index = $skippedIndex;
-                continue;
-            }
+        $elements = [];
 
+        $index = $startIndex;
+        while ($endIndex >= $index = $this->nextCandidateIndex($tokens, $index)) {
             if (!$tokens[$index]->equals(',')) {
                 continue;
             }
 
-            $arguments[] = $this->createArrayArgumentAnalysis($tokens, $argumentStart, $index - 1);
-            $argumentStart = $index + 1;
+            /** @var int $elementEndIndex */
+            $elementEndIndex = $tokens->getPrevMeaningfulToken($index);
+
+            $elements[] = $this->createArrayElementAnalysis($tokens, $startIndex, $elementEndIndex);
+
+            /** @var int $startIndex */
+            $startIndex = $tokens->getNextMeaningfulToken($index);
         }
 
-        if ($argumentStart <= $endIndex) {
-            $arguments[] = $this->createArrayArgumentAnalysis($tokens, $argumentStart, $endIndex);
+        if ($startIndex <= $endIndex) {
+            $elements[] = $this->createArrayElementAnalysis($tokens, $startIndex, $endIndex);
         }
 
-        return $arguments;
+        return $elements;
     }
 
-    private function createArrayArgumentAnalysis(Tokens $tokens, int $startIndex, int $endIndex): ArrayArgumentAnalysis
+    private function createArrayElementAnalysis(Tokens $tokens, int $startIndex, int $endIndex): ArrayElementAnalysis
     {
-        $keyStartIndex = null;
-        $keyEndIndex = null;
-
-        /** @var int $argumentStartIndex */
-        $argumentStartIndex = $tokens->getNextMeaningfulToken($startIndex - 1);
-
-        /** @var int $argumentEndIndex */
-        $argumentEndIndex = $tokens->getPrevNonWhitespace($endIndex + 1);
-
-        $index = $startIndex - 1;
-        while ($index < $endIndex) {
-            $index++;
-            $skippedIndex = $this->skipBlock($tokens, $index);
-            if ($skippedIndex !== $index) {
-                $index = $skippedIndex;
+        $index = $startIndex;
+        while ($endIndex > $index = $this->nextCandidateIndex($tokens, $index)) {
+            if (!$tokens[$index]->isGivenKind(T_DOUBLE_ARROW)) {
                 continue;
             }
 
-            if ($tokens[$index]->isGivenKind(T_DOUBLE_ARROW)) {
-                $keyStartIndex = $argumentStartIndex;
+            /** @var int $keyEndIndex */
+            $keyEndIndex = $tokens->getPrevMeaningfulToken($index);
 
-                /** @var int $keyEndIndex */
-                $keyEndIndex = $tokens->getPrevMeaningfulToken($index);
+            /** @var int $valueStartIndex */
+            $valueStartIndex = $tokens->getNextMeaningfulToken($index);
 
-                /** @var int $argumentStartIndex */
-                $argumentStartIndex = $tokens->getNextMeaningfulToken($index);
-            }
+            return new ArrayElementAnalysis($startIndex, $keyEndIndex, $valueStartIndex, $endIndex);
         }
 
-        return new ArrayArgumentAnalysis($keyStartIndex, $keyEndIndex, $argumentStartIndex, $argumentEndIndex);
+        return new ArrayElementAnalysis(null, null, $startIndex, $endIndex);
     }
 
-    private function skipBlock(Tokens $tokens, int $index): int
+    private function nextCandidateIndex(Tokens $tokens, int $index): int
     {
+        /** @var int $index */
+        $index = $tokens->getNextMeaningfulToken($index);
+
         if ($tokens[$index]->equals('{')) {
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
         }

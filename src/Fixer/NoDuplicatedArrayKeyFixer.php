@@ -10,7 +10,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayArgumentAnalysis;
+use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ArrayAnalyzer;
 use PhpCsFixerCustomFixers\TokenRemover;
 
@@ -61,17 +61,17 @@ $x = [
         $arrayAnalyzer = new ArrayAnalyzer();
 
         $keys = [];
-        foreach (\array_reverse($arrayAnalyzer->getArguments($tokens, $index)) as $arrayArgumentAnalysis) {
-            $key = $this->getKeyContentIfPossible($tokens, $arrayArgumentAnalysis);
+        foreach (\array_reverse($arrayAnalyzer->getElements($tokens, $index)) as $arrayElementAnalysis) {
+            $key = $this->getKeyContentIfPossible($tokens, $arrayElementAnalysis);
             if ($key === null) {
                 continue;
             }
             if (isset($keys[$key])) {
                 /** @var int $startIndex */
-                $startIndex = $arrayArgumentAnalysis->getKeyStartIndex();
+                $startIndex = $arrayElementAnalysis->getKeyStartIndex();
 
                 /** @var int $endIndex */
-                $endIndex = $tokens->getNextMeaningfulToken($arrayArgumentAnalysis->getArgumentEndIndex());
+                $endIndex = $tokens->getNextMeaningfulToken($arrayElementAnalysis->getValueEndIndex());
                 if ($tokens[$endIndex + 1]->isWhitespace() && Preg::match('/^\h+$/', $tokens[$endIndex + 1]->getContent()) === 1) {
                     $endIndex++;
                 }
@@ -83,14 +83,14 @@ $x = [
         }
     }
 
-    private function getKeyContentIfPossible(Tokens $tokens, ArrayArgumentAnalysis $arrayArgumentAnalysis): ?string
+    private function getKeyContentIfPossible(Tokens $tokens, ArrayElementAnalysis $arrayElementAnalysis): ?string
     {
-        if ($arrayArgumentAnalysis->getKeyStartIndex() === null || $arrayArgumentAnalysis->getKeyEndIndex() === null) {
+        if ($arrayElementAnalysis->getKeyStartIndex() === null || $arrayElementAnalysis->getKeyEndIndex() === null) {
             return null;
         }
 
         $content = '';
-        for ($index = $arrayArgumentAnalysis->getKeyEndIndex(); $index >= $arrayArgumentAnalysis->getKeyStartIndex(); $index--) {
+        for ($index = $arrayElementAnalysis->getKeyEndIndex(); $index >= $arrayElementAnalysis->getKeyStartIndex(); $index--) {
             if ($tokens[$index]->isWhitespace() || $tokens[$index]->isComment()) {
                 continue;
             }

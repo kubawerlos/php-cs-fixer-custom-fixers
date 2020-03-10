@@ -7,7 +7,7 @@ namespace PhpCsFixerCustomFixers\Analyzer\Analysis;
 /**
  * @internal
  */
-final class ArrayArgumentAnalysis
+final class ArrayElementAnalysis
 {
     /** @var ?int */
     private $keyStartIndex;
@@ -16,17 +16,17 @@ final class ArrayArgumentAnalysis
     private $keyEndIndex;
 
     /** @var int */
-    private $argumentStartIndex;
+    private $valueStartIndex;
 
     /** @var int */
-    private $argumentEndIndex;
+    private $valueEndIndex;
 
-    public function __construct(?int $keyStartIndex, ?int $keyEndIndex, int $argumentStartIndex, int $argumentEndIndex)
+    public function __construct(?int $keyStartIndex, ?int $keyEndIndex, int $valueStartIndex, int $valueEndIndex)
     {
         $this->keyStartIndex = $keyStartIndex;
         $this->keyEndIndex = $keyEndIndex;
-        $this->argumentStartIndex = $argumentStartIndex;
-        $this->argumentEndIndex = $argumentEndIndex;
+        $this->valueStartIndex = $valueStartIndex;
+        $this->valueEndIndex = $valueEndIndex;
     }
 
     public function getKeyStartIndex(): ?int
@@ -39,13 +39,13 @@ final class ArrayArgumentAnalysis
         return $this->keyEndIndex;
     }
 
-    public function getArgumentStartIndex(): int
+    public function getValueStartIndex(): int
     {
-        return $this->argumentStartIndex;
+        return $this->valueStartIndex;
     }
 
-    public function getArgumentEndIndex(): int
+    public function getValueEndIndex(): int
     {
-        return $this->argumentEndIndex;
+        return $this->valueEndIndex;
     }
 }
