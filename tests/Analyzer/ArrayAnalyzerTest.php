@@ -117,7 +117,7 @@ final class ArrayAnalyzerTest extends TestCase
                 new ArrayElementAnalysis(9, 15, 23, 29),
             ],
             '<?php $a = [
-                /* comment 1 */ (1 + 2) /* comment 2 */ => /* comment 3 */ foo(1, 2),  /* comment 4 */
+                /* comment 1 */ (1 + 2) /* comment 2 */ => /* comment 3 */ foo(1, 2)/* comment 4 */,  /* comment 5 */
             ];',
         ];
 
@@ -134,6 +134,33 @@ final class ArrayAnalyzerTest extends TestCase
                "bar" => 1 + 1,
                // baz
                "baz" /* TODO: something */ => 1 + 1+ 1,
+            ];',
+        ];
+
+        yield [
+            [
+                new ArrayElementAnalysis(7, 11, 15, 19),
+                new ArrayElementAnalysis(22, 26, 30, 34),
+            ],
+            '<?php $a = [
+                    1 + 2 => 3 + 4,
+                    5 + 6 => 7 + 8,
+                ];
+            ',
+        ];
+
+        yield [
+            [
+                new ArrayElementAnalysis(null, null, 7, 16),
+                new ArrayElementAnalysis(null, null, 19, 28),
+            ],
+            '<?php $a = [
+                [
+                    "foo" => "bar",
+                ],
+                [
+                    "foo" => "bar",
+                ],
             ];',
         ];
     }
