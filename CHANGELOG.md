@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - Add CommentedOutFunctionFixer
+- Add NoDuplicatedArrayKeyFixer
 
 ## v2.0.0 - *2020-03-01*
 - Drop PHP 7.1 support
