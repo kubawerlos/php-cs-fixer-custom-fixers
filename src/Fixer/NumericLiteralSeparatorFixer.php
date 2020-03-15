@@ -139,7 +139,7 @@ echo 0137_041; // octal
             return $this->updateContent($content, '0', null, 4, $this->octalSeparator);
         }
 
-        if (Preg::match('/e-?\d+$/i', $content) === 1) {
+        if (Preg::match('/e-?[-\d_]+$/i', $content) === 1) {
             $content = $this->updateContent($content, null, 'e', 3, $this->floatSeparator);
 
             return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
@@ -169,7 +169,7 @@ echo 0137_041; // octal
             }
 
             /** @var string $substringToUpdate */
-            $substringToUpdate = Preg::replace(\sprintf('/[\da-fA-F]{%d}(?!$)/', $groupSize), '$0_', $substringToUpdate);
+            $substringToUpdate = Preg::replace(\sprintf('/[\da-fA-F]{%d}(?!-)(?!$)/', $groupSize), '$0_', $substringToUpdate);
 
             if ($fromRight) {
                 $substringToUpdate = \strrev($substringToUpdate);
@@ -184,15 +184,14 @@ echo 0137_041; // octal
         if ($startCharacter === null) {
             return 0;
         }
+
         $startPosition = \stripos($content, $startCharacter);
+
         if ($startPosition === false) {
             return null;
         }
-        if ($startPosition !== 0) {
-            $startPosition++;
-        }
 
-        return $startPosition;
+        return $startPosition + 1;
     }
 
     private function getEndPosition(string $content, ?string $endCharacter): int
