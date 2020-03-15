@@ -8,6 +8,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
+use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Utils;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -69,6 +70,8 @@ class FooTest extends TestCase {
 
     private function removeUselessReturns(Tokens $tokens, int $startIndex, int $endIndex): void
     {
+        $functionsAnalyzer = new FunctionsAnalyzer();
+
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->equalsAny(self::FUNCTION_TOKENS, false)) {
                 continue;
@@ -80,7 +83,7 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            if (!$this->isTheSameClassCall($tokens, $index)) {
+            if (!$functionsAnalyzer->isTheSameClassCall($tokens, $index)) {
                 continue;
             }
 
@@ -107,18 +110,5 @@ class FooTest extends TestCase {
             $tokens->clearRange($returnIndex, $semicolonAfterReturnIndex - 1);
             TokenRemover::removeWithLinesIfPossible($tokens, $semicolonAfterReturnIndex);
         }
-    }
-
-    private function isTheSameClassCall(Tokens $tokens, int $index): bool
-    {
-        /** @var int $operatorIndex */
-        $operatorIndex = $tokens->getPrevMeaningfulToken($index);
-
-        /** @var int $referenceIndex */
-        $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
-
-        return $tokens[$operatorIndex]->isGivenKind(T_OBJECT_OPERATOR) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this'], false)
-            || $tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->equals([T_STRING, 'self'], false)
-            || $tokens[$operatorIndex]->isGivenKind(T_DOUBLE_COLON) && $tokens[$referenceIndex]->isGivenKind(T_STATIC);
     }
 }
