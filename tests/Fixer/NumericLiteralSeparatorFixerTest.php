@@ -9,7 +9,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @internal
  *
- * @covers   \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
  *
  * @requires PHP 7.4
  */
