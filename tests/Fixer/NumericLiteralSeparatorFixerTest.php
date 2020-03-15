@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Tokenizer\Tokens;
+
 /**
  * @internal
  *
@@ -26,6 +28,28 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         self::assertSame('hexadecimal', $options[3]->getName());
         self::assertArrayHasKey(4, $options);
         self::assertSame('octal', $options[4]->getName());
+    }
+
+    public function testReversingCodeSample(): void
+    {
+        $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
+
+        Tokens::clearCache();
+        $tokens = Tokens::fromCode($codeSample->getCode());
+
+        $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+
+        $this->doTest(
+            $codeSample->getCode(),
+            $tokens->generateCode(),
+            [
+                'binary' => true,
+                'decimal' => true,
+                'float' => true,
+                'hexadecimal' => true,
+                'octal' => true,
+            ]
+        );
     }
 
     /**
