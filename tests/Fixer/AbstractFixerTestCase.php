@@ -69,6 +69,9 @@ abstract class AbstractFixerTestCase extends TestCase
         static::assertRegExp('/\n$/', $codeSample->getCode());
     }
 
+    /**
+     * @coversNothing
+     */
     final public function testCodeSampleIsChangedDuringFixing(): void
     {
         $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];

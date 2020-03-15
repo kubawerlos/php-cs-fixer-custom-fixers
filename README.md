@@ -9,7 +9,7 @@
 [![Travis CI build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg?label=Travis+CI)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
 [![AppVeyor build status](https://img.shields.io/appveyor/ci/kubawerlos/php-cs-fixer-custom-fixers/master?label=AppVeyor)](https://ci.appveyor.com/project/kubawerlos/php-cs-fixer-custom-fixers)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-2054-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-2168-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -276,6 +276,28 @@ Function `sprintf` without parameters should not be used.
  <?php
 -$foo = sprintf('Foo');
 +$foo = 'Foo';
+```
+
+#### NumericLiteralSeparatorFixer
+Numeric literals must have configured separators.
+Configuration options:
+- `binary` (`bool`, `null`): whether add, remove or ignore separators in binary numbers.; defaults to `false`
+- `decimal` (`bool`, `null`): whether add, remove or ignore separators in decimal numbers.; defaults to `false`
+- `float` (`bool`, `null`): whether add, remove or ignore separators in float numbers.; defaults to `false`
+- `hexadecimal` (`bool`, `null`): whether add, remove or ignore separators in hexadecimal numbers.; defaults to `false`
+- `octal` (`bool`, `null`): whether add, remove or ignore separators in octal numbers.; defaults to `false`
+```diff
+ <?php
+-echo 0b01010100_01101000; // binary
+-echo 135_798_642; // decimal
+-echo 1_234.456_78e-4_321; // float
+-echo 0xAE_B0_42_FC; // hexadecimal
+-echo 0123_4567; // octal
++echo 0b0101010001101000; // binary
++echo 135798642; // decimal
++echo 1234.45678e-4321; // float
++echo 0xAEB042FC; // hexadecimal
++echo 01234567; // octal
 ```
 
 #### OperatorLinebreakFixer
