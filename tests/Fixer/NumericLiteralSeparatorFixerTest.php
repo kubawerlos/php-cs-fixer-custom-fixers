@@ -104,12 +104,14 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         yield 'adding separator for floats' => [
             '<?php
                 echo 12_345.6;
-                echo 12_345.67889;
+                echo 12_345.678_89;
                 echo 1_234_567_890.12;
                 echo 1_000e10;
                 echo 2_000e10;
                 echo 3_000e-8;
                 echo -100_000e-8;
+                echo 1.234_567_89e100;
+                echo 123_456_789.123_456_78e123_456;
             ',
             '<?php
                 echo 12345.6;
@@ -119,6 +121,8 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
                 echo 2_0_0_0e10;
                 echo 3000e-8;
                 echo -100000e-8;
+                echo 1.23456789e100;
+                echo 123456789.12345678e123456;
             ',
             ['float' => true],
         ];
@@ -185,6 +189,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
                 echo -1e-5;
                 echo 0X42_72_6F_77_6E;
                 echo 0x12_3e_45;
+                echo 012_345.123_45e12_345;
             ',
             '<?php
                 echo 1000000;
@@ -193,6 +198,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
                 echo -1e-5;
                 echo 0X42726F776E;
                 echo 0x123e45;
+                echo 012345.12345e12345;
             ',
             [
                 'binary' => true,

@@ -121,49 +121,84 @@ echo 0137_041; // octal
     private function getNewContent(string $content): string
     {
         if (\strpos($content, '.') !== false) {
-            return $this->updateContent($content, 0, '.', 3, $this->floatSeparator);
+            $content = $this->updateContent($content, null, '.', 3, $this->floatSeparator);
+            $content = $this->updateContent($content, '.', 'e', 3, $this->floatSeparator, false);
+
+            return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
         }
 
         if (\stripos($content, '0b') === 0) {
-            return $this->updateContent($content, 2, null, 8, $this->binarySeparator);
+            return $this->updateContent($content, 'b', null, 8, $this->binarySeparator);
         }
 
         if (\stripos($content, '0x') === 0) {
-            return $this->updateContent($content, 2, null, 2, $this->hexadecimalSeparator);
+            return $this->updateContent($content, 'x', null, 2, $this->hexadecimalSeparator);
         }
 
         if (\strpos($content, '0') === 0) {
-            return $this->updateContent($content, 1, null, 4, $this->octalSeparator);
+            return $this->updateContent($content, '0', null, 4, $this->octalSeparator);
         }
 
         if (Preg::match('/e-?\d+$/i', $content) === 1) {
-            return $this->updateContent($content, 0, 'e', 3, $this->floatSeparator);
+            $content = $this->updateContent($content, null, 'e', 3, $this->floatSeparator);
+
+            return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
         }
 
-        return $this->updateContent($content, 0, null, 3, $this->decimalSeparator);
+        return $this->updateContent($content, null, null, 3, $this->decimalSeparator);
     }
 
-    private function updateContent(string $content, int $startPosition, ?string $endCharacter, int $groupSize, ?bool $addSeparators): string
+    private function updateContent(string $content, ?string $startCharacter, ?string $endCharacter, int $groupSize, ?bool $addSeparators, bool $fromRight = true): string
     {
         if ($addSeparators === null) {
             return $content;
         }
 
-        $content = \str_replace('_', '', $content);
-
-        if (!$addSeparators) {
+        $startPosition = $this->getStartPosition($content, $startCharacter);
+        if ($startPosition === null) {
             return $content;
         }
+        $endPosition = $this->getEndPosition($content, $endCharacter);
 
-        /** @var int $endPosition */
+        $substringToUpdate = \substr($content, $startPosition, $endPosition - $startPosition);
+        $substringToUpdate = \str_replace('_', '', $substringToUpdate);
+
+        if ($addSeparators) {
+            if ($fromRight) {
+                $substringToUpdate = \strrev($substringToUpdate);
+            }
+
+            /** @var string $substringToUpdate */
+            $substringToUpdate = Preg::replace(\sprintf('/[\da-fA-F]{%d}(?!$)/', $groupSize), '$0_', $substringToUpdate);
+
+            if ($fromRight) {
+                $substringToUpdate = \strrev($substringToUpdate);
+            }
+        }
+
+        return \substr($content, 0, $startPosition) . $substringToUpdate . \substr($content, $endPosition);
+    }
+
+    private function getStartPosition(string $content, ?string $startCharacter): ?int
+    {
+        if ($startCharacter === null) {
+            return 0;
+        }
+        $startPosition = \stripos($content, $startCharacter);
+        if ($startPosition === false) {
+            return null;
+        }
+        if ($startPosition !== 0) {
+            $startPosition++;
+        }
+
+        return $startPosition;
+    }
+
+    private function getEndPosition(string $content, ?string $endCharacter): int
+    {
         $endPosition = $endCharacter === null ? \strlen($content) : \stripos($content, $endCharacter);
 
-        $separableContent = \substr($content, $startPosition, $endPosition - $startPosition);
-        $separableContent = \strrev($separableContent);
-        /** @var string $separableContent */
-        $separableContent = Preg::replace(\sprintf('/[\da-fA-F]{%d}(?!$)/', $groupSize), '$0_', $separableContent);
-        $separableContent = \strrev($separableContent);
-
-        return \substr($content, 0, $startPosition) . $separableContent . \substr($content, $endPosition);
+        return $endPosition === false ? \strlen($content) : $endPosition;
     }
 }
