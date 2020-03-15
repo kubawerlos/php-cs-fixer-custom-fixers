@@ -135,7 +135,7 @@ echo 0123_4567; // octal
             return $this->updateContent($content, 'x', null, 2, $this->hexadecimalSeparator);
         }
 
-        if (Preg::match('/e-?[-\d_]+$/i', $content) === 1) {
+        if (Preg::match('/e-?[\d_]+$/i', $content) === 1) {
             $content = $this->updateContent($content, null, 'e', 3, $this->floatSeparator);
 
             return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
