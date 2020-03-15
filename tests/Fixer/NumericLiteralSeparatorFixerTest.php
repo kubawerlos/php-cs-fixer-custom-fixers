@@ -7,7 +7,7 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
+ * @covers   \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
  *
  * @requires PHP 7.4
  */
@@ -42,7 +42,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
 
     public static function provideFixCases(): iterable
     {
-        yield 'null ignores fixing' => [
+        yield [
             '<?php
                 echo 1234567890;
                 echo 1_234_567_890;
@@ -50,162 +50,100 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
             null,
             ['decimal' => null],
         ];
-        yield 'default is to remove separator for binaries' => [
-            '<?php echo 0b01010100011010000110010101101111;',
-            '<?php echo 0b01010100_01101000_01100101_01101111;',
-        ];
-        yield 'removing separator for binaries' => [
-            '<?php echo 0b01010100011010000110010101101111;',
-            '<?php echo 0b01010100_01101000_01100101_01101111;',
-            ['binary' => false],
-        ];
-        yield 'adding separator for binaries' => [
-            '<?php echo 0b01010100_01101000_01100101_01101111;',
-            '<?php echo 0b01010100011010000110010101101111;',
-            ['binary' => true],
-        ];
-        yield 'default is to remove separator for decimals' => [
-            '<?php echo 1234567890;',
+
+        yield [
             '<?php echo 1_234_567_890;',
-        ];
-        yield 'removing separator for decimals' => [
-            '<?php echo 1234567890;',
-            '<?php echo 1_2_3_4_567890;',
-            ['decimal' => false],
-        ];
-        yield 'adding separator for decimals' => [
-            '<?php
-                echo 123_456;
-                echo 1_234_567_890;
-                echo -123;
-                echo -123_456;
-                echo 1_234_567_890;
-                echo -0;
-            ',
-            '<?php
-                echo 123456;
-                echo 1234567890;
-                echo -123;
-                echo -123456;
-                echo 1_2_3_4_5_6_7_8_9_0;
-                echo -0;
-            ',
+            '<?php echo 1_2_3_4_5_6_7_8_9_0;',
             ['decimal' => true],
         ];
-        yield 'default is to remove separator for floats' => [
-            '<?php echo 1234567890.12;',
-            '<?php echo 1_234_567_890.12;',
+
+        $cases = [
+            'binary' => [
+                '0b0101010001101000' => '0b01010100_01101000',
+                '0B0101010001101000' => '0B01010100_01101000',
+                '0b01010100011010000110010101101111' => '0b01010100_01101000_01100101_01101111',
+                '0b110001000' => '0b1_10001000',
+                '0b100100010001000' => '0b1001000_10001000',
+            ],
+            'decimal' => [
+                '1234' => '1_234',
+                '-1234' => '-1_234',
+                '12345' => '12_345',
+                '123456' => '123_456',
+            ],
+            'float' => [
+                '1234.5' => '1_234.5',
+                '1.2345' => '1.234_5',
+                '1234e5' => '1_234e5',
+                '1234E5' => '1_234E5',
+                '1e2345' => '1e2_345',
+                '1234.5678e1234' => '1_234.567_8e1_234',
+                '1.1e-1234' => '1.1e-1_234',
+                '1.1e-12345' => '1.1e-12_345',
+                '1.1e-123456' => '1.1e-123_456',
+            ],
+            'hexadecimal' => [
+                '0x42726F776E' => '0x42_72_6F_77_6E',
+                '0X42726F776E' => '0X42_72_6F_77_6E',
+                '0x2726F776E' => '0x2_72_6F_77_6E',
+                '0x1234567890abcdef' => '0x12_34_56_78_90_ab_cd_ef',
+                '0X1234567890ABCDEF' => '0X12_34_56_78_90_AB_CD_EF',
+            ],
+            'octal' => [
+                '012345' => '01_2345',
+                '0123456' => '012_3456',
+                '01234567' => '0123_4567',
+                '012345670' => '01234_5670',
+            ],
         ];
-        yield 'removing separator for floats' => [
-            '<?php echo 1234567890.12;',
-            '<?php echo 1_234_567_890.12;',
-            ['float' => false],
-        ];
-        yield 'adding separator for floats' => [
+
+        foreach ($cases as $option => $pairs) {
+            foreach ($pairs as $withoutSeparator => $withSeparator) {
+                yield [
+                    \sprintf('<?php echo %s;', $withoutSeparator),
+                    \sprintf('<?php echo %s;', $withSeparator),
+                    [$option => false],
+                ];
+                yield [
+                    \sprintf('<?php echo %s;', $withSeparator),
+                    \sprintf('<?php echo %s;', $withoutSeparator),
+                    [$option => true],
+                ];
+                yield [
+                    \sprintf('<?php echo %s;', $withSeparator),
+                    \sprintf('<?php echo %s;', $withoutSeparator),
+                    [
+                        'binary' => true,
+                        'decimal' => true,
+                        'float' => true,
+                        'hexadecimal' => true,
+                        'octal' => true,
+                    ],
+                ];
+            }
+        }
+
+        yield [
             '<?php
-                echo 12_345.6;
-                echo 12_345.678_89;
-                echo 1_234_567_890.12;
-                echo 1_000e10;
-                echo 2_000e10;
-                echo 3_000e-8;
-                echo -100_000e-8;
-                echo 1.234_567_89e100;
-                echo 123_456_789.123_456_78e123_456;
+                echo 0b10101010_10101010;
+                echo 1234567;
+                echo 1_234e1234;
+                echo 0x12_34_56_78_90;
+                echo 01234;
             ',
             '<?php
-                echo 12345.6;
-                echo 12345.67889;
-                echo 1234567890.12;
-                echo 1000e10;
-                echo 2_0_0_0e10;
-                echo 3000e-8;
-                echo -100000e-8;
-                echo 1.23456789e100;
-                echo 123456789.12345678e123456;
-            ',
-            ['float' => true],
-        ];
-        yield 'default is to remove separator for hexadecimals' => [
-            '<?php echo 0x42726F776E;',
-            '<?php echo 0x42_72_6F_77_6E;',
-        ];
-        yield 'removing separator for hexadecimals' => [
-            '<?php echo 0x42726F776E;',
-            '<?php echo 0x42_72_6F_77_6E;',
-            ['hexadecimal' => false],
-        ];
-        yield 'adding separator for hexadecimals' => [
-            '<?php
-                echo 0x42_72_6F_77_6E;
-                echo 0x42_72_6F_77_6E;
-            ',
-            '<?php
-                echo 0x42726F776E;
-                echo 0x42_726F_776E;
-            ',
-            ['hexadecimal' => true],
-        ];
-        yield 'default is to remove separator for octals' => [
-            '<?php echo 01234567;',
-            '<?php echo 0123_4567;',
-        ];
-        yield 'removing separator for octals' => [
-            '<?php echo 01234567;',
-            '<?php echo 0123_4567;',
-            ['octal' => false],
-        ];
-        yield 'adding separator for octals' => [
-            '<?php echo 0123_4567;',
-            '<?php echo 01234567;',
-            ['octal' => true],
-        ];
-        yield 'uppercase binary' => [
-            '<?php echo 0b01010100_01101000_01100101_01101111;',
-            '<?php echo 0b01010100011010000110010101101111;',
-            ['binary' => true],
-        ];
-        yield 'uppercase float' => [
-            '<?php
-                echo 1_234E78;
-                echo 1_234.56E78;
-            ',
-            '<?php
-                echo 1234E78;
-                echo 1234.56E78;
-            ',
-            ['float' => true],
-        ];
-        yield 'uppercase hexadecimal' => [
-            '<?php echo 0X42_72_6F_77_6E;',
-            '<?php echo 0X42726F776E;',
-            ['hexadecimal' => true],
-        ];
-        yield 'add separators for all numbers' => [
-            '<?php
-                echo 1_000_000;
-                echo 1e10;
-                echo 1E10;
-                echo -1e-5;
-                echo 0X42_72_6F_77_6E;
-                echo 0x12_3e_45;
-                echo 012_345.123_45e12_345;
-            ',
-            '<?php
-                echo 1000000;
-                echo 1e10;
-                echo 1E10;
-                echo -1e-5;
-                echo 0X42726F776E;
-                echo 0x123e45;
-                echo 012345.12345e12345;
+                echo 0b1010101010101010;
+                echo 1_234_567;
+                echo 1_234e1234;
+                echo 0x1_234_567_890;
+                echo 01_234;
             ',
             [
                 'binary' => true,
-                'decimal' => true,
-                'float' => true,
+                'decimal' => false,
+                'float' => null,
                 'hexadecimal' => true,
-                'octal' => true,
+                'octal' => false,
             ],
         ];
     }
