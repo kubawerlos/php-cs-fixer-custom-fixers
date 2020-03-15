@@ -135,14 +135,14 @@ echo 0137_0412; // octal
             return $this->updateContent($content, 'x', null, 2, $this->hexadecimalSeparator);
         }
 
-        if (\strpos($content, '0') === 0) {
-            return $this->updateContent($content, '0', null, 4, $this->octalSeparator);
-        }
-
         if (Preg::match('/e-?[-\d_]+$/i', $content) === 1) {
             $content = $this->updateContent($content, null, 'e', 3, $this->floatSeparator);
 
             return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
+        }
+
+        if (\strpos($content, '0') === 0) {
+            return $this->updateContent($content, '0', null, 4, $this->octalSeparator);
         }
 
         return $this->updateContent($content, null, null, 3, $this->decimalSeparator);

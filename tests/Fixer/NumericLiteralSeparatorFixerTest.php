@@ -82,6 +82,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
                 '1.1e-12345' => '1.1e-12_345',
                 '1.1e-123456' => '1.1e-123_456',
                 '01234.5' => '01_234.5',
+                '01234e5' => '01_234e5',
             ],
             'hexadecimal' => [
                 '0x42726F776E' => '0x42_72_6F_77_6E',
@@ -89,6 +90,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
                 '0x2726F776E' => '0x2_72_6F_77_6E',
                 '0x1234567890abcdef' => '0x12_34_56_78_90_ab_cd_ef',
                 '0X1234567890ABCDEF' => '0X12_34_56_78_90_AB_CD_EF',
+                '0x1234e5' => '0x12_34_e5',
             ],
             'octal' => [
                 '012345' => '01_2345',
