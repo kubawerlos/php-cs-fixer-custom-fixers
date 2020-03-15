@@ -196,8 +196,16 @@ echo 0137_041; // octal
 
     private function getEndPosition(string $content, ?string $endCharacter): int
     {
-        $endPosition = $endCharacter === null ? \strlen($content) : \stripos($content, $endCharacter);
+        if ($endCharacter === null) {
+            return \strlen($content);
+        }
 
-        return $endPosition === false ? \strlen($content) : $endPosition;
+        $endPosition = \stripos($content, $endCharacter);
+
+        if ($endPosition === false) {
+            return \strlen($content);
+        }
+
+        return $endPosition;
     }
 }
