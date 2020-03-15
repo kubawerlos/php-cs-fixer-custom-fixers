@@ -40,9 +40,9 @@ final class NumericLiteralSeparatorFixer extends AbstractFixer implements Config
                 '<?php
 echo 0b01010100_01101000; // binary
 echo 299_792_458; // decimal
-echo 1_200.674_083e-11; // float
+echo 1_200.674_083e-1_108; // float
 echo 0xCAFE_F00D; // hexadecimal
-echo 0137_041; // octal
+echo 0137_0412; // octal
 ',
                 new VersionSpecification(70400)
             )]
