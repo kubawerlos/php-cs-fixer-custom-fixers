@@ -6,8 +6,7 @@
 ![Repository size](https://github-size-badge.herokuapp.com/kubawerlos/php-cs-fixer-custom-fixers.svg)
 [![Last commit](https://img.shields.io/github/last-commit/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/commits)
 
-[![Travis CI build status](https://img.shields.io/travis/kubawerlos/php-cs-fixer-custom-fixers/master.svg?label=Travis+CI)](https://travis-ci.org/kubawerlos/php-cs-fixer-custom-fixers)
-[![AppVeyor build status](https://img.shields.io/appveyor/ci/kubawerlos/php-cs-fixer-custom-fixers/master?label=AppVeyor)](https://ci.appveyor.com/project/kubawerlos/php-cs-fixer-custom-fixers)
+[![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
 ![Tests](https://img.shields.io/badge/tests-2168-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
