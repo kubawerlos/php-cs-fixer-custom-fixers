@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Check trailing whitespaces
-        run: ./check_trailing_whitespaces.sh
+        run: ./dev-tools/check_trailing_whitespaces.sh
 
       - name: Install dependencies
         run: composer update --no-progress --no-suggest
