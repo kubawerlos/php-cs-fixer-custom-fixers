@@ -25,7 +25,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
         php-version: ['7.4']
         include:
           - os: ubuntu-latest
