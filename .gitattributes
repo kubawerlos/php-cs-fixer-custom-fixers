@@ -2,3 +2,5 @@
 /tests/ export-ignore
 /.* export-ignore
 /phpunit.xml export-ignore
+
+* text eol=lf
