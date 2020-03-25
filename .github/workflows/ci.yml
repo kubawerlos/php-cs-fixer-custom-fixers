@@ -25,7 +25,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [macos-latest, ubuntu-latest]
         php-version: ['7.4']
         include:
           - os: ubuntu-latest
@@ -60,11 +60,11 @@ jobs:
       - name: Install dependencies
         run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
 
-#      - name: Test
-#        run: composer test -- --coverage-clover=./build/logs/clover.xml
-#
-#      - name: Collect coverage
-#        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
-#        run: |
-#          composer require --dev php-coveralls/php-coveralls
-#          COVERALLS_REPO_TOKEN=${{ secrets.COVERALLS_REPO_TOKEN }} COVERALLS_RUN_LOCALLY=1 ./vendor/bin/php-coveralls -v
+      - name: Test
+        run: composer test -- --coverage-clover=./build/logs/clover.xml
+
+      - name: Collect coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
+        run: |
+          composer require --dev php-coveralls/php-coveralls
+          COVERALLS_REPO_TOKEN=${{ secrets.COVERALLS_REPO_TOKEN }} COVERALLS_RUN_LOCALLY=1 ./vendor/bin/php-coveralls -v
