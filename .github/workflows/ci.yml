@@ -60,9 +60,9 @@ jobs:
       - name: Install dependencies
         run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
 
-#      - name: Test
-#        run: composer test -- --coverage-clover=./build/logs/clover.xml
-#
+      - name: Test
+        run: composer test -- --coverage-clover=./build/logs/clover.xml
+
 #      - name: Collect coverage
 #        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
 #        run: |
