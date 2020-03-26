@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 return PhpCsFixer\Config::create()
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
@@ -44,9 +44,6 @@ return PhpCsFixer\Config::create()
         'compact_nullable_typehint' => true,
         'concat_space' => [
             'spacing' => 'one',
-        ],
-        'declare_equal_normalize' => [
-            'space' => 'single',
         ],
         'explicit_indirect_variable' => true,
         'explicit_string_variable' => true,
