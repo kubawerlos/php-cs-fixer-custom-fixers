@@ -66,6 +66,4 @@ jobs:
 
       - name: Collect coverage
         if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
-        run: |
-          composer require --dev php-coveralls/php-coveralls
-          COVERALLS_REPO_TOKEN=${{ secrets.COVERALLS_REPO_TOKEN }} COVERALLS_RUN_LOCALLY=1 ./vendor/bin/php-coveralls -v
+        uses: coverallsapp/github-action@v1.0.1
