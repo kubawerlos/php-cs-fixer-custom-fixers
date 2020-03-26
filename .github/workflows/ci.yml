@@ -67,3 +67,5 @@ jobs:
       - name: Collect coverage
         if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
         uses: coverallsapp/github-action@v1.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
