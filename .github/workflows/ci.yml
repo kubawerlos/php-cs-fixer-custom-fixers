@@ -44,6 +44,7 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-version }}
+          ini-values: pcov.directory=.
           coverage: pcov
 
       - name: Get composer cache directory
@@ -54,8 +55,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
         run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
