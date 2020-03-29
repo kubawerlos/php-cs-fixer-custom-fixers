@@ -44,8 +44,11 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-version }}
-          ini-values: pcov.directory=$(cwd)
+          ini-values: pcov.directory=${{ GITHUB_WORKSPACE }}
           coverage: pcov
+
+      - name: Show PCOV config
+        run: php -i | grep -i pcov
 
       - name: Get composer cache directory
         id: composer-cache
