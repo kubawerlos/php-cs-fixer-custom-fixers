@@ -44,7 +44,7 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-version }}
-          ini-values: pcov.directory=.
+          ini-values: pcov.directory=$(cwd)
           coverage: pcov
 
       - name: Get composer cache directory
