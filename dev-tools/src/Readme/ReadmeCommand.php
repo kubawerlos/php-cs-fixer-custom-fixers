@@ -247,7 +247,7 @@ In your PHP CS Fixer configuration register fixers and use them:
         /** @var int $start */
         $start = \strpos($diff, "\n", 10);
 
-        return \str_replace(" \n", "\n", \substr($diff, $start + 1, -1));
+        return \substr($diff, $start + 1, -1);
     }
 
     private function contributing(): string
