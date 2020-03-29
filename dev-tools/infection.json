@@ -7,7 +7,7 @@
     },
     "timeout": 10,
     "logs": {
-        "text": "infection.log",
+        "text": "php://stdout",
         "badge": {
             "branch": "master"
         }
