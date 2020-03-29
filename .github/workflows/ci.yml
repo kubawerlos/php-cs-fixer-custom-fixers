@@ -44,7 +44,7 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-version }}
-          ini-values: pcov.directory=${{ GITHUB_WORKSPACE }}
+          ini-values: pcov.directory=$GITHUB_WORKSPACE
           coverage: pcov
 
       - name: Show PCOV config
