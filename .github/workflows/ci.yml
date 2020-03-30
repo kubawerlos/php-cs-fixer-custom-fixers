@@ -47,7 +47,18 @@ jobs:
           ini-values: pcov.directory=$GITHUB_WORKSPACE
           coverage: pcov
 
-      - name: Get composer cache directory
+      - name: Get Composer data directory
+        id: composer-data
+        run: echo '::set-output name=dir::$(composer config data-dir)'
+
+      - name: Cache Composer data
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-data.outputs.dir }}
+          key: ${{ runner.os }}-composer-data-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-data-
+
+      - name: Get Composer cache directory
         id: composer-cache
         run: echo '::set-output name=dir::$(composer config cache-files-dir)'
 
@@ -55,8 +66,11 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
+          key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-cache-
+
+      - name: Install prestissimo
+        run: composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
 
       - name: Install dependencies
         run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
