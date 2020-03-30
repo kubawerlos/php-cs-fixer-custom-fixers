@@ -51,9 +51,6 @@ jobs:
         id: composer-data
         run: echo '::set-output name=dir::$(composer config data-dir)'
 
-      - name: Show composer-data value
-        run: echo ${{ steps.composer-data.outputs.dir }}
-
       - name: Cache Composer data
         uses: actions/cache@v1
         with:
@@ -64,9 +61,6 @@ jobs:
       - name: Get Composer cache directory
         id: composer-cache
         run: echo '::set-output name=dir::$(composer config cache-files-dir)'
-
-      - name: Show composer-cache value
-        run: echo ${{ steps.composer-cache.outputs.dir }}
 
       - name: Cache dependencies
         uses: actions/cache@v1
