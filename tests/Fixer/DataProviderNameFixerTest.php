@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
+
 /**
  * @internal
  *
@@ -11,6 +13,18 @@ namespace Tests\Fixer;
  */
 final class DataProviderNameFixerTest extends AbstractFixerTestCase
 {
+    public function testConfiguration(): void
+    {
+        /** @var FixerOptionInterface[] $options */
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('prefix', $options[0]->getName());
+        self::assertSame('provide', $options[0]->getDefault());
+        self::assertArrayHasKey(1, $options);
+        self::assertSame('suffix', $options[1]->getName());
+        self::assertSame('Cases', $options[1]->getDefault());
+    }
+
     public function testIsRisky(): void
     {
         self::assertTrue($this->fixer->isRisky());
@@ -19,9 +33,9 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     public static function provideFixCases(): iterable
@@ -277,5 +291,93 @@ class FooTest extends TestCase {
                 }', $modifier),
             ];
         }
+
+        yield 'custom prefix' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider theBestPrefixFooCases
+     */
+    public function testFoo() {}
+    public function theBestPrefixFooCases() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider dp
+     */
+    public function testFoo() {}
+    public function dp() {}
+}',
+            ['prefix' => 'theBestPrefix'],
+        ];
+
+        yield 'custom suffix' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooTheBestSuffix
+     */
+    public function testFoo() {}
+    public function provideFooTheBestSuffix() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider dp
+     */
+    public function testFoo() {}
+    public function dp() {}
+}',
+            ['suffix' => 'TheBestSuffix'],
+        ];
+
+        yield 'custom prefix and suffix' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider theBestPrefixFooTheBestSuffix
+     */
+    public function testFoo() {}
+    public function theBestPrefixFooTheBestSuffix() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider dp
+     */
+    public function testFoo() {}
+    public function dp() {}
+}',
+
+            [
+                'prefix' => 'theBestPrefix',
+                'suffix' => 'TheBestSuffix',
+            ],
+        ];
+
+        yield 'empty suffix' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider dataProviderForFoo
+     */
+    public function testFoo() {}
+    public function dataProviderForFoo() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider dp
+     */
+    public function testFoo() {}
+    public function dp() {}
+}',
+
+            [
+                'prefix' => 'dataProviderFor',
+                'suffix' => '',
+            ],
+        ];
     }
 }

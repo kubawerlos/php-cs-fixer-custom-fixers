@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -13,8 +16,14 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
-final class DataProviderNameFixer extends AbstractFixer
+final class DataProviderNameFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
+    /** @var string */
+    private $prefix = 'provide';
+
+    /** @var string */
+    private $suffix = 'Cases';
+
     /**
      * {@inheritdoc}
      */
@@ -38,6 +47,34 @@ class FooTest extends TestCase {
             null,
             'when relying on name of data provider function'
         );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolver
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('prefix', 'prefix that replaces "test"'))
+                ->setAllowedTypes(['string'])
+                ->setDefault($this->prefix)
+                ->getOption(),
+            (new FixerOptionBuilder('suffix', 'suffix to be added at the end"'))
+                ->setAllowedTypes(['string'])
+                ->setDefault($this->suffix)
+                ->getOption(),
+        ]);
+    }
+
+    public function configure(?array $configuration = null): void
+    {
+        /** @var string[] $configuration */
+        $configuration = $configuration ?? [];
+
+        if (isset($configuration['prefix'])) {
+            $this->prefix = $configuration['prefix'];
+        }
+
+        if (isset($configuration['suffix'])) {
+            $this->suffix = $configuration['suffix'];
+        }
     }
 
     public function getPriority(): int
@@ -99,6 +136,6 @@ class FooTest extends TestCase {
             $name = \substr($name, 4);
         }
 
-        return 'provide' . \ucfirst($name) . 'Cases';
+        return $this->prefix . \ucfirst($name) . $this->suffix;
     }
 }

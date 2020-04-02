@@ -94,7 +94,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        if ($configuration !== null) {
+        if ($this->fixer instanceof ConfigurableFixerInterface) {
             $this->fixer->configure($configuration);
         }
 
