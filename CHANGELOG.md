@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## v2.2.0 - [Unreleased]
+## v2.2.0 - *2020-04-02*
 - Feature: DataProviderNameFixer - add options "prefix" and "suffix"
 
 ## v2.1.0 - *2020-03-15*
