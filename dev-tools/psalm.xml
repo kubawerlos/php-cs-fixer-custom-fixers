@@ -24,7 +24,6 @@
         <DeprecatedInterface errorLevel='suppress' />
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
-        <InvalidArgument errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />
         <MoreSpecificReturnType>
             <errorLevel type='suppress'>

@@ -73,17 +73,29 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
             return;
         }
 
-        if ($matches['before_newline'][0] !== ' ') {
+        /** @var string $opening */
+        $opening = $matches['opening'];
+
+        /** @var string $beforeNewline */
+        $beforeNewline = $matches['before_newline'];
+
+        /** @var string $newline */
+        $newline = $matches['newline'];
+
+        /** @var string $afterNewline */
+        $afterNewline = $matches['after_newline'];
+
+        if ($beforeNewline[0] !== ' ') {
             $indent .= ' ';
         }
 
-        if (Preg::match('#^\h+$#', $matches['before_newline']) === 1) {
+        if (Preg::match('#^\h+$#', $beforeNewline) === 1) {
             $insert = '';
         } else {
-            $insert = $matches['newline'] . $indent . $matches['before_newline'];
+            $insert = $newline . $indent . $beforeNewline;
         }
 
-        $newContent = $matches['opening'] . $insert . $matches['newline'] . $matches['after_newline'];
+        $newContent = $opening . $insert . $newline . $afterNewline;
 
         if ($newContent !== $token->getContent()) {
             $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
@@ -100,6 +112,8 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
 
         Preg::match('#\R(\h*)#', $token->getContent(), $matches);
+
+        /** @var string $indent */
         $indent = $matches[1];
 
         $newContent = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $token->getContent());

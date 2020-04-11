@@ -37,6 +37,7 @@ final class ReferenceAnalyzer
         }
 
         if ($token->isGivenKind(T_STRING)) {
+            /** @var int $index */
             $index = $tokens->getPrevMeaningfulToken($index);
 
             /** @var Token $token */

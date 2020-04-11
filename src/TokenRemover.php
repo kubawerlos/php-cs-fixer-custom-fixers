@@ -52,6 +52,7 @@ final class TokenRemover
         }
 
         if (Preg::match('/\R/', $prevToken->getContent()) !== 1) {
+            /** @var int $prevPrevIndex */
             $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
 
             /** @var Token $prevPrevToken */

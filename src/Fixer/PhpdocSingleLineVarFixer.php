@@ -61,7 +61,10 @@ class Foo {
                 continue;
             }
 
-            $newContent = '/** ' . \rtrim($matches[1]) . ' */';
+            /** @var string $var */
+            $var = $matches[1];
+
+            $newContent = '/** ' . \rtrim($var) . ' */';
 
             if ($newContent === $token->getContent()) {
                 continue;
