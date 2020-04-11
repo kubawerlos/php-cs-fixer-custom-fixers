@@ -39,17 +39,25 @@ final class TokenRemover
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getNonEmptySibling($index, -1);
-        if (!$tokens[$prevIndex]->isGivenKind([T_OPEN_TAG, T_WHITESPACE])) {
+
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
+
+        if (!$prevToken->isGivenKind([T_OPEN_TAG, T_WHITESPACE])) {
             return true;
         }
 
-        if ($tokens[$prevIndex]->isGivenKind(T_OPEN_TAG) && Preg::match('/\R$/', $tokens[$prevIndex]->getContent()) !== 1) {
+        if ($prevToken->isGivenKind(T_OPEN_TAG) && Preg::match('/\R$/', $prevToken->getContent()) !== 1) {
             return true;
         }
 
-        if (Preg::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
+        if (Preg::match('/\R/', $prevToken->getContent()) !== 1) {
             $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
-            if (!$tokens[$prevPrevIndex]->isGivenKind(T_OPEN_TAG) || Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
+
+            /** @var Token $prevPrevToken */
+            $prevPrevToken = $tokens[$prevPrevIndex];
+
+            if (!$prevPrevToken->isGivenKind(T_OPEN_TAG) || Preg::match('/\R$/', $prevPrevToken->getContent()) !== 1) {
                 return true;
             }
         }
@@ -63,19 +71,26 @@ final class TokenRemover
         if ($nextIndex === null) {
             return false;
         }
-        if (!$tokens[$nextIndex]->isGivenKind(T_WHITESPACE)) {
+
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
+
+        if (!$nextToken->isGivenKind(T_WHITESPACE)) {
             return true;
         }
 
-        return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) !== 1;
+        return Preg::match('/\R/', $nextToken->getContent()) !== 1;
     }
 
     private static function handleWhitespaceBefore(Tokens $tokens, int $index): bool
     {
-        if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        if (!$token->isGivenKind(T_WHITESPACE)) {
             return false;
         }
-        $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
+        $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $token->getContent());
 
         $contentWithoutTrailingSpacesAndNewline = Preg::replace('/\R$/', '', $contentWithoutTrailingSpaces, 1);
 
@@ -90,9 +105,12 @@ final class TokenRemover
 
     private static function handleWhitespaceAfter(Tokens $tokens, int $index, bool $wasNewlineRemoved): void
     {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
         $pattern = $wasNewlineRemoved ? '/^\h+/' : '/^\h*\R/';
 
-        $newContent = Preg::replace($pattern, '', $tokens[$index]->getContent());
+        $newContent = Preg::replace($pattern, '', $token->getContent());
 
         if ($newContent === '') {
             $tokens->clearAt($index);
