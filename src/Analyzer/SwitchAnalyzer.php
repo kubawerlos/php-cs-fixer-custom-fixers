@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Analyzer;
 
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\SwitchAnalysis;
@@ -15,7 +16,10 @@ final class SwitchAnalyzer
 {
     public function getSwitchAnalysis(Tokens $tokens, int $switchIndex): SwitchAnalysis
     {
-        if (!$tokens[$switchIndex]->isGivenKind(T_SWITCH)) {
+        /** @var Token $switchToken */
+        $switchToken = $tokens[$switchIndex];
+
+        if (!$switchToken->isGivenKind(T_SWITCH)) {
             throw new \InvalidArgumentException(\sprintf('Index %d is not "switch".', $switchIndex));
         }
 
@@ -27,15 +31,19 @@ final class SwitchAnalyzer
         $index = $casesStartIndex;
         while ($index < $casesEndIndex) {
             $index++;
-            if ($tokens[$index]->isGivenKind(T_SWITCH)) {
+
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if ($token->isGivenKind(T_SWITCH)) {
                 $index = (new self())->getSwitchAnalysis($tokens, $index)->getCasesEnd();
                 continue;
             }
-            if ($tokens[$index]->equals('?')) {
+            if ($token->equals('?')) {
                 $ternaryOperatorDepth++;
                 continue;
             }
-            if (!$tokens[$index]->equals(':')) {
+            if (!$token->equals(':')) {
                 continue;
             }
             if ($ternaryOperatorDepth > 0) {
@@ -62,7 +70,10 @@ final class SwitchAnalyzer
 
     private function getCasesEnd(Tokens $tokens, int $casesStartIndex): int
     {
-        if ($tokens[$casesStartIndex]->equals('{')) {
+        /** @var Token $casesStartToken */
+        $casesStartToken = $tokens[$casesStartIndex];
+
+        if ($casesStartToken->equals('{')) {
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $casesStartIndex);
         }
 
@@ -72,16 +83,24 @@ final class SwitchAnalyzer
             /** @var int $index */
             $index = $tokens->getNextMeaningfulToken($index);
 
-            if ($tokens[$index]->isGivenKind(T_ENDSWITCH)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if ($token->isGivenKind(T_ENDSWITCH)) {
                 $depth--;
                 continue;
             }
 
-            if (!$tokens[$index]->isGivenKind(T_SWITCH)) {
+            if (!$token->isGivenKind(T_SWITCH)) {
                 continue;
             }
+
             $index = $this->getCasesStart($tokens, $index);
-            if ($tokens[$index]->equals(':')) {
+
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if ($token->equals(':')) {
                 $depth++;
             }
         }
@@ -89,6 +108,9 @@ final class SwitchAnalyzer
         /** @var int $afterEndswitchIndex */
         $afterEndswitchIndex = $tokens->getNextMeaningfulToken($index);
 
-        return $tokens[$afterEndswitchIndex]->equals(';') ? $afterEndswitchIndex : $index;
+        /** @var Token $afterEndswitchToken */
+        $afterEndswitchToken = $tokens[$afterEndswitchIndex];
+
+        return $afterEndswitchToken->equals(';') ? $afterEndswitchIndex : $index;
     }
 }
