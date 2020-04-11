@@ -28,7 +28,6 @@
         <MixedArgument errorLevel='suppress' />
         <MixedArgumentTypeCoercion errorLevel='suppress' />
         <MixedArrayAccess errorLevel='suppress' />
-        <MixedArrayOffset errorLevel='suppress' />
         <MixedAssignment errorLevel='suppress' />
         <MixedInferredReturnType errorLevel='suppress' />
         <MixedMethodCall errorLevel='suppress' />

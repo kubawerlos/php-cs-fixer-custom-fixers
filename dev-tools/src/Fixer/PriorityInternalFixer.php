@@ -52,7 +52,10 @@ final class PriorityInternalFixer implements FixerInterface
         /** @var int $classNameIndex */
         $classNameIndex = $tokens->getPrevMeaningfulToken($sequencesStartIndex);
 
-        $className = $tokens[$classNameIndex]->getContent();
+        /** @var Token $classNameToken */
+        $classNameToken = $tokens[$classNameIndex];
+
+        $className = $classNameToken->getContent();
 
         /** @var int $startIndex */
         $startIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, ['{']);
@@ -73,7 +76,10 @@ final class PriorityInternalFixer implements FixerInterface
         $commentsToInsert = $this->getCommentsToInsert($className);
 
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_COMMENT)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind(T_COMMENT)) {
                 continue;
             }
 
@@ -102,7 +108,11 @@ final class PriorityInternalFixer implements FixerInterface
         $nextIndex = $tokens->getNextTokenOfKind($startIndex, [[T_RETURN]]);
 
         $priorityStartIndex = $nextIndex + 2;
-        if ($tokens[$priorityStartIndex]->isGivenKind(T_VARIABLE)) {
+
+        /** @var Token $priorityStartToken */
+        $priorityStartToken = $tokens[$priorityStartIndex];
+
+        if ($priorityStartToken->isGivenKind(T_VARIABLE)) {
             return;
         }
 
