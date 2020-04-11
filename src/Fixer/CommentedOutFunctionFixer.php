@@ -75,33 +75,33 @@ var_dump($x);
                 continue;
             }
 
-            $indexStart = $index;
+            $startIndex = $index;
 
             /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
-                $indexStart = $prevIndex;
+                $startIndex = $prevIndex;
             }
 
-            if (!$this->isPreviousTokenSeparateStatement($tokens, $indexStart)) {
+            if (!$this->isPreviousTokenSeparateStatement($tokens, $startIndex)) {
                 continue;
             }
 
             /** @var int $indexParenthesisStart */
             $indexParenthesisStart = $tokens->getNextMeaningfulToken($index);
 
-            $indexEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
+            $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
 
             /** @var int $indexSemicolon */
-            $indexSemicolon = $tokens->getNextMeaningfulToken($indexEnd);
+            $indexSemicolon = $tokens->getNextMeaningfulToken($endIndex);
             if (!$tokens[$indexSemicolon]->equalsAny([';', [T_CLOSE_TAG]])) {
                 continue;
             }
             if ($tokens[$indexSemicolon]->equals(';')) {
-                $indexEnd = $indexSemicolon;
+                $endIndex = $indexSemicolon;
             }
 
-            $this->fixBlock($tokens, $indexStart, $indexEnd);
+            $this->fixBlock($tokens, $startIndex, $endIndex);
         }
     }
 
@@ -147,32 +147,32 @@ var_dump($x);
         return false;
     }
 
-    private function fixBlock(Tokens $tokens, int $indexStart, int $indexEnd): void
+    private function fixBlock(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        if ($this->canUseSingleLineComment($tokens, $indexStart, $indexEnd)) {
-            $this->fixBlockWithSingleLineComments($tokens, $indexStart, $indexEnd);
+        if ($this->canUseSingleLineComment($tokens, $startIndex, $endIndex)) {
+            $this->fixBlockWithSingleLineComments($tokens, $startIndex, $endIndex);
 
             return;
         }
 
         $tokens->overrideRange(
-            $indexStart,
-            $indexEnd,
-            [new Token([T_COMMENT, '/*' . $tokens->generatePartialCode($indexStart, $indexEnd) . '*/'])]
+            $startIndex,
+            $endIndex,
+            [new Token([T_COMMENT, '/*' . $tokens->generatePartialCode($startIndex, $endIndex) . '*/'])]
         );
     }
 
-    private function canUseSingleLineComment(Tokens $tokens, int $indexStart, int $indexEnd): bool
+    private function canUseSingleLineComment(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        if (!$tokens->offsetExists($indexEnd + 1)) {
+        if (!$tokens->offsetExists($endIndex + 1)) {
             return true;
         }
 
-        if (Preg::match('/^\R/', $tokens[$indexEnd + 1]->getContent()) === 1) {
+        if (Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent()) === 1) {
             return true;
         }
 
-        for ($index = $indexStart; $index < $indexEnd; $index++) {
+        for ($index = $startIndex; $index < $endIndex; $index++) {
             if (\strpos($tokens[$index]->getContent(), '*/') !== false) {
                 return true;
             }
@@ -181,23 +181,23 @@ var_dump($x);
         return false;
     }
 
-    private function fixBlockWithSingleLineComments(Tokens $tokens, int $indexStart, int $indexEnd): void
+    private function fixBlockWithSingleLineComments(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        $codeToCommentOut = $tokens->generatePartialCode($indexStart, $indexEnd);
+        $codeToCommentOut = $tokens->generatePartialCode($startIndex, $endIndex);
 
         $prefix = '//';
-        if ($tokens[$indexStart - 1]->isWhitespace()) {
-            $indexStart--;
+        if ($tokens[$startIndex - 1]->isWhitespace()) {
+            $startIndex--;
             /** @var string $prefix */
-            $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $tokens[$indexStart]->getContent());
+            $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $tokens[$startIndex]->getContent());
         }
         $codeToCommentOut = $prefix . \str_replace("\n", "\n//", $codeToCommentOut);
 
-        if ($tokens->offsetExists($indexEnd + 1) && Preg::match('/^\R/', $tokens[$indexEnd + 1]->getContent()) === 0) {
+        if ($tokens->offsetExists($endIndex + 1) && Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent()) === 0) {
             $codeToCommentOut .= "\n";
-            if ($tokens[$indexEnd + 1]->isWhitespace()) {
-                $indexEnd++;
-                $codeToCommentOut .= $tokens[$indexEnd]->getContent();
+            if ($tokens[$endIndex + 1]->isWhitespace()) {
+                $endIndex++;
+                $codeToCommentOut .= $tokens[$endIndex]->getContent();
             }
         }
 
@@ -206,8 +206,8 @@ var_dump($x);
         $newTokens->clearEmptyTokens();
 
         $tokens->overrideRange(
-            $indexStart,
-            $indexEnd,
+            $startIndex,
+            $endIndex,
             $newTokens
         );
     }

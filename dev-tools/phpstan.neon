@@ -8,19 +8,16 @@ parameters:
     - message: '#Cannot call method [a-zA-Z]+\(\) on PhpCsFixer\\Tokenizer\\Token\|null\.$#'
       paths:
         - ../src/Fixer/CommentSurroundedBySpacesFixer.php
-        - ../src/Fixer/CommentedOutFunctionFixer.php
         - ../src/Fixer/DataProviderNameFixer.php
         - ../src/Fixer/InternalClassCasingFixer.php
         - ../src/Fixer/MultilineCommentOpeningClosingAloneFixer.php
         - ../src/Fixer/NoCommentedOutCodeFixer.php
         - ../src/Fixer/NoDoctrineMigrationsGeneratedCommentFixer.php
-        - ../src/Fixer/NoDuplicatedArrayKeyFixer.php
         - ../src/Fixer/NoImportFromGlobalNamespaceFixer.php
         - ../src/Fixer/NoLeadingSlashInGlobalNamespaceFixer.php
         - ../src/Fixer/NoNullableBooleanTypeFixer.php
         - ../src/Fixer/NoPhpStormGeneratedCommentFixer.php
         - ../src/Fixer/NoReferenceInFunctionDefinitionFixer.php
-        - ../src/Fixer/NoSuperfluousConcatenationFixer.php
         - ../src/Fixer/NoUselessCommentFixer.php
         - ../src/Fixer/NoUselessDoctrineRepositoryCommentFixer.php
         - ../src/Fixer/NoUselessSprintfFixer.php
