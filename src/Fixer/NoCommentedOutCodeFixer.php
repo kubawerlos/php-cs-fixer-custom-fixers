@@ -44,7 +44,8 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     {
         $commentsAnalyzer = new CommentsAnalyzer();
 
-        for ($index = 0; $index < $tokens->count(); $index++) {
+        $index = 0;
+        while (++$index < $tokens->count()) {
             /** @var Token $token */
             $token = $tokens[$index];
 
