@@ -74,25 +74,39 @@ final class InternalClassCasingFixer extends AbstractFixer
     {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
-        if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
+
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
+
+        if ($prevToken->isGivenKind(T_NS_SEPARATOR)) {
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
-            if ($tokens[$prevIndex]->isGivenKind(T_STRING)) {
+
+            /** @var Token $prevToken */
+            $prevToken = $tokens[$prevIndex];
+
+            if ($prevToken->isGivenKind(T_STRING)) {
                 return false;
             }
         } elseif (!$isInGlobalNamespace) {
             return false;
         }
 
-        if ($tokens[$prevIndex]->isGivenKind([T_AS, T_CLASS, T_CONST, T_DOUBLE_COLON, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
+        if ($prevToken->isGivenKind([T_AS, T_CLASS, T_CONST, T_DOUBLE_COLON, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
             return false;
         }
 
+        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken($index);
-        if ($tokens[$nextIndex]->isGivenKind(T_NS_SEPARATOR)) {
+
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
+
+        if ($nextToken->isGivenKind(T_NS_SEPARATOR)) {
             return false;
         }
 
-        return $tokens[$prevIndex]->isGivenKind([T_NEW]) || !$tokens[$nextIndex]->equals('(');
+        return $prevToken->isGivenKind([T_NEW]) || !$nextToken->equals('(');
     }
 
     private function getCorrectCase(string $className): string

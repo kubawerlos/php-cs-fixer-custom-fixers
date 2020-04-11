@@ -53,13 +53,23 @@ $y = new \Baz();
                 continue;
             }
 
+            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if ($tokens[$prevIndex]->isGivenKind(T_STRING)) {
+
+            /** @var Token $prevToken */
+            $prevToken = $tokens[$prevIndex];
+
+            if ($prevToken->isGivenKind(T_STRING)) {
                 continue;
             }
 
+            /** @var int $nextIndex */
             $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_COMMENT], [T_DOC_COMMENT], [T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE]]);
-            if ($tokens[$prevIndex]->isGivenKind(T_NEW) || $tokens[$nextIndex]->isGivenKind(T_DOUBLE_COLON)) {
+
+            /** @var Token $nextToken */
+            $nextToken = $tokens[$nextIndex];
+
+            if ($prevToken->isGivenKind(T_NEW) || $nextToken->isGivenKind(T_DOUBLE_COLON)) {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }
         }

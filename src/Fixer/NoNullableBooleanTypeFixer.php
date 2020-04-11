@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoNullableBooleanTypeFixer extends AbstractFixer
@@ -44,19 +45,30 @@ function foo(?bool $bar) : ?bool
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if ($tokens[$index]->getContent() !== '?') {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if ($token->getContent() !== '?') {
                 continue;
             }
 
             /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
 
-            if (!$tokens[$nextIndex]->equals([T_STRING, 'bool'], false) && !$tokens[$nextIndex]->equals([T_STRING, 'boolean'], false)) {
+            /** @var Token $nextToken */
+            $nextToken = $tokens[$nextIndex];
+
+            if (!$nextToken->equals([T_STRING, 'bool'], false) && !$nextToken->equals([T_STRING, 'boolean'], false)) {
                 continue;
             }
 
+            /** @var int $nextNextIndex */
             $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
-            if (!$tokens[$nextNextIndex]->isGivenKind(T_VARIABLE) && $tokens[$nextNextIndex]->getContent() !== '{') {
+
+            /** @var Token $nextNextToken */
+            $nextNextToken = $tokens[$nextNextIndex];
+
+            if (!$nextNextToken->isGivenKind(T_VARIABLE) && $nextNextToken->getContent() !== '{') {
                 continue;
             }
 
