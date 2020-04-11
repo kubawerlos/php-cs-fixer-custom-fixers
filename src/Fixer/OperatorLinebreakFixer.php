@@ -206,7 +206,10 @@ function foo() {
         $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
 
         for ($i = $nextIndex - 1; $i > \max($operatorIndices); $i--) {
-            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+            /** @var Token $token */
+            $token = $tokens[$i];
+
+            if ($token->isWhitespace() && Preg::match('/\R/u', $token->getContent()) === 1) {
                 $isWhitespaceBefore = $prevToken->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, -1);
                 if ($isWhitespaceBefore) {
@@ -234,7 +237,10 @@ function foo() {
         $nextToken = $tokens[$nextIndex];
 
         for ($i = $prevIndex + 1; $i < \max($operatorIndices); $i++) {
-            if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
+            /** @var Token $token */
+            $token = $tokens[$i];
+
+            if ($token->isWhitespace() && Preg::match('/\R/u', $token->getContent()) === 1) {
                 $isWhitespaceAfter = $nextToken->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, 1);
                 if ($isWhitespaceAfter) {
@@ -273,7 +279,10 @@ function foo() {
     private function isMultiline(Tokens $tokens, int $indexStart, int $indexEnd): bool
     {
         for ($index = $indexStart; $index <= $indexEnd; $index++) {
-            if (\strpos($tokens[$index]->getContent(), "\n") !== false) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (\strpos($token->getContent(), "\n") !== false) {
                 return true;
             }
         }

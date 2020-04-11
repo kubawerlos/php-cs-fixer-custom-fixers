@@ -7,9 +7,7 @@ parameters:
     - '#^Method PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+::configure\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
     - message: '#Cannot call method [a-zA-Z]+\(\) on PhpCsFixer\\Tokenizer\\Token\|null\.$#'
       paths:
-        - ../src/Fixer/DataProviderNameFixer.php
         - ../src/Fixer/InternalClassCasingFixer.php
-        - ../src/Fixer/NoCommentedOutCodeFixer.php
         - ../src/Fixer/NoLeadingSlashInGlobalNamespaceFixer.php
         - ../src/Fixer/NoNullableBooleanTypeFixer.php
         - ../src/Fixer/NoReferenceInFunctionDefinitionFixer.php

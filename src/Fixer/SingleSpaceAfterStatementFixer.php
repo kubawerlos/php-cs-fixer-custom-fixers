@@ -115,15 +115,20 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if (!$tokens[$index]->isGivenKind($this->tokens)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind($this->tokens)) {
                 continue;
             }
 
             if (!$this->canAddSpaceAfter($tokens, $index)) {
                 continue;
             }
+            /** @var Token $nextToken */
+            $nextToken = $tokens[$index + 1];
 
-            if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE)) {
+            if ($nextToken->isGivenKind(T_WHITESPACE)) {
                 $tokens[$index + 1] = new Token([T_WHITESPACE, ' ']);
                 continue;
             }
@@ -134,14 +139,17 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     private function canAddSpaceAfter(Tokens $tokens, int $index): bool
     {
-        if ($tokens[$index + 1]->isGivenKind(T_WHITESPACE)) {
-            return !$this->allowLinebreak || Preg::match('/\R/', $tokens[$index + 1]->getContent()) !== 1;
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$index + 1];
+
+        if ($nextToken->isGivenKind(T_WHITESPACE)) {
+            return !$this->allowLinebreak || Preg::match('/\R/', $nextToken->getContent()) !== 1;
         }
 
-        if ($tokens[$index]->isGivenKind(T_CLASS) && $tokens[$index + 1]->getContent() === '(') {
+        if ($tokens[$index]->isGivenKind(T_CLASS) && $nextToken->getContent() === '(') {
             return false;
         }
 
-        return !\in_array($tokens[$index + 1]->getContent(), [';', ':'], true);
+        return !\in_array($nextToken->getContent(), [';', ':'], true);
     }
 }

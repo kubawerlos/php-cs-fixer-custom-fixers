@@ -113,22 +113,31 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 
     private function fixTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
     {
-        if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $tokens[$index - 2]->getContent()) !== 1) {
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$index - 1];
+
+        /** @var Token $prevPrevToken */
+        $prevPrevToken = $tokens[$index - 2];
+
+        if ($prevToken->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $prevPrevToken->getContent()) !== 1) {
             $tokens->clearAt($index - 1);
         }
     }
 
     private function fixMoreThanTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
     {
-        if ($tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
-            if (Preg::match('/\R/', $tokens[$index - 1]->getContent()) !== 1) {
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$index - 1];
+
+        if ($prevToken->isGivenKind(T_WHITESPACE)) {
+            if (Preg::match('/\R/', $prevToken->getContent()) !== 1) {
                 $tokens[$index - 1] = new Token([T_WHITESPACE, ' ']);
             }
 
             return;
         }
 
-        if (!\in_array($tokens[$index - 1]->getContent(), ['!', '(', '@', '[', '{'], true)) {
+        if (!\in_array($prevToken->getContent(), ['!', '(', '@', '[', '{'], true)) {
             $tokens->insertAt($index, new Token([T_WHITESPACE, ' ']));
         }
     }

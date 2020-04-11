@@ -9,6 +9,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\CommentsAnalyzer;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
@@ -44,11 +45,14 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         $commentsAnalyzer = new CommentsAnalyzer();
 
         for ($index = 0; $index < $tokens->count(); $index++) {
-            if (!$tokens[$index]->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
                 continue;
             }
 
-            if (\strpos($tokens[$index]->getContent(), '/*') === 0) {
+            if (\strpos($token->getContent(), '/*') === 0) {
                 $commentIndices = [$index];
             } else {
                 /** @var int[] $commentIndices */
@@ -81,7 +85,10 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         $content = '';
 
         foreach ($commentIndices as $index) {
-            $content .= PHP_EOL . $this->getContent($tokens[$index]->getContent());
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            $content .= PHP_EOL . $this->getContent($token->getContent());
             $testedIndices[] = $index;
 
             if (\rtrim($content) === '') {
