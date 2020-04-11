@@ -146,7 +146,7 @@ $bar = new Foo();
 
             return;
         }
-        $token = new Token([T_DOC_COMMENT, $this->ensureDocCommentContent($content)]);
+        $tokens[$index] = new Token([T_DOC_COMMENT, $this->ensureDocCommentContent($content)]);
     }
 
     private function ensureDocCommentContent(string $content): string
