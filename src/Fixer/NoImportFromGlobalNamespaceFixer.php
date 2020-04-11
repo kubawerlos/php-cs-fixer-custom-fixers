@@ -57,6 +57,7 @@ class Bar {
         $imports = [];
 
         for ($index = $startIndex; $index < $endIndex; $index++) {
+            /** @var Token $token */
             $token = $tokens[$index];
 
             if ($token->isGivenKind(T_USE)) {
@@ -91,15 +92,25 @@ class Bar {
         /** @var int $classNameIndex */
         $classNameIndex = $tokens->getNextMeaningfulToken($index);
 
-        if ($tokens[$classNameIndex]->isGivenKind(T_NS_SEPARATOR)) {
+        /** @var Token $classNameToken */
+        $classNameToken = $tokens[$classNameIndex];
+
+        if ($classNameToken->isGivenKind(T_NS_SEPARATOR)) {
             /** @var int $classNameIndex */
             $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+
+            /** @var Token $classNameToken */
+            $classNameToken = $tokens[$classNameIndex];
         }
 
         /** @var int $semicolonIndex */
         $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
-        if ($tokens[$semicolonIndex]->getContent() === ';') {
-            $imports[] = $tokens[$classNameIndex]->getContent();
+
+        /** @var Token $semicolonToken */
+        $semicolonToken = $tokens[$semicolonIndex];
+
+        if ($semicolonToken->equals(';')) {
+            $imports[] = $classNameToken->getContent();
             $tokens->clearRange($index, $semicolonIndex);
             TokenRemover::removeWithLinesIfPossible($tokens, $semicolonIndex);
         }
@@ -112,13 +123,16 @@ class Bar {
      */
     private function updateComment(Tokens $tokens, array $imports, int $index): void
     {
-        $content = $tokens[$index]->getContent();
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        $content = $token->getContent();
 
         foreach ($imports as $import) {
             $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
         }
 
-        if ($content !== $tokens[$index]->getContent()) {
+        if ($content !== $token->getContent()) {
             $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
         }
     }
@@ -128,12 +142,20 @@ class Bar {
      */
     private function updateUsage(Tokens $tokens, array $imports, int $index): void
     {
-        if (!\in_array($tokens[$index]->getContent(), $imports, true)) {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        if (!\in_array($token->getContent(), $imports, true)) {
             return;
         }
 
+        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
-        if ($tokens[$prevIndex]->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR])) {
+
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
+
+        if ($prevToken->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR])) {
             return;
         }
 
