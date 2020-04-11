@@ -40,6 +40,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            /** @var Token $token */
             $token = $tokens[$index];
 
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
@@ -57,6 +58,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
     private function fixOpening(Tokens $tokens, int $index): void
     {
+        /** @var Token $token */
         $token = $tokens[$index];
 
         if (Preg::match('#^/\*+\R#', $token->getContent()) === 1) {
@@ -90,6 +92,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
     private function fixClosing(Tokens $tokens, int $index): void
     {
+        /** @var Token $token */
         $token = $tokens[$index];
 
         if (Preg::match('#\R\h*\*+/$#', $token->getContent()) === 1) {

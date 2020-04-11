@@ -7,27 +7,17 @@ parameters:
     - '#^Method PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+::configure\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
     - message: '#Cannot call method [a-zA-Z]+\(\) on PhpCsFixer\\Tokenizer\\Token\|null\.$#'
       paths:
-        - ../src/Fixer/CommentSurroundedBySpacesFixer.php
         - ../src/Fixer/DataProviderNameFixer.php
         - ../src/Fixer/InternalClassCasingFixer.php
-        - ../src/Fixer/MultilineCommentOpeningClosingAloneFixer.php
         - ../src/Fixer/NoCommentedOutCodeFixer.php
-        - ../src/Fixer/NoDoctrineMigrationsGeneratedCommentFixer.php
         - ../src/Fixer/NoLeadingSlashInGlobalNamespaceFixer.php
         - ../src/Fixer/NoNullableBooleanTypeFixer.php
-        - ../src/Fixer/NoPhpStormGeneratedCommentFixer.php
         - ../src/Fixer/NoReferenceInFunctionDefinitionFixer.php
         - ../src/Fixer/NoUselessCommentFixer.php
-        - ../src/Fixer/NoUselessDoctrineRepositoryCommentFixer.php
         - ../src/Fixer/NoUselessSprintfFixer.php
-        - ../src/Fixer/NumericLiteralSeparatorFixer.php
         - ../src/Fixer/OperatorLinebreakFixer.php
         - ../src/Fixer/PhpUnitNoUselessReturnFixer.php
-        - ../src/Fixer/PhpdocOnlyAllowedAnnotationsFixer.php
-        - ../src/Fixer/PhpdocParamTypeFixer.php
         - ../src/Fixer/PhpdocSelfAccessorFixer.php
-        - ../src/Fixer/PhpdocSingleLineVarFixer.php
-        - ../src/Fixer/PhpdocTypesTrimFixer.php
         - ../src/Fixer/SingleSpaceAfterStatementFixer.php
         - ../src/Fixer/SingleSpaceBeforeStatementFixer.php
   level: max

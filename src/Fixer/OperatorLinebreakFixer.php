@@ -199,12 +199,15 @@ function foo() {
         /** @var int $prevIndex */
         $prevIndex = $tokens->getNonEmptySibling(\min($operatorIndices), -1);
 
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
+
         /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
 
         for ($i = $nextIndex - 1; $i > \max($operatorIndices); $i--) {
             if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
-                $isWhitespaceBefore = $tokens[$prevIndex]->isWhitespace();
+                $isWhitespaceBefore = $prevToken->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, -1);
                 if ($isWhitespaceBefore) {
                     $inserts[] = new Token([T_WHITESPACE, ' ']);
@@ -227,9 +230,12 @@ function foo() {
         /** @var int $nextIndex */
         $nextIndex = $tokens->getNonEmptySibling(\max($operatorIndices), 1);
 
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
+
         for ($i = $prevIndex + 1; $i < \max($operatorIndices); $i++) {
             if ($tokens[$i]->isWhitespace() && Preg::match('/\R/u', $tokens[$i]->getContent()) === 1) {
-                $isWhitespaceAfter = $tokens[$nextIndex]->isWhitespace();
+                $isWhitespaceAfter = $nextToken->isWhitespace();
                 $inserts = $this->getReplacementsAndClear($tokens, $operatorIndices, 1);
                 if ($isWhitespaceAfter) {
                     \array_unshift($inserts, new Token([T_WHITESPACE, ' ']));

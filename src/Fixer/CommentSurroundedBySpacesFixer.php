@@ -43,6 +43,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            /** @var Token $token */
             $token = $tokens[$index];
 
             if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
