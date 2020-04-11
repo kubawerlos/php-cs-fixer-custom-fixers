@@ -75,43 +75,55 @@ var_dump($x);
                 continue;
             }
 
-            $indexStart = $index;
+            $startIndex = $index;
 
             /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
-                $indexStart = $prevIndex;
+
+            /** @var Token $prevToken */
+            $prevToken = $tokens[$prevIndex];
+
+            if ($prevToken->isGivenKind(T_NS_SEPARATOR)) {
+                $startIndex = $prevIndex;
             }
 
-            if (!$this->isPreviousTokenSeparateStatement($tokens, $indexStart)) {
+            if (!$this->isPreviousTokenSeparateStatement($tokens, $startIndex)) {
                 continue;
             }
 
             /** @var int $indexParenthesisStart */
             $indexParenthesisStart = $tokens->getNextMeaningfulToken($index);
 
-            $indexEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
+            $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
 
-            /** @var int $indexSemicolon */
-            $indexSemicolon = $tokens->getNextMeaningfulToken($indexEnd);
-            if (!$tokens[$indexSemicolon]->equalsAny([';', [T_CLOSE_TAG]])) {
+            /** @var int $semicolonIndex */
+            $semicolonIndex = $tokens->getNextMeaningfulToken($endIndex);
+
+            /** @var Token $semicolonToken */
+            $semicolonToken = $tokens[$semicolonIndex];
+
+            if (!$semicolonToken->equalsAny([';', [T_CLOSE_TAG]])) {
                 continue;
             }
-            if ($tokens[$indexSemicolon]->equals(';')) {
-                $indexEnd = $indexSemicolon;
+
+            if ($semicolonToken->equals(';')) {
+                $endIndex = $semicolonIndex;
             }
 
-            $this->fixBlock($tokens, $indexStart, $indexEnd);
+            $this->fixBlock($tokens, $startIndex, $endIndex);
         }
     }
 
     private function isFunctionToFix(Tokens $tokens, int $index): bool
     {
-        if (!$tokens[$index]->isGivenKind(T_STRING)) {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        if (!$token->isGivenKind(T_STRING)) {
             return false;
         }
 
-        if (!\in_array(\strtolower($tokens[$index]->getContent()), $this->functions, true)) {
+        if (!\in_array(\strtolower($token->getContent()), $this->functions, true)) {
             return false;
         }
 
@@ -123,18 +135,24 @@ var_dump($x);
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
-        if ($tokens[$prevIndex]->equalsAny([';', '{', '}', [T_OPEN_TAG]])) {
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
+
+        if ($prevToken->equalsAny([';', '{', '}', [T_OPEN_TAG]])) {
             return true;
         }
 
         $switchAnalyzer = new SwitchAnalyzer();
 
-        if (!$tokens[$prevIndex]->equals(':')) { // can be part of ternary operator or from switch/case
+        if (!$prevToken->equals(':')) { // can be part of ternary operator or from switch/case
             return false;
         }
 
         for ($i = $index; $i > 0; $i--) {
-            if (!$tokens[$i]->isGivenKind(T_SWITCH)) {
+            /** @var Token $token */
+            $token = $tokens[$i];
+
+            if (!$token->isGivenKind(T_SWITCH)) {
                 continue;
             }
             foreach ($switchAnalyzer->getSwitchAnalysis($tokens, $i)->getCases() as $caseAnalysis) {
@@ -147,33 +165,39 @@ var_dump($x);
         return false;
     }
 
-    private function fixBlock(Tokens $tokens, int $indexStart, int $indexEnd): void
+    private function fixBlock(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        if ($this->canUseSingleLineComment($tokens, $indexStart, $indexEnd)) {
-            $this->fixBlockWithSingleLineComments($tokens, $indexStart, $indexEnd);
+        if ($this->canUseSingleLineComment($tokens, $startIndex, $endIndex)) {
+            $this->fixBlockWithSingleLineComments($tokens, $startIndex, $endIndex);
 
             return;
         }
 
         $tokens->overrideRange(
-            $indexStart,
-            $indexEnd,
-            [new Token([T_COMMENT, '/*' . $tokens->generatePartialCode($indexStart, $indexEnd) . '*/'])]
+            $startIndex,
+            $endIndex,
+            [new Token([T_COMMENT, '/*' . $tokens->generatePartialCode($startIndex, $endIndex) . '*/'])]
         );
     }
 
-    private function canUseSingleLineComment(Tokens $tokens, int $indexStart, int $indexEnd): bool
+    private function canUseSingleLineComment(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        if (!$tokens->offsetExists($indexEnd + 1)) {
+        if (!$tokens->offsetExists($endIndex + 1)) {
             return true;
         }
 
-        if (Preg::match('/^\R/', $tokens[$indexEnd + 1]->getContent()) === 1) {
+        /** @var Token $afterEndToken */
+        $afterEndToken = $tokens[$endIndex + 1];
+
+        if (Preg::match('/^\R/', $afterEndToken->getContent()) === 1) {
             return true;
         }
 
-        for ($index = $indexStart; $index < $indexEnd; $index++) {
-            if (\strpos($tokens[$index]->getContent(), '*/') !== false) {
+        for ($index = $startIndex; $index < $endIndex; $index++) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (\strpos($token->getContent(), '*/') !== false) {
                 return true;
             }
         }
@@ -181,23 +205,31 @@ var_dump($x);
         return false;
     }
 
-    private function fixBlockWithSingleLineComments(Tokens $tokens, int $indexStart, int $indexEnd): void
+    private function fixBlockWithSingleLineComments(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        $codeToCommentOut = $tokens->generatePartialCode($indexStart, $indexEnd);
+        $codeToCommentOut = $tokens->generatePartialCode($startIndex, $endIndex);
+
+        /** @var Token $beforeStartToken */
+        $beforeStartToken = $tokens[$startIndex - 1];
 
         $prefix = '//';
-        if ($tokens[$indexStart - 1]->isWhitespace()) {
-            $indexStart--;
+        if ($beforeStartToken->isWhitespace()) {
+            $startIndex--;
             /** @var string $prefix */
-            $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $tokens[$indexStart]->getContent());
+            $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $beforeStartToken->getContent());
         }
         $codeToCommentOut = $prefix . \str_replace("\n", "\n//", $codeToCommentOut);
 
-        if ($tokens->offsetExists($indexEnd + 1) && Preg::match('/^\R/', $tokens[$indexEnd + 1]->getContent()) === 0) {
-            $codeToCommentOut .= "\n";
-            if ($tokens[$indexEnd + 1]->isWhitespace()) {
-                $indexEnd++;
-                $codeToCommentOut .= $tokens[$indexEnd]->getContent();
+        if ($tokens->offsetExists($endIndex + 1)) {
+            /** @var Token $afterEndToken */
+            $afterEndToken = $tokens[$endIndex + 1];
+
+            if (Preg::match('/^\R/', $afterEndToken->getContent()) === 0) {
+                $codeToCommentOut .= "\n";
+                if ($afterEndToken->isWhitespace()) {
+                    $endIndex++;
+                    $codeToCommentOut .= $afterEndToken->getContent();
+                }
             }
         }
 
@@ -206,8 +238,8 @@ var_dump($x);
         $newTokens->clearEmptyTokens();
 
         $tokens->overrideRange(
-            $indexStart,
-            $indexEnd,
+            $startIndex,
+            $endIndex,
             $newTokens
         );
     }

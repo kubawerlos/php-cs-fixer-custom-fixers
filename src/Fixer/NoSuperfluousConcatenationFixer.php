@@ -61,13 +61,20 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if (!$tokens[$index]->equals('.')) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->equals('.')) {
                 continue;
             }
 
             /** @var int $firstIndex */
             $firstIndex = $tokens->getPrevMeaningfulToken($index);
-            if (!$tokens[$firstIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
+
+            /** @var Token $firstToken */
+            $firstToken = $tokens[$firstIndex];
+
+            if (!$firstToken->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
             if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $firstIndex, $index)) {
@@ -76,7 +83,11 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
             /** @var int $secondIndex */
             $secondIndex = $tokens->getNextMeaningfulToken($index);
-            if (!$tokens[$secondIndex]->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
+
+            /** @var Token $secondToken */
+            $secondToken = $tokens[$secondIndex];
+
+            if (!$secondToken->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
             if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
@@ -90,10 +101,13 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
     private function areOnlyHorizontalWhitespacesBetween(Tokens $tokens, int $indexStart, int $indexEnd): bool
     {
         for ($index = $indexStart + 1; $index < $indexEnd; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_WHITESPACE)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind(T_WHITESPACE)) {
                 return false;
             }
-            if (Preg::match('/\R/', $tokens[$index]->getContent()) === 1) {
+            if (Preg::match('/\R/', $token->getContent()) === 1) {
                 return false;
             }
         }
@@ -103,9 +117,15 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
     private function fixConcat(Tokens $tokens, int $firstIndex, int $secondIndex): void
     {
+        /** @var Token $firstToken */
+        $firstToken = $tokens[$firstIndex];
+
+        /** @var Token $secondToken */
+        $secondToken = $tokens[$secondIndex];
+
         $prefix = '';
-        $firstContent = $tokens[$firstIndex]->getContent();
-        $secondContent = $tokens[$secondIndex]->getContent();
+        $firstContent = $firstToken->getContent();
+        $secondContent = $secondToken->getContent();
 
         if ($this->allowPreventingTrailingSpaces
             && Preg::match('/\h(\\\'|")$/', $firstContent) === 1
