@@ -302,6 +302,8 @@ class Foo
 
     public function hello()
     {
+        foreach ($b as $x) {}
+
         $b = [1, 2, 3];
 
         foreach ($b as $x) {}
@@ -317,6 +319,9 @@ class Foo
 
     public function hello()
     {
+        /** @var $y */
+        foreach ($b as $x) {}
+
         /** @var $a */
         $b = [1, 2, 3];
 

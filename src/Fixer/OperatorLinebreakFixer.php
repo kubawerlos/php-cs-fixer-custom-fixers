@@ -250,6 +250,7 @@ function foo() {
     {
         return \array_map(
             static function (int $index) use ($tokens, $direction): Token {
+                /** @var Token $clone */
                 $clone = $tokens[$index];
                 if ($tokens[$index + $direction]->isWhitespace()) {
                     $tokens->clearAt($index + $direction);
