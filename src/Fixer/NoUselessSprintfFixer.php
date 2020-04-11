@@ -9,6 +9,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoUselessSprintfFixer extends AbstractFixer
@@ -44,7 +45,10 @@ final class NoUselessSprintfFixer extends AbstractFixer
         $functionsAnalyzer = new FunctionsAnalyzer();
 
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if (!$tokens[$index]->equals([T_STRING, 'sprintf'], false)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->equals([T_STRING, 'sprintf'], false)) {
                 continue;
             }
 
@@ -61,14 +65,23 @@ final class NoUselessSprintfFixer extends AbstractFixer
                 continue;
             }
 
+            /** @var int $afterOpenParenthesisIndex */
             $afterOpenParenthesisIndex = $tokens->getNextMeaningfulToken($openParenthesisIndex);
-            if ($tokens[$afterOpenParenthesisIndex]->isGivenKind(T_ELLIPSIS)) {
+
+            /** @var Token $afterOpenParenthesisToken */
+            $afterOpenParenthesisToken = $tokens[$afterOpenParenthesisIndex];
+
+            if ($afterOpenParenthesisToken->isGivenKind(T_ELLIPSIS)) {
                 continue;
             }
 
             /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if ($tokens[$prevIndex]->isGivenKind(T_NS_SEPARATOR)) {
+
+            /** @var Token $prevToken */
+            $prevToken = $tokens[$prevIndex];
+
+            if ($prevToken->isGivenKind(T_NS_SEPARATOR)) {
                 $this->removeTokenAndSiblingWhitespace($tokens, $prevIndex, 1);
             }
             $this->removeTokenAndSiblingWhitespace($tokens, $index, 1);
@@ -80,7 +93,11 @@ final class NoUselessSprintfFixer extends AbstractFixer
     private function removeTokenAndSiblingWhitespace(Tokens $tokens, int $index, int $direction): void
     {
         $tokens->clearAt($index);
-        if ($tokens[$index + $direction]->isWhitespace()) {
+
+        /** @var Token $siblingToken */
+        $siblingToken = $tokens[$index + $direction];
+
+        if ($siblingToken->isWhitespace()) {
             $tokens->clearAt($index + $direction);
         }
     }

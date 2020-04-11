@@ -26,7 +26,6 @@
         <InternalMethod errorLevel='suppress' />
         <InvalidArgument errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />
-        <MixedMethodCall errorLevel='suppress' />
         <MoreSpecificReturnType>
             <errorLevel type='suppress'>
                 <file name='./src/Fixers.php' />

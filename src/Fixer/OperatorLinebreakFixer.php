@@ -103,7 +103,10 @@ function foo() {
         while ($index > 1) {
             $index--;
 
-            if (!$tokens[$index]->equalsAny($this->operators, false)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->equalsAny($this->operators, false)) {
                 continue;
             }
 
@@ -116,10 +119,14 @@ function foo() {
             }
 
             $operatorIndices = [$index];
-            if ($tokens[$index]->equals(':')) {
+            if ($token->equals(':')) {
                 /** @var int $prevIndex */
                 $prevIndex = $tokens->getPrevMeaningfulToken($index);
-                if ($tokens[$prevIndex]->equals('?')) {
+
+                /** @var Token $prevToken */
+                $prevToken = $tokens[$prevIndex];
+
+                if ($prevToken->equals('?')) {
                     $operatorIndices = [$prevIndex, $index];
                     $index = $prevIndex;
                 }
@@ -138,7 +145,10 @@ function foo() {
     {
         $indices = [];
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if ($tokens[$index]->isGivenKind(T_SWITCH)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if ($token->isGivenKind(T_SWITCH)) {
                 $indices = \array_merge($indices, $this->getCasesColonsForSwitch($tokens, $index));
             }
         }
@@ -262,15 +272,18 @@ function foo() {
     {
         return \array_map(
             static function (int $index) use ($tokens, $direction): Token {
-                /** @var Token $clone */
-                $clone = $tokens[$index];
+                /** @var Token $token */
+                $token = $tokens[$index];
 
-                if ($tokens[$index + $direction]->isWhitespace()) {
+                /** @var Token $siblingToken */
+                $siblingToken = $tokens[$index + $direction];
+
+                if ($siblingToken->isWhitespace()) {
                     $tokens->clearAt($index + $direction);
                 }
                 $tokens->clearAt($index);
 
-                return $clone;
+                return $token;
             },
             $indices
         );

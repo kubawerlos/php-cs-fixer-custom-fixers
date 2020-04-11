@@ -72,13 +72,16 @@ class Foo {
                 return;
             }
 
-            if ($tokens[$nextIndex]->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
+            /** @var Token $nextToken */
+            $nextToken = $tokens[$nextIndex];
+
+            if ($nextToken->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
                 $newContent = Preg::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*(class|interface|trait)\h+[A-Za-z0-9\\\\_]+.?(?=\R|$)/i',
                     '',
                     $token->getContent()
                 );
-            } elseif ($tokens[$nextIndex]->isGivenKind(T_FUNCTION)) {
+            } elseif ($nextToken->isGivenKind(T_FUNCTION)) {
                 $newContent = Preg::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
                     '',

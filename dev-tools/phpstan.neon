@@ -5,19 +5,6 @@ parameters:
     - ./src/Readme
   ignoreErrors:
     - '#^Method PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+::configure\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
-    - message: '#Cannot call method [a-zA-Z]+\(\) on PhpCsFixer\\Tokenizer\\Token\|null\.$#'
-      paths:
-        - ../src/Fixer/InternalClassCasingFixer.php
-        - ../src/Fixer/NoLeadingSlashInGlobalNamespaceFixer.php
-        - ../src/Fixer/NoNullableBooleanTypeFixer.php
-        - ../src/Fixer/NoReferenceInFunctionDefinitionFixer.php
-        - ../src/Fixer/NoUselessCommentFixer.php
-        - ../src/Fixer/NoUselessSprintfFixer.php
-        - ../src/Fixer/OperatorLinebreakFixer.php
-        - ../src/Fixer/PhpUnitNoUselessReturnFixer.php
-        - ../src/Fixer/PhpdocSelfAccessorFixer.php
-        - ../src/Fixer/SingleSpaceAfterStatementFixer.php
-        - ../src/Fixer/SingleSpaceBeforeStatementFixer.php
   level: max
   paths:
     - ./src

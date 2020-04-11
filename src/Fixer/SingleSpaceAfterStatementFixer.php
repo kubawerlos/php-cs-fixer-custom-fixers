@@ -140,6 +140,9 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     private function canAddSpaceAfter(Tokens $tokens, int $index): bool
     {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
         /** @var Token $nextToken */
         $nextToken = $tokens[$index + 1];
 
@@ -147,7 +150,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
             return !$this->allowLinebreak || Preg::match('/\R/', $nextToken->getContent()) !== 1;
         }
 
-        if ($tokens[$index]->isGivenKind(T_CLASS) && $nextToken->getContent() === '(') {
+        if ($token->isGivenKind(T_CLASS) && $nextToken->equals('(')) {
             return false;
         }
 

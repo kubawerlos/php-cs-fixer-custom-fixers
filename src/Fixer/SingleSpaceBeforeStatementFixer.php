@@ -94,15 +94,24 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if (!$tokens[$index]->isGivenKind($this->tokens)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind($this->tokens)) {
                 continue;
             }
 
-            if ($tokens[$index - 1]->isGivenKind(T_OPEN_TAG)) {
+            /** @var Token $prevToken */
+            $prevToken = $tokens[$index - 1];
+
+            if ($prevToken->isGivenKind(T_OPEN_TAG)) {
                 continue;
             }
 
-            if ($tokens[$index - 2]->isGivenKind(T_OPEN_TAG)) {
+            /** @var Token $prevPrevToken */
+            $prevPrevToken = $tokens[$index - 2];
+
+            if ($prevPrevToken->isGivenKind(T_OPEN_TAG)) {
                 $this->fixTwoTokensAfterOpenTag($tokens, $index);
                 continue;
             }
