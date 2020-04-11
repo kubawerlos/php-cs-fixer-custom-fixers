@@ -63,16 +63,19 @@ $bar = new Foo();
                 return;
             }
 
-            if ($tokens[$nextIndex]->isGivenKind([T_PRIVATE, T_PROTECTED, T_PUBLIC, T_VAR, T_STATIC])) {
+            /** @var Token $nextToken */
+            $nextToken = $tokens[$nextIndex];
+
+            if ($nextToken->isGivenKind([T_PRIVATE, T_PROTECTED, T_PUBLIC, T_VAR, T_STATIC])) {
                 continue;
             }
 
-            if ($tokens[$nextIndex]->isGivenKind(T_VARIABLE)) {
-                $this->removeVarAnnotation($tokens, $index, [$tokens[$nextIndex]->getContent()]);
+            if ($nextToken->isGivenKind(T_VARIABLE)) {
+                $this->removeVarAnnotation($tokens, $index, [$nextToken->getContent()]);
                 continue;
             }
 
-            if ($tokens[$nextIndex]->isGivenKind([T_FOR, T_FOREACH, T_IF, T_SWITCH, T_WHILE])) {
+            if ($nextToken->isGivenKind([T_FOR, T_FOREACH, T_IF, T_SWITCH, T_WHILE])) {
                 $this->removeVarAnnotationForControl($tokens, $index, $nextIndex);
                 continue;
             }
@@ -108,6 +111,7 @@ $bar = new Foo();
         $variables = [];
 
         for ($index = $index + 1; $index < $endIndex; $index++) {
+            /** @var Token $token */
             $token = $tokens[$index];
 
             if ($token->isGivenKind(T_VARIABLE)) {
@@ -120,7 +124,10 @@ $bar = new Foo();
 
     private function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
     {
-        $doc = new DocBlock($tokens[$index]->getContent());
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        $doc = new DocBlock($token->getContent());
 
         foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
             if ($pattern === null || Preg::match($pattern, $annotation->getContent()) !== 1) {
@@ -130,7 +137,7 @@ $bar = new Foo();
 
         $content = $doc->getContent();
 
-        if ($content === $tokens[$index]->getContent()) {
+        if ($content === $token->getContent()) {
             return;
         }
 
@@ -139,7 +146,7 @@ $bar = new Foo();
 
             return;
         }
-        $tokens[$index] = new Token([T_DOC_COMMENT, $this->ensureDocCommentContent($content)]);
+        $token = new Token([T_DOC_COMMENT, $this->ensureDocCommentContent($content)]);
     }
 
     private function ensureDocCommentContent(string $content): string

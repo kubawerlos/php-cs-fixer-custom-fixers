@@ -23,7 +23,6 @@ parameters:
         - ../src/Fixer/NumericLiteralSeparatorFixer.php
         - ../src/Fixer/OperatorLinebreakFixer.php
         - ../src/Fixer/PhpUnitNoUselessReturnFixer.php
-        - ../src/Fixer/PhpdocNoIncorrectVarAnnotationFixer.php
         - ../src/Fixer/PhpdocOnlyAllowedAnnotationsFixer.php
         - ../src/Fixer/PhpdocParamTypeFixer.php
         - ../src/Fixer/PhpdocSelfAccessorFixer.php

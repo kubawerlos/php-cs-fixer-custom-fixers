@@ -27,7 +27,6 @@
         <InvalidArgument errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />
         <MixedArgument errorLevel='suppress' />
-        <MixedArgumentTypeCoercion errorLevel='suppress' />
         <MixedArrayAccess errorLevel='suppress' />
         <MixedAssignment errorLevel='suppress' />
         <MixedMethodCall errorLevel='suppress' />
