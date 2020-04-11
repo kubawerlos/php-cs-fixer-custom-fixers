@@ -125,6 +125,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
             if (!$this->canAddSpaceAfter($tokens, $index)) {
                 continue;
             }
+
             /** @var Token $nextToken */
             $nextToken = $tokens[$index + 1];
 
