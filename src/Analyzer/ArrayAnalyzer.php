@@ -109,22 +109,22 @@ final class ArrayAnalyzer
         $token = $tokens[$index];
 
         if ($token->equals('{')) {
-            $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index) + 1;
         }
 
         if ($token->equals('(')) {
-            $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index) + 1;
         }
 
         if ($token->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
-            $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index);
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index) + 1;
         }
 
         if ($token->isGivenKind(T_ARRAY)) {
             /** @var int $arrayOpenBraceIndex */
             $arrayOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['(']);
 
-            $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $arrayOpenBraceIndex);
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $arrayOpenBraceIndex) + 1;
         }
 
         return $index + 1;
