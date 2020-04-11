@@ -97,8 +97,11 @@ $x = [
             return null;
         }
 
+        /** @var int $keyEndIndex */
+        $keyEndIndex = $arrayElementAnalysis->getKeyEndIndex();
+
         $content = '';
-        for ($index = $arrayElementAnalysis->getKeyEndIndex(); $index >= $arrayElementAnalysis->getKeyStartIndex(); $index--) {
+        for ($index = $keyEndIndex; $index >= $arrayElementAnalysis->getKeyStartIndex(); $index--) {
             /** @var Token $token */
             $token = $tokens[$index];
 
