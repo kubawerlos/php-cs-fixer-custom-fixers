@@ -109,10 +109,19 @@ class FooTest extends TestCase {
             if (\count($dataProviderAnalysis->getUsageIndices()) > 1) {
                 continue;
             }
+
             $usageIndex = $dataProviderAnalysis->getUsageIndices()[0];
+
+            /** @var Token $usageToken */
+            $usageToken = $tokens[$usageIndex];
+
+            /** @var int $testNameIndex */
             $testNameIndex = $tokens->getNextTokenOfKind($usageIndex, [[T_STRING]]);
 
-            $dataProviderNewName = $this->getProviderNameForTestName($tokens[$testNameIndex]->getContent());
+            /** @var Token $testNameToken */
+            $testNameToken = $tokens[$testNameIndex];
+
+            $dataProviderNewName = $this->getProviderNameForTestName($testNameToken->getContent());
             if ($tokens->findSequence([[T_FUNCTION], [T_STRING, $dataProviderNewName]], $startIndex, $endIndex, false) !== null) {
                 continue;
             }
@@ -123,7 +132,7 @@ class FooTest extends TestCase {
             $newCommentContent = Preg::replace(
                 \sprintf('/(@dataProvider\s+)%s/', $dataProviderAnalysis->getName()),
                 \sprintf('$1%s', $dataProviderNewName),
-                $tokens[$usageIndex]->getContent()
+                $usageToken->getContent()
             );
 
             $tokens[$usageIndex] = new Token([T_DOC_COMMENT, $newCommentContent]);

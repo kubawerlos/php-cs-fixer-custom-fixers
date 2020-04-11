@@ -49,7 +49,10 @@ final class InternalClassCasingFixer extends AbstractFixer
     private function fixCasing(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_STRING)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind(T_STRING)) {
                 continue;
             }
 
@@ -57,9 +60,9 @@ final class InternalClassCasingFixer extends AbstractFixer
                 continue;
             }
 
-            $correctCase = $this->getCorrectCase($tokens[$index]->getContent());
+            $correctCase = $this->getCorrectCase($token->getContent());
 
-            if ($correctCase === $tokens[$index]->getContent()) {
+            if ($correctCase === $token->getContent()) {
                 continue;
             }
 

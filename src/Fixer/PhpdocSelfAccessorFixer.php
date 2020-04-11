@@ -89,15 +89,19 @@ class Foo {
     private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $classyName, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
 
-            $newContent = $this->getNewContent($tokens[$index]->getContent(), $namespace, $classyName);
+            $newContent = $this->getNewContent($token->getContent(), $namespace, $classyName);
 
-            if ($newContent === $tokens[$index]->getContent()) {
+            if ($newContent === $token->getContent()) {
                 continue;
             }
+
             $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
         }
     }
