@@ -44,7 +44,7 @@ class FooTest extends TestCase {
     public function getPriority(): int
     {
         // must be run before ReturnTypeDeclarationFixer
-        return 1;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool

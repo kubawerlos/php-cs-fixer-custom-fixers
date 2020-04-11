@@ -25,6 +25,16 @@
         <InternalMethod errorLevel='suppress' />
         <InvalidArgument errorLevel='suppress' />
         <LoopInvalidation errorLevel='suppress' />
+        <MixedArgument errorLevel='suppress' />
+        <MixedArgumentTypeCoercion errorLevel='suppress' />
+        <MixedArrayAccess errorLevel='suppress' />
+        <MixedArrayOffset errorLevel='suppress' />
+        <MixedAssignment errorLevel='suppress' />
+        <MixedInferredReturnType errorLevel='suppress' />
+        <MixedMethodCall errorLevel='suppress' />
+        <MixedOperand errorLevel='suppress' />
+        <MixedReturnStatement errorLevel='suppress' />
+        <MixedReturnTypeCoercion errorLevel='suppress' />
         <MoreSpecificReturnType>
             <errorLevel type='suppress'>
                 <file name='./src/Fixers.php' />
