@@ -31,7 +31,6 @@
         <MixedArrayAccess errorLevel='suppress' />
         <MixedAssignment errorLevel='suppress' />
         <MixedMethodCall errorLevel='suppress' />
-        <MixedReturnTypeCoercion errorLevel='suppress' />
         <MoreSpecificReturnType>
             <errorLevel type='suppress'>
                 <file name='./src/Fixers.php' />

@@ -51,18 +51,29 @@ function foo($a, $b, $c) {}
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
-            if (!$tokens[$index]->isGivenKind(T_DOC_COMMENT)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
 
             $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]);
-            if ($functionIndex === null || !$tokens[$functionIndex]->isGivenKind(T_FUNCTION)) {
+
+            if ($functionIndex === null) {
+                return;
+            }
+
+            /** @var Token $functionToken */
+            $functionToken = $tokens[$functionIndex];
+
+            if (!$functionToken->isGivenKind(T_FUNCTION)) {
                 continue;
             }
 
             $paramNames = $this->getParamNames($tokens, $functionIndex);
 
-            $docBlock = new DocBlock($tokens[$index]->getContent());
+            $docBlock = new DocBlock($token->getContent());
             $sorted = $this->getSortedAnnotations($docBlock->getAnnotations(), $paramNames);
 
             foreach ($sorted as $annotationIndex => $annotationContent) {
@@ -75,7 +86,7 @@ function foo($a, $b, $c) {}
                 $line->setContent($annotationContent);
             }
 
-            if ($docBlock->getContent() === $tokens[$index]->getContent()) {
+            if ($docBlock->getContent() === $token->getContent()) {
                 continue;
             }
 
@@ -95,8 +106,11 @@ function foo($a, $b, $c) {}
 
         $paramNames = [];
         for ($index = $paramBlockStartIndex; $index < $paramBlockEndIndex; $index++) {
-            if ($tokens[$index]->isGivenKind(T_VARIABLE)) {
-                $paramNames[] = $tokens[$index]->getContent();
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if ($token->isGivenKind(T_VARIABLE)) {
+                $paramNames[] = $token->getContent();
             }
         }
 
