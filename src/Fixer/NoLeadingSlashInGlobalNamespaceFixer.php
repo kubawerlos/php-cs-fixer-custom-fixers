@@ -7,6 +7,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoLeadingSlashInGlobalNamespaceFixer extends AbstractFixer
@@ -41,6 +42,7 @@ $y = new \Baz();
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
+            /** @var Token $token */
             $token = $tokens[$index];
 
             if ($token->isGivenKind(T_NAMESPACE)) {

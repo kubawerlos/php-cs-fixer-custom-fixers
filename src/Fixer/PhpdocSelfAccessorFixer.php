@@ -70,12 +70,15 @@ class Foo {
             /** @var int $nameIndex */
             $nameIndex = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
 
+            /** @var Token $nameToken */
+            $nameToken = $tokens[$nameIndex];
+
             /** @var int $startIndex */
             $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
 
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
-            $classyName = $tokens[$nameIndex]->getContent();
+            $classyName = $nameToken->getContent();
 
             $this->replaceNameOccurrences($tokens, $fullName, $classyName, $startIndex, $endIndex);
 

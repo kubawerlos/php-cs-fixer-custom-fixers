@@ -105,15 +105,18 @@ echo 0123_4567; // octal
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if (!$tokens[$index]->isGivenKind([T_DNUMBER, T_LNUMBER])) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (!$token->isGivenKind([T_DNUMBER, T_LNUMBER])) {
                 continue;
             }
 
-            $content = $tokens[$index]->getContent();
+            $content = $token->getContent();
             $newContent = $this->getNewContent($content);
 
             if ($content !== $newContent) {
-                $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
+                $tokens[$index] = new Token([$token->getId(), $newContent]);
             }
         }
     }

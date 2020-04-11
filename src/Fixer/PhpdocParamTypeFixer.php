@@ -47,6 +47,7 @@ function a($foo, $bar) {}
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            /** @var Token $token */
             $token = $tokens[$index];
 
             if (!$token->isGivenKind([T_DOC_COMMENT])) {
