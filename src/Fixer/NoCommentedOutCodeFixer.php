@@ -89,7 +89,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            $content .= PHP_EOL . $this->getContent($token->getContent());
+            $content .= PHP_EOL . $this->getContent($token);
             $testedIndices[] = $index;
 
             if (\rtrim($content) === '') {
@@ -105,10 +105,14 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         return $indicesToRemove;
     }
 
-    private function getContent(string $content): string
+    private function getContent(Token $token): string
     {
-        /** @var string $content */
-        $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
+        $content = $token->getContent();
+
+        if (\strpos($content, '/*') === 0) {
+            /** @var string $content */
+            $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
+        }
 
         return \ltrim($content, '#/');
     }
