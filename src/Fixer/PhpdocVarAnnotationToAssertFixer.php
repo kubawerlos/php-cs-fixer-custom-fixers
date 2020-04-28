@@ -41,18 +41,27 @@ $fooOrBar = new Foo();
                 continue;
             }
 
+            $next = $tokens->getNextMeaningfulToken($index);
+            if (
+                $next === null
+                ||
+                $tokens[(int)$next]->isGivenKind([\T_CONST, \T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC])
+            ) {
+                continue;
+            }
+
             if (\stripos($token->getContent(), '@var') === false) {
                 continue;
             }
 
-            if (\stripos($token->getContent(), '- skip converting into "assert()"-call') !== false) {
+            if (\strpos($token->getContent(), '- skip converting into "assert()"-call') !== false) {
                 continue;
             }
 
             $this->convertVarAnnotationMatchingPattern(
                 $tokens,
                 $index,
-                '/@var\s+(?<type>[\|&\?\\\\a-zA-Z_\x7f-\xff]*)\s+(?<variable>[$a-zA-Z_\x7f-\xff]*)\s+(?<comment>[^\*]*)/'
+                '/@var\s+(?<type>[\|\?\\\\a-z_\x7f-\xff]*)\s+(?<variable>[$a-z_\x7f-\xff]*)\s+(?<comment>[^\*]*)/isu'
             );
         }
     }
@@ -88,11 +97,11 @@ $fooOrBar = new Foo();
         $str = '';
 
         if ($tmpType === 'false') {
-            $str .= 'false === ' . $variable;
+            $str .= $variable . ' === false';
         } elseif ($tmpType === 'true') {
-            $str .= 'true === ' . $variable;
+            $str .= $variable . ' === true';
         } elseif ($tmpType === 'null') {
-            $str .= 'is_null(' . $variable . ')';
+            $str .= $variable . ' === null';
         } elseif ($tmpType === 'bool' || $tmpType === 'boolean') {
             $str .= 'is_bool(' . $variable . ')';
         } elseif ($tmpType === 'string') {
