@@ -3,7 +3,7 @@
         "php": "^7.4"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.4.0",
+        "ergebnis/composer-normalize": "^2.5.0",
         "infection/infection": "^0.16.3",
         "kubawerlos/types-checker": "^2.0.0",
         "maglnet/composer-require-checker": "^2.1.0",
