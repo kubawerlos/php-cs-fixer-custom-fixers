@@ -6,7 +6,6 @@
         "ergebnis/composer-normalize": "^2.5.1",
         "infection/infection": "^0.16.3",
         "kubawerlos/php-cs-fixer-config": "dev-master",
-        "kubawerlos/php-cs-fixer-custom-fixers": "dev-master as 2.2.0",
         "kubawerlos/types-checker": "^2.0.0",
         "maglnet/composer-require-checker": "^2.1.0",
         "mi-schi/phpmd-extension": "^4.3.0",
@@ -16,16 +15,16 @@
         "squizlabs/php_codesniffer": "^3.5.5",
         "vimeo/psalm": "^3.11.2"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": ".."
+    "autoload": {
+        "psr-4": {
+            "PhpCsFixerCustomFixers\\": "../src"
         }
-    ],
+    },
     "scripts": {
         "analyse": [
             "composer validate --strict --working-dir=..",
             "composer normalize --dry-run ../composer.json",
+            "composer normalize --dry-run",
             "composer-require-checker check ../composer.json",
             "phpcs",
             "types-checker --autoloader=../vendor/autoload.php ./src ../src ../tests",
@@ -35,6 +34,7 @@
         ],
         "fix": [
             "composer normalize ../composer.json",
+            "composer normalize",
             "phpcbf || exit 0"
         ],
         "infection": [

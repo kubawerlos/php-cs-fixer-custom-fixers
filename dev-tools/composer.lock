@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f0a6b845154dee51c66927263e0739d",
+    "content-hash": "04a729ae28b0756f84d65abd5da138b9",
     "packages": [],
     "packages-dev": [
         {
@@ -1088,27 +1088,27 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "dev-master",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "a00dc605b74899ea0fd455bdc3b75a6323a5951e"
+                "reference": "5d9375f39f6d9ccbb52530bc9edefa53c6ba694d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/a00dc605b74899ea0fd455bdc3b75a6323a5951e",
-                "reference": "a00dc605b74899ea0fd455bdc3b75a6323a5951e",
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/5d9375f39f6d9ccbb52530bc9edefa53c6ba694d",
+                "reference": "5d9375f39f6d9ccbb52530bc9edefa53c6ba694d",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "friendsofphp/php-cs-fixer": "^2.16.2",
+                "friendsofphp/php-cs-fixer": "^2.16.1",
                 "php": "^7.2",
                 "symfony/finder": "^3.0 || ^4.0 || ^5.0"
             },
             "require-dev": {
                 "johnkary/phpunit-speedtrap": "^3.2.0",
-                "phpunit/phpunit": "^8.5.3 || ^9.1.1"
+                "phpunit/phpunit": "^8.5.2 || ^9.0.1"
             },
             "type": "library",
             "autoload": {
@@ -1127,7 +1127,7 @@
                 }
             ],
             "description": "A set of custom fixers for PHP CS Fixer",
-            "time": "2020-05-03T14:03:49+00:00"
+            "time": "2020-04-02T21:28:01+00:00"
         },
         {
             "name": "kubawerlos/types-checker",
@@ -3727,18 +3727,10 @@
             "time": "2015-12-17T08:42:14+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "2.2.0",
-            "alias_normalized": "2.2.0.0",
-            "version": "9999999-dev",
-            "package": "kubawerlos/php-cs-fixer-custom-fixers"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kubawerlos/php-cs-fixer-config": 20,
-        "kubawerlos/php-cs-fixer-custom-fixers": 20
+        "kubawerlos/php-cs-fixer-config": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
