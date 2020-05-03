@@ -2,6 +2,24 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of PHP CS Fixer: custom fixers.
+ *
+ * (c) Kuba Werłos <werlos@gmail.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+$header = \trim('
+This file is part of PHP CS Fixer: custom fixers.
+
+(c) Kuba Werłos <werlos@gmail.com>
+
+For the full copyright and license information, please view
+the LICENSE file that was distributed with this source code.
+');
+
 return PhpCsFixer\Config::create()
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
@@ -55,6 +73,7 @@ return PhpCsFixer\Config::create()
         'function_to_constant' => [
             'functions' => ['get_class', 'get_called_class', 'php_sapi_name', 'phpversion', 'pi'],
         ],
+        'header_comment' => ['header' => $header],
         'heredoc_to_nowdoc' => true,
         'increment_style' => [
             'style' => 'post',
