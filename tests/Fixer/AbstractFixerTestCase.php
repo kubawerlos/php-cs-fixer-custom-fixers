@@ -130,7 +130,7 @@ abstract class AbstractFixerTestCase extends TestCase
             self::assertSame($expected, $tokens->generateCode());
 
             Tokens::clearCache();
-            static::assertTokens(Tokens::fromCode($expected), $tokens);
+            self::assertTokens(Tokens::fromCode($expected), $tokens);
         }
 
         Tokens::clearCache();
