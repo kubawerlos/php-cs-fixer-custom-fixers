@@ -1051,12 +1051,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "ac465b48ebde995db26d9faf55e40cd7ae2a6e9d"
+                "reference": "0517d6e94cfd0709187255f6875acd4aefc57313"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/ac465b48ebde995db26d9faf55e40cd7ae2a6e9d",
-                "reference": "ac465b48ebde995db26d9faf55e40cd7ae2a6e9d",
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/0517d6e94cfd0709187255f6875acd4aefc57313",
+                "reference": "0517d6e94cfd0709187255f6875acd4aefc57313",
                 "shasum": ""
             },
             "require": {
@@ -1084,7 +1084,7 @@
                 }
             ],
             "description": "Provides configuration for PHP CS Fixer",
-            "time": "2020-05-03T17:02:04+00:00"
+            "time": "2020-05-03T17:28:02+00:00"
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
