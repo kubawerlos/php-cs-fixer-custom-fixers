@@ -5,7 +5,7 @@
     "require-dev": {
         "ergebnis/composer-normalize": "^2.5.1",
         "infection/infection": "^0.16.3",
-        "kubawerlos/php-cs-fixer-config": "dev-master",
+        "kubawerlos/php-cs-fixer-config": "^1.0.0",
         "kubawerlos/types-checker": "^2.0.0",
         "maglnet/composer-require-checker": "^2.1.0",
         "mi-schi/phpmd-extension": "^4.3.0",
