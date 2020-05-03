@@ -96,10 +96,10 @@ namespace PhpCsFixer\Fixer\ClassNotation {
                     && $b['type'] === 'method' && $b['visibility'] === 'public'
                     && isset($a['name'], $b['name'])) {
                     if (!\in_array($a['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
-                        throw new \Exception(\sprintf('Method %s not in order list', $a['name']));
+                        throw new \Exception(\sprintf('Method "%s" not in order list', $a['name']));
                     }
                     if (!\in_array($b['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
-                        throw new \Exception(\sprintf('Method %s not in order list', $b['name']));
+                        throw new \Exception(\sprintf('Method "%s" not in order list', $b['name']));
                     }
                     foreach (OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER as $name) {
                         if ($a['name'] === $name) {
