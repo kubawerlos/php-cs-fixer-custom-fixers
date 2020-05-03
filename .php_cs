@@ -11,17 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-$header = \trim('
-This file is part of PHP CS Fixer: custom fixers.
-
-(c) Kuba Werłos <werlos@gmail.com>
-
-For the full copyright and license information, please view
-the LICENSE file that was distributed with this source code.
-');
-
-require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/RulesInterface.php';
-require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
+require_once __DIR__ . '/dev-tools/vendor/autoload.php';
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers'))->getRules();
 
 // PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer will handle this
