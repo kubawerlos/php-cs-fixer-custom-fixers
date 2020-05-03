@@ -6,6 +6,7 @@
         "ergebnis/composer-normalize": "^2.5.1",
         "infection/infection": "^0.16.3",
         "kubawerlos/php-cs-fixer-config": "dev-master",
+        "kubawerlos/php-cs-fixer-custom-fixers": "dev-master as 2.2.0",
         "kubawerlos/types-checker": "^2.0.0",
         "maglnet/composer-require-checker": "^2.1.0",
         "mi-schi/phpmd-extension": "^4.3.0",
@@ -15,6 +16,12 @@
         "squizlabs/php_codesniffer": "^3.5.5",
         "vimeo/psalm": "^3.11.2"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": ".."
+        }
+    ],
     "scripts": {
         "analyse": [
             "composer validate --strict --working-dir=..",

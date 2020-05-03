@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04a729ae28b0756f84d65abd5da138b9",
+    "content-hash": "3f0a6b845154dee51c66927263e0739d",
     "packages": [],
     "packages-dev": [
         {
             "name": "amphp/amp",
-            "version": "v2.4.2",
+            "version": "v2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "feca077369a47263b22156b3c6389e55f3809f24"
+                "reference": "1e58d53e4af390efc7813e36cd215bd82cba4b06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/feca077369a47263b22156b3c6389e55f3809f24",
-                "reference": "feca077369a47263b22156b3c6389e55f3809f24",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/1e58d53e4af390efc7813e36cd215bd82cba4b06",
+                "reference": "1e58d53e4af390efc7813e36cd215bd82cba4b06",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 "jetbrains/phpstorm-stubs": "^2019.3",
                 "phpunit/phpunit": "^6.0.9 | ^7",
                 "react/promise": "^2",
-                "vimeo/psalm": "^3.9@dev"
+                "vimeo/psalm": "^3.11@dev"
             },
             "type": "library",
             "extra": {
@@ -83,7 +83,7 @@
                 "non-blocking",
                 "promise"
             ],
-            "time": "2020-04-04T15:05:26+00:00"
+            "time": "2020-04-30T04:54:50+00:00"
         },
         {
             "name": "amphp/byte-stream",
@@ -1051,12 +1051,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "9c04945ae76977b03a21188e50eb3d3211e00417"
+                "reference": "bf36336066d1c2283fb2574f70e844c45bba8768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/9c04945ae76977b03a21188e50eb3d3211e00417",
-                "reference": "9c04945ae76977b03a21188e50eb3d3211e00417",
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/bf36336066d1c2283fb2574f70e844c45bba8768",
+                "reference": "bf36336066d1c2283fb2574f70e844c45bba8768",
                 "shasum": ""
             },
             "require": {
@@ -1084,31 +1084,31 @@
                 }
             ],
             "description": "Provides configuration for PHP CS Fixer",
-            "time": "2020-05-03T13:11:35+00:00"
+            "time": "2020-05-03T13:45:40+00:00"
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "v2.2.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "5d9375f39f6d9ccbb52530bc9edefa53c6ba694d"
+                "reference": "a00dc605b74899ea0fd455bdc3b75a6323a5951e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/5d9375f39f6d9ccbb52530bc9edefa53c6ba694d",
-                "reference": "5d9375f39f6d9ccbb52530bc9edefa53c6ba694d",
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/a00dc605b74899ea0fd455bdc3b75a6323a5951e",
+                "reference": "a00dc605b74899ea0fd455bdc3b75a6323a5951e",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "friendsofphp/php-cs-fixer": "^2.16.1",
+                "friendsofphp/php-cs-fixer": "^2.16.2",
                 "php": "^7.2",
                 "symfony/finder": "^3.0 || ^4.0 || ^5.0"
             },
             "require-dev": {
                 "johnkary/phpunit-speedtrap": "^3.2.0",
-                "phpunit/phpunit": "^8.5.2 || ^9.0.1"
+                "phpunit/phpunit": "^8.5.3 || ^9.1.1"
             },
             "type": "library",
             "autoload": {
@@ -1127,7 +1127,7 @@
                 }
             ],
             "description": "A set of custom fixers for PHP CS Fixer",
-            "time": "2020-04-02T21:28:01+00:00"
+            "time": "2020-05-03T14:03:49+00:00"
         },
         {
             "name": "kubawerlos/types-checker",
@@ -1348,16 +1348,16 @@
         },
         {
             "name": "netresearch/jsonmapper",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweiske/jsonmapper.git",
-                "reference": "e245890383c3ed38b6d202ee373c23ccfebc0f54"
+                "reference": "e0f1e33a71587aca81be5cffbb9746510e1fe04e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/e245890383c3ed38b6d202ee373c23ccfebc0f54",
-                "reference": "e245890383c3ed38b6d202ee373c23ccfebc0f54",
+                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/e0f1e33a71587aca81be5cffbb9746510e1fe04e",
+                "reference": "e0f1e33a71587aca81be5cffbb9746510e1fe04e",
                 "shasum": ""
             },
             "require": {
@@ -1390,7 +1390,7 @@
                 }
             ],
             "description": "Map nested JSON structures onto PHP classes",
-            "time": "2020-03-04T17:23:33+00:00"
+            "time": "2020-04-16T18:48:43+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -1752,23 +1752,20 @@
         },
         {
             "name": "phpdocumentor/reflection-common",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "63a995caa1ca9e5590304cd845c15ad6d482a62a"
+                "reference": "6568f4687e5b41b054365f9ae03fcb1ed5f2069b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/63a995caa1ca9e5590304cd845c15ad6d482a62a",
-                "reference": "63a995caa1ca9e5590304cd845c15ad6d482a62a",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/6568f4687e5b41b054365f9ae03fcb1ed5f2069b",
+                "reference": "6568f4687e5b41b054365f9ae03fcb1ed5f2069b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~6"
             },
             "type": "library",
             "extra": {
@@ -1800,7 +1797,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2018-08-07T13:53:10+00:00"
+            "time": "2020-04-27T09:25:28+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2320,20 +2317,20 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.7.2",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "e2e5d290e4d2a4f0eb449f510071392e00e10d19"
+                "reference": "ff2aa5420bfbc296cf6a0bc785fa5b35736de7c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/e2e5d290e4d2a4f0eb449f510071392e00e10d19",
-                "reference": "e2e5d290e4d2a4f0eb449f510071392e00e10d19",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/ff2aa5420bfbc296cf6a0bc785fa5b35736de7c1",
+                "reference": "ff2aa5420bfbc296cf6a0bc785fa5b35736de7c1",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3 || ^7.0"
+                "php": "^5.3 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
@@ -2365,7 +2362,7 @@
                 "parser",
                 "validator"
             ],
-            "time": "2019-10-24T14:27:39+00:00"
+            "time": "2020-04-30T19:05:18+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -2420,16 +2417,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "3e633c31a34738f7f4ed7a225c43fc45ca74c986"
+                "reference": "db1674e1a261148429f123871f30d211992294e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/3e633c31a34738f7f4ed7a225c43fc45ca74c986",
-                "reference": "3e633c31a34738f7f4ed7a225c43fc45ca74c986",
+                "url": "https://api.github.com/repos/symfony/config/zipball/db1674e1a261148429f123871f30d211992294e7",
+                "reference": "db1674e1a261148429f123871f30d211992294e7",
                 "shasum": ""
             },
             "require": {
@@ -2480,11 +2477,11 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-27T16:56:45+00:00"
+            "time": "2020-04-15T15:59:10+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -2560,16 +2557,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "4e48dc44680d8efa357410c78093a04753196981"
+                "reference": "92d8b3bd896a87cdd8aba0a3dd041bc072e8cfba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/4e48dc44680d8efa357410c78093a04753196981",
-                "reference": "4e48dc44680d8efa357410c78093a04753196981",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/92d8b3bd896a87cdd8aba0a3dd041bc072e8cfba",
+                "reference": "92d8b3bd896a87cdd8aba0a3dd041bc072e8cfba",
                 "shasum": ""
             },
             "require": {
@@ -2629,7 +2626,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-30T11:42:42+00:00"
+            "time": "2020-04-28T17:58:55+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2761,16 +2758,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "ca3b87dd09fff9b771731637f5379965fbfab420"
+                "reference": "7cd0dafc4353a0f62e307df90b48466379c8cc91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/ca3b87dd09fff9b771731637f5379965fbfab420",
-                "reference": "ca3b87dd09fff9b771731637f5379965fbfab420",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/7cd0dafc4353a0f62e307df90b48466379c8cc91",
+                "reference": "7cd0dafc4353a0f62e307df90b48466379c8cc91",
                 "shasum": ""
             },
             "require": {
@@ -2807,11 +2804,11 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-27T16:56:45+00:00"
+            "time": "2020-04-12T14:40:17+00:00"
         },
         {
             "name": "symfony/finder",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -3203,16 +3200,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v5.0.7",
+            "version": "v5.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "c5ca4a0fc16a0c888067d43fbcfe1f8a53d8e70e"
+                "reference": "3179f68dff5bad14d38c4114a1dab98030801fd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/c5ca4a0fc16a0c888067d43fbcfe1f8a53d8e70e",
-                "reference": "c5ca4a0fc16a0c888067d43fbcfe1f8a53d8e70e",
+                "url": "https://api.github.com/repos/symfony/process/zipball/3179f68dff5bad14d38c4114a1dab98030801fd7",
+                "reference": "3179f68dff5bad14d38c4114a1dab98030801fd7",
                 "shasum": ""
             },
             "require": {
@@ -3248,7 +3245,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-27T16:56:45+00:00"
+            "time": "2020-04-15T15:59:10+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -3730,10 +3727,18 @@
             "time": "2015-12-17T08:42:14+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "2.2.0",
+            "alias_normalized": "2.2.0.0",
+            "version": "9999999-dev",
+            "package": "kubawerlos/php-cs-fixer-custom-fixers"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kubawerlos/php-cs-fixer-config": 20
+        "kubawerlos/php-cs-fixer-config": 20,
+        "kubawerlos/php-cs-fixer-custom-fixers": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
