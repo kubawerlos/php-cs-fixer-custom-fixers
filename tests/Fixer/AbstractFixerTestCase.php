@@ -41,7 +41,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
     {
-        static::assertRegExp('/^[A-Z`].*\.$/', $this->fixer->getDefinition()->getSummary());
+        self::assertRegExp('/^[A-Z`].*\.$/', $this->fixer->getDefinition()->getSummary());
     }
 
     final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void
@@ -52,7 +52,7 @@ abstract class AbstractFixerTestCase extends TestCase
             return;
         }
 
-        static::assertRegExp('/^[a-z]/', $this->fixer->getDefinition()->getRiskyDescription());
+        self::assertRegExp('/^[a-z]/', $this->fixer->getDefinition()->getRiskyDescription());
     }
 
     final public function testFixerDefinitionRiskyDescriptionDoesNotEndWithDot(): void
@@ -63,19 +63,19 @@ abstract class AbstractFixerTestCase extends TestCase
             return;
         }
 
-        static::assertStringEndsNotWith('.', $this->fixer->getDefinition()->getRiskyDescription());
+        self::assertStringEndsNotWith('.', $this->fixer->getDefinition()->getRiskyDescription());
     }
 
     final public function testFixerDefinitionHasExactlyOneCodeSample(): void
     {
-        static::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
+        self::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
     }
 
     final public function testCodeSampleEndsWithNewLine(): void
     {
         $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
 
-        static::assertRegExp('/\n$/', $codeSample->getCode());
+        self::assertRegExp('/\n$/', $codeSample->getCode());
     }
 
     /**
@@ -93,12 +93,12 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        static::assertNotSame($codeSample->getCode(), $tokens->generateCode());
+        self::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
 
     final public function testPriority(): void
     {
-        static::assertIsInt($this->fixer->getPriority());
+        self::assertIsInt($this->fixer->getPriority());
     }
 
     final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -113,24 +113,24 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $linter = new TokenizerLinter();
 
-        static::assertNull($linter->lintSource($expected)->check());
+        self::assertNull($linter->lintSource($expected)->check());
 
         if ($input !== null) {
-            static::assertNull($linter->lintSource($input)->check());
+            self::assertNull($linter->lintSource($input)->check());
 
             Tokens::clearCache();
             $tokens = Tokens::fromCode($input);
 
-            static::assertTrue($this->fixer->isCandidate($tokens));
+            self::assertTrue($this->fixer->isCandidate($tokens));
 
             $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
             $tokens->clearEmptyTokens();
 
-            static::assertSame($expected, $tokens->generateCode());
+            self::assertSame($expected, $tokens->generateCode());
 
             Tokens::clearCache();
-            static::assertTokens(Tokens::fromCode($expected), $tokens);
+            self::assertTokens(Tokens::fromCode($expected), $tokens);
         }
 
         Tokens::clearCache();
@@ -138,8 +138,8 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        static::assertSame($expected, $tokens->generateCode());
+        self::assertSame($expected, $tokens->generateCode());
 
-        static::assertFalse($tokens->isChanged());
+        self::assertFalse($tokens->isChanged());
     }
 }

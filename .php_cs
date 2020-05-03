@@ -122,7 +122,9 @@ return PhpCsFixer\Config::create()
         'php_unit_set_up_tear_down_visibility' => true,
         'php_unit_strict' => true,
         'php_unit_test_annotation' => true,
-        'php_unit_test_case_static_method_calls' => true,
+        'php_unit_test_case_static_method_calls' => [
+            'call_type' => 'self',
+        ],
         'php_unit_test_class_requires_covers' => true,
         'phpdoc_line_span' => ['property' => 'single'],
         'phpdoc_order' => true,
