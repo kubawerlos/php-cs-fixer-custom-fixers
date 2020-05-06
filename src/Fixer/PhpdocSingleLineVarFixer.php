@@ -39,7 +39,8 @@ class Foo {
 
     public function getPriority(): int
     {
-        return 0;
+        // must be run after PhpdocLineSpanFixer
+        return -1;
     }
 
     public function isCandidate(Tokens $tokens): bool
