@@ -13,37 +13,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
-use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
-use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
+use PhpCsFixer\Fixer as Fixer;
 use PhpCsFixer\Fixer\FixerInterface;
-use PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer;
-use PhpCsFixer\Fixer\FunctionNotation\SingleLineThrowFixer;
-use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
-use PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocTypesOrderFixer;
-use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer;
-use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
-use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
-use PhpCsFixerCustomFixers\Fixer\MultilineCommentOpeningClosingAloneFixer;
-use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
-use PhpCsFixerCustomFixers\Fixer\NoImportFromGlobalNamespaceFixer;
-use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
-use PhpCsFixerCustomFixers\Fixer\NoUselessCommentFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpdocTypesTrimFixer;
-use PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer;
+use PhpCsFixerCustomFixers\Fixer as CustomFixer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -125,15 +99,15 @@ final class PriorityTest extends TestCase
     public static function providePriorityCases(): iterable
     {
         yield [
-            new CommentSurroundedBySpacesFixer(),
-            new MultilineCommentOpeningClosingFixer(),
+            new CustomFixer\CommentSurroundedBySpacesFixer(),
+            new Fixer\Comment\MultilineCommentOpeningClosingFixer(),
             '<?php /** foo */',
             '<?php /**foo**/',
         ];
 
         yield [
-            new CommentToPhpdocFixer(),
-            new PhpdocNoSuperfluousParamFixer(),
+            new Fixer\Comment\CommentToPhpdocFixer(),
+            new CustomFixer\PhpdocNoSuperfluousParamFixer(),
             '<?php /* header comment */ $foo = true;
                 /**
                  */
@@ -148,8 +122,8 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
-            new CommentToPhpdocFixer(),
-            new PhpdocOnlyAllowedAnnotationsFixer(),
+            new Fixer\Comment\CommentToPhpdocFixer(),
+            new CustomFixer\PhpdocOnlyAllowedAnnotationsFixer(),
             '<?php /* header comment */ $foo = true;
                 /**
                  */
@@ -164,8 +138,8 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
-            new CommentToPhpdocFixer(),
-            new PhpdocParamOrderFixer(),
+            new Fixer\Comment\CommentToPhpdocFixer(),
+            new CustomFixer\PhpdocParamOrderFixer(),
             '<?php /* header comment */ $foo = true;
                 /**
                  * @param $a
@@ -183,8 +157,8 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
-            new CommentToPhpdocFixer(),
-            new PhpdocParamTypeFixer(),
+            new Fixer\Comment\CommentToPhpdocFixer(),
+            new CustomFixer\PhpdocParamTypeFixer(),
             '<?php /* header comment */ $foo = true;
                 /**
                  * @param mixed $x
@@ -200,8 +174,8 @@ final class PriorityTest extends TestCase
         ];
 
         yield [
-            new CommentedOutFunctionFixer(),
-            new CommentSurroundedBySpacesFixer(),
+            new CustomFixer\CommentedOutFunctionFixer(),
+            new CustomFixer\CommentSurroundedBySpacesFixer(),
             '<?php
 $x = foo();
 // var_dump($x);
@@ -215,8 +189,8 @@ bar($x);
         ];
 
         yield [
-            new CommentedOutFunctionFixer(),
-            new NoCommentedOutCodeFixer(),
+            new CustomFixer\CommentedOutFunctionFixer(),
+            new CustomFixer\NoCommentedOutCodeFixer(),
             '<?php
                 $x = foo();
                 bar($x);
@@ -228,10 +202,10 @@ bar($x);
             ',
         ];
 
-        $returnTypeDeclarationFixer = new ReturnTypeDeclarationFixer();
+        $returnTypeDeclarationFixer = new Fixer\FunctionNotation\ReturnTypeDeclarationFixer();
         $returnTypeDeclarationFixer->configure(['space_before' => 'one']);
         yield [
-            new DataProviderReturnTypeFixer(),
+            new CustomFixer\DataProviderReturnTypeFixer(),
             $returnTypeDeclarationFixer,
             '<?php
                 class FooTest extends TestCase {
@@ -254,8 +228,8 @@ bar($x);
         ];
 
         yield [
-            new MultilineCommentOpeningClosingAloneFixer(),
-            new MultilineCommentOpeningClosingFixer(),
+            new CustomFixer\MultilineCommentOpeningClosingAloneFixer(),
+            new Fixer\Comment\MultilineCommentOpeningClosingFixer(),
             '<?php /**
                     * foo
                     */',
@@ -264,8 +238,8 @@ bar($x);
         ];
 
         yield [
-            new NoCommentedOutCodeFixer(),
-            new NoExtraBlankLinesFixer(),
+            new CustomFixer\NoCommentedOutCodeFixer(),
+            new Fixer\Whitespace\NoExtraBlankLinesFixer(),
             '<?php
                 use Foo\Bar;
 
@@ -281,8 +255,8 @@ bar($x);
         ];
 
         yield [
-            new NoCommentedOutCodeFixer(),
-            new NoUnusedImportsFixer(),
+            new CustomFixer\NoCommentedOutCodeFixer(),
+            new Fixer\Import\NoUnusedImportsFixer(),
             '<?php
                 use Foo\Bar;
                 $x = new Bar();
@@ -296,8 +270,8 @@ bar($x);
         ];
 
         yield [
-            new NoImportFromGlobalNamespaceFixer(),
-            new PhpdocAlignFixer(),
+            new CustomFixer\NoImportFromGlobalNamespaceFixer(),
+            new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php
                 namespace Foo;
                 /**
@@ -318,8 +292,8 @@ bar($x);
         ];
 
         yield [
-            new NoUselessCommentFixer(),
-            new NoEmptyCommentFixer(),
+            new CustomFixer\NoUselessCommentFixer(),
+            new Fixer\Comment\NoEmptyCommentFixer(),
             '<?php
                 ' . '
                  class Foo {}
@@ -333,8 +307,8 @@ bar($x);
         ];
 
         yield [
-            new NoUselessCommentFixer(),
-            new NoEmptyPhpdocFixer(),
+            new CustomFixer\NoUselessCommentFixer(),
+            new Fixer\Phpdoc\NoEmptyPhpdocFixer(),
             '<?php
                 ' . '
                  class Foo {}
@@ -348,8 +322,8 @@ bar($x);
         ];
 
         yield [
-            new NoUselessCommentFixer(),
-            new PhpdocTrimConsecutiveBlankLineSeparationFixer(),
+            new CustomFixer\NoUselessCommentFixer(),
+            new Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer(),
             '<?php
                 /**
                  * @version 1.0
@@ -371,8 +345,8 @@ bar($x);
         ];
 
         yield [
-            new NoUselessCommentFixer(),
-            new PhpdocTrimFixer(),
+            new CustomFixer\NoUselessCommentFixer(),
+            new Fixer\Phpdoc\PhpdocTrimFixer(),
             '<?php
                 /**
                  * @author John Doe
@@ -389,10 +363,10 @@ bar($x);
             ',
         ];
 
-        $noExtraBlankLinesFixer = new NoExtraBlankLinesFixer();
+        $noExtraBlankLinesFixer = new Fixer\Whitespace\NoExtraBlankLinesFixer();
         $noExtraBlankLinesFixer->configure(['tokens' => ['curly_brace_block']]);
         yield [
-            new PhpUnitNoUselessReturnFixer(),
+            new CustomFixer\PhpUnitNoUselessReturnFixer(),
             $noExtraBlankLinesFixer,
             '<?php
                 class FooTest extends TestCase {
@@ -414,8 +388,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocAddMissingParamAnnotationFixer(),
-            new PhpdocParamOrderFixer(),
+            new Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer(),
+            new CustomFixer\PhpdocParamOrderFixer(),
             '<?php /* header comment */ $foo = true;
                 /**
                  * @param mixed $a
@@ -431,9 +405,28 @@ bar($x);
             ',
         ];
 
+        $phpdocLineSpanFixer = new Fixer\Phpdoc\PhpdocLineSpanFixer();
+        $phpdocLineSpanFixer->configure(['property' => 'multi']);
         yield [
-            new PhpdocNoIncorrectVarAnnotationFixer(),
-            new NoEmptyPhpdocFixer(),
+            $phpdocLineSpanFixer,
+            new CustomFixer\PhpdocSingleLineVarFixer(),
+            '<?php
+                class Foo {
+                    /** @var string */
+                    private $bar;
+                }',
+            '<?php
+                class Foo {
+                    /**
+                     * @var string
+                     */
+                    private $bar;
+                }',
+        ];
+
+        yield [
+            new CustomFixer\PhpdocNoIncorrectVarAnnotationFixer(),
+            new Fixer\Phpdoc\NoEmptyPhpdocFixer(),
             '<?php
                 ' . '
                 $y = 2;
@@ -447,8 +440,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocNoIncorrectVarAnnotationFixer(),
-            new NoExtraBlankLinesFixer(),
+            new CustomFixer\PhpdocNoIncorrectVarAnnotationFixer(),
+            new Fixer\Whitespace\NoExtraBlankLinesFixer(),
             '<?php
 
                 $y = 2;
@@ -462,8 +455,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocNoIncorrectVarAnnotationFixer(),
-            new NoUnusedImportsFixer(),
+            new CustomFixer\PhpdocNoIncorrectVarAnnotationFixer(),
+            new Fixer\Import\NoUnusedImportsFixer(),
             '<?php
                 $y = 2;
             ',
@@ -475,8 +468,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocNoIncorrectVarAnnotationFixer(),
-            new PhpdocTrimConsecutiveBlankLineSeparationFixer(),
+            new CustomFixer\PhpdocNoIncorrectVarAnnotationFixer(),
+            new Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer(),
             '<?php
                 /**
                  * Foo
@@ -498,8 +491,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocNoIncorrectVarAnnotationFixer(),
-            new PhpdocTrimFixer(),
+            new CustomFixer\PhpdocNoIncorrectVarAnnotationFixer(),
+            new Fixer\Phpdoc\PhpdocTrimFixer(),
             '<?php
                 /**
                  * Foo
@@ -517,8 +510,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocNoSuperfluousParamFixer(),
-            new NoEmptyPhpdocFixer(),
+            new CustomFixer\PhpdocNoSuperfluousParamFixer(),
+            new Fixer\Phpdoc\NoEmptyPhpdocFixer(),
             '<?php
                 ' . '
                  function foo() {}
@@ -532,8 +525,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocOnlyAllowedAnnotationsFixer(),
-            new NoEmptyPhpdocFixer(),
+            new CustomFixer\PhpdocOnlyAllowedAnnotationsFixer(),
+            new Fixer\Phpdoc\NoEmptyPhpdocFixer(),
             '<?php
                 ' . '
                 class Foo {}
@@ -547,8 +540,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocParamOrderFixer(),
-            new PhpdocAlignFixer(),
+            new CustomFixer\PhpdocParamOrderFixer(),
+            new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php /* header comment */ $foo = true;
                 /**
                  * @param int    $a
@@ -568,8 +561,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocParamTypeFixer(),
-            new PhpdocAlignFixer(),
+            new CustomFixer\PhpdocParamTypeFixer(),
+            new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php
                 /**
                  * @param int   $x
@@ -587,8 +580,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocTypesTrimFixer(),
-            new PhpdocAlignFixer(),
+            new CustomFixer\PhpdocTypesTrimFixer(),
+            new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php
                 /**
                  * @param Foo|Bar $x
@@ -606,8 +599,8 @@ bar($x);
         ];
 
         yield [
-            new PhpdocTypesTrimFixer(),
-            new PhpdocTypesOrderFixer(),
+            new CustomFixer\PhpdocTypesTrimFixer(),
+            new Fixer\Phpdoc\PhpdocTypesOrderFixer(),
             '<?php
                 /**
                  * @param Bar|Foo $x
@@ -623,8 +616,8 @@ bar($x);
         ];
 
         yield [
-            new SingleLineThrowFixer(),
-            new NoSuperfluousConcatenationFixer(),
+            new Fixer\FunctionNotation\SingleLineThrowFixer(),
+            new CustomFixer\NoSuperfluousConcatenationFixer(),
             '<?php
                 throw new Exception("This should not happen");
             ',
