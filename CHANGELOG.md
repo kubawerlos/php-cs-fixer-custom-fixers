@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v2.#.0 - [Unreleased]
+- Add TypedPropertiesSpaceFixer
+
 ## v2.2.0 - *2020-04-02*
 - Feature: DataProviderNameFixer - add options "prefix" and "suffix"
 
