@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Tests;
 
+/**
+ * @internal
+ */
 trait AssertRegExpTrait
 {
     public static function assertRegExp(string $pattern, string $string, string $message = ''): void
