@@ -19,12 +19,14 @@ use PhpCsFixer\Linter\TokenizerLinter;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
+use Tests\AssertRegExpTrait;
 
 /**
  * @internal
  */
 abstract class AbstractFixerTestCase extends TestCase
 {
+    use AssertRegExpTrait;
     use AssertTokensTrait;
 
     /** @var DefinedFixerInterface */
