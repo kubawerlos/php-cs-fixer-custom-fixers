@@ -23,9 +23,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoUselessParenthesisFixer extends AbstractFixer
 {
-    private const PARENTHESIS_TOKENS = ['(',  CT::T_BRACE_CLASS_INSTANTIATION_OPEN];
-    private const BLOCK_START_TOKENS = ['{', '(', '[', [CT::T_ARRAY_INDEX_CURLY_BRACE_OPEN], [CT::T_ARRAY_SQUARE_BRACE_OPEN], [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]];
-
     /**
      * {@inheritdoc}
      */
@@ -35,7 +32,7 @@ final class NoUselessParenthesisFixer extends AbstractFixer
             'There must be no useless parenthesis.',
             [
                 new CodeSample('<?php
-foo (($bar));
+foo(($bar));
 '),
             ]
         );
