@@ -121,5 +121,19 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
 ',
             ['elements' => ['foo', 'bar']],
         ];
+
+        yield [
+            '<?php
+                /**
+                 * @#
+                 */
+             ',
+            '<?php
+                /**
+                 * @#
+                 * @return Foo
+                 */
+             ',
+        ];
     }
 }
