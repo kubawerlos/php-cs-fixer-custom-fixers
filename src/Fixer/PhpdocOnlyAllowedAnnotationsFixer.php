@@ -100,6 +100,7 @@ function foo_bar() {}
                 if (Preg::match('/@([a-zA-Z0-9_\\-\\\\]+)/', $annotation->getContent(), $matches) === 0) {
                     continue;
                 }
+
                 if (\in_array($matches[1], $this->elements, true)) {
                     continue;
                 }
