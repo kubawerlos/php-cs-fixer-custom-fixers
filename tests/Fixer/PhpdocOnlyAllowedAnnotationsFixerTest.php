@@ -125,7 +125,6 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 /**
-                 * @#
                  */
              ',
             '<?php
