@@ -32,10 +32,12 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         );
     }
 
+    /**
+     * Must run before NoExtraBlankLinesFixer, NoUnusedImportsFixer.
+     * Must run after CommentedOutFunctionFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after CommentedOutFunctionFixer
-        // must be run before NoExtraBlankLinesFixer and NoUnusedImportsFixer
         return 0;
     }
 

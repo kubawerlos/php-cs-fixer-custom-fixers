@@ -17,7 +17,6 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Utils;
-use PhpCsFixerCustomFixers\TokenRemover;
 use PhpCsFixerCustomFixersDev\Priority\PriorityCollection;
 
 /**
@@ -77,92 +76,41 @@ final class PriorityInternalFixer implements FixerInterface
         /** @var int $sequencesStartIndex */
         $sequencesStartIndex = \key($indices);
 
-        /** @var int $startIndex */
-        $startIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, ['{']);
+        /** @var Token $commentToken */
+        $commentToken = $tokens[$sequencesStartIndex - 2];
 
-        $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
+        $commentContent = $this->getCommentContent($className);
 
-        $commentsToInsert = $this->getCommentsToInsert($className);
-
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(T_COMMENT)) {
-                continue;
-            }
-
-            if ($commentsToInsert === []) {
-                TokenRemover::removeWithLinesIfPossible($tokens, $index);
-                continue;
-            }
-
-            $tokens[$index] = \array_shift($commentsToInsert);
-        }
-
-        /** @var int $returnIndex */
-        $returnIndex = $tokens->getNextTokenOfKind($startIndex, [[T_RETURN]]);
-
-        foreach (\array_reverse($commentsToInsert) as $comment) {
+        if ($commentToken->isGivenKind(T_DOC_COMMENT)) {
+            $tokens[$sequencesStartIndex - 2] = new Token([T_DOC_COMMENT, $commentContent]);
+        } else {
             $tokens->insertAt(
-                $returnIndex - 1,
+                $sequencesStartIndex,
                 [
+                    new Token([T_DOC_COMMENT, $commentContent]),
                     new Token([T_WHITESPACE, "\n    "]),
-                    $comment,
                 ]
             );
         }
-
-        /** @var int $nextIndex */
-        $nextIndex = $tokens->getNextTokenOfKind($startIndex, [[T_RETURN]]);
-
-        $priorityStartIndex = $nextIndex + 2;
-
-        /** @var Token $priorityStartToken */
-        $priorityStartToken = $tokens[$priorityStartIndex];
-
-        if ($priorityStartToken->isGivenKind(T_VARIABLE)) {
-            return;
-        }
-
-        /** @var int $nextIndex */
-        $nextIndex = $tokens->getNextTokenOfKind($priorityStartIndex, [';']);
-
-        $priorityEndIndex = $nextIndex - 1;
-
-        $priorityCollection = PriorityCollection::create();
-        $priority = $priorityCollection->getPriorityFixer($className)->getPriority();
-
-        $priorityTokens = $priority < 0 ? [new Token('-')] : [];
-        $priorityTokens[] = new Token([T_LNUMBER, (string) \abs($priority)]);
-
-        $tokens->overrideRange($priorityStartIndex, $priorityEndIndex, $priorityTokens);
     }
 
-    /**
-     * @return Token[]
-     */
-    private function getCommentsToInsert(string $className): array
+    private function getCommentContent(string $className): string
     {
-        $comments = [];
+        $comment = "/**\n";
         $priorityCollection = PriorityCollection::create();
-
-        $fixersToRunBefore = $priorityCollection->getPriorityFixer($className)->getFixerToRunBeforeNames();
-        if ([] !== $fixersToRunBefore) {
-            $comments[] = new Token([
-                T_COMMENT,
-                \sprintf('// must be run after %s', \str_replace('`', '', Utils::naturalLanguageJoinWithBackticks($fixersToRunBefore))),
-            ]);
-        }
 
         $fixersToRunAfter = $priorityCollection->getPriorityFixer($className)->getFixerToRunAfterNames();
         if ([] !== $fixersToRunAfter) {
-            $comments[] = new Token([
-                T_COMMENT,
-                \sprintf('// must be run before %s', \str_replace('`', '', Utils::naturalLanguageJoinWithBackticks($fixersToRunAfter))),
-            ]);
+            $comment .= \sprintf("     * Must run before %s.\n", \implode(', ', $fixersToRunAfter));
         }
 
-        return $comments;
+        $fixersToRunBefore = $priorityCollection->getPriorityFixer($className)->getFixerToRunBeforeNames();
+        if ([] !== $fixersToRunBefore) {
+            $comment .= \sprintf("     * Must run after %s.\n", \implode(', ', $fixersToRunBefore));
+        }
+
+        $comment .= '    */';
+
+        return $comment;
     }
 }

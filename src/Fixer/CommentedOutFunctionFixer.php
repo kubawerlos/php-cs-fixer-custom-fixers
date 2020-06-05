@@ -61,9 +61,11 @@ var_dump($x);
         }
     }
 
+    /**
+     * Must run before CommentSurroundedBySpacesFixer, NoCommentedOutCodeFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before CommentSurroundedBySpacesFixer and NoCommentedOutCodeFixer
         return 2;
     }
 

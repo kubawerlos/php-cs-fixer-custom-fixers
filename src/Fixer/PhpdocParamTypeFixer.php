@@ -36,10 +36,12 @@ function a($foo, $bar) {}
         );
     }
 
+    /**
+     * Must run before NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer.
+     * Must run after CommentToPhpdocFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after CommentToPhpdocFixer
-        // must be run before NoSuperfluousPhpdocTagsFixer and PhpdocAlignFixer
         return 7;
     }
 

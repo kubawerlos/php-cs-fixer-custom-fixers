@@ -50,9 +50,11 @@ class FooTest extends TestCase {
         );
     }
 
+    /**
+     * Must run before ReturnTypeDeclarationFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before ReturnTypeDeclarationFixer
         return 0;
     }
 
