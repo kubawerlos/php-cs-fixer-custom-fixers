@@ -562,6 +562,22 @@ bar($x);
 
         yield [
             new CustomFixer\PhpdocParamTypeFixer(),
+            new Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer(),
+            '<?php
+                /**
+                 */
+                 function f($x) {}
+            ',
+            '<?php
+                /**
+                 * @param $x
+                 */
+                 function f($x) {}
+            ',
+        ];
+
+        yield [
+            new CustomFixer\PhpdocParamTypeFixer(),
             new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php
                 /**
