@@ -67,10 +67,12 @@ function foo_bar() {}
         }
     }
 
+    /**
+     * Must run before NoEmptyPhpdocFixer.
+     * Must run after CommentToPhpdocFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after CommentToPhpdocFixer
-        // must be run before NoEmptyPhpdocFixer
         return 6;
     }
 

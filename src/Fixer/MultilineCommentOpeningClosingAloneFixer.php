@@ -30,9 +30,11 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         );
     }
 
+    /**
+     * Must run before MultilineCommentOpeningClosingFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before MultilineCommentOpeningClosingFixer
         return 1;
     }
 

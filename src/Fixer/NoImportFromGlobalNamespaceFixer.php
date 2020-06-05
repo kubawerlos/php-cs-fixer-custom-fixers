@@ -38,9 +38,11 @@ class Bar {
         );
     }
 
+    /**
+     * Must run before PhpdocAlignFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before PhpdocAlignFixer
         return 0;
     }
 
