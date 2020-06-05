@@ -39,8 +39,8 @@ function a($foo, $bar) {}
     public function getPriority(): int
     {
         // must be run after CommentToPhpdocFixer
-        // must be run before PhpdocAlignFixer
-        return 0;
+        // must be run before NoSuperfluousPhpdocTagsFixer and PhpdocAlignFixer
+        return 7;
     }
 
     public function isCandidate(Tokens $tokens): bool
