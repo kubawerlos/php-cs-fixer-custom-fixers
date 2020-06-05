@@ -256,6 +256,17 @@ bar($x);
 
         yield [
             new CustomFixer\NoCommentedOutCodeFixer(),
+            new Fixer\Whitespace\NoTrailingWhitespaceFixer(),
+            '<?php
+                $foo;
+            ',
+            '<?php
+                $foo; // $bar;
+            ',
+        ];
+
+        yield [
+            new CustomFixer\NoCommentedOutCodeFixer(),
             new Fixer\Import\NoUnusedImportsFixer(),
             '<?php
                 use Foo\Bar;

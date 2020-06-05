@@ -92,6 +92,31 @@ final class PriorityInternalFixer implements FixerInterface
                 ]
             );
         }
+
+        /** @var int $returnIndex */
+        $returnIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, [[T_RETURN]]);
+
+        $priorityStartIndex = $returnIndex + 2;
+
+        /** @var Token $priorityStartToken */
+        $priorityStartToken = $tokens[$priorityStartIndex];
+
+        if ($priorityStartToken->isGivenKind(T_VARIABLE)) {
+            return;
+        }
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextTokenOfKind($priorityStartIndex, [';']);
+
+        $priorityEndIndex = $nextIndex - 1;
+
+        $priorityCollection = PriorityCollection::create();
+        $priority = $priorityCollection->getPriorityFixer($className)->getPriority();
+
+        $priorityTokens = $priority < 0 ? [new Token('-')] : [];
+        $priorityTokens[] = new Token([T_LNUMBER, (string) \abs($priority)]);
+
+        $tokens->overrideRange($priorityStartIndex, $priorityEndIndex, $priorityTokens);
     }
 
     private function getCommentContent(string $className): string
