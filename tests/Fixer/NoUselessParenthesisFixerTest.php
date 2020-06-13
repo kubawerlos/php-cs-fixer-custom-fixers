@@ -144,6 +144,65 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php return // foo 
+                    // bar
+                        1 // baz
+ // qux
+                    ;',
+            '<?php return // foo 
+                    ( // bar
+                        1 // baz
+                    ) // qux
+                    ;',
+        ];
+
+        yield [
+            '<?php 
+                if (
+                        $foo
+                    ) {
+                    return true;
+                }
+            ',
+            '<?php 
+                if (
+                    (
+                        $foo
+                    )
+                    ) {
+                    return true;
+                }
+            ',
+        ];
+
+        if (false) {
+            yield [
+                '<?php
+                if // comment 1
+                    ( // comment 2
+                     // comment 3
+                        true // comment 4
+                    ) // comment 5
+                     // comment 6
+                    { // comment 7
+                        return true;
+                    }
+            ',
+                '<?php
+                if // comment 1
+                    ( // comment 2
+                    ( // comment 3
+                        true // comment 4
+                    ) // comment 5
+                    ) // comment 6
+                    { // comment 7
+                        return true;
+                    }
+            ',
+            ];
+        }
+
+        yield [
             '<?php
                 foo(1);
                 foo((2 + 3) * (4 + 5));

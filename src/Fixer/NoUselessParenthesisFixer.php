@@ -16,6 +16,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
@@ -81,10 +82,10 @@ foo(($bar));
                 continue;
             }
 
-            $tokens->clearAt($index);
-            $tokens->clearAt($blockEndIndex);
             $this->clearWhitespace($tokens, $index + 1);
             $this->clearWhitespace($tokens, $blockEndIndex - 1);
+            $tokens->clearTokenAndMergeSurroundingWhitespace($index);
+            $tokens->clearTokenAndMergeSurroundingWhitespace($blockEndIndex);
 
             if ($prevToken->isGivenKind(T_RETURN)) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
@@ -134,6 +135,17 @@ foo(($bar));
             return;
         }
 
-        $tokens->ensureWhitespaceAtIndex($index, 0, \rtrim($token->getContent(), " \t"));
+        /** @var int $prevIndex */
+        $prevIndex = $tokens->getNonEmptySibling($index, -1);
+
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
+
+        if ($prevToken->isComment() && Preg::match('#^//#', $prevToken->getContent()) === 1) {
+            $tokens->ensureWhitespaceAtIndex($index, 0, \rtrim($token->getContent(), " \t"));
+
+            return;
+        }
+        $tokens->clearAt($index);
     }
 }
