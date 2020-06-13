@@ -37,9 +37,11 @@ function foo($x) {}
         );
     }
 
+    /**
+     * Must run before PhpdocAlignFixer, PhpdocTypesOrderFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before PhpdocAlignFixer and PhpdocTypesOrderFixer
         return 1;
     }
 

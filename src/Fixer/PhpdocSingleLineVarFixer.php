@@ -37,9 +37,11 @@ class Foo {
         );
     }
 
+    /**
+     * Must run after PhpdocLineSpanFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after PhpdocLineSpanFixer
         return -1;
     }
 

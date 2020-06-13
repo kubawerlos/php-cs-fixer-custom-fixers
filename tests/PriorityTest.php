@@ -256,6 +256,17 @@ bar($x);
 
         yield [
             new CustomFixer\NoCommentedOutCodeFixer(),
+            new Fixer\Whitespace\NoTrailingWhitespaceFixer(),
+            '<?php
+                $foo;
+            ',
+            '<?php
+                $foo; // $bar;
+            ',
+        ];
+
+        yield [
+            new CustomFixer\NoCommentedOutCodeFixer(),
             new Fixer\Import\NoUnusedImportsFixer(),
             '<?php
                 use Foo\Bar;
@@ -557,6 +568,22 @@ bar($x);
                  * @param int $a
                  */
                  function bar($a, $b) {}
+            ',
+        ];
+
+        yield [
+            new CustomFixer\PhpdocParamTypeFixer(),
+            new Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer(),
+            '<?php
+                /**
+                 */
+                 function f($x) {}
+            ',
+            '<?php
+                /**
+                 * @param $x
+                 */
+                 function f($x) {}
             ',
         ];
 

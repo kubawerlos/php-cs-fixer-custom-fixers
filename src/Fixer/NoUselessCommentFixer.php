@@ -46,9 +46,11 @@ class Foo {
         );
     }
 
+    /**
+     * Must run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer and PhpdocTrimFixer
         return 6;
     }
 

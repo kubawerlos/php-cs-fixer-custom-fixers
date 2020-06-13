@@ -40,10 +40,12 @@ function foo($a, $b, $c) {}
         );
     }
 
+    /**
+     * Must run before PhpdocAlignFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocAddMissingParamAnnotationFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after CommentToPhpdocFixer and PhpdocAddMissingParamAnnotationFixer
-        // must be run before PhpdocAlignFixer
         return 0;
     }
 

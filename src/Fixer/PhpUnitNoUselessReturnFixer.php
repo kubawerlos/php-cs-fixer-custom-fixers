@@ -52,9 +52,11 @@ class FooTest extends TestCase {
         );
     }
 
+    /**
+     * Must run before NoExtraBlankLinesFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before NoExtraBlankLinesFixer
         return 0;
     }
 
