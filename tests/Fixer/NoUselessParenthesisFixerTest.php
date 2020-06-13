@@ -144,12 +144,12 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php return // foo 
+            '<?php return // foo
                     // bar
                         1 // baz
  // qux
                     ;',
-            '<?php return // foo 
+            '<?php return // foo
                     ( // bar
                         1 // baz
                     ) // qux
@@ -157,19 +157,19 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php 
+            '<?php
                 if (
                         $foo
                     ) {
                     return true;
                 }
             ',
-            '<?php 
+            '<?php
                 if (
                     (
                         $foo
                     )
-                    ) {
+                ) {
                     return true;
                 }
             ',
@@ -182,18 +182,18 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
                     ( // comment 2
                      // comment 3
                         true // comment 4
-                    ) // comment 5
-                     // comment 6
-                    { // comment 7
+                ) // comment 5
+                 // comment 6
+                { // comment 7
                         return true;
                     }
             ',
                 '<?php
                 if // comment 1
                     ( // comment 2
-                    ( // comment 3
-                        true // comment 4
-                    ) // comment 5
+                        ( // comment 3
+                            true // comment 4
+                        ) // comment 5
                     ) // comment 6
                     { // comment 7
                         return true;
