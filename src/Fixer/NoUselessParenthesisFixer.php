@@ -62,12 +62,6 @@ foo(($bar));
                 continue;
             }
 
-            /** @var int $prevIndex */
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-
-            /** @var Token $prevToken */
-            $prevToken = $tokens[$prevIndex];
-
             /** @var array<string, int> $blockType */
             $blockType = Tokens::detectBlockType($token);
             $blockEndIndex = $tokens->findBlockEnd($blockType['type'], $index);
@@ -80,6 +74,12 @@ foo(($bar));
             $this->clearWhitespace($tokens, $blockEndIndex - 1);
             $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             $tokens->clearTokenAndMergeSurroundingWhitespace($blockEndIndex);
+
+            /** @var int $prevIndex */
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+
+            /** @var Token $prevToken */
+            $prevToken = $tokens[$prevIndex];
 
             if ($prevToken->isGivenKind(T_RETURN)) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
@@ -98,20 +98,20 @@ foo(($bar));
     {
         $blocksAnalyzer = new BlocksAnalyzer();
 
-        /** @var int $prevStartIndex */
-        $prevStartIndex = $tokens->getPrevMeaningfulToken($startIndex);
+        /** @var int $prevIndex */
+        $prevIndex = $tokens->getPrevMeaningfulToken($startIndex);
 
-        /** @var Token $prevStartToken */
-        $prevStartToken = $tokens[$prevStartIndex];
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
 
-        /** @var int $nextEndIndex */
-        $nextEndIndex = $tokens->getNextMeaningfulToken($endIndex);
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextMeaningfulToken($endIndex);
 
-        /** @var Token $nextEndToken */
-        $nextEndToken = $tokens[$nextEndIndex];
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
 
-        return $blocksAnalyzer->isBlock($tokens, $prevStartIndex, $nextEndIndex)
-            || $prevStartToken->equalsAny(['=', [T_RETURN]]) && $nextEndToken->equals(';');
+        return $blocksAnalyzer->isBlock($tokens, $prevIndex, $nextIndex)
+            || $prevToken->equalsAny(['=', [T_RETURN]]) && $nextToken->equals(';');
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void
