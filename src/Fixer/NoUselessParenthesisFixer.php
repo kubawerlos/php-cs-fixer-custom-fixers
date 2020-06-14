@@ -16,7 +16,6 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
@@ -129,11 +128,12 @@ foo(($bar));
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
-        if ($prevToken->isComment() && Preg::match('#^//#', $prevToken->getContent()) === 1) {
+        if ($prevToken->isComment()) {
             $tokens->ensureWhitespaceAtIndex($index, 0, \rtrim($token->getContent(), " \t"));
 
             return;
         }
+
         $tokens->clearAt($index);
     }
 }

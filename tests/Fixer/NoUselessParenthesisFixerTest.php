@@ -175,20 +175,19 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
             ',
         ];
 
-        if (false) {
-            yield [
-                '<?php
+        yield [
+            '<?php
                 if // comment 1
                     ( // comment 2
-                     // comment 3
-                        true // comment 4
-                ) // comment 5
-                 // comment 6
-                { // comment 7
+                        // comment 3
+                            true // comment 4
+ // comment 5
+                    ) // comment 6
+                    { // comment 7
                         return true;
                     }
             ',
-                '<?php
+            '<?php
                 if // comment 1
                     ( // comment 2
                         ( // comment 3
@@ -199,8 +198,57 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
                         return true;
                     }
             ',
-            ];
-        }
+        ];
+
+        yield [
+            '<?php
+                if # comment 1
+                    ( # comment 2
+                        # comment 3
+                            true # comment 4
+ # comment 5
+                    ) # comment 6
+                    { # comment 7
+                        return true;
+                    }
+            ',
+            '<?php
+                if # comment 1
+                    ( # comment 2
+                        ( # comment 3
+                            true # comment 4
+                        ) # comment 5
+                    ) # comment 6
+                    { # comment 7
+                        return true;
+                    }
+            ',
+        ];
+
+        yield [
+            '<?php
+                if /* comment 1 */
+                    ( /* comment 2 */
+                        /* comment 3 */
+                            true /* comment 4 */
+ /* comment 5 */
+                    ) /* comment 6 */
+                    { /* comment 7 */
+                        return true;
+                    }
+            ',
+            '<?php
+                if /* comment 1 */
+                    ( /* comment 2 */
+                        ( /* comment 3 */
+                            true /* comment 4 */
+                        ) /* comment 5 */
+                    ) /* comment 6 */
+                    { /* comment 7 */
+                        return true;
+                    }
+            ',
+        ];
 
         yield [
             '<?php
