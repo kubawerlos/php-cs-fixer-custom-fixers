@@ -71,10 +71,6 @@ foo(($bar));
             /** @var Token $prevToken */
             $prevToken = $tokens[$prevIndex];
 
-            if ($prevToken->isGivenKind([T_ARRAY, T_CLASS, T_STATIC, T_STRING, T_VARIABLE])) {
-                continue;
-            }
-
             /** @var array<string, int> $blockType */
             $blockType = Tokens::detectBlockType($token);
             $blockEndIndex = $tokens->findBlockEnd($blockType['type'], $index);
