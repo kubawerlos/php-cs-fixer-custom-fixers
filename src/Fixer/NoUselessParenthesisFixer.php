@@ -21,6 +21,7 @@ use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Tokenizer\Transformer\BraceClassInstantiationTransformer;
 
 final class NoUselessParenthesisFixer extends AbstractFixer
 {
@@ -46,7 +47,7 @@ foo(($bar));
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound(['(',  CT::T_BRACE_CLASS_INSTANTIATION_OPEN]);
+        return $tokens->isAnyTokenKindsFound(['(', CT::T_BRACE_CLASS_INSTANTIATION_OPEN]);
     }
 
     public function isRisky(): bool
@@ -90,6 +91,13 @@ foo(($bar));
             if ($prevToken->isGivenKind(T_RETURN)) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
             }
+
+            $transformer = new BraceClassInstantiationTransformer();
+
+            /** @var Token $t */
+            foreach ($tokens as $i => $t) {
+                $transformer->process($tokens, $t, $i);
+            }
         }
     }
 
@@ -109,21 +117,8 @@ foo(($bar));
         /** @var Token $nextEndToken */
         $nextEndToken = $tokens[$nextEndIndex];
 
-        if ($blocksAnalyzer->isBlock($tokens, $prevStartIndex, $nextEndIndex)) {
-            return true;
-        }
-
-        if ($prevStartToken->equalsAny(['=', [T_RETURN]]) && $nextEndToken->equals(';')) {
-            return true;
-        }
-
-        /** @var int $nextStartIndex */
-        $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
-
-        /** @var int $prevEndIndex */
-        $prevEndIndex = $tokens->getPrevMeaningfulToken($endIndex);
-
-        return $blocksAnalyzer->isBlock($tokens, $nextStartIndex, $prevEndIndex);
+        return $blocksAnalyzer->isBlock($tokens, $prevStartIndex, $nextEndIndex)
+            || $prevStartToken->equalsAny(['=', [T_RETURN]]) && $nextEndToken->equals(';');
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void

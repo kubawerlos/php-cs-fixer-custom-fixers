@@ -159,8 +159,8 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 if (
-                        $foo
-                    ) {
+                    $foo
+                ) {
                     return true;
                 }
             ',
