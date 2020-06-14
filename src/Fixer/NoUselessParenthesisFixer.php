@@ -25,9 +25,6 @@ use PhpCsFixer\Tokenizer\Transformer\BraceClassInstantiationTransformer;
 
 final class NoUselessParenthesisFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
