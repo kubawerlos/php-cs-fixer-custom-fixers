@@ -1,5 +1,5 @@
 parameters:
-  autoload_files:
+  bootstrapFiles:
     - ../vendor/autoload.php
   excludes_analyse:
     - ./src/Readme
