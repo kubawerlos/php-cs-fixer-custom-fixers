@@ -25,9 +25,6 @@ use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
 final class DataProviderReturnTypeFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(

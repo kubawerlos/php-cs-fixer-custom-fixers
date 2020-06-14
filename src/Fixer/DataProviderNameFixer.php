@@ -33,9 +33,6 @@ final class DataProviderNameFixer extends AbstractFixer implements Configuration
     /** @var string */
     private $suffix = 'Cases';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
