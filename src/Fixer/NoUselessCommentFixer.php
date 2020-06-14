@@ -22,9 +22,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoUselessCommentFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
