@@ -256,6 +256,17 @@ bar($x);
 
         yield [
             new CustomFixer\NoCommentedOutCodeFixer(),
+            new Fixer\Whitespace\NoTrailingWhitespaceFixer(),
+            '<?php
+                $foo;
+            ',
+            '<?php
+                $foo; // $bar;
+            ',
+        ];
+
+        yield [
+            new CustomFixer\NoCommentedOutCodeFixer(),
             new Fixer\Import\NoUnusedImportsFixer(),
             '<?php
                 use Foo\Bar;
@@ -562,6 +573,22 @@ bar($x);
 
         yield [
             new CustomFixer\PhpdocParamTypeFixer(),
+            new Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer(),
+            '<?php
+                /**
+                 */
+                 function f($x) {}
+            ',
+            '<?php
+                /**
+                 * @param $x
+                 */
+                 function f($x) {}
+            ',
+        ];
+
+        yield [
+            new CustomFixer\PhpdocParamTypeFixer(),
             new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php
                 /**
@@ -576,6 +603,30 @@ bar($x);
                  * @param     $y
                  */
                 function foo($x, $y) {}
+            ',
+        ];
+
+        yield [
+            new CustomFixer\PhpdocSelfAccessorFixer(),
+            new Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer(),
+            '<?php
+                class Foo
+                {
+                    /**
+                     */
+                    public function bar(): self
+                    {}
+                }
+            ',
+            '<?php
+                class Foo
+                {
+                    /**
+                     * @return Foo
+                     */
+                    public function bar(): self
+                    {}
+                }
             ',
         ];
 

@@ -32,10 +32,12 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
         );
     }
 
+    /**
+     * Must run before MultilineCommentOpeningClosingFixer.
+     * Must run after CommentedOutFunctionFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after CommentedOutFunctionFixer
-        // must be run before MultilineCommentOpeningClosingFixer
         return 1;
     }
 

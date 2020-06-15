@@ -273,6 +273,7 @@ make sure all checks pass:
 ```bash
 ./check_trailing_whitespaces.sh
 composer verify
+composer infection
 ```
 and submit pull request.',
             $this->composer()->name,

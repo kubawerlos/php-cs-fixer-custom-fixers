@@ -51,9 +51,11 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         $this->allowPreventingTrailingSpaces = isset($configuration['allow_preventing_trailing_spaces']) && $configuration['allow_preventing_trailing_spaces'] === true;
     }
 
+    /**
+     * Must run after SingleLineThrowFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after SingleLineThrowFixer
         return 0;
     }
 

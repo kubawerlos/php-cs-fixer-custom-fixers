@@ -22,9 +22,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoUselessCommentFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -46,9 +43,11 @@ class Foo {
         );
     }
 
+    /**
+     * Must run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer and PhpdocTrimFixer
         return 6;
     }
 
@@ -78,7 +77,7 @@ class Foo {
                 [[T_WHITESPACE], [T_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC]]
             );
             if ($nextIndex === null) {
-                return;
+                continue;
             }
 
             /** @var Token $nextToken */

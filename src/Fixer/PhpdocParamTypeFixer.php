@@ -36,11 +36,13 @@ function a($foo, $bar) {}
         );
     }
 
+    /**
+     * Must run before NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer.
+     * Must run after CommentToPhpdocFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after CommentToPhpdocFixer
-        // must be run before PhpdocAlignFixer
-        return 0;
+        return 7;
     }
 
     public function isCandidate(Tokens $tokens): bool

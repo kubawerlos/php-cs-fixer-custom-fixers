@@ -25,9 +25,6 @@ use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
 final class DataProviderReturnTypeFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -50,9 +47,11 @@ class FooTest extends TestCase {
         );
     }
 
+    /**
+     * Must run before ReturnTypeDeclarationFixer.
+     */
     public function getPriority(): int
     {
-        // must be run before ReturnTypeDeclarationFixer
         return 0;
     }
 

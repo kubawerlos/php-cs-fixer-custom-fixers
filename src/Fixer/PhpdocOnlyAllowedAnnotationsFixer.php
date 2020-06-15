@@ -67,10 +67,12 @@ function foo_bar() {}
         }
     }
 
+    /**
+     * Must run before NoEmptyPhpdocFixer.
+     * Must run after CommentToPhpdocFixer.
+     */
     public function getPriority(): int
     {
-        // must be run after CommentToPhpdocFixer
-        // must be run before NoEmptyPhpdocFixer
         return 6;
     }
 
@@ -97,11 +99,12 @@ function foo_bar() {}
             $docBlock = new DocBlock($token->getContent());
 
             foreach ($docBlock->getAnnotations() as $annotation) {
-                Preg::match('/@([a-zA-Z0-9\Q_-\\\E]+)/', $annotation->getContent(), $matches);
-
-                if (\in_array($matches[1], $this->elements, true)) {
+                if (Preg::match('/@([a-zA-Z0-9_\\-\\\\]+)/', $annotation->getContent(), $matches) === 1
+                    && \in_array($matches[1], $this->elements, true)
+                ) {
                     continue;
                 }
+
                 $annotation->remove();
             }
 
