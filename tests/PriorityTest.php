@@ -607,6 +607,30 @@ bar($x);
         ];
 
         yield [
+            new CustomFixer\PhpdocSelfAccessorFixer(),
+            new Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer(),
+            '<?php
+                class Foo
+                {
+                    /**
+                     */
+                    public function bar(): self
+                    {}
+                }
+            ',
+            '<?php
+                class Foo
+                {
+                    /**
+                     * @return Foo
+                     */
+                    public function bar(): self
+                    {}
+                }
+            ',
+        ];
+
+        yield [
             new CustomFixer\PhpdocTypesTrimFixer(),
             new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php
