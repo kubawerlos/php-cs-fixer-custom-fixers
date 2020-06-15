@@ -48,13 +48,13 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             /**
              */
             class Foo {}
-             ',
+            ',
             '<?php
             /**
              * Class Foo.
              */
             class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -62,13 +62,13 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             /**
              */
             class Bar {}
-             ',
+            ',
             '<?php
             /**
              * Class Foo\Bar.
              */
             class Bar {}
-             ',
+            ',
         ];
 
         yield [
@@ -76,13 +76,13 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             /**
              */
             class Foo {}
-             ',
+            ',
             '<?php
             /**
              * Class Foo
              */
             class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -90,13 +90,13 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             /**
              */
             interface Foo {}
-             ',
+            ',
             '<?php
             /**
              * Interface Foo
              */
             interface Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -104,13 +104,13 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             /**
              */
             trait Foo {}
-             ',
+            ',
             '<?php
             /**
              * Trait Foo
              */
             trait Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -120,7 +120,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
              * Class provides nice functionality
              */
             class Foo {}
-             ',
+            ',
             '<?php
             /**
              * Class Foo.
@@ -128,7 +128,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
              * Class provides nice functionality
              */
             class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -138,7 +138,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
              *
              */
             class Foo {}
-             ',
+            ',
             '<?php
             /**
              * Class provides nice functionality
@@ -146,7 +146,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
              * Class Foo.
              */
             class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -156,7 +156,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
              * Class is cool
              */
             class Foo {}
-             ',
+            ',
             '<?php
             /**
              * @author John Doe
@@ -164,7 +164,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
              * Class is cool
              */
             class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -173,13 +173,13 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
              * @see example.com
              */
             abstract class Foo {}
-             ',
+            ',
             '<?php
             /** Class Foo
              * @see example.com
              */
             abstract class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -187,12 +187,12 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             //
             // Class that does something
             final class Foo {}
-             ',
+            ',
             '<?php
             // Class Foo
             // Class that does something
             final class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -200,19 +200,19 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             #
             # Class that does something
             final class Foo {}
-             ',
+            ',
             '<?php
             # Class Foo
             # Class that does something
             final class Foo {}
-             ',
+            ',
         ];
 
         yield [
             '<?php
             // I am class Foo
             class Foo {}
-             ',
+            ',
         ];
 
         yield [
@@ -221,7 +221,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             if (true) {
                 return false;
             }
-             ',
+            ',
         ];
 
         yield [
@@ -230,117 +230,117 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
               * @coversDefaultClass CoveredClass
               */
              class Foo {}
-             ',
+            ',
         ];
 
         yield [
             '<?php
-             /**
-              * @coversDefaultClass ClassCovered
-              */
-             class Foo {}
-             ',
+            /**
+             * @coversDefaultClass ClassCovered
+             */
+            class Foo {}
+            ',
         ];
 
         yield [
             '<?php
-             class Foo {
-                 /**
-                  */
-                 public function __constructor() {}
-             }
-             ',
+            class Foo {
+                /**
+                 */
+                public function __constructor() {}
+            }
+            ',
             '<?php
-             class Foo {
-                 /**
-                  * Foo constructor.
-                  */
-                 public function __constructor() {}
-             }
-             ',
+            class Foo {
+                /**
+                 * Foo constructor.
+                 */
+                public function __constructor() {}
+            }
+            ',
         ];
 
         yield [
             '<?php
-             class Foo {
-                 /**
-                  */
-                 public function setA() {}
-                 /**
-                  */
-                 public static function setB() {}
-                 /**
-                  */
-                 static public function setC() {}
-                 /**
-                  */
-                 protected function setD() {}
-                 /**
-                  */
-                 private function setE() {}
-                 /**
-                  */
-                 private function getF() {}
-                 /**
-                  */
-                 private function setG() {}
-                 /**
-                  */
-                 private function getH() {}
-                 /**
-                  * Does not really gets I
-                  */
-                 private function getI() {}
-                 /**
-                  * Get J in a fancy way
-                  */
-                 private function getJ() {}
-             }
-             ',
+            class Foo {
+                /**
+                 */
+                public function setA() {}
+                /**
+                 */
+                public static function setB() {}
+                /**
+                 */
+                static public function setC() {}
+                /**
+                 */
+                protected function setD() {}
+                /**
+                 */
+                private function setE() {}
+                /**
+                 */
+                private function getF() {}
+                /**
+                 */
+                private function setG() {}
+                /**
+                 */
+                private function getH() {}
+                /**
+                 * Does not really gets I
+                 */
+                private function getI() {}
+                /**
+                 * Get J in a fancy way
+                 */
+                private function getJ() {}
+            }
+            ',
             '<?php
-             class Foo {
-                 /**
-                  * Set A
-                  */
-                 public function setA() {}
-                 /**
-                  * Set B.
-                  */
-                 public static function setB() {}
-                 /**
-                  * Set C
-                  */
-                 static public function setC() {}
-                 /**
-                  * Set D
-                  */
-                 protected function setD() {}
-                 /**
-                  * Sets E
-                  */
-                 private function setE() {}
-                 /**
-                  * Get F
-                  */
-                 private function getF() {}
-                 /**
-                  * Gets G
-                  */
-                 private function setG() {}
-                 /**
-                  * Gets H.
-                  */
-                 private function getH() {}
-                 /**
-                  * Does not really gets I
-                  */
-                 private function getI() {}
-                 /**
-                  * Get J in a fancy way
-                  */
-                 private function getJ() {}
-             }
-             ',
+            class Foo {
+                /**
+                 * Set A
+                 */
+                public function setA() {}
+                /**
+                 * Set B.
+                 */
+                public static function setB() {}
+                /**
+                 * Set C
+                 */
+                static public function setC() {}
+                /**
+                 * Set D
+                 */
+                protected function setD() {}
+                /**
+                 * Sets E
+                 */
+                private function setE() {}
+                /**
+                 * Get F
+                 */
+                private function getF() {}
+                /**
+                 * Gets G
+                 */
+                private function setG() {}
+                /**
+                 * Gets H.
+                 */
+                private function getH() {}
+                /**
+                 * Does not really gets I
+                 */
+                private function getI() {}
+                /**
+                 * Get J in a fancy way
+                 */
+                private function getJ() {}
+            }
+            ',
         ];
 
         yield [
@@ -386,6 +386,22 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
                         return  42;
                     }
                 }
+            ',
+        ];
+
+        yield [
+            '<?php
+            /**
+             */
+            class Bar {}
+            // foo
+            ',
+            '<?php
+            /**
+             * Class Foo\Bar.
+             */
+            class Bar {}
+            // foo
             ',
         ];
     }
