@@ -77,7 +77,7 @@ class Foo {
                 [[T_WHITESPACE], [T_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC]]
             );
             if ($nextIndex === null) {
-                return;
+                continue;
             }
 
             /** @var Token $nextToken */
