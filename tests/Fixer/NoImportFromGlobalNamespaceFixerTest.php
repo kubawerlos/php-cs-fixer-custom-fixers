@@ -276,6 +276,18 @@ class Bar {
 
         yield [
             '<?php
+                namespace Foo;
+                function Bar() {}
+            ',
+            '<?php
+                namespace Foo;
+                use Bar;
+                function Bar() {}
+            ',
+        ];
+
+        yield [
+            '<?php
                 namespace N1;  new \DateTime();
                 namespace N2;  new \DateTime();
                 namespace N3;  new \DateTime();

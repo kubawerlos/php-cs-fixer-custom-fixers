@@ -166,7 +166,7 @@ class Bar {
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
-        if ($prevToken->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR])) {
+        if ($prevToken->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR, T_FUNCTION])) {
             return;
         }
 
