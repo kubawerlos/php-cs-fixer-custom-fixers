@@ -38,6 +38,7 @@ jobs:
           - os: ubuntu-latest
             php-version: '8.0'
             composer_flags: '--ignore-platform-reqs'
+            continue-on-error: true
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
