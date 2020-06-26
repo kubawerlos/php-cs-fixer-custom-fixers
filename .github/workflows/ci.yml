@@ -16,8 +16,11 @@ jobs:
       - name: Check trailing whitespaces
         run: ./dev-tools/check_trailing_whitespaces.sh
 
+      - name: Echo
+        run: echo $GITHUB_TOKEN
+
       - name: Composer config
-        run: composer config -g github-oauth.github.com $GITHUB_TOKEN
+        run: composer config github-oauth.github.com $GITHUB_TOKEN
 
       - name: Install dependencies
         run: composer update --no-progress --profile -vvv
