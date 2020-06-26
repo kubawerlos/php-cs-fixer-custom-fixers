@@ -20,7 +20,7 @@ jobs:
         run: composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
-        run: composer update --no-progress --profile -vvv
+        run: composer update --no-progress
 
       - name: Analyse
         run: composer test
@@ -74,6 +74,9 @@ jobs:
 
       - name: Install prestissimo
         run: composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
+
+      - name: Composer config
+        run: composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
