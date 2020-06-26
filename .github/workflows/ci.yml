@@ -17,7 +17,7 @@ jobs:
         run: ./dev-tools/check_trailing_whitespaces.sh
 
       - name: Install dependencies
-        run: composer update --no-progress --no-suggest
+        run: composer update --no-progress
 
       - name: Analyse
         run: composer test
