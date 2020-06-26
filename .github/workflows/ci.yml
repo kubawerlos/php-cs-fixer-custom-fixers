@@ -23,6 +23,9 @@ jobs:
           tools: composer:v2
 
       - name: Install dependencies
+        run: composer config -g --unset github-oauth.github.com
+
+      - name: Install dependencies
         run: composer update --no-progress --profile -vvv
 
       - name: Analyse
