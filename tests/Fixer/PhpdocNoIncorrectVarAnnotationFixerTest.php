@@ -261,11 +261,12 @@ class Foo
      */
     public $b;
 
-    /**      */
+    /**
+     */
     protected $c;
 
     /**
-*/
+     */
     private $d;
 
     /**
