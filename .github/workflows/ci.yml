@@ -16,6 +16,9 @@ jobs:
       - name: Check trailing whitespaces
         run: ./dev-tools/check_trailing_whitespaces.sh
 
+      - name: Use Composer 2
+        run: composer selfu --2
+
       - name: Install dependencies
         run: composer update --no-progress --profile -vvv
 
