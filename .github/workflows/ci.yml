@@ -16,8 +16,11 @@ jobs:
       - name: Check trailing whitespaces
         run: ./dev-tools/check_trailing_whitespaces.sh
 
-      - name: Use Composer 2
-        run: composer selfu --2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
 
       - name: Install dependencies
         run: composer update --no-progress --profile -vvv
