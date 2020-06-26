@@ -16,12 +16,6 @@ jobs:
       - name: Check trailing whitespaces
         run: ./dev-tools/check_trailing_whitespaces.sh
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-          tools: composer:v2
-
       - name: Composer config
         run: composer config -g github-oauth.github.com $GITHUB_TOKEN
 
