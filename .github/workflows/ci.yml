@@ -22,8 +22,8 @@ jobs:
           php-version: '7.4'
           tools: composer:v2
 
-      - name: Install dependencies
-        run: composer config -g --unset github-oauth.github.com
+      - name: Composer config
+        run: composer config -g github-oauth.github.com $GITHUB_TOKEN
 
       - name: Install dependencies
         run: composer update --no-progress --profile -vvv
