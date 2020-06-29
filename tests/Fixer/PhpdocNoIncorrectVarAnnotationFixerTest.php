@@ -261,11 +261,12 @@ class Foo
      */
     public $b;
 
-    /**      */
+    /**
+     */
     protected $c;
 
     /**
-*/
+     */
     private $d;
 
     /**
@@ -290,7 +291,7 @@ class Foo
     protected $c;
 
     /**
-      * @var $foo */
+     * @var $foo */
     private $d;
 
     /**

@@ -125,12 +125,12 @@ final class PriorityInternalFixer implements FixerInterface
         $priorityCollection = PriorityCollection::create();
 
         $fixersToRunAfter = $priorityCollection->getPriorityFixer($className)->getFixerToRunAfterNames();
-        if ([] !== $fixersToRunAfter) {
+        if ($fixersToRunAfter !== []) {
             $comment .= \sprintf("     * Must run before %s.\n", \implode(', ', $fixersToRunAfter));
         }
 
         $fixersToRunBefore = $priorityCollection->getPriorityFixer($className)->getFixerToRunBeforeNames();
-        if ([] !== $fixersToRunBefore) {
+        if ($fixersToRunBefore !== []) {
             $comment .= \sprintf("     * Must run after %s.\n", \implode(', ', $fixersToRunBefore));
         }
 
