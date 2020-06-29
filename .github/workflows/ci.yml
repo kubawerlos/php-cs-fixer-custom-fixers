@@ -76,13 +76,15 @@ jobs:
         run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
 
       - name: Test
-        run: composer test -- --coverage-clover=./coverage/lcov.info
+        run: composer test -- --coverage-clover=./build/logs/clover.xml
 
-      - name: Coveralls GitHub Action
+      - name: Upload coverage results to Coveralls
         if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
-        uses: coverallsapp/github-action@v1.1.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          composer require --dev twinh/php-coveralls
+          php-coveralls --coverage_clover=./build/logs/clover.xml -v
 
       - name: Run Infection
         if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
