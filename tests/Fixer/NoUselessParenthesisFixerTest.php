@@ -55,6 +55,16 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php throw $exception;',
+            '<?php throw ($exception);',
+        ];
+
+        yield [
+            '<?php throw new Exception("message");',
+            '<?php throw (new Exception("message"));',
+        ];
+
+        yield [
             '<?php return array();',
             '<?php return(array());',
         ];

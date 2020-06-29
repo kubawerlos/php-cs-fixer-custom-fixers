@@ -110,7 +110,7 @@ foo(($bar));
         $nextToken = $tokens[$nextIndex];
 
         return $blocksAnalyzer->isBlock($tokens, $prevIndex, $nextIndex)
-            || $prevToken->equalsAny(['=', [T_RETURN]]) && $nextToken->equals(';');
+            || $prevToken->equalsAny(['=', [T_RETURN], [T_THROW]]) && $nextToken->equals(';');
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void
