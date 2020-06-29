@@ -157,18 +157,6 @@ $bar = new Foo();
 
             return;
         }
-        $tokens[$index] = new Token([T_DOC_COMMENT, $this->ensureDocCommentContent($content)]);
-    }
-
-    private function ensureDocCommentContent(string $content): string
-    {
-        if (\strpos($content, '/**') !== 0) {
-            $content = '/** ' . $content;
-        }
-        if (\strpos($content, '*/') === false) {
-            $content .= \str_replace(\ltrim($content), '', $content) . '*/';
-        }
-
-        return $content;
+        $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
     }
 }
