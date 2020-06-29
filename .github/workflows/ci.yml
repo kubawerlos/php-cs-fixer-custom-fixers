@@ -78,11 +78,13 @@ jobs:
       - name: Test
         run: composer test -- --coverage-clover=./build/logs/clover.xml
 
-      - name: Collect coverage
+      - name: Upload coverage results to Coveralls
         if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          composer require --dev php-coveralls/php-coveralls
-          COVERALLS_REPO_TOKEN=${{ secrets.COVERALLS_REPO_TOKEN }} COVERALLS_RUN_LOCALLY=1 ./vendor/bin/php-coveralls --verbose
+          composer require --dev twinh/php-coveralls
+          ./vendor/bin/php-coveralls --verbose
 
       - name: Run Infection
         if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
