@@ -1,8 +1,9 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## v2.3.0 - [Unreleased]
+## v2.3.0 - *2020-07-07*
 - Add NoUselessParenthesisFixer
 - Add NoUselessStrlenFixer
+- DataProviderNameFixer - handle snake_case naming
 
 ## v2.2.0 - *2020-04-02*
 - Feature: DataProviderNameFixer - add options "prefix" and "suffix"
