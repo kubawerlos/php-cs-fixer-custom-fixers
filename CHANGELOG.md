@@ -2,6 +2,7 @@
 
 ## v2.3.0 - [Unreleased]
 - Add NoUselessParenthesisFixer
+- Add NoUselessStrlenFixer
 
 ## v2.2.0 - *2020-04-02*
 - Feature: DataProviderNameFixer - add options "prefix" and "suffix"
