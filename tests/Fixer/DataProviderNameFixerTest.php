@@ -301,92 +301,87 @@ class FooTest extends TestCase {
             ];
         }
 
-        yield 'custom prefix' => [
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider theBestPrefixFooCases
-     */
-    public function testFoo() {}
-    public function theBestPrefixFooCases() {}
-}',
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider dp
-     */
-    public function testFoo() {}
-    public function dp() {}
-}',
-            ['prefix' => 'theBestPrefix'],
-        ];
-
-        yield 'custom suffix' => [
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider provideFooTheBestSuffix
-     */
-    public function testFoo() {}
-    public function provideFooTheBestSuffix() {}
-}',
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider dp
-     */
-    public function testFoo() {}
-    public function dp() {}
-}',
-            ['suffix' => 'TheBestSuffix'],
-        ];
-
-        yield 'custom prefix and suffix' => [
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider theBestPrefixFooTheBestSuffix
-     */
-    public function testFoo() {}
-    public function theBestPrefixFooTheBestSuffix() {}
-}',
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider dp
-     */
-    public function testFoo() {}
-    public function dp() {}
-}',
-
-            [
-                'prefix' => 'theBestPrefix',
-                'suffix' => 'TheBestSuffix',
+        foreach ([
+            'custom prefix' => [
+                'theBestPrefixFooCases',
+                'testFoo',
+                ['prefix' => 'theBestPrefix'],
             ],
-        ];
-
-        yield 'empty suffix' => [
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider dataProviderForFoo
-     */
-    public function testFoo() {}
-    public function dataProviderForFoo() {}
-}',
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider dp
-     */
-    public function testFoo() {}
-    public function dp() {}
-}',
-
-            [
-                'prefix' => 'dataProviderFor',
-                'suffix' => '',
+            'custom suffix' => [
+                'provideFooTheBestSuffix',
+                'testFoo',
+                ['suffix' => 'TheBestSuffix'],
             ],
-        ];
+            'custom prefix and suffix' => [
+                'theBestPrefixFooTheBestSuffix',
+                'testFoo',
+                ['prefix' => 'theBestPrefix', 'suffix' => 'TheBestSuffix'],
+            ],
+            'empty prefix' => [
+                'fooDataProvider',
+                'testFoo',
+                ['prefix' => '', 'suffix' => 'DataProvider'],
+            ],
+            'empty suffix' => [
+                'dataProviderForFoo',
+                'testFoo',
+                ['prefix' => 'dataProviderFor', 'suffix' => ''],
+            ],
+            'prefix and suffix with underscores' => [
+                'provide_foo_data',
+                'test_foo',
+                ['prefix' => 'provide_', 'suffix' => '_data'],
+            ],
+            'empty prefix and suffix with underscores' => [
+                'foo_data_provider',
+                'test_foo',
+                ['prefix' => '', 'suffix' => '_data_provider'],
+            ],
+            'prefix with underscores and empty suffix' => [
+                'data_provider_foo',
+                'test_foo',
+                ['prefix' => 'data_provider_', 'suffix' => ''],
+            ],
+            'prefix with underscores and empty suffix and test function starting with uppercase' => [
+                'data_provider_Foo',
+                'test_Foo',
+                ['prefix' => 'data_provider_', 'suffix' => ''],
+            ],
+            'prefix and suffix with underscores and test function having multiple consecutive underscores' => [
+                'provide_foo_data',
+                'test___foo',
+                ['prefix' => 'provide_', 'suffix' => '_data'],
+            ],
+            'uppercase naming' => [
+                'PROVIDE_FOO_DATA',
+                'TEST_FOO',
+                ['prefix' => 'PROVIDE_', 'suffix' => '_DATA'],
+            ],
+            'camelCase test function and prefix with underscores' => [
+                'data_provider_FooBar',
+                'testFooBar',
+                ['prefix' => 'data_provider_', 'suffix' => ''],
+            ],
+        ] as $name => list($dataProvider, $testFunction, $config)) {
+            yield $name => [
+                \sprintf('<?php
+                    class FooTest extends TestCase {
+                        /**
+                         * @dataProvider %s
+                         */
+                        public function %s() {}
+                        public function %s() {}
+                    }', $dataProvider, $testFunction, $dataProvider),
+                \sprintf('<?php
+                    class FooTest extends TestCase {
+                        /**
+                         * @dataProvider dtPrvdr
+                         */
+                        public function %s() {}
+                        public function dtPrvdr() {}
+                    }', $testFunction),
+                $config,
+            ];
+        }
     }
 }
