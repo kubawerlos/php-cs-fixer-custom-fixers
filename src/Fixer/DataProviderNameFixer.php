@@ -147,10 +147,15 @@ class FooTest extends TestCase {
 
     private function getProviderNameForTestName(string $name): string
     {
-        if (Preg::match('/^test/', $name) === 1) {
-            $name = \substr($name, 4);
+        /** @var string $name */
+        $name = Preg::replace('/^test_*/i', '', $name);
+
+        if ($this->prefix === '') {
+            $name = \lcfirst($name);
+        } elseif (\substr($this->prefix, -1) !== '_') {
+            $name = \ucfirst($name);
         }
 
-        return $this->prefix . \ucfirst($name) . $this->suffix;
+        return $this->prefix . $name . $this->suffix;
     }
 }
