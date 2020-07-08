@@ -289,7 +289,7 @@ Function `sprintf` without parameters should not be used.
 ```
 
 #### NoUselessStrlenFixer
-Function `strlen` should not be used when compared to 0.
+Function `strlen` (or `mb_strlen`) should not be used when compared to 0.
   *Risky: when the function `strlen` is overridden.*
 ```diff
  <?php
