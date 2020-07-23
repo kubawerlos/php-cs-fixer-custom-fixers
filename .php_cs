@@ -35,6 +35,7 @@ return PhpCsFixer\Config::create()
             ->in(__DIR__ . '/tests')
             ->notName('php-cs-fixer.config.*.php')
             ->append([
+                __DIR__ . '/dev-tools/build-infection-config',
                 __DIR__ . '/dev-tools/readme',
                 __FILE__,
             ])
