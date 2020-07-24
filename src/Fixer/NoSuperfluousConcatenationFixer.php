@@ -160,18 +160,22 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             [
                 new Token(
                     [T_CONSTANT_ENCAPSED_STRING,
-                        $prefix . $border . $this->getContentForBorder($firstContent, $border) . $this->getContentForBorder($secondContent, $border) . $border,
+                        $prefix . $border . $this->getContentForBorder($firstContent, $border, true) . $this->getContentForBorder($secondContent, $border, false) . $border,
                     ]
                 ),
             ]
         );
     }
 
-    private function getContentForBorder(string $content, string $targetBorder): string
+    private function getContentForBorder(string $content, string $targetBorder, bool $escapeDollarWhenIsLastCharacter): string
     {
         $currentBorder = $content[0];
         $content = \substr($content, 1, -1);
         if ($currentBorder === '"') {
+            if ($escapeDollarWhenIsLastCharacter && $content[\strlen($content) - 1] === '$') {
+                $content = \substr($content, 0, -1) . '\$';
+            }
+
             return $content;
         }
         if ($targetBorder === "'") {

@@ -177,6 +177,31 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
             ['allow_preventing_trailing_spaces' => true],
         ];
 
+        yield [
+            '<?php echo "My name is \$foo";',
+            '<?php echo "My name is $" . "foo";',
+        ];
+
+        yield [
+            '<?php echo "My name is \$foo";',
+            '<?php echo "My name is $" . \'foo\';',
+        ];
+
+        yield [
+            '<?php echo "My name is \$foo";',
+            '<?php echo \'My name is $\' . "foo";',
+        ];
+
+        yield [
+            '<?php echo \'My name is $foo\';',
+            '<?php echo \'My name is $\' . \'foo\';',
+        ];
+
+        yield [
+            '<?php echo "one \$two \$three $";',
+            '<?php echo "one $" . "two $" . "three $";',
+        ];
+
         for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {
             $char = \chr($bytevalue);
             yield [
