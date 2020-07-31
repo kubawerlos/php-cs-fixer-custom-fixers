@@ -106,7 +106,6 @@ $x = [
             return null;
         }
 
-        /** @var int $keyEndIndex */
         $keyEndIndex = $arrayElementAnalysis->getKeyEndIndex();
 
         $content = '';
