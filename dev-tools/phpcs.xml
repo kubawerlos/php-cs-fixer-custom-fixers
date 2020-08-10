@@ -12,7 +12,7 @@
     <file>../.php_cs</file>
     <exclude-pattern>./src/Readme/php-cs-fixer.config.*.php</exclude-pattern>
 
-    <rule ref='PSR2'>
+    <rule ref='PSR12'>
         <exclude name='Generic.Files.LineLength' />
     </rule>
 

@@ -107,8 +107,10 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
                 continue;
             }
 
-            if ($this->isCorrectSyntax('<?php' . $content)
-                || $this->isCorrectSyntax('<?php class Foo {' . $content . PHP_EOL . '}')) {
+            if (
+                $this->isCorrectSyntax('<?php' . $content)
+                || $this->isCorrectSyntax('<?php class Foo {' . $content . PHP_EOL . '}')
+            ) {
                 $indicesToRemove = $testedIndices;
             }
         }

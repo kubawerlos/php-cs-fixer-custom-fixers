@@ -448,19 +448,21 @@ switch ($foo) {
             ',
         ];
 
-        foreach ([
-            '+', '-', '*', '/', '%', '**', // Arithmetic
-            '+=', '-=', '*=', '/=', '%=', '**=', // Arithmetic assignment
-            '=', // Assignment
-            '&', '|', '^', '<<', '>>', // Bitwise
-            '&=', '|=', '^=', '<<=', '>>=', // Bitwise assignment
-            '==', '===', '!=', '<>', '!==', '<', '>', '<=', '>=', '<=>', // Comparison
-            'and', 'or', 'xor', '&&', '||', // Logical
-            '.', '.=', // String
-            '??', // Null Coalescing
-            '->', // Object
-            '::', // Scope Resolution
-        ] as $operator) {
+        foreach (
+            [
+                '+', '-', '*', '/', '%', '**', // Arithmetic
+                '+=', '-=', '*=', '/=', '%=', '**=', // Arithmetic assignment
+                '=', // Assignment
+                '&', '|', '^', '<<', '>>', // Bitwise
+                '&=', '|=', '^=', '<<=', '>>=', // Bitwise assignment
+                '==', '===', '!=', '<>', '!==', '<', '>', '<=', '>=', '<=>', // Comparison
+                'and', 'or', 'xor', '&&', '||', // Logical
+                '.', '.=', // String
+                '??', // Null Coalescing
+                '->', // Object
+                '::', // Scope Resolution
+            ] as $operator
+        ) {
             yield \sprintf('handle %s operator', $operator) => [
                 \sprintf('<?php
                     $foo

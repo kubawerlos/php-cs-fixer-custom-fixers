@@ -74,7 +74,8 @@ final class Version20180609123456 extends AbstractMigration
                 continue;
             }
 
-            if (\strpos($token->getContent(), 'Auto-generated Migration: Please modify to your needs!') === false
+            if (
+                \strpos($token->getContent(), 'Auto-generated Migration: Please modify to your needs!') === false
                 && \strpos($token->getContent(), 'this up() migration is auto-generated, please modify it to your needs') === false
                 && \strpos($token->getContent(), 'this down() migration is auto-generated, please modify it to your needs') === false
             ) {
