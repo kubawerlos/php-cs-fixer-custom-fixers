@@ -138,7 +138,8 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         $firstContent = $firstToken->getContent();
         $secondContent = $secondToken->getContent();
 
-        if ($this->allowPreventingTrailingSpaces
+        if (
+            $this->allowPreventingTrailingSpaces
             && Preg::match('/\h(\\\'|")$/', $firstContent) === 1
             && Preg::match('/^(\\\'|")\R/', $secondContent) === 1
         ) {

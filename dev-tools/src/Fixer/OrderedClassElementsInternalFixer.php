@@ -92,9 +92,11 @@ namespace PhpCsFixer\Fixer\ClassNotation {
              * @param string[] $b
              */
             static function (array $a, array $b): int {
-                if ($a['type'] === 'method' && $a['visibility'] === 'public'
+                if (
+                    $a['type'] === 'method' && $a['visibility'] === 'public'
                     && $b['type'] === 'method' && $b['visibility'] === 'public'
-                    && isset($a['name'], $b['name'])) {
+                    && isset($a['name'], $b['name'])
+                ) {
                     if (!\in_array($a['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
                         throw new \Exception(\sprintf('Method "%s" not in order list', $a['name']));
                     }
