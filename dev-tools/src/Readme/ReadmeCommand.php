@@ -271,7 +271,8 @@ Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```
 make sure all checks pass:
 ```bash
-./check_trailing_whitespaces.sh
+./dev-tools/check_file_permissions.sh
+./dev-tools/check_trailing_whitespaces.sh
 composer verify
 composer infection
 ```
