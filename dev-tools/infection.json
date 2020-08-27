@@ -61,6 +61,7 @@
         "GreaterThanNegotiation": true,
         "GreaterThanOrEqualToNegotiation": true,
         "Identical": true,
+        "InstanceOf_": true,
         "LessThanNegotiation": true,
         "LessThanOrEqualToNegotiation": true,
         "LogicalLowerAnd": true,
