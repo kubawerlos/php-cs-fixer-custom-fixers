@@ -121,7 +121,9 @@ $bar = new Foo();
 
         $variables = [];
 
-        for ($index = $index + 1; $index < $endIndex; $index++) {
+        while ($index < $endIndex) {
+            $index++;
+
             /** @var Token $token */
             $token = $tokens[$index];
 
