@@ -41,6 +41,7 @@
                 <file name='../src/Fixer/DeprecatingFixerInterface.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
+        <UnnecessaryVarAnnotation errorLevel='suppress' />
         <UnusedClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>
