@@ -183,12 +183,18 @@ function foo() {
      */
     private function fixOperatorLinebreak(Tokens $tokens, array $operatorIndices): void
     {
+        /** @var int $minOperatorIndices */
+        $minOperatorIndices = \min($operatorIndices);
+
+        /** @var int $maxOperatorIndices */
+        $maxOperatorIndices = \max($operatorIndices);
+
         /** @var int $prevIndex */
-        $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
+        $prevIndex = $tokens->getPrevMeaningfulToken($minOperatorIndices);
         $indexStart = $prevIndex + 1;
 
         /** @var int $nextIndex */
-        $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
+        $nextIndex = $tokens->getNextMeaningfulToken($maxOperatorIndices);
         $indexEnd = $nextIndex - 1;
 
         if (!$this->isMultiline($tokens, $indexStart, $indexEnd)) {
@@ -196,7 +202,7 @@ function foo() {
         }
 
         if ($this->position === 'beginning') {
-            if (!$this->isMultiline($tokens, \max($operatorIndices), $indexEnd)) {
+            if (!$this->isMultiline($tokens, $maxOperatorIndices, $indexEnd)) {
                 return; // operator already is placed correctly
             }
             $this->fixMoveToTheBeginning($tokens, $operatorIndices);
@@ -204,7 +210,7 @@ function foo() {
             return;
         }
 
-        if (!$this->isMultiline($tokens, $indexStart, \min($operatorIndices))) {
+        if (!$this->isMultiline($tokens, $indexStart, $minOperatorIndices)) {
             return; // operator already is placed correctly
         }
         $this->fixMoveToTheEnd($tokens, $operatorIndices);
@@ -215,16 +221,22 @@ function foo() {
      */
     private function fixMoveToTheBeginning(Tokens $tokens, array $operatorIndices): void
     {
+        /** @var int $minOperatorIndices */
+        $minOperatorIndices = \min($operatorIndices);
+
+        /** @var int $maxOperatorIndices */
+        $maxOperatorIndices = \max($operatorIndices);
+
         /** @var int $prevIndex */
-        $prevIndex = $tokens->getNonEmptySibling(\min($operatorIndices), -1);
+        $prevIndex = $tokens->getNonEmptySibling($minOperatorIndices, -1);
 
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
         /** @var int $nextIndex */
-        $nextIndex = $tokens->getNextMeaningfulToken(\max($operatorIndices));
+        $nextIndex = $tokens->getNextMeaningfulToken($maxOperatorIndices);
 
-        for ($i = $nextIndex - 1; $i > \max($operatorIndices); $i--) {
+        for ($i = $nextIndex - 1; $i > $maxOperatorIndices; $i--) {
             /** @var Token $token */
             $token = $tokens[$i];
 
@@ -246,16 +258,22 @@ function foo() {
      */
     private function fixMoveToTheEnd(Tokens $tokens, array $operatorIndices): void
     {
+        /** @var int $minOperatorIndices */
+        $minOperatorIndices = \min($operatorIndices);
+
+        /** @var int $maxOperatorIndices */
+        $maxOperatorIndices = \max($operatorIndices);
+
         /** @var int $prevIndex */
-        $prevIndex = $tokens->getPrevMeaningfulToken(\min($operatorIndices));
+        $prevIndex = $tokens->getPrevMeaningfulToken($minOperatorIndices);
 
         /** @var int $nextIndex */
-        $nextIndex = $tokens->getNonEmptySibling(\max($operatorIndices), 1);
+        $nextIndex = $tokens->getNonEmptySibling($maxOperatorIndices, 1);
 
         /** @var Token $nextToken */
         $nextToken = $tokens[$nextIndex];
 
-        for ($i = $prevIndex + 1; $i < \max($operatorIndices); $i++) {
+        for ($i = $prevIndex + 1; $i < $maxOperatorIndices; $i++) {
             /** @var Token $token */
             $token = $tokens[$i];
 
