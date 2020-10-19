@@ -88,6 +88,7 @@
             ]
         },
         "RoundingFamily": true,
+        "SharedCaseRemoval": true,
         "ShiftLeft": true,
         "ShiftRight": true,
         "Spaceship": true,

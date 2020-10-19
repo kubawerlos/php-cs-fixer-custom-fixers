@@ -4,7 +4,7 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.8.2",
-        "infection/infection": "^0.17.7",
+        "infection/infection": "^0.18.0",
         "kubawerlos/php-cs-fixer-config": "^1.4.0",
         "kubawerlos/types-checker": "^2.0.0",
         "maglnet/composer-require-checker": "^2.1.0",
@@ -13,7 +13,7 @@
         "phpstan/phpstan": "^0.12.50",
         "phpstan/phpstan-strict-rules": "^0.12.5",
         "squizlabs/php_codesniffer": "^3.5.6",
-        "vimeo/psalm": "^3.17"
+        "vimeo/psalm": "^3.17.2"
     },
     "autoload": {
         "psr-4": {
