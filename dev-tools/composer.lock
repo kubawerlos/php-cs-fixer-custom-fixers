@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9db4d96bac12d77fffc9e834a117bf1",
+    "content-hash": "28b12826f416b1c18f445749ee2b5da6",
     "packages": [],
     "packages-dev": [
         {
@@ -521,6 +521,20 @@
                 "lexer",
                 "parser",
                 "php"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Flexer",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-05-25T17:44:05+00:00"
         },
@@ -4322,16 +4336,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.17.2",
+            "version": "3.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "9e526d9cb569fe4631e6a737bbb7948d05596e3f"
+                "reference": "a463c894c4323e84121b5978867923efc6f8554a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/9e526d9cb569fe4631e6a737bbb7948d05596e3f",
-                "reference": "9e526d9cb569fe4631e6a737bbb7948d05596e3f",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/a463c894c4323e84121b5978867923efc6f8554a",
+                "reference": "a463c894c4323e84121b5978867923efc6f8554a",
                 "shasum": ""
             },
             "require": {
@@ -4418,7 +4432,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2020-10-15T00:23:17+00:00"
+            "time": "2020-10-19T19:02:41+00:00"
         },
         {
             "name": "webmozart/assert",
