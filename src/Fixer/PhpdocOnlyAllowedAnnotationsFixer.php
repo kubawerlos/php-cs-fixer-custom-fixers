@@ -27,7 +27,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocOnlyAllowedAnnotationsFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var string[] */
+    /** @var array<string> */
     private $elements = [];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -65,7 +65,7 @@ function foo_bar() {}
     public function configure(?array $configuration = null): void
     {
         if (isset($configuration['elements'])) {
-            /** @var string[] $elements */
+            /** @var array<string> $elements */
             $elements = $configuration['elements'];
             $this->elements = $elements;
         }

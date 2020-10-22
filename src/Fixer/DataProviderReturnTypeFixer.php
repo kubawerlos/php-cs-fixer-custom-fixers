@@ -69,7 +69,7 @@ class FooTest extends TestCase {
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
 
-        /** @var int[] $indices */
+        /** @var array<int> $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
             $this->fixReturnTypes($tokens, $indices[0], $indices[1]);
         }

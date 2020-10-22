@@ -67,7 +67,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             if (\strpos($token->getContent(), '/*') === 0) {
                 $commentIndices = [$index];
             } else {
-                /** @var int[] $commentIndices */
+                /** @var array<int> $commentIndices */
                 $commentIndices = $commentsAnalyzer->getCommentBlockIndices($tokens, $index);
             }
 
@@ -86,9 +86,9 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     }
 
     /**
-     * @param int[] $commentIndices
+     * @param array<int> $commentIndices
      *
-     * @return int[]
+     * @return array<int>
      */
     private function getIndicesToRemove(Tokens $tokens, array $commentIndices): array
     {

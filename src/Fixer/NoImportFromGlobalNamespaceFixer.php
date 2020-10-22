@@ -94,9 +94,9 @@ class Bar {
     }
 
     /**
-     * @param string[] $imports
+     * @param array<string> $imports
      *
-     * @return string[]
+     * @return array<string>
      */
     private function removeImportFromGlobalNamespace(Tokens $tokens, array $imports, int $index): array
     {
@@ -130,7 +130,7 @@ class Bar {
     }
 
     /**
-     * @param string[] $imports
+     * @param array<string> $imports
      */
     private function updateComment(Tokens $tokens, array $imports, int $index): void
     {
@@ -149,7 +149,7 @@ class Bar {
     }
 
     /**
-     * @param string[] $imports
+     * @param array<string> $imports
      */
     private function updateUsage(Tokens $tokens, array $imports, int $index): void
     {

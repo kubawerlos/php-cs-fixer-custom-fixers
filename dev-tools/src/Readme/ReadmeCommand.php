@@ -199,7 +199,7 @@ In your PHP CS Fixer configuration register fixers and use them:
                             return \sprintf('\'%s\'', $value);
                         }, $option->getAllowedValues());
                     } else {
-                        /** @var string[] $allowed */
+                        /** @var array<string> $allowed */
                         $allowed = $option->getAllowedTypes();
                     }
                     $output .= \sprintf(

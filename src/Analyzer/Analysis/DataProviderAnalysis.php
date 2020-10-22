@@ -24,11 +24,11 @@ final class DataProviderAnalysis
     /** @var int */
     private $nameIndex;
 
-    /** @var int[] */
+    /** @var array<int> */
     private $usageIndices;
 
     /**
-     * @param int[] $usageIndices
+     * @param array<int> $usageIndices
      */
     public function __construct(string $name, int $nameIndex, array $usageIndices)
     {
@@ -48,7 +48,7 @@ final class DataProviderAnalysis
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getUsageIndices(): array
     {

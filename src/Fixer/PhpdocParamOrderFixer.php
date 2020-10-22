@@ -106,7 +106,7 @@ function foo($a, $b, $c) {}
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
@@ -129,8 +129,8 @@ function foo($a, $b, $c) {}
     }
 
     /**
-     * @param Annotation[] $annotations
-     * @param string[]     $paramNames
+     * @param array<Annotation> $annotations
+     * @param array<string>     $paramNames
      *
      * @return array<int, string>
      */
