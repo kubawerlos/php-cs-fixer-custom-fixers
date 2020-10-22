@@ -18,6 +18,15 @@ $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers',
 unset($rules['ordered_class_elements']);
 unset($rules['ordered_interfaces']);
 
+// add new fixers that are not in PhpCsFixerConfig yet
+foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
+    if (isset($rules[$fixer->getName()])) {
+        continue;
+    }
+    $rules[$fixer->getName()] = true;
+}
+
+// add internal fixers
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
 }

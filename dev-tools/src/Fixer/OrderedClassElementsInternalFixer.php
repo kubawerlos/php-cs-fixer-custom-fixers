@@ -81,7 +81,7 @@ namespace PhpCsFixer\Fixer\ClassNotation {
     /**
      * @internal
      *
-     * @param array<array<string>> $elements
+     * @param string[][] $elements
      */
     function usort(array &$elements): void
     {

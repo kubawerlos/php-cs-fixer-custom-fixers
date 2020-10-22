@@ -94,7 +94,7 @@ final class PriorityTest extends TestCase
     }
 
     /**
-     * @return array<array<FixerInterface>>
+     * @return FixerInterface[][]
      */
     public static function providePriorityCases(): iterable
     {

@@ -8,7 +8,7 @@
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-2297-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-2333-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -348,6 +348,19 @@ PHPUnit's functions `fail`, `markTestIncomplete` and `markTestSkipped` should no
 -        return;
      }
  }
+```
+
+#### PhpdocArrayStyleFixer
+Simple or generic array style should be used in PHPDoc if possible.
+Configuration options:
+- `style` (`'simple'`, `'generic'`): whether use simple (`int[]`) or generic (`array<int>`) style; defaults to `'simple'`
+```diff
+ <?php
+ /**
+- * @return array<int>
++ * @return int[]
+  */
+  function foo() { return [1, 2]; }
 ```
 
 #### PhpdocNoIncorrectVarAnnotationFixer
