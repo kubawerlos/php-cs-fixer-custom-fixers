@@ -179,7 +179,7 @@ function foo() {
     }
 
     /**
-     * @param int[] $operatorIndices
+     * @param non-empty-array<int> $operatorIndices
      */
     private function fixOperatorLinebreak(Tokens $tokens, array $operatorIndices): void
     {
@@ -217,7 +217,7 @@ function foo() {
     }
 
     /**
-     * @param int[] $operatorIndices
+     * @param non-empty-array<int> $operatorIndices
      */
     private function fixMoveToTheBeginning(Tokens $tokens, array $operatorIndices): void
     {
@@ -254,7 +254,7 @@ function foo() {
     }
 
     /**
-     * @param int[] $operatorIndices
+     * @param non-empty-array<int> $operatorIndices
      */
     private function fixMoveToTheEnd(Tokens $tokens, array $operatorIndices): void
     {
