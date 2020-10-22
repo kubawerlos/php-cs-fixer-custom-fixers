@@ -98,6 +98,21 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
+                /**
+                 * @foo array<int>
+                 * @param int[]
+                 */
+              ',
+            '<?php
+                /**
+                 * @foo array<int>
+                 * @param array<int>
+                 */
+              ',
+        ];
+
+        yield [
+            '<?php
                 /** @var int[] */
                 /** @var int[] */
                 /** @foo array<int> */
