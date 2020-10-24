@@ -72,9 +72,6 @@ jobs:
           key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-cache-
 
-      - name: Install prestissimo
-        run: composer global outdated --strict hirak/prestissimo || composer global require hirak/prestissimo
-
       - name: Install dependencies
         run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
 
