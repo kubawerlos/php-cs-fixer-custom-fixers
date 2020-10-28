@@ -40,7 +40,7 @@ $bar = new Foo();
      */
     public function getPriority(): int
     {
-        return 6;
+        return 4;
     }
 
     public function isCandidate(Tokens $tokens): bool

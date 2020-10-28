@@ -11,7 +11,8 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/dev-tools/vendor/autoload.php';
+require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/RulesInterface.php';
+require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
 // PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer will handle this
