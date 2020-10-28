@@ -117,7 +117,7 @@ class FooTest extends TestCase {
 
         yield 'fix when data provider is abstract' => [
             '<?php
-class FooTest extends TestCase {
+abstract class FooTest extends TestCase {
     /**
      * @dataProvider provideFooCases
      */
@@ -125,7 +125,7 @@ class FooTest extends TestCase {
     abstract public static function provideFooCases();
 }',
             '<?php
-class FooTest extends TestCase {
+abstract class FooTest extends TestCase {
     /**
      * @dataProvider provideFooCases
      */

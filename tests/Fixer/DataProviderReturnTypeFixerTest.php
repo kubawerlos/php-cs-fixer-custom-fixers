@@ -204,19 +204,19 @@ class FooTest extends TestCase {
                         /**
                          * @dataProvider provideFooCases
                          */
-                        %s function testFoo() {}
+                        %s function testFoo() %s
                         public function provideFooCases(): iterable {}
                     }
-                ', $modifier),
+                ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
                 \sprintf('<?php
                     class FooTest extends TestCase {
                         /**
                          * @dataProvider provideFooCases
                          */
-                        %s function testFoo() {}
+                        %s function testFoo() %s
                         public function provideFooCases() {}
                     }
-                ', $modifier),
+                ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
             ];
         }
     }
