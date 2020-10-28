@@ -36,6 +36,10 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     public static function provideFixCases(): iterable
     {
         yield [
+            '<?php namespace Foo; $y = new \\Bar();',
+        ];
+
+        yield [
             '<?php $foo = new Bar();',
             '<?php $foo = new \\Bar();',
         ];
@@ -56,8 +60,18 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
         ];
 
         yield [
-            '<?php $x = new Foo(); namespace Bar { $y = new \\Baz(); }',
-            '<?php $x = new \\Foo(); namespace Bar { $y = new \\Baz(); }',
+            '<?php
+                namespace { $x = new Foo(); }
+                namespace Bar { $y = new \\Baz(); }
+                namespace { $x = new Foo2(); }
+                namespace Bar2 { $y = new \\Baz2(); }
+            ',
+            '<?php
+                namespace { $x = new \\Foo(); }
+                namespace Bar { $y = new \\Baz(); }
+                namespace { $x = new \\Foo2(); }
+                namespace Bar2 { $y = new \\Baz2(); }
+            ',
         ];
 
         yield [
