@@ -229,7 +229,7 @@ foreach ($foos as $foo) {
         if ($foo === 0) {
             break 2;
         }
-        continue 3;
+        continue 2;
     }
 }',
             '<?php
@@ -238,7 +238,7 @@ foreach ($foos as $foo) {
         if ($foo === 0) {
             break    2;
         }
-        continue    3;
+        continue    2;
     }
 }',
         ];

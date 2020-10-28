@@ -47,13 +47,25 @@ function foo($b, $i, $s) {}
         yield ['<?php
 /**
  * @param foo &$a
- * @param foo& $b
- * @param foo & $c
- * @param foo ...$d
- * @param foo... $e
- * @param foo ... $f
+ * @param foo ...$b
  */
-function bar(&$a, &$b, &$c, ...$d, ...$e, ...$f) {}
+function bar(&$a, ...$b) {}
+'];
+
+        yield ['<?php
+/**
+ * @param foo& $a
+ * @param foo... $b
+ */
+function bar(&$a, ...$b) {}
+'];
+
+        yield ['<?php
+/**
+ * @param foo & $a
+ * @param foo ... $b
+ */
+function bar(&$a, ...$b) {}
 '];
 
         yield ['<?php
