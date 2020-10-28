@@ -114,8 +114,6 @@ abstract class AbstractFixerTestCase extends TestCase
         }
 
         if ($input !== null) {
-            self::assertNull($this->lintSource($input));
-
             Tokens::clearCache();
             $tokens = Tokens::fromCode($input);
 

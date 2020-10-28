@@ -283,7 +283,7 @@ class FooTest extends TestCase {
         foreach (['abstract', 'final', 'private', 'protected', 'static', '/* private */'] as $modifier) {
             yield \sprintf('test function with %s modifier', $modifier) => [
                 \sprintf('<?php
-                class FooTest extends TestCase {
+                abstract class FooTest extends TestCase {
                     /**
                      * @dataProvider provideFooCases
                      */
@@ -291,7 +291,7 @@ class FooTest extends TestCase {
                     public function provideFooCases() {}
                 }', $modifier, $modifier === 'abstract' ? ';' : '{}'),
                 \sprintf('<?php
-                class FooTest extends TestCase {
+                abstract class FooTest extends TestCase {
                     /**
                      * @dataProvider fooDataProvider
                      */

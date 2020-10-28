@@ -110,8 +110,8 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php (new stdClass())->foo = 4;',
-            '<?php ((new stdClass()))->foo = 4;',
+            '<?php echo (new stdClass())->foo;',
+            '<?php echo ((new stdClass()))->foo;',
         ];
 
         yield [
