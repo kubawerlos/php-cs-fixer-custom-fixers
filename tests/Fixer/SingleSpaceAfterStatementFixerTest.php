@@ -171,16 +171,20 @@ interface    FooInterface {
 
         yield [
             '<?php
-try {
-    yield -1;
-} catch (Throwable $e) {
-    echo "oh no";
+function foo () {
+    try {
+        yield -1;
+    } catch (Throwable $e) {
+        echo "oh no";
+    }
 }',
             '<?php
-try {
-    yield -1;
-} catch    (Throwable $e) {
-    echo "oh no";
+function foo () {
+    try {
+        yield -1;
+    } catch    (Throwable $e) {
+        echo "oh no";
+    }
 }',
         ];
 
@@ -221,17 +225,21 @@ if    ($isIt) {
         yield [
             '<?php
 foreach ($foos as $foo) {
-    if ($foo === 0) {
-        break 2;
+    foreach ($foos as $foo) {
+        if ($foo === 0) {
+            break 2;
+        }
+        continue 2;
     }
-    continue 3;
 }',
             '<?php
 foreach ($foos as $foo) {
-    if ($foo === 0) {
-        break    2;
+    foreach ($foos as $foo) {
+        if ($foo === 0) {
+            break    2;
+        }
+        continue    2;
     }
-    continue    3;
 }',
         ];
 

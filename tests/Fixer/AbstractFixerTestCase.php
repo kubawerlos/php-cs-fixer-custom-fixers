@@ -15,7 +15,7 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
-use PhpCsFixer\Linter\TokenizerLinter;
+use PhpCsFixer\Linter\Linter;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
@@ -113,13 +113,7 @@ abstract class AbstractFixerTestCase extends TestCase
             throw new \InvalidArgumentException('Expected must be different to input.');
         }
 
-        $linter = new TokenizerLinter();
-
-        self::assertNull($linter->lintSource($expected)->check());
-
         if ($input !== null) {
-            self::assertNull($linter->lintSource($input)->check());
-
             Tokens::clearCache();
             $tokens = Tokens::fromCode($input);
 
@@ -135,6 +129,8 @@ abstract class AbstractFixerTestCase extends TestCase
             self::assertTokens(Tokens::fromCode($expected), $tokens);
         }
 
+        self::assertNull($this->lintSource($expected));
+
         Tokens::clearCache();
         $tokens = Tokens::fromCode($expected);
 
@@ -143,5 +139,22 @@ abstract class AbstractFixerTestCase extends TestCase
         self::assertSame($expected, $tokens->generateCode());
 
         self::assertFalse($tokens->isChanged());
+    }
+
+    private function lintSource(string $source): ?string
+    {
+        static $linter;
+
+        if ($linter === null) {
+            $linter = new Linter();
+        }
+
+        try {
+            $linter->lintSource($source)->check();
+        } catch (\Exception $exception) {
+            return \sprintf('Linting "%s" failed with error: %s.', $source, $exception->getMessage());
+        }
+
+        return null;
     }
 }

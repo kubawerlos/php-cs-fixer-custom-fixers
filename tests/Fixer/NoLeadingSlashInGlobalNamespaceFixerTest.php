@@ -56,8 +56,8 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
         ];
 
         yield [
-            '<?php $x = new Foo(); namespace Bar; $y = new \\Baz();',
-            '<?php $x = new \\Foo(); namespace Bar; $y = new \\Baz();',
+            '<?php $x = new Foo(); namespace Bar { $y = new \\Baz(); }',
+            '<?php $x = new \\Foo(); namespace Bar { $y = new \\Baz(); }',
         ];
 
         yield [

@@ -47,13 +47,25 @@ function foo($b, $i, $s) {}
         yield ['<?php
 /**
  * @param foo &$a
- * @param foo& $b
- * @param foo & $c
- * @param foo ...$d
- * @param foo... $e
- * @param foo ... $f
+ * @param foo ...$b
  */
-function bar(&$a, &$b, &$c, ...$d, ...$e, ...$f) {}
+function bar(&$a, ...$b) {}
+'];
+
+        yield ['<?php
+/**
+ * @param foo& $a
+ * @param foo... $b
+ */
+function bar(&$a, ...$b) {}
+'];
+
+        yield ['<?php
+/**
+ * @param foo & $a
+ * @param foo ... $b
+ */
+function bar(&$a, ...$b) {}
 '];
 
         yield ['<?php
@@ -237,22 +249,22 @@ function bar($a) {}
         foreach (['abstract', 'final', 'private', 'protected', 'public', 'static', '/* private */'] as $modifier) {
             yield [
                 \sprintf('<?php
-                    class Foo {
+                    abstract class Foo {
                         /**
                          * @param $a
                          */
-                        %s function bar($a) {}
+                        %s function bar($a) %s
                     }
-                ', $modifier),
+                ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
                 \sprintf('<?php
-                    class Foo {
+                    abstract class Foo {
                         /**
                          * @param $a
                          * @param $b
                          */
-                        %s function bar($a) {}
+                        %s function bar($a) %s
                     }
-                ', $modifier),
+                ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
             ];
         }
     }
