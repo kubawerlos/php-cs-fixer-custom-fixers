@@ -50,13 +50,12 @@ $y = new \Baz();
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        for ($index = 0; $index < $tokens->count(); $index++) {
+        $index = 0;
+        while (++$index < $tokens->count()) {
+            $index = $this->skipNamespacedCode($tokens, $index);
+
             /** @var Token $token */
             $token = $tokens[$index];
-
-            if ($token->isGivenKind(T_NAMESPACE)) {
-                return;
-            }
 
             if (!$token->isGivenKind(T_NS_SEPARATOR)) {
                 continue;
@@ -82,5 +81,37 @@ $y = new \Baz();
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }
         }
+    }
+
+    private function skipNamespacedCode(Tokens $tokens, int $index): int
+    {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        if (!$token->isGivenKind(T_NAMESPACE)) {
+            return $index;
+        }
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextMeaningfulToken($index);
+
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
+
+        if ($nextToken->equals('{')) {
+            return $nextIndex;
+        }
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getNextTokenOfKind($index, ['{', ';']);
+
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
+
+        if ($nextToken->equals(';')) {
+            return $tokens->count() - 1;
+        }
+
+        return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $nextIndex);
     }
 }
