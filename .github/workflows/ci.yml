@@ -19,8 +19,8 @@ jobs:
       - name: Check trailing whitespaces
         run: ./dev-tools/check_trailing_whitespaces.sh
 
-     - name: Test
-       run: php -r "var_dump(\defined('TOKEN_PARSE'));"
+      - name: Test
+        run: php -r "var_dump(\defined('TOKEN_PARSE'));"
 
       - name: Install dependencies
         run: composer update --no-progress --no-suggest
