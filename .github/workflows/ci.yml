@@ -50,9 +50,6 @@ jobs:
           ini-values: pcov.directory=$GITHUB_WORKSPACE
           coverage: pcov
 
-      - name: Test
-        run: php -r "var_dump(\defined('TOKEN_PARSE'));var_dump(class_exists(\CompileError::class));"
-
       - name: Get Composer data directory
         id: composer-data
         run: echo '::set-output name=dir::$(composer config data-dir)'

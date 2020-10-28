@@ -15,7 +15,7 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
-use PhpCsFixer\Linter\TokenizerLinter;
+use PhpCsFixer\Linter\Linter;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
@@ -113,7 +113,7 @@ abstract class AbstractFixerTestCase extends TestCase
             throw new \InvalidArgumentException('Expected must be different to input.');
         }
 
-        $linter = new TokenizerLinter();
+        $linter = new Linter();
 
         self::assertNull($linter->lintSource($expected)->check());
 
