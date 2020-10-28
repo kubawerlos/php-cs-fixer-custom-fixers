@@ -20,7 +20,7 @@ jobs:
         run: ./dev-tools/check_trailing_whitespaces.sh
 
       - name: Test
-        run: php -r "var_dump(\defined('TOKEN_PARSE'));"
+        run: php -r "var_dump(\defined('TOKEN_PARSE'));var_dump(class_exists(\CompileError::class));"
 
       - name: Install dependencies
         run: composer update --no-progress --no-suggest
