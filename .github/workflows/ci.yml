@@ -19,74 +19,76 @@ jobs:
       - name: Check trailing whitespaces
         run: ./dev-tools/check_trailing_whitespaces.sh
 
+     - name: Test
+       run: php -r "var_dump(\defined('TOKEN_PARSE'));"
+
       - name: Install dependencies
         run: composer update --no-progress --no-suggest
 
       - name: Analyse
         run: composer analyse
 
-  test:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        php-version: ['7.4']
-        include:
-          - os: ubuntu-latest
-            php-version: '7.2'
-            composer_flags: '--prefer-lowest'
-          - os: ubuntu-latest
-            php-version: '7.2'
-          - os: ubuntu-latest
-            php-version: '7.3'
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          ini-values: pcov.directory=$GITHUB_WORKSPACE
-          coverage: pcov
-          extensions: tokenizer
-
-      - name: Get Composer data directory
-        id: composer-data
-        run: echo '::set-output name=dir::$(composer config data-dir)'
-
-      - name: Cache Composer data
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-data.outputs.dir }}
-          key: ${{ runner.os }}-composer-data-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-data-
-
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo '::set-output name=dir::$(composer config cache-files-dir)'
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-cache-
-
-      - name: Install dependencies
-        run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
-
-      - name: Test
-        run: composer test -- --coverage-clover=./build/logs/clover.xml
-
-      - name: Upload coverage results to Coveralls
-        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          composer require --dev twinh/php-coveralls
-          ./vendor/bin/php-coveralls --verbose
-
-      - name: Run Infection
-        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
-        run: composer infection
+#  test:
+#    strategy:
+#      matrix:
+#        os: [macos-latest, ubuntu-latest, windows-latest]
+#        php-version: ['7.4']
+#        include:
+#          - os: ubuntu-latest
+#            php-version: '7.2'
+#            composer_flags: '--prefer-lowest'
+#          - os: ubuntu-latest
+#            php-version: '7.2'
+#          - os: ubuntu-latest
+#            php-version: '7.3'
+#    runs-on: ${{ matrix.os }}
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ matrix.php-version }}
+#          ini-values: pcov.directory=$GITHUB_WORKSPACE
+#          coverage: pcov
+#
+#      - name: Get Composer data directory
+#        id: composer-data
+#        run: echo '::set-output name=dir::$(composer config data-dir)'
+#
+#      - name: Cache Composer data
+#        uses: actions/cache@v1
+#        with:
+#          path: ${{ steps.composer-data.outputs.dir }}
+#          key: ${{ runner.os }}-composer-data-${{ hashFiles('**/composer.json') }}
+#          restore-keys: ${{ runner.os }}-composer-data-
+#
+#      - name: Get Composer cache directory
+#        id: composer-cache
+#        run: echo '::set-output name=dir::$(composer config cache-files-dir)'
+#
+#      - name: Cache dependencies
+#        uses: actions/cache@v1
+#        with:
+#          path: ${{ steps.composer-cache.outputs.dir }}
+#          key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.json') }}
+#          restore-keys: ${{ runner.os }}-composer-cache-
+#
+#      - name: Install dependencies
+#        run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
+#
+#      - name: Test
+#        run: composer test -- --coverage-clover=./build/logs/clover.xml
+#
+#      - name: Upload coverage results to Coveralls
+#        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
+#        env:
+#          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#          composer require --dev twinh/php-coveralls
+#          ./vendor/bin/php-coveralls --verbose
+#
+#      - name: Run Infection
+#        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
+#        run: composer infection
