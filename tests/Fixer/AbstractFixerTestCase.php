@@ -148,6 +148,7 @@ abstract class AbstractFixerTestCase extends TestCase
         if ($linter === null) {
             $linter = new Linter();
         }
+
         try {
             $linter->lintSource($source)->check();
         } catch (\Exception $exception) {
