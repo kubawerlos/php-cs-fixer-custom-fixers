@@ -138,6 +138,7 @@
         "UnwrapTrim": true,
         "UnwrapUcFirst": true,
         "UnwrapUcWords": true,
+        "YieldValue": true,
         "Yield_": true
     },
     "bootstrap": "../vendor/autoload.php"
