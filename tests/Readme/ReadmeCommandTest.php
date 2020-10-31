@@ -22,7 +22,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  *
  * @covers \PhpCsFixerCustomFixersDev\Readme\ReadmeCommand
  *
- * @requires PHP 7.4
+ * @requires PHP ^7.4
  */
 final class ReadmeCommandTest extends TestCase
 {

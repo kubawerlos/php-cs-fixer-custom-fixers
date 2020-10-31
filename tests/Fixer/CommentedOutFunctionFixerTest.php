@@ -152,11 +152,6 @@ bar($x);
             '<?php \var_dump($x);',
         ];
 
-        yield 'with comment between backslash and function call' => [
-            '<?php //\/* foo */var_dump/** bar */($x);',
-            '<?php \/* foo */var_dump/** bar */($x);',
-        ];
-
         yield 'with custom function' => [
             '<?php var_dump($x);// foo($y);',
             '<?php var_dump($x); foo($y);',
@@ -235,5 +230,12 @@ baz();
                 var_dump($y);
             ',
         ];
+
+        if (PHP_MAJOR_VERSION < 8) {
+            yield 'with comment between backslash and function call' => [
+                '<?php //\/* foo */var_dump/** bar */($x);',
+                '<?php \/* foo */var_dump/** bar */($x);',
+            ];
+        }
     }
 }

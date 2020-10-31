@@ -78,19 +78,22 @@ class FooTest extends TestCase {
                 ': iterable',
                 ': Foo\Bar',
             ],
-            'data provider with return type namespaced class starting with iterable' => [
-                ': iterable',
-                ': iterable \ Foo',
-            ],
-            'data provider with return type namespaced class and comments' => [
-                ': iterable',
-                ': Foo/* Some info */\/* More info */Bar',
-            ],
             'data provider with iterable return type in different case' => [
                 ': iterable',
                 ': Iterable',
             ],
         ];
+
+        if (PHP_MAJOR_VERSION < 8) {
+            $cases['data provider with return type namespaced class starting with iterable'] = [
+                ': iterable',
+                ': iterable \ Foo',
+            ];
+            $cases['data provider with return type namespaced class and comments'] = [
+                ': iterable',
+                ': Foo/* Some info */\/* More info */Bar',
+            ];
+        }
 
         foreach ($cases as $key => $case) {
             yield $key => \array_map(

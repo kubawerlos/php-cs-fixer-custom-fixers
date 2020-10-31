@@ -89,19 +89,21 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
             ',
         ];
 
-        yield [
-            '<?php $foo =  Bar::value();',
-            '<?php $foo = \\ Bar::value();',
-        ];
+        if (PHP_MAJOR_VERSION < 8) {
+            yield [
+                '<?php $foo =  Bar::value();',
+                '<?php $foo = \\ Bar::value();',
+            ];
 
-        yield [
-            '<?php $foo = /* comment */Bar::value();',
-            '<?php $foo = \\/* comment */Bar::value();',
-        ];
+            yield [
+                '<?php $foo = /* comment */Bar::value();',
+                '<?php $foo = \\/* comment */Bar::value();',
+            ];
 
-        yield [
-            '<?php $foo = /** comment */Bar::value();',
-            '<?php $foo = \\/** comment */Bar::value();',
-        ];
+            yield [
+                '<?php $foo = /** comment */Bar::value();',
+                '<?php $foo = \\/** comment */Bar::value();',
+            ];
+        }
     }
 }
