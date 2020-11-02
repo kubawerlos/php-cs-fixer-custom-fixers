@@ -51,6 +51,7 @@ final class InfectionConfigBuilder
             'timeout' => 10,
             'logs' => [
                 'text' => 'php://stdout',
+                'github' => true,
                 'badge' => ['branch' => 'master'],
             ],
             'phpUnit' => [

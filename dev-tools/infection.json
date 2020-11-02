@@ -8,6 +8,7 @@
     "timeout": 10,
     "logs": {
         "text": "php://stdout",
+        "github": true,
         "badge": {
             "branch": "master"
         }
@@ -93,6 +94,7 @@
         "ShiftRight": true,
         "Spaceship": true,
         "Spread": true,
+        "Ternary": true,
         "This": true,
         "Throw_": true,
         "UnwrapArrayChangeKeyCase": true,
@@ -131,10 +133,16 @@
         "UnwrapArrayUnique": true,
         "UnwrapArrayValues": true,
         "UnwrapLcFirst": true,
+        "UnwrapLtrim": true,
+        "UnwrapRtrim": true,
+        "UnwrapStrIreplace": true,
         "UnwrapStrRepeat": true,
         "UnwrapStrReplace": true,
+        "UnwrapStrRev": true,
+        "UnwrapStrShuffle": true,
         "UnwrapStrToLower": true,
         "UnwrapStrToUpper": true,
+        "UnwrapSubstr": true,
         "UnwrapTrim": true,
         "UnwrapUcFirst": true,
         "UnwrapUcWords": true,
