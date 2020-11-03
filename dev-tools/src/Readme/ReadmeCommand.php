@@ -181,12 +181,10 @@ In your PHP CS Fixer configuration register fixers and use them:
                 $fixer->getDefinition()->getSummary()
             );
 
-            if ($fixer instanceof DeprecatingFixerInterface) {
-                $output .= \sprintf(
-                    "\n  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
-                    $fixer->getPullRequestId()
-                );
-            }
+            $output .= !$fixer instanceof DeprecatingFixerInterface ? '' : \sprintf(
+                "\n  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
+                $fixer->getPullRequestId()
+            );
 
             $output .= $fixer instanceof DeprecatedFixerInterface ? \sprintf("\n  DEPRECATED: use `%s` instead.", \implode('`, `', $fixer->getSuccessorsNames())) : '';
 
