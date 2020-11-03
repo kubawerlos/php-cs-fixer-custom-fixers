@@ -8,7 +8,7 @@
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/master.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=master)
-![Tests](https://img.shields.io/badge/tests-2300-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-2299-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/master)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
@@ -322,8 +322,8 @@ Configuration options:
 ```
 
 #### OperatorLinebreakFixer
-Operators must always be at the beginning or at the end of the line.
-  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/4021) is merged and released.*
+Operators - when multiline - must always be at the beginning or at the end of the line.
+  DEPRECATED: use `operator_linebreak` instead.
 Configuration options:
 - `only_booleans` (`bool`): whether to limit operators to only boolean ones; defaults to `false`
 - `position` (`'beginning'`, `'end'`): whether to place operators at the beginning or at the end of the line; defaults to `'beginning'`

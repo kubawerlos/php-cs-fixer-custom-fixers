@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## 2.4.0 - Unreleased
+- Deprecate OperatorLinebreakFixer
+
 ## v2.3.0 - *2020-07-07*
 - Add NoUselessParenthesisFixer
 - Add NoUselessStrlenFixer

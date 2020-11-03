@@ -12,7 +12,7 @@
     "require": {
         "php": "^7.2",
         "ext-tokenizer": "*",
-        "friendsofphp/php-cs-fixer": "^2.16.7",
+        "friendsofphp/php-cs-fixer": "dev-master as 2.17.0",
         "symfony/finder": "^3.0 || ^4.0 || ^5.0"
     },
     "require-dev": {

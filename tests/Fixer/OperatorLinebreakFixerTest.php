@@ -34,11 +34,6 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
         self::assertFalse($this->fixer->isRisky());
     }
 
-    public function testDeprecatingPullRequest(): void
-    {
-        self::assertSame(4021, $this->fixer->getPullRequestId());
-    }
-
     /**
      * @dataProvider provideFixCases
      */
