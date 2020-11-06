@@ -34,6 +34,11 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
         self::assertFalse($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertContains('operator_linebreak', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @dataProvider provideFixCases
      */
