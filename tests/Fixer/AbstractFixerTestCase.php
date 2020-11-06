@@ -15,6 +15,7 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Linter\Linter;
 use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -70,7 +71,11 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionHasExactlyOneCodeSample(): void
     {
-        self::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
+        if ($this->fixer instanceof DeprecatedFixerInterface) {
+            self::assertGreaterThan(1, \count($this->fixer->getDefinition()->getCodeSamples()));
+        } else {
+            self::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
+        }
     }
 
     final public function testCodeSampleEndsWithNewLine(): void

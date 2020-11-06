@@ -3,9 +3,9 @@
         "php": "^7.4"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.9.0",
+        "ergebnis/composer-normalize": "^2.11.0",
         "infection/infection": "^0.20.1",
-        "kubawerlos/php-cs-fixer-config": "^1.5.0",
+        "kubawerlos/php-cs-fixer-config": "^1.6.0",
         "kubawerlos/types-checker": "^2.0.0",
         "maglnet/composer-require-checker": "^2.1.0",
         "mi-schi/phpmd-extension": "^4.3.0",
