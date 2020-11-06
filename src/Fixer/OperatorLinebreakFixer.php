@@ -19,6 +19,9 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @deprecated
+ */
 final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatedFixerInterface
 {
     /** @var \PhpCsFixer\Fixer\Operator\OperatorLinebreakFixer */
