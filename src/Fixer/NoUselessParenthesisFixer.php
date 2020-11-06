@@ -20,7 +20,7 @@ use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\Transformer\BraceClassInstantiationTransformer;
+use PhpCsFixer\Tokenizer\Transformers;
 
 final class NoUselessParenthesisFixer extends AbstractFixer
 {
@@ -84,12 +84,7 @@ foo(($bar));
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
             }
 
-            $transformer = new BraceClassInstantiationTransformer();
-
-            /** @var Token $t */
-            foreach ($tokens as $i => $t) {
-                $transformer->process($tokens, $t, $i);
-            }
+            Transformers::create()->transform($tokens);
         }
     }
 
