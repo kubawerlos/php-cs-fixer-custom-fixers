@@ -61,7 +61,7 @@ foo(($bar));
                 continue;
             }
 
-            /** @var array<string, int> $blockType */
+            /** @var array{isStart: bool, type: int} $blockType */
             $blockType = Tokens::detectBlockType($token);
             $blockEndIndex = $tokens->findBlockEnd($blockType['type'], $index);
 
