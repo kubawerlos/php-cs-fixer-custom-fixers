@@ -3,6 +3,7 @@
 ## v2.4.0 - [Unreleased]
 - Update PHP CS Fixer to v2.17
 - Remove PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer - use PhpCsFixer\Tokenizer\Analyzer\ReferenceAnalyzer
+- Remove PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer - use PhpCsFixer\Tokenizer\Analyzer\SwitchAnalyzer
 
 ## v2.3.0 - *2020-07-07*
 - Add NoUselessParenthesisFixer
