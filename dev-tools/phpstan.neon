@@ -3,11 +3,11 @@ parameters:
     - ../vendor/autoload.php
   excludes_analyse:
     - ./src/Readme
-  reportMaybesInMethodSignatures: false
   level: max
   paths:
     - ./src
     - ../src
+  reportMaybesInMethodSignatures: false
 
 includes:
   - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
