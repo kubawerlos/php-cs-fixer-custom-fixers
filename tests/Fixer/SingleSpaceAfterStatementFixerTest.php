@@ -289,8 +289,8 @@ do    {
         $expectedTokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
 
-        $reflection = new \ReflectionClass($this->fixer);
-        $property = $reflection->getProperty('tokens');
+        $reflectionObject = new \ReflectionObject($this->fixer);
+        $property = $reflectionObject->getProperty('tokens');
         $property->setAccessible(true);
         $property->setValue($this->fixer, \array_diff($property->getValue($this->fixer), [$token]));
 
@@ -307,8 +307,8 @@ do    {
     public static function provideTokenIsUsefulCases(): iterable
     {
         $fixer = new SingleSpaceAfterStatementFixer();
-        $reflection = new \ReflectionClass($fixer);
-        $property = $reflection->getProperty('tokens');
+        $reflectionObject = new \ReflectionObject($fixer);
+        $property = $reflectionObject->getProperty('tokens');
         $property->setAccessible(true);
 
         foreach ($property->getValue($fixer) as $token) {

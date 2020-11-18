@@ -58,7 +58,7 @@ final class SrcCodeTest extends TestCase
      */
     public function testFixerIsFinal(FixerInterface $fixer): void
     {
-        self::assertTrue((new \ReflectionClass($fixer))->isFinal());
+        self::assertTrue((new \ReflectionObject($fixer))->isFinal());
     }
 
     /**
@@ -74,7 +74,7 @@ final class SrcCodeTest extends TestCase
      */
     public function testDeprecatedFixerHasAnnotation(FixerInterface $fixer): void
     {
-        $comment = (new \ReflectionClass($fixer))->getDocComment();
+        $comment = (new \ReflectionObject($fixer))->getDocComment();
         self::assertSame(
             $fixer instanceof DeprecatedFixerInterface,
             \strpos($comment === false ? '' : $comment, '@deprecated') !== false
@@ -103,8 +103,8 @@ final class SrcCodeTest extends TestCase
      */
     public function testThereIsNoPregFunctionUsedDirectly(string $className): void
     {
-        $rc = new \ReflectionClass($className);
-        $tokens = Tokens::fromCode(\file_get_contents($rc->getFileName()));
+        $reflectionClass = new \ReflectionClass($className);
+        $tokens = Tokens::fromCode(\file_get_contents($reflectionClass->getFileName()));
         $stringTokens = \array_filter(
             $tokens->toArray(),
             static function (Token $token): bool {

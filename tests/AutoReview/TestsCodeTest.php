@@ -95,11 +95,11 @@ final class TestsCodeTest extends TestCase
      */
     private static function getDataProviderMethodNames(string $className): array
     {
-        $reflection = new \ReflectionClass($className);
+        $reflectionClass = new \ReflectionClass($className);
 
         $dataProviderMethodNames = [];
 
-        foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+        foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
             $docBlock = new DocBlock($method->getDocComment());
             $dataProviderAnnotations = $docBlock->getAnnotationsOfType('dataProvider');
 
