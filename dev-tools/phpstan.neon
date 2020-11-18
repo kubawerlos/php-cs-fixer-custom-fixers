@@ -3,12 +3,11 @@ parameters:
     - ../vendor/autoload.php
   excludes_analyse:
     - ./src/Readme
-  ignoreErrors:
-    - '#^Method PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+::configure\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
   level: max
   paths:
     - ./src
     - ../src
+  reportMaybesInMethodSignatures: false
 
 includes:
   - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon

@@ -84,6 +84,9 @@ echo 0123_4567; // octal
         ]);
     }
 
+    /**
+     * @param null|array<string, null|bool> $configuration
+     */
     public function configure(?array $configuration = null): void
     {
         /** @var array<null|bool> $configuration */

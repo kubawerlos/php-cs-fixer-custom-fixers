@@ -69,6 +69,9 @@ function foo() {
         ]);
     }
 
+    /**
+     * @param null|array<string, bool|string> $configuration
+     */
     public function configure(?array $configuration = null): void
     {
         if (isset($configuration['only_booleans']) && $configuration['only_booleans'] === true) {

@@ -24,6 +24,7 @@
         <DeprecatedInterface errorLevel='suppress' />
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
+        <MoreSpecificImplementedParamType errorLevel='suppress' />
         <MoreSpecificReturnType>
             <errorLevel type='suppress'>
                 <file name='./src/Fixers.php' />

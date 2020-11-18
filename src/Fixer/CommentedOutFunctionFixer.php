@@ -52,6 +52,9 @@ var_dump($x);
         ]);
     }
 
+    /**
+     * @param null|array<string, array<string>> $configuration
+     */
     public function configure(?array $configuration = null): void
     {
         if (isset($configuration['functions'])) {
