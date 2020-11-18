@@ -69,6 +69,9 @@ class FooTest extends TestCase {
         ]);
     }
 
+    /**
+     * @param null|array<string, string> $configuration
+     */
     public function configure(?array $configuration = null): void
     {
         /** @var string[] $configuration */

@@ -58,6 +58,9 @@ function foo_bar() {}
         ]);
     }
 
+    /**
+     * @param null|array<string, array<string>> $configuration
+     */
     public function configure(?array $configuration = null): void
     {
         if (isset($configuration['elements'])) {
