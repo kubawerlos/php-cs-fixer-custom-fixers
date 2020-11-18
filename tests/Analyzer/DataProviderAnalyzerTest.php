@@ -26,6 +26,8 @@ use PHPUnit\Framework\TestCase;
 final class DataProviderAnalyzerTest extends TestCase
 {
     /**
+     * @param DataProviderAnalysis[] $expected
+     *
      * @dataProvider provideGettingDataProvidersCases
      */
     public function testGettingDataProviders(array $expected, string $code, int $startIndex = 0, ?int $endIndex = null): void
@@ -39,6 +41,9 @@ final class DataProviderAnalyzerTest extends TestCase
         self::assertSame(\serialize($expected), \serialize($analyzer->getDataProviders($tokens, $startIndex, $endIndex)));
     }
 
+    /**
+     * @return iterable<array{array<DataProviderAnalysis>, string}>
+     */
     public static function provideGettingDataProvidersCases(): iterable
     {
         yield 'single data provider' => [

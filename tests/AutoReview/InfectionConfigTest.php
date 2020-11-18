@@ -34,7 +34,10 @@ final class InfectionConfigTest extends TestCase
         $configBuilder = new InfectionConfigBuilder();
         $configFromBuilder = $configBuilder->build();
 
-        $actualConfig = \json_decode(\file_get_contents(__DIR__ . '/../../dev-tools/infection.json'), true);
+        /** @var string $json */
+        $json = \file_get_contents(__DIR__ . '/../../dev-tools/infection.json');
+
+        $actualConfig = \json_decode($json, true);
 
         self::assertSame($configFromBuilder, $actualConfig, 'Infection config is not up to date, run "php ./dev-tools/build-infection-config".');
     }

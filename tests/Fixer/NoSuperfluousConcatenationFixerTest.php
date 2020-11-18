@@ -13,10 +13,15 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\DefinedFixerInterface;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer
+ *
+ * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  */
 final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
 {
@@ -33,6 +38,8 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
     }
 
     /**
+     * @param null|array<string, bool> $configuration
+     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -40,6 +47,9 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input, $configuration);
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: null|string, 2?: array<string, bool>}>
+     */
     public static function provideFixCases(): iterable
     {
         yield ['<?php $foo. "bar";'];

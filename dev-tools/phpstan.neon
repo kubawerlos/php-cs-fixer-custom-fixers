@@ -3,10 +3,14 @@ parameters:
     - ../vendor/autoload.php
   excludes_analyse:
     - ./src/Readme
+  ignoreErrors:
+      - '#^Call to function method_exists\(\) with ''Tests\\\\.*'' and ''.*'' will always evaluate to true\.$#'
+      - '#^Parameter \#1 \$argument of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given\.$#'
   level: max
   paths:
     - ./src
     - ../src
+    - ../tests
   reportMaybesInMethodSignatures: false
 
 includes:

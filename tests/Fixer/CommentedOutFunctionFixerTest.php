@@ -13,10 +13,15 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\DefinedFixerInterface;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer
+ *
+ * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  */
 final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
 {
@@ -33,6 +38,8 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
     }
 
     /**
+     * @param null|array<string, array<string>> $configuration
+     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -41,6 +48,9 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: string, 2?: array<string, array<string>>}>
+     */
     public static function provideFixCases(): iterable
     {
         yield 'ignore method' => ['<?php $printingHelper->var_dump($foo);'];

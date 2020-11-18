@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer;
@@ -21,6 +23,8 @@ use PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer
+ *
+ * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  */
 final class SingleSpaceAfterStatementFixerTest extends AbstractFixerTestCase
 {
@@ -115,6 +119,8 @@ interface    FooInterface {
     }
 
     /**
+     * @param null|array<string, bool> $configuration
+     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -122,6 +128,9 @@ interface    FooInterface {
         $this->doTest($expected, $input, $configuration);
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: null|string, 2?: array<string, bool>}>
+     */
     public static function provideFixCases(): iterable
     {
         yield ['<?php echo 1; array(1, 2, 3);'];
@@ -304,6 +313,9 @@ do    {
         );
     }
 
+    /**
+     * @return iterable<array{int}>
+     */
     public static function provideTokenIsUsefulCases(): iterable
     {
         $fixer = new SingleSpaceAfterStatementFixer();

@@ -76,16 +76,14 @@ final class PriorityTest extends TestCase
 
     public function testProvidePriorityCasesIsSorted(): void
     {
-        $cases = \array_map(
-            static function (array $case): string {
-                return \sprintf(
-                    '%s_%s',
-                    (new \ReflectionClass($case[0]))->getShortName(),
-                    (new \ReflectionClass($case[1]))->getShortName()
-                );
-            },
-            \iterator_to_array($this->providePriorityCases())
-        );
+        $cases = [];
+        foreach (self::providePriorityCases() as $case) {
+            $cases[] = \sprintf(
+                '%s_%s',
+                (new \ReflectionClass($case[0]))->getShortName(),
+                (new \ReflectionClass($case[1]))->getShortName()
+            );
+        }
 
         $sorted = $cases;
         \sort($sorted);
@@ -94,7 +92,7 @@ final class PriorityTest extends TestCase
     }
 
     /**
-     * @return array<array<FixerInterface>>
+     * @return iterable<array{FixerInterface, FixerInterface, string, string}>
      */
     public static function providePriorityCases(): iterable
     {

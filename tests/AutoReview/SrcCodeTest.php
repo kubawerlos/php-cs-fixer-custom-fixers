@@ -81,6 +81,9 @@ final class SrcCodeTest extends TestCase
         );
     }
 
+    /**
+     * @return iterable<array<FixerInterface>>
+     */
     public static function provideFixerCases(): iterable
     {
         return \array_map(
@@ -104,7 +107,14 @@ final class SrcCodeTest extends TestCase
     public function testThereIsNoPregFunctionUsedDirectly(string $className): void
     {
         $reflectionClass = new \ReflectionClass($className);
-        $tokens = Tokens::fromCode(\file_get_contents($reflectionClass->getFileName()));
+
+        /** @var string $fileName */
+        $fileName = $reflectionClass->getFileName();
+
+        /** @var string $content */
+        $content = \file_get_contents($fileName);
+
+        $tokens = Tokens::fromCode($content);
         $stringTokens = \array_filter(
             $tokens->toArray(),
             static function (Token $token): bool {
@@ -129,6 +139,9 @@ final class SrcCodeTest extends TestCase
         self::assertNotContains('preg_split', $strings, $message);
     }
 
+    /**
+     * @return iterable<array{string}>
+     */
     public static function provideThereIsNoPregFunctionUsedDirectlyCases(): iterable
     {
         $finder = Finder::create()

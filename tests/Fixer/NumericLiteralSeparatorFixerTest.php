@@ -13,12 +13,16 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
+ *
+ * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  *
  * @requires PHP 7.4
  */
@@ -62,6 +66,8 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
     }
 
     /**
+     * @param null|array<string, null|bool> $configuration
+     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -73,6 +79,9 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         );
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: null|string, 2?: array<string, null|bool>}>
+     */
     public static function provideFixCases(): iterable
     {
         yield [

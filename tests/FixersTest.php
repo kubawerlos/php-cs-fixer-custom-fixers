@@ -44,6 +44,9 @@ final class FixersTest extends TestCase
         self::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
     }
 
+    /**
+     * @return array<array>
+     */
     public static function provideFixerIsInCollectionCases(): iterable
     {
         return \array_map(
@@ -61,6 +64,9 @@ final class FixersTest extends TestCase
         );
     }
 
+    /**
+     * @return string[]
+     */
     private function fixerNamesFromCollection(): array
     {
         return \array_map(

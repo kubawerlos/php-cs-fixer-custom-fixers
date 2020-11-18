@@ -30,7 +30,7 @@ final class TokenRemoverTest extends TestCase
     /**
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, string $input): void
     {
         Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
@@ -47,6 +47,9 @@ final class TokenRemoverTest extends TestCase
         self::assertTokens(Tokens::fromCode($expected), $tokens);
     }
 
+    /**
+     * @return iterable<array<string>>
+     */
     public static function provideFixCases(): iterable
     {
         yield 'after open tag' => [

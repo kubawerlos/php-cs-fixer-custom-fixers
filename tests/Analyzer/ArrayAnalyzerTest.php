@@ -36,6 +36,8 @@ final class ArrayAnalyzerTest extends TestCase
     }
 
     /**
+     * @param ArrayElementAnalysis[] $expected
+     *
      * @dataProvider provideGettingArrayElementsCases
      */
     public function testGettingArrayElements(array $expected, string $code): void
@@ -46,6 +48,9 @@ final class ArrayAnalyzerTest extends TestCase
         self::assertSame(\serialize($expected), \serialize($analyzer->getElements($tokens, 5)));
     }
 
+    /**
+     * @return iterable<array{array<ArrayElementAnalysis>, string}>
+     */
     public static function provideGettingArrayElementsCases(): iterable
     {
         yield [
