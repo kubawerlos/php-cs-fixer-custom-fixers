@@ -173,11 +173,11 @@ In your PHP CS Fixer configuration register fixers and use them:
 
         /** @var AbstractFixer $fixer */
         foreach (new Fixers() as $fixer) {
-            $reflection = new \ReflectionClass($fixer);
+            $reflectionClass = new \ReflectionClass($fixer);
 
             $output .= \sprintf(
                 "\n#### %s\n%s",
-                $reflection->getShortName(),
+                $reflectionClass->getShortName(),
                 $fixer->getDefinition()->getSummary()
             );
 
