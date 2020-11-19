@@ -72,7 +72,7 @@ abstract class AbstractFixerTestCase extends TestCase
     final public function testFixerDefinitionHasExactlyOneCodeSample(): void
     {
         if ($this->fixer instanceof DeprecatedFixerInterface) {
-            self::assertGreaterThan(1, \count($this->fixer->getDefinition()->getCodeSamples()));
+            self::assertGreaterThanOrEqual(1, \count($this->fixer->getDefinition()->getCodeSamples()));
         } else {
             self::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
         }

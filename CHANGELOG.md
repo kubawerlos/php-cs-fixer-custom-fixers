@@ -2,6 +2,7 @@
 
 ## v2.4.0 - [Unreleased]
 - Update PHP CS Fixer to v2.17
+- Deprecate NoUselessSprintfFixer - use "no_useless_sprintf"
 - Deprecate OperatorLinebreakFixer - use "operator_linebreak"
 - Remove PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer - use PhpCsFixer\Tokenizer\Analyzer\ReferenceAnalyzer
 - Remove PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer - use PhpCsFixer\Tokenizer\Analyzer\SwitchAnalyzer

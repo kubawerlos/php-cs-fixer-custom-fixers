@@ -281,6 +281,7 @@ There must be no useless parenthesis.
 
 #### NoUselessSprintfFixer
 Function `sprintf` without parameters should not be used.
+  DEPRECATED: use `no_useless_sprintf` instead.
   *Risky: when the function `sprintf` is overridden.*
 ```diff
  <?php
