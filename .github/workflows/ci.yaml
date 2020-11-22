@@ -20,7 +20,7 @@ jobs:
         run: ./dev-tools/check_trailing_whitespaces.sh
 
       - name: Install dependencies
-        run: composer update --no-progress --no-suggest
+        run: composer update --no-progress
 
       - name: Analyse
         run: composer analyse
@@ -76,7 +76,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-cache-
 
       - name: Install dependencies
-        run: composer update --no-progress --no-suggest ${{ matrix.composer_flags }}
+        run: composer update --no-progress ${{ matrix.composer_flags }}
 
       - name: Test
         run: composer test -- --coverage-clover=./build/logs/clover.xml
