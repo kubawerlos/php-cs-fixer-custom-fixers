@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64833bed1c1f73f076858a5a51d55760",
+    "content-hash": "2fa9245074815a788b59e871b2e7882a",
     "packages": [],
     "packages-dev": [
         {
@@ -1250,16 +1250,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "ab7c414ae3b8e5370bbb0f071e6315b7aa9c715f"
+                "reference": "0fbd0e735c8f54cc625430ff6a1245b2851b0261"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/ab7c414ae3b8e5370bbb0f071e6315b7aa9c715f",
-                "reference": "ab7c414ae3b8e5370bbb0f071e6315b7aa9c715f",
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/0fbd0e735c8f54cc625430ff6a1245b2851b0261",
+                "reference": "0fbd0e735c8f54cc625430ff6a1245b2851b0261",
                 "shasum": ""
             },
             "require": {
@@ -1287,7 +1287,7 @@
                 }
             ],
             "description": "Provides configuration for PHP CS Fixer",
-            "time": "2020-11-06T20:06:17+00:00"
+            "time": "2020-11-18T19:44:25+00:00"
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
