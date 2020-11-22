@@ -1,0 +1,14 @@
+version: 2
+
+updates:
+  - package-ecosystem: 'composer'
+    directory: '/dev-tools'
+    schedule:
+      interval: 'daily'
+    ignore:
+      - dependency-name: 'php-cs-fixer/diff'
+    labels:
+      - 'dependencies'
+    reviewers:
+      - 'kubawerlos'
+    versioning-strategy: 'increase'
