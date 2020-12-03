@@ -55,33 +55,47 @@ $y = new \Baz();
         while (++$index < $tokens->count()) {
             $index = $this->skipNamespacedCode($tokens, $index);
 
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(T_NS_SEPARATOR)) {
+            if (!$this->isToRemove($tokens, $index)) {
                 continue;
             }
 
-            /** @var int $prevIndex */
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-
-            /** @var Token $prevToken */
-            $prevToken = $tokens[$prevIndex];
-
-            if ($prevToken->isGivenKind(T_STRING)) {
-                continue;
-            }
-
-            /** @var int $nextIndex */
-            $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_COMMENT], [T_DOC_COMMENT], [T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE]]);
-
-            /** @var Token $nextToken */
-            $nextToken = $tokens[$nextIndex];
-
-            if ($prevToken->equalsAny(['(', ',']) || $prevToken->isGivenKind([T_NEW, CT::T_TYPE_COLON]) || $nextToken->isGivenKind(T_DOUBLE_COLON)) {
-                $tokens->clearTokenAndMergeSurroundingWhitespace($index);
-            }
+            $tokens->clearTokenAndMergeSurroundingWhitespace($index);
         }
+    }
+
+    private function isToRemove(Tokens $tokens, int $index): bool
+    {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        if (!$token->isGivenKind(T_NS_SEPARATOR)) {
+            return false;
+        }
+
+        /** @var int $prevIndex */
+        $prevIndex = $tokens->getPrevMeaningfulToken($index);
+
+        /** @var Token $prevToken */
+        $prevToken = $tokens[$prevIndex];
+
+        if ($prevToken->isGivenKind(T_STRING)) {
+            return false;
+        }
+        if ($prevToken->isGivenKind([T_NEW, CT::T_NULLABLE_TYPE, CT::T_TYPE_COLON])) {
+            return true;
+        }
+
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_COMMENT], [T_DOC_COMMENT], [T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE]]);
+
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
+
+        if ($nextToken->isGivenKind(T_DOUBLE_COLON)) {
+            return true;
+        }
+
+        return $prevToken->equalsAny(['(', ',']) && $nextToken->isGivenKind(T_VARIABLE);
     }
 
     private function skipNamespacedCode(Tokens $tokens, int $index): int
