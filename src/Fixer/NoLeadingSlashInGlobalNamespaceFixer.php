@@ -16,6 +16,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -77,7 +78,7 @@ $y = new \Baz();
             /** @var Token $nextToken */
             $nextToken = $tokens[$nextIndex];
 
-            if ($prevToken->isGivenKind(T_NEW) || $nextToken->isGivenKind(T_DOUBLE_COLON)) {
+            if ($prevToken->equals('(') || $prevToken->isGivenKind([T_NEW, CT::T_TYPE_COLON]) || $nextToken->isGivenKind(T_DOUBLE_COLON)) {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }
         }

@@ -60,6 +60,16 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
         ];
 
         yield [
+            '<?php function f(Bar $x) {};',
+            '<?php function f(\\Bar $x) {};',
+        ];
+
+        yield [
+            '<?php function f(): Bar {};',
+            '<?php function f(): \\Bar {};',
+        ];
+
+        yield [
             '<?php
                 namespace { $x = new Foo(); }
                 namespace Bar { $y = new \\Baz(); }
