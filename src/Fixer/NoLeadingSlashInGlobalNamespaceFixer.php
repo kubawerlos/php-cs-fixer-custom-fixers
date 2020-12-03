@@ -78,7 +78,7 @@ $y = new \Baz();
             /** @var Token $nextToken */
             $nextToken = $tokens[$nextIndex];
 
-            if ($prevToken->equals('(') || $prevToken->isGivenKind([T_NEW, CT::T_TYPE_COLON]) || $nextToken->isGivenKind(T_DOUBLE_COLON)) {
+            if ($prevToken->equalsAny(['(', ',']) || $prevToken->isGivenKind([T_NEW, CT::T_TYPE_COLON]) || $nextToken->isGivenKind(T_DOUBLE_COLON)) {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             }
         }
