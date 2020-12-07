@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
 <phpunit xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-         xsi:noNamespaceSchemaLocation='./vendor/phpunit/phpunit/schema/9.2.xsd'
+         xsi:noNamespaceSchemaLocation='./vendor/phpunit/phpunit/phpunit.xsd'
          cacheResult='false'
          colors='true'
          forceCoversAnnotation='true'
@@ -21,31 +21,18 @@
         </testsuite>
     </testsuites>
 
-    <listeners>
-        <listener class='JohnKary\PHPUnit\Listener\SpeedTrapListener'>
-            <arguments>
-                <array>
-                    <element key='slowThreshold'>
-                        <integer>100</integer>
-                    </element>
-                </array>
-            </arguments>
-        </listener>
-    </listeners>
-
-    <logging>
-        <log type='coverage-text' target='php://stdout' showOnlySummary='true' />
-    </logging>
-
-    <filter>
-        <whitelist>
+    <coverage>
+        <include>
             <directory>./dev-tools/src/Readme</directory>
             <directory>./src</directory>
-            <exclude>
-                <file>./dev-tools/src/Readme/php-cs-fixer.config.after.php</file>
-                <file>./dev-tools/src/Readme/php-cs-fixer.config.before.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
+        </include>
+        <exclude>
+            <file>./dev-tools/src/Readme/php-cs-fixer.config.after.php</file>
+            <file>./dev-tools/src/Readme/php-cs-fixer.config.before.php</file>
+        </exclude>
+        <report>
+            <text outputFile='php://stdout' showOnlySummary='true' />
+        </report>
+    </coverage>
 
 </phpunit>
