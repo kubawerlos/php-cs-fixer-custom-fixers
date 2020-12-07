@@ -59,14 +59,14 @@ jobs:
           result-encoding: string
 
       - name: Test
-        run: echo ${{steps.coverage-driver.outputs.result}}
+        run: echo A${{ steps.coverage-driver.outputs.result }}B
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           ini-values: pcov.directory=$GITHUB_WORKSPACE
-          coverage: ${{steps.coverage-driver.outputs.result}}
+          coverage: ${{ steps.coverage-driver.outputs.result }}
 
       - name: Get Composer data directory
         id: composer-data
@@ -97,7 +97,7 @@ jobs:
         run: composer test -- --coverage-clover=./build/logs/clover.xml
 
       - name: Upload coverage results to Coveralls
-        if: ${{steps.coverage-driver.outputs.result}} == 'pcov'
+        if: ${{ steps.coverage-driver.outputs.result }} == 'pcov'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -105,5 +105,5 @@ jobs:
           ./vendor/bin/php-coveralls --verbose
 
       - name: Run Infection
-        if: ${{steps.coverage-driver.outputs.result}} == 'pcov'
+        if: ${{ steps.coverage-driver.outputs.result }} == 'pcov'
         run: composer infection
