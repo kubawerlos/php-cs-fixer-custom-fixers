@@ -101,7 +101,7 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          composer require --dev twinh/php-coveralls
+          composer require --dev php-coveralls/php-coveralls
           ./vendor/bin/php-coveralls --verbose
 
       - name: Run Infection
