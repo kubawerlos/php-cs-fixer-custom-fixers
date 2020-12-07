@@ -28,8 +28,8 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        php-version: ['7.4']
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        php-version: [ '7.4' ]
         include:
           - os: ubuntu-latest
             php-version: '7.2'
@@ -46,12 +46,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Get code coverage driver
+        uses: actions/github-script@v3.1
+        id: coverage-driver
+        with:
+          script: return 'foo';
+          result-encoding: string
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           ini-values: pcov.directory=$GITHUB_WORKSPACE
-          coverage: pcov
+          coverage: ${{steps.coverage-driver.outputs.result}}
 
       - name: Get Composer data directory
         id: composer-data
