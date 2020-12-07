@@ -54,7 +54,7 @@ jobs:
           result-encoding: string
 
       - name: Test
-        uses: echo ${{steps.coverage-driver.outputs.result}}
+        run: echo ${{steps.coverage-driver.outputs.result}}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
