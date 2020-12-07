@@ -50,8 +50,11 @@ jobs:
         uses: actions/github-script@v3.1
         id: coverage-driver
         with:
-          script: return 'foo';
+          script: return 'none';
           result-encoding: string
+
+      - name: Test
+        uses: echo ${{steps.coverage-driver.outputs.result}}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
