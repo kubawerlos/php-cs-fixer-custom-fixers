@@ -16,7 +16,6 @@
         "symfony/finder": "^3.0 || ^4.0 || ^5.0"
     },
     "require-dev": {
-        "johnkary/phpunit-speedtrap": "^3.2.0",
         "phpunit/phpunit": "^8.5.3 || ^9.1.1"
     },
     "autoload": {
@@ -50,7 +49,7 @@
             "composer --working-dir=./dev-tools --quiet install"
         ],
         "test": [
-            "phpunit"
+            "phpunit -v"
         ],
         "verify": [
             "@analyse",
