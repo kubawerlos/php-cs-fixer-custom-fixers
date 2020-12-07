@@ -50,7 +50,12 @@ jobs:
         uses: actions/github-script@v3.1
         id: coverage-driver
         with:
-          script: return 'none';
+          script: |
+            if (matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4') {
+              return 'pcov';
+            } else {
+              return 'none';
+            }
           result-encoding: string
 
       - name: Test
@@ -92,7 +97,7 @@ jobs:
         run: composer test -- --coverage-clover=./build/logs/clover.xml
 
       - name: Upload coverage results to Coveralls
-        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
+        if: ${{steps.coverage-driver.outputs.result}} != 'none'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -100,5 +105,5 @@ jobs:
           ./vendor/bin/php-coveralls --verbose
 
       - name: Run Infection
-        if: matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4'
+        if: ${{steps.coverage-driver.outputs.result}} != 'none'
         run: composer infection
