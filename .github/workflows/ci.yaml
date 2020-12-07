@@ -97,7 +97,7 @@ jobs:
         run: composer test -- --coverage-clover=./build/logs/clover.xml
 
       - name: Upload coverage results to Coveralls
-        if: ${{ steps.coverage-driver.outputs.result }} == 'pcov'
+        if: steps.coverage-driver.outputs.result != 'none'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -105,5 +105,5 @@ jobs:
           ./vendor/bin/php-coveralls --verbose
 
       - name: Run Infection
-        if: ${{ steps.coverage-driver.outputs.result }} == 'pcov'
+        if: steps.coverage-driver.outputs.result != 'none'
         run: composer infection
