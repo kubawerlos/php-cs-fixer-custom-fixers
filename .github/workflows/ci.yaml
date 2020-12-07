@@ -51,7 +51,7 @@ jobs:
         id: coverage-driver
         with:
           script: |
-            if (matrix.os == 'ubuntu-latest' && matrix.php-version == '7.4') {
+            if (${{ matrix.os }} == 'ubuntu-latest' && ${{ matrix.php-version }} == '7.4') {
               return 'pcov';
             } else {
               return 'none';
