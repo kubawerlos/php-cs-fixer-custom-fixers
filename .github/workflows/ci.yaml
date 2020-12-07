@@ -53,9 +53,6 @@ jobs:
           script: 'return "${{ matrix.os }}" == "ubuntu-latest" && "${{ matrix.php-version }}" == "7.4" ? "pcov" : "none"'
           result-encoding: string
 
-      - name: Test
-        run: echo A${{ steps.coverage-driver.outputs.result }}B
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
