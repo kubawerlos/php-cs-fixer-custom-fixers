@@ -93,11 +93,11 @@ jobs:
       - name: Install dependencies
         run: composer update --no-progress ${{ matrix.composer_flags }}
 
-      - name: Test
+      - name: Run tests
         run: composer test -- --coverage-clover=./build/logs/clover.xml
 
       - name: Upload coverage results to Coveralls
-        if: ${{steps.coverage-driver.outputs.result}} != 'none'
+        if: ${{steps.coverage-driver.outputs.result}} == 'pcov'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -105,5 +105,5 @@ jobs:
           ./vendor/bin/php-coveralls --verbose
 
       - name: Run Infection
-        if: ${{steps.coverage-driver.outputs.result}} != 'none'
+        if: ${{steps.coverage-driver.outputs.result}} == 'pcov'
         run: composer infection
