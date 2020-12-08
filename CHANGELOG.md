@@ -1,6 +1,6 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## v2.4.0 - [Unreleased]
+## v2.4.0 - *2020-12-08*
 - Allow PHP 8
 - Update PHP CS Fixer to v2.17
 - Deprecate NoUselessSprintfFixer - use "no_useless_sprintf"
@@ -74,7 +74,7 @@
 - Deprecate NoUselessClassCommentFixer
 - Deprecate NoUselessConstructorCommentFixer
 - Feature: OperatorLinebreakFixer - handle ternary operator
-- Fix: NoImportFromGlobalNamespaceFixer - class without  namespace
+- Fix: NoImportFromGlobalNamespaceFixer - class without namespace
 - Fix: NoUselessClassCommentFixer - comment detection
 - Fix: TokenRemover - remove last element of file
 - Fix: TokenRemover - remove item in line after code
