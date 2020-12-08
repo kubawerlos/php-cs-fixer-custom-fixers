@@ -322,8 +322,8 @@ Configuration options:
 ```
 
 #### OperatorLinebreakFixer
-Operators must always be at the beginning or at the end of the line.
-  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/4021) is merged and released.*
+Operators - when multiline - must always be at the beginning or at the end of the line.
+  DEPRECATED: use `operator_linebreak` instead.
 Configuration options:
 - `only_booleans` (`bool`): whether to limit operators to only boolean ones; defaults to `false`
 - `position` (`'beginning'`, `'end'`): whether to place operators at the beginning or at the end of the line; defaults to `'beginning'`

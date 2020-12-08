@@ -34,9 +34,9 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
         self::assertFalse($this->fixer->isRisky());
     }
 
-    public function testDeprecatingPullRequest(): void
+    public function testSuccessorName(): void
     {
-        self::assertSame(4021, $this->fixer->getPullRequestId());
+        self::assertContains('operator_linebreak', $this->fixer->getSuccessorsNames());
     }
 
     /**
