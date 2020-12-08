@@ -25,6 +25,11 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
         self::assertTrue($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertContains('no_useless_sprintf', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @dataProvider provideFixCases
      */
@@ -74,15 +79,6 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-                $foo = "Foo";',
-            '<?php
-                $foo = sprintf(
-                    "Foo"
-                );',
-        ];
-
-        yield [
-            '<?php
                 $foo = "Foo";
                 PrintingHelper::sprintf("Bar");
                 $baz = "Baz";
@@ -100,7 +96,7 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
 
         if (PHP_MAJOR_VERSION < 8) {
             yield [
-                '<?php $foo ;',
+                '<?php    $foo  ;',
                 '<?php \ sprintf ( $foo ) ;',
             ];
         }
