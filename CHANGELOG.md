@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v2.4.0 - [Unreleased]
+- Remove PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer - use PhpCsFixer\Tokenizer\Analyzer\ReferenceAnalyzer
+
 ## v2.3.0 - *2020-07-07*
 - Add NoUselessParenthesisFixer
 - Add NoUselessStrlenFixer
