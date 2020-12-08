@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         os: [ macos-latest, ubuntu-latest, windows-latest ]
-        php-version: [ '7.4' ]
+        php-version: [ '7.4', '8.0' ]
         include:
           - os: ubuntu-latest
             php-version: '7.2'
@@ -38,9 +38,6 @@ jobs:
             php-version: '7.2'
           - os: ubuntu-latest
             php-version: '7.3'
-          - os: ubuntu-latest
-            php-version: '8.0'
-            composer_flags: '--ignore-platform-reqs'
 
     runs-on: ${{ matrix.os }}
 
