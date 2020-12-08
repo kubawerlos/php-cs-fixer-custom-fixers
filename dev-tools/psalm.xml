@@ -38,7 +38,6 @@
             <errorLevel type='suppress'>
                 <file name='./src/Fixer/OrderedClassElementsInternalFixer.php' />
                 <file name='../src/Analyzer/Analysis/ArrayElementAnalysis.php' />
-                <file name='../src/Analyzer/Analysis/SwitchAnalysis.php' />
                 <file name='../src/Fixer/DeprecatingFixerInterface.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
