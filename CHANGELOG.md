@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v2.4.0 - [Unreleased]
+- Allow PHP 8
 - Update PHP CS Fixer to v2.17
 - Deprecate NoUselessSprintfFixer - use "no_useless_sprintf"
 - Deprecate OperatorLinebreakFixer - use "operator_linebreak"
