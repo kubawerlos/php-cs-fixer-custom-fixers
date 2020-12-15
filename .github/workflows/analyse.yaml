@@ -1,3 +1,5 @@
+name: analyse
+
 on:
   - pull_request
   - push
@@ -13,9 +15,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-
-      - name: PHP version
-        run: php -v
+          coverage: none
 
       - name: Check file permissions
         run: ./dev-tools/check_file_permissions.sh
