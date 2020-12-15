@@ -1,5 +1,3 @@
-name: analyse
-
 on:
   - pull_request
   - push
@@ -8,11 +6,16 @@ jobs:
   analyse:
     runs-on: ubuntu-latest
     steps:
-      - name: PHP version
-        run: php -v
-
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: PHP version
+        run: php -v
 
       - name: Check file permissions
         run: ./dev-tools/check_file_permissions.sh
