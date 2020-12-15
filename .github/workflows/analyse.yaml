@@ -1,0 +1,30 @@
+name: analyse
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+
+      - name: Check file permissions
+        run: ./dev-tools/check_file_permissions.sh
+
+      - name: Check trailing whitespaces
+        run: ./dev-tools/check_trailing_whitespaces.sh
+
+      - name: Install dependencies
+        run: composer update --no-progress
+
+      - name: Analyse
+        run: composer analyse
