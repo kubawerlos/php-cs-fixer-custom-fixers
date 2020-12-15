@@ -8,6 +8,9 @@ jobs:
   analyse:
     runs-on: ubuntu-latest
     steps:
+      - name: PHP version
+        run: php -v
+
       - name: Checkout
         uses: actions/checkout@v2
 
