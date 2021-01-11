@@ -3,7 +3,7 @@
 /*
  * This file is part of PHP CS Fixer: custom fixers.
  *
- * (c) 2018-2020 Kuba Werłos
+ * (c) 2018 Kuba Werłos
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -113,11 +113,7 @@ $isNotEmpty = strlen($string) > 0;
             return true;
         }
 
-        if ($this->transformConditionRight($tokens, $endIndex)) {
-            return true;
-        }
-
-        return false;
+        return $this->transformConditionRight($tokens, $endIndex);
     }
 
     private function transformConditionLeft(Tokens $tokens, int $index): bool

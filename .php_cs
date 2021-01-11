@@ -3,7 +3,7 @@
 /*
  * This file is part of PHP CS Fixer: custom fixers.
  *
- * (c) 2018-2020 Kuba Werłos
+ * (c) 2018 Kuba Werłos
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -18,6 +18,9 @@ $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers',
 // PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer will handle this
 unset($rules['ordered_class_elements']);
 unset($rules['ordered_interfaces']);
+
+unset($rules['phpdoc_tag_type']); // TODO: remove when fixer: https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/5395
+unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
