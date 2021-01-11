@@ -113,7 +113,7 @@ $isNotEmpty = strlen($string) > 0;
             return true;
         }
 
-        return (bool) ($this->transformConditionRight($tokens, $endIndex));
+        return $this->transformConditionRight($tokens, $endIndex);
     }
 
     private function transformConditionLeft(Tokens $tokens, int $index): bool
