@@ -18,6 +18,8 @@ use Infection\Mutator\ProfileList;
 final class InfectionConfigBuilder
 {
     private const UNWANTED_MUTATORS = [
+        'Concat',
+        'ConcatOperandRemoval',
         'Decrement',
         'DecrementInteger',
         'FalseValue',
