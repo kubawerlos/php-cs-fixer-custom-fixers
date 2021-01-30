@@ -80,13 +80,14 @@ use Bar;
     private function getUniqueKey(NamespaceUseAnalysis $useDeclaration): string
     {
         if ($useDeclaration->isClass()) {
-            return 'class_' . $useDeclaration->getShortName();
-        }
-        if ($useDeclaration->isFunction()) {
-            return 'function_' . $useDeclaration->getShortName();
+            return $useDeclaration->getShortName();
         }
 
-        return 'constant_' . $useDeclaration->getShortName();
+        if ($useDeclaration->isFunction()) {
+            return 'function ' . $useDeclaration->getShortName();
+        }
+
+        return 'constant ' . $useDeclaration->getShortName();
     }
 
     private function removeUseDeclaration(Tokens $tokens, NamespaceUseAnalysis $useDeclaration): void

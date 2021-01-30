@@ -147,5 +147,35 @@ final class NoDuplicatedImportsFixerTest extends AbstractFixerTestCase
                 use Foo\Baz as Bar;
             ',
         ];
+
+        yield [
+            '<?php
+                namespace N;
+                use Foo;
+                use Bar;
+                use const Foo;
+                use const Bar;
+                use function Foo;
+                use function Bar;
+            ',
+            '<?php
+                namespace N;
+                use Foo;
+                use Foo;
+                use Bar;
+                use Bar;
+                use Bar;
+                use const Foo;
+                use const Foo;
+                use const Bar;
+                use const Bar;
+                use const Bar;
+                use function Foo;
+                use function Foo;
+                use function Bar;
+                use function Bar;
+                use function Bar;
+            ',
+        ];
     }
 }
