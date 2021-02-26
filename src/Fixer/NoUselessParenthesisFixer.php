@@ -83,7 +83,10 @@ foo(($bar));
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
             }
 
-            $tokens = Tokens::fromCode($tokens->generateCode());
+            $code = $tokens->generateCode();
+            $tokens->setCode('<?php ');
+            $tokens->setCode($code);
+            $index--;
         }
     }
 
