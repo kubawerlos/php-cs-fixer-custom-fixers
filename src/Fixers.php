@@ -37,7 +37,11 @@ final class Fixers implements \IteratorAggregate
         /** @var SplFileInfo $fileInfo */
         foreach ($finder as $fileInfo) {
             $className = __NAMESPACE__ . '\\Fixer\\' . $fileInfo->getBasename('.php');
-            yield new $className();
+
+            /** @var FixerInterface $fixer */
+            $fixer = new $className();
+
+            yield $fixer;
         }
     }
 }
