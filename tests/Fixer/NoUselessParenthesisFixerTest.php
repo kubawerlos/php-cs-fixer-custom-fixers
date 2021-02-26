@@ -274,5 +274,16 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
                 foo((7 + 8));
             ',
         ];
+
+        yield [
+            '<?php
+                "String with {$curly} braces";
+                return 1;
+            ',
+            '<?php
+                "String with {$curly} braces";
+                return (1);
+            ',
+        ];
     }
 }
