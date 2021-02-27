@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36ac1b8774e5a7b9b350c0c70f2e4024",
+    "content-hash": "01196296ca8bd617dcc17b919f93b937",
     "packages": [],
     "packages-dev": [
         {
@@ -1347,21 +1347,21 @@
         },
         {
             "name": "kubawerlos/types-checker",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/types-checker.git",
-                "reference": "c325532e8faa7b057266f22c17fe1d2721dd3032"
+                "reference": "12327113d78a324b317be5f0f4a31e13f827f1ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/types-checker/zipball/c325532e8faa7b057266f22c17fe1d2721dd3032",
-                "reference": "c325532e8faa7b057266f22c17fe1d2721dd3032",
+                "url": "https://api.github.com/repos/kubawerlos/types-checker/zipball/12327113d78a324b317be5f0f4a31e13f827f1ca",
+                "reference": "12327113d78a324b317be5f0f4a31e13f827f1ca",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "php": "^7.2",
+                "php": "^7.2 || ^8.0",
                 "symfony/console": "^3.4 || ^4.0 || ^5.0",
                 "symfony/finder": "^3.4 || ^4.0 || ^5.0"
             },
@@ -1388,7 +1388,7 @@
                 }
             ],
             "description": "A tool to find missing type declarations in PHP 7 code",
-            "time": "2020-03-20T09:55:38+00:00"
+            "time": "2021-02-26T22:49:32+00:00"
         },
         {
             "name": "localheinz/diff",
