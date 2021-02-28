@@ -5,5 +5,5 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
-[*.yaml]
+[*.{neon,yaml}]
 indent_size = 2
