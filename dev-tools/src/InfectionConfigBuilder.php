@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PhpCsFixerCustomFixersDev;
 
 use Infection\Mutator\ProfileList;
+use PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer;
 
 final class InfectionConfigBuilder
 {
@@ -80,6 +81,7 @@ final class InfectionConfigBuilder
                 'PhpCsFixerCustomFixers\\Fixer\\*::getConfigurationDefinition',
                 'PhpCsFixerCustomFixers\\Fixer\\*::getDefinition',
                 'PhpCsFixerCustomFixers\\Fixer\\*::isCandidate',
+                NoLeadingSlashInGlobalNamespaceFixer::class . '::isToRemove', // whitespaces and commends cannot be inside FQCN in PHP 8
             ],
         ];
 

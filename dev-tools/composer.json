@@ -32,6 +32,7 @@
         "fix": [
             "composer normalize ../composer.json",
             "composer normalize",
+            "./build-infection-config",
             "phpcbf || exit 0"
         ],
         "infection": [
