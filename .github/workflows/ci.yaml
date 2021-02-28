@@ -54,7 +54,7 @@ jobs:
         uses: actions/github-script@v3.1
         id: coverage-driver
         with:
-          script: 'return "${{ matrix.os }}" == "ubuntu-latest" && "${{ matrix.php-version }}" == "7.4" ? "pcov" : "none"'
+          script: 'return "${{ matrix.os }}" == "ubuntu-latest" && "${{ matrix.php-version }}" == "8.0" ? "pcov" : "none"'
           result-encoding: string
 
       - name: Setup PHP

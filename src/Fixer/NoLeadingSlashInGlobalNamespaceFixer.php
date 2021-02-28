@@ -95,7 +95,7 @@ $y = new \Baz();
             return true;
         }
 
-        return $prevToken->equalsAny(['(', ',']) && $nextToken->isGivenKind(T_VARIABLE);
+        return $prevToken->equalsAny(['(', ',', [CT::T_TYPE_ALTERNATION]]) && $nextToken->isGivenKind([T_VARIABLE, CT::T_TYPE_ALTERNATION]);
     }
 
     private function skipNamespacedCode(Tokens $tokens, int $index): int

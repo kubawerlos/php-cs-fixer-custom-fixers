@@ -132,4 +132,15 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
             '<?php $foo = \\/** comment */Bar::value();',
         ];
     }
+
+    /**
+     * @requires PHP ^8.0
+     */
+    public function testFixOnPhp8(): void
+    {
+        $this->doTest(
+            '<?php function f(Bar | Baz | Qux $x) {};',
+            '<?php function f(\Bar | \Baz | \Qux $x) {};'
+        );
+    }
 }

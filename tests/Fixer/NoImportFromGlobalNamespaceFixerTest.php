@@ -308,4 +308,23 @@ class Bar {
             ',
         ];
     }
+
+    /**
+     * @requires PHP ^8.0
+     */
+    public function testFixOnPhp8(): void
+    {
+        $this->doTest(
+            '<?php
+                namespace Foo;
+                function f(\Bar | \Baz $x) {}
+                ',
+            '<?php
+                namespace Foo;
+                use Bar;
+                use Baz;
+                function f(Bar | Baz $x) {}
+                '
+        );
+    }
 }

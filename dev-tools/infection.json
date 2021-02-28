@@ -26,7 +26,8 @@
             "ignore": [
                 "PhpCsFixerCustomFixers\\Fixer\\*::getConfigurationDefinition",
                 "PhpCsFixerCustomFixers\\Fixer\\*::getDefinition",
-                "PhpCsFixerCustomFixers\\Fixer\\*::isCandidate"
+                "PhpCsFixerCustomFixers\\Fixer\\*::isCandidate",
+                "PhpCsFixerCustomFixers\\Fixer\\NoLeadingSlashInGlobalNamespaceFixer::isToRemove"
             ]
         },
         "ArrayOneItem": true,
