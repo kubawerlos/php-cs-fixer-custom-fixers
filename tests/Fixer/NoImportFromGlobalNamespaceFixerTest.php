@@ -324,7 +324,7 @@ class Bar {
                 use Bar;
                 use Baz;
                 function f(Bar | Baz $x) {}
-                ',
+                '
         );
     }
 }
