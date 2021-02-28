@@ -13,16 +13,10 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\OperatorLinebreakFixer
- *
- * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface&DeprecatedFixerInterface $fixer
  */
 final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
 {

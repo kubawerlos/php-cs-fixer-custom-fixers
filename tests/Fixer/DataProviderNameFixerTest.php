@@ -13,16 +13,12 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer
- *
- * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  */
 final class DataProviderNameFixerTest extends AbstractFixerTestCase
 {

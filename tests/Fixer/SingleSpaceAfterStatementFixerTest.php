@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer;
@@ -23,8 +21,6 @@ use PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer
- *
- * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  */
 final class SingleSpaceAfterStatementFixerTest extends AbstractFixerTestCase
 {

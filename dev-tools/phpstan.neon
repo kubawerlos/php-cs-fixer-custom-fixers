@@ -1,18 +1,25 @@
 parameters:
-  bootstrapFiles:
-    - ../vendor/autoload.php
-  excludes_analyse:
-    - ./src/Readme
-  ignoreErrors:
-      - '#^Call to function method_exists\(\) with ''Tests\\\\.*'' and ''.*'' will always evaluate to true\.$#'
-      - '#^Parameter \#1 \$argument of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given\.$#'
-  level: max
-  paths:
-    - ./src
-    - ../src
-    - ../tests
-  reportMaybesInMethodSignatures: false
+    bootstrapFiles:
+        - ../vendor/autoload.php
+    excludes_analyse:
+        - ./src/Readme
+    ignoreErrors:
+        -
+            message: '#^Call to an undefined method PhpCsFixer\\Fixer\\DefinedFixerInterface::#'
+            path: ../tests
+        -
+            message: '#^Call to function method_exists\(\) with ''Tests\\\\.*'' and ''.*'' will always evaluate to true\.$#'
+            path: ../tests
+        -
+            message: '#^Parameter \#1 \$argument of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given\.$#'
+            path: ../tests
+    level: max
+    paths:
+        - ./src
+        - ../src
+        - ../tests
+    reportMaybesInMethodSignatures: false
 
 includes:
-  - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
-  - ./vendor/phpstan/phpstan-strict-rules/rules.neon
+    - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - ./vendor/phpstan/phpstan-strict-rules/rules.neon

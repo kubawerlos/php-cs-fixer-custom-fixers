@@ -13,15 +13,10 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
-
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer
- *
- * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  */
 final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
 {

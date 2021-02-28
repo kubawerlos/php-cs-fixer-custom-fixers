@@ -13,16 +13,12 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
- *
- * @property DefinedFixerInterface&ConfigurationDefinitionFixerInterface $fixer
  *
  * @requires PHP 7.4
  */

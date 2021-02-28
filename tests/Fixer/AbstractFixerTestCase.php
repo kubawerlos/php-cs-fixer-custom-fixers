@@ -39,7 +39,10 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $className = 'PhpCsFixerCustomFixers\\Fixer\\' . \substr($reflectionClass->getShortName(), 0, -4);
 
-        $this->fixer = new $className();
+        /** @var DefinedFixerInterface $fixer */
+        $fixer = new $className();
+
+        $this->fixer = $fixer;
     }
 
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
