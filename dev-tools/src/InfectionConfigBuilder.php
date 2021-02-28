@@ -19,7 +19,6 @@ final class InfectionConfigBuilder
 {
     private const UNWANTED_MUTATORS = [
         'Concat',
-        'ConcatOperandRemoval',
         'Decrement',
         'DecrementInteger',
         'FalseValue',

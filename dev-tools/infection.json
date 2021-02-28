@@ -47,6 +47,7 @@
         "CastString": true,
         "CloneRemoval": true,
         "Coalesce": true,
+        "ConcatOperandRemoval": true,
         "Continue_": true,
         "DivEqual": true,
         "Division": true,

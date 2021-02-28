@@ -157,44 +157,56 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-                  // Keep this
-              ',
+                // Keep this
+            ',
             '<?php
-                  // // Foo
-                  // Keep this
-                  // // Bar
-              ',
+                // // Foo
+                // Keep this
+                // // Bar
+            ',
         ];
 
         yield [
             '<?php
-                  /* // Hello
-                   * @see www.example.com
-                   */
-              ',
+                class Foo { // comment 1
+                }
+            ',
+            '<?php
+                class Foo { // comment 1
+                    // public function bar() // comment 2
+                    // { // comment 3
+                    // } // comment 4
+                }
+            ',
         ];
 
         yield [
             '<?php
-                  class Foo {
-                      public function f1()
-                      {
-                          return 1;
-                      }
-                  }
-              ',
+                 /* // Hello
+                  * @see www.example.com
+                  */
+            ',
+        ];
+
+        yield [
             '<?php
-                  class Foo {
-                      public function f1()
-                      {
-                          return 1;
-                      }
-                      //public function f2()
-                      //{
-                      //    return 2;
-                      //}
-                  }
-              ',
+            class Foo {
+                public function f1()
+                {
+                    return 1;
+                }
+            }',
+            '<?php
+            class Foo {
+                public function f1()
+                {
+                    return 1;
+                }
+                //public function f2()
+                //{
+                //    return 2;
+                //}
+            }',
         ];
     }
 }
