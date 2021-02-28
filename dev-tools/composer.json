@@ -1,7 +1,4 @@
 {
-    "require": {
-        "php": "^8.0"
-    },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.13.2",
         "infection/infection": "^0.21.2",
