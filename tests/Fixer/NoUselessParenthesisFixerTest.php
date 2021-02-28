@@ -125,12 +125,12 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php foo($bar);',
+            '<?php foo( $bar );',
             '<?php foo(( $bar ));',
         ];
 
         yield [
-            '<?php foo( $bar );',
+            '<?php foo($bar);',
             '<?php foo( ($bar) );',
         ];
 
@@ -140,7 +140,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php foo( /* one */ /* two */ /* three */ $bar /* four */ /* five */ /* six */ );',
+            '<?php foo/* one */ /* two */ ( /* three */ $bar /* four */ ) /* five */ /* six */;',
             '<?php foo( /* one */ ( /* two */ ( /* three */ $bar /* four */ ) /* five */ ) /* six */ );',
         ];
 
@@ -169,8 +169,8 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 if (
-                    $foo
-                ) {
+                        $foo
+                    ) {
                     return true;
                 }
             ',
@@ -188,11 +188,11 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 if // comment 1
-                    ( // comment 2
-                        // comment 3
+                    // comment 2
+                        ( // comment 3
                             true // comment 4
- // comment 5
-                    ) // comment 6
+                        ) // comment 5
+ // comment 6
                     { // comment 7
                         return true;
                     }
@@ -213,11 +213,11 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 if # comment 1
-                    ( # comment 2
-                        # comment 3
+                    # comment 2
+                        ( # comment 3
                             true # comment 4
- # comment 5
-                    ) # comment 6
+                        ) # comment 5
+ # comment 6
                     { # comment 7
                         return true;
                     }
@@ -238,11 +238,11 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 if /* comment 1 */
-                    ( /* comment 2 */
-                        /* comment 3 */
+                    /* comment 2 */
+                        ( /* comment 3 */
                             true /* comment 4 */
- /* comment 5 */
-                    ) /* comment 6 */
+                        ) /* comment 5 */
+ /* comment 6 */
                     { /* comment 7 */
                         return true;
                     }
@@ -272,6 +272,17 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
                 foo((2 + 3) * (4 + 5));
                 foo((((6))));
                 foo((7 + 8));
+            ',
+        ];
+
+        yield [
+            '<?php
+                "String with {$curly} braces";
+                return 1;
+            ',
+            '<?php
+                "String with {$curly} braces";
+                return (1);
             ',
         ];
     }

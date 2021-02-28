@@ -20,7 +20,6 @@ use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\Transformers;
 
 final class NoUselessParenthesisFixer extends AbstractFixer
 {
@@ -83,8 +82,6 @@ foo(($bar));
             if ($prevToken->isGivenKind(T_RETURN)) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
             }
-
-            Transformers::create()->transform($tokens);
         }
     }
 
@@ -92,20 +89,35 @@ foo(($bar));
     {
         $blocksAnalyzer = new BlocksAnalyzer();
 
-        /** @var int $prevIndex */
-        $prevIndex = $tokens->getPrevMeaningfulToken($startIndex);
+        // is there a block of parenthesis inside?
+        /** @var int $nextStartIndex */
+        $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
+        /** @var Token $nextStartToken */
+        $nextStartToken = $tokens[$nextStartIndex];
+        if ($nextStartToken->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
+            /** @var int $prevEndIndex */
+            $prevEndIndex = $tokens->getPrevMeaningfulToken($endIndex);
+            if ($blocksAnalyzer->isBlock($tokens, $nextStartIndex, $prevEndIndex)) {
+                return true;
+            }
+        }
 
-        /** @var Token $prevToken */
-        $prevToken = $tokens[$prevIndex];
+        // is there a block of parenthesis outside?
+        /** @var int $prevStartIndex */
+        $prevStartIndex = $tokens->getPrevMeaningfulToken($startIndex);
+        /** @var int $nextEndIndex */
+        $nextEndIndex = $tokens->getNextMeaningfulToken($endIndex);
+        if ($blocksAnalyzer->isBlock($tokens, $prevStartIndex, $nextEndIndex)) {
+            return true;
+        }
 
-        /** @var int $nextIndex */
-        $nextIndex = $tokens->getNextMeaningfulToken($endIndex);
+        // is there assignment, return or throw before?
+        /** @var Token $prevStartToken */
+        $prevStartToken = $tokens[$prevStartIndex];
+        /** @var Token $nextEndToken */
+        $nextEndToken = $tokens[$nextEndIndex];
 
-        /** @var Token $nextToken */
-        $nextToken = $tokens[$nextIndex];
-
-        return $blocksAnalyzer->isBlock($tokens, $prevIndex, $nextIndex)
-            || $prevToken->equalsAny(['=', [T_RETURN], [T_THROW]]) && $nextToken->equals(';');
+        return $prevStartToken->equalsAny(['=', [T_RETURN], [T_THROW]]) && $nextEndToken->equals(';');
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void
