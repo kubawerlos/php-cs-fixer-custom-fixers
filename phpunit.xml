@@ -23,13 +23,8 @@
 
     <coverage>
         <include>
-            <directory>./dev-tools/src/Readme</directory>
             <directory>./src</directory>
         </include>
-        <exclude>
-            <file>./dev-tools/src/Readme/php-cs-fixer.config.after.php</file>
-            <file>./dev-tools/src/Readme/php-cs-fixer.config.before.php</file>
-        </exclude>
         <report>
             <text outputFile='php://stdout' showOnlySummary='true' />
         </report>
