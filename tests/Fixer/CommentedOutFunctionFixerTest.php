@@ -235,12 +235,16 @@ baz();
                 var_dump($y);
             ',
         ];
+    }
 
-        if (PHP_MAJOR_VERSION < 8) {
-            yield 'with comment between backslash and function call' => [
-                '<?php //\/* foo */var_dump/** bar */($x);',
-                '<?php \/* foo */var_dump/** bar */($x);',
-            ];
-        }
+    /**
+     * @requires PHP ^7.2
+     */
+    public function testWithCommentBetweenBackslashAndFunctionCall(): void
+    {
+        $this->doTest(
+            '<?php //\/* foo */var_dump/** bar */($x);',
+            '<?php \/* foo */var_dump/** bar */($x);'
+        );
     }
 }

@@ -5,7 +5,6 @@
          cacheResult='false'
          colors='true'
          forceCoversAnnotation='true'
-         verbose='true'
 >
 
     <php>
