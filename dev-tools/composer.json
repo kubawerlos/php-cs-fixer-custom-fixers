@@ -30,8 +30,8 @@
             "psalm --no-progress --shepherd"
         ],
         "fix": [
-            "composer normalize ../composer.json",
-            "composer normalize",
+            "composer normalize --no-check-lock ../composer.json",
+            "composer normalize --no-check-lock",
             "phpcbf || exit 0"
         ],
         "infection": [
