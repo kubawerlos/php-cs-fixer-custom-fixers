@@ -1,13 +1,13 @@
 {
     "require": {
-        "php": "^7.4"
+        "php": "^8.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.13.2",
         "infection/infection": "^0.21.2",
         "kubawerlos/php-cs-fixer-config": "^1.9.0",
         "kubawerlos/types-checker": "^2.1.0",
-        "maglnet/composer-require-checker": "^2.1.0",
+        "maglnet/composer-require-checker": "^3.1.0",
         "mi-schi/phpmd-extension": "^4.3.0",
         "phpmd/phpmd": "^2.9.1",
         "phpstan/phpstan": "^0.12.79",
