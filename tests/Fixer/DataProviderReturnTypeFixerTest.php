@@ -210,7 +210,7 @@ class FooTest extends TestCase {
     }
 
     /**
-     * @requires     PHP ^7.2
+     * @requires PHP ^7.2
      *
      * @dataProvider provideFix7Cases
      */

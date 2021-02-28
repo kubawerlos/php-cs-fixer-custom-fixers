@@ -100,22 +100,36 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
                 $b = new \\Baz();
             ',
         ];
+    }
 
-        if (PHP_MAJOR_VERSION < 8) {
-            yield [
-                '<?php $foo =  Bar::value();',
-                '<?php $foo = \\ Bar::value();',
-            ];
+    /**
+     * @requires PHP ^7.2
+     *
+     * @dataProvider provideFix7Cases
+     */
+    public function testFix7(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
 
-            yield [
-                '<?php $foo = /* comment */Bar::value();',
-                '<?php $foo = \\/* comment */Bar::value();',
-            ];
+    /**
+     * @return iterable<array{string, string}>
+     */
+    public static function provideFix7Cases(): iterable
+    {
+        yield [
+            '<?php $foo =  Bar::value();',
+            '<?php $foo = \\ Bar::value();',
+        ];
 
-            yield [
-                '<?php $foo = /** comment */Bar::value();',
-                '<?php $foo = \\/** comment */Bar::value();',
-            ];
-        }
+        yield [
+            '<?php $foo = /* comment */Bar::value();',
+            '<?php $foo = \\/* comment */Bar::value();',
+        ];
+
+        yield [
+            '<?php $foo = /** comment */Bar::value();',
+            '<?php $foo = \\/** comment */Bar::value();',
+        ];
     }
 }

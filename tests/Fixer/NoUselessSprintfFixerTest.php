@@ -96,12 +96,16 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
                 sprintf(...$pieces);
             ',
         ];
+    }
 
-        if (PHP_MAJOR_VERSION < 8) {
-            yield [
-                '<?php    $foo  ;',
-                '<?php \ sprintf ( $foo ) ;',
-            ];
-        }
+    /**
+     * @requires PHP ^7.2
+     */
+    public function testWithSpaceBetweenSlashaAndFunctionName(): void
+    {
+        $this->doTest(
+            '<?php    $foo  ;',
+            '<?php \ sprintf ( $foo ) ;'
+        );
     }
 }
