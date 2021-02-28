@@ -115,6 +115,8 @@ interface    FooInterface {
     }
 
     /**
+     * @param null|array<string, bool> $configuration
+     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -122,6 +124,9 @@ interface    FooInterface {
         $this->doTest($expected, $input, $configuration);
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: null|string, 2?: array<string, bool>}>
+     */
     public static function provideFixCases(): iterable
     {
         yield ['<?php echo 1; array(1, 2, 3);'];
@@ -304,6 +309,9 @@ do    {
         );
     }
 
+    /**
+     * @return iterable<array{int}>
+     */
     public static function provideTokenIsUsefulCases(): iterable
     {
         $fixer = new SingleSpaceAfterStatementFixer();

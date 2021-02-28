@@ -40,6 +40,7 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
     }
 
     /**
+     * @param null|array<string, bool|string> $configuration
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -47,6 +48,9 @@ final class OperatorLinebreakFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input, $configuration);
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: null|string, 2?: array<string, bool|string>}>
+     */
     public static function provideFixCases(): iterable
     {
         foreach (self::pairs() as $key => $value) {
@@ -205,6 +209,9 @@ return $foo
         ];
     }
 
+    /**
+     * @return iterable<array{0: string, 1: string}>
+     */
     private static function pairs(): iterable
     {
         yield 'handle equal sign' => [

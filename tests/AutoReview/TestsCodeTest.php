@@ -47,7 +47,10 @@ final class TestsCodeTest extends TestCase
     {
         $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
 
-        self::assertSame('iterable', $reflectionMethod->getReturnType()->getName());
+        /** @var \ReflectionNamedType $reflectionType */
+        $reflectionType = $reflectionMethod->getReturnType();
+
+        self::assertSame('iterable', $reflectionType->getName());
     }
 
     /**
@@ -60,6 +63,9 @@ final class TestsCodeTest extends TestCase
         self::assertTrue($reflectionMethod->isStatic());
     }
 
+    /**
+     * @return iterable<string, array{string, string}>
+     */
     public static function provideDataProviderCases(): iterable
     {
         static $dataProviders;
@@ -78,6 +84,7 @@ final class TestsCodeTest extends TestCase
                 if ($file->getRelativePath() !== '') {
                     $className .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
                 }
+
                 $className .= '\\' . $file->getBasename('.php');
                 foreach (self::getDataProviderMethodNames($className) as $dataProviderName) {
                     $dataProviders[\sprintf('%s::%s', $className, $dataProviderName)] = [$dataProviderName, $className];
@@ -100,7 +107,12 @@ final class TestsCodeTest extends TestCase
         $dataProviderMethodNames = [];
 
         foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-            $docBlock = new DocBlock($method->getDocComment());
+            $docComment = $method->getDocComment();
+            if ($docComment === false) {
+                continue;
+            }
+
+            $docBlock = new DocBlock($docComment);
             $dataProviderAnnotations = $docBlock->getAnnotationsOfType('dataProvider');
 
             foreach ($dataProviderAnnotations as $dataProviderAnnotation) {

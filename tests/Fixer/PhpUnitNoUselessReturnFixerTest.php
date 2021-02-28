@@ -33,26 +33,29 @@ final class PhpUnitNoUselessReturnFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input);
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
     public static function provideFixCases(): iterable
     {
-        return \array_map(
-            static function (array $args): array {
-                return \array_map(
-                    static function (string $case): string {
-                        return \sprintf('<?php
+        foreach (self::getFixCases() as $fixCase) {
+            yield \array_map(
+                static function (string $case): string {
+                    return \sprintf('<?php
 class FooTest extends TestCase {
     public function testFoo() {
         %s
     }
 }', $case);
-                    },
-                    $args
-                );
-            },
-            \iterator_to_array(self::getFixCases())
-        );
+                },
+                $fixCase
+            );
+        }
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
     private static function getFixCases(): iterable
     {
         yield ['$this->markTestSkipped = true;'];

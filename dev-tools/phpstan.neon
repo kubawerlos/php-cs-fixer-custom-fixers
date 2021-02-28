@@ -3,10 +3,18 @@ parameters:
     - ../vendor/autoload.php
   excludes_analyse:
     - ./src/Readme
+  ignoreErrors:
+    - message: '#^Call to an undefined method PhpCsFixer\\Fixer\\DefinedFixerInterface::#'
+      path: ../tests
+    - message: '#^Call to function method_exists\(\) with ''Tests\\\\.*'' and ''.*'' will always evaluate to true\.$#'
+      path: ../tests
+    - message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given\.$#'
+      path: ../tests
   level: max
   paths:
     - ./src
     - ../src
+    - ../tests
   reportMaybesInMethodSignatures: false
 
 includes:

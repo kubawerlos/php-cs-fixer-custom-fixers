@@ -40,6 +40,8 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
     }
 
     /**
+     * @param null|array<string, string> $configuration
+     *
      * @dataProvider provideFixCases
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
@@ -47,6 +49,9 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
         $this->doTest($expected, $input, $configuration);
     }
 
+    /**
+     * @return iterable<array{0: string, 1?: string, 2?: array<string, string>}>
+     */
     public static function provideFixCases(): iterable
     {
         yield 'data provider correctly named' => [

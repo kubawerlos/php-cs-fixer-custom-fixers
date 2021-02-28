@@ -39,7 +39,10 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $className = 'PhpCsFixerCustomFixers\\Fixer\\' . \substr($reflectionClass->getShortName(), 0, -4);
 
-        $this->fixer = new $className();
+        /** @var DefinedFixerInterface $fixer */
+        $fixer = new $className();
+
+        $this->fixer = $fixer;
     }
 
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
@@ -55,7 +58,10 @@ abstract class AbstractFixerTestCase extends TestCase
             return;
         }
 
-        self::assertRegExp('/^[a-z]/', $this->fixer->getDefinition()->getRiskyDescription());
+        /** @var string $riskyDescription */
+        $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+
+        self::assertRegExp('/^[a-z]/', $riskyDescription);
     }
 
     final public function testFixerDefinitionRiskyDescriptionDoesNotEndWithDot(): void
@@ -66,7 +72,10 @@ abstract class AbstractFixerTestCase extends TestCase
             return;
         }
 
-        self::assertStringEndsNotWith('.', $this->fixer->getDefinition()->getRiskyDescription());
+        /** @var string $riskyDescription */
+        $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+
+        self::assertStringEndsNotWith('.', $riskyDescription);
     }
 
     final public function testFixerDefinitionHasExactlyOneCodeSample(): void
@@ -108,6 +117,9 @@ abstract class AbstractFixerTestCase extends TestCase
         self::assertIsInt($this->fixer->getPriority());
     }
 
+    /**
+     * @param null|array<string, mixed> $configuration
+     */
     final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
     {
         if ($this->fixer instanceof ConfigurableFixerInterface) {
