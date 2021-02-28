@@ -20,6 +20,21 @@ namespace Tests\Fixer;
  */
 final class DataProviderReturnTypeFixerTest extends AbstractFixerTestCase
 {
+    private const TEMPLATE = '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {}
+    /**
+     * @dataProvider provider
+     */
+    public function testBar() {}
+    public function provideFooCases()%s {}
+    public function provider()%s {}
+    public function notProvider(): array {}
+}';
+
     public function testIsRisky(): void
     {
         self::assertTrue($this->fixer->isRisky());
@@ -49,63 +64,30 @@ class FooTest extends TestCase {
 }',
         ];
 
-        $template = '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider provideFooCases
-     */
-    public function testFoo() {}
-    /**
-     * @dataProvider provider
-     */
-    public function testBar() {}
-    public function provideFooCases()%s {}
-    public function provider()%s {}
-    public function notProvider(): array {}
-}';
+        yield 'data provider without return type' => self::mapToTemplate(
+            ': iterable',
+            ''
+        );
 
-        $cases = [
-            'data provider without return type' => [
-                ': iterable',
-                '',
-            ],
-            'data provider with array return type' => [
-                ': iterable',
-                ': array',
-            ],
-            'data provider with return type and comment' => [
-                ': /* TODO: add more cases */ iterable',
-                ': /* TODO: add more cases */ array',
-            ],
-            'data provider with return type namespaced class' => [
-                ': iterable',
-                ': Foo\Bar',
-            ],
-            'data provider with iterable return type in different case' => [
-                ': iterable',
-                ': Iterable',
-            ],
-        ];
+        yield 'data provider with array return type' => self::mapToTemplate(
+            ': iterable',
+            ': array'
+        );
 
-        if (PHP_MAJOR_VERSION < 8) {
-            $cases['data provider with return type namespaced class starting with iterable'] = [
-                ': iterable',
-                ': iterable \ Foo',
-            ];
-            $cases['data provider with return type namespaced class and comments'] = [
-                ': iterable',
-                ': Foo/* Some info */\/* More info */Bar',
-            ];
-        }
+        yield 'data provider with return type and comment' => self::mapToTemplate(
+            ': /* TODO: add more cases */ iterable',
+            ': /* TODO: add more cases */ array'
+        );
 
-        foreach ($cases as $key => $case) {
-            yield $key => \array_map(
-                static function (string $code) use ($template): string {
-                    return \sprintf($template, $code, $code);
-                },
-                $case
-            );
-        }
+        yield 'data provider with return type namespaced class' => self::mapToTemplate(
+            ': iterable',
+            ': Foo\Bar'
+        );
+
+        yield 'data provider with iterable return type in different case' => self::mapToTemplate(
+            ': iterable',
+            ': Iterable'
+        );
 
         yield 'multiple data providers' => [
             '<?php class FooTest extends TestCase {
@@ -225,5 +207,42 @@ class FooTest extends TestCase {
                 ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
             ];
         }
+    }
+
+    /**
+     * @requires     PHP ^7.2
+     *
+     * @dataProvider provideFix7Cases
+     */
+    public function testFix7(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{string, string}>
+     */
+    public static function provideFix7Cases(): iterable
+    {
+        yield 'data provider with return type namespaced class starting with iterable' => self::mapToTemplate(
+            ': iterable',
+            ': iterable \ Foo'
+        );
+
+        yield 'data provider with return type namespaced class and comments' => self::mapToTemplate(
+            ': iterable',
+            ': Foo/* Some info */\/* More info */Bar'
+        );
+    }
+
+    /**
+     * @return array{string, string}
+     */
+    private static function mapToTemplate(string $expected, string $actual): array
+    {
+        return [
+            \sprintf(self::TEMPLATE, $expected, $expected),
+            \sprintf(self::TEMPLATE, $actual, $actual),
+        ];
     }
 }
