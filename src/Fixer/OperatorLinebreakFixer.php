@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -22,7 +22,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @deprecated
  */
-final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface, DeprecatedFixerInterface
+final class OperatorLinebreakFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
     /** @var \PhpCsFixer\Fixer\Operator\OperatorLinebreakFixer */
     private $fixer;

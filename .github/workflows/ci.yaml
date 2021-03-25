@@ -36,6 +36,12 @@ jobs:
         os: [ macos-latest, ubuntu-latest, windows-latest ]
         php-version: [ '7.4', '8.0' ]
         include:
+          - os: ubuntu-18.04
+            php-version: '8.0'
+            php-cs-fixer-version: '^2'
+          - os: ubuntu-18.04
+            php-version: '7.4'
+            php-cs-fixer-version: '^2'
           - os: ubuntu-latest
             php-version: '7.3'
           - os: ubuntu-latest
@@ -88,6 +94,10 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-cache-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-cache-
+
+      - name: Configure PHP CS Fixer version
+        if: matrix.php-cs-fixer-version
+        run: composer require friendsofphp/php-cs-fixer:${{ matrix.php-cs-fixer-version }} --no-update
 
       - name: Install dependencies
         run: composer update --no-progress ${{ matrix.composer_flags }}

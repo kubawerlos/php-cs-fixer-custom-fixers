@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
@@ -26,7 +26,7 @@ use PhpCsFixer\Tokenizer\Analyzer\SwitchAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class CommentedOutFunctionFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
+final class CommentedOutFunctionFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var string[] */
     private $functions = ['print_r', 'var_dump', 'var_export'];

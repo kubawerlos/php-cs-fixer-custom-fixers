@@ -39,6 +39,7 @@
                 <file name='./src/Fixer/OrderedClassElementsInternalFixer.php' />
                 <file name='../src/Analyzer/Analysis/ArrayElementAnalysis.php' />
                 <file name='../src/Fixer/DeprecatingFixerInterface.php' />
+                <file name='../src/Fixer/NoLeadingSlashInGlobalNamespaceFixer.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
         <UnnecessaryVarAnnotation errorLevel='suppress' />
