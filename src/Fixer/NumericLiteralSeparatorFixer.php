@@ -15,6 +15,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -58,7 +59,7 @@ echo 0123_4567; // octal
         );
     }
 
-    public function getConfigurationDefinition(): FixerConfigurationResolver
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('binary', 'whether add, remove or ignore separators in binary numbers.'))

@@ -15,6 +15,7 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
@@ -55,7 +56,7 @@ class FooTest extends TestCase {
         );
     }
 
-    public function getConfigurationDefinition(): FixerConfigurationResolver
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('prefix', 'prefix that replaces "test"'))

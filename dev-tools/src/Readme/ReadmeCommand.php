@@ -195,7 +195,8 @@ In your PHP CS Fixer configuration register fixers and use them:
                 );
             }
 
-            if ($fixer instanceof ConfigurationDefinitionFixerInterface) {
+            /** @var ConfigurationDefinitionFixerInterface $fixer */
+            if ($fixer instanceof ConfigurableFixerInterface) {
                 $output .= "\nConfiguration options:";
 
                 foreach ($fixer->getConfigurationDefinition()->getOptions() as $option) {
