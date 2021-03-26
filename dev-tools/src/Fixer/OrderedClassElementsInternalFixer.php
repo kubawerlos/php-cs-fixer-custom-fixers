@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace PhpCsFixerCustomFixersDev\Fixer {
     use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
     use PhpCsFixer\Fixer\FixerInterface;
+    use PhpCsFixer\FixerDefinition\FixerDefinition;
+    use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
     use PhpCsFixer\Tokenizer\Tokens;
 
     /**
@@ -34,6 +36,11 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
             'fix',
             'getSuccessorsNames',
         ];
+
+        public function getDefinition(): FixerDefinitionInterface
+        {
+            return new FixerDefinition('Internal fixer for class elements order.', []);
+        }
 
         /** @var OrderedClassElementsFixer */
         private $orderedClassElementsFixer;

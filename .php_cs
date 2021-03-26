@@ -26,7 +26,7 @@ foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
 }
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
     ->setRiskyAllowed(true)
