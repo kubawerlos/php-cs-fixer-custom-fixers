@@ -4,6 +4,7 @@
          xsi:noNamespaceSchemaLocation='./vendor/phpunit/phpunit/phpunit.xsd'
          cacheResult='false'
          colors='true'
+         executionOrder='default'
          forceCoversAnnotation='true'
 >
 

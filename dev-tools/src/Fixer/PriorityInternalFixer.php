@@ -26,14 +26,14 @@ use PhpCsFixerCustomFixersDev\Priority\PriorityCollection;
  */
 final class PriorityInternalFixer implements FixerInterface
 {
-    public function getName(): string
-    {
-        return 'Internal/' . \strtolower(\str_replace('\\', '_', Utils::camelCaseToUnderscore(__CLASS__)));
-    }
 
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition('Internal fixer for priorities.', []);
+    }
+    public function getName(): string
+    {
+        return 'Internal/' . \strtolower(\str_replace('\\', '_', Utils::camelCaseToUnderscore(__CLASS__)));
     }
 
     public function getPriority(): int

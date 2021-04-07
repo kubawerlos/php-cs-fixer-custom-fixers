@@ -37,17 +37,17 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
             'getSuccessorsNames',
         ];
 
-        public function getDefinition(): FixerDefinitionInterface
-        {
-            return new FixerDefinition('Internal fixer for class elements order.', []);
-        }
-
         /** @var OrderedClassElementsFixer */
         private $orderedClassElementsFixer;
 
         public function __construct()
         {
             $this->orderedClassElementsFixer = new OrderedClassElementsFixer();
+        }
+
+        public function getDefinition(): FixerDefinitionInterface
+        {
+            return new FixerDefinition('Internal fixer for class elements order.', []);
         }
 
         public function getName(): string
