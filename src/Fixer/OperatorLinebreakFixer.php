@@ -47,7 +47,7 @@ final class OperatorLinebreakFixer extends AbstractFixer implements Configuratio
      */
     public function configure(?array $configuration = null): void
     {
-        $this->fixer->configure($configuration);
+        $this->fixer->configure($configuration ?? []);
     }
 
     public function getPriority(): int
