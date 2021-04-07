@@ -46,6 +46,9 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    env:
+      PHP_CS_FIXER_FUTURE_MODE: 1
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
