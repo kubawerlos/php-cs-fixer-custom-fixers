@@ -141,7 +141,7 @@ final class PriorityInternalFixer implements FixerInterface
             $comment .= \sprintf("     * Must run after %s.\n", \implode(', ', $fixersToRunBefore));
         }
 
-        $comment .= '    */';
+        $comment .= '     */';
 
         return $comment;
     }

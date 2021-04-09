@@ -67,7 +67,8 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
 
         public function isCandidate(Tokens $tokens): bool
         {
-            return $tokens->findSequence([[T_EXTENDS], [T_STRING, 'AbstractFixer']]) !== null;
+            return $tokens->findSequence([[T_EXTENDS], [T_STRING, 'AbstractFixer']]) !== null
+                || $tokens->findSequence([[T_IMPLEMENTS], [T_STRING, 'FixerInterface']]) !== null;
         }
 
         public function isRisky(): bool
