@@ -53,7 +53,7 @@ final class PriorityTest extends TestCase
         self::assertSame($expected, $tokens->generateCode());
 
         Tokens::clearCache();
-        self::assertTokens(Tokens::fromCode($expected), $tokens);
+        self::assertSameTokens(Tokens::fromCode($expected), $tokens);
     }
 
     /**

@@ -43,7 +43,7 @@ final class TokenRemoverTest extends TestCase
         $tokens->clearEmptyTokens();
 
         Tokens::clearCache();
-        self::assertTokens(Tokens::fromCode($expected), $tokens);
+        self::assertSameTokens(Tokens::fromCode($expected), $tokens);
     }
 
     /**
