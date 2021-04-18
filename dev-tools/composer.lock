@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "188a20a20423a419da402f68677ff431",
+    "content-hash": "840a5552202df7c9f3452a271dae5afd",
     "packages": [],
     "packages-dev": [
         {
@@ -1267,16 +1267,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "04e6bab295c149acb1f5d7919ad7ec4854c77d07"
+                "reference": "72b4ba148fcdf20c2c0a9174249d65becc01ecaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/04e6bab295c149acb1f5d7919ad7ec4854c77d07",
-                "reference": "04e6bab295c149acb1f5d7919ad7ec4854c77d07",
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/72b4ba148fcdf20c2c0a9174249d65becc01ecaf",
+                "reference": "72b4ba148fcdf20c2c0a9174249d65becc01ecaf",
                 "shasum": ""
             },
             "require": {
@@ -1305,9 +1305,9 @@
             ],
             "description": "Provides configuration for PHP CS Fixer",
             "support": {
-                "source": "https://github.com/kubawerlos/php-cs-fixer-config/tree/v1.9.0"
+                "source": "https://github.com/kubawerlos/php-cs-fixer-config/tree/v1.10.0"
             },
-            "time": "2021-01-30T12:01:09+00:00"
+            "time": "2021-04-18T07:24:42+00:00"
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",

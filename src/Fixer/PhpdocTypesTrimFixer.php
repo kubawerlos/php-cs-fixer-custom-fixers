@@ -47,7 +47,7 @@ function foo($x) {}
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT);
+        return $tokens->isTokenKindFound(\T_DOC_COMMENT);
     }
 
     public function isRisky(): bool
@@ -61,7 +61,7 @@ function foo($x) {}
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_DOC_COMMENT])) {
+            if (!$token->isGivenKind([\T_DOC_COMMENT])) {
                 continue;
             }
 
@@ -88,7 +88,7 @@ function foo($x) {}
                 continue;
             }
 
-            $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
+            $tokens[$index] = new Token([\T_DOC_COMMENT, $newContent]);
         }
     }
 
@@ -112,7 +112,7 @@ function foo($x) {}
             $variableStartPosition = \strlen($content);
         }
 
-        Preg::match('/(?<!(\h|&|\|))\h(?!(\h|&(?!\$)|\|))/', $content, $matches, PREG_OFFSET_CAPTURE, $typeStartPosition + 1);
+        Preg::match('/(?<!(\h|&|\|))\h(?!(\h|&(?!\$)|\|))/', $content, $matches, \PREG_OFFSET_CAPTURE, $typeStartPosition + 1);
         if ($matches !== []) {
             $descriptionStartPosition = $matches[0][1];
         } else {

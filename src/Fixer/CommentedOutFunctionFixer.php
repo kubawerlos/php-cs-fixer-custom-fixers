@@ -75,7 +75,7 @@ var_dump($x);
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_STRING);
+        return $tokens->isTokenKindFound(\T_STRING);
     }
 
     public function isRisky(): bool
@@ -98,7 +98,7 @@ var_dump($x);
             /** @var Token $prevToken */
             $prevToken = $tokens[$prevIndex];
 
-            if ($prevToken->isGivenKind(T_NS_SEPARATOR)) {
+            if ($prevToken->isGivenKind(\T_NS_SEPARATOR)) {
                 $startIndex = $prevIndex;
             }
 
@@ -117,7 +117,7 @@ var_dump($x);
             /** @var Token $semicolonToken */
             $semicolonToken = $tokens[$semicolonIndex];
 
-            if (!$semicolonToken->equalsAny([';', [T_CLOSE_TAG]])) {
+            if (!$semicolonToken->equalsAny([';', [\T_CLOSE_TAG]])) {
                 continue;
             }
 
@@ -134,7 +134,7 @@ var_dump($x);
         /** @var Token $token */
         $token = $tokens[$index];
 
-        if (!$token->isGivenKind(T_STRING)) {
+        if (!$token->isGivenKind(\T_STRING)) {
             return false;
         }
 
@@ -153,7 +153,7 @@ var_dump($x);
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
-        if ($prevToken->equalsAny([';', '{', '}', [T_OPEN_TAG]])) {
+        if ($prevToken->equalsAny([';', '{', '}', [\T_OPEN_TAG]])) {
             return true;
         }
 
@@ -167,7 +167,7 @@ var_dump($x);
             /** @var Token $token */
             $token = $tokens[$i];
 
-            if (!$token->isGivenKind(T_SWITCH)) {
+            if (!$token->isGivenKind(\T_SWITCH)) {
                 continue;
             }
             foreach ($switchAnalyzer->getSwitchAnalysis($tokens, $i)->getCases() as $caseAnalysis) {
@@ -191,7 +191,7 @@ var_dump($x);
         $tokens->overrideRange(
             $startIndex,
             $endIndex,
-            [new Token([T_COMMENT, '/*' . $tokens->generatePartialCode($startIndex, $endIndex) . '*/'])]
+            [new Token([\T_COMMENT, '/*' . $tokens->generatePartialCode($startIndex, $endIndex) . '*/'])]
         );
     }
 

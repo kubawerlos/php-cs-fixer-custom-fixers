@@ -79,7 +79,7 @@ foo(($bar));
             /** @var Token $prevToken */
             $prevToken = $tokens[$prevIndex];
 
-            if ($prevToken->isGivenKind(T_RETURN)) {
+            if ($prevToken->isGivenKind(\T_RETURN)) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
             }
         }
@@ -117,7 +117,7 @@ foo(($bar));
         /** @var Token $nextEndToken */
         $nextEndToken = $tokens[$nextEndIndex];
 
-        return $prevStartToken->equalsAny(['=', [T_RETURN], [T_THROW]]) && $nextEndToken->equals(';');
+        return $prevStartToken->equalsAny(['=', [\T_RETURN], [\T_THROW]]) && $nextEndToken->equals(';');
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void

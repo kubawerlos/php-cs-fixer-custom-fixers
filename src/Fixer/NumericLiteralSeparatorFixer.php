@@ -107,7 +107,7 @@ echo 0123_4567; // octal
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return \PHP_VERSION_ID >= 70400 && $tokens->isAnyTokenKindsFound([T_DNUMBER, T_LNUMBER]);
+        return \PHP_VERSION_ID >= 70400 && $tokens->isAnyTokenKindsFound([\T_DNUMBER, \T_LNUMBER]);
     }
 
     public function isRisky(): bool
@@ -121,7 +121,7 @@ echo 0123_4567; // octal
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_DNUMBER, T_LNUMBER])) {
+            if (!$token->isGivenKind([\T_DNUMBER, \T_LNUMBER])) {
                 continue;
             }
 

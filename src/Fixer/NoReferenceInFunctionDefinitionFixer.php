@@ -41,7 +41,7 @@ function foo(&$x) {}
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_FUNCTION]);
+        return $tokens->isAnyTokenKindsFound([\T_FUNCTION]);
     }
 
     public function isRisky(): bool
@@ -55,7 +55,7 @@ function foo(&$x) {}
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_FUNCTION)) {
+            if (!$token->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 

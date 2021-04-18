@@ -43,7 +43,7 @@ function foo(?bool $bar) : ?bool
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_STRING);
+        return $tokens->isTokenKindFound(\T_STRING);
     }
 
     public function isRisky(): bool
@@ -67,7 +67,7 @@ function foo(?bool $bar) : ?bool
             /** @var Token $nextToken */
             $nextToken = $tokens[$nextIndex];
 
-            if (!$nextToken->equals([T_STRING, 'bool'], false) && !$nextToken->equals([T_STRING, 'boolean'], false)) {
+            if (!$nextToken->equals([\T_STRING, 'bool'], false) && !$nextToken->equals([\T_STRING, 'boolean'], false)) {
                 continue;
             }
 
@@ -77,7 +77,7 @@ function foo(?bool $bar) : ?bool
             /** @var Token $nextNextToken */
             $nextNextToken = $tokens[$nextNextIndex];
 
-            if (!$nextNextToken->isGivenKind(T_VARIABLE) && $nextNextToken->getContent() !== '{') {
+            if (!$nextNextToken->isGivenKind(\T_VARIABLE) && $nextNextToken->getContent() !== '{') {
                 continue;
             }
 

@@ -41,7 +41,7 @@ final class ArrayAnalyzer
             return $this->getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
         }
 
-        if ($token->isGivenKind(T_ARRAY)) {
+        if ($token->isGivenKind(\T_ARRAY)) {
             /** @var int $arrayOpenBraceIndex */
             $arrayOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['(']);
 
@@ -96,7 +96,7 @@ final class ArrayAnalyzer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_DOUBLE_ARROW)) {
+            if (!$token->isGivenKind(\T_DOUBLE_ARROW)) {
                 continue;
             }
 
@@ -129,7 +129,7 @@ final class ArrayAnalyzer
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index) + 1;
         }
 
-        if ($token->isGivenKind(T_ARRAY)) {
+        if ($token->isGivenKind(\T_ARRAY)) {
             /** @var int $arrayOpenBraceIndex */
             $arrayOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['(']);
 

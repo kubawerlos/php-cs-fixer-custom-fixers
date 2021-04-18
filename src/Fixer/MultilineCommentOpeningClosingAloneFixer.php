@@ -40,7 +40,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $tokens->isAnyTokenKindsFound([\T_COMMENT, \T_DOC_COMMENT]);
     }
 
     public function isRisky(): bool
@@ -54,7 +54,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
@@ -109,7 +109,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         $newContent = $opening . $insert . $newline . $afterNewline;
 
         if ($newContent !== $token->getContent()) {
-            $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
+            $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? \T_DOC_COMMENT : \T_COMMENT, $newContent]);
         }
     }
 

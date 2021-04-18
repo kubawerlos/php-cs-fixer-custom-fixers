@@ -43,7 +43,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $tokens->isAnyTokenKindsFound([\T_COMMENT, \T_DOC_COMMENT]);
     }
 
     public function isRisky(): bool
@@ -57,7 +57,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
@@ -75,7 +75,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
                 continue;
             }
 
-            $tokens[$index] = new Token([\strpos($newContent, '/** ') === 0 ? T_DOC_COMMENT : T_COMMENT, $newContent]);
+            $tokens[$index] = new Token([\strpos($newContent, '/** ') === 0 ? \T_DOC_COMMENT : \T_COMMENT, $newContent]);
         }
     }
 }

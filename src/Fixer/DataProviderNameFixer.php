@@ -94,7 +94,7 @@ class FooTest extends TestCase {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_CLASS, T_DOC_COMMENT, T_EXTENDS, T_FUNCTION, T_STRING]);
+        return $tokens->isAllTokenKindsFound([\T_CLASS, \T_DOC_COMMENT, \T_EXTENDS, \T_FUNCTION, \T_STRING]);
     }
 
     public function isRisky(): bool
@@ -126,17 +126,17 @@ class FooTest extends TestCase {
             $usageToken = $tokens[$usageIndex];
 
             /** @var int $testNameIndex */
-            $testNameIndex = $tokens->getNextTokenOfKind($usageIndex, [[T_STRING]]);
+            $testNameIndex = $tokens->getNextTokenOfKind($usageIndex, [[\T_STRING]]);
 
             /** @var Token $testNameToken */
             $testNameToken = $tokens[$testNameIndex];
 
             $dataProviderNewName = $this->getProviderNameForTestName($testNameToken->getContent());
-            if ($tokens->findSequence([[T_FUNCTION], [T_STRING, $dataProviderNewName]], $startIndex, $endIndex, false) !== null) {
+            if ($tokens->findSequence([[\T_FUNCTION], [\T_STRING, $dataProviderNewName]], $startIndex, $endIndex, false) !== null) {
                 continue;
             }
 
-            $tokens[$dataProviderAnalysis->getNameIndex()] = new Token([T_STRING, $dataProviderNewName]);
+            $tokens[$dataProviderAnalysis->getNameIndex()] = new Token([\T_STRING, $dataProviderNewName]);
 
             /** @var string $newCommentContent */
             $newCommentContent = Preg::replace(
@@ -145,7 +145,7 @@ class FooTest extends TestCase {
                 $usageToken->getContent()
             );
 
-            $tokens[$usageIndex] = new Token([T_DOC_COMMENT, $newCommentContent]);
+            $tokens[$usageIndex] = new Token([\T_DOC_COMMENT, $newCommentContent]);
         }
     }
 

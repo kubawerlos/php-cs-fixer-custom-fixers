@@ -44,7 +44,7 @@ use Bar;
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_USE);
+        return $tokens->isTokenKindFound(\T_USE);
     }
 
     public function isRisky(): bool

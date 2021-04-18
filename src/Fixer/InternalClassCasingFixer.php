@@ -38,7 +38,7 @@ final class InternalClassCasingFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_STRING);
+        return $tokens->isTokenKindFound(\T_STRING);
     }
 
     public function isRisky(): bool
@@ -61,7 +61,7 @@ final class InternalClassCasingFixer extends AbstractFixer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_STRING)) {
+            if (!$token->isGivenKind(\T_STRING)) {
                 continue;
             }
 
@@ -75,7 +75,7 @@ final class InternalClassCasingFixer extends AbstractFixer
                 continue;
             }
 
-            $tokens[$index] = new Token([T_STRING, $correctCase]);
+            $tokens[$index] = new Token([\T_STRING, $correctCase]);
         }
     }
 
@@ -87,21 +87,21 @@ final class InternalClassCasingFixer extends AbstractFixer
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
-        if ($prevToken->isGivenKind(T_NS_SEPARATOR)) {
+        if ($prevToken->isGivenKind(\T_NS_SEPARATOR)) {
             /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
 
             /** @var Token $prevToken */
             $prevToken = $tokens[$prevIndex];
 
-            if ($prevToken->isGivenKind(T_STRING)) {
+            if ($prevToken->isGivenKind(\T_STRING)) {
                 return false;
             }
         } elseif (!$isInGlobalNamespace) {
             return false;
         }
 
-        if ($prevToken->isGivenKind([T_AS, T_CLASS, T_CONST, T_DOUBLE_COLON, T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
+        if ($prevToken->isGivenKind([\T_AS, \T_CLASS, \T_CONST, \T_DOUBLE_COLON, \T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
             return false;
         }
 
@@ -111,11 +111,11 @@ final class InternalClassCasingFixer extends AbstractFixer
         /** @var Token $nextToken */
         $nextToken = $tokens[$nextIndex];
 
-        if ($nextToken->isGivenKind(T_NS_SEPARATOR)) {
+        if ($nextToken->isGivenKind(\T_NS_SEPARATOR)) {
             return false;
         }
 
-        return $prevToken->isGivenKind([T_NEW]) || !$nextToken->equals('(');
+        return $prevToken->isGivenKind([\T_NEW]) || !$nextToken->equals('(');
     }
 
     private function getCorrectCase(string $className): string

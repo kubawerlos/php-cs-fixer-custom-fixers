@@ -47,7 +47,7 @@ $isNotEmpty = strlen($string) > 0;
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_LNUMBER) && $tokens->isAnyTokenKindsFound(['>', '<', T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_EQUAL, T_IS_NOT_EQUAL]);
+        return $tokens->isTokenKindFound(\T_LNUMBER) && $tokens->isAnyTokenKindsFound(['>', '<', \T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL]);
     }
 
     public function isRisky(): bool
@@ -64,7 +64,7 @@ $isNotEmpty = strlen($string) > 0;
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->equalsAny([[T_STRING, 'strlen'], [T_STRING, 'mb_strlen']], false)) {
+            if (!$token->equalsAny([[\T_STRING, 'strlen'], [\T_STRING, 'mb_strlen']], false)) {
                 continue;
             }
 
@@ -94,7 +94,7 @@ $isNotEmpty = strlen($string) > 0;
             $prevToken = $tokens[$prevIndex];
 
             $startIndex = $index;
-            if ($prevToken->isGivenKind(T_NS_SEPARATOR)) {
+            if ($prevToken->isGivenKind(\T_NS_SEPARATOR)) {
                 $startIndex = $prevIndex;
                 $tokensToRemove[$prevIndex] = 1;
             }
@@ -127,7 +127,7 @@ $isNotEmpty = strlen($string) > 0;
         $changeCondition = false;
         if ($prevToken->equals('<')) {
             $changeCondition = true;
-        } elseif (!$prevToken->isGivenKind([T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_EQUAL, T_IS_NOT_EQUAL])) {
+        } elseif (!$prevToken->isGivenKind([\T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL])) {
             return false;
         }
 
@@ -137,15 +137,15 @@ $isNotEmpty = strlen($string) > 0;
         /** @var Token $prevPrevToken */
         $prevPrevToken = $tokens[$prevPrevIndex];
 
-        if (!$prevPrevToken->equals([T_LNUMBER, '0'])) {
+        if (!$prevPrevToken->equals([\T_LNUMBER, '0'])) {
             return false;
         }
 
         if ($changeCondition) {
-            $tokens[$prevIndex] = new Token([T_IS_NOT_IDENTICAL, '!==']);
+            $tokens[$prevIndex] = new Token([\T_IS_NOT_IDENTICAL, '!==']);
         }
 
-        $tokens[$prevPrevIndex] = new Token([T_CONSTANT_ENCAPSED_STRING, '\'\'']);
+        $tokens[$prevPrevIndex] = new Token([\T_CONSTANT_ENCAPSED_STRING, '\'\'']);
 
         return true;
     }
@@ -161,7 +161,7 @@ $isNotEmpty = strlen($string) > 0;
         $changeCondition = false;
         if ($nextToken->equals('>')) {
             $changeCondition = true;
-        } elseif (!$nextToken->isGivenKind([T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_EQUAL, T_IS_NOT_EQUAL])) {
+        } elseif (!$nextToken->isGivenKind([\T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL])) {
             return false;
         }
 
@@ -171,15 +171,15 @@ $isNotEmpty = strlen($string) > 0;
         /** @var Token $nextNextToken */
         $nextNextToken = $tokens[$nextNextIndex];
 
-        if (!$nextNextToken->equals([T_LNUMBER, '0'])) {
+        if (!$nextNextToken->equals([\T_LNUMBER, '0'])) {
             return false;
         }
 
         if ($changeCondition) {
-            $tokens[$nextIndex] = new Token([T_IS_NOT_IDENTICAL, '!==']);
+            $tokens[$nextIndex] = new Token([\T_IS_NOT_IDENTICAL, '!==']);
         }
 
-        $tokens[$nextNextIndex] = new Token([T_CONSTANT_ENCAPSED_STRING, '\'\'']);
+        $tokens[$nextNextIndex] = new Token([\T_CONSTANT_ENCAPSED_STRING, '\'\'']);
 
         return true;
     }

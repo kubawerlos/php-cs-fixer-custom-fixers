@@ -48,7 +48,7 @@ final class PriorityInternalFixer implements FixerInterface
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->findSequence([[T_EXTENDS], [T_STRING, 'AbstractFixer']]) !== null;
+        return $tokens->findSequence([[\T_EXTENDS], [\T_STRING, 'AbstractFixer']]) !== null;
     }
 
     public function isRisky(): bool
@@ -59,7 +59,7 @@ final class PriorityInternalFixer implements FixerInterface
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         /** @var int[] $indices */
-        $indices = $tokens->findSequence([[T_EXTENDS], [T_STRING, 'AbstractFixer']]);
+        $indices = $tokens->findSequence([[\T_EXTENDS], [\T_STRING, 'AbstractFixer']]);
 
         /** @var int $sequencesStartIndex */
         $sequencesStartIndex = \key($indices);
@@ -78,7 +78,7 @@ final class PriorityInternalFixer implements FixerInterface
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
         /** @var int[] $indices */
-        $indices = $tokens->findSequence([[T_PUBLIC], [T_FUNCTION], [T_STRING, 'getPriority']], $startIndex, $endIndex);
+        $indices = $tokens->findSequence([[\T_PUBLIC], [\T_FUNCTION], [\T_STRING, 'getPriority']], $startIndex, $endIndex);
 
         /** @var int $sequencesStartIndex */
         $sequencesStartIndex = \key($indices);
@@ -88,27 +88,27 @@ final class PriorityInternalFixer implements FixerInterface
 
         $commentContent = $this->getCommentContent($className);
 
-        if ($commentToken->isGivenKind(T_DOC_COMMENT)) {
-            $tokens[$sequencesStartIndex - 2] = new Token([T_DOC_COMMENT, $commentContent]);
+        if ($commentToken->isGivenKind(\T_DOC_COMMENT)) {
+            $tokens[$sequencesStartIndex - 2] = new Token([\T_DOC_COMMENT, $commentContent]);
         } else {
             $tokens->insertAt(
                 $sequencesStartIndex,
                 [
-                    new Token([T_DOC_COMMENT, $commentContent]),
-                    new Token([T_WHITESPACE, "\n    "]),
+                    new Token([\T_DOC_COMMENT, $commentContent]),
+                    new Token([\T_WHITESPACE, "\n    "]),
                 ]
             );
         }
 
         /** @var int $returnIndex */
-        $returnIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, [[T_RETURN]]);
+        $returnIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, [[\T_RETURN]]);
 
         $priorityStartIndex = $returnIndex + 2;
 
         /** @var Token $priorityStartToken */
         $priorityStartToken = $tokens[$priorityStartIndex];
 
-        if ($priorityStartToken->isGivenKind(T_VARIABLE)) {
+        if ($priorityStartToken->isGivenKind(\T_VARIABLE)) {
             return;
         }
 
@@ -121,7 +121,7 @@ final class PriorityInternalFixer implements FixerInterface
         $priority = $priorityCollection->getPriorityFixer($className)->getPriority();
 
         $priorityTokens = $priority < 0 ? [new Token('-')] : [];
-        $priorityTokens[] = new Token([T_LNUMBER, (string) \abs($priority)]);
+        $priorityTokens[] = new Token([\T_LNUMBER, (string) \abs($priority)]);
 
         $tokens->overrideRange($priorityStartIndex, $priorityEndIndex, $priorityTokens);
     }

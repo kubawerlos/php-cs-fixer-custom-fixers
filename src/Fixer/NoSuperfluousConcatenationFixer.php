@@ -65,7 +65,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound(['.', T_CONSTANT_ENCAPSED_STRING]);
+        return $tokens->isAllTokenKindsFound(['.', \T_CONSTANT_ENCAPSED_STRING]);
     }
 
     public function isRisky(): bool
@@ -89,7 +89,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             /** @var Token $firstToken */
             $firstToken = $tokens[$firstIndex];
 
-            if (!$firstToken->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
+            if (!$firstToken->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
             if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $firstIndex, $index)) {
@@ -102,7 +102,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             /** @var Token $secondToken */
             $secondToken = $tokens[$secondIndex];
 
-            if (!$secondToken->isGivenKind(T_CONSTANT_ENCAPSED_STRING)) {
+            if (!$secondToken->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
             }
             if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
@@ -119,7 +119,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_WHITESPACE)) {
+            if (!$token->isGivenKind(\T_WHITESPACE)) {
                 return false;
             }
             if (Preg::match('/\R/', $token->getContent()) === 1) {
@@ -164,7 +164,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             $secondIndex,
             [
                 new Token(
-                    [T_CONSTANT_ENCAPSED_STRING,
+                    [\T_CONSTANT_ENCAPSED_STRING,
                         $prefix . $border . $this->getContentForBorder($firstContent, $border, true) . $this->getContentForBorder($secondContent, $border, false) . $border,
                     ]
                 ),

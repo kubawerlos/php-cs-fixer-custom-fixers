@@ -43,7 +43,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $tokens->isAnyTokenKindsFound([\T_COMMENT, \T_DOC_COMMENT]);
     }
 
     public function isRisky(): bool
@@ -60,7 +60,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
@@ -100,7 +100,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            $content .= PHP_EOL . $this->getContent($token);
+            $content .= \PHP_EOL . $this->getContent($token);
             $testedIndices[] = $index;
 
             if (\rtrim($content) === '') {
@@ -109,7 +109,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
             if (
                 $this->isCorrectSyntax('<?php' . $content)
-                || $this->isCorrectSyntax('<?php class Foo {' . $content . PHP_EOL . '}')
+                || $this->isCorrectSyntax('<?php class Foo {' . $content . \PHP_EOL . '}')
             ) {
                 $indicesToRemove = $testedIndices;
             }
@@ -124,7 +124,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
         if (\strpos($content, '/*') === 0) {
             /** @var string $content */
-            $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', PHP_EOL, $content);
+            $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', \PHP_EOL, $content);
         }
 
         return \ltrim($content, '#/');
