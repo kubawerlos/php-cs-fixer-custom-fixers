@@ -17,10 +17,10 @@ use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Linter\Linter;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
 use Tests\AssertRegExpTrait;
+use Tests\AssertSameTokensTrait;
 
 /**
  * @internal
@@ -28,6 +28,7 @@ use Tests\AssertRegExpTrait;
 abstract class AbstractFixerTestCase extends TestCase
 {
     use AssertRegExpTrait;
+    use AssertSameTokensTrait;
 
     /** @var DefinedFixerInterface */
     protected $fixer;
@@ -170,20 +171,5 @@ abstract class AbstractFixerTestCase extends TestCase
         }
 
         return null;
-    }
-
-    private static function assertSameTokens(Tokens $expectedTokens, Tokens $inputTokens): void
-    {
-        self::assertSame($expectedTokens->count(), $inputTokens->count(), 'Both collections must have the same size.');
-
-        foreach ($expectedTokens as $index => $expectedToken) {
-            /** @var Token $inputToken */
-            $inputToken = $inputTokens[$index];
-
-            self::assertTrue(
-                $expectedToken->equals($inputToken),
-                \sprintf("Token at index %d must be:\n%s,\ngot:\n%s.", $index, $expectedToken->toJson(), $inputToken->toJson())
-            );
-        }
     }
 }
