@@ -15,7 +15,6 @@ namespace Tests;
 
 use PhpCsFixer\Fixer as Fixer;
 use PhpCsFixer\Fixer\FixerInterface;
-use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer as CustomFixer;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class PriorityTest extends TestCase
 {
-    use AssertTokensTrait;
+    use AssertSameTokensTrait;
 
     /**
      * @dataProvider providePriorityCases
