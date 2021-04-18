@@ -36,7 +36,7 @@ final class TokenRemoverTest extends TestCase
         $tokens = Tokens::fromCode($input);
 
         foreach ($tokens as $index => $token) {
-            if ($token->equals([T_COMMENT, '/* to remove */'])) {
+            if ($token->equals([\T_COMMENT, '/* to remove */'])) {
                 TokenRemover::removeWithLinesIfPossible($tokens, $index);
             }
         }

@@ -48,7 +48,7 @@ class Bar {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_USE);
+        return $tokens->isTokenKindFound(\T_USE);
     }
 
     public function isRisky(): bool
@@ -71,7 +71,7 @@ class Bar {
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if ($token->isGivenKind(T_USE)) {
+            if ($token->isGivenKind(\T_USE)) {
                 $imports = $this->removeImportFromGlobalNamespace($tokens, $imports, $index);
                 continue;
             }
@@ -80,12 +80,12 @@ class Bar {
                 continue;
             }
 
-            if ($token->isGivenKind(T_DOC_COMMENT)) {
+            if ($token->isGivenKind(\T_DOC_COMMENT)) {
                 $this->updateComment($tokens, $imports, $index);
                 continue;
             }
 
-            if (!$token->isGivenKind(T_STRING)) {
+            if (!$token->isGivenKind(\T_STRING)) {
                 continue;
             }
 
@@ -106,7 +106,7 @@ class Bar {
         /** @var Token $classNameToken */
         $classNameToken = $tokens[$classNameIndex];
 
-        if ($classNameToken->isGivenKind(T_NS_SEPARATOR)) {
+        if ($classNameToken->isGivenKind(\T_NS_SEPARATOR)) {
             /** @var int $classNameIndex */
             $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
 
@@ -144,7 +144,7 @@ class Bar {
         }
 
         if ($content !== $token->getContent()) {
-            $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
+            $tokens[$index] = new Token([\T_DOC_COMMENT, $content]);
         }
     }
 
@@ -166,10 +166,10 @@ class Bar {
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
-        if ($prevToken->isGivenKind([T_CONST, T_DOUBLE_COLON, T_NS_SEPARATOR, T_OBJECT_OPERATOR, T_FUNCTION])) {
+        if ($prevToken->isGivenKind([\T_CONST, \T_DOUBLE_COLON, \T_NS_SEPARATOR, \T_OBJECT_OPERATOR, \T_FUNCTION])) {
             return;
         }
 
-        $tokens->insertAt($index, new Token([T_NS_SEPARATOR, '\\']));
+        $tokens->insertAt($index, new Token([\T_NS_SEPARATOR, '\\']));
     }
 }

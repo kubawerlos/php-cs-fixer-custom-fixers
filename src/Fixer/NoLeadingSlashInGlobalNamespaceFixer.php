@@ -41,7 +41,7 @@ $y = new \Baz();
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_NS_SEPARATOR);
+        return $tokens->isTokenKindFound(\T_NS_SEPARATOR);
     }
 
     public function isRisky(): bool
@@ -68,7 +68,7 @@ $y = new \Baz();
         /** @var Token $token */
         $token = $tokens[$index];
 
-        if (!$token->isGivenKind(T_NS_SEPARATOR)) {
+        if (!$token->isGivenKind(\T_NS_SEPARATOR)) {
             return false;
         }
 
@@ -78,24 +78,24 @@ $y = new \Baz();
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
-        if ($prevToken->isGivenKind(T_STRING)) {
+        if ($prevToken->isGivenKind(\T_STRING)) {
             return false;
         }
-        if ($prevToken->isGivenKind([T_NEW, CT::T_NULLABLE_TYPE, CT::T_TYPE_COLON])) {
+        if ($prevToken->isGivenKind([\T_NEW, CT::T_NULLABLE_TYPE, CT::T_TYPE_COLON])) {
             return true;
         }
 
         /** @var int $nextIndex */
-        $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_COMMENT], [T_DOC_COMMENT], [T_NS_SEPARATOR], [T_STRING], [T_WHITESPACE]]);
+        $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[\T_COMMENT], [\T_DOC_COMMENT], [\T_NS_SEPARATOR], [\T_STRING], [\T_WHITESPACE]]);
 
         /** @var Token $nextToken */
         $nextToken = $tokens[$nextIndex];
 
-        if ($nextToken->isGivenKind(T_DOUBLE_COLON)) {
+        if ($nextToken->isGivenKind(\T_DOUBLE_COLON)) {
             return true;
         }
 
-        return $prevToken->equalsAny(['(', ',', [CT::T_TYPE_ALTERNATION]]) && $nextToken->isGivenKind([T_VARIABLE, CT::T_TYPE_ALTERNATION]);
+        return $prevToken->equalsAny(['(', ',', [CT::T_TYPE_ALTERNATION]]) && $nextToken->isGivenKind([\T_VARIABLE, CT::T_TYPE_ALTERNATION]);
     }
 
     private function skipNamespacedCode(Tokens $tokens, int $index): int
@@ -103,7 +103,7 @@ $y = new \Baz();
         /** @var Token $token */
         $token = $tokens[$index];
 
-        if (!$token->isGivenKind(T_NAMESPACE)) {
+        if (!$token->isGivenKind(\T_NAMESPACE)) {
             return $index;
         }
 

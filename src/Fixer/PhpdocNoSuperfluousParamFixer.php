@@ -50,7 +50,7 @@ function foo($b, $s) {}
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_DOC_COMMENT, T_FUNCTION]);
+        return $tokens->isAllTokenKindsFound([\T_DOC_COMMENT, \T_FUNCTION]);
     }
 
     public function isRisky(): bool
@@ -64,11 +64,11 @@ function foo($b, $s) {}
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_DOC_COMMENT)) {
+            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
-            $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]);
+            $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[\T_ABSTRACT], [\T_COMMENT], [\T_FINAL], [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_STATIC], [\T_WHITESPACE]]);
 
             if ($functionIndex === null) {
                 return;
@@ -77,7 +77,7 @@ function foo($b, $s) {}
             /** @var Token $functionToken */
             $functionToken = $tokens[$functionIndex];
 
-            if (!$functionToken->isGivenKind(T_FUNCTION)) {
+            if (!$functionToken->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 
@@ -92,7 +92,7 @@ function foo($b, $s) {}
             if ($newContent === '') {
                 $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             } else {
-                $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
+                $tokens[$index] = new Token([\T_DOC_COMMENT, $newContent]);
             }
         }
     }
@@ -112,7 +112,7 @@ function foo($b, $s) {}
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if ($token->isGivenKind(T_VARIABLE)) {
+            if ($token->isGivenKind(\T_VARIABLE)) {
                 $paramNames[] = $token->getContent();
             }
         }

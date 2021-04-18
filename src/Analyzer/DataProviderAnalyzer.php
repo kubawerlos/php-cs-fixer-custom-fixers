@@ -36,13 +36,13 @@ final class DataProviderAnalyzer
             $docCommentIndex = $tokens->getTokenNotOfKindSibling(
                 $methodIndex,
                 -1,
-                [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_FUNCTION], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]
+                [[\T_ABSTRACT], [\T_COMMENT], [\T_FINAL], [\T_FUNCTION], [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_STATIC], [\T_WHITESPACE]]
             );
 
             /** @var Token $docCommentToken */
             $docCommentToken = $tokens[$docCommentIndex];
 
-            if (!$docCommentToken->isGivenKind(T_DOC_COMMENT)) {
+            if (!$docCommentToken->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
@@ -83,7 +83,7 @@ final class DataProviderAnalyzer
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_FUNCTION)) {
+            if (!$token->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 
@@ -93,7 +93,7 @@ final class DataProviderAnalyzer
             /** @var Token $functionNameToken */
             $functionNameToken = $tokens[$functionNameIndex];
 
-            if (!$functionNameToken->isGivenKind(T_STRING)) {
+            if (!$functionNameToken->isGivenKind(\T_STRING)) {
                 continue;
             }
 

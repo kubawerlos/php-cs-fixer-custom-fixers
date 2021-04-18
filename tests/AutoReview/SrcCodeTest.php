@@ -118,7 +118,7 @@ final class SrcCodeTest extends TestCase
         $stringTokens = \array_filter(
             $tokens->toArray(),
             static function (Token $token): bool {
-                return $token->isGivenKind(T_STRING);
+                return $token->isGivenKind(\T_STRING);
             }
         );
         $strings = \array_map(

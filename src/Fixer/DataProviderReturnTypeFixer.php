@@ -57,7 +57,7 @@ class FooTest extends TestCase {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_CLASS, T_DOC_COMMENT, T_EXTENDS, T_FUNCTION, T_STRING]);
+        return $tokens->isAllTokenKindsFound([\T_CLASS, \T_DOC_COMMENT, \T_EXTENDS, \T_FUNCTION, \T_STRING]);
     }
 
     public function isRisky(): bool
@@ -91,8 +91,8 @@ class FooTest extends TestCase {
                     $argumentsEnd + 1,
                     [
                         new Token([CT::T_TYPE_COLON, ':']),
-                        new Token([T_WHITESPACE, ' ']),
-                        new Token([T_STRING, 'iterable']),
+                        new Token([\T_WHITESPACE, ' ']),
+                        new Token([\T_STRING, 'iterable']),
                     ]
                 );
                 continue;
@@ -101,7 +101,7 @@ class FooTest extends TestCase {
             if ($typeAnalysis->getName() !== 'iterable') {
                 /** @var int $startIndex */
                 $startIndex = $tokens->getNextMeaningfulToken($typeAnalysis->getStartIndex() - 1);
-                $tokens->overrideRange($startIndex, $typeAnalysis->getEndIndex(), [new Token([T_STRING, 'iterable'])]);
+                $tokens->overrideRange($startIndex, $typeAnalysis->getEndIndex(), [new Token([\T_STRING, 'iterable'])]);
             }
         }
     }

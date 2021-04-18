@@ -47,7 +47,7 @@ $x = [
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN]);
+        return $tokens->isAnyTokenKindsFound([\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN]);
     }
 
     public function isRisky(): bool
@@ -61,7 +61,7 @@ $x = [
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
+            if (!$token->isGivenKind([\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
                 continue;
             }
 
@@ -116,7 +116,7 @@ $x = [
             if ($token->isWhitespace() || $token->isComment()) {
                 continue;
             }
-            if ($token->equalsAny([[T_VARIABLE], '('])) {
+            if ($token->equalsAny([[\T_VARIABLE], '('])) {
                 return null;
             }
             $content .= $token->getContent();

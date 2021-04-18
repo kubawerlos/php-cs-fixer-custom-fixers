@@ -56,7 +56,7 @@ final class Version20180609123456 extends AbstractMigration
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $tokens->isAnyTokenKindsFound([\T_COMMENT, \T_DOC_COMMENT]);
     }
 
     public function isRisky(): bool
@@ -70,7 +70,7 @@ final class Version20180609123456 extends AbstractMigration
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 

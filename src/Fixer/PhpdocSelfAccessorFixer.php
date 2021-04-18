@@ -50,7 +50,7 @@ class Foo {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_CLASS, T_INTERFACE]) && $tokens->isTokenKindFound(T_DOC_COMMENT);
+        return $tokens->isAnyTokenKindsFound([\T_CLASS, \T_INTERFACE]) && $tokens->isTokenKindFound(\T_DOC_COMMENT);
     }
 
     public function isRisky(): bool
@@ -78,12 +78,12 @@ class Foo {
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_CLASS, T_INTERFACE]) || $tokensAnalyzer->isAnonymousClass($index)) {
+            if (!$token->isGivenKind([\T_CLASS, \T_INTERFACE]) || $tokensAnalyzer->isAnonymousClass($index)) {
                 continue;
             }
 
             /** @var int $nameIndex */
-            $nameIndex = $tokens->getNextTokenOfKind($index, [[T_STRING]]);
+            $nameIndex = $tokens->getNextTokenOfKind($index, [[\T_STRING]]);
 
             /** @var Token $nameToken */
             $nameToken = $tokens[$nameIndex];
@@ -107,7 +107,7 @@ class Foo {
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_DOC_COMMENT)) {
+            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
@@ -117,7 +117,7 @@ class Foo {
                 continue;
             }
 
-            $tokens[$index] = new Token([T_DOC_COMMENT, $newContent]);
+            $tokens[$index] = new Token([\T_DOC_COMMENT, $newContent]);
         }
     }
 

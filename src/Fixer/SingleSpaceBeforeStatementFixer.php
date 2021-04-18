@@ -25,52 +25,52 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 {
     /** @var int[] */
     private $tokens = [
-        T_ABSTRACT,
-        T_AS,
-        T_BREAK,
-        T_CASE,
-        T_CATCH,
-        T_CLASS,
-        T_CLONE,
-        T_CONST,
-        T_CONTINUE,
-        T_DO,
-        T_ECHO,
-        T_ELSE,
-        T_ELSEIF,
-        T_EXTENDS,
-        T_FINAL,
-        T_FINALLY,
-        T_FOR,
-        T_FOREACH,
-        T_FUNCTION,
-        T_GLOBAL,
-        T_GOTO,
-        T_IF,
-        T_IMPLEMENTS,
-        T_INCLUDE,
-        T_INCLUDE_ONCE,
-        T_INSTANCEOF,
-        T_INSTEADOF,
-        T_INTERFACE,
-        T_NAMESPACE,
-        T_NEW,
-        T_PRINT,
-        T_PRIVATE,
-        T_PROTECTED,
-        T_PUBLIC,
-        T_REQUIRE,
-        T_REQUIRE_ONCE,
-        T_RETURN,
-        T_SWITCH,
-        T_THROW,
-        T_TRAIT,
-        T_TRY,
-        T_USE,
-        T_VAR,
-        T_WHILE,
-        T_YIELD,
-        T_YIELD_FROM,
+        \T_ABSTRACT,
+        \T_AS,
+        \T_BREAK,
+        \T_CASE,
+        \T_CATCH,
+        \T_CLASS,
+        \T_CLONE,
+        \T_CONST,
+        \T_CONTINUE,
+        \T_DO,
+        \T_ECHO,
+        \T_ELSE,
+        \T_ELSEIF,
+        \T_EXTENDS,
+        \T_FINAL,
+        \T_FINALLY,
+        \T_FOR,
+        \T_FOREACH,
+        \T_FUNCTION,
+        \T_GLOBAL,
+        \T_GOTO,
+        \T_IF,
+        \T_IMPLEMENTS,
+        \T_INCLUDE,
+        \T_INCLUDE_ONCE,
+        \T_INSTANCEOF,
+        \T_INSTEADOF,
+        \T_INTERFACE,
+        \T_NAMESPACE,
+        \T_NEW,
+        \T_PRINT,
+        \T_PRIVATE,
+        \T_PROTECTED,
+        \T_PUBLIC,
+        \T_REQUIRE,
+        \T_REQUIRE_ONCE,
+        \T_RETURN,
+        \T_SWITCH,
+        \T_THROW,
+        \T_TRAIT,
+        \T_TRY,
+        \T_USE,
+        \T_VAR,
+        \T_WHILE,
+        \T_YIELD,
+        \T_YIELD_FROM,
         CT::T_CONST_IMPORT,
         CT::T_FUNCTION_IMPORT,
         CT::T_USE_TRAIT,
@@ -113,14 +113,14 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
             /** @var Token $prevToken */
             $prevToken = $tokens[$index - 1];
 
-            if ($prevToken->isGivenKind(T_OPEN_TAG)) {
+            if ($prevToken->isGivenKind(\T_OPEN_TAG)) {
                 continue;
             }
 
             /** @var Token $prevPrevToken */
             $prevPrevToken = $tokens[$index - 2];
 
-            if ($prevPrevToken->isGivenKind(T_OPEN_TAG)) {
+            if ($prevPrevToken->isGivenKind(\T_OPEN_TAG)) {
                 $this->fixTwoTokensAfterOpenTag($tokens, $index);
                 continue;
             }
@@ -137,7 +137,7 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
         /** @var Token $prevPrevToken */
         $prevPrevToken = $tokens[$index - 2];
 
-        if ($prevToken->isGivenKind(T_WHITESPACE) && Preg::match('/\R/', $prevPrevToken->getContent()) !== 1) {
+        if ($prevToken->isGivenKind(\T_WHITESPACE) && Preg::match('/\R/', $prevPrevToken->getContent()) !== 1) {
             $tokens->clearAt($index - 1);
         }
     }
@@ -147,16 +147,16 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
         /** @var Token $prevToken */
         $prevToken = $tokens[$index - 1];
 
-        if ($prevToken->isGivenKind(T_WHITESPACE)) {
+        if ($prevToken->isGivenKind(\T_WHITESPACE)) {
             if (Preg::match('/\R/', $prevToken->getContent()) !== 1) {
-                $tokens[$index - 1] = new Token([T_WHITESPACE, ' ']);
+                $tokens[$index - 1] = new Token([\T_WHITESPACE, ' ']);
             }
 
             return;
         }
 
         if (!\in_array($prevToken->getContent(), ['!', '(', '@', '[', '{'], true)) {
-            $tokens->insertAt($index, new Token([T_WHITESPACE, ' ']));
+            $tokens->insertAt($index, new Token([\T_WHITESPACE, ' ']));
         }
     }
 }

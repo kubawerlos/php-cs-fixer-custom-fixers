@@ -45,7 +45,7 @@ $bar = new Foo();
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT);
+        return $tokens->isTokenKindFound(\T_DOC_COMMENT);
     }
 
     public function isRisky(): bool
@@ -77,16 +77,16 @@ $bar = new Foo();
             /** @var Token $nextToken */
             $nextToken = $tokens[$nextIndex];
 
-            if ($nextToken->isGivenKind([T_PRIVATE, T_PROTECTED, T_PUBLIC, T_VAR, T_STATIC])) {
+            if ($nextToken->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC])) {
                 continue;
             }
 
-            if ($nextToken->isGivenKind(T_VARIABLE)) {
+            if ($nextToken->isGivenKind(\T_VARIABLE)) {
                 $this->removeVarAnnotation($tokens, $index, [$nextToken->getContent()]);
                 continue;
             }
 
-            if ($nextToken->isGivenKind([T_FOR, T_FOREACH, T_IF, T_SWITCH, T_WHILE])) {
+            if ($nextToken->isGivenKind([\T_FOR, \T_FOREACH, \T_IF, \T_SWITCH, \T_WHILE])) {
                 $this->removeVarAnnotationForControl($tokens, $index, $nextIndex);
                 continue;
             }
@@ -97,7 +97,7 @@ $bar = new Foo();
 
     private function isTokenCandidate(Token $token): bool
     {
-        return $token->isGivenKind(T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
+        return $token->isGivenKind(\T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
     }
 
     /**
@@ -127,7 +127,7 @@ $bar = new Foo();
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if ($token->isGivenKind(T_VARIABLE)) {
+            if ($token->isGivenKind(\T_VARIABLE)) {
                 $variables[] = $token->getContent();
             }
         }
@@ -159,6 +159,6 @@ $bar = new Foo();
 
             return;
         }
-        $tokens[$index] = new Token([T_DOC_COMMENT, $content]);
+        $tokens[$index] = new Token([\T_DOC_COMMENT, $content]);
     }
 }

@@ -82,7 +82,7 @@ function foo_bar() {}
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(T_DOC_COMMENT);
+        return $tokens->isTokenKindFound(\T_DOC_COMMENT);
     }
 
     public function isRisky(): bool
@@ -96,7 +96,7 @@ function foo_bar() {}
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_DOC_COMMENT)) {
+            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
@@ -118,7 +118,7 @@ function foo_bar() {}
                 continue;
             }
 
-            $tokens[$index] = new Token([T_DOC_COMMENT, $docBlock->getContent()]);
+            $tokens[$index] = new Token([\T_DOC_COMMENT, $docBlock->getContent()]);
         }
     }
 }

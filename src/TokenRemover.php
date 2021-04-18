@@ -52,11 +52,11 @@ final class TokenRemover
         /** @var Token $prevToken */
         $prevToken = $tokens[$prevIndex];
 
-        if (!$prevToken->isGivenKind([T_OPEN_TAG, T_WHITESPACE])) {
+        if (!$prevToken->isGivenKind([\T_OPEN_TAG, \T_WHITESPACE])) {
             return true;
         }
 
-        if ($prevToken->isGivenKind(T_OPEN_TAG) && Preg::match('/\R$/', $prevToken->getContent()) !== 1) {
+        if ($prevToken->isGivenKind(\T_OPEN_TAG) && Preg::match('/\R$/', $prevToken->getContent()) !== 1) {
             return true;
         }
 
@@ -67,7 +67,7 @@ final class TokenRemover
             /** @var Token $prevPrevToken */
             $prevPrevToken = $tokens[$prevPrevIndex];
 
-            if (!$prevPrevToken->isGivenKind(T_OPEN_TAG) || Preg::match('/\R$/', $prevPrevToken->getContent()) !== 1) {
+            if (!$prevPrevToken->isGivenKind(\T_OPEN_TAG) || Preg::match('/\R$/', $prevPrevToken->getContent()) !== 1) {
                 return true;
             }
         }
@@ -85,7 +85,7 @@ final class TokenRemover
         /** @var Token $nextToken */
         $nextToken = $tokens[$nextIndex];
 
-        if (!$nextToken->isGivenKind(T_WHITESPACE)) {
+        if (!$nextToken->isGivenKind(\T_WHITESPACE)) {
             return true;
         }
 
@@ -97,7 +97,7 @@ final class TokenRemover
         /** @var Token $token */
         $token = $tokens[$index];
 
-        if (!$token->isGivenKind(T_WHITESPACE)) {
+        if (!$token->isGivenKind(\T_WHITESPACE)) {
             return false;
         }
         $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $token->getContent());
@@ -107,7 +107,7 @@ final class TokenRemover
         if ($contentWithoutTrailingSpacesAndNewline === '') {
             $tokens->clearAt($index);
         } else {
-            $tokens[$index] = new Token([T_WHITESPACE, $contentWithoutTrailingSpacesAndNewline]);
+            $tokens[$index] = new Token([\T_WHITESPACE, $contentWithoutTrailingSpacesAndNewline]);
         }
 
         return $contentWithoutTrailingSpaces !== $contentWithoutTrailingSpacesAndNewline;
@@ -128,6 +128,6 @@ final class TokenRemover
             return;
         }
 
-        $tokens[$index] = new Token([T_WHITESPACE, $newContent]);
+        $tokens[$index] = new Token([\T_WHITESPACE, $newContent]);
     }
 }

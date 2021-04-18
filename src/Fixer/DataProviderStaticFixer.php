@@ -51,7 +51,7 @@ class FooTest extends TestCase {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_CLASS, T_DOC_COMMENT, T_EXTENDS, T_FUNCTION, T_STRING]);
+        return $tokens->isAllTokenKindsFound([\T_CLASS, \T_DOC_COMMENT, \T_EXTENDS, \T_FUNCTION, \T_STRING]);
     }
 
     public function isRisky(): bool
@@ -79,12 +79,12 @@ class FooTest extends TestCase {
             if ($methodStartIndex !== null) {
                 $methodEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $methodStartIndex);
 
-                if ($tokens->findSequence([[T_VARIABLE, '$this']], $methodStartIndex, $methodEndIndex) !== null) {
+                if ($tokens->findSequence([[\T_VARIABLE, '$this']], $methodStartIndex, $methodEndIndex) !== null) {
                     continue;
                 }
             }
             /** @var int $functionIndex */
-            $functionIndex = $tokens->getPrevTokenOfKind($dataProviderAnalysis->getNameIndex(), [[T_FUNCTION]]);
+            $functionIndex = $tokens->getPrevTokenOfKind($dataProviderAnalysis->getNameIndex(), [[\T_FUNCTION]]);
 
             $methodAttributes = $tokensAnalyzer->getMethodAttributes($functionIndex);
             if ($methodAttributes['static'] !== false) {
@@ -93,7 +93,7 @@ class FooTest extends TestCase {
 
             $tokens->insertAt(
                 $functionIndex,
-                [new Token([T_STATIC, 'static']), new Token([T_WHITESPACE, ' '])]
+                [new Token([\T_STATIC, 'static']), new Token([\T_WHITESPACE, ' '])]
             );
         }
     }

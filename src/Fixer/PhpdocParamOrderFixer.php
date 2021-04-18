@@ -51,7 +51,7 @@ function foo($a, $b, $c) {}
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_DOC_COMMENT, T_FUNCTION]);
+        return $tokens->isAllTokenKindsFound([\T_DOC_COMMENT, \T_FUNCTION]);
     }
 
     public function isRisky(): bool
@@ -65,11 +65,11 @@ function foo($a, $b, $c) {}
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind(T_DOC_COMMENT)) {
+            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
-            $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[T_ABSTRACT], [T_COMMENT], [T_FINAL], [T_PRIVATE], [T_PROTECTED], [T_PUBLIC], [T_STATIC], [T_WHITESPACE]]);
+            $functionIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[\T_ABSTRACT], [\T_COMMENT], [\T_FINAL], [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_STATIC], [\T_WHITESPACE]]);
 
             if ($functionIndex === null) {
                 return;
@@ -78,7 +78,7 @@ function foo($a, $b, $c) {}
             /** @var Token $functionToken */
             $functionToken = $tokens[$functionIndex];
 
-            if (!$functionToken->isGivenKind(T_FUNCTION)) {
+            if (!$functionToken->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 
@@ -101,7 +101,7 @@ function foo($a, $b, $c) {}
                 continue;
             }
 
-            $tokens[$index] = new Token([T_DOC_COMMENT, $docBlock->getContent()]);
+            $tokens[$index] = new Token([\T_DOC_COMMENT, $docBlock->getContent()]);
         }
     }
 
@@ -120,7 +120,7 @@ function foo($a, $b, $c) {}
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if ($token->isGivenKind(T_VARIABLE)) {
+            if ($token->isGivenKind(\T_VARIABLE)) {
                 $paramNames[] = $token->getContent();
             }
         }

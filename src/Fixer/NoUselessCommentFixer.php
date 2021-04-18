@@ -53,7 +53,7 @@ class Foo {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_COMMENT, T_DOC_COMMENT]);
+        return $tokens->isAnyTokenKindsFound([\T_COMMENT, \T_DOC_COMMENT]);
     }
 
     public function isRisky(): bool
@@ -67,14 +67,14 @@ class Foo {
             /** @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_COMMENT, T_DOC_COMMENT])) {
+            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
             $nextIndex = $tokens->getTokenNotOfKindSibling(
                 $index,
                 1,
-                [[T_WHITESPACE], [T_COMMENT], [T_ABSTRACT], [T_FINAL], [T_PUBLIC], [T_PROTECTED], [T_PRIVATE], [T_STATIC]]
+                [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]]
             );
             if ($nextIndex === null) {
                 continue;
@@ -83,13 +83,13 @@ class Foo {
             /** @var Token $nextToken */
             $nextToken = $tokens[$nextIndex];
 
-            if ($nextToken->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
+            if ($nextToken->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
                 $newContent = Preg::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*(class|interface|trait)\h+[A-Za-z0-9\\\\_]+.?(?=\R|$)/i',
                     '',
                     $token->getContent()
                 );
-            } elseif ($nextToken->isGivenKind(T_FUNCTION)) {
+            } elseif ($nextToken->isGivenKind(\T_FUNCTION)) {
                 $newContent = Preg::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
                     '',

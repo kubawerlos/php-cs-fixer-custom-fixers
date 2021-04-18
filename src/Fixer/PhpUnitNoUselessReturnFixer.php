@@ -25,7 +25,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PhpUnitNoUselessReturnFixer extends AbstractFixer
 {
-    private const FUNCTION_TOKENS = [[T_STRING, 'fail'], [T_STRING, 'markTestIncomplete'], [T_STRING, 'markTestSkipped']];
+    private const FUNCTION_TOKENS = [[\T_STRING, 'fail'], [\T_STRING, 'markTestIncomplete'], [\T_STRING, 'markTestSkipped']];
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -62,7 +62,7 @@ class FooTest extends TestCase {
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_CLASS, T_EXTENDS, T_FUNCTION, T_STRING, T_RETURN]);
+        return $tokens->isAllTokenKindsFound([\T_CLASS, \T_EXTENDS, \T_FUNCTION, \T_STRING, \T_RETURN]);
     }
 
     public function isRisky(): bool
@@ -117,7 +117,7 @@ class FooTest extends TestCase {
             /** @var Token $returnToken */
             $returnToken = $tokens[$returnIndex];
 
-            if (!$returnToken->isGivenKind(T_RETURN)) {
+            if (!$returnToken->isGivenKind(\T_RETURN)) {
                 continue;
             }
 
