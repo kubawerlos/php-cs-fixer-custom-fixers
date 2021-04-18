@@ -17,7 +17,7 @@ use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Linter\Linter;
-use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
 use Tests\AssertRegExpTrait;
@@ -28,7 +28,6 @@ use Tests\AssertRegExpTrait;
 abstract class AbstractFixerTestCase extends TestCase
 {
     use AssertRegExpTrait;
-    use AssertTokensTrait;
 
     /** @var DefinedFixerInterface */
     protected $fixer;
@@ -130,32 +129,30 @@ abstract class AbstractFixerTestCase extends TestCase
             throw new \InvalidArgumentException('Expected must be different to input.');
         }
 
-        if ($input !== null) {
-            Tokens::clearCache();
-            $tokens = Tokens::fromCode($input);
-
-            self::assertTrue($this->fixer->isCandidate($tokens));
-
-            $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
-
-            $tokens->clearEmptyTokens();
-
-            self::assertSame($expected, $tokens->generateCode());
-
-            Tokens::clearCache();
-            self::assertTokens(Tokens::fromCode($expected), $tokens);
-        }
-
         self::assertNull($this->lintSource($expected));
 
         Tokens::clearCache();
-        $tokens = Tokens::fromCode($expected);
+        $expectedTokens = Tokens::fromCode($expected);
 
-        $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+        if ($input !== null) {
+            Tokens::clearCache();
+            $inputTokens = Tokens::fromCode($input);
 
-        self::assertSame($expected, $tokens->generateCode());
+            self::assertTrue($this->fixer->isCandidate($inputTokens));
 
-        self::assertFalse($tokens->isChanged());
+            $this->fixer->fix($this->createMock(\SplFileInfo::class), $inputTokens);
+            $inputTokens->clearEmptyTokens();
+
+            self::assertSame($expected, $inputTokens->generateCode());
+
+            self::assertSameTokens($expectedTokens, $inputTokens);
+        }
+
+        $this->fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
+
+        self::assertSame($expected, $expectedTokens->generateCode());
+
+        self::assertFalse($expectedTokens->isChanged());
     }
 
     private function lintSource(string $source): ?string
@@ -173,5 +170,20 @@ abstract class AbstractFixerTestCase extends TestCase
         }
 
         return null;
+    }
+
+    private static function assertSameTokens(Tokens $expectedTokens, Tokens $inputTokens): void
+    {
+        self::assertSame($expectedTokens->count(), $inputTokens->count(), 'Both collections must have the same size.');
+
+        foreach ($expectedTokens as $index => $expectedToken) {
+            /** @var Token $inputToken */
+            $inputToken = $inputTokens[$index];
+
+            self::assertTrue(
+                $expectedToken->equals($inputToken),
+                \sprintf("Token at index %d must be:\n%s,\ngot:\n%s.", $index, $expectedToken->toJson(), $inputToken->toJson())
+            );
+        }
     }
 }
