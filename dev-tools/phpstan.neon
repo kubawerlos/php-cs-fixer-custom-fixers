@@ -12,11 +12,18 @@ parameters:
       path: ../tests
   level: max
   paths:
-    - ./src
     - ../src
     - ../tests
   reportMaybesInMethodSignatures: false
 
 includes:
+  - ./vendor/symplify/phpstan-rules/config/services/services.neon
+  - ./vendor/symplify/phpstan-rules/packages/cognitive-complexity/config/cognitive-complexity-services.neon
   - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
   - ./vendor/phpstan/phpstan-strict-rules/rules.neon
+
+services:
+  - class: Symplify\PHPStanRules\CognitiveComplexity\Rules\FunctionLikeCognitiveComplexityRule
+    tags: [ phpstan.rules.rule ]
+    arguments:
+      maxMethodCognitiveComplexity: 13
