@@ -2,6 +2,7 @@
     "require-dev": {
         "ergebnis/composer-normalize": "^2.13.3",
         "infection/infection": "^0.22.0",
+        "kubawerlos/composer-smaller-lock": "^0.1.1",
         "kubawerlos/php-cs-fixer-config": "^1.10.0",
         "kubawerlos/types-checker": "^2.1.0",
         "maglnet/composer-require-checker": "^3.2.0",
