@@ -27,6 +27,7 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
             'getDefinition',
             'getConfigurationDefinition',
             'configure',
+            'name',
             'getName',
             'getPriority',
             'getPullRequestId',
