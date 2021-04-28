@@ -101,7 +101,7 @@ abstract class AbstractFixerTestCase extends TestCase
     {
         $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
         if ($this->fixer instanceof ConfigurableFixerInterface) {
-            $this->fixer->configure($codeSample->getConfiguration());
+            $this->fixer->configure($codeSample->getConfiguration() ?? []);
         }
 
         Tokens::clearCache();
@@ -123,7 +123,7 @@ abstract class AbstractFixerTestCase extends TestCase
     final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
     {
         if ($this->fixer instanceof ConfigurableFixerInterface) {
-            $this->fixer->configure($configuration);
+            $this->fixer->configure($configuration ?? []);
         }
 
         if ($expected === $input) {

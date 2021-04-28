@@ -39,7 +39,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->fixer->configure($configuration);
+        $this->fixer->configure($configuration ?? []);
         $this->doTest($expected, $input);
     }
 

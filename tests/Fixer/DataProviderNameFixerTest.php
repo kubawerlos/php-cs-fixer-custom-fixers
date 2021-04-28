@@ -368,7 +368,7 @@ class FooTest extends TestCase {
                     'testFooBar',
                     ['prefix' => 'data_provider_', 'suffix' => ''],
                 ],
-            ] as $name => list($dataProvider, $testFunction, $config)
+            ] as $name => [$dataProvider, $testFunction, $config]
         ) {
             yield $name => [
                 \sprintf('<?php
