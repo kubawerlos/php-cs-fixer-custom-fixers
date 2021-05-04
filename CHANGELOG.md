@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v2.5.0 - *2021-05-04*
+- Add PHP CS Fixer v3 support
+
 ## v2.4.0 - *2020-12-08*
 - Allow PHP 8
 - Update PHP CS Fixer to v2.17
