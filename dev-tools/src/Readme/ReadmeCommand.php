@@ -84,13 +84,13 @@ final class ReadmeCommand extends BaseCommand
             '',
             $this->badge(
                 'CI Status',
-                \sprintf('https://github.com/%s/workflows/CI/badge.svg?branch=master&event=push', $this->composer()->name),
+                \sprintf('https://github.com/%s/workflows/CI/badge.svg?branch=main&event=push', $this->composer()->name),
                 \sprintf('https://github.com/%s/actions', $this->composer()->name)
             ),
             $this->badge(
                 'Code coverage',
-                \sprintf('%s/coveralls/github/%s/master.svg', self::SHIELDS_HOST, $this->composer()->name),
-                \sprintf('https://coveralls.io/github/%s?branch=master', $this->composer()->name)
+                \sprintf('%s/coveralls/github/%s/main.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://coveralls.io/github/%s?branch=main', $this->composer()->name)
             ),
             $this->badge(
                 'Tests',
@@ -98,7 +98,7 @@ final class ReadmeCommand extends BaseCommand
             ),
             $this->badge(
                 'Mutation testing badge',
-                \sprintf('https://badge.stryker-mutator.io/github.com/%s/master', $this->composer()->name),
+                \sprintf('https://badge.stryker-mutator.io/github.com/%s/main', $this->composer()->name),
                 'https://stryker-mutator.github.io'
             ),
             $this->badge(

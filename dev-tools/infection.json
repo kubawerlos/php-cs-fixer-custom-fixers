@@ -10,7 +10,7 @@
         "text": "php://stdout",
         "github": true,
         "badge": {
-            "branch": "master"
+            "branch": "main"
         }
     },
     "phpUnit": {

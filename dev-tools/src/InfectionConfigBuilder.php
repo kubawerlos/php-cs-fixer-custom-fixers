@@ -54,7 +54,7 @@ final class InfectionConfigBuilder
             'logs' => [
                 'text' => 'php://stdout',
                 'github' => true,
-                'badge' => ['branch' => 'master'],
+                'badge' => ['branch' => 'main'],
             ],
             'phpUnit' => [
                 'configDir' => '..',
