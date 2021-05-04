@@ -15,7 +15,6 @@ namespace PhpCsFixerCustomFixersDev\Readme;
 
 use PhpCsFixer\Console\Command\HelpCommand;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\StdinFileInfo;
@@ -195,7 +194,7 @@ In your PHP CS Fixer configuration register fixers and use them:
                 );
             }
 
-            if ($fixer instanceof ConfigurationDefinitionFixerInterface) {
+            if ($fixer instanceof ConfigurableFixerInterface) {
                 $output .= "\nConfiguration options:";
 
                 foreach ($fixer->getConfigurationDefinition()->getOptions() as $option) {

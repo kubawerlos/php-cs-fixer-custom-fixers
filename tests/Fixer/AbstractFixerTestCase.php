@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Linter\Linter;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +30,7 @@ abstract class AbstractFixerTestCase extends TestCase
     use AssertRegExpTrait;
     use AssertSameTokensTrait;
 
-    /** @var DefinedFixerInterface */
+    /** @var FixerInterface */
     protected $fixer;
 
     final protected function setUp(): void
@@ -39,7 +39,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $className = 'PhpCsFixerCustomFixers\\Fixer\\' . \substr($reflectionClass->getShortName(), 0, -4);
 
-        /** @var DefinedFixerInterface $fixer */
+        /** @var FixerInterface $fixer */
         $fixer = new $className();
 
         $this->fixer = $fixer;

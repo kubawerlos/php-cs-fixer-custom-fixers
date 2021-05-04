@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
@@ -25,7 +25,7 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
+final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var int[] */
     private $tokens = [

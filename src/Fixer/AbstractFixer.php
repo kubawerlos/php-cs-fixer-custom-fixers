@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\Fixer\DefinedFixerInterface;
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Preg;
 
-abstract class AbstractFixer implements DefinedFixerInterface
+abstract class AbstractFixer implements FixerInterface
 {
     final public static function name(): string
     {

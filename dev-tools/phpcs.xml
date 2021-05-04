@@ -9,7 +9,7 @@
     <file>./src</file>
     <file>../src</file>
     <file>../tests</file>
-    <file>../.php_cs</file>
+    <file>../.php-cs-fixer.php</file>
     <exclude-pattern>./src/Readme/php-cs-fixer.config.*.php</exclude-pattern>
 
     <rule ref='PSR12'>

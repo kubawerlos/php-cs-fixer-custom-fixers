@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
@@ -24,7 +24,7 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class NoSuperfluousConcatenationFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
+final class NoSuperfluousConcatenationFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var bool */
     private $allowPreventingTrailingSpaces = false;

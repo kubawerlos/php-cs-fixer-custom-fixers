@@ -4,7 +4,7 @@ parameters:
   excludes_analyse:
     - ./src/Readme
   ignoreErrors:
-    - message: '#^Call to an undefined method PhpCsFixer\\Fixer\\DefinedFixerInterface::#'
+    - message: '#^Call to an undefined method PhpCsFixer\\Fixer\\FixerInterface::[a-zA-Z]+\(\)\.$#'
       path: ../tests
     - message: '#^Call to function method_exists\(\) with ''Tests\\\\.*'' and ''.*'' will always evaluate to true\.$#'
       path: ../tests
