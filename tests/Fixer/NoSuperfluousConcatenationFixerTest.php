@@ -37,6 +37,23 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    public function testStringIsTheSame(string $expected, ?string $input = null, ?array $configuration = null): void
+    {
+        if ($input === null) {
+            $this->expectNotToPerformAssertions();
+        } else {
+            self::assertSame(
+                eval(\str_replace('<?php', 'return', $expected)),
+                eval(\str_replace('<?php', 'return', $input))
+            );
+        }
+    }
+
+    /**
+     * @param null|array<string, bool> $configuration
+     *
+     * @dataProvider provideFixCases
+     */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
         $this->doTest($expected, $input, $configuration);
@@ -162,49 +179,69 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php echo "Foo  & Bar";',
-            '<?php echo "Foo " . " & Bar";',
+            '<?php "Foo  & Bar";',
+            '<?php "Foo " . " & Bar";',
             ['allow_preventing_trailing_spaces' => true],
         ];
 
         yield [
-            '<?php echo "Foo
+            '<?php "Foo
                          & Bar";',
-            '<?php echo "Foo" . "
+            '<?php "Foo" . "
                          & Bar";',
             ['allow_preventing_trailing_spaces' => true],
         ];
 
         yield [
-            '<?php echo "Foo " . "
+            '<?php "Foo " . "
                          & Bar";',
             null,
             ['allow_preventing_trailing_spaces' => true],
         ];
 
         yield [
-            '<?php echo "My name is \$foo";',
-            '<?php echo "My name is $" . "foo";',
+            '<?php "My name is \$foo";',
+            '<?php "My name is $" . "foo";',
         ];
 
         yield [
-            '<?php echo "My name is \$foo";',
-            '<?php echo "My name is $" . \'foo\';',
+            '<?php "My name is \$foo";',
+            '<?php "My name is $" . \'foo\';',
         ];
 
         yield [
-            '<?php echo "My name is \$foo";',
-            '<?php echo \'My name is $\' . "foo";',
+            '<?php "My name is \$foo";',
+            '<?php \'My name is $\' . "foo";',
         ];
 
         yield [
-            '<?php echo \'My name is $foo\';',
-            '<?php echo \'My name is $\' . \'foo\';',
+            '<?php \'My name is $foo\';',
+            '<?php \'My name is $\' . \'foo\';',
         ];
 
         yield [
-            '<?php echo "one \$two \$three $";',
-            '<?php echo "one $" . "two $" . "three $";',
+            '<?php "one \$two \$three $";',
+            '<?php "one $" . "two $" . "three $";',
+        ];
+
+        yield [
+            <<<'CONTENT'
+<?php "\\\"Foo\\\"\n";
+CONTENT
+            ,
+            <<<'CONTENT'
+<?php '\"Foo\"' . "\n";
+CONTENT
+        ];
+
+        yield [
+            <<<'CONTENT'
+<?php "\\\"\Foo\\\\\"\n";
+CONTENT
+            ,
+            <<<'CONTENT'
+<?php '\"\Foo\\\"' . "\n";
+CONTENT
         ];
 
         for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {

@@ -191,11 +191,13 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             [
                 "\\'",
                 '"',
+                '\\\\"',
                 '$',
             ],
             [
                 "'",
                 '\\"',
+                '\\\\\\"',
                 '\\$',
             ],
             $content

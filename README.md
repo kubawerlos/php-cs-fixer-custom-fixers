@@ -8,7 +8,7 @@
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/main.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=main)
-![Tests](https://img.shields.io/badge/tests-2246-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-2790-brightgreen.svg)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)](https://stryker-mutator.github.io)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
