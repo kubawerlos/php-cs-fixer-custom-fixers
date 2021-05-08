@@ -44,7 +44,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         } else {
             self::assertSame(
                 eval(\str_replace('<?php', 'return', $expected)),
-                eval(\str_replace('<?php', 'return', $input)),
+                eval(\str_replace('<?php', 'return', $input))
             );
         }
     }
