@@ -116,3 +116,5 @@ jobs:
       - name: Run Infection
         if: steps.coverage-driver.outputs.result != 'none'
         run: composer infection
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
