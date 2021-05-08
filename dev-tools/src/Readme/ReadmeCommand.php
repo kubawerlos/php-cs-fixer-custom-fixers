@@ -72,13 +72,13 @@ final class ReadmeCommand extends BaseCommand
                 'LICENSE'
             ),
             $this->badge(
-                'Repository size',
-                \sprintf('https://github-size-badge.herokuapp.com/%s.svg', $this->composer()->name)
+                'Tests',
+                \sprintf('%s/badge/tests-%d-brightgreen.svg', self::SHIELDS_HOST, $this->numberOfTests())
             ),
             $this->badge(
-                'Last commit',
-                \sprintf('%s/github/last-commit/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
-                \sprintf('https://github.com/%s/commits', $this->composer()->name)
+                'Downloads',
+                \sprintf('%s/packagist/dt/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
+                \sprintf('https://packagist.org/packages/%s', $this->composer()->name)
             ),
             '',
             $this->badge(
@@ -90,10 +90,6 @@ final class ReadmeCommand extends BaseCommand
                 'Code coverage',
                 \sprintf('%s/coveralls/github/%s/main.svg', self::SHIELDS_HOST, $this->composer()->name),
                 \sprintf('https://coveralls.io/github/%s?branch=main', $this->composer()->name)
-            ),
-            $this->badge(
-                'Tests',
-                \sprintf('%s/badge/tests-%d-brightgreen.svg', self::SHIELDS_HOST, $this->numberOfTests())
             ),
             $this->badge(
                 'Mutation testing badge',
