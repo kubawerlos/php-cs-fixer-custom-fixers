@@ -227,19 +227,21 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         yield [
             <<<'CONTENT'
 <?php "\\\"Foo\\\"\n";
-CONTENT,
+CONTENT
+            ,
             <<<'CONTENT'
 <?php '\"Foo\"' . "\n";
-CONTENT,
+CONTENT
         ];
 
         yield [
             <<<'CONTENT'
 <?php "\\\"\Foo\\\\\"\n";
-CONTENT,
+CONTENT
+            ,
             <<<'CONTENT'
 <?php '\"\Foo\\\"' . "\n";
-CONTENT,
+CONTENT
         ];
 
         for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {
