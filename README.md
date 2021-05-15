@@ -455,9 +455,9 @@ Configuration options:
 ```diff
  <?php
 -$foo = new    Foo();
--echo$foo->__toString();
+-echo$foo->bar();
 +$foo = new Foo();
-+echo $foo->__toString();
++echo $foo->bar();
 ```
 
 #### SingleSpaceBeforeStatementFixer
