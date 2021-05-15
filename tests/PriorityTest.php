@@ -676,5 +676,25 @@ bar($x);
                 );
             ',
         ];
+
+        yield [
+            new CustomFixer\StringableInterfaceFixer(),
+            new Fixer\ClassNotation\ClassDefinitionFixer(),
+            '<?php class Foo implements
+    Bar,
+    Baz,
+    \Stringable
+{
+    public function __toString() { return "Foo"; }
+}
+',
+            '<?php class Foo implements
+    Bar,
+    Baz
+{
+    public function __toString() { return "Foo"; }
+}
+',
+        ];
     }
 }
