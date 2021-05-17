@@ -24,7 +24,7 @@ final class StringableInterfaceFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Class that implements the `__toString()` method must implement the `Stringable` interface.',
+            'Class that implements the `__toString()` method must explicitly implement the `Stringable` interface.',
             [new CodeSample('<?php
 class Foo
 {

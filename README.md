@@ -469,7 +469,7 @@ Single space must precede - not preceded by linebreak - statement.
 ```
 
 #### StringableInterfaceFixer
-Class that implements the `__toString()` method must implement the `Stringable` interface.
+Class that implements the `__toString()` method must explicitly implement the `Stringable` interface.
 ```diff
  <?php
 -class Foo
