@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v2.6.0
+- Add ConstructorPropertyPromotionFixer
 - Add StringableInterfaceFixer
 
 ## v2.5.0 - *2021-05-04*
