@@ -45,7 +45,7 @@ final class FixersTest extends TestCase
     }
 
     /**
-     * @return array<array>
+     * @return iterable<array<FixerInterface>>
      */
     public static function provideFixerIsInCollectionCases(): iterable
     {
@@ -53,7 +53,10 @@ final class FixersTest extends TestCase
             static function (SplFileInfo $fileInfo): array {
                 $className = 'PhpCsFixerCustomFixers\\Fixer\\' . $fileInfo->getBasename('.php');
 
-                return [new $className()];
+                /** @var FixerInterface $fixer */
+                $fixer = new $className();
+
+                return [$fixer];
             },
             \iterator_to_array(Finder::create()
                 ->files()
