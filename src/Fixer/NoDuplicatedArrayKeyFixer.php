@@ -102,10 +102,11 @@ $x = [
 
     private function getKeyContentIfPossible(Tokens $tokens, ArrayElementAnalysis $arrayElementAnalysis): ?string
     {
-        if ($arrayElementAnalysis->getKeyStartIndex() === null || $arrayElementAnalysis->getKeyEndIndex() === null) {
+        if ($arrayElementAnalysis->getKeyStartIndex() === null) {
             return null;
         }
 
+        /** @var int $keyEndIndex */
         $keyEndIndex = $arrayElementAnalysis->getKeyEndIndex();
 
         $content = '';
@@ -116,9 +117,11 @@ $x = [
             if ($token->isWhitespace() || $token->isComment()) {
                 continue;
             }
+
             if ($token->equalsAny([[\T_VARIABLE], '('])) {
                 return null;
             }
+
             $content .= $token->getContent();
         }
 
