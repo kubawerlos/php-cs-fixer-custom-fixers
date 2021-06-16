@@ -25,16 +25,25 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
         self::assertFalse($this->fixer->isRisky());
     }
 
-    /**
-     * @dataProvider provideFixCases
-     */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testConfiguration(): void
     {
-        $this->doTest($expected, $input);
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('allow_duplicated_expressions', $options[0]->getName());
     }
 
     /**
-     * @return iterable<array{0: string, 1?: string}>
+     * @param null|array<string, bool> $configuration
+     *
+     * @dataProvider provideFixCases
+     */
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
+    {
+        $this->doTest($expected, $input, $configuration);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: null|string, 2?: array<string, bool>}>
      */
     public static function provideFixCases(): iterable
     {
@@ -197,6 +206,33 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
                     "foo" => "bar",
                 ],
             ];',
+        ];
+
+        yield [
+            '<?php $x = [
+                "foo" => 1,
+                "FOO" => 2,
+            ];',
+        ];
+
+        yield [
+            '<?php $x = [
+                getRandomIndex() => 1,
+                getRandomIndex() => 2,
+            ];',
+            null,
+            ['allow_duplicated_expressions' => true],
+        ];
+
+        yield [
+            '<?php $x = [
+                getRandomIndex() => 2,
+            ];',
+            '<?php $x = [
+                getRandomIndex() => 1,
+                getRandomIndex() => 2,
+            ];',
+            ['allow_duplicated_expressions' => false],
         ];
     }
 }

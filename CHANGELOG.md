@@ -2,6 +2,7 @@
 
 ## v2.6.0
 - Add StringableInterfaceFixer
+- NoDuplicatedArrayKeyFixer - add option "allow_duplicated_expressions"
 
 ## v2.5.0 - *2021-05-04*
 - Add PHP CS Fixer v3 support
