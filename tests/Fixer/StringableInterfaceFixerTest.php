@@ -96,7 +96,7 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             ',
         ];
 
-        yield 'aaa' => [
+        yield [
             '<?php namespace FooNamespace;
             class Foo implements Bar\Stringable, \Stringable
             {
