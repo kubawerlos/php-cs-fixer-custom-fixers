@@ -29,7 +29,7 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
         self::assertArrayHasKey(0, $options);
-        self::assertSame('allow_duplicated_expressions', $options[0]->getName());
+        self::assertSame('ignore_expressions', $options[0]->getName());
     }
 
     /**
@@ -221,7 +221,7 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
                 getRandomIndex() => 2,
             ];',
             null,
-            ['allow_duplicated_expressions' => true],
+            ['ignore_expressions' => true],
         ];
 
         yield [
@@ -232,7 +232,7 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
                 getRandomIndex() => 1,
                 getRandomIndex() => 2,
             ];',
-            ['allow_duplicated_expressions' => false],
+            ['ignore_expressions' => false],
         ];
     }
 }

@@ -31,7 +31,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 final class NoDuplicatedArrayKeyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var bool */
-    private $allowDuplicatedExpressions = true;
+    private $ignoreExpressions = true;
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -50,9 +50,9 @@ $x = [
     public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('allow_duplicated_expressions', 'whether keep duplicated expressions (as they might return different value) or not'))
+            (new FixerOptionBuilder('ignore_expressions', 'whether to keep duplicated expressions (as they might return different values) or not'))
                 ->setAllowedTypes(['bool'])
-                ->setDefault($this->allowDuplicatedExpressions)
+                ->setDefault($this->ignoreExpressions)
                 ->getOption(),
         ]);
     }
@@ -62,8 +62,8 @@ $x = [
      */
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['allow_duplicated_expressions'])) {
-            $this->allowDuplicatedExpressions = $configuration['allow_duplicated_expressions'];
+        if (isset($configuration['ignore_expressions'])) {
+            $this->ignoreExpressions = $configuration['ignore_expressions'];
         }
     }
 
@@ -145,7 +145,7 @@ $x = [
                 continue;
             }
 
-            if ($this->allowDuplicatedExpressions && $token->equalsAny([[\T_VARIABLE], '('])) {
+            if ($this->ignoreExpressions && $token->equalsAny([[\T_VARIABLE], '('])) {
                 return null;
             }
 
