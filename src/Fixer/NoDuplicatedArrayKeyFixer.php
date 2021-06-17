@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -24,8 +28,11 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ArrayAnalyzer;
 use PhpCsFixerCustomFixers\TokenRemover;
 
-final class NoDuplicatedArrayKeyFixer extends AbstractFixer
+final class NoDuplicatedArrayKeyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
+    /** @var bool */
+    private $ignoreExpressions = true;
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -38,6 +45,26 @@ $x = [
 ];
 ')]
         );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('ignore_expressions', 'whether to keep duplicated expressions (as they might return different values) or not'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault($this->ignoreExpressions)
+                ->getOption(),
+        ]);
+    }
+
+    /**
+     * @param null|array<string, bool> $configuration
+     */
+    public function configure(?array $configuration = null): void
+    {
+        if (isset($configuration['ignore_expressions'])) {
+            $this->ignoreExpressions = $configuration['ignore_expressions'];
+        }
     }
 
     public function getPriority(): int
@@ -118,7 +145,7 @@ $x = [
                 continue;
             }
 
-            if ($token->equalsAny([[\T_VARIABLE], '('])) {
+            if ($this->ignoreExpressions && $token->equalsAny([[\T_VARIABLE], '('])) {
                 return null;
             }
 
