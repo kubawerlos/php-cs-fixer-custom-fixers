@@ -344,5 +344,16 @@ class Foo
 }
 ',
         ];
+
+        yield [
+            '<?php
+$x = 0;
+',
+            '<?php
+/** @var this is incorrect */
+$x = 0;
+/** @var this is incorrect */
+',
+        ];
     }
 }
