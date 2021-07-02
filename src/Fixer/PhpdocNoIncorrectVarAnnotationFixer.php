@@ -70,8 +70,7 @@ $bar = new Foo();
 
             if ($nextIndex === null) {
                 $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
-
-                return;
+                continue;
             }
 
             /** @var Token $nextToken */
