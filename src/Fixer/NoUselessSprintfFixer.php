@@ -33,11 +33,14 @@ final class NoUselessSprintfFixer extends AbstractFixer implements DeprecatedFix
 
     public function getDefinition(): FixerDefinitionInterface
     {
+        /** @var string $riskyDescription */
+        $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+
         return new FixerDefinition(
             $this->fixer->getDefinition()->getSummary(),
             $this->fixer->getDefinition()->getCodeSamples(),
-            $this->fixer->getDefinition()->getDescription(),
-            \str_replace('Risky when if', 'when', \trim((string) $this->fixer->getDefinition()->getRiskyDescription(), '.'))
+            null,
+            \str_replace('Risky when if', 'when', \trim($riskyDescription, '.'))
         );
     }
 
