@@ -34,12 +34,12 @@ final class CommentedOutFunctionFixer extends AbstractFixer implements Configura
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Configured functions must be commented out.',
+            'The configured functions must be commented out.',
             [new CodeSample('<?php
 var_dump($x);
 ')],
             null,
-            'when any of the configured functions has side effects or is overridden'
+            'when any of the configured functions have side effects or are overwritten'
         );
     }
 

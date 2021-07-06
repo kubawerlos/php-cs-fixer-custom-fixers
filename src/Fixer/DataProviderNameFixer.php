@@ -37,7 +37,7 @@ final class DataProviderNameFixer extends AbstractFixer implements ConfigurableF
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Name of data provider that is used only once must match name of test.',
+            'Data provider names used only once must match the name of the test.',
             [
                 new CodeSample(
                     '<?php

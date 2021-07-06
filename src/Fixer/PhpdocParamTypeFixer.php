@@ -25,7 +25,7 @@ final class PhpdocParamTypeFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            '`@param` must have type.',
+            '`@param` must have a type.',
             [new CodeSample('<?php
 /**
  * @param string $foo

@@ -27,7 +27,7 @@ final class NoDuplicatedImportsFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Duplicated `use` statements must be removed.',
+            'There can be no duplicate `use` statements.',
             [new CodeSample('<?php
 namespace FooBar;
 use Foo;

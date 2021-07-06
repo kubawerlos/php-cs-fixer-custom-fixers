@@ -27,7 +27,7 @@ final class DataProviderStaticFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Data provider must be static.',
+            'Data providers must be static.',
             [
                 new CodeSample(
                     '<?php
