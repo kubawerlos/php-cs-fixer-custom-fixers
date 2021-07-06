@@ -27,7 +27,7 @@ final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'The `@var` must be used correctly in code.',
+            'The `@var` annotations must be used correctly in code.',
             [new CodeSample('<?php
 /** @var Foo $foo */
 $bar = new Foo();

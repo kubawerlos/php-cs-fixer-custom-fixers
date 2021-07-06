@@ -48,7 +48,7 @@ class FooTest extends TestCase {
 }
 ')],
             'They will throw an exception anyway.',
-            'when native PHPUnit methods are overwritten'
+            'when original PHPUnit methods are overwritten'
         );
     }
 

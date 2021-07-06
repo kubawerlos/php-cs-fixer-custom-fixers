@@ -244,7 +244,7 @@ Configuration options:
 ```
 
 #### NoUselessCommentFixer
-There must be no useless comments like "Class Foo".
+There must be no useless comments.
 ```diff
  <?php
  /**
@@ -341,7 +341,7 @@ Configuration options:
 
 #### PhpUnitNoUselessReturnFixer
 PHPUnit `fail`, `markTestIncomplete` and `markTestSkipped` functions should not be followed directly by return.
-  *Risky: when native PHPUnit methods are overwritten.*
+  *Risky: when original PHPUnit methods are overwritten.*
 ```diff
  <?php
  class FooTest extends TestCase {
@@ -353,7 +353,7 @@ PHPUnit `fail`, `markTestIncomplete` and `markTestSkipped` functions should not 
 ```
 
 #### PhpdocNoIncorrectVarAnnotationFixer
-The `@var` must be used correctly in code.
+The `@var` annotations must be used correctly in code.
 ```diff
  <?php
 -/** @var Foo $foo */
@@ -402,7 +402,7 @@ The `@param` annotations must be in the same order as the function parameters.
 ```
 
 #### PhpdocParamTypeFixer
-`@param` must have a type.
+The `@param` annotations must have a type.
 ```diff
  <?php
  /**
@@ -427,7 +427,7 @@ In PHPDoc, the class or interface element `self` should be preferred over the cl
 ```
 
 #### PhpdocSingleLineVarFixer
-`@var` annotations must be on a single line if they are the only content.
+The `@var` annotations must be on a single line if they are the only content.
 ```diff
  <?php
  class Foo {
@@ -463,7 +463,7 @@ Configuration options:
 ```
 
 #### SingleSpaceBeforeStatementFixer
-There must be a single space before statements that are not preceded by line breaks.
+Statements not preceded by a line break must be preceded by a single space.
 ```diff
  <?php
 -$foo =new Foo();

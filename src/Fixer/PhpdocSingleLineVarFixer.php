@@ -25,7 +25,7 @@ final class PhpdocSingleLineVarFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            '`@var` annotations must be on a single line if they are the only content.',
+            'The `@var` annotations must be on a single line if they are the only content.',
             [new CodeSample('<?php
 class Foo {
     /**
