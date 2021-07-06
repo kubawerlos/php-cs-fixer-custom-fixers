@@ -37,7 +37,7 @@ final class NoUselessSprintfFixer extends AbstractFixer implements DeprecatedFix
             $this->fixer->getDefinition()->getSummary(),
             $this->fixer->getDefinition()->getCodeSamples(),
             $this->fixer->getDefinition()->getDescription(),
-            'when ' . \substr($this->fixer->getDefinition()->getRiskyDescription(), 14, -1)
+            \str_replace('Risky when if', 'when', \trim((string) $this->fixer->getDefinition()->getRiskyDescription(), '.'))
         );
     }
 
