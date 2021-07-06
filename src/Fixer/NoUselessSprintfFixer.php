@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -34,11 +33,14 @@ final class NoUselessSprintfFixer extends AbstractFixer implements DeprecatedFix
 
     public function getDefinition(): FixerDefinitionInterface
     {
+        /** @var string $riskyDescription */
+        $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+
         return new FixerDefinition(
-            'Function `sprintf` without parameters should not be used.',
-            [new CodeSample("<?php\n\$foo = sprintf('Foo');\n")],
+            $this->fixer->getDefinition()->getSummary(),
+            $this->fixer->getDefinition()->getCodeSamples(),
             null,
-            'when the function `sprintf` is overridden'
+            \str_replace('Risky when if', 'when', \trim($riskyDescription, '.'))
         );
     }
 

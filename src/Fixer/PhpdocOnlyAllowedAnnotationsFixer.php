@@ -33,7 +33,7 @@ final class PhpdocOnlyAllowedAnnotationsFixer extends AbstractFixer implements C
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Only listed annotations can be in PHPDoc.',
+            'Only the listed annotations are allowed in PHPDoc.',
             [new CodeSample(
                 '<?php
 /**

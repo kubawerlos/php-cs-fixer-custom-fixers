@@ -26,7 +26,7 @@ final class NoUselessParenthesisFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'There must be no useless parenthesis.',
+            'There can be no useless parentheses.',
             [
                 new CodeSample('<?php
 foo(($bar));

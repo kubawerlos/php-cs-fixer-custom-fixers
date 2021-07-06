@@ -31,7 +31,7 @@ final class PhpUnitNoUselessReturnFixer extends AbstractFixer
     {
         return new FixerDefinition(
             \sprintf(
-                "PHPUnit's functions %s should not be followed directly by return.",
+                'PHPUnit %s functions should not be followed directly by return.',
                 Utils::naturalLanguageJoinWithBackticks(\array_map(
                     static function (array $token): string {
                         return $token[1];
@@ -47,8 +47,8 @@ class FooTest extends TestCase {
     }
 }
 ')],
-            'They will throw exception anyway.',
-            "when PHPUnit's native methods are overridden"
+            'They will throw an exception anyway.',
+            'when original PHPUnit methods are overwritten'
         );
     }
 

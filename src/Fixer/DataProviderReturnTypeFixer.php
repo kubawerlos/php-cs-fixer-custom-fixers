@@ -28,7 +28,7 @@ final class DataProviderReturnTypeFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Return type of data provider must be `iterable`.',
+            'The types returned by data providers must be `iterable`.',
             [
                 new CodeSample(
                     '<?php

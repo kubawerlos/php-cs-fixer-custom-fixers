@@ -80,7 +80,7 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Single space must precede - not preceded by linebreak - statement.',
+            'Statements not preceded by a line break must be preceded by a single space.',
             [new CodeSample("<?php\n\$foo =new Foo();\n")]
         );
     }

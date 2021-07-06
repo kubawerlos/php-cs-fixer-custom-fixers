@@ -87,7 +87,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Single space must follow - not followed by semicolon - statement.',
+            'Statements not followed by a semicolon must be followed by a single space.',
             [new CodeSample("<?php\n\$foo = new    Foo();\necho\$foo->bar();\n")]
         );
     }
