@@ -31,6 +31,8 @@ jobs:
         php-version: [ '7.4', '8.0' ]
         include:
           - os: ubuntu-latest
+            php-version: '8.1'
+          - os: ubuntu-latest
             php-version: '7.3'
           - os: ubuntu-latest
             php-version: '7.2'

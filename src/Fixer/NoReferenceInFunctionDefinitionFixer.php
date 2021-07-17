@@ -65,7 +65,7 @@ function foo(&$x) {}
                 /** @var Token $t */
                 $t = $tokens[$i];
 
-                if ($t->equals('&')) {
+                if ($t->getContent() === '&') {
                     $tokens->clearTokenAndMergeSurroundingWhitespace($i);
                 }
             }
