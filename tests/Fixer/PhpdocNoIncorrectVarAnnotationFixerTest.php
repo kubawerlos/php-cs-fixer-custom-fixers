@@ -38,28 +38,24 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
      */
     public static function provideFixCases(): iterable
     {
-        yield [
-            '<?php
+        yield 'keep correct PHPDoc' => ['<?php
 /** @var Foo $foo */
 $foo = new Foo();
-',
-        ];
+'];
 
-        yield [
+        yield 'keep correct PHPDoc with leading slash' => [
             '<?php
 /** @var \Foo $foo */
 $foo = new Foo();
-',
-        ];
+',        ];
 
-        yield [
+        yield 'keep correct PHPDoc with nullable' => [
             '<?php
 /** @var ?Foo $foo */
 $foo = new Foo();
-',
-        ];
+',        ];
 
-        yield [
+        yield 'remove PHPDoc when variable name is different' => [
             '<?php
 $bar = new Logger();
 ',
@@ -69,7 +65,7 @@ $bar = new Logger();
 ',
         ];
 
-        yield [
+        yield 'remove PHPDoc when annotation hs no type' => [
             '<?php
 $bar = new Logger();
 ',
@@ -79,7 +75,7 @@ $bar = new Logger();
 ',
         ];
 
-        yield [
+        yield 'remove PHPDoc when variable name is different in "for" loop' => [
             '<?php
 for ($i = 0; $i < 100; $i++) {}
 ',
@@ -89,14 +85,12 @@ for ($i = 0; $i < 100; $i++) {}
 ',
         ];
 
-        yield [
-            '<?php
+        yield 'keep correct PHPDoc for "for" loop' => ['<?php
 /** @var int $i */
 for ($i = 0; $i < 100; $i++) {}
-',
-        ];
+'];
 
-        yield [
+        yield 'remove PHPDoc when variable name is different in "foreach" loop' => [
             '<?php
 foreach ($foo as $v) {}
 ',
@@ -106,14 +100,17 @@ foreach ($foo as $v) {}
 ',
         ];
 
-        yield [
-            '<?php
+        yield 'keep correct PHPDoc for array in "foreach" loop' => ['<?php
+/** @var int[] $foo */
+foreach ($foo as $bar) {}
+',
+        ];
+        yield 'keep correct PHPDoc for element in "foreach" loop' => ['<?php
 /** @var int $value */
 foreach ($foo as $value) {}
-',
-        ];
+'];
 
-        yield [
+        yield 'remove PHPDoc when variable name is different in "if" condition' => [
             '<?php
 if (($v = getValue()) !== null) {}
 ',
@@ -123,14 +120,12 @@ if (($v = getValue()) !== null) {}
 ',
         ];
 
-        yield [
-            '<?php
+        yield 'keep correct PHPDoc for "if" condition' => ['<?php
 /** @var int $value */
 if (($value = getValue()) !== null) {}
-',
-        ];
+'];
 
-        yield [
+        yield 'remove PHPDoc when variable name is different in "switch" condition' => [
             '<?php
 switch ($v = getValue()) { default: break; }
 ',
@@ -140,14 +135,12 @@ switch ($v = getValue()) { default: break; }
 ',
         ];
 
-        yield [
-            '<?php
+        yield 'keep correct PHPDoc for "switch" condition' => ['<?php
 /** @var int $value */
 switch ($value = getValue()) { default: break; }
-',
-        ];
+'];
 
-        yield [
+        yield 'remove PHPDoc when variable name is different in "while" loop' => [
             '<?php
 while ($i < 0) { $i++; }
 ',
@@ -157,14 +150,13 @@ while ($i < 0) { $i++; }
 ',
         ];
 
-        yield [
-            '<?php
+        yield 'keep correct PHPDoc for "while" loop' => ['<?php
 /** @var int $index */
 while ($index < 0) { $i++; }
 ',
         ];
 
-        yield [
+        yield 'remove PHPDoc when variable name is different, but keep the rest of PHPDoc' => [
             '<?php
 /**
  * We create here new instance here
@@ -180,7 +172,7 @@ $bar = new Logger();
 ',
         ];
 
-        yield [
+        yield 'remove PHPDoc from before "return"' => [
             '<?php
 return true;
 ',
@@ -190,7 +182,7 @@ return true;
 ',
         ];
 
-        yield [
+        yield 'remove PHPDoc from end of file' => [
             '<?php
 ',
             '<?php
@@ -198,35 +190,17 @@ return true;
 ',
         ];
 
-        yield [
-            '<?php
+        yield 'ignore other annotations' => ['<?php
 /** @see LoggerInterface $foo */
 $bar = new Logger();
-',
-        ];
+'];
 
-        yield [
-            '<?php
-/** @var LoggerInterface[] $foo */
-foreach ($foo as $bar) {}
-',
-        ];
-
-        yield [
-            '<?php
-/** @var LoggerInterface $bar */
-foreach ($foo as $bar) {}
-',
-        ];
-
-        yield [
-            '<?php
+        yield 'ignore different variable name case' => ['<?php
 /** @var LoggerInterface $bar */
 $Bar = 2;
-',
-        ];
+'];
 
-        yield [
+        yield 'keep correct PHPDoc for class properties' => [
             '<?php
 class Foo
 {
@@ -254,7 +228,7 @@ class Foo
 ',
         ];
 
-        yield [
+        yield 'remove PHPDoc for class properties' => [
             '<?php
 class Foo
 {
@@ -306,7 +280,7 @@ class Foo
 ',
         ];
 
-        yield [
+        yield 'remove PHPDoc from inside of function' => [
             '<?php
 /** Class Foo */
 class Foo
@@ -345,7 +319,7 @@ class Foo
 ',
         ];
 
-        yield [
+        yield 'incorrect PHPDoc at the end of the file' => [
             '<?php
 $x = 0;
 ',

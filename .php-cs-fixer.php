@@ -22,6 +22,13 @@ unset($rules['ordered_interfaces']);
 unset($rules['phpdoc_tag_type']); // TODO: remove when fixer: https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/5395
 unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
 
+// add new fixers that are not in PhpCsFixerConfig yet
+foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
+    if (!isset($rules[$fixer->getName()])) {
+        $rules[$fixer->getName()] = true;
+    }
+}
+
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
 }
