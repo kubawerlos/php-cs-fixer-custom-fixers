@@ -36,15 +36,15 @@ jobs:
         os: [ macos-latest, ubuntu-latest, windows-latest ]
         php-version: [ '7.4', '8.0' ]
         include:
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             php-version: '8.0'
             php-cs-fixer-version: '^2'
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             php-version: '7.4'
             php-cs-fixer-version: '^2'
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             php-version: '7.3'
-          - os: ubuntu-latest
+          - os: ubuntu-18.04
             php-version: '7.2'
           - os: ubuntu-latest
             php-version: '7.2'
