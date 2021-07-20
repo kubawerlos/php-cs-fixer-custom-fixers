@@ -264,14 +264,12 @@ Alternatively, fork the repo, develop your changes, regenerate `README.md`:
 ```
 make sure all checks pass:
 ```bash
-./dev-tools/check_file_permissions.sh
-./dev-tools/check_trailing_whitespaces.sh
 composer verify
 composer infection
 ```
 and submit pull request.',
             $this->composer()->name,
-            \end($this->composer()->scripts->fix)
+            \substr(\end($this->composer()->scripts->fix), 1)
         );
     }
 

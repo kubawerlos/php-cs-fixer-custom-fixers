@@ -17,12 +17,6 @@ jobs:
           php-version: '8.0'
           coverage: none
 
-      - name: Check file permissions
-        run: ./dev-tools/check_file_permissions.sh
-
-      - name: Check trailing whitespaces
-        run: ./dev-tools/check_trailing_whitespaces.sh
-
       - name: Install dependencies
         run: composer update --no-progress
 
