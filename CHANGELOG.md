@@ -4,10 +4,10 @@
 - Add StringableInterfaceFixer
 - NoDuplicatedArrayKeyFixer - add option "ignore_expressions"
 
-## v2.5.0 - *2021-05-04*
+## v2.5.0
 - Add PHP CS Fixer v3 support
 
-## v2.4.0 - *2020-12-08*
+## v2.4.0
 - Allow PHP 8
 - Update PHP CS Fixer to v2.17
 - Deprecate NoUselessSprintfFixer - use "no_useless_sprintf"
@@ -15,20 +15,20 @@
 - Remove PhpCsFixerCustomFixers\Analyzer\ReferenceAnalyzer - use PhpCsFixer\Tokenizer\Analyzer\ReferenceAnalyzer
 - Remove PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer - use PhpCsFixer\Tokenizer\Analyzer\SwitchAnalyzer
 
-## v2.3.0 - *2020-07-07*
+## v2.3.0
 - Add NoUselessParenthesisFixer
 - Add NoUselessStrlenFixer
 - DataProviderNameFixer - handle snake_case naming
 
-## v2.2.0 - *2020-04-02*
+## v2.2.0
 - Feature: DataProviderNameFixer - add options "prefix" and "suffix"
 
-## v2.1.0 - *2020-03-15*
+## v2.1.0
 - Add CommentedOutFunctionFixer
 - Add NoDuplicatedArrayKeyFixer
 - Add NumericLiteralSeparatorFixer
 
-## v2.0.0 - *2020-03-01*
+## v2.0.0
 - Drop PHP 7.1 support
 - Remove ImplodeCallFixer - use "implode_call"
 - Remove NoTwoConsecutiveEmptyLinesFixer - use "no_extra_blank_lines"
@@ -39,7 +39,7 @@
 - Remove PhpdocVarAnnotationCorrectOrderFixer - use "phpdoc_var_annotation_correct_order"
 - Remove SingleLineThrowFixer - use "single_line_throw"
 
-## v1.17.0 - *2019-12-29*
+## v1.17.0
 - Update PHP CS Fixer to v2.16
 - Add DataProviderStaticFixer
 - Add NoSuperfluousConcatenationFixer
@@ -52,29 +52,29 @@
 - Allow symfony/finder 5.0
 - Add Windows OS support with AppVeyor
 
-## v1.16.0 - *2019-10-24*
+## v1.16.0
 - Add PhpdocOnlyAllowedAnnotationsFixer
 - Feature: OperatorLinebreakFixer - handle object operators
 
-## v1.15.0 - *2019-08-19*
+## v1.15.0
 - Add CommentSurroundedBySpacesFixer
 - Add DataProviderReturnTypeFixer
 - Add NoDuplicatedImportsFixer
 
-## v1.14.0 - *2019-07-25*
+## v1.14.0
 - Add DataProviderNameFixer
 - Add NoUselessSprintfFixer
 - Add PhpUnitNoUselessReturnFixer
 - Add SingleLineThrowFixer
 - Feature: NoCommentedOutCodeFixer - handle class method
 
-## v1.13.0 - *2019-01-11*
+## v1.13.0
 - Update PHP CS Fixer to v2.14
 - OperatorLinebreakFixer - respect no whitespace around operator
 - OperatorLinebreakFixer - support concatenation operator
 - Deprecate PhpdocVarAnnotationCorrectOrderFixer
 
-## v1.12.0 - *2018-12-02*
+## v1.12.0
 - Add NoCommentedOutCodeFixer
 - Add NoUselessCommentFixer
 - Add NullableParamStyleFixer
@@ -87,7 +87,7 @@
 - Fix: TokenRemover - remove item in line after code
 - Fix: NoImportFromGlobalNamespaceFixer - constant named the same as global imported class
 
-## v1.11.0 - *2018-10-14*
+## v1.11.0
 - Add PhpdocParamOrderFixer
 - Add InternalClassCasingFixer
 - Add SingleSpaceAfterStatementFixer
@@ -95,40 +95,40 @@
 - Add OperatorLinebreakFixer
 - Add MultilineCommentOpeningClosingAloneFixer
 
-## v1.10.0 - *2018-09-19*
+## v1.10.0
 - Add NoUnneededConcatenationFixer
 - Add PhpdocNoSuperfluousParamFixer
 - Deprecate ImplodeCallFixer
 - Deprecate NoTwoConsecutiveEmptyLinesFixer
 
-## v1.9.0 - *2018-08-10*
+## v1.9.0
 - Add NoNullableBooleanTypeFixer
 
-## v1.8.0 - *2018-08-09*
+## v1.8.0
 - Add PhpdocSelfAccessorFixer
 
-## v1.7.0 - *2018-08-06*
+## v1.7.0
 - Add NoReferenceInFunctionDefinitionFixer
 - Add NoImportFromGlobalNamespaceFixer
 
-## v1.6.0 - *2018-07-22*
+## v1.6.0
 - Add ImplodeCallFixer
 - Add PhpdocSingleLineVarFixer
 
-## v1.5.0 - *2018-06-26*
+## v1.5.0
 - Add NoUselessDoctrineRepositoryCommentFixer
 
-## v1.4.0 - *2018-06-09*
+## v1.4.0
 - Add NoDoctrineMigrationsGeneratedCommentFixer
 
-## v1.3.0 - *2018-06-05*
+## v1.3.0
 - Add PhpdocVarAnnotationCorrectOrderFixer
 - Remove @var without type at the beginning in PhpdocNoIncorrectVarAnnotationFixer
 
-## v1.2.0 - *2018-06-03*
+## v1.2.0
 - Add PhpdocNoIncorrectVarAnnotationFixer
 
-## v1.1.0 - *2018-06-02*
+## v1.1.0
 - Update PHP CS Fixer to v2.12
 - Add NoUselessConstructorCommentFixer
 - Add PhpdocParamTypeFixer
@@ -137,7 +137,7 @@
 - Feature: verify correctness for PHP CS Fixer (without smote tests)
 - Fix: false positive class comment
 
-## v1.0.0 - *2018-05-21*
+## v1.0.0
 - Add NoLeadingSlashInGlobalNamespaceFixer
 - Add NoPhpStormGeneratedCommentFixer
 - Add NoTwoConsecutiveEmptyLinesFixer

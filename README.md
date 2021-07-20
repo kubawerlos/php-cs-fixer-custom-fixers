@@ -494,8 +494,6 @@ php ./dev-tools/readme > ./README.md
 ```
 make sure all checks pass:
 ```bash
-./dev-tools/check_file_permissions.sh
-./dev-tools/check_trailing_whitespaces.sh
 composer verify
 composer infection
 ```
