@@ -2,10 +2,10 @@
 set -eu
 
 files_with_wrong_permissions=$(
-    git ls-files --stage . \
+    git ls-files --stage .. \
         ':!*.sh' \
-        ':!dev-tools/build-infection-config' \
-        ':!dev-tools/readme' \
+        ':!build-infection-config' \
+        ':!readme' \
     | grep '100755 ' \
     | sort -fh
 )
