@@ -329,5 +329,49 @@ $x = 0;
 /** @var this is incorrect */
 ',
         ];
+
+        yield 'remove PHPDoc for class properties when variable names are different' => [
+            '<?php class Foo {
+                static $a;
+                public $b;
+                protected $c;
+                private $d;
+                var $e;
+                private static $f;
+            }',
+            '<?php class Foo {
+                /** @var int $x */
+                static $a;
+                /** @var int $x */
+                public $b;
+                /** @var int $x */
+                protected $c;
+                /** @var int $x */
+                private $d;
+                /** @var int $x */
+                var $e;
+                /** @var int $x */
+                private static $f;
+            }',
+        ];
+
+        yield 'remove PHPDoc for constants' => [
+            '<?php class Foo {
+                const A = 1;
+                public const B = 2;
+                protected const C = 3;
+                private const D = 4;
+            }',
+            '<?php class Foo {
+                /** @var int */
+                const A = 1;
+                /** @var int */
+                public const B = 2;
+                /** @var int */
+                protected const C = 3;
+                /** @var int */
+                private const D = 4;
+            }',
+        ];
     }
 }

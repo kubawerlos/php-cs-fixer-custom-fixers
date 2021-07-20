@@ -3,6 +3,7 @@
 ## v2.6.0
 - Add StringableInterfaceFixer
 - NoDuplicatedArrayKeyFixer - add option "ignore_expressions"
+- PhpdocNoIncorrectVarAnnotationFixer - handle class properties when variable names are different and constants with visibility
 
 ## v2.5.0
 - Add PHP CS Fixer v3 support

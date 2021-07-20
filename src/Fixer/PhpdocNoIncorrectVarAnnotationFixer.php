@@ -77,6 +77,7 @@ $bar = new Foo();
             $nextToken = $tokens[$nextIndex];
 
             if ($nextToken->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC])) {
+                $this->removeForClassElement($tokens, $index);
                 continue;
             }
 
@@ -97,6 +98,31 @@ $bar = new Foo();
     private function isTokenCandidate(Token $token): bool
     {
         return $token->isGivenKind(\T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
+    }
+
+    private function removeForClassElement(Tokens $tokens, int $index): void
+    {
+        /** @var int $nextIndex */
+        $nextIndex = $tokens->getTokenNotOfKindsSibling($index, 1, [\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC, \T_WHITESPACE]);
+
+        /** @var Token $nextToken */
+        $nextToken = $tokens[$nextIndex];
+
+        if ($nextToken->isGivenKind(\T_CONST)) {
+            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
+
+            return;
+        }
+
+        if ($nextToken->isGivenKind(\T_VARIABLE)) {
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (Preg::match('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $token->getContent()) === 1) {
+                // \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff] */
+                $this->removeVarAnnotation($tokens, $index, [$nextToken->getContent()]);
+            }
+        }
     }
 
     /**
