@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 use PHPUnit\Framework\TestCase;
@@ -34,6 +35,7 @@ final class TokenRemoverTest extends TestCase
         Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
 
+        /** @var Token $token */
         foreach ($tokens as $index => $token) {
             if ($token->equals([\T_COMMENT, '/* to remove */'])) {
                 TokenRemover::removeWithLinesIfPossible($tokens, $index);

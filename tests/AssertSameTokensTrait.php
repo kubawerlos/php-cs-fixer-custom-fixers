@@ -22,6 +22,7 @@ trait AssertSameTokensTrait
     {
         self::assertSame($expectedTokens->count(), $inputTokens->count(), 'Both collections must have the same size.');
 
+        /** @var Token $expectedToken */
         foreach ($expectedTokens as $index => $expectedToken) {
             /** @var Token $inputToken */
             $inputToken = $inputTokens[$index];
