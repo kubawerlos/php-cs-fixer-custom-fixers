@@ -38,11 +38,11 @@ function foo($x) {}
     }
 
     /**
-     * Must run before PhpdocAlignFixer, PhpdocTypesOrderFixer.
+     * Must run before PhpdocAlignFixer.
      */
     public function getPriority(): int
     {
-        return 1;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool

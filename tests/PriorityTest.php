@@ -647,23 +647,6 @@ bar($x);
         ];
 
         yield [
-            new CustomFixer\PhpdocTypesTrimFixer(),
-            new Fixer\Phpdoc\PhpdocTypesOrderFixer(),
-            '<?php
-                /**
-                 * @param Bar|Foo $x
-                 */
-                function foo($x) {}
-            ',
-            '<?php
-                /**
-                 * @param Foo | Bar $x
-                 */
-                function foo($x) {}
-            ',
-        ];
-
-        yield [
             new Fixer\FunctionNotation\SingleLineThrowFixer(),
             new CustomFixer\NoSuperfluousConcatenationFixer(),
             '<?php

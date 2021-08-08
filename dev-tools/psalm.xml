@@ -21,16 +21,9 @@
     </projectFiles>
 
     <issueHandlers>
-        <DeprecatedInterface errorLevel='suppress' />
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
         <MoreSpecificImplementedParamType errorLevel='suppress' />
-        <MoreSpecificReturnType>
-            <errorLevel type='suppress'>
-                <file name='./src/Fixers.php' />
-                <file name='../src/Fixers.php' />
-            </errorLevel>
-        </MoreSpecificReturnType>
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
@@ -38,8 +31,6 @@
             <errorLevel type='suppress'>
                 <file name='./src/Fixer/OrderedClassElementsInternalFixer.php' />
                 <file name='../src/Analyzer/Analysis/ArrayElementAnalysis.php' />
-                <file name='../src/Fixer/DeprecatingFixerInterface.php' />
-                <file name='../src/Fixer/NoLeadingSlashInGlobalNamespaceFixer.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
         <UnnecessaryVarAnnotation errorLevel='suppress' />
