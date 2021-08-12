@@ -26,7 +26,7 @@ final class NoUselessParenthesisFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'There can be no useless parentheses.',
+            'There must be no useless parentheses.',
             [
                 new CodeSample('<?php
 foo(($bar));
@@ -79,7 +79,7 @@ foo(($bar));
             /** @var Token $prevToken */
             $prevToken = $tokens[$prevIndex];
 
-            if ($prevToken->isGivenKind(\T_RETURN)) {
+            if ($prevToken->isGivenKind([\T_RETURN, \T_THROW])) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
             }
         }
@@ -87,37 +87,117 @@ foo(($bar));
 
     private function isBlockToRemove(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        $blocksAnalyzer = new BlocksAnalyzer();
-
-        // is there a block of parenthesis inside?
-        /** @var int $nextStartIndex */
-        $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
-        /** @var Token $nextStartToken */
-        $nextStartToken = $tokens[$nextStartIndex];
-        if ($nextStartToken->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
-            /** @var int $prevEndIndex */
-            $prevEndIndex = $tokens->getPrevMeaningfulToken($endIndex);
-            if ($blocksAnalyzer->isBlock($tokens, $nextStartIndex, $prevEndIndex)) {
-                return true;
-            }
+        if ($this->isParenthesisBlockInside($tokens, $startIndex, $endIndex)) {
+            return true;
         }
 
-        // is there a block of parenthesis outside?
         /** @var int $prevStartIndex */
         $prevStartIndex = $tokens->getPrevMeaningfulToken($startIndex);
         /** @var int $nextEndIndex */
         $nextEndIndex = $tokens->getNextMeaningfulToken($endIndex);
-        if ($blocksAnalyzer->isBlock($tokens, $prevStartIndex, $nextEndIndex)) {
+
+        if ((new BlocksAnalyzer())->isBlock($tokens, $prevStartIndex, $nextEndIndex)) {
             return true;
         }
 
-        // is there assignment, return or throw before?
         /** @var Token $prevStartToken */
         $prevStartToken = $tokens[$prevStartIndex];
         /** @var Token $nextEndToken */
         $nextEndToken = $tokens[$nextEndIndex];
 
+        if ($this->isForbiddenBeforeOpenParenthesis($tokens, $prevStartIndex)) {
+            return false;
+        }
+
+        if ($this->isExpressionInside($tokens, $startIndex, $endIndex)) {
+            return true;
+        }
+
         return $prevStartToken->equalsAny(['=', [\T_RETURN], [\T_THROW]]) && $nextEndToken->equals(';');
+    }
+
+    private function isForbiddenBeforeOpenParenthesis(Tokens $tokens, int $index): bool
+    {
+        /** @var Token $token */
+        $token = $tokens[$index];
+
+        if (
+            $token->isGivenKind([
+                \T_ARRAY,
+                \T_CATCH,
+                \T_CLASS,
+                \T_ELSEIF,
+                \T_EMPTY,
+                \T_EVAL,
+                \T_EXIT,
+                \T_FUNCTION,
+                \T_IF,
+                \T_ISSET,
+                \T_LIST,
+                \T_STATIC,
+                \T_STRING,
+                \T_SWITCH,
+                \T_UNSET,
+                \T_VARIABLE,
+                \T_WHILE,
+                CT::T_CLASS_CONSTANT,
+                CT::T_USE_LAMBDA,
+            ])
+            || \defined('T_FN') && $token->isGivenKind(\T_FN)
+            || \defined('T_MATCH') && $token->isGivenKind(\T_MATCH)
+        ) {
+            return true;
+        }
+
+        /** @var null|array{isStart: bool, type: int} $blockType */
+        $blockType = Tokens::detectBlockType($token);
+
+        return $blockType !== null && !$blockType['isStart'];
+    }
+
+    private function isParenthesisBlockInside(Tokens $tokens, int $startIndex, int $endIndex): bool
+    {
+        /** @var int $nextStartIndex */
+        $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
+        /** @var Token $nextStartToken */
+        $nextStartToken = $tokens[$nextStartIndex];
+
+        return $nextStartToken->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])
+            && (new BlocksAnalyzer())->isBlock($tokens, $nextStartIndex, $tokens->getPrevMeaningfulToken($endIndex));
+    }
+
+    private function isExpressionInside(Tokens $tokens, int $startIndex, int $endIndex): bool
+    {
+        $expression = false;
+
+        /** @var int $index */
+        $index = $tokens->getNextMeaningfulToken($startIndex);
+
+        while ($index < $endIndex) {
+            $expression = true;
+
+            /** @var Token $token */
+            $token = $tokens[$index];
+
+            if (
+                !$token->isGivenKind([
+                    \T_CONSTANT_ENCAPSED_STRING,
+                    \T_DNUMBER,
+                    \T_DOUBLE_COLON,
+                    \T_LNUMBER,
+                    \T_OBJECT_OPERATOR,
+                    \T_STRING,
+                    \T_VARIABLE,
+                ]) && !$token->isMagicConstant()
+            ) {
+                return false;
+            }
+
+            /** @var int $index */
+            $index = $tokens->getNextMeaningfulToken($index);
+        }
+
+        return $expression;
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void

@@ -5,6 +5,7 @@
 - Add StringableInterfaceFixer
 - NoCommentedOutCodeFixer - do not remove URLs
 - NoDuplicatedArrayKeyFixer - add option "ignore_expressions"
+- NoUselessParenthesisFixer - fix expressions
 - PhpdocNoIncorrectVarAnnotationFixer - handle class properties when variable names are different and constants with visibility
 
 ## v2.5.0
