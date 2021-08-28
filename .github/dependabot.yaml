@@ -17,3 +17,5 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
+    reviewers:
+      - 'kubawerlos'
