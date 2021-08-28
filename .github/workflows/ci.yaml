@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get code coverage driver
-        uses: actions/github-script@v3.1
+        uses: actions/github-script@v4.1
         id: coverage-driver
         with:
           script: 'return "${{ matrix.os }}" == "ubuntu-latest" && "${{ matrix.php-version }}" == "8.0" ? "pcov" : "none"'
@@ -72,7 +72,7 @@ jobs:
         run: echo '::set-output name=dir::$(composer config data-dir)'
 
       - name: Cache Composer data
-        uses: actions/cache@v1
+        uses: actions/cache@v2.1.6
         with:
           path: ${{ steps.composer-data.outputs.dir }}
           key: ${{ runner.os }}-composer-data-${{ hashFiles('**/composer.json') }}
