@@ -629,6 +629,22 @@ bar($x);
 
         yield [
             new CustomFixer\PhpdocTypesTrimFixer(),
+            new Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer(),
+            '<?php
+                /**
+                 */
+                function f(): ?string {}
+            ',
+            '<?php
+                /**
+                 * @return string | null
+                 */
+                function f(): ?string {}
+            ',
+        ];
+
+        yield [
+            new CustomFixer\PhpdocTypesTrimFixer(),
             new Fixer\Phpdoc\PhpdocAlignFixer(),
             '<?php
                 /**
