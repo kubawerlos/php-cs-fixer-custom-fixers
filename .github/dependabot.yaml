@@ -12,3 +12,8 @@ updates:
     reviewers:
       - 'kubawerlos'
     versioning-strategy: 'increase'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
