@@ -23,6 +23,9 @@ unset($rules['use_arrow_functions']); // TODO: remove when dropping support to P
 
 // add new fixers that are not in PhpCsFixerConfig yet
 foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
+    if ($fixer instanceof \PhpCsFixer\Fixer\DeprecatedFixerInterface) {
+        continue;
+    }
     if (!isset($rules[$fixer->getName()])) {
         $rules[$fixer->getName()] = true;
     }
