@@ -37,6 +37,7 @@ final class InfectionConfigBuilder
         'Minus',
         'NotIdentical',
         'NotIdenticalNotEqual',
+        'SyntaxError',
         'OneZeroInteger',
         'Plus',
         'TrueValue',
