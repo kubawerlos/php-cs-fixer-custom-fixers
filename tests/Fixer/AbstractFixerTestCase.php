@@ -16,11 +16,14 @@ namespace Tests\Fixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\FixerFactory;
 use PhpCsFixer\Linter\Linter;
+use PhpCsFixer\RuleSet\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
 use Tests\AssertRegExpTrait;
 use Tests\AssertSameTokensTrait;
+use Tests\PriorityTest;
 
 /**
  * @internal
@@ -114,7 +117,38 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testPriority(): void
     {
-        self::assertIsInt($this->fixer->getPriority());
+        if ($this->fixer instanceof DeprecatedFixerInterface) {
+            foreach ($this->fixer->getSuccessorsNames() as $name) {
+                $factory = new FixerFactory();
+                $factory->registerBuiltInFixers();
+                $factory->useRuleSet(new RuleSet([$name => true]));
+
+                $fixers = $factory->getFixers();
+
+                /** @var FixerInterface $fixer */
+                $fixer = \current($fixers);
+
+                self::assertSame($fixer->getPriority(), $this->fixer->getPriority());
+            }
+
+            return;
+        }
+
+        $shouldPriorityBeZero = true;
+        foreach (PriorityTest::providePriorityCases() as $case) {
+            if ($case[0]->getName() === $this->fixer->getName()) {
+                self::assertGreaterThan($case[1]->getPriority(), $this->fixer->getPriority());
+                $shouldPriorityBeZero = false;
+            }
+            if ($case[1]->getName() === $this->fixer->getName()) {
+                self::assertLessThan($case[0]->getPriority(), $this->fixer->getPriority());
+                $shouldPriorityBeZero = false;
+            }
+        }
+
+        if ($shouldPriorityBeZero) {
+            self::assertSame(0, $this->fixer->getPriority());
+        }
     }
 
     /**

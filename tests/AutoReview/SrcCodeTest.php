@@ -75,10 +75,13 @@ final class SrcCodeTest extends TestCase
     public function testDeprecatedFixerHasAnnotation(FixerInterface $fixer): void
     {
         $comment = (new \ReflectionObject($fixer))->getDocComment();
-        self::assertSame(
-            $fixer instanceof DeprecatedFixerInterface,
-            \strpos($comment === false ? '' : $comment, '@deprecated') !== false
-        );
+        if (!$fixer instanceof DeprecatedFixerInterface) {
+            $this->addToAssertionCount(1);
+
+            return;
+        }
+
+        self::assertNotFalse(\strpos($comment === false ? '' : $comment, '@deprecated'));
     }
 
     /**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1cdbf499112980e785a8224c24177d37",
+    "content-hash": "5cd31407e4aa08a248ae8d44929332f7",
     "packages": [
         {
             "name": "amphp/amp",
@@ -77,43 +77,6 @@
                 "MIT"
             ],
             "description": "A stream abstraction to make working with non-blocking I/O simple."
-        },
-        {
-            "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "fff576ac850c045158a250e7e27666e146e78d18"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/fff576ac850c045158a250e7e27666e146e78d18",
-                "reference": "fff576ac850c045158a250e7e27666e146e78d18"
-            },
-            "require": {
-                "composer-plugin-api": "^1.1.0 || ^2.0",
-                "php": "^7 || ^8"
-            },
-            "replace": {
-                "ocramius/package-versions": "1.11.99"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "PackageVersions\\Installer",
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PackageVersions\\": "src/PackageVersions"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)"
         },
         {
             "name": "composer/semver",
@@ -1060,6 +1023,37 @@
             "description": "A PHP parser written in PHP"
         },
         {
+            "name": "ocramius/package-versions",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/PackageVersions.git",
+                "reference": "f64411e9a63a35f8645d5fe04a9f55a2df2895c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/f64411e9a63a35f8645d5fe04a9f55a2df2895c9",
+                "reference": "f64411e9a63a35f8645d5fe04a9f55a2df2895c9"
+            },
+            "require": {
+                "composer-runtime-api": "^2.0.0",
+                "php": "~8.0.0"
+            },
+            "replace": {
+                "composer/package-versions-deprecated": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PackageVersions\\": "src/PackageVersions"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Provides efficient querying for installed package versions (no runtime IO)"
+        },
+        {
             "name": "ondram/ci-detector",
             "version": "3.5.1",
             "source": {
@@ -1381,6 +1375,45 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool"
+        },
+        {
+            "name": "phpstan/phpstan-phpunit",
+            "version": "0.12.22",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-phpunit.git",
+                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc",
+                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc"
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "phpstan/phpstan": "^0.12.92"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon",
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPUnit extensions and rules for PHPStan"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
