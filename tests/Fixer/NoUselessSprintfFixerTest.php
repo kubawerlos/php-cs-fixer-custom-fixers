@@ -101,7 +101,7 @@ final class NoUselessSprintfFixerTest extends AbstractFixerTestCase
     /**
      * @requires PHP ^7.2
      */
-    public function testWithSpaceBetweenSlashaAndFunctionName(): void
+    public function testWithSpaceBetweenSlashAndFunctionName(): void
     {
         $this->doTest(
             '<?php    $foo  ;',
