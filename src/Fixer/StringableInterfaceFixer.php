@@ -118,7 +118,7 @@ class Foo
         $classNameIndex = $tokens->getNextTokenOfKind($classIndex, [[\T_STRING]]);
 
         /** @var int $implementsIndex */
-        $implementsIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{', [\T_IMPLEMENTS]]);
+        $implementsIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{', [\T_IMPLEMENTS], [\T_OPEN_TAG]]);
 
         /** @var Token $implementsToken */
         $implementsToken = $tokens[$implementsIndex];
