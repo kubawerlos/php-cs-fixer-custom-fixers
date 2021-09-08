@@ -45,7 +45,6 @@
         "CastFloat": true,
         "CastInt": true,
         "CastObject": true,
-        "CastString": true,
         "CloneRemoval": true,
         "Coalesce": true,
         "ConcatOperandRemoval": true,

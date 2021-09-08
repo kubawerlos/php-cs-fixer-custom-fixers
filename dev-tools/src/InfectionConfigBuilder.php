@@ -19,6 +19,7 @@ use PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer;
 final class InfectionConfigBuilder
 {
     private const UNWANTED_MUTATORS = [
+        'CastString', // todo: remove after solving Infection issue
         'Concat',
         'Decrement',
         'DecrementInteger',
@@ -39,6 +40,7 @@ final class InfectionConfigBuilder
         'NotIdenticalNotEqual',
         'OneZeroInteger',
         'Plus',
+        'SyntaxError',
         'TrueValue',
     ];
 
