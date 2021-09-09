@@ -144,7 +144,15 @@ abstract class AbstractFixerTestCase extends TestCase
             $this->fixer->fix($this->createMock(\SplFileInfo::class), $inputTokens);
             $inputTokens->clearEmptyTokens();
 
-            self::assertSame($expected, $inputTokens->generateCode());
+            self::assertSame(
+                $expected,
+                $actual = $inputTokens->generateCode(),
+                \sprintf(
+                    "Expected code:\n```\n%s\n```\nGot:\n```\n%s\n```\n",
+                    $expected,
+                    $actual
+                )
+            );
 
             self::assertSameTokens($expectedTokens, $inputTokens);
         }
