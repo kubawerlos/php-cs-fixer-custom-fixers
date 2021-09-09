@@ -147,7 +147,7 @@ final class ArrayAnalyzerTest extends TestCase
                // bar
                "bar" => 1 + 1,
                // baz
-               "baz" /* TODO: something */ => 1 + 1+ 1,
+               "baz" /* something */ => 1 + 1+ 1,
             ];',
         ];
 

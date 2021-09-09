@@ -75,8 +75,8 @@ class FooTest extends TestCase {
         );
 
         yield 'data provider with return type and comment' => self::mapToTemplate(
-            ': /* TODO: add more cases */ iterable',
-            ': /* TODO: add more cases */ array'
+            ': /* foo */ iterable',
+            ': /* foo */ array'
         );
 
         yield 'data provider with return type namespaced class' => self::mapToTemplate(
