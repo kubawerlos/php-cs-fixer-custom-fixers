@@ -47,6 +47,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         $tokens = Tokens::fromCode($codeSample->getCode());
 
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+        self::assertNull($this->lintSource($tokens->generateCode()));
 
         $this->doTest(
             $codeSample->getCode(),

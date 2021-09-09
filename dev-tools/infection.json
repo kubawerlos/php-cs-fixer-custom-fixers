@@ -45,6 +45,7 @@
         "CastFloat": true,
         "CastInt": true,
         "CastObject": true,
+        "CastString": true,
         "CloneRemoval": true,
         "Coalesce": true,
         "ConcatOperandRemoval": true,
@@ -146,7 +147,11 @@
         "UnwrapRtrim": true,
         "UnwrapStrIreplace": true,
         "UnwrapStrRepeat": true,
-        "UnwrapStrReplace": true,
+        "UnwrapStrReplace": {
+            "ignore": [
+                "PhpCsFixerCustomFixers\\Fixer\\CommentedOutFunctionFixer::fixBlockWithSingleLineComments"
+            ]
+        },
         "UnwrapStrRev": true,
         "UnwrapStrShuffle": true,
         "UnwrapStrToLower": true,
