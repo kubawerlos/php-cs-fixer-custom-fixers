@@ -233,7 +233,7 @@ var_dump($x);
             /** @var string $prefix */
             $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $beforeStartToken->getContent());
         }
-        $codeToCommentOut = $prefix . (string) \call_user_func('str_replace', "\n", "\n//", $codeToCommentOut);
+        $codeToCommentOut = $prefix . \str_replace("\n", "\n//", $codeToCommentOut);
 
         if ($tokens->offsetExists($endIndex + 1)) {
             /** @var Token $afterEndToken */

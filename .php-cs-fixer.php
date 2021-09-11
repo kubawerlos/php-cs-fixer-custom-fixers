@@ -19,9 +19,6 @@ $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers',
 unset($rules['ordered_class_elements']);
 unset($rules['ordered_interfaces']);
 
-// todo: remove after solving Infection issue
-unset($rules['regular_callable_call']);
-
 unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
 
 // add new fixers that are not in PhpCsFixerConfig yet

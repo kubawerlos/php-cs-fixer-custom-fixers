@@ -176,7 +176,7 @@ echo 0123_4567; // octal
         }
         $endPosition = $this->getEndPosition($content, $endCharacter);
 
-        $substringToUpdate = (string) \call_user_func('substr', $content, $startPosition, $endPosition - $startPosition);
+        $substringToUpdate = \substr($content, $startPosition, $endPosition - $startPosition);
         $substringToUpdate = \str_replace('_', '', $substringToUpdate);
 
         if ($addSeparators) {
@@ -192,7 +192,7 @@ echo 0123_4567; // octal
             }
         }
 
-        return (string) \call_user_func('substr', $content, 0, $startPosition) . $substringToUpdate . (string) \call_user_func('substr', $content, $endPosition);
+        return \substr($content, 0, $startPosition) . $substringToUpdate . \substr($content, $endPosition);
     }
 
     private function getStartPosition(string $content, ?string $startCharacter): ?int

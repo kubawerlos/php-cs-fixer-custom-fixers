@@ -19,7 +19,6 @@ use PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer;
 final class InfectionConfigBuilder
 {
     private const UNWANTED_MUTATORS = [
-        'CastString', // todo: remove after solving Infection issue
         'Concat',
         'Decrement',
         'DecrementInteger',
@@ -90,6 +89,12 @@ final class InfectionConfigBuilder
         $config['mutators']['PublicVisibility'] = [
             'ignore' => [
                 'PhpCsFixerCustomFixers\\Fixer\\AbstractFixer::name',
+            ],
+        ];
+
+        $config['mutators']['UnwrapStrReplace'] = [
+            'ignore' => [
+                'PhpCsFixerCustomFixers\\Fixer\\CommentedOutFunctionFixer::fixBlockWithSingleLineComments',
             ],
         ];
 

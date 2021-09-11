@@ -164,7 +164,7 @@ abstract class AbstractFixerTestCase extends TestCase
         self::assertFalse($expectedTokens->isChanged());
     }
 
-    private function lintSource(string $source): ?string
+    final protected function lintSource(string $source): ?string
     {
         static $linter;
 
