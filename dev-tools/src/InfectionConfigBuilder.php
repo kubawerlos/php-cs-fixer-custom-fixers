@@ -92,12 +92,6 @@ final class InfectionConfigBuilder
             ],
         ];
 
-        $config['mutators']['UnwrapStrReplace'] = [
-            'ignore' => [
-                'PhpCsFixerCustomFixers\\Fixer\\CommentedOutFunctionFixer::fixBlockWithSingleLineComments',
-            ],
-        ];
-
         return $config;
     }
 }
