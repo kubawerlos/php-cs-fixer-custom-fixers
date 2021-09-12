@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3025f1ad4766d039bfe398c966a7ebd8",
+    "content-hash": "e812815c62ecc4b94a1a7698d3a59173",
     "packages": [
         {
             "name": "amphp/amp",
@@ -582,16 +582,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.25.0",
+            "version": "0.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "77b684ada43efd93e3ace7ea254aa9848d8ea9e6"
+                "reference": "854bc7f4106252539ebfdf8f29fd4856e7d9ea4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/77b684ada43efd93e3ace7ea254aa9848d8ea9e6",
-                "reference": "77b684ada43efd93e3ace7ea254aa9848d8ea9e6"
+                "url": "https://api.github.com/repos/infection/infection/zipball/854bc7f4106252539ebfdf8f29fd4856e7d9ea4c",
+                "reference": "854bc7f4106252539ebfdf8f29fd4856e7d9ea4c"
             },
             "require": {
                 "composer/xdebug-handler": "^2.0",

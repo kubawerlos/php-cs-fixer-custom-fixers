@@ -147,11 +147,7 @@
         "UnwrapRtrim": true,
         "UnwrapStrIreplace": true,
         "UnwrapStrRepeat": true,
-        "UnwrapStrReplace": {
-            "ignore": [
-                "PhpCsFixerCustomFixers\\Fixer\\CommentedOutFunctionFixer::fixBlockWithSingleLineComments"
-            ]
-        },
+        "UnwrapStrReplace": true,
         "UnwrapStrRev": true,
         "UnwrapStrShuffle": true,
         "UnwrapStrToLower": true,
