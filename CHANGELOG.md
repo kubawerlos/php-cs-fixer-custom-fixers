@@ -3,6 +3,8 @@
 ## v3.0.0
 - Drop support for PHP CS Fixer v2
 - Add StringableInterfaceFixer
+- Remove NoUselessSprintfFixer - use "no_useless_sprintf"
+- Remove OperatorLinebreakFixer - use operator_linebreak
 - NoCommentedOutCodeFixer - do not remove URLs
 - NoDuplicatedArrayKeyFixer - add option "ignore_expressions"
 - NoUselessParenthesisFixer - fix expressions
