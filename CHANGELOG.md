@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
-## v2.6.0
+## v3.0.0
+- Drop support for PHP CS Fixer v2
 - Add StringableInterfaceFixer
 - NoCommentedOutCodeFixer - do not remove URLs
 - NoDuplicatedArrayKeyFixer - add option "ignore_expressions"
