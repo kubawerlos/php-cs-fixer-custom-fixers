@@ -107,6 +107,12 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
                 continue;
             }
 
+            foreach (Preg::split('/\R/u', $content) as $line) {
+                if (\filter_var(\trim($line), \FILTER_VALIDATE_URL) !== false) {
+                    return [];
+                }
+            }
+
             if (
                 $this->isCorrectSyntax('<?php' . $content)
                 || $this->isCorrectSyntax('<?php class Foo {' . $content . \PHP_EOL . '}')
