@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-2869-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-2678-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -280,16 +280,6 @@ There must be no useless parentheses.
 +foo($bar);
 ```
 
-#### NoUselessSprintfFixer
-There must be no `sprintf` calls with only the first argument.
-  DEPRECATED: use `no_useless_sprintf` instead.
-  *Risky: when the `sprintf` function is overridden.*
-```diff
- <?php
--$foo = sprintf('bar');
-+$foo = 'bar';
-```
-
 #### NoUselessStrlenFixer
 The `strlen` or` mb_strlen` functions should not be compared against 0.
   *Risky: when the function `strlen` is overridden.*
@@ -321,22 +311,6 @@ Configuration options:
 +echo 1234.45678e-4321; // float
 +echo 0xAEB042FC; // hexadecimal
 +echo 01234567; // octal
-```
-
-#### OperatorLinebreakFixer
-Operators - when multiline - must always be at the beginning or at the end of the line.
-  DEPRECATED: use `operator_linebreak` instead.
-Configuration options:
-- `only_booleans` (`bool`): whether to limit operators to only boolean ones; defaults to `false`
-- `position` (`'beginning'`, `'end'`): whether to place operators at the beginning or at the end of the line; defaults to `'beginning'`
-```diff
- <?php
- function foo() {
--    return $bar ||
--        $baz;
-+    return $bar
-+        || $baz;
- }
 ```
 
 #### PhpUnitNoUselessReturnFixer
