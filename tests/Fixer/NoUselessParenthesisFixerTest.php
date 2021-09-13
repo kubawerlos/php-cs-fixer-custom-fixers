@@ -42,7 +42,36 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield ['<?php $foo([1, 2]);'];
         yield ['<?php foo(($a || $b) && ($c || $d));'];
         yield ['<?php $a = array([]);'];
+        yield ['<?php $f($x);'];
+        yield ['<?php if ($x) {} elseif ($y) {}'];
+        yield ['<?php array($x);'];
+        yield ['<?php empty($x);'];
+        yield ['<?php isset($x);'];
+        yield ['<?php unset($x);'];
+        yield ['<?php exit(2);'];
+        yield ['<?php eval("<?php echo 3;");'];
+        yield ['<?php list($x) = [1];'];
+        yield ['<?php switch ($x) { default: return true; }'];
+        yield ['<?php try {} catch (Exception $x) {}'];
         yield ['<?php $c = new class([]) {};'];
+        yield ['<?php $f = function ($x) { return $x + 2; };'];
+        yield ['<?php $f = function ($x): int { return $x + 2; };'];
+        yield ['<?php $f = function ($x) use ($y) { return $x + $y; };'];
+        yield ['<?php $f = function ($x) use ($y): int { return $x + $y; };'];
+        yield ['<?php $arrayOfCallbacks["foo"]($bar);'];
+        yield ['<?php do {} while($x);'];
+        yield ['<?php Obj::class($x);'];
+        yield ['<?php class Foo { public static function create($x) { return new static($x); } }'];
+        yield ['<?php class Foo { public static function create($x) { return $this->{$prop}; } }'];
+        yield ['<?php $c = new class($x) {};'];
+        yield ['<?php $object->{"set_value"}($x);'];
+        yield ['<?php $object->{"set_{$name}"}($x);'];
+        if (\defined('T_FN')) {
+            yield ['<?php $f = fn ($x) => $x + 2;'];
+        }
+        if (\defined('T_MATCH')) {
+            yield ['<?php return match ($x) { default => 0 };'];
+        }
         yield ['<?php class Foo {
                     public function createSelf() {
                         return new self([1, 2]);
@@ -65,6 +94,11 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield [
             '<?php throw new Exception("message");',
             '<?php throw (new Exception("message"));',
+        ];
+
+        yield [
+            '<?php throw new Exception("message");',
+            '<?php throw(new Exception("message"));',
         ];
 
         yield [
@@ -145,6 +179,36 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield [
             '<?php foo/* one */ /* two */ ( /* three */ $bar /* four */ ) /* five */ /* six */;',
             '<?php foo( /* one */ ( /* two */ ( /* three */ $bar /* four */ ) /* five */ ) /* six */ );',
+        ];
+
+        yield [
+            '<?php echo 1 + 2 + 3;',
+            '<?php echo 1 + (2) + 3;',
+        ];
+
+        yield [
+            '<?php echo 1.5 + 2.5 + 3.5;',
+            '<?php echo 1.5 + (2.5) + 3.5;',
+        ];
+
+        yield [
+            '<?php $s = "a" . "b" . "c";',
+            '<?php $s = "a" . ("b") . "c";',
+        ];
+
+        yield [
+            '<?php echo 1 + $obj->value + 3;',
+            '<?php echo 1 + ($obj->value) + 3;',
+        ];
+
+        yield [
+            '<?php echo 1 + Obj::VALUE + 3;',
+            '<?php echo 1 + (Obj::VALUE) + 3;',
+        ];
+
+        yield [
+            '<?php $s = "a" . "b" . "c";',
+            '<?php $s = "a" . ( "b" ) . "c";',
         ];
 
         yield [
