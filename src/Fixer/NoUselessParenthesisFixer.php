@@ -105,6 +105,10 @@ foo(($bar));
         /** @var Token $nextEndToken */
         $nextEndToken = $tokens[$nextEndIndex];
 
+        if ($nextEndToken->equals('(')) {
+            return false;
+        }
+
         if ($this->isForbiddenBeforeOpenParenthesis($tokens, $prevStartIndex)) {
             return false;
         }
