@@ -80,6 +80,9 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
                         return new static([1, 2]);
                     }
                 }'];
+        yield ['<?php return ($function)(42);'];
+        yield ['<?php return ($this->function)(42);'];
+        yield ['<?php return ($this->getFunction())(42);'];
 
         yield [
             '<?php return $bar;',
