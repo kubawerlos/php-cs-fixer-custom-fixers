@@ -97,7 +97,7 @@ jobs:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies
-          ./vendor/bin/php-coveralls --verbose
+          ./vendor/bin/php-coveralls --verbose || true
 
       - name: Run Infection
         if: steps.coverage-driver.outputs.result != 'none'
