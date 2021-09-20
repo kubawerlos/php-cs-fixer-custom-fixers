@@ -99,17 +99,13 @@ jobs:
           composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies
           ./vendor/bin/php-coveralls --verbose || true
 
-      - name: Run Infection code review
+      - name: Run Infection code review for changed files
         if: steps.coverage-driver.outputs.result != 'none' && github.event_name == 'pull_request'
         working-directory: ./dev-tools
         run: |
-          composer install-dev-tools
-          echo ----
-          echo $GITHUB_BASE_REF
-          echo ----
+          composer install --quiet
           git fetch --depth=1 origin $GITHUB_BASE_REF
           ./vendor/bin/infection --git-diff-filter=AM --git-diff-base=origin/$GITHUB_BASE_REF --ignore-msi-with-no-mutations --logger-github --min-msi=100 --no-progress --only-covered --threads=16
-#          ./dev-tools/vendor/bin/infection --configuration=./infection2.json --git-diff-filter=AM --git-diff-base=origin/$GITHUB_BASE_REF --ignore-msi-with-no-mutations --logger-github --min-msi=100 --no-progress --only-covered --threads=16
 
       - name: Run Infection
         if: steps.coverage-driver.outputs.result != 'none'
