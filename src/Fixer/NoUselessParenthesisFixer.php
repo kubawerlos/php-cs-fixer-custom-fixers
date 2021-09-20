@@ -105,7 +105,7 @@ foo(($bar));
         /** @var Token $nextEndToken */
         $nextEndToken = $tokens[$nextEndIndex];
 
-        if ($nextEndToken->equals('(')) {
+        if ($nextEndToken->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
             return false;
         }
 
