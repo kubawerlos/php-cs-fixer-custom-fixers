@@ -234,5 +234,16 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
             ];',
             ['ignore_expressions' => false],
         ];
+
+        yield [
+            '<?php $x = [
+                getRandomIndex() => 2,
+            ];',
+            '<?php $x = [
+                getRandomIndex/* foo */    /* bar */() => 1,
+                getRandomIndex() => 2,
+            ];',
+            ['ignore_expressions' => false],
+        ];
     }
 }
