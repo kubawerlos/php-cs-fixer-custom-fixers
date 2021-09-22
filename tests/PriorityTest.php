@@ -413,6 +413,27 @@ bar($x);
             ',
         ];
 
+        yield [
+            new CustomFixer\PhpdocArrayStyleFixer(),
+            new Fixer\Phpdoc\PhpdocAlignFixer(),
+            '<?php
+                namespace Foo;
+                /**
+                 * @param bool       $b
+                 * @param array<int> $d
+                 */
+                 function bar($b, $d) {}
+            ',
+            '<?php
+                namespace Foo;
+                /**
+                 * @param bool  $b
+                 * @param int[] $d
+                 */
+                 function bar($b, $d) {}
+            ',
+        ];
+
         $phpdocLineSpanFixer = new Fixer\Phpdoc\PhpdocLineSpanFixer();
         $phpdocLineSpanFixer->configure(['property' => 'multi']);
         yield [

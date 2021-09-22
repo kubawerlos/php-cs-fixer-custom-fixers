@@ -20,7 +20,7 @@ use Tests\PriorityTest;
 
 final class PriorityCollection
 {
-    /** @var PriorityFixer[] */
+    /** @var array<PriorityFixer> */
     private $priorityFixers = [];
 
     public static function create(): self

@@ -28,7 +28,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class CommentedOutFunctionFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var string[] */
+    /** @var array<string> */
     private $functions = ['print_r', 'var_dump', 'var_export'];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -59,7 +59,7 @@ var_dump($x);
     public function configure(?array $configuration = null): void
     {
         if (isset($configuration['functions'])) {
-            /** @var string[] $elements */
+            /** @var array<string> $elements */
             $elements = $configuration['functions'];
             $this->functions = $elements;
         }

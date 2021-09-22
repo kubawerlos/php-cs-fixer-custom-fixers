@@ -26,7 +26,7 @@ use PHPUnit\Framework\TestCase;
 final class DataProviderAnalyzerTest extends TestCase
 {
     /**
-     * @param DataProviderAnalysis[] $expected
+     * @param array<DataProviderAnalysis> $expected
      *
      * @dataProvider provideGettingDataProvidersCases
      */

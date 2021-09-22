@@ -97,8 +97,8 @@ namespace PhpCsFixer\Fixer\ClassNotation {
         \usort(
             $elements,
             /**
-             * @param string[] $a
-             * @param string[] $b
+             * @param array<string> $a
+             * @param array<string> $b
              */
             static function (array $a, array $b): int {
                 if (

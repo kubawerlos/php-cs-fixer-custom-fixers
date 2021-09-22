@@ -23,7 +23,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 {
-    /** @var int[] */
+    /** @var array<int> */
     private $tokens = [
         \T_ABSTRACT,
         \T_AS,

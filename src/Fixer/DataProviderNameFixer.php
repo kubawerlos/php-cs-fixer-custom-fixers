@@ -75,7 +75,7 @@ class FooTest extends TestCase {
      */
     public function configure(?array $configuration = null): void
     {
-        /** @var string[] $configuration */
+        /** @var array<string> $configuration */
         $configuration = $configuration ?? [];
 
         if (isset($configuration['prefix'])) {
@@ -106,7 +106,7 @@ class FooTest extends TestCase {
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
 
-        /** @var int[] $indices */
+        /** @var array<int> $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
             $this->fixNames($tokens, $indices[0], $indices[1]);
         }

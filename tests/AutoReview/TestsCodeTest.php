@@ -98,7 +98,7 @@ final class TestsCodeTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     private static function getDataProviderMethodNames(string $className): array
     {

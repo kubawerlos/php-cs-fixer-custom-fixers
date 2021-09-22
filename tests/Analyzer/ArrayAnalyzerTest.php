@@ -36,7 +36,7 @@ final class ArrayAnalyzerTest extends TestCase
     }
 
     /**
-     * @param ArrayElementAnalysis[] $expected
+     * @param array<ArrayElementAnalysis> $expected
      *
      * @dataProvider provideGettingArrayElementsCases
      */

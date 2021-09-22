@@ -126,7 +126,7 @@ $bar = new Foo();
     }
 
     /**
-     * @param string[] $allowedVariables
+     * @param array<string> $allowedVariables
      */
     private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void
     {

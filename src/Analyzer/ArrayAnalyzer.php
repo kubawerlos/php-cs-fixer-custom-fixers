@@ -24,7 +24,7 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 final class ArrayAnalyzer
 {
     /**
-     * @return ArrayElementAnalysis[]
+     * @return array<ArrayElementAnalysis>
      */
     public function getElements(Tokens $tokens, int $index): array
     {
@@ -58,7 +58,7 @@ final class ArrayAnalyzer
     }
 
     /**
-     * @return ArrayElementAnalysis[]
+     * @return array<ArrayElementAnalysis>
      */
     private function getElementsForArrayContent(Tokens $tokens, int $startIndex, int $endIndex): array
     {

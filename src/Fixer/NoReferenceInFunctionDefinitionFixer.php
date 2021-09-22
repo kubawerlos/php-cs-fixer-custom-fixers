@@ -73,7 +73,7 @@ function foo(&$x) {}
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     private function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex): array
     {

@@ -20,10 +20,10 @@ final class PriorityFixer
     /** @var FixerInterface */
     private $fixer;
 
-    /** @var self[] */
+    /** @var array<self> */
     private $fixersToRunAfter = [];
 
-    /** @var self[] */
+    /** @var array<self> */
     private $fixersToRunBefore = [];
 
     /** @var null|int */
@@ -60,7 +60,7 @@ final class PriorityFixer
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFixerToRunAfterNames(): array
     {
@@ -68,7 +68,7 @@ final class PriorityFixer
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFixerToRunBeforeNames(): array
     {
@@ -76,9 +76,9 @@ final class PriorityFixer
     }
 
     /**
-     * @param self[] $priorityFixers
+     * @param array<self> $priorityFixers
      *
-     * @return string[]
+     * @return array<string>
      */
     private function getFixerNames(array $priorityFixers): array
     {

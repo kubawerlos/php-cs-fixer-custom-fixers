@@ -24,7 +24,7 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
     {
-        /** @var FixerOptionInterface[] $options */
+        /** @var array<FixerOptionInterface> $options */
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('prefix', $options[0]->getName());

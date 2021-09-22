@@ -24,7 +24,7 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\DataProviderAnalysis;
 final class DataProviderAnalyzer
 {
     /**
-     * @return DataProviderAnalysis[]
+     * @return array<DataProviderAnalysis>
      */
     public function getDataProviders(Tokens $tokens, int $startIndex, int $endIndex): array
     {
@@ -48,7 +48,7 @@ final class DataProviderAnalyzer
 
             Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $docCommentToken->getContent(), $matches);
 
-            /** @var string[] $matches */
+            /** @var array<string> $matches */
             $matches = $matches[1];
 
             foreach ($matches as $dataProviderName) {
