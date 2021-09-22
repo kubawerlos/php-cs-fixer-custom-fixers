@@ -26,6 +26,9 @@ foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     if ($fixer instanceof \PhpCsFixer\Fixer\DeprecatedFixerInterface) {
         continue;
     }
+    if ($fixer instanceof \PhpCsFixerCustomFixers\Fixer\ConstructorPropertyPromotionFixer) {
+        continue; // TODO: remove when dropping support to PHP <8.0
+    }
     if (!isset($rules[$fixer->getName()])) {
         $rules[$fixer->getName()] = true;
     }

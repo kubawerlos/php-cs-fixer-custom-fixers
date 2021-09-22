@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.1.0
+- Add ConstructorPropertyPromotionFixer
 - Add PhpdocArrayStyleFixer
 - Restore PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer (as PhpCsFixer\Tokenizer\Analyzer\SwitchAnalyzer got removed in PHP CS Fixer 3.2.0)
 

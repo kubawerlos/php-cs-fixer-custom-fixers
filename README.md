@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-2767-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-2824-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -53,6 +53,19 @@ Configuration options:
  <?php
 -var_dump($x);
 +//var_dump($x);
+```
+
+#### ConstructorPropertyPromotionFixer
+Constructor Property Promotion should be used if possible.
+```diff
+ <?php
+ class Foo {
+-    private string $bar;
+-    public function __construct(string $bar) {
+-        $this->bar = $bar;
++    public function __construct(private string $bar) {
+     }
+ }
 ```
 
 #### DataProviderNameFixer
