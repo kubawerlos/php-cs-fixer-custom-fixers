@@ -57,14 +57,11 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
         $index = 0;
         while (++$index < $tokens->count()) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
+            if (!$tokens[$index]->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
-            if (\strpos($token->getContent(), '/*') === 0) {
+            if (\strpos($tokens[$index]->getContent(), '/*') === 0) {
                 $commentIndices = [$index];
             } else {
                 /** @var array<int> $commentIndices */
@@ -97,10 +94,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         $content = '';
 
         foreach ($commentIndices as $index) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            $content .= \PHP_EOL . $this->getContent($token);
+            $content .= \PHP_EOL . $this->getContent($tokens[$index]);
             $testedIndices[] = $index;
 
             if (\rtrim($content) === '') {

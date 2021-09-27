@@ -75,25 +75,19 @@ class Foo {
         while ($index < $namespaceEndIndex) {
             $index++;
 
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind([\T_CLASS, \T_INTERFACE]) || $tokensAnalyzer->isAnonymousClass($index)) {
+            if (!$tokens[$index]->isGivenKind([\T_CLASS, \T_INTERFACE]) || $tokensAnalyzer->isAnonymousClass($index)) {
                 continue;
             }
 
             /** @var int $nameIndex */
             $nameIndex = $tokens->getNextTokenOfKind($index, [[\T_STRING]]);
 
-            /** @var Token $nameToken */
-            $nameToken = $tokens[$nameIndex];
-
             /** @var int $startIndex */
             $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
 
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
-            $classyName = $nameToken->getContent();
+            $classyName = $tokens[$nameIndex]->getContent();
 
             $this->replaceNameOccurrences($tokens, $fullName, $classyName, $startIndex, $endIndex);
 
@@ -104,16 +98,13 @@ class Foo {
     private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $classyName, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
+            if (!$tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
-            $newContent = $this->getNewContent($token->getContent(), $namespace, $classyName);
+            $newContent = $this->getNewContent($tokens[$index]->getContent(), $namespace, $classyName);
 
-            if ($newContent === $token->getContent()) {
+            if ($newContent === $tokens[$index]->getContent()) {
                 continue;
             }
 

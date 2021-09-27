@@ -18,7 +18,6 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Utils;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -85,20 +84,14 @@ class FooTest extends TestCase {
         $functionsAnalyzer = new FunctionsAnalyzer();
 
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->equalsAny(self::FUNCTION_TOKENS, false)) {
+            if (!$tokens[$index]->equalsAny(self::FUNCTION_TOKENS, false)) {
                 continue;
             }
 
             /** @var int $openingBraceIndex */
             $openingBraceIndex = $tokens->getNextMeaningfulToken($index);
 
-            /** @var Token $openingBraceToken */
-            $openingBraceToken = $tokens[$openingBraceIndex];
-
-            if (!$openingBraceToken->equals('(')) {
+            if (!$tokens[$openingBraceIndex]->equals('(')) {
                 continue;
             }
 
@@ -114,27 +107,18 @@ class FooTest extends TestCase {
             /** @var int $returnIndex */
             $returnIndex = $tokens->getNextMeaningfulToken($semicolonIndex);
 
-            /** @var Token $returnToken */
-            $returnToken = $tokens[$returnIndex];
-
-            if (!$returnToken->isGivenKind(\T_RETURN)) {
+            if (!$tokens[$returnIndex]->isGivenKind(\T_RETURN)) {
                 continue;
             }
 
             /** @var int $semicolonAfterReturnIndex */
             $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($returnIndex, [';', '(']);
 
-            /** @var Token $semicolonAfterReturnToken */
-            $semicolonAfterReturnToken = $tokens[$semicolonAfterReturnIndex];
-
-            while ($semicolonAfterReturnToken->equals('(')) {
+            while ($tokens[$semicolonAfterReturnIndex]->equals('(')) {
                 $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $semicolonAfterReturnIndex);
 
                 /** @var int $semicolonAfterReturnIndex */
                 $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
-
-                /** @var Token $semicolonAfterReturnToken */
-                $semicolonAfterReturnToken = $tokens[$semicolonAfterReturnIndex];
             }
 
             $tokens->clearRange($returnIndex, $semicolonAfterReturnIndex - 1);

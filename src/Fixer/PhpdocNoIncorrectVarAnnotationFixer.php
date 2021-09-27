@@ -56,10 +56,7 @@ $bar = new Foo();
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$this->isTokenCandidate($token)) {
+            if (!$this->isTokenCandidate($tokens[$index])) {
                 continue;
             }
 
@@ -73,20 +70,17 @@ $bar = new Foo();
                 continue;
             }
 
-            /** @var Token $nextToken */
-            $nextToken = $tokens[$nextIndex];
-
-            if ($nextToken->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC])) {
+            if ($tokens[$nextIndex]->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC])) {
                 $this->removeForClassElement($tokens, $index);
                 continue;
             }
 
-            if ($nextToken->isGivenKind(\T_VARIABLE)) {
-                $this->removeVarAnnotation($tokens, $index, [$nextToken->getContent()]);
+            if ($tokens[$nextIndex]->isGivenKind(\T_VARIABLE)) {
+                $this->removeVarAnnotation($tokens, $index, [$tokens[$nextIndex]->getContent()]);
                 continue;
             }
 
-            if ($nextToken->isGivenKind([\T_FOR, \T_FOREACH, \T_IF, \T_SWITCH, \T_WHILE])) {
+            if ($tokens[$nextIndex]->isGivenKind([\T_FOR, \T_FOREACH, \T_IF, \T_SWITCH, \T_WHILE])) {
                 $this->removeVarAnnotationForControl($tokens, $index, $nextIndex);
                 continue;
             }
@@ -105,22 +99,15 @@ $bar = new Foo();
         /** @var int $nextIndex */
         $nextIndex = $tokens->getTokenNotOfKindsSibling($index, 1, [\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC, \T_WHITESPACE]);
 
-        /** @var Token $nextToken */
-        $nextToken = $tokens[$nextIndex];
-
-        if ($nextToken->isGivenKind(\T_CONST)) {
+        if ($tokens[$nextIndex]->isGivenKind(\T_CONST)) {
             $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
 
             return;
         }
 
-        if ($nextToken->isGivenKind(\T_VARIABLE)) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (Preg::match('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $token->getContent()) === 1) {
-                // \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff] */
-                $this->removeVarAnnotation($tokens, $index, [$nextToken->getContent()]);
+        if ($tokens[$nextIndex]->isGivenKind(\T_VARIABLE)) {
+            if (Preg::match('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent()) === 1) {
+                $this->removeVarAnnotation($tokens, $index, [$tokens[$nextIndex]->getContent()]);
             }
         }
     }
@@ -149,11 +136,8 @@ $bar = new Foo();
         while ($index < $endIndex) {
             $index++;
 
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if ($token->isGivenKind(\T_VARIABLE)) {
-                $variables[] = $token->getContent();
+            if ($tokens[$index]->isGivenKind(\T_VARIABLE)) {
+                $variables[] = $tokens[$index]->getContent();
             }
         }
 
@@ -162,10 +146,7 @@ $bar = new Foo();
 
     private function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        $doc = new DocBlock($token->getContent());
+        $doc = new DocBlock($tokens[$index]->getContent());
 
         foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
             if ($pattern === null || Preg::match($pattern, $annotation->getContent()) !== 1) {
@@ -175,7 +156,7 @@ $bar = new Foo();
 
         $content = $doc->getContent();
 
-        if ($content === $token->getContent()) {
+        if ($content === $tokens[$index]->getContent()) {
             return;
         }
 

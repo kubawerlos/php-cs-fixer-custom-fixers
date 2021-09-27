@@ -64,10 +64,7 @@ class Foo {
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
+            if (!$tokens[$index]->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
@@ -80,30 +77,27 @@ class Foo {
                 continue;
             }
 
-            /** @var Token $nextToken */
-            $nextToken = $tokens[$nextIndex];
-
-            if ($nextToken->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
+            if ($tokens[$nextIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
                 $newContent = Preg::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*(class|interface|trait)\h+[A-Za-z0-9\\\\_]+.?(?=\R|$)/i',
                     '',
-                    $token->getContent()
+                    $tokens[$index]->getContent()
                 );
-            } elseif ($nextToken->isGivenKind(\T_FUNCTION)) {
+            } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
                 $newContent = Preg::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
                     '',
-                    $token->getContent()
+                    $tokens[$index]->getContent()
                 );
             } else {
                 continue;
             }
 
-            if ($newContent === $token->getContent()) {
+            if ($newContent === $tokens[$index]->getContent()) {
                 continue;
             }
 
-            $tokens[$index] = new Token([$token->getId(), $newContent]);
+            $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
         }
     }
 }

@@ -62,10 +62,7 @@ function foo($a, $b, $c) {}
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
+            if (!$tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
@@ -75,16 +72,13 @@ function foo($a, $b, $c) {}
                 return;
             }
 
-            /** @var Token $functionToken */
-            $functionToken = $tokens[$functionIndex];
-
-            if (!$functionToken->isGivenKind(\T_FUNCTION)) {
+            if (!$tokens[$functionIndex]->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 
             $paramNames = $this->getParamNames($tokens, $functionIndex);
 
-            $docBlock = new DocBlock($token->getContent());
+            $docBlock = new DocBlock($tokens[$index]->getContent());
             $sorted = $this->getSortedAnnotations($docBlock->getAnnotations(), $paramNames);
 
             foreach ($sorted as $annotationIndex => $annotationContent) {
@@ -97,7 +91,7 @@ function foo($a, $b, $c) {}
                 $line->setContent($annotationContent);
             }
 
-            if ($docBlock->getContent() === $token->getContent()) {
+            if ($docBlock->getContent() === $tokens[$index]->getContent()) {
                 continue;
             }
 
@@ -117,11 +111,8 @@ function foo($a, $b, $c) {}
 
         $paramNames = [];
         for ($index = $paramBlockStartIndex; $index < $paramBlockEndIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if ($token->isGivenKind(\T_VARIABLE)) {
-                $paramNames[] = $token->getContent();
+            if ($tokens[$index]->isGivenKind(\T_VARIABLE)) {
+                $paramNames[] = $tokens[$index]->getContent();
             }
         }
 

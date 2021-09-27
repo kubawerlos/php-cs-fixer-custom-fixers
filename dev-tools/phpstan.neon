@@ -17,6 +17,8 @@ parameters:
     - ../src
     - ../tests
   reportMaybesInMethodSignatures: false
+  stubFiles:
+    - ./stubs.php
 
 includes:
   - ./vendor/symplify/phpstan-rules/config/services/services.neon
