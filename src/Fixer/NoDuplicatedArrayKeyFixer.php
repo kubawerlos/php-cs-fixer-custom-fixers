@@ -22,7 +22,6 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ArrayAnalyzer;
@@ -85,10 +84,7 @@ $x = [
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind([\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
+            if (!$tokens[$index]->isGivenKind([\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
                 continue;
             }
 
@@ -113,10 +109,7 @@ $x = [
                 /** @var int $endIndex */
                 $endIndex = $tokens->getNextMeaningfulToken($arrayElementAnalysis->getValueEndIndex());
 
-                /** @var Token $afterEndToken */
-                $afterEndToken = $tokens[$endIndex + 1];
-
-                if ($afterEndToken->isWhitespace() && Preg::match('/^\h+$/', $afterEndToken->getContent()) === 1) {
+                if ($tokens[$endIndex + 1]->isWhitespace() && Preg::match('/^\h+$/', $tokens[$endIndex + 1]->getContent()) === 1) {
                     $endIndex++;
                 }
 
@@ -138,18 +131,15 @@ $x = [
 
         $content = '';
         for ($index = $keyEndIndex; $index >= $arrayElementAnalysis->getKeyStartIndex(); $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if ($token->isWhitespace() || $token->isComment()) {
+            if ($tokens[$index]->isWhitespace() || $tokens[$index]->isComment()) {
                 continue;
             }
 
-            if ($this->ignoreExpressions && $token->equalsAny([[\T_VARIABLE], '('])) {
+            if ($this->ignoreExpressions && $tokens[$index]->equalsAny([[\T_VARIABLE], '('])) {
                 return null;
             }
 
-            $content .= $token->getContent();
+            $content .= $tokens[$index]->getContent();
         }
 
         return $content;

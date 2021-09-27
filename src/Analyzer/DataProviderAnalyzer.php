@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PhpCsFixerCustomFixers\Analyzer;
 
 use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\DataProviderAnalysis;
 
@@ -39,14 +38,11 @@ final class DataProviderAnalyzer
                 [[\T_ABSTRACT], [\T_COMMENT], [\T_FINAL], [\T_FUNCTION], [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_STATIC], [\T_WHITESPACE]]
             );
 
-            /** @var Token $docCommentToken */
-            $docCommentToken = $tokens[$docCommentIndex];
-
-            if (!$docCommentToken->isGivenKind(\T_DOC_COMMENT)) {
+            if (!$tokens[$docCommentIndex]->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
-            Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $docCommentToken->getContent(), $matches);
+            Preg::matchAll('/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/', $tokens[$docCommentIndex]->getContent(), $matches);
 
             /** @var array<string> $matches */
             $matches = $matches[1];
@@ -80,24 +76,18 @@ final class DataProviderAnalyzer
     {
         $functions = [];
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(\T_FUNCTION)) {
+            if (!$tokens[$index]->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 
             /** @var int $functionNameIndex */
             $functionNameIndex = $tokens->getNextNonWhitespace($index);
 
-            /** @var Token $functionNameToken */
-            $functionNameToken = $tokens[$functionNameIndex];
-
-            if (!$functionNameToken->isGivenKind(\T_STRING)) {
+            if (!$tokens[$functionNameIndex]->isGivenKind(\T_STRING)) {
                 continue;
             }
 
-            $functions[$functionNameToken->getContent()] = $functionNameIndex;
+            $functions[$tokens[$functionNameIndex]->getContent()] = $functionNameIndex;
         }
 
         return $functions;

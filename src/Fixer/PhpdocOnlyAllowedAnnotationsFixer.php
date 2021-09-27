@@ -93,14 +93,11 @@ function foo_bar() {}
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
+            if (!$tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
-            $docBlock = new DocBlock($token->getContent());
+            $docBlock = new DocBlock($tokens[$index]->getContent());
 
             foreach ($docBlock->getAnnotations() as $annotation) {
                 if (

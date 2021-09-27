@@ -18,7 +18,6 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoUselessParenthesisFixer extends AbstractFixer
@@ -53,15 +52,12 @@ foo(($bar));
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
+            if (!$tokens[$index]->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
                 continue;
             }
 
             /** @var array{isStart: bool, type: int} $blockType */
-            $blockType = Tokens::detectBlockType($token);
+            $blockType = Tokens::detectBlockType($tokens[$index]);
             $blockEndIndex = $tokens->findBlockEnd($blockType['type'], $index);
 
             if (!$this->isBlockToRemove($tokens, $index, $blockEndIndex)) {
@@ -76,10 +72,7 @@ foo(($bar));
             /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
-            /** @var Token $prevToken */
-            $prevToken = $tokens[$prevIndex];
-
-            if ($prevToken->isGivenKind([\T_RETURN, \T_THROW])) {
+            if ($tokens[$prevIndex]->isGivenKind([\T_RETURN, \T_THROW])) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
             }
         }
@@ -100,12 +93,7 @@ foo(($bar));
             return true;
         }
 
-        /** @var Token $prevStartToken */
-        $prevStartToken = $tokens[$prevStartIndex];
-        /** @var Token $nextEndToken */
-        $nextEndToken = $tokens[$nextEndIndex];
-
-        if ($nextEndToken->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
+        if ($tokens[$nextEndIndex]->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
             return false;
         }
 
@@ -117,16 +105,13 @@ foo(($bar));
             return true;
         }
 
-        return $prevStartToken->equalsAny(['=', [\T_RETURN], [\T_THROW]]) && $nextEndToken->equals(';');
+        return $tokens[$prevStartIndex]->equalsAny(['=', [\T_RETURN], [\T_THROW]]) && $tokens[$nextEndIndex]->equals(';');
     }
 
     private function isForbiddenBeforeOpenParenthesis(Tokens $tokens, int $index): bool
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
         if (
-            $token->isGivenKind([
+            $tokens[$index]->isGivenKind([
                 \T_ARRAY,
                 \T_CATCH,
                 \T_CLASS,
@@ -147,14 +132,14 @@ foo(($bar));
                 CT::T_CLASS_CONSTANT,
                 CT::T_USE_LAMBDA,
             ])
-            || \defined('T_FN') && $token->isGivenKind(\T_FN)
-            || \defined('T_MATCH') && $token->isGivenKind(\T_MATCH)
+            || \defined('T_FN') && $tokens[$index]->isGivenKind(\T_FN)
+            || \defined('T_MATCH') && $tokens[$index]->isGivenKind(\T_MATCH)
         ) {
             return true;
         }
 
         /** @var null|array{isStart: bool, type: int} $blockType */
-        $blockType = Tokens::detectBlockType($token);
+        $blockType = Tokens::detectBlockType($tokens[$index]);
 
         return $blockType !== null && !$blockType['isStart'];
     }
@@ -163,10 +148,8 @@ foo(($bar));
     {
         /** @var int $nextStartIndex */
         $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
-        /** @var Token $nextStartToken */
-        $nextStartToken = $tokens[$nextStartIndex];
 
-        return $nextStartToken->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])
+        return $tokens[$nextStartIndex]->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])
             && (new BlocksAnalyzer())->isBlock($tokens, $nextStartIndex, $tokens->getPrevMeaningfulToken($endIndex));
     }
 
@@ -180,11 +163,8 @@ foo(($bar));
         while ($index < $endIndex) {
             $expression = true;
 
-            /** @var Token $token */
-            $token = $tokens[$index];
-
             if (
-                !$token->isGivenKind([
+                !$tokens[$index]->isGivenKind([
                     \T_CONSTANT_ENCAPSED_STRING,
                     \T_DNUMBER,
                     \T_DOUBLE_COLON,
@@ -192,7 +172,7 @@ foo(($bar));
                     \T_OBJECT_OPERATOR,
                     \T_STRING,
                     \T_VARIABLE,
-                ]) && !$token->isMagicConstant()
+                ]) && !$tokens[$index]->isMagicConstant()
             ) {
                 return false;
             }
@@ -206,21 +186,15 @@ foo(($bar));
 
     private function clearWhitespace(Tokens $tokens, int $index): void
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if (!$token->isWhitespace()) {
+        if (!$tokens[$index]->isWhitespace()) {
             return;
         }
 
         /** @var int $prevIndex */
         $prevIndex = $tokens->getNonEmptySibling($index, -1);
 
-        /** @var Token $prevToken */
-        $prevToken = $tokens[$prevIndex];
-
-        if ($prevToken->isComment()) {
-            $tokens->ensureWhitespaceAtIndex($index, 0, \rtrim($token->getContent(), " \t"));
+        if ($tokens[$prevIndex]->isComment()) {
+            $tokens->ensureWhitespaceAtIndex($index, 0, \rtrim($tokens[$index]->getContent(), " \t"));
 
             return;
         }

@@ -22,7 +22,6 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurableFixerInterface
@@ -128,10 +127,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind($this->tokens)) {
+            if (!$tokens[$index]->isGivenKind($this->tokens)) {
                 continue;
             }
 
@@ -145,20 +141,14 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
 
     private function canAddSpaceAfter(Tokens $tokens, int $index): bool
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        /** @var Token $nextToken */
-        $nextToken = $tokens[$index + 1];
-
-        if ($nextToken->isGivenKind(\T_WHITESPACE)) {
-            return !$this->allowLinebreak || Preg::match('/\R/', $nextToken->getContent()) !== 1;
+        if ($tokens[$index + 1]->isGivenKind(\T_WHITESPACE)) {
+            return !$this->allowLinebreak || Preg::match('/\R/', $tokens[$index + 1]->getContent()) !== 1;
         }
 
-        if ($token->isGivenKind(\T_CLASS) && $nextToken->equals('(')) {
+        if ($tokens[$index]->isGivenKind(\T_CLASS) && $tokens[$index + 1]->equals('(')) {
             return false;
         }
 
-        return !\in_array($nextToken->getContent(), [';', ':'], true);
+        return !\in_array($tokens[$index + 1]->getContent(), [';', ':'], true);
     }
 }

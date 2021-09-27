@@ -60,15 +60,12 @@ class Foo
         $isNamespaced = false;
 
         for ($index = 1; $index < $tokens->count(); $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if ($token->isGivenKind(\T_NAMESPACE)) {
+            if ($tokens[$index]->isGivenKind(\T_NAMESPACE)) {
                 $isNamespaced = true;
                 continue;
             }
 
-            if (!$token->isGivenKind(\T_CLASS)) {
+            if (!$tokens[$index]->isGivenKind(\T_CLASS)) {
                 continue;
             }
 
@@ -88,10 +85,7 @@ class Foo
     private function doesHaveToStringMethod(Tokens $tokens, int $classStartIndex, int $classEndIndex): bool
     {
         for ($index = $classStartIndex + 1; $index < $classEndIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(\T_FUNCTION)) {
+            if (!$tokens[$index]->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 
@@ -101,10 +95,7 @@ class Foo
                 return false;
             }
 
-            /** @var Token $functionNameToken */
-            $functionNameToken = $tokens[$functionNameIndex];
-
-            if ($functionNameToken->equals([\T_STRING, '__toString'], false)) {
+            if ($tokens[$functionNameIndex]->equals([\T_STRING, '__toString'], false)) {
                 return true;
             }
         }
@@ -120,10 +111,7 @@ class Foo
         /** @var int $implementsIndex */
         $implementsIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{', [\T_IMPLEMENTS]]);
 
-        /** @var Token $implementsToken */
-        $implementsToken = $tokens[$implementsIndex];
-
-        if ($implementsToken->equals('{')) {
+        if ($tokens[$implementsIndex]->equals('{')) {
             /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($implementsIndex);
 
@@ -164,27 +152,18 @@ class Foo
     private function isStringableAlreadyUsed(Tokens $tokens, int $implementsStartIndex, int $implementsEndIndex, bool $isNamespaced): bool
     {
         for ($index = $implementsStartIndex; $index < $implementsEndIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->equals([\T_STRING, 'Stringable'], false)) {
+            if (!$tokens[$index]->equals([\T_STRING, 'Stringable'], false)) {
                 continue;
             }
 
             /** @var int $namespaceSeparatorIndex */
             $namespaceSeparatorIndex = $tokens->getPrevMeaningfulToken($index);
 
-            /** @var Token $namespaceSeparatorToken */
-            $namespaceSeparatorToken = $tokens[$namespaceSeparatorIndex];
-
-            if ($namespaceSeparatorToken->isGivenKind(\T_NS_SEPARATOR)) {
+            if ($tokens[$namespaceSeparatorIndex]->isGivenKind(\T_NS_SEPARATOR)) {
                 /** @var int $beforeNamespaceSeparatorIndex */
                 $beforeNamespaceSeparatorIndex = $tokens->getPrevMeaningfulToken($namespaceSeparatorIndex);
 
-                /** @var Token $beforeNamespaceSeparatorToken */
-                $beforeNamespaceSeparatorToken = $tokens[$beforeNamespaceSeparatorIndex];
-
-                if (!$beforeNamespaceSeparatorToken->isGivenKind(\T_STRING)) {
+                if (!$tokens[$beforeNamespaceSeparatorIndex]->isGivenKind(\T_STRING)) {
                     return true;
                 }
             } else {

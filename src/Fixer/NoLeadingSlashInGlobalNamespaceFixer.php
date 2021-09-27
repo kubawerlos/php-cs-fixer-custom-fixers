@@ -17,7 +17,6 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoLeadingSlashInGlobalNamespaceFixer extends AbstractFixer
@@ -65,65 +64,47 @@ $y = new \Baz();
 
     private function isToRemove(Tokens $tokens, int $index): bool
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if (!$token->isGivenKind(\T_NS_SEPARATOR)) {
+        if (!$tokens[$index]->isGivenKind(\T_NS_SEPARATOR)) {
             return false;
         }
 
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
-        /** @var Token $prevToken */
-        $prevToken = $tokens[$prevIndex];
-
-        if ($prevToken->isGivenKind(\T_STRING)) {
+        if ($tokens[$prevIndex]->isGivenKind(\T_STRING)) {
             return false;
         }
-        if ($prevToken->isGivenKind([\T_NEW, CT::T_NULLABLE_TYPE, CT::T_TYPE_COLON])) {
+        if ($tokens[$prevIndex]->isGivenKind([\T_NEW, CT::T_NULLABLE_TYPE, CT::T_TYPE_COLON])) {
             return true;
         }
 
         /** @var int $nextIndex */
         $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[\T_COMMENT], [\T_DOC_COMMENT], [\T_NS_SEPARATOR], [\T_STRING], [\T_WHITESPACE]]);
 
-        /** @var Token $nextToken */
-        $nextToken = $tokens[$nextIndex];
-
-        if ($nextToken->isGivenKind(\T_DOUBLE_COLON)) {
+        if ($tokens[$nextIndex]->isGivenKind(\T_DOUBLE_COLON)) {
             return true;
         }
 
-        return $prevToken->equalsAny(['(', ',', [CT::T_TYPE_ALTERNATION]]) && $nextToken->isGivenKind([\T_VARIABLE, CT::T_TYPE_ALTERNATION]);
+        return $tokens[$prevIndex]->equalsAny(['(', ',', [CT::T_TYPE_ALTERNATION]]) && $tokens[$nextIndex]->isGivenKind([\T_VARIABLE, CT::T_TYPE_ALTERNATION]);
     }
 
     private function skipNamespacedCode(Tokens $tokens, int $index): int
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if (!$token->isGivenKind(\T_NAMESPACE)) {
+        if (!$tokens[$index]->isGivenKind(\T_NAMESPACE)) {
             return $index;
         }
 
         /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken($index);
 
-        /** @var Token $nextToken */
-        $nextToken = $tokens[$nextIndex];
-
-        if ($nextToken->equals('{')) {
+        if ($tokens[$nextIndex]->equals('{')) {
             return $nextIndex;
         }
 
         /** @var int $nextIndex */
         $nextIndex = $tokens->getNextTokenOfKind($index, ['{', ';']);
 
-        /** @var Token $nextToken */
-        $nextToken = $tokens[$nextIndex];
-
-        if ($nextToken->equals(';')) {
+        if ($tokens[$nextIndex]->equals(';')) {
             return $tokens->count() - 1;
         }
 

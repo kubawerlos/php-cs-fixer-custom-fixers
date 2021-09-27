@@ -61,10 +61,7 @@ $isNotEmpty = strlen($string) > 0;
         $functionsAnalyzer = new FunctionsAnalyzer();
 
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->equalsAny([[\T_STRING, 'strlen'], [\T_STRING, 'mb_strlen']], false)) {
+            if (!$tokens[$index]->equalsAny([[\T_STRING, 'strlen'], [\T_STRING, 'mb_strlen']], false)) {
                 continue;
             }
 
@@ -90,11 +87,8 @@ $isNotEmpty = strlen($string) > 0;
             /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
-            /** @var Token $prevToken */
-            $prevToken = $tokens[$prevIndex];
-
             $startIndex = $index;
-            if ($prevToken->isGivenKind(\T_NS_SEPARATOR)) {
+            if ($tokens[$prevIndex]->isGivenKind(\T_NS_SEPARATOR)) {
                 $startIndex = $prevIndex;
                 $tokensToRemove[$prevIndex] = 1;
             }
@@ -121,23 +115,17 @@ $isNotEmpty = strlen($string) > 0;
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
-        /** @var Token $prevToken */
-        $prevToken = $tokens[$prevIndex];
-
         $changeCondition = false;
-        if ($prevToken->equals('<')) {
+        if ($tokens[$prevIndex]->equals('<')) {
             $changeCondition = true;
-        } elseif (!$prevToken->isGivenKind([\T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL])) {
+        } elseif (!$tokens[$prevIndex]->isGivenKind([\T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL])) {
             return false;
         }
 
         /** @var int $prevPrevIndex */
         $prevPrevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
 
-        /** @var Token $prevPrevToken */
-        $prevPrevToken = $tokens[$prevPrevIndex];
-
-        if (!$prevPrevToken->equals([\T_LNUMBER, '0'])) {
+        if (!$tokens[$prevPrevIndex]->equals([\T_LNUMBER, '0'])) {
             return false;
         }
 
@@ -155,23 +143,17 @@ $isNotEmpty = strlen($string) > 0;
         /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken($index);
 
-        /** @var Token $nextToken */
-        $nextToken = $tokens[$nextIndex];
-
         $changeCondition = false;
-        if ($nextToken->equals('>')) {
+        if ($tokens[$nextIndex]->equals('>')) {
             $changeCondition = true;
-        } elseif (!$nextToken->isGivenKind([\T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL])) {
+        } elseif (!$tokens[$nextIndex]->isGivenKind([\T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL])) {
             return false;
         }
 
         /** @var int $nextNextIndex */
         $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
 
-        /** @var Token $nextNextToken */
-        $nextNextToken = $tokens[$nextNextIndex];
-
-        if (!$nextNextToken->equals([\T_LNUMBER, '0'])) {
+        if (!$tokens[$nextNextIndex]->equals([\T_LNUMBER, '0'])) {
             return false;
         }
 
@@ -192,10 +174,7 @@ $isNotEmpty = strlen($string) > 0;
         foreach ($tokensToRemove as $index => $direction) {
             $tokens->clearAt($index);
 
-            /** @var Token $siblingToken */
-            $siblingToken = $tokens[$index + $direction];
-
-            if ($siblingToken->isWhitespace()) {
+            if ($tokens[$index + $direction]->isWhitespace()) {
                 $tokens->clearAt($index + $direction);
             }
         }

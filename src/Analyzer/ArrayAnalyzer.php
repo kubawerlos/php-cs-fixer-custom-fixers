@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PhpCsFixerCustomFixers\Analyzer;
 
 use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 
@@ -28,10 +27,7 @@ final class ArrayAnalyzer
      */
     public function getElements(Tokens $tokens, int $index): array
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if ($token->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
+        if ($tokens[$index]->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
             /** @var int $arrayContentStartIndex */
             $arrayContentStartIndex = $tokens->getNextMeaningfulToken($index);
 
@@ -41,7 +37,7 @@ final class ArrayAnalyzer
             return $this->getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
         }
 
-        if ($token->isGivenKind(\T_ARRAY)) {
+        if ($tokens[$index]->isGivenKind(\T_ARRAY)) {
             /** @var int $arrayOpenBraceIndex */
             $arrayOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['(']);
 
@@ -66,10 +62,7 @@ final class ArrayAnalyzer
 
         $index = $startIndex;
         while ($endIndex >= $index = $this->nextCandidateIndex($tokens, $index)) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->equals(',')) {
+            if (!$tokens[$index]->equals(',')) {
                 continue;
             }
 
@@ -93,10 +86,7 @@ final class ArrayAnalyzer
     {
         $index = $startIndex;
         while ($endIndex > $index = $this->nextCandidateIndex($tokens, $index)) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(\T_DOUBLE_ARROW)) {
+            if (!$tokens[$index]->isGivenKind(\T_DOUBLE_ARROW)) {
                 continue;
             }
 
@@ -114,22 +104,19 @@ final class ArrayAnalyzer
 
     private function nextCandidateIndex(Tokens $tokens, int $index): int
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if ($token->equals('{')) {
+        if ($tokens[$index]->equals('{')) {
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index) + 1;
         }
 
-        if ($token->equals('(')) {
+        if ($tokens[$index]->equals('(')) {
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index) + 1;
         }
 
-        if ($token->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
+        if ($tokens[$index]->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index) + 1;
         }
 
-        if ($token->isGivenKind(\T_ARRAY)) {
+        if ($tokens[$index]->isGivenKind(\T_ARRAY)) {
             /** @var int $arrayOpenBraceIndex */
             $arrayOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['(']);
 

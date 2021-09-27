@@ -67,10 +67,7 @@ final class PriorityInternalFixer implements FixerInterface
         /** @var int $classNameIndex */
         $classNameIndex = $tokens->getPrevMeaningfulToken($sequencesStartIndex);
 
-        /** @var Token $classNameToken */
-        $classNameToken = $tokens[$classNameIndex];
-
-        $className = $classNameToken->getContent();
+        $className = $tokens[$classNameIndex]->getContent();
 
         /** @var int $startIndex */
         $startIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, ['{']);
@@ -83,12 +80,9 @@ final class PriorityInternalFixer implements FixerInterface
         /** @var int $sequencesStartIndex */
         $sequencesStartIndex = \key($indices);
 
-        /** @var Token $commentToken */
-        $commentToken = $tokens[$sequencesStartIndex - 2];
-
         $commentContent = $this->getCommentContent($className);
 
-        if ($commentToken->isGivenKind(\T_DOC_COMMENT)) {
+        if ($tokens[$sequencesStartIndex - 2]->isGivenKind(\T_DOC_COMMENT)) {
             $tokens[$sequencesStartIndex - 2] = new Token([\T_DOC_COMMENT, $commentContent]);
         } else {
             $tokens->insertAt(
@@ -105,10 +99,7 @@ final class PriorityInternalFixer implements FixerInterface
 
         $priorityStartIndex = $returnIndex + 2;
 
-        /** @var Token $priorityStartToken */
-        $priorityStartToken = $tokens[$priorityStartIndex];
-
-        if ($priorityStartToken->isGivenKind(\T_VARIABLE)) {
+        if ($tokens[$priorityStartIndex]->isGivenKind(\T_VARIABLE)) {
             return;
         }
 

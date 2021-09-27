@@ -68,10 +68,7 @@ class Bar {
         $imports = [];
 
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if ($token->isGivenKind(\T_USE)) {
+            if ($tokens[$index]->isGivenKind(\T_USE)) {
                 $imports = $this->removeImportFromGlobalNamespace($tokens, $imports, $index);
                 continue;
             }
@@ -80,12 +77,12 @@ class Bar {
                 continue;
             }
 
-            if ($token->isGivenKind(\T_DOC_COMMENT)) {
+            if ($tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
                 $this->updateComment($tokens, $imports, $index);
                 continue;
             }
 
-            if (!$token->isGivenKind(\T_STRING)) {
+            if (!$tokens[$index]->isGivenKind(\T_STRING)) {
                 continue;
             }
 
@@ -103,25 +100,16 @@ class Bar {
         /** @var int $classNameIndex */
         $classNameIndex = $tokens->getNextMeaningfulToken($index);
 
-        /** @var Token $classNameToken */
-        $classNameToken = $tokens[$classNameIndex];
-
-        if ($classNameToken->isGivenKind(\T_NS_SEPARATOR)) {
+        if ($tokens[$classNameIndex]->isGivenKind(\T_NS_SEPARATOR)) {
             /** @var int $classNameIndex */
             $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
-
-            /** @var Token $classNameToken */
-            $classNameToken = $tokens[$classNameIndex];
         }
 
         /** @var int $semicolonIndex */
         $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
 
-        /** @var Token $semicolonToken */
-        $semicolonToken = $tokens[$semicolonIndex];
-
-        if ($semicolonToken->equals(';')) {
-            $imports[] = $classNameToken->getContent();
+        if ($tokens[$semicolonIndex]->equals(';')) {
+            $imports[] = $tokens[$classNameIndex]->getContent();
             $tokens->clearRange($index, $semicolonIndex);
             TokenRemover::removeWithLinesIfPossible($tokens, $semicolonIndex);
         }
@@ -134,16 +122,13 @@ class Bar {
      */
     private function updateComment(Tokens $tokens, array $imports, int $index): void
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        $content = $token->getContent();
+        $content = $tokens[$index]->getContent();
 
         foreach ($imports as $import) {
             $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
         }
 
-        if ($content !== $token->getContent()) {
+        if ($content !== $tokens[$index]->getContent()) {
             $tokens[$index] = new Token([\T_DOC_COMMENT, $content]);
         }
     }
@@ -153,20 +138,14 @@ class Bar {
      */
     private function updateUsage(Tokens $tokens, array $imports, int $index): void
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if (!\in_array($token->getContent(), $imports, true)) {
+        if (!\in_array($tokens[$index]->getContent(), $imports, true)) {
             return;
         }
 
         /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
 
-        /** @var Token $prevToken */
-        $prevToken = $tokens[$prevIndex];
-
-        if ($prevToken->isGivenKind([\T_CONST, \T_DOUBLE_COLON, \T_NS_SEPARATOR, \T_OBJECT_OPERATOR, \T_FUNCTION])) {
+        if ($tokens[$prevIndex]->isGivenKind([\T_CONST, \T_DOUBLE_COLON, \T_NS_SEPARATOR, \T_OBJECT_OPERATOR, \T_FUNCTION])) {
             return;
         }
 

@@ -58,18 +58,15 @@ class Foo {
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
+            if (!$tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
-            if (\stripos($token->getContent(), '@var') === false) {
+            if (\stripos($tokens[$index]->getContent(), '@var') === false) {
                 continue;
             }
 
-            if (Preg::match('#^/\*\*[\s\*]+(@var[^\r\n]+)[\s\*]*\*\/$#u', $token->getContent(), $matches) !== 1) {
+            if (Preg::match('#^/\*\*[\s\*]+(@var[^\r\n]+)[\s\*]*\*\/$#u', $tokens[$index]->getContent(), $matches) !== 1) {
                 continue;
             }
 
@@ -78,7 +75,7 @@ class Foo {
 
             $newContent = '/** ' . \rtrim($var) . ' */';
 
-            if ($newContent === $token->getContent()) {
+            if ($newContent === $tokens[$index]->getContent()) {
                 continue;
             }
 

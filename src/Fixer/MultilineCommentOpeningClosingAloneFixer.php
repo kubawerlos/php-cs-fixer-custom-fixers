@@ -51,14 +51,11 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
+            if (!$tokens[$index]->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
-            if (Preg::match('/\R/', $token->getContent()) !== 1) {
+            if (Preg::match('/\R/', $tokens[$index]->getContent()) !== 1) {
                 continue;
             }
 
@@ -69,17 +66,14 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
     private function fixOpening(Tokens $tokens, int $index): void
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if (Preg::match('#^/\*+\R#', $token->getContent()) === 1) {
+        if (Preg::match('#^/\*+\R#', $tokens[$index]->getContent()) === 1) {
             return;
         }
 
-        Preg::match('#\R(\h*)#', $token->getContent(), $matches);
+        Preg::match('#\R(\h*)#', $tokens[$index]->getContent(), $matches);
         $indent = $matches[1] . '*';
 
-        Preg::match('#^(?<opening>/\*+)(?<before_newline>.*?)(?<newline>\R)(?<after_newline>.*)$#s', $token->getContent(), $matches);
+        Preg::match('#^(?<opening>/\*+)(?<before_newline>.*?)(?<newline>\R)(?<after_newline>.*)$#s', $tokens[$index]->getContent(), $matches);
         if ($matches === []) {
             return;
         }
@@ -108,29 +102,26 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
         $newContent = $opening . $insert . $newline . $afterNewline;
 
-        if ($newContent !== $token->getContent()) {
+        if ($newContent !== $tokens[$index]->getContent()) {
             $tokens[$index] = new Token([Preg::match('~/\*{2}\s~', $newContent) === 1 ? \T_DOC_COMMENT : \T_COMMENT, $newContent]);
         }
     }
 
     private function fixClosing(Tokens $tokens, int $index): void
     {
-        /** @var Token $token */
-        $token = $tokens[$index];
-
-        if (Preg::match('#\R\h*\*+/$#', $token->getContent()) === 1) {
+        if (Preg::match('#\R\h*\*+/$#', $tokens[$index]->getContent()) === 1) {
             return;
         }
 
-        Preg::match('#\R(\h*)#', $token->getContent(), $matches);
+        Preg::match('#\R(\h*)#', $tokens[$index]->getContent(), $matches);
 
         /** @var string $indent */
         $indent = $matches[1];
 
-        $newContent = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $token->getContent());
+        $newContent = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $tokens[$index]->getContent());
 
-        if ($newContent !== $token->getContent()) {
-            $tokens[$index] = new Token([$token->getId(), $newContent]);
+        if ($newContent !== $tokens[$index]->getContent()) {
+            $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
         }
     }
 }

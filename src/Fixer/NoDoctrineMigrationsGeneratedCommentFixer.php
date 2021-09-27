@@ -16,7 +16,6 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
@@ -67,17 +66,14 @@ final class Version20180609123456 extends AbstractMigration
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
+            if (!$tokens[$index]->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
                 continue;
             }
 
             if (
-                \strpos($token->getContent(), 'Auto-generated Migration: Please modify to your needs!') === false
-                && \strpos($token->getContent(), 'this up() migration is auto-generated, please modify it to your needs') === false
-                && \strpos($token->getContent(), 'this down() migration is auto-generated, please modify it to your needs') === false
+                \strpos($tokens[$index]->getContent(), 'Auto-generated Migration: Please modify to your needs!') === false
+                && \strpos($tokens[$index]->getContent(), 'this up() migration is auto-generated, please modify it to your needs') === false
+                && \strpos($tokens[$index]->getContent(), 'this down() migration is auto-generated, please modify it to your needs') === false
             ) {
                 continue;
             }

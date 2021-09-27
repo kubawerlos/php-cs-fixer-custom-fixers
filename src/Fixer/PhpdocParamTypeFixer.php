@@ -58,24 +58,21 @@ function a($foo, $bar) {}
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            /** @var Token $token */
-            $token = $tokens[$index];
-
-            if (!$token->isGivenKind([\T_DOC_COMMENT])) {
+            if (!$tokens[$index]->isGivenKind([\T_DOC_COMMENT])) {
                 continue;
             }
 
-            if (\stripos($token->getContent(), '@param') === false) {
+            if (\stripos($tokens[$index]->getContent(), '@param') === false) {
                 continue;
             }
 
             $newContent = Preg::replace(
                 '/(@param) {0,7}( *\$)/i',
                 '$1 mixed $2',
-                $token->getContent()
+                $tokens[$index]->getContent()
             );
 
-            if ($newContent === $token->getContent()) {
+            if ($newContent === $tokens[$index]->getContent()) {
                 continue;
             }
 
