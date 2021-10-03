@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: 'composer'
     directory: '/dev-tools'
     schedule:
-      interval: 'daily'
+      interval: 'monthly'
     ignore:
       - dependency-name: 'php-cs-fixer/diff'
     labels:
