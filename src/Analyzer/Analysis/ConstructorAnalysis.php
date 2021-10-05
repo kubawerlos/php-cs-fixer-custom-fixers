@@ -33,6 +33,11 @@ final class ConstructorAnalysis
         $this->constructorIndex = $constructorIndex;
     }
 
+    public function getConstructorIndex(): int
+    {
+        return $this->constructorIndex;
+    }
+
     /**
      * @return array<int, string>
      */

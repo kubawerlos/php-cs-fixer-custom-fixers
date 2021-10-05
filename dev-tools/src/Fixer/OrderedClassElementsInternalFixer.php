@@ -27,6 +27,7 @@ namespace PhpCsFixerCustomFixersDev\Fixer {
             'getDefinition',
             'getConfigurationDefinition',
             'configure',
+            'setWhitespacesConfig',
             'name',
             'getName',
             'getPriority',

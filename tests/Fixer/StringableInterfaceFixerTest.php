@@ -17,8 +17,6 @@ namespace Tests\Fixer;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\StringableInterfaceFixer
- *
- * @requires PHP 8.0
  */
 final class StringableInterfaceFixerTest extends AbstractFixerTestCase
 {
@@ -29,6 +27,8 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
 
     /**
      * @dataProvider provideFixCases
+     *
+     * @requires PHP 8.0
      */
     public function testFix(string $expected, ?string $input = null): void
     {

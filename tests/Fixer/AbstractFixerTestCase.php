@@ -16,8 +16,10 @@ namespace Tests\Fixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\Linter\Linter;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\WhitespacesFixerConfig;
 use PHPUnit\Framework\TestCase;
 use Tests\AssertRegExpTrait;
 use Tests\AssertSameTokensTrait;
@@ -43,6 +45,9 @@ abstract class AbstractFixerTestCase extends TestCase
         $fixer = new $className();
 
         $this->fixer = $fixer;
+        if ($this->fixer instanceof WhitespacesAwareFixerInterface) {
+            $this->fixer->setWhitespacesConfig(new WhitespacesFixerConfig());
+        }
     }
 
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void

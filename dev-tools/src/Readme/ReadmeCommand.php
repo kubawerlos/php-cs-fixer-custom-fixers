@@ -16,9 +16,11 @@ namespace PhpCsFixerCustomFixersDev\Readme;
 use PhpCsFixer\Console\Command\HelpCommand;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
 use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
@@ -168,6 +170,10 @@ In your PHP CS Fixer configuration register fixers and use them:
 
         /** @var AbstractFixer $fixer */
         foreach (new Fixers() as $fixer) {
+            if ($fixer instanceof WhitespacesAwareFixerInterface) {
+                $fixer->setWhitespacesConfig(new WhitespacesFixerConfig());
+            }
+
             $reflectionClass = new \ReflectionClass($fixer);
 
             $output .= \sprintf(

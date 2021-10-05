@@ -50,7 +50,7 @@ final class InfectionConfigBuilder
         $config = [
             '$schema' => './vendor/infection/infection/resources/schema.json',
             'source' => ['directories' => ['../src']],
-            'timeout' => 10,
+            'timeout' => 5,
             'logs' => [
                 'text' => 'php://stdout',
                 'github' => true,

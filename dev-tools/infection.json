@@ -5,7 +5,7 @@
             "../src"
         ]
     },
-    "timeout": 10,
+    "timeout": 5,
     "logs": {
         "text": "php://stdout",
         "github": true,

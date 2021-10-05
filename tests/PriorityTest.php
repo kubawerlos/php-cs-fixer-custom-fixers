@@ -16,6 +16,7 @@ namespace Tests;
 use PhpCsFixer\Fixer as Fixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerCustomFixers\Fixer as CustomFixer;
 use PHPUnit\Framework\TestCase;
 
@@ -23,8 +24,6 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @coversNothing
- *
- * @requires PHP 8.0
  */
 final class PriorityTest extends TestCase
 {
@@ -32,14 +31,18 @@ final class PriorityTest extends TestCase
 
     /**
      * @dataProvider providePriorityCases
+     *
+     * @requires PHP 8.0
      */
-    public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
+    public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer): void
     {
         self::assertLessThan($firstFixer->getPriority(), $secondFixer->getPriority());
     }
 
     /**
      * @dataProvider providePriorityCases
+     *
+     * @requires PHP 8.0
      */
     public function testInOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
@@ -60,6 +63,8 @@ final class PriorityTest extends TestCase
 
     /**
      * @dataProvider providePriorityCases
+     *
+     * @requires PHP 8.0
      */
     public function testInRevertedOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
@@ -706,6 +711,28 @@ bar($x);
                 }
             }
             ',
+        ];
+
+        $multilinePromotedPropertiesFixer = new CustomFixer\MultilinePromotedPropertiesFixer();
+        $multilinePromotedPropertiesFixer->setWhitespacesConfig(new WhitespacesFixerConfig());
+        yield [
+            new CustomFixer\PromotedConstructorPropertyFixer(),
+            $multilinePromotedPropertiesFixer,
+            '<?php class Foo {
+                public function __construct(
+                    private int $x,
+                    private int $y
+                ) {
+                }
+            }',
+            '<?php class Foo {
+                private int $x;
+                private int $y;
+                public function __construct(int $x, int $y) {
+                    $this->x = $x;
+                    $this->y = $y;
+                }
+            }',
         ];
 
         yield [
