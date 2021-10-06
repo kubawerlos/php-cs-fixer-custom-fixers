@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8320b58dc83b2e1d5cbb9603d7f90033",
+    "content-hash": "419f22b79d4b11e5c5cb5d9a02c9c6af",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1382,6 +1382,45 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool"
+        },
+        {
+            "name": "phpstan/phpstan-phpunit",
+            "version": "0.12.22",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-phpunit.git",
+                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc",
+                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc"
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "phpstan/phpstan": "^0.12.92"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon",
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPUnit extensions and rules for PHPStan"
         },
         {
             "name": "phpstan/phpstan-strict-rules",

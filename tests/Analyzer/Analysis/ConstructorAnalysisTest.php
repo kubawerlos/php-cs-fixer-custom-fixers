@@ -74,7 +74,7 @@ final class ConstructorAnalysisTest extends TestCase
     }
 
     /**
-     * @param array<int, string> $expected
+     * @param array<string, int> $expected
      *
      * @dataProvider provideGettingConstructorPromotableAssignmentsCases
      */
