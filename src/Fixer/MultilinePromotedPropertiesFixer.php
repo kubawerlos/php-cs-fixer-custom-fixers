@@ -51,11 +51,12 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
     }
 
     /**
+     * Must run before BracesFixer.
      * Must run after PromotedConstructorPropertyFixer.
      */
     public function getPriority(): int
     {
-        return 0;
+        return 36;
     }
 
     public function isCandidate(Tokens $tokens): bool
