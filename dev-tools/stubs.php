@@ -22,4 +22,13 @@ namespace PhpCsFixer\Tokenizer {
     class Tokens extends \SplFixedArray
     {
     }
+
+    class TokensAnalyzer {
+        /**
+         * @return array<int, array{token: Token, type: string, classIndex: int}>
+         */
+        public function getClassyElements()
+        {
+        }
+    }
 }

@@ -23,6 +23,8 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @coversNothing
+ *
+ * @requires PHP 8.0
  */
 final class PriorityTest extends TestCase
 {
@@ -196,6 +198,29 @@ bar($x);
                 $x = foo();
                 var_dump($x);
                 bar($x);
+            ',
+        ];
+
+        yield [
+            new CustomFixer\ConstructorPropertyPromotionFixer(),
+            new Fixer\ClassNotation\ClassAttributesSeparationFixer(),
+            '<?php class Foo
+            {
+                public function __construct(private int $x, private int $y) {
+                }
+            }
+            ',
+            '<?php class Foo
+            {
+                private int $x;
+
+                private int $y;
+
+                public function __construct(int $x, int $y) {
+                    $this->x = $x;
+                    $this->y = $y;
+                }
+            }
             ',
         ];
 

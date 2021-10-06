@@ -23,6 +23,7 @@
     <issueHandlers>
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
+        <MissingConstructor errorLevel='suppress' />
         <MoreSpecificImplementedParamType errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
@@ -31,7 +32,6 @@
             <errorLevel type='suppress'>
                 <file name='./src/Fixer/OrderedClassElementsInternalFixer.php' />
                 <file name='../src/Analyzer/Analysis/ArrayElementAnalysis.php' />
-                <file name='../src/Analyzer/Analysis/ConstructorAnalysis.php' />
                 <file name='../src/Analyzer/Analysis/SwitchAnalysis.php' />
             </errorLevel>
         </PossiblyUnusedMethod>
