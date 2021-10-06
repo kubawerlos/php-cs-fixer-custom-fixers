@@ -22,6 +22,8 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\ArrayAnalyzer
+ *
+ * @requires PHP 8.0
  */
 final class ArrayAnalyzerTest extends TestCase
 {
