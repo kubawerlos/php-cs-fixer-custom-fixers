@@ -55,19 +55,6 @@ Configuration options:
 +//var_dump($x);
 ```
 
-#### ConstructorPropertyPromotionFixer
-Constructor Property Promotion should be used if possible.
-```diff
- <?php
- class Foo {
--    private string $bar;
--    public function __construct(string $bar) {
--        $this->bar = $bar;
-+    public function __construct(private string $bar) {
-     }
- }
-```
-
 #### DataProviderNameFixer
 Data provider names used only once must match the name of the test.
   *Risky: when relying on name of data provider function.*
@@ -446,6 +433,19 @@ PHPDoc types must be trimmed.
 + * @param null|string $x
   */
  function foo($x) {}
+```
+
+#### PromotedConstructorPropertyFixer
+Constructor properties must be promoted if possible.
+```diff
+ <?php
+ class Foo {
+-    private string $bar;
+-    public function __construct(string $bar) {
+-        $this->bar = $bar;
++    public function __construct(private string $bar) {
+     }
+ }
 ```
 
 #### SingleSpaceAfterStatementFixer

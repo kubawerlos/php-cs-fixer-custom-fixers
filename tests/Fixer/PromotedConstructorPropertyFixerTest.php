@@ -16,11 +16,11 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\ConstructorPropertyPromotionFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer
  *
  * @requires PHP 8.0
  */
-final class ConstructorPropertyPromotionFixerTest extends AbstractFixerTestCase
+final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
