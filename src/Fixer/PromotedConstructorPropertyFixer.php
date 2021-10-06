@@ -32,7 +32,7 @@ final class PromotedConstructorPropertyFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Constructor properties should be promoted if possible.',
+            'Constructor properties must be promoted if possible.',
             [
                 new VersionSpecificCodeSample(
                     '<?php

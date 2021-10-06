@@ -436,7 +436,7 @@ PHPDoc types must be trimmed.
 ```
 
 #### PromotedConstructorPropertyFixer
-Constructor properties should be promoted if possible.
+Constructor properties must be promoted if possible.
 ```diff
  <?php
  class Foo {
