@@ -40,7 +40,6 @@ final class ConstructorAnalysis
     {
         /** @var int $openParenthesis */
         $openParenthesis = $this->tokens->getNextTokenOfKind($this->constructorIndex, ['(']);
-
         $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
         $constructorPromotableParameters = [];

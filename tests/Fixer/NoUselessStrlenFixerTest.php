@@ -47,15 +47,15 @@ final class NoUselessStrlenFixerTest extends AbstractFixerTestCase
 
         yield ['<?php $s !== \'\';', '<?php strlen($s) > 0;'];
         yield ['<?php $s === \'\';', '<?php strlen($s) === 0;'];
-        yield ['<?php $s == \'\';',  '<?php strlen($s) == 0;'];
+        yield ['<?php $s == \'\';', '<?php strlen($s) == 0;'];
         yield ['<?php $s !== \'\';', '<?php strlen($s) !== 0;'];
-        yield ['<?php $s != \'\';',  '<?php strlen($s) != 0;'];
+        yield ['<?php $s != \'\';', '<?php strlen($s) != 0;'];
 
         yield ['<?php \'\' !== $s;', '<?php 0 < strlen($s);'];
         yield ['<?php \'\' === $s;', '<?php 0 === strlen($s);'];
-        yield ['<?php \'\' == $s;',  '<?php 0 == strlen($s);'];
+        yield ['<?php \'\' == $s;', '<?php 0 == strlen($s);'];
         yield ['<?php \'\' !== $s;', '<?php 0 !== \strlen($s);'];
-        yield ['<?php \'\' != $s;',  '<?php 0 != \strlen($s);'];
+        yield ['<?php \'\' != $s;', '<?php 0 != \strlen($s);'];
 
         yield ['<?php $s !== \'\';', '<?php \strlen($s) > 0;'];
         yield ['<?php $s !== \'\';', '<?php mb_strlen($s) > 0;'];

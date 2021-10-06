@@ -92,7 +92,7 @@ final class ConstructorAnalysisTest extends TestCase
     public static function provideGettingConstructorPromotableAssignmentsCases(): iterable
     {
         yield 'simple assignments' => [
-            ['x' => 30,   'y' => 39,  'z' => 48],
+            ['x' => 30, 'y' => 39, 'z' => 48],
             '<?php class Foo {
                 public function __construct($x, $y, $z) {
                     $this->a = $x;
