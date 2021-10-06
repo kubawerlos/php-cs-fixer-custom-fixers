@@ -24,7 +24,7 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 use PhpCsFixerCustomFixers\TokenRemover;
 
-final class ConstructorPropertyPromotionFixer extends AbstractFixer
+final class PromotedConstructorPropertyFixer extends AbstractFixer
 {
     /** @var array<int, array<Token>> */
     private $tokensToInsert;
@@ -32,7 +32,7 @@ final class ConstructorPropertyPromotionFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Constructor Property Promotion should be used if possible.',
+            'Constructor properties should be promoted if possible.',
             [
                 new VersionSpecificCodeSample(
                     '<?php

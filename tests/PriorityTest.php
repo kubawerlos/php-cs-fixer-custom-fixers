@@ -201,29 +201,6 @@ bar($x);
             ',
         ];
 
-        yield [
-            new CustomFixer\ConstructorPropertyPromotionFixer(),
-            new Fixer\ClassNotation\ClassAttributesSeparationFixer(),
-            '<?php class Foo
-            {
-                public function __construct(private int $x, private int $y) {
-                }
-            }
-            ',
-            '<?php class Foo
-            {
-                private int $x;
-
-                private int $y;
-
-                public function __construct(int $x, int $y) {
-                    $this->x = $x;
-                    $this->y = $y;
-                }
-            }
-            ',
-        ];
-
         $returnTypeDeclarationFixer = new Fixer\FunctionNotation\ReturnTypeDeclarationFixer();
         $returnTypeDeclarationFixer->configure(['space_before' => 'one']);
         yield [
@@ -705,6 +682,29 @@ bar($x);
                  * @param Foo       $y
                  */
                 function foo($x, $y) {}
+            ',
+        ];
+
+        yield [
+            new CustomFixer\PromotedConstructorPropertyFixer(),
+            new Fixer\ClassNotation\ClassAttributesSeparationFixer(),
+            '<?php class Foo
+            {
+                public function __construct(private int $x, private int $y) {
+                }
+            }
+            ',
+            '<?php class Foo
+            {
+                private int $x;
+
+                private int $y;
+
+                public function __construct(int $x, int $y) {
+                    $this->x = $x;
+                    $this->y = $y;
+                }
+            }
             ',
         ];
 
