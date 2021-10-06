@@ -50,7 +50,7 @@ class Foo {
     }
 
     /**
-     * Must run before ClassAttributesSeparationFixer.
+     * Must run before ClassAttributesSeparationFixer, MultilinePromotedPropertiesFixer.
      */
     public function getPriority(): int
     {

@@ -34,6 +34,7 @@ final class ConstructorAnalysisTest extends TestCase
         $tokens = Tokens::fromCode($code);
         $analysis = new ConstructorAnalysis($tokens, 11);
 
+        self::assertSame(11, $analysis->getConstructorIndex());
         self::assertSame($expected, $analysis->getConstructorPromotableParameters());
     }
 

@@ -53,10 +53,7 @@ final class ConstructorAnalyzerTest extends TestCase
                 self::assertNull($constructorAnalysis);
             } else {
                 self::assertInstanceOf(ConstructorAnalysis::class, $constructorAnalysis);
-                self::assertSame(
-                    \serialize(new ConstructorAnalysis($tokens, $nonAbstractConstructorIndex)),
-                    \serialize($constructorAnalysis)
-                );
+                self::assertSame($nonAbstractConstructorIndex, $constructorAnalysis->getConstructorIndex());
             }
         }
     }
