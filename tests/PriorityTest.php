@@ -241,6 +241,26 @@ bar($x);
                     *******/',
         ];
 
+        $multilinePromotedPropertiesFixer = new CustomFixer\MultilinePromotedPropertiesFixer();
+        $multilinePromotedPropertiesFixer->setWhitespacesConfig(new WhitespacesFixerConfig());
+        yield [
+            $multilinePromotedPropertiesFixer,
+            new Fixer\Basic\BracesFixer(),
+            '<?php class Foo
+{
+    public function __construct(
+        private int $x
+    ) {
+    }
+}',
+            '<?php class Foo
+{
+    public function __construct(private int $x)
+    {
+    }
+}',
+        ];
+
         yield [
             new CustomFixer\NoCommentedOutCodeFixer(),
             new Fixer\Whitespace\NoExtraBlankLinesFixer(),
@@ -692,6 +712,26 @@ bar($x);
 
         yield [
             new CustomFixer\PromotedConstructorPropertyFixer(),
+            new Fixer\Basic\BracesFixer(),
+            '<?php class Foo
+{
+    public function __construct(private int $x)
+    {
+    }
+}',
+            '<?php class Foo
+{
+    private int $x;
+
+    public function __construct(int $x)
+    {
+        $this->x = $x;
+    }
+}',
+        ];
+
+        yield [
+            new CustomFixer\PromotedConstructorPropertyFixer(),
             new Fixer\ClassNotation\ClassAttributesSeparationFixer(),
             '<?php class Foo
             {
@@ -713,8 +753,6 @@ bar($x);
             ',
         ];
 
-        $multilinePromotedPropertiesFixer = new CustomFixer\MultilinePromotedPropertiesFixer();
-        $multilinePromotedPropertiesFixer->setWhitespacesConfig(new WhitespacesFixerConfig());
         yield [
             new CustomFixer\PromotedConstructorPropertyFixer(),
             $multilinePromotedPropertiesFixer,
@@ -733,6 +771,47 @@ bar($x);
                     $this->y = $y;
                 }
             }',
+        ];
+
+        yield [
+            new CustomFixer\PromotedConstructorPropertyFixer(),
+            new Fixer\Whitespace\NoExtraBlankLinesFixer(),
+            '<?php class Foo {
+
+                public function __construct(private int $x, private int $y) {
+                }
+            }',
+            '<?php class Foo {
+                private int $x;
+
+                private int $y;
+
+                public function __construct(int $x, int $y) {
+                    $this->x = $x;
+                    $this->y = $y;
+                }
+            }',
+        ];
+
+        yield [
+            new CustomFixer\PromotedConstructorPropertyFixer(),
+            new Fixer\Import\NoUnusedImportsFixer(),
+            '<?php namespace Foo;
+            class Test {
+                public function __construct(private int $x) {
+                }
+            }
+            ',
+            '<?php namespace Foo;
+            use Bar\Baz;
+            class Test {
+                /** @var Baz[] */
+                private array $x;
+                public function __construct(int $x) {
+                    $this->x = $x;
+                }
+            }
+            ',
         ];
 
         yield [
