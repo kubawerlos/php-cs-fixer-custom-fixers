@@ -21,6 +21,8 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis
+ *
+ * @requires PHP 8.0
  */
 final class ConstructorAnalysisTest extends TestCase
 {
