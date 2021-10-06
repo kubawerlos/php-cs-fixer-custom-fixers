@@ -21,8 +21,6 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis
- *
- * @requires PHP 8.0
  */
 final class ConstructorAnalysisTest extends TestCase
 {
@@ -65,12 +63,14 @@ final class ConstructorAnalysisTest extends TestCase
             }',
         ];
 
-        yield 'some already promoted' => [
-            [22 => 'b', 39 => 's'],
-            '<?php class Foo {
+        if (\PHP_VERSION_ID >= 80000) {
+            yield 'some already promoted' => [
+                [22 => 'b', 39 => 's'],
+                '<?php class Foo {
                 public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
             }',
-        ];
+            ];
+        }
     }
 
     /**

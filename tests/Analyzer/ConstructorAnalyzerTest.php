@@ -95,12 +95,12 @@ final class ConstructorAnalyzerTest extends TestCase
         ];
 
         yield 'class with other elements' => [
-            [3 => 38],
+            [3 => 29],
             '<?php abstract class Foo {
-                public array $a;
-                private bool $b;
+                public $a;
                 public static function create() {}
                 public function __construct() {}
+                public function bar() {}
             }',
         ];
 
