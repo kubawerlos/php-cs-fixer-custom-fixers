@@ -31,6 +31,7 @@
             <errorLevel type='suppress'>
                 <file name='./src/Fixer/OrderedClassElementsInternalFixer.php' />
                 <file name='../src/Analyzer/Analysis/ArrayElementAnalysis.php' />
+                <file name='../src/Analyzer/Analysis/ConstructorAnalysis.php' />
                 <file name='../src/Analyzer/Analysis/SwitchAnalysis.php' />
             </errorLevel>
         </PossiblyUnusedMethod>

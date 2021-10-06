@@ -37,6 +37,8 @@ final class ConstructorAnalyzerTest extends TestCase
     }
 
     /**
+     * @param array<int, null|int> $expected
+     *
      * @dataProvider provideFindingNonAbstractConstructorCases
      */
     public function testFindingNonAbstractConstructor(array $expected, string $code): void
@@ -60,7 +62,7 @@ final class ConstructorAnalyzerTest extends TestCase
     }
 
     /**
-     * @return iterable<array{?int, int, string}>
+     * @return iterable<array{array<int, null|int>, string}>
      */
     public static function provideFindingNonAbstractConstructorCases(): iterable
     {
