@@ -487,6 +487,31 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'promote with attributes' => [
+            '<?php class Foo {
+                public function __construct(
+                    private string $x,
+                    #[Attribute(1, 2, 3)]
+                    private string $y,
+                ) {
+                }
+            }
+            ',
+            '<?php class Foo {
+                private string $x;
+                private string $y;
+                public function __construct(
+                    string $x,
+                    #[Attribute(1, 2, 3)]
+                    string $y,
+                ) {
+                    $this->x = $x;
+                    $this->y = $y;
+                }
+            }
+            ',
+        ];
+
         yield 'promote with different name' => [
             '<?php class Foo {
                 public function __construct(private string $x) {
