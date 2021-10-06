@@ -12,6 +12,8 @@ parameters:
       path: ../tests
     - message: '#^Parameter \#\d+ \$callback of function array_[a-z]+ expects callable\(.+\): [a-z]+, Closure\(.+\): [a-z]+ given\.$#'
       path: ../tests
+    - message: '# will always evaluate to true\.$#'
+      path: ../tests
   level: max
   paths:
     - ../src
@@ -24,6 +26,7 @@ includes:
   - ./vendor/symplify/phpstan-rules/config/services/services.neon
   - ./vendor/symplify/phpstan-rules/packages/cognitive-complexity/config/cognitive-complexity-services.neon
   - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
+  - ./vendor/phpstan/phpstan-phpunit/extension.neon
   - ./vendor/phpstan/phpstan-strict-rules/rules.neon
 
 services:
