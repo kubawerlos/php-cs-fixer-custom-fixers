@@ -244,7 +244,7 @@ class Foo {
     private function addVisibilityToParameter(Tokens $tokens, int $index, Token $visibilityToken): void
     {
         /** @var int $prevElementIndex */
-        $prevElementIndex = $tokens->getPrevTokenOfKind($index, ['(', ',']);
+        $prevElementIndex = $tokens->getPrevTokenOfKind($index, ['(', ',', [CT::T_ATTRIBUTE_CLOSE]]);
 
         /** @var int $propertyStartIndex */
         $propertyStartIndex = $tokens->getNextMeaningfulToken($prevElementIndex);
