@@ -65,7 +65,6 @@ function foo_bar() {}
     public function configure(?array $configuration = null): void
     {
         if (isset($configuration['elements'])) {
-            /** @var array<string> $elements */
             $elements = $configuration['elements'];
             $this->elements = $elements;
         }

@@ -59,7 +59,6 @@ var_dump($x);
     public function configure(?array $configuration = null): void
     {
         if (isset($configuration['functions'])) {
-            /** @var array<string> $elements */
             $elements = $configuration['functions'];
             $this->functions = $elements;
         }
