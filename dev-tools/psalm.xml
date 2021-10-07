@@ -5,7 +5,7 @@
        xsi:schemaLocation='https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd'
        allowStringToStandInForClass='true'
        autoloader='../vendor/autoload.php'
-       findUnusedCode='true'
+       findUnusedCode='false'
        findUnusedVariablesAndParams='true'
        resolveFromConfigFile='true'
        strictBinaryOperands='true'
@@ -28,14 +28,5 @@
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
-        <PossiblyUnusedMethod>
-            <errorLevel type='suppress'>
-                <file name='./src/Fixer/OrderedClassElementsInternalFixer.php' />
-                <file name='../src/Analyzer/Analysis/ArrayElementAnalysis.php' />
-                <file name='../src/Analyzer/Analysis/SwitchAnalysis.php' />
-            </errorLevel>
-        </PossiblyUnusedMethod>
-        <UnnecessaryVarAnnotation errorLevel='suppress' />
-        <UnusedClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>
