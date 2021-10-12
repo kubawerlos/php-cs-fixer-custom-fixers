@@ -15,14 +15,6 @@ require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rul
 require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
-// PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer will handle this
-unset($rules['ordered_class_elements']);
-unset($rules['ordered_interfaces']);
-
-unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when dropping support to PHP <8.0
-unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
-unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
-
 // add new fixers that are not in PhpCsFixerConfig yet
 foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     if ($fixer instanceof \PhpCsFixer\Fixer\DeprecatedFixerInterface) {
@@ -33,6 +25,13 @@ foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     }
 }
 
+// PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer will handle this
+unset($rules['ordered_class_elements']);
+unset($rules['ordered_interfaces']);
+
+unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when dropping support to PHP <8.0
+unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
+unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
 unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
