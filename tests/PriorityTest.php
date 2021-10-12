@@ -398,6 +398,13 @@ bar($x);
             ',
         ];
 
+        yield [
+            new CustomFixer\NoUselessIfConditionFixer(),
+            new Fixer\Whitespace\NoTrailingWhitespaceFixer(),
+            '<?php  return 42;',
+            '<?php if (true) { return 42; }',
+        ];
+
         $noExtraBlankLinesFixer = new Fixer\Whitespace\NoExtraBlankLinesFixer();
         $noExtraBlankLinesFixer->configure(['tokens' => ['curly_brace_block']]);
         yield [

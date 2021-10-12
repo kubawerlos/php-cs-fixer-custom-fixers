@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.2.0
+- Add NoUselessIfConditionFixer
+
 ## v3.1.0
 - Add MultilinePromotedPropertiesFixer
 - Add PhpdocArrayStyleFixer
