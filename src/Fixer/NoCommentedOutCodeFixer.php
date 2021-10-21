@@ -101,7 +101,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
                 continue;
             }
 
-            foreach (Preg::split('/\R/u', $content) as $line) {
+            foreach (Preg::split('/\s/u', $content) as $line) {
                 if (\filter_var(\trim($line), \FILTER_VALIDATE_URL) !== false) {
                     return [];
                 }

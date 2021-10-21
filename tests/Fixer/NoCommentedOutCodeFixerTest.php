@@ -239,6 +239,12 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
+                // See: https://www.example.com
+            ',
+        ];
+
+        yield [
+            '<?php
                 // See:
                 // https://www.example.com
             ',
