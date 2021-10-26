@@ -11,8 +11,8 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/RulesInterface.php';
-require_once __DIR__ . '/dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
+require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/RulesInterface.php';
+require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
 // add new fixers that are not in PhpCsFixerConfig yet
@@ -46,13 +46,13 @@ return (new PhpCsFixer\Config())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->files()
-            ->in(__DIR__ . '/dev-tools/src')
+            ->in(__DIR__ . '/.dev-tools/src')
             ->in(__DIR__ . '/src')
             ->in(__DIR__ . '/tests')
             ->notName('php-cs-fixer.config.*.php')
             ->append([
-                __DIR__ . '/dev-tools/build-infection-config',
-                __DIR__ . '/dev-tools/readme',
+                __DIR__ . '/.dev-tools/build-infection-config',
+                __DIR__ . '/.dev-tools/readme',
                 __FILE__,
             ])
     )

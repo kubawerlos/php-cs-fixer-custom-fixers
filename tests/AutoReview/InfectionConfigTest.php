@@ -25,8 +25,8 @@ final class InfectionConfigTest extends TestCase
 {
     public function testConfigIsUpToDate(): void
     {
-        if (\file_exists(__DIR__ . '/../../dev-tools/vendor/autoload.php')) {
-            require_once __DIR__ . '/../../dev-tools/vendor/autoload.php';
+        if (\file_exists(__DIR__ . '/../../.dev-tools/vendor/autoload.php')) {
+            require_once __DIR__ . '/../../.dev-tools/vendor/autoload.php';
         } else {
             self::markTestSkipped('Not tested when dev-tools not installed.');
         }
@@ -35,10 +35,10 @@ final class InfectionConfigTest extends TestCase
         $configFromBuilder = $configBuilder->build();
 
         /** @var string $json */
-        $json = \file_get_contents(__DIR__ . '/../../dev-tools/infection.json');
+        $json = \file_get_contents(__DIR__ . '/../../.dev-tools/infection.json');
 
         $actualConfig = \json_decode($json, true);
 
-        self::assertSame($configFromBuilder, $actualConfig, 'Infection config is not up to date, run "php ./dev-tools/build-infection-config".');
+        self::assertSame($configFromBuilder, $actualConfig, 'Infection config is not up to date, run "php ./.dev-tools/build-infection-config".');
     }
 }

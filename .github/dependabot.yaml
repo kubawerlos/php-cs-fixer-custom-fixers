@@ -2,7 +2,7 @@ version: 2
 
 updates:
   - package-ecosystem: 'composer'
-    directory: '/dev-tools'
+    directory: '/.dev-tools'
     schedule:
       interval: 'monthly'
     ignore:

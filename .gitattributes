@@ -1,6 +1,5 @@
-/dev-tools/ export-ignore
-/tests/ export-ignore
 /.* export-ignore
+/tests/ export-ignore
 /phpunit.xml export-ignore
 
 * text eol=lf

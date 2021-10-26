@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "29cdff2db4f7593c14e2ff8e6c518aa5",
+    "content-hash": "897da09ec058dc5766d1aa4704727b31",
     "packages": [
         {
             "name": "amphp/amp",
@@ -117,16 +117,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.2.5",
+            "version": "3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "31f3ea725711245195f62e54ffa402d8ef2fdba9"
+                "reference": "83e511e247de329283478496f7a1e114c9517506"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/31f3ea725711245195f62e54ffa402d8ef2fdba9",
-                "reference": "31f3ea725711245195f62e54ffa402d8ef2fdba9"
+                "url": "https://api.github.com/repos/composer/semver/zipball/83e511e247de329283478496f7a1e114c9517506",
+                "reference": "83e511e247de329283478496f7a1e114c9517506"
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0"
@@ -795,22 +795,25 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.10.4",
+            "version": "v2.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "6e0540c60805b33148dc95db2602a087fb2ef9fb"
+                "reference": "ed79a61ef903383b9e978ff5ba9d70740f13d293"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/6e0540c60805b33148dc95db2602a087fb2ef9fb",
-                "reference": "6e0540c60805b33148dc95db2602a087fb2ef9fb"
+                "url": "https://api.github.com/repos/nette/latte/zipball/ed79a61ef903383b9e978ff5ba9d70740f13d293",
+                "reference": "ed79a61ef903383b9e978ff5ba9d70740f13d293"
             },
             "require": {
                 "ext-json": "*",
                 "ext-tokenizer": "*",
                 "php": ">=7.1 <8.2"
             },
+            "bin": [
+                "bin/latte-lint"
+            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -958,16 +961,16 @@
         },
         {
             "name": "nette/neon",
-            "version": "v3.2.2",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/neon.git",
-                "reference": "e4ca6f4669121ca6876b1d048c612480e39a28d5"
+                "reference": "33d262a0c4fb6c6371385f6dc8532f4e32c20ebc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/neon/zipball/e4ca6f4669121ca6876b1d048c612480e39a28d5",
-                "reference": "e4ca6f4669121ca6876b1d048c612480e39a28d5"
+                "url": "https://api.github.com/repos/nette/neon/zipball/33d262a0c4fb6c6371385f6dc8532f4e32c20ebc",
+                "reference": "33d262a0c4fb6c6371385f6dc8532f4e32c20ebc"
             },
             "require": {
                 "ext-json": "*",
@@ -976,7 +979,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -1214,16 +1217,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.2.2",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/069a785b2141f5bcf49f3e353548dc1cce6df556",
-                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/622548b623e81ca6d78b721c5e029f4ce664f170",
+                "reference": "622548b623e81ca6d78b721c5e029f4ce664f170"
             },
             "require": {
                 "ext-filter": "*",
@@ -3429,16 +3432,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.10.0",
+            "version": "4.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "916b098b008f6de4543892b1e0651c1c3b92cbfa"
+                "reference": "e33492398bd4e5e2ab60e331d445979bd83feecd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/916b098b008f6de4543892b1e0651c1c3b92cbfa",
-                "reference": "916b098b008f6de4543892b1e0651c1c3b92cbfa"
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e33492398bd4e5e2ab60e331d445979bd83feecd",
+                "reference": "e33492398bd4e5e2ab60e331d445979bd83feecd"
             },
             "require": {
                 "amphp/amp": "^2.4.2",
@@ -3457,7 +3460,7 @@
                 "felixfbecker/advanced-json-rpc": "^3.0.3",
                 "felixfbecker/language-server-protocol": "^1.5",
                 "netresearch/jsonmapper": "^1.0 || ^2.0 || ^3.0 || ^4.0",
-                "nikic/php-parser": "^4.12",
+                "nikic/php-parser": "^4.13",
                 "openlss/lib-array2xml": "^1.0",
                 "php": "^7.1|^8",
                 "sebastian/diff": "^3.0 || ^4.0",
