@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "897da09ec058dc5766d1aa4704727b31",
+    "content-hash": "2e2100220edaaae538b3808f5d3ea039",
     "packages": [
         {
             "name": "amphp/amp",
@@ -702,16 +702,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "28a2e0bf0df4da57e03e0f47091606b91e4d3414"
+                "reference": "00a5c3a0ec6a4f9cc00dfb251a2972e01797a4e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/28a2e0bf0df4da57e03e0f47091606b91e4d3414",
-                "reference": "28a2e0bf0df4da57e03e0f47091606b91e4d3414"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/00a5c3a0ec6a4f9cc00dfb251a2972e01797a4e7",
+                "reference": "00a5c3a0ec6a4f9cc00dfb251a2972e01797a4e7"
             },
             "require": {
                 "friendsofphp/php-cs-fixer": "^3.2.1",

@@ -37,7 +37,6 @@ use Symfony\Component\Process\Process;
 final class ReadmeCommand extends BaseCommand
 {
     private const NAME = 'PHP CS Fixer: custom fixers';
-
     private const SHIELDS_HOST = 'https://img.shields.io';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
