@@ -21,33 +21,33 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpCsFixerCustomFixers\\": "./src"
+            "PhpCsFixerCustomFixers\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PhpCsFixerCustomFixersDev\\": "./.dev-tools/src",
-            "Tests\\": "./tests"
+            "PhpCsFixerCustomFixersDev\\": ".dev-tools/src",
+            "Tests\\": "tests"
         }
     },
     "scripts": {
         "analyse": [
             "@install-dev-tools",
             "php-cs-fixer fix --ansi --diff --dry-run --verbose",
-            "@composer --working-dir=./.dev-tools analyse"
+            "@composer --working-dir=.dev-tools analyse"
         ],
         "fix": [
             "@install-dev-tools",
             "php-cs-fixer fix --ansi --verbose || exit 0",
-            "@composer --working-dir=./.dev-tools fix",
-            "@php .dev-tools/readme > ./README.md"
+            "@composer --working-dir=.dev-tools fix",
+            "@php .dev-tools/readme > README.md"
         ],
         "infection": [
             "@install-dev-tools",
-            "@composer --working-dir=./.dev-tools infection"
+            "@composer --working-dir=.dev-tools infection"
         ],
         "install-dev-tools": [
-            "@composer --working-dir=./.dev-tools --quiet install"
+            "@composer --working-dir=.dev-tools --quiet install"
         ],
         "test": [
             "phpunit"
