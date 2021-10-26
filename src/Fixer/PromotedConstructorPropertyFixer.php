@@ -21,6 +21,7 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
+use PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 use PhpCsFixerCustomFixers\TokenRemover;
 
@@ -82,22 +83,7 @@ class Foo {
                 continue;
             }
 
-            $constructorPromotableParameters = $constructorAnalysis->getConstructorPromotableParameters();
-            $constructorPromotableAssignments = $constructorAnalysis->getConstructorPromotableAssignments();
-
-            $properties = $this->getClassProperties($tokens, $index);
-
-            foreach ($constructorPromotableParameters as $constructorParameterIndex => $constructorParameterName) {
-                if (!isset($constructorPromotableAssignments[$constructorParameterName])) {
-                    continue;
-                }
-                $this->promoteProperty(
-                    $tokens,
-                    $constructorParameterIndex,
-                    $constructorPromotableAssignments[$constructorParameterName],
-                    $properties
-                );
-            }
+            $this->promoteProperties($tokens, $index, $constructorAnalysis);
         }
 
         \krsort($this->tokensToInsert);
@@ -111,20 +97,49 @@ class Foo {
         }
     }
 
+    private function promoteProperties(Tokens $tokens, int $classIndex, ConstructorAnalysis $constructorAnalysis): void
+    {
+        $properties = $this->getClassProperties($tokens, $classIndex);
+
+        $constructorPromotableParameters = $constructorAnalysis->getConstructorPromotableParameters();
+        $constructorPromotableAssignments = $constructorAnalysis->getConstructorPromotableAssignments();
+
+        foreach ($constructorPromotableParameters as $constructorParameterIndex => $constructorParameterName) {
+            if (!isset($constructorPromotableAssignments[$constructorParameterName])) {
+                continue;
+            }
+
+            $propertyIndex = $this->getPropertyIndex($tokens, $properties, $constructorPromotableAssignments[$constructorParameterName]);
+
+            $propertyVisibility = null;
+            if ($propertyIndex !== null) {
+                $propertyVisibility = $this->removePropertyAndReturnVisibility($tokens, $propertyIndex, $constructorParameterIndex);
+            }
+
+            $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
+            $this->addVisibilityToParameter($tokens, $constructorParameterIndex, $propertyVisibility ?? new Token([\T_PUBLIC, 'public']));
+        }
+    }
+
     /**
      * @param array<int> $properties
      */
-    private function promoteProperty(Tokens $tokens, int $parameterIndex, int $assignmentIndex, array $properties): void
+    private function getPropertyIndex(Tokens $tokens, array $properties, int $assignmentIndex): ?int
     {
-        $promotedPropertyName = $this->removeAssignmentAndReturnPropertyName($tokens, $assignmentIndex);
-        $propertyVisibility = null;
-        foreach ($properties as $propertyName => $propertyIndex) {
-            if ($promotedPropertyName !== $propertyName) {
+        /** @var int $propertyNameIndex */
+        $propertyNameIndex = $tokens->getPrevTokenOfKind($assignmentIndex, [[\T_STRING]]);
+
+        $propertyName = $tokens[$propertyNameIndex]->getContent();
+
+        foreach ($properties as $name => $index) {
+            if ($name !== $propertyName) {
                 continue;
             }
-            $propertyVisibility = $this->removePropertyAndReturnVisibility($tokens, $propertyIndex, $parameterIndex);
+
+            return $index;
         }
-        $this->addVisibilityToParameter($tokens, $parameterIndex, $propertyVisibility ?? new Token([\T_PUBLIC, 'public']));
+
+        return null;
     }
 
     /**
@@ -222,13 +237,8 @@ class Foo {
         return $index;
     }
 
-    private function removeAssignmentAndReturnPropertyName(Tokens $tokens, int $variableAssignmentIndex): string
+    private function removeAssignment(Tokens $tokens, int $variableAssignmentIndex): void
     {
-        /** @var int $propertyIndex */
-        $propertyIndex = $tokens->getPrevTokenOfKind($variableAssignmentIndex, [[\T_STRING]]);
-
-        $name = $tokens[$propertyIndex]->getContent();
-
         /** @var int $thisIndex */
         $thisIndex = $tokens->getPrevTokenOfKind($variableAssignmentIndex, [[\T_VARIABLE]]);
 
@@ -237,8 +247,6 @@ class Foo {
 
         $tokens->clearRange($thisIndex + 1, $propertyEndIndex);
         TokenRemover::removeWithLinesIfPossible($tokens, $thisIndex);
-
-        return $name;
     }
 
     private function addVisibilityToParameter(Tokens $tokens, int $index, Token $visibilityToken): void
