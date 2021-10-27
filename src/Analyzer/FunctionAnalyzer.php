@@ -100,25 +100,22 @@ final class FunctionAnalyzer
 
     private function createArgumentAnalysis(Tokens $tokens, int $startIndex, int $endIndex): ArgumentAnalysis
     {
-        return new ArgumentAnalysis($startIndex, $endIndex, $this->isConstant($tokens, $startIndex, $endIndex));
-    }
+        $isConstant = true;
 
-    private function isConstant(Tokens $tokens, int $startIndex, int $endIndex): bool
-    {
         for ($index = $startIndex; $index <= $endIndex; $index++) {
             if ($tokens[$index]->isGivenKind(\T_VARIABLE)) {
-                return false;
+                $isConstant = false;
             }
             if ($tokens[$index]->equals('(')) {
                 /** @var int $prevParenthesisIndex */
                 $prevParenthesisIndex = $tokens->getPrevMeaningfulToken($index);
 
                 if (!$tokens[$prevParenthesisIndex]->isGivenKind(\T_ARRAY)) {
-                    return false;
+                    $isConstant = false;
                 }
             }
         }
 
-        return true;
+        return new ArgumentAnalysis($startIndex, $endIndex, $isConstant);
     }
 }
