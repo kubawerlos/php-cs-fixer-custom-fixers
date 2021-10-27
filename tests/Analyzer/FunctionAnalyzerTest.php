@@ -33,7 +33,7 @@ final class FunctionAnalyzerTest extends TestCase
         $analyzer = new FunctionAnalyzer();
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(\sprintf('Index %d is not "function".', $index));
+        $this->expectExceptionMessage(\sprintf('Index %d is not a function.', $index));
 
         $analyzer->getFunctionArguments(Tokens::fromCode($code), $index);
     }

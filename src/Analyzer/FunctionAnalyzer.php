@@ -70,13 +70,13 @@ final class FunctionAnalyzer
     private function getArgumentsRange(Tokens $tokens, int $index): ?array
     {
         if (!$tokens[$index]->isGivenKind(\T_STRING)) {
-            throw new \InvalidArgumentException(\sprintf('Index %d is not "function".', $index));
+            throw new \InvalidArgumentException(\sprintf('Index %d is not a function.', $index));
         }
 
         /** @var int $openParenthesis */
         $openParenthesis = $tokens->getNextMeaningfulToken($index);
         if (!$tokens[$openParenthesis]->equals('(')) {
-            throw new \InvalidArgumentException(\sprintf('Index %d is not "function".', $index));
+            throw new \InvalidArgumentException(\sprintf('Index %d is not a function.', $index));
         }
 
         $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
