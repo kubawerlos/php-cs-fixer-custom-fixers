@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-2890-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-2927-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -324,6 +324,19 @@ Configuration options:
 +echo 1234.45678e-4321; // float
 +echo 0xAEB042FC; // hexadecimal
 +echo 01234567; // octal
+```
+
+#### PhpUnitAssertArgumentsOrderFixer
+PHPUnit assertions must have expected argument before actual one.
+  *Risky: when original PHPUnit methods are overwritten.*
+```diff
+ <?php
+ class FooTest extends TestCase {
+     public function testFoo() {
+-        self::assertSame($value, 10);
++        self::assertSame(10, $value);
+     }
+ }
 ```
 
 #### PhpUnitNoUselessReturnFixer

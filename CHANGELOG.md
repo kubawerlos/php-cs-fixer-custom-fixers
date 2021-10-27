@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.2.0
+- Add PhpUnitAssertArgumentsOrderFixer
 - PromotedConstructorPropertyFixer - add option "promote_only_existing_properties"
 
 ## v3.1.0
