@@ -22,17 +22,26 @@ namespace Tests\Fixer;
  */
 final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 {
+    public function testConfiguration(): void
+    {
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('promote_only_existing_properties', $options[0]->getName());
+    }
+
     public function testIsRisky(): void
     {
         self::assertFalse($this->fixer->isRisky());
     }
 
     /**
+     * @param null|array<string, array<string>> $configuration
+     *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     /**
@@ -613,6 +622,32 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                 }
             }
             ',
+        ];
+
+        yield 'promote only existing properties' => [
+            '<?php class Point {
+                public function __construct(
+                    private int $property1,
+                    int $propertyNotDefined,
+                    private int $property2,
+                ) {
+                    $this->propertyNotDefined = $propertyNotDefined;
+                }
+            }',
+            '<?php class Point {
+                private int $property1;
+                private int $property2;
+                public function __construct(
+                    int $property1,
+                    int $propertyNotDefined,
+                    int $property2,
+                ) {
+                    $this->property1 = $property1;
+                    $this->propertyNotDefined = $propertyNotDefined;
+                    $this->property2 = $property2;
+                }
+            }',
+            ['promote_only_existing_properties' => true],
         ];
     }
 }

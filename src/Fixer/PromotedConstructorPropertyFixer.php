@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\FixerDefinition\VersionSpecification;
@@ -25,10 +29,13 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 use PhpCsFixerCustomFixers\TokenRemover;
 
-final class PromotedConstructorPropertyFixer extends AbstractFixer
+final class PromotedConstructorPropertyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var array<int, array<Token>> */
     private $tokensToInsert;
+
+    /** @var bool */
+    private $promoteOnlyExistingProperties = false;
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -48,6 +55,26 @@ class Foo {
                 ),
             ]
         );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('promote_only_existing_properties', 'whether to promote only properties that are defined in class'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault($this->promoteOnlyExistingProperties)
+                ->getOption(),
+        ]);
+    }
+
+    /**
+     * @param null|array<string, bool> $configuration
+     */
+    public function configure(?array $configuration = null): void
+    {
+        if (isset($configuration['promote_only_existing_properties'])) {
+            $this->promoteOnlyExistingProperties = $configuration['promote_only_existing_properties'];
+        }
     }
 
     /**
@@ -110,6 +137,10 @@ class Foo {
             }
 
             $propertyIndex = $this->getPropertyIndex($tokens, $properties, $constructorPromotableAssignments[$constructorParameterName]);
+
+            if ($propertyIndex === null && $this->promoteOnlyExistingProperties) {
+                continue;
+            }
 
             $propertyVisibility = null;
             if ($propertyIndex !== null) {

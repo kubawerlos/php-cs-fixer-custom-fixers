@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.2.0
+- PromotedConstructorPropertyFixer - add option "promote_only_existing_properties"
+
 ## v3.1.0
 - Add MultilinePromotedPropertiesFixer
 - Add PhpdocArrayStyleFixer
