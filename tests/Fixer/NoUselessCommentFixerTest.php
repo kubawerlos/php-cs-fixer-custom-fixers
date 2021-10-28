@@ -231,7 +231,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-            /** ' . '
+            /**
              * @see example.com
              */
             abstract class Foo {}

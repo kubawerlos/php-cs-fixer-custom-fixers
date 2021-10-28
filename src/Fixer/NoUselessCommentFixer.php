@@ -44,7 +44,7 @@ class Foo {
     }
 
     /**
-     * Must run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoTrailingWhitespaceInCommentFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer.
+     * Must run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer.
      */
     public function getPriority(): int
     {
@@ -68,23 +68,39 @@ class Foo {
                 continue;
             }
 
-            $classyIndex = $tokens->getTokenNotOfKindSibling(
-                $index,
-                1,
-                [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]]
-            );
-            if ($classyIndex === null) {
+            $newContent = $this->getNewContent($tokens, $index);
+
+            if ($newContent === $tokens[$index]->getContent()) {
                 continue;
             }
 
-            if ($tokens[$classyIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
-                /** @var int $classNameIndex */
-                $classNameIndex = $tokens->getNextMeaningfulToken($classyIndex);
+            $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
+        }
+    }
 
-                $newContent = Preg::replace(
-                    \sprintf('/
+    private function getNewContent(Tokens $tokens, int $index): string
+    {
+        $content = $tokens[$index]->getContent();
+
+        $nextIndex = $tokens->getTokenNotOfKindSibling(
+            $index,
+            1,
+            [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]]
+        );
+
+        if ($nextIndex === null) {
+            return $content;
+        }
+
+        if ($tokens[$nextIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
+            /** @var int $classyNameIndex */
+            $classyNameIndex = $tokens->getNextMeaningfulToken($nextIndex);
+
+            /** @var string $content */
+            $content = Preg::replace(
+                \sprintf('~
                         \R?
-                        (?<=\n|\r|\r\n|^\#|^\/{2}|^\/\*[^\*]|^\/\*{2}\s)
+                        (?<=\n|\r|\r\n|^\#|^/{2}|^/\*[^\*\s]|^/\*{2})
                         \h*\**\h*
                         (
                             (class|interface|trait)\h+([a-zA-Z\d\\\\]+)
@@ -93,26 +109,26 @@ class Foo {
                         )
                         \.?
                         \h*
-                        (?=\R|\*\/$|$)
-                    /ix', $tokens[$classNameIndex]->getContent()),
-                    '',
-                    $tokens[$index]->getContent()
-                );
-            } elseif ($tokens[$classyIndex]->isGivenKind(\T_FUNCTION)) {
-                $newContent = Preg::replace(
-                    '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
-                    '',
-                    $tokens[$index]->getContent()
-                );
-            } else {
-                continue;
-            }
-
-            if ($newContent === $tokens[$index]->getContent()) {
-                continue;
-            }
-
-            $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
+                        (?=\R|\*/$|$)
+                    ~ix', $tokens[$classyNameIndex]->getContent()),
+                '',
+                $content
+            );
+        } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
+            /** @var string $content */
+            $content = Preg::replace(
+                '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
+                '',
+                $content
+            );
+        } else {
+            return $content;
         }
+
+        if ($content === '/***/') {
+            $content = '/** */';
+        }
+
+        return $content;
     }
 }
