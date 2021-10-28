@@ -44,7 +44,7 @@ class Foo {
     }
 
     /**
-     * Must run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer.
+     * Must run before NoEmptyCommentFixer, NoEmptyPhpdocFixer, NoTrailingWhitespaceInCommentFixer, PhpdocTrimConsecutiveBlankLineSeparationFixer, PhpdocTrimFixer.
      */
     public function getPriority(): int
     {
@@ -68,22 +68,25 @@ class Foo {
                 continue;
             }
 
-            $nextIndex = $tokens->getTokenNotOfKindSibling(
+            $classyIndex = $tokens->getTokenNotOfKindSibling(
                 $index,
                 1,
                 [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]]
             );
-            if ($nextIndex === null) {
+            if ($classyIndex === null) {
                 continue;
             }
 
-            if ($tokens[$nextIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
+            if ($tokens[$classyIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
+                /** @var int $classNameIndex */
+                $classNameIndex = $tokens->getNextMeaningfulToken($classyIndex);
+
                 $newContent = Preg::replace(
-                    '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*(class|interface|trait)\h+[A-Za-z0-9\\\\_]+.?(?=\R|$)/i',
+                    \sprintf('/\R?(?<=\n|\r|\r\n|^#|^\/{2}|^\/\*[^\*]|^\/\*{2} )\h*\**\h*((class|interface|trait)\h+)?([a-zA-Z\d\\\\]+\\\\)?%s\.?\h*(?=\R|\*\/$|$)/i', $tokens[$classNameIndex]->getContent()),
                     '',
                     $tokens[$index]->getContent()
                 );
-            } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
+            } elseif ($tokens[$classyIndex]->isGivenKind(\T_FUNCTION)) {
                 $newContent = Preg::replace(
                     '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
                     '',

@@ -358,6 +358,21 @@ bar($x);
 
         yield [
             new CustomFixer\NoUselessCommentFixer(),
+            new Fixer\Comment\NoTrailingWhitespaceInCommentFixer(),
+            '<?php
+                /**
+                 */
+                 class Foo {}
+            ',
+            '<?php
+                /** Class Foo
+                 */
+                 class Foo {}
+            ',
+        ];
+
+        yield [
+            new CustomFixer\NoUselessCommentFixer(),
             new Fixer\Phpdoc\PhpdocTrimConsecutiveBlankLineSeparationFixer(),
             '<?php
                 /**
