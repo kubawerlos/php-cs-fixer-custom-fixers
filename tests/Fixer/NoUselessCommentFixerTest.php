@@ -49,6 +49,20 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
             /**
+             * DoNotRemoveMe
+             */
+            class Bar {}
+            ',
+        ];
+
+        yield [
+            '<?php
+            /**
+             */
+            class Bar {}
+            ',
+            '<?php
+            /**
              * Class Foo.
              */
             class Bar {}

@@ -82,7 +82,19 @@ class Foo {
                 $classNameIndex = $tokens->getNextMeaningfulToken($classyIndex);
 
                 $newContent = Preg::replace(
-                    \sprintf('/\R?(?<=\n|\r|\r\n|^#|^\/{2}|^\/\*[^\*]|^\/\*{2} )\h*\**\h*((class|interface|trait)\h+)?([a-zA-Z\d\\\\]+\\\\)?%s\.?\h*(?=\R|\*\/$|$)/i', $tokens[$classNameIndex]->getContent()),
+                    \sprintf('/
+                        \R?
+                        (?<=\n|\r|\r\n|^\#|^\/{2}|^\/\*[^\*]|^\/\*{2}\s)
+                        \h*\**\h*
+                        (
+                            (class|interface|trait)\h+([a-zA-Z\d\\\\]+)
+                            |
+                            %s
+                        )
+                        \.?
+                        \h*
+                        (?=\R|\*\/$|$)
+                    /ix', $tokens[$classNameIndex]->getContent()),
                     '',
                     $tokens[$index]->getContent()
                 );
