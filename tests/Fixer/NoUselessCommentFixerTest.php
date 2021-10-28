@@ -38,34 +38,31 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield [
-            '<?php
+        yield ['<?php
             /**
              * Class Foo.
              */
-             ',
-        ];
+             foo();
+             '];
 
-        yield [
-            '<?php
+        yield ['<?php
             /**
              * DoNotRemoveMe
              */
-            class Bar {}
-            ',
-        ];
+            class Foo {}
+            '];
 
         yield [
             '<?php
             /**
              */
-            class Bar {}
+            class Foo {}
             ',
             '<?php
             /**
-             * Class Foo.
+             * Class Bar.
              */
-            class Bar {}
+            class Foo {}
             ',
         ];
 
