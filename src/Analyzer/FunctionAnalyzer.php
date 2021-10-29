@@ -24,9 +24,9 @@ final class FunctionAnalyzer
     /**
      * @return array<ArgumentAnalysis>
      */
-    public function getFunctionArguments(Tokens $tokens, int $index): array
+    public static function getFunctionArguments(Tokens $tokens, int $index): array
     {
-        $argumentsRange = $this->getArgumentsRange($tokens, $index);
+        $argumentsRange = self::getArgumentsRange($tokens, $index);
         if ($argumentsRange === null) {
             return [];
         }
@@ -53,13 +53,13 @@ final class FunctionAnalyzer
             /** @var int $currentArgumentEnd */
             $currentArgumentEnd = $tokens->getPrevMeaningfulToken($index);
 
-            $arguments[] = $this->createArgumentAnalysis($tokens, $currentArgumentStart, $currentArgumentEnd);
+            $arguments[] = self::createArgumentAnalysis($tokens, $currentArgumentStart, $currentArgumentEnd);
 
             /** @var int $currentArgumentStart */
             $currentArgumentStart = $tokens->getNextMeaningfulToken($index);
         }
 
-        $arguments[] = $this->createArgumentAnalysis($tokens, $currentArgumentStart, $argumentsEndIndex);
+        $arguments[] = self::createArgumentAnalysis($tokens, $currentArgumentStart, $argumentsEndIndex);
 
         return $arguments;
     }
@@ -67,7 +67,7 @@ final class FunctionAnalyzer
     /**
      * @return null|array{int, int}
      */
-    private function getArgumentsRange(Tokens $tokens, int $index): ?array
+    private static function getArgumentsRange(Tokens $tokens, int $index): ?array
     {
         if (!$tokens[$index]->isGivenKind(\T_STRING)) {
             throw new \InvalidArgumentException(\sprintf('Index %d is not a function.', $index));
@@ -98,7 +98,7 @@ final class FunctionAnalyzer
         return [$argumentStartIndex, $argumentsEndIndex];
     }
 
-    private function createArgumentAnalysis(Tokens $tokens, int $startIndex, int $endIndex): ArgumentAnalysis
+    private static function createArgumentAnalysis(Tokens $tokens, int $startIndex, int $endIndex): ArgumentAnalysis
     {
         $isConstant = true;
 

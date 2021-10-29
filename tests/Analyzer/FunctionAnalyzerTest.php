@@ -30,12 +30,10 @@ final class FunctionAnalyzerTest extends TestCase
      */
     public function testForNotFunction(string $code, int $index): void
     {
-        $analyzer = new FunctionAnalyzer();
-
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(\sprintf('Index %d is not a function.', $index));
 
-        $analyzer->getFunctionArguments(Tokens::fromCode($code), $index);
+        FunctionAnalyzer::getFunctionArguments(Tokens::fromCode($code), $index);
     }
 
     /**
@@ -55,9 +53,8 @@ final class FunctionAnalyzerTest extends TestCase
     public function testGettingArguments(array $expected, string $code, int $index): void
     {
         $tokens = Tokens::fromCode($code);
-        $analyzer = new FunctionAnalyzer();
 
-        self::assertSame(\serialize($expected), \serialize($analyzer->getFunctionArguments($tokens, $index)));
+        self::assertSame(\serialize($expected), \serialize(FunctionAnalyzer::getFunctionArguments($tokens, $index)));
     }
 
     /**

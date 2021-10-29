@@ -83,56 +83,19 @@ class FooTest extends TestCase {
 
     private function fixArgumentsOrder(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        $functionAnalyzer = new FunctionAnalyzer();
-
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!self::isAssertionCall($tokens, $index)) {
                 continue;
             }
 
-            $arguments = $functionAnalyzer->getFunctionArguments($tokens, $index);
+            $arguments = FunctionAnalyzer::getFunctionArguments($tokens, $index);
 
-            if (!$this->shouldArgumentsBeSwapped($arguments)) {
+            if (!self::shouldArgumentsBeSwapped($arguments)) {
                 continue;
             }
 
-            $this->swapArguments($tokens, $arguments);
+            self::swapArguments($tokens, $arguments);
         }
-    }
-
-    /**
-     * @param array<ArgumentAnalysis> $arguments
-     */
-    private function shouldArgumentsBeSwapped(array $arguments): bool
-    {
-        if (\count($arguments) < 2) {
-            return false;
-        }
-
-        if ($arguments[0]->isConstant()) {
-            return false;
-        }
-
-        return $arguments[1]->isConstant();
-    }
-
-    /**
-     * @param array<ArgumentAnalysis> $arguments
-     */
-    private function swapArguments(Tokens $tokens, array $arguments): void
-    {
-        $expectedArgumentTokens = []; // these will be 1st argument
-        for ($index = $arguments[1]->getStartIndex(); $index <= $arguments[1]->getEndIndex(); $index++) {
-            $expectedArgumentTokens[] = $tokens[$index];
-        }
-
-        $actualArgumentTokens = []; // these will be 2nd argument
-        for ($index = $arguments[0]->getStartIndex(); $index <= $arguments[0]->getEndIndex(); $index++) {
-            $actualArgumentTokens[] = $tokens[$index];
-        }
-
-        $tokens->overrideRange($arguments[1]->getStartIndex(), $arguments[1]->getEndIndex(), $actualArgumentTokens);
-        $tokens->overrideRange($arguments[0]->getStartIndex(), $arguments[0]->getEndIndex(), $expectedArgumentTokens);
     }
 
     private static function isAssertionCall(Tokens $tokens, int $index): bool
@@ -162,5 +125,40 @@ class FooTest extends TestCase {
         }
 
         return (new FunctionsAnalyzer())->isTheSameClassCall($tokens, $index);
+    }
+
+    /**
+     * @param array<ArgumentAnalysis> $arguments
+     */
+    private static function shouldArgumentsBeSwapped(array $arguments): bool
+    {
+        if (\count($arguments) < 2) {
+            return false;
+        }
+
+        if ($arguments[0]->isConstant()) {
+            return false;
+        }
+
+        return $arguments[1]->isConstant();
+    }
+
+    /**
+     * @param array<ArgumentAnalysis> $arguments
+     */
+    private static function swapArguments(Tokens $tokens, array $arguments): void
+    {
+        $expectedArgumentTokens = []; // these will be 1st argument
+        for ($index = $arguments[1]->getStartIndex(); $index <= $arguments[1]->getEndIndex(); $index++) {
+            $expectedArgumentTokens[] = $tokens[$index];
+        }
+
+        $actualArgumentTokens = []; // these will be 2nd argument
+        for ($index = $arguments[0]->getStartIndex(); $index <= $arguments[0]->getEndIndex(); $index++) {
+            $actualArgumentTokens[] = $tokens[$index];
+        }
+
+        $tokens->overrideRange($arguments[1]->getStartIndex(), $arguments[1]->getEndIndex(), $actualArgumentTokens);
+        $tokens->overrideRange($arguments[0]->getStartIndex(), $arguments[0]->getEndIndex(), $expectedArgumentTokens);
     }
 }
