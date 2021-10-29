@@ -59,10 +59,10 @@ class FooTest extends TestCase {
     private static function getFixCases(): iterable
     {
         yield ['$notThis->assertSame($x, 1);'];
-        yield ['$this->assertSame;'];
-        yield ['$this->assertSame();'];
-        yield ['$this->assertSame(1);'];
-        yield ['$this->assertSame(1, 2);'];
+        yield ['self::assertSame;'];
+        yield ['self::assertSame();'];
+        yield ['self::assertSame(1);'];
+        yield ['self::assertSame(1, 2);'];
 
         yield [
             '$this->assertSame(1, $x);',
@@ -70,39 +70,39 @@ class FooTest extends TestCase {
         ];
 
         yield [
-            '$this->assertSame(true, $x);',
-            '$this->assertSame($x, true);',
+            'static::assertSame(true, $x);',
+            'static::assertSame($x, true);',
         ];
 
         yield [
-            '$this->assertSame([1, 2, 3], $x);',
-            '$this->assertSame($x, [1, 2, 3]);',
+            'self::assertSame([1, 2, 3], $x);',
+            'self::assertSame($x, [1, 2, 3]);',
         ];
 
         yield [
-            '$this->assertSame(array(1, 2, 3), $x);',
-            '$this->assertSame($x, array(1, 2, 3));',
+            'self::assertSame(array(1, 2, 3), $x);',
+            'self::assertSame($x, array(1, 2, 3));',
         ];
 
         yield [
-            '$this->assertSame(
+            'self::assertSame(
                 false,
                 $x
             );',
-            '$this->assertSame(
+            'self::assertSame(
                 $x,
                 false
             );',
         ];
 
         yield [
-            '$this->assertSame(6, foo(1, 2, 3));',
-            '$this->assertSame(foo(1, 2, 3), 6);',
+            'self::assertSame(6, foo(1, 2, 3));',
+            'self::assertSame(foo(1, 2, 3), 6);',
         ];
 
         yield [
-            '$this->assertSame(1, $x, "Message");',
-            '$this->assertSame($x, 1, "Message");',
+            'self::assertSame(1, $x, "Message");',
+            'self::assertSame($x, 1, "Message");',
         ];
 
         yield [
@@ -112,14 +112,14 @@ class FooTest extends TestCase {
 
         yield [
             '
-                $this->assertSame(1, $a);
-                $this->assertSame(2, $b);
-                $this->assertSame(3, $c);
+                self::assertSame(1, $a);
+                self::assertSame(2, $b);
+                self::assertSame(3, $c);
             ',
             '
-                $this->assertSame($a, 1);
-                $this->assertSame(2, $b);
-                $this->assertSame($c, 3);
+                self::assertSame($a, 1);
+                self::assertSame(2, $b);
+                self::assertSame($c, 3);
             ',
         ];
     }

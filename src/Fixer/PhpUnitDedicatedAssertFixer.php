@@ -95,7 +95,7 @@ class FooTest extends TestCase {
     private function fixAssertions(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!self::isAssertionCall($tokens, $index)) {
+            if (!self::isAssertionToFix($tokens, $index)) {
                 continue;
             }
 
@@ -108,7 +108,7 @@ class FooTest extends TestCase {
         }
     }
 
-    private static function isAssertionCall(Tokens $tokens, int $index): bool
+    private static function isAssertionToFix(Tokens $tokens, int $index): bool
     {
         static $assertions;
 
