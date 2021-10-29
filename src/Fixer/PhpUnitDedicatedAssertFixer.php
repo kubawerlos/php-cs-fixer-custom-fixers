@@ -18,33 +18,43 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
 
-final class PhpUnitAssertArgumentsOrderFixer extends AbstractFixer
+final class PhpUnitDedicatedAssertFixer extends AbstractFixer
 {
     private const ASSERTIONS = [
         'assertEquals',
-        'assertEqualsCanonicalizing',
-        'assertEqualsIgnoringCase',
-        'assertEqualsWithDelta',
         'assertNotEquals',
-        'assertNotEqualsCanonicalizing',
-        'assertNotEqualsIgnoringCase',
-        'assertNotEqualsWithDelta',
-        'assertNotSame',
         'assertSame',
+        'assertNotSame',
+    ];
+    private const REPLACEMENTS_MAP = [
+        'count' => [
+            'positive' => 'assertCount',
+            'negative' => 'assertNotCount',
+        ],
+        'get_class' => [
+            'positive' => 'assertInstanceOf',
+            'negative' => 'assertNotInstanceOf',
+        ],
+        'sizeof' => [
+            'positive' => 'assertCount',
+            'negative' => 'assertNotCount',
+        ],
     ];
 
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'PHPUnit assertions must have expected argument before actual one.',
+            'PHPUnit assertions like `assertCount` and `assertInstanceOf` must be used over `assertEquals`/`assertSame`.',
             [new CodeSample('<?php
 class FooTest extends TestCase {
     public function testFoo() {
-        self::assertSame($value, 10);
+        self::assertSame($size, count($elements));
+        self::assertSame($className, get_class($object));
     }
 }
 ')],
@@ -54,11 +64,11 @@ class FooTest extends TestCase {
     }
 
     /**
-     * Must run before PhpUnitConstructFixer, PhpUnitDedicatedAssertFixer.
+     * Must run after PhpUnitAssertArgumentsOrderFixer.
      */
     public function getPriority(): int
     {
-        return 0;
+        return -1;
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -77,11 +87,11 @@ class FooTest extends TestCase {
 
         /** @var array<int> $indexes */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
-            $this->fixArgumentsOrder($tokens, $indexes[0], $indexes[1]);
+            $this->fixAssertions($tokens, $indexes[0], $indexes[1]);
         }
     }
 
-    private function fixArgumentsOrder(Tokens $tokens, int $startIndex, int $endIndex): void
+    private function fixAssertions(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!self::isAssertionCall($tokens, $index)) {
@@ -89,12 +99,11 @@ class FooTest extends TestCase {
             }
 
             $arguments = FunctionAnalyzer::getFunctionArguments($tokens, $index);
-
-            if (!self::shouldArgumentsBeSwapped($arguments)) {
+            if (\count($arguments) < 2) {
                 continue;
             }
 
-            self::swapArguments($tokens, $arguments);
+            self::fixAssertion($tokens, $index, $arguments[1]);
         }
     }
 
@@ -127,38 +136,42 @@ class FooTest extends TestCase {
         return (new FunctionsAnalyzer())->isTheSameClassCall($tokens, $index);
     }
 
-    /**
-     * @param array<ArgumentAnalysis> $arguments
-     */
-    private static function shouldArgumentsBeSwapped(array $arguments): bool
+    private static function fixAssertion(Tokens $tokens, int $assertionIndex, ArgumentAnalysis $secondArgument): void
     {
-        if (\count($arguments) < 2) {
-            return false;
+        $functionCallIndex = $secondArgument->getStartIndex();
+        if ($tokens[$functionCallIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+            /** @var int $functionCallIndex */
+            $functionCallIndex = $tokens->getNextMeaningfulToken($functionCallIndex);
         }
 
-        if ($arguments[0]->isConstant()) {
-            return false;
+        if (!(new FunctionsAnalyzer())->isGlobalFunctionCall($tokens, $functionCallIndex)) {
+            return;
         }
 
-        return $arguments[1]->isConstant();
-    }
-
-    /**
-     * @param array<ArgumentAnalysis> $arguments
-     */
-    private static function swapArguments(Tokens $tokens, array $arguments): void
-    {
-        $expectedArgumentTokens = []; // these will be 1st argument
-        for ($index = $arguments[1]->getStartIndex(); $index <= $arguments[1]->getEndIndex(); $index++) {
-            $expectedArgumentTokens[] = $tokens[$index];
+        $arguments = FunctionAnalyzer::getFunctionArguments($tokens, $functionCallIndex);
+        if (\count($arguments) !== 1) {
+            return;
         }
 
-        $actualArgumentTokens = []; // these will be 2nd argument
-        for ($index = $arguments[0]->getStartIndex(); $index <= $arguments[0]->getEndIndex(); $index++) {
-            $actualArgumentTokens[] = $tokens[$index];
+        $functionName = \strtolower($tokens[$functionCallIndex]->getContent());
+
+        if (!isset(self::REPLACEMENTS_MAP[$functionName])) {
+            return;
         }
 
-        $tokens->overrideRange($arguments[1]->getStartIndex(), $arguments[1]->getEndIndex(), $actualArgumentTokens);
-        $tokens->overrideRange($arguments[0]->getStartIndex(), $arguments[0]->getEndIndex(), $expectedArgumentTokens);
+        $newAssertion = self::REPLACEMENTS_MAP[$functionName][\stripos($tokens[$assertionIndex]->getContent(), 'not', 6) === false ? 'positive' : 'negative'];
+
+        /** @var int $openParenthesisIndex */
+        $openParenthesisIndex = $tokens->getNextMeaningfulToken($functionCallIndex);
+        $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+
+        if ($closeParenthesisIndex < $secondArgument->getEndIndex()) {
+            return;
+        }
+
+        $tokens[$assertionIndex] = new Token([\T_STRING, $newAssertion]);
+        $tokens->clearRange($secondArgument->getStartIndex(), $openParenthesisIndex - 1);
+        $tokens->clearTokenAndMergeSurroundingWhitespace($openParenthesisIndex);
+        $tokens->clearTokenAndMergeSurroundingWhitespace($closeParenthesisIndex);
     }
 }
