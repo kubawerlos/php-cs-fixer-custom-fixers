@@ -64,6 +64,7 @@ class FooTest extends TestCase {
     }
 
     /**
+     * Must run before NoUnusedImportsFixer.
      * Must run after PhpUnitAssertArgumentsOrderFixer.
      */
     public function getPriority(): int

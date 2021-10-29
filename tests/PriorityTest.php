@@ -436,6 +436,26 @@ bar($x);
             ',
         ];
 
+        yield [
+            new CustomFixer\PhpUnitDedicatedAssertFixer(),
+            new Fixer\Import\NoUnusedImportsFixer(),
+            '<?php
+                class FooTest extends TestCase {
+                    public function testFoo() {
+                        $this->assertCount(3, $elements);
+                    }
+                }
+            ',
+            '<?php
+                use function count;
+                class FooTest extends TestCase {
+                    public function testFoo() {
+                        $this->assertSame(3, count($elements));
+                    }
+                }
+            ',
+        ];
+
         $noExtraBlankLinesFixer = new Fixer\Whitespace\NoExtraBlankLinesFixer();
         $noExtraBlankLinesFixer->configure(['tokens' => ['curly_brace_block']]);
         yield [
