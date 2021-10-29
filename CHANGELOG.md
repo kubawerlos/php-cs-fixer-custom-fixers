@@ -2,6 +2,7 @@
 
 ## v3.2.0
 - Add PhpUnitAssertArgumentsOrderFixer
+- Add PhpUnitDedicatedAssertFixer
 - PromotedConstructorPropertyFixer - add option "promote_only_existing_properties"
 - NoUselessCommentFixer - support PHPDoc like `/** ClassName */`
 
