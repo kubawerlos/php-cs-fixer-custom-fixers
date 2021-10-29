@@ -68,30 +68,7 @@ class Foo {
                 continue;
             }
 
-            $nextIndex = $tokens->getTokenNotOfKindSibling(
-                $index,
-                1,
-                [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]]
-            );
-            if ($nextIndex === null) {
-                continue;
-            }
-
-            if ($tokens[$nextIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
-                $newContent = Preg::replace(
-                    '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*(class|interface|trait)\h+[A-Za-z0-9\\\\_]+.?(?=\R|$)/i',
-                    '',
-                    $tokens[$index]->getContent()
-                );
-            } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
-                $newContent = Preg::replace(
-                    '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
-                    '',
-                    $tokens[$index]->getContent()
-                );
-            } else {
-                continue;
-            }
+            $newContent = $this->getNewContent($tokens, $index);
 
             if ($newContent === $tokens[$index]->getContent()) {
                 continue;
@@ -99,5 +76,59 @@ class Foo {
 
             $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
         }
+    }
+
+    private function getNewContent(Tokens $tokens, int $index): string
+    {
+        $content = $tokens[$index]->getContent();
+
+        $nextIndex = $tokens->getTokenNotOfKindSibling(
+            $index,
+            1,
+            [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]]
+        );
+
+        if ($nextIndex === null) {
+            return $content;
+        }
+
+        if ($tokens[$nextIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
+            /** @var int $classyNameIndex */
+            $classyNameIndex = $tokens->getNextMeaningfulToken($nextIndex);
+
+            /** @var string $content */
+            $content = Preg::replace(
+                \sprintf('~
+                        \R?
+                        (?<=\n|\r|\r\n|^\#|^/{2}|^/\*[^\*\s]|^/\*{2})
+                        \h*\**\h*
+                        (
+                            (class|interface|trait)\h+([a-zA-Z\d\\\\]+)
+                            |
+                            %s
+                        )
+                        \.?
+                        \h*
+                        (?=\R|\*/$|$)
+                    ~ix', $tokens[$classyNameIndex]->getContent()),
+                '',
+                $content
+            );
+        } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
+            /** @var string $content */
+            $content = Preg::replace(
+                '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
+                '',
+                $content
+            );
+        } else {
+            return $content;
+        }
+
+        if ($content === '/***/') {
+            $content = '/** */';
+        }
+
+        return $content;
     }
 }
