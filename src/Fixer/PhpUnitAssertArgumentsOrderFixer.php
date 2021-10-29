@@ -18,6 +18,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
@@ -25,16 +26,20 @@ use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
 final class PhpUnitAssertArgumentsOrderFixer extends AbstractFixer
 {
     private const ASSERTIONS = [
-        'assertEquals',
-        'assertEqualsCanonicalizing',
-        'assertEqualsIgnoringCase',
-        'assertEqualsWithDelta',
-        'assertNotEquals',
-        'assertNotEqualsCanonicalizing',
-        'assertNotEqualsIgnoringCase',
-        'assertNotEqualsWithDelta',
-        'assertNotSame',
-        'assertSame',
+        'assertEquals' => true,
+        'assertNotEquals' => true,
+        'assertEqualsCanonicalizing' => true,
+        'assertNotEqualsCanonicalizing' => true,
+        'assertEqualsIgnoringCase' => true,
+        'assertNotEqualsIgnoringCase' => true,
+        'assertEqualsWithDelta' => true,
+        'assertNotEqualsWithDelta' => true,
+        'assertSame' => true,
+        'assertNotSame' => true,
+        'assertGreaterThan' => 'assertLessThan',
+        'assertGreaterThanOrEqual' => 'assertLessThanOrEqual',
+        'assertLessThan' => 'assertGreaterThan',
+        'assertLessThanOrEqual' => 'assertGreaterThanOrEqual',
     ];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -84,7 +89,8 @@ class FooTest extends TestCase {
     private function fixArgumentsOrder(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!self::isAssertionCall($tokens, $index)) {
+            $newAssertion = self::getNewAssertion($tokens, $index);
+            if ($newAssertion === null) {
                 continue;
             }
 
@@ -94,37 +100,50 @@ class FooTest extends TestCase {
                 continue;
             }
 
+            if ($newAssertion !== $tokens[$index]->getContent()) {
+                $tokens[$index] = new Token([\T_STRING, $newAssertion]);
+            }
+
             self::swapArguments($tokens, $arguments);
         }
     }
 
-    private static function isAssertionCall(Tokens $tokens, int $index): bool
+    private static function getNewAssertion(Tokens $tokens, int $index): ?string
     {
+        /** @var null|array<string, bool|string> $assertions */
         static $assertions;
 
         if ($assertions === null) {
-            $assertions = \array_flip(
-                \array_map(
-                    static function (string $name): string {
-                        return \strtolower($name);
-                    },
-                    self::ASSERTIONS
-                )
-            );
+            $assertions = [];
+            foreach (self::ASSERTIONS as $old => $new) {
+                $assertions[\strtolower($old)] = $new;
+            }
         }
 
-        if (!isset($assertions[\strtolower($tokens[$index]->getContent())])) {
-            return false;
+        $oldAssertion = $tokens[$index]->getContent();
+
+        if (!isset($assertions[\strtolower($oldAssertion)])) {
+            return null;
         }
+
+        $newAssertion = $assertions[\strtolower($oldAssertion)];
 
         /** @var int $openingBraceIndex */
         $openingBraceIndex = $tokens->getNextMeaningfulToken($index);
 
         if (!$tokens[$openingBraceIndex]->equals('(')) {
-            return false;
+            return null;
         }
 
-        return (new FunctionsAnalyzer())->isTheSameClassCall($tokens, $index);
+        if (!(new FunctionsAnalyzer())->isTheSameClassCall($tokens, $index)) {
+            return null;
+        }
+
+        if (!\is_string($newAssertion)) {
+            return $oldAssertion;
+        }
+
+        return $newAssertion;
     }
 
     /**

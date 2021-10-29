@@ -106,6 +106,26 @@ class FooTest extends TestCase {
         ];
 
         yield [
+            'self::assertGreaterThan(1, $x);',
+            'self::assertLessThan($x, 1);',
+        ];
+
+        yield [
+            'self::assertLessThan(1, $x);',
+            'self::assertGreaterThan($x, 1);',
+        ];
+
+        yield [
+            'self::assertGreaterThanOrEqual(1, $x);',
+            'self::assertLessThanOrEqual($x, 1);',
+        ];
+
+        yield [
+            'self::assertLessThanOrEqual(1, $x);',
+            'self::assertGreaterThanOrEqual($x, 1);',
+        ];
+
+        yield [
             '$this->ASSERTSAME(1, $x);',
             '$this->ASSERTSAME($x, 1);',
         ];
