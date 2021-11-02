@@ -17,6 +17,7 @@
         <directory name='../src' />
         <ignoreFiles>
             <directory name='./src/Readme' />
+            <file name='./src/OrderedClassElementsFixerWrapper.php' />
         </ignoreFiles>
     </projectFiles>
 

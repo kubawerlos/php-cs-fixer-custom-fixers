@@ -11,89 +11,111 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerCustomFixersDev\Fixer {
-    use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
-    use PhpCsFixer\Fixer\FixerInterface;
-    use PhpCsFixer\FixerDefinition\FixerDefinition;
-    use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-    use PhpCsFixer\Tokenizer\Tokens;
+namespace PhpCsFixerCustomFixersDev\Fixer;
 
-    /**
-     * @internal
-     */
-    final class OrderedClassElementsInternalFixer implements FixerInterface
+use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Utils;
+use PhpCsFixerCustomFixersDev\OrderedClassElementsFixerWrapper;
+
+/**
+ * @internal
+ */
+final class OrderedClassElementsInternalFixer implements FixerInterface
+{
+    public const PUBLIC_METHODS_ORDER = [
+        'getDefinition',
+        'getConfigurationDefinition',
+        'configure',
+        'setWhitespacesConfig',
+        'name',
+        'getName',
+        'getPriority',
+        'getPullRequestId',
+        'supports',
+        'isCandidate',
+        'isRisky',
+        'fix',
+        'getSuccessorsNames',
+    ];
+
+    /** @var OrderedClassElementsFixerWrapper */
+    private $orderedClassElementsFixerWrapper;
+
+    public function __construct()
     {
-        public const PUBLIC_METHODS_ORDER = [
-            'getDefinition',
-            'getConfigurationDefinition',
-            'configure',
-            'setWhitespacesConfig',
-            'name',
-            'getName',
-            'getPriority',
-            'getPullRequestId',
-            'supports',
-            'isCandidate',
-            'isRisky',
-            'fix',
-            'getSuccessorsNames',
-        ];
+        $this->orderedClassElementsFixerWrapper = new OrderedClassElementsFixerWrapper();
+    }
 
-        /** @var OrderedClassElementsFixer */
-        private $orderedClassElementsFixer;
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        return new FixerDefinition('Internal fixer for class elements order.', []);
+    }
 
-        public function __construct()
-        {
-            $this->orderedClassElementsFixer = new OrderedClassElementsFixer();
-        }
+    public function getName(): string
+    {
+        return 'Internal/' . \strtolower(\str_replace('\\', '_', Utils::camelCaseToUnderscore(__CLASS__)));
+    }
 
-        public function getDefinition(): FixerDefinitionInterface
-        {
-            return new FixerDefinition('Internal fixer for class elements order.', []);
-        }
+    public function getPriority(): int
+    {
+        return $this->orderedClassElementsFixerWrapper->getPriority();
+    }
 
-        public function getName(): string
-        {
-            return 'Internal/' . $this->orderedClassElementsFixer->getName();
-        }
+    public function supports(\SplFileInfo $file): bool
+    {
+        return true;
+    }
 
-        public function getPriority(): int
-        {
-            return $this->orderedClassElementsFixer->getPriority();
-        }
+    public function isCandidate(Tokens $tokens): bool
+    {
+        return $tokens->findSequence([[\T_EXTENDS], [\T_STRING, 'AbstractFixer']]) !== null
+            || $tokens->findSequence([[\T_IMPLEMENTS], [\T_STRING, 'FixerInterface']]) !== null;
+    }
 
-        public function supports(\SplFileInfo $file): bool
-        {
-            return $this->orderedClassElementsFixer->supports($file);
-        }
+    public function isRisky(): bool
+    {
+        return false;
+    }
 
-        public function isCandidate(Tokens $tokens): bool
-        {
-            return $tokens->findSequence([[\T_EXTENDS], [\T_STRING, 'AbstractFixer']]) !== null
-                || $tokens->findSequence([[\T_IMPLEMENTS], [\T_STRING, 'FixerInterface']]) !== null;
-        }
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        for ($index = 1; $index < $tokens->count(); $index++) {
+            if (!$tokens[$index]->isClassy()) {
+                continue;
+            }
 
-        public function isRisky(): bool
-        {
-            return $this->orderedClassElementsFixer->isRisky();
-        }
+            /** @var int $index */
+            $index = $tokens->getNextTokenOfKind($index, ['{']);
 
-        public function fix(\SplFileInfo $file, Tokens $tokens): void
-        {
-            $this->orderedClassElementsFixer->fix($file, $tokens);
+            /** @var array<array<string>> $elements */
+            $elements = $this->orderedClassElementsFixerWrapper->getElements($tokens, $index);
+
+            if (\count($elements) === 0) {
+                continue;
+            }
+
+            /** @var array<array<string>> $elements */
+            $elements = $this->orderedClassElementsFixerWrapper->sortElements($elements);
+            $sorted = $this->sortElements($elements);
+
+            /** @var int $endIndex */
+            $endIndex = $elements[\count($elements) - 1]['end'];
+
+            if ($sorted !== $elements) {
+                $this->orderedClassElementsFixerWrapper->sortTokens($tokens, $index, $endIndex, $sorted);
+            }
+
+            $index = $endIndex;
         }
     }
-}
-
-namespace PhpCsFixer\Fixer\ClassNotation {
-    use PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer;
 
     /**
-     * @internal
-     *
      * @param array<array<string>> $elements
      */
-    function usort(array &$elements): void
+    private function sortElements(array $elements): array
     {
         \usort(
             $elements,
@@ -107,13 +129,13 @@ namespace PhpCsFixer\Fixer\ClassNotation {
                     && $b['type'] === 'method' && $b['visibility'] === 'public'
                     && isset($a['name'], $b['name'])
                 ) {
-                    if (!\in_array($a['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
+                    if (!\in_array($a['name'], self::PUBLIC_METHODS_ORDER, true)) {
                         throw new \Exception(\sprintf('Method "%s" not in order list', $a['name']));
                     }
-                    if (!\in_array($b['name'], OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER, true)) {
+                    if (!\in_array($b['name'], self::PUBLIC_METHODS_ORDER, true)) {
                         throw new \Exception(\sprintf('Method "%s" not in order list', $b['name']));
                     }
-                    foreach (OrderedClassElementsInternalFixer::PUBLIC_METHODS_ORDER as $name) {
+                    foreach (self::PUBLIC_METHODS_ORDER as $name) {
                         if ($a['name'] === $name) {
                             return -1;
                         }
@@ -130,5 +152,7 @@ namespace PhpCsFixer\Fixer\ClassNotation {
                 return $a['position'] <=> $b['position'];
             }
         );
+
+        return $elements;
     }
 }
