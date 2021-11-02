@@ -86,12 +86,9 @@ final class SrcCodeTest extends TestCase
      */
     public static function provideFixerCases(): iterable
     {
-        return \array_map(
-            static function (FixerInterface $fixer): array {
-                return [$fixer];
-            },
-            \iterator_to_array(new Fixers())
-        );
+        foreach (new Fixers() as $fixer) {
+            yield [$fixer];
+        }
     }
 
     public function testFixerSupportsAllFilesByDefault(): void
@@ -114,9 +111,11 @@ final class SrcCodeTest extends TestCase
         /** @var string $content */
         $content = \file_get_contents($fileName);
 
-        $tokens = Tokens::fromCode($content);
+        /** @var array<Token> $tokens */
+        $tokens = Tokens::fromCode($content)->toArray();
+
         $stringTokens = \array_filter(
-            $tokens->toArray(),
+            $tokens,
             static function (Token $token): bool {
                 return $token->isGivenKind(\T_STRING);
             }

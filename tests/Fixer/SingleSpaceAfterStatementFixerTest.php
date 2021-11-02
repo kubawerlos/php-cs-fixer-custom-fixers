@@ -297,7 +297,11 @@ do    {
         $reflectionObject = new \ReflectionObject($this->fixer);
         $property = $reflectionObject->getProperty('tokens');
         $property->setAccessible(true);
-        $property->setValue($this->fixer, \array_diff($property->getValue($this->fixer), [$token]));
+
+        /** @var array<int> $tokens */
+        $tokens = $property->getValue($this->fixer);
+
+        $property->setValue($this->fixer, \array_diff($tokens, [$token]));
 
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
@@ -319,7 +323,10 @@ do    {
         $property = $reflectionObject->getProperty('tokens');
         $property->setAccessible(true);
 
-        foreach ($property->getValue($fixer) as $token) {
+        /** @var array<int> $tokens */
+        $tokens = $property->getValue($fixer);
+
+        foreach ($tokens as $token) {
             yield [$token];
         }
     }
