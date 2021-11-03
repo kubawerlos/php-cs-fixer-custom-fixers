@@ -10,8 +10,6 @@ parameters:
       path: ../tests
     - message: '#^Parameter \#\d+ \$[a-zA-Z0-9]+ of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given\.$#'
       path: ../tests
-    - message: '#^Parameter \#\d+ \$callback of function array_[a-z]+ expects callable\(.+\): [a-z]+, Closure\(.+\): [a-z]+ given\.$#'
-      path: ../tests
     - message: '# will always evaluate to true\.$#'
       path: ../tests
   level: max

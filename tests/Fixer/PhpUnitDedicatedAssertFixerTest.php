@@ -112,7 +112,11 @@ class FooTest extends TestCase {
         ];
 
         $reflection = new \ReflectionClass(PhpUnitDedicatedAssertFixer::class);
-        foreach ($reflection->getConstant('ASSERTIONS') as $assertion) {
+
+        /** @var array<string> $assertions */
+        $assertions = $reflection->getConstant('ASSERTIONS');
+
+        foreach ($assertions as $assertion) {
             $expected = 'self::assertCount(3, $array);';
             $input = \sprintf('self::%s(3, count($array));', $assertion);
 
