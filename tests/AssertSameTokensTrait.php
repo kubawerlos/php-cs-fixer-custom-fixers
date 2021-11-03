@@ -20,7 +20,7 @@ trait AssertSameTokensTrait
 {
     private static function assertSameTokens(Tokens $expectedTokens, Tokens $inputTokens): void
     {
-        self::assertSame($expectedTokens->count(), $inputTokens->count(), 'Both collections must have the same size.');
+        self::assertCount($expectedTokens->count(), $inputTokens, 'Both collections must have the same size.');
 
         /** @var Token $expectedToken */
         foreach ($expectedTokens as $index => $expectedToken) {
