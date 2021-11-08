@@ -70,6 +70,15 @@ final class CommentSurroundedBySpacesFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php $a; #',
+        ];
+
+        yield [
+            '<?php #[\ReturnTypeWillChange]
+              function doFoo() {}',
+        ];
+
+        yield [
             '<?php $a; /* foo */',
             '<?php $a; /*foo */',
         ];
