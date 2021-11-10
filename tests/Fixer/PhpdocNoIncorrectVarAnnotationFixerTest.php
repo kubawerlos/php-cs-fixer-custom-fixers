@@ -330,6 +330,29 @@ $x = 0;
 ',
         ];
 
+        yield 'remove PHPDoc from wrong places' => [
+            '<?php class Foo {
+                public function f1($x) {
+                }
+                public function f2($x) {
+                    return $x;
+                }
+            }',
+            '<?php class Foo {
+                /** @var int */
+                public function f1($x) {
+                    /** @var int $x */
+                }
+                /** @var int $x */
+                public function f2($x) {
+                    /** @var int $x */
+                    return $x;
+                    /** @var int $x */
+                }
+                /** @var int */
+            }',
+        ];
+
         yield 'remove PHPDoc for class properties when variable names are different' => [
             '<?php class Foo {
                 static $a;
