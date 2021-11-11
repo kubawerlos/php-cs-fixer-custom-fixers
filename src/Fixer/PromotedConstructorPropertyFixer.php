@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
@@ -21,6 +22,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\FixerDefinition\VersionSpecification;
 use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -110,7 +112,7 @@ class Foo {
                 continue;
             }
 
-            $this->promoteProperties($tokens, $index, $constructorAnalysis);
+            $this->promoteProperties($tokens, $index, $constructorAnalysis, $this->isDoctrineEntity($tokens, $index));
         }
 
         \krsort($this->tokensToInsert);
@@ -124,7 +126,27 @@ class Foo {
         }
     }
 
-    private function promoteProperties(Tokens $tokens, int $classIndex, ConstructorAnalysis $constructorAnalysis): void
+    private function isDoctrineEntity(Tokens $tokens, int $index): bool
+    {
+        /** @var int $phpDocIndex */
+        $phpDocIndex = $tokens->getPrevNonWhitespace($index);
+
+        if (!$tokens[$phpDocIndex]->isGivenKind(\T_DOC_COMMENT)) {
+            return false;
+        }
+
+        $docBlock = new DocBlock($tokens[$phpDocIndex]->getContent());
+
+        foreach ($docBlock->getAnnotations() as $annotation) {
+            if (Preg::match('/\*\h+(@Document|@Entity|@Mapping\\\\Entity|@ODM\\\\Document|@ORM\\\\Entity|@ORM\\\\Mapping\\\\Entity)/', $annotation->getContent()) === 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function promoteProperties(Tokens $tokens, int $classIndex, ConstructorAnalysis $constructorAnalysis, bool $isDoctrineEntity): void
     {
         $properties = $this->getClassProperties($tokens, $classIndex);
 
@@ -138,7 +160,7 @@ class Foo {
 
             $propertyIndex = $this->getPropertyIndex($tokens, $properties, $constructorPromotableAssignments[$constructorParameterName]);
 
-            if ($propertyIndex === null && $this->promoteOnlyExistingProperties) {
+            if (!$this->isPropertyToPromote($tokens, $propertyIndex, $isDoctrineEntity)) {
                 continue;
             }
 
@@ -171,6 +193,30 @@ class Foo {
         }
 
         return null;
+    }
+
+    private function isPropertyToPromote(Tokens $tokens, ?int $propertyIndex, bool $isDoctrineEntity): bool
+    {
+        if ($propertyIndex === null) {
+            return !$this->promoteOnlyExistingProperties;
+        }
+
+        if (!$isDoctrineEntity) {
+            return true;
+        }
+
+        /** @var int $phpDocIndex */
+        $phpDocIndex = $tokens->getPrevTokenOfKind($propertyIndex, [[\T_DOC_COMMENT]]);
+
+        $variableIndex = $tokens->getNextTokenOfKind($phpDocIndex, ['{', [\T_VARIABLE]]);
+
+        if ($variableIndex !== $propertyIndex) {
+            return true;
+        }
+
+        $docBlock = new DocBlock($tokens[$phpDocIndex]->getContent());
+
+        return \count($docBlock->getAnnotations()) === 0;
     }
 
     /**
