@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.3.0
+- PhpdocNoIncorrectVarAnnotationFixer - remove more incorrect annotations
+
 ## v3.2.0
 - Add PhpUnitAssertArgumentsOrderFixer
 - Add PhpUnitDedicatedAssertFixer
