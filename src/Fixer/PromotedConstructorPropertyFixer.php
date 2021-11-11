@@ -126,26 +126,6 @@ class Foo {
         }
     }
 
-    private function isDoctrineEntity(Tokens $tokens, int $index): bool
-    {
-        /** @var int $phpDocIndex */
-        $phpDocIndex = $tokens->getPrevNonWhitespace($index);
-
-        if (!$tokens[$phpDocIndex]->isGivenKind(\T_DOC_COMMENT)) {
-            return false;
-        }
-
-        $docBlock = new DocBlock($tokens[$phpDocIndex]->getContent());
-
-        foreach ($docBlock->getAnnotations() as $annotation) {
-            if (Preg::match('/\*\h+(@Document|@Entity|@Mapping\\\\Entity|@ODM\\\\Document|@ORM\\\\Entity|@ORM\\\\Mapping\\\\Entity)/', $annotation->getContent()) === 1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private function promoteProperties(Tokens $tokens, int $classIndex, ConstructorAnalysis $constructorAnalysis): void
     {
         $isDoctrineEntity = $this->isDoctrineEntity($tokens, $classIndex);
@@ -173,6 +153,26 @@ class Foo {
             $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
             $this->addVisibilityToParameter($tokens, $constructorParameterIndex, $propertyVisibility ?? new Token([\T_PUBLIC, 'public']));
         }
+    }
+
+    private function isDoctrineEntity(Tokens $tokens, int $index): bool
+    {
+        /** @var int $phpDocIndex */
+        $phpDocIndex = $tokens->getPrevNonWhitespace($index);
+
+        if (!$tokens[$phpDocIndex]->isGivenKind(\T_DOC_COMMENT)) {
+            return false;
+        }
+
+        $docBlock = new DocBlock($tokens[$phpDocIndex]->getContent());
+
+        foreach ($docBlock->getAnnotations() as $annotation) {
+            if (Preg::match('/\*\h+(@Document|@Entity|@Mapping\\\\Entity|@ODM\\\\Document|@ORM\\\\Entity|@ORM\\\\Mapping\\\\Entity)/', $annotation->getContent()) === 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
