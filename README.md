@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-2996-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3030-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -53,6 +53,20 @@ Configuration options:
  <?php
 -var_dump($x);
 +//var_dump($x);
+```
+
+#### ConstructorEmptyBracesFixer
+Constructor's empty braces must be single line.
+```diff
+ <?php
+ class Foo {
+     public function __construct(
+         $param1,
+         $param2
+-    ) {
+-    }
++    ) {}
+ }
 ```
 
 #### DataProviderNameFixer
