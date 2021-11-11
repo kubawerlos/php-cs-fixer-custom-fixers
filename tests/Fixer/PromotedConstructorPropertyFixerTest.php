@@ -649,5 +649,91 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             }',
             ['promote_only_existing_properties' => true],
         ];
+
+        yield 'promote with PHPDocs' => [
+            '<?php
+            /**
+             * @internal
+             */
+            class Foo {
+                public function __construct(private int $x) {
+                }
+            }
+            ',
+            '<?php
+            /**
+             * @internal
+             */
+            class Foo {
+                /**
+                 * @var int
+                 */
+                private int $x;
+                public function __construct(int $x) {
+                    $this->x = $x;
+                }
+            }
+            ',
+        ];
+
+        foreach (
+            [
+                '@Document',
+                '@Entity',
+                '@Mapping\Entity',
+                '@ODM\Document',
+                '@ORM\Entity',
+                '@ORM\Mapping\Entity',
+            ] as $annotation
+        ) {
+            yield \sprintf('promote only properties without PHPDoc with tag when class has %s annotation', $annotation) => [
+                \sprintf(
+                    '<?php
+                    /**
+                     * %s
+                     */
+                    class Foo
+                    {
+                        /**
+                         * @Id
+                         */
+                        public string $doNotPromoteThisOne;
+                        public function __construct(
+                            public string $promoteThisOne,
+                            string $doNotPromoteThisOne,
+                            public string $promoteThisOneToo,
+                        ) {
+                            $this->doNotPromoteThisOne = $doNotPromoteThisOne;
+                        }
+                    }',
+                    $annotation
+                ),
+                \sprintf(
+                    '<?php
+                    /**
+                     * %s
+                     */
+                    class Foo
+                    {
+                        public string $promoteThisOne;
+                        /**
+                         * @Id
+                         */
+                        public string $doNotPromoteThisOne;
+                        public string $promoteThisOneToo;
+                        public function __construct(
+                            string $promoteThisOne,
+                            string $doNotPromoteThisOne,
+                            string $promoteThisOneToo,
+                        ) {
+                            $this->promoteThisOne = $promoteThisOne;
+                            $this->doNotPromoteThisOne = $doNotPromoteThisOne;
+                            $this->promoteThisOneToo = $promoteThisOneToo;
+                        }
+                    }',
+                    $annotation
+                ),
+            ];
+        }
     }
 }
