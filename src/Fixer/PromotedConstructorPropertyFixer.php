@@ -112,7 +112,7 @@ class Foo {
                 continue;
             }
 
-            $this->promoteProperties($tokens, $index, $constructorAnalysis, $this->isDoctrineEntity($tokens, $index));
+            $this->promoteProperties($tokens, $index, $constructorAnalysis);
         }
 
         \krsort($this->tokensToInsert);
@@ -146,8 +146,9 @@ class Foo {
         return false;
     }
 
-    private function promoteProperties(Tokens $tokens, int $classIndex, ConstructorAnalysis $constructorAnalysis, bool $isDoctrineEntity): void
+    private function promoteProperties(Tokens $tokens, int $classIndex, ConstructorAnalysis $constructorAnalysis): void
     {
+        $isDoctrineEntity = $this->isDoctrineEntity($tokens, $classIndex);
         $properties = $this->getClassProperties($tokens, $classIndex);
 
         $constructorPromotableParameters = $constructorAnalysis->getConstructorPromotableParameters();
