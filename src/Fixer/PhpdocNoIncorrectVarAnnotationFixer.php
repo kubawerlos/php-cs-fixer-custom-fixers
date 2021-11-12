@@ -100,7 +100,7 @@ $bar = new Foo();
         $nextIndex = $tokens->getTokenNotOfKindsSibling($index, 1, [\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC, \T_WHITESPACE]);
 
         if ($tokens[$nextIndex]->isGivenKind(\T_VARIABLE)) {
-            if (Preg::match('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent()) === 1) {
+            if (Preg::match('/@var\h+(.+\h+)?\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent()) === 1) {
                 $this->removeVarAnnotation($tokens, $index, [$tokens[$nextIndex]->getContent()]);
             }
 

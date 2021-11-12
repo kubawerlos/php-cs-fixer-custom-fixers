@@ -224,6 +224,12 @@ class Foo
      * @var int
      */
     var $e;
+
+    /**
+	 * Description of $f
+	 * @var int
+	 */
+	private $f;
 }
 ',
         ];
