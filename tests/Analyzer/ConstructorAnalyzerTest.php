@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class ConstructorAnalyzerTest extends TestCase
 {
-    public function testFindingNonAbstractConstructorWhenNotForClass(): void
+    public function testFindingConstructorWhenNotForClass(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Index 2 is not a class.');
@@ -33,7 +33,7 @@ final class ConstructorAnalyzerTest extends TestCase
         $tokens = Tokens::fromCode('<?php $no . $class . $here;');
         $analyzer = new ConstructorAnalyzer();
 
-        $analyzer->findNonAbstractConstructor($tokens, 2);
+        $analyzer->findConstructor($tokens, 2, true);
     }
 
     /**
@@ -41,13 +41,13 @@ final class ConstructorAnalyzerTest extends TestCase
      *
      * @dataProvider provideFindingNonAbstractConstructorCases
      */
-    public function testFindingNonAbstractConstructor(array $expected, string $code): void
+    public function testFindingNonAbstractConstructor(array $expected, bool $allowAbstract, string $code): void
     {
         $tokens = Tokens::fromCode($code);
         $analyzer = new ConstructorAnalyzer();
 
         foreach ($expected as $classIndex => $nonAbstractConstructorIndex) {
-            $constructorAnalysis = $analyzer->findNonAbstractConstructor($tokens, $classIndex);
+            $constructorAnalysis = $analyzer->findConstructor($tokens, $classIndex, $allowAbstract);
 
             if ($nonAbstractConstructorIndex === null) {
                 self::assertNull($constructorAnalysis);
@@ -59,19 +59,29 @@ final class ConstructorAnalyzerTest extends TestCase
     }
 
     /**
-     * @return iterable<array{array<int, null|int>, string}>
+     * @return iterable<array{array<int, null|int>, bool, string}>
      */
     public static function provideFindingNonAbstractConstructorCases(): iterable
     {
         yield 'no constructor' => [
             [3 => null],
+            true,
             '<?php abstract class Foo {
                 public function notConstructor() {}
             }',
         ];
 
-        yield 'abstract constructor' => [
+        yield 'abstract constructor allowed to be found' => [
+            [3 => 13],
+            true,
+            '<?php abstract class Foo {
+                abstract public function __construct() {}
+            }',
+        ];
+
+        yield 'abstract constructor not allowed to be found' => [
             [3 => null],
+            false,
             '<?php abstract class Foo {
                 abstract public function __construct() {}
             }',
@@ -79,6 +89,7 @@ final class ConstructorAnalyzerTest extends TestCase
 
         yield 'public constructor' => [
             [3 => 11],
+            true,
             '<?php abstract class Foo {
                 public function __construct() {}
             }',
@@ -86,6 +97,7 @@ final class ConstructorAnalyzerTest extends TestCase
 
         yield 'uppercase constructor' => [
             [3 => 11],
+            true,
             '<?php abstract class Foo {
                 public function __CONSTRUCT() {}
             }',
@@ -93,6 +105,7 @@ final class ConstructorAnalyzerTest extends TestCase
 
         yield 'class with other elements' => [
             [3 => 29],
+            true,
             '<?php abstract class Foo {
                 public $a;
                 public static function create() {}
@@ -103,6 +116,7 @@ final class ConstructorAnalyzerTest extends TestCase
 
         yield 'multiple classes' => [
             [2 => 10, 21 => null, 29 => 37],
+            true,
             '<?php
             class Foo {
                 public function __construct() {}

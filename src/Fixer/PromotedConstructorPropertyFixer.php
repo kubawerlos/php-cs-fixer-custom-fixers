@@ -107,7 +107,7 @@ class Foo {
                 continue;
             }
 
-            $constructorAnalysis = $constructorAnalyzer->findNonAbstractConstructor($tokens, $index);
+            $constructorAnalysis = $constructorAnalyzer->findConstructor($tokens, $index, false);
             if ($constructorAnalysis === null) {
                 continue;
             }
