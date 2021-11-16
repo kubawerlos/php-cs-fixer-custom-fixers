@@ -45,7 +45,7 @@ class FooTest extends TestCase {
     /**
      * @dataProvider dataProvider
      */
-    public function testHappyPath() {}
+    public function testSomething($expected, $actual) {}
     public function dataProvider() {}
 }
 '

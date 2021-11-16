@@ -34,10 +34,10 @@ final class DataProviderReturnTypeFixer extends AbstractFixer
                     '<?php
 class FooTest extends TestCase {
     /**
-     * @dataProvider provideHappyPathCases
+     * @dataProvider provideSomethingCases
      */
-    public function testHappyPath() {}
-    public function provideHappyPathCases(): array {}
+    public function testSomething($expected, $actual) {}
+    public function provideSomethingCases(): array {}
 }
 '
                 ),

@@ -80,11 +80,11 @@ Configuration options:
  class FooTest extends TestCase {
      /**
 -     * @dataProvider dataProvider
-+     * @dataProvider provideHappyPathCases
++     * @dataProvider provideSomethingCases
       */
-     public function testHappyPath() {}
+     public function testSomething($expected, $actual) {}
 -    public function dataProvider() {}
-+    public function provideHappyPathCases() {}
++    public function provideSomethingCases() {}
  }
 ```
 
@@ -95,11 +95,11 @@ The types returned by data providers must be `iterable`.
  <?php
  class FooTest extends TestCase {
      /**
-      * @dataProvider provideHappyPathCases
+      * @dataProvider provideSomethingCases
       */
-     public function testHappyPath() {}
--    public function provideHappyPathCases(): array {}
-+    public function provideHappyPathCases(): iterable {}
+     public function testSomething($expected, $actual) {}
+-    public function provideSomethingCases(): array {}
++    public function provideSomethingCases(): iterable {}
  }
 ```
 
@@ -109,11 +109,11 @@ Data providers must be static.
  <?php
  class FooTest extends TestCase {
      /**
-      * @dataProvider provideHappyPathCases
+      * @dataProvider provideSomethingCases
       */
-     public function testHappyPath() {}
--    public function provideHappyPathCases() {}
-+    public static function provideHappyPathCases() {}
+     public function testSomething($expected, $actual) {}
+-    public function provideSomethingCases() {}
++    public static function provideSomethingCases() {}
  }
 ```
 
