@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.3.0
+- Add ConstructorEmptyBracesFixer
 - PhpdocNoIncorrectVarAnnotationFixer - remove more incorrect annotations
 
 ## v3.2.0

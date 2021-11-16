@@ -103,6 +103,19 @@ final class PriorityTest extends TestCase
     public static function providePriorityCases(): iterable
     {
         yield [
+            new Fixer\Basic\BracesFixer(),
+            new CustomFixer\ConstructorEmptyBracesFixer(),
+            '<?php class Foo
+{
+    public function __construct() {}
+}',
+            '<?php class Foo
+{
+    public function __construct(){}
+}',
+        ];
+
+        yield [
             new CustomFixer\CommentSurroundedBySpacesFixer(),
             new Fixer\Comment\MultilineCommentOpeningClosingFixer(),
             '<?php /** foo */',
@@ -809,6 +822,20 @@ bar($x);
                 }
             }
             ',
+        ];
+
+        yield [
+            new CustomFixer\PromotedConstructorPropertyFixer(),
+            new CustomFixer\ConstructorEmptyBracesFixer(),
+            '<?php class Foo {
+                public function __construct(private int $x) {}
+            }',
+            '<?php class Foo {
+                private int $x;
+                public function __construct(int $x) {
+                    $this->x = $x;
+                }
+            }',
         ];
 
         yield [
