@@ -257,7 +257,14 @@ class Foo
 
                     /** @var Vendor\\Baz */
                     private Vendor\\Baz $baz;
+                }',
+            ];
+        }
 
+        if (\PHP_VERSION_ID >= 80000) {
+            yield 'keep correct PHPDoc for class properties, PHP 8.0' => [
+                '<?php class Foo
+                {
                     /** @var int|string */
                     private int|string $intOrString;
                 }',
