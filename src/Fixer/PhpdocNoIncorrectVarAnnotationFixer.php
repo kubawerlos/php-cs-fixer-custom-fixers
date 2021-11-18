@@ -18,6 +18,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -71,7 +72,7 @@ $bar = new Foo();
             }
 
             if ($tokens[$nextIndex]->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC])) {
-                $this->removeForClassElement($tokens, $index);
+                $this->removeForClassElement($tokens, $index, $nextIndex);
                 continue;
             }
 
@@ -94,20 +95,27 @@ $bar = new Foo();
         return $token->isGivenKind(\T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
     }
 
-    private function removeForClassElement(Tokens $tokens, int $index): void
+    private function removeForClassElement(Tokens $tokens, int $index, int $propertyStartIndex): void
     {
-        /** @var int $nextIndex */
-        $nextIndex = $tokens->getTokenNotOfKindsSibling($index, 1, [\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC, \T_WHITESPACE]);
+        $tokenKinds = [\T_NS_SEPARATOR, \T_STATIC, \T_STRING, \T_WHITESPACE, CT::T_ARRAY_TYPEHINT, CT::T_NULLABLE_TYPE, CT::T_TYPE_ALTERNATION];
 
-        if ($tokens[$nextIndex]->isGivenKind(\T_VARIABLE)) {
-            if (Preg::match('/@var\h+(.+\h+)?\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent()) === 1) {
-                $this->removeVarAnnotation($tokens, $index, [$tokens[$nextIndex]->getContent()]);
-            }
+        if (\defined('T_READONLY')) {
+            $tokenKinds[] = CT::T_TYPE_INTERSECTION;
+            $tokenKinds[] = \T_READONLY;
+        }
+
+        /** @var int $variableIndex */
+        $variableIndex = $tokens->getTokenNotOfKindsSibling($propertyStartIndex, 1, $tokenKinds);
+
+        if (!$tokens[$variableIndex]->isGivenKind(\T_VARIABLE)) {
+            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
 
             return;
         }
 
-        $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
+        if (Preg::match('/@var\h+(.+\h+)?\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent()) === 1) {
+            $this->removeVarAnnotation($tokens, $index, [$tokens[$variableIndex]->getContent()]);
+        }
     }
 
     /**
