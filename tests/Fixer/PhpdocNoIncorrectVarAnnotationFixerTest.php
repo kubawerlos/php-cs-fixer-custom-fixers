@@ -230,9 +230,59 @@ class Foo
 	 * @var int
 	 */
 	private $f;
+
+    /**
+     * @var int
+     */
+    private static $g;
 }
 ',
         ];
+
+        if (\PHP_VERSION_ID >= 70400) {
+            yield 'keep correct PHPDoc for class properties, PHP 7.4' => [
+                '<?php class Foo
+                {
+                    /** @var array */
+                    private array $array;
+
+                    /** @var bool */
+                    private bool $boolean;
+
+                    /** @var null|string */
+                    private ?string $nullableString;
+
+                    /** @var Bar */
+                    private Bar $bar;
+
+                    /** @var Vendor\\Baz */
+                    private Vendor\\Baz $baz;
+                }',
+            ];
+        }
+
+        if (\PHP_VERSION_ID >= 80000) {
+            yield 'keep correct PHPDoc for class properties, PHP 8.0' => [
+                '<?php class Foo
+                {
+                    /** @var int|string */
+                    private int|string $intOrString;
+                }',
+            ];
+        }
+
+        if (\PHP_VERSION_ID >= 80100) {
+            yield 'keep correct PHPDoc for class properties, PHP 8.1' => [
+                '<?php class Foo
+                {
+                    /** @var string */
+                    private readonly string $readonlyString;
+
+                    /** @var Bar&Vendor\\Baz */
+                    private Bar&Vendor\\Baz $barAndBaz;
+                }',
+            ];
+        }
 
         yield 'remove PHPDoc for class properties' => [
             '<?php
