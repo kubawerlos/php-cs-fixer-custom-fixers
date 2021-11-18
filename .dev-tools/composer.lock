@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96f9afbae6e792f848367956bf815187",
+    "content-hash": "63860e345e0656df9300d2ea31618f00",
     "packages": [
         {
             "name": "amphp/amp",
@@ -670,19 +670,19 @@
         },
         {
             "name": "kubawerlos/composer-smaller-lock",
-            "version": "0.1.4",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/composer-smaller-lock.git",
-                "reference": "40ae5ddfb4150445e5c7f49f0b2720af7d8e87b3"
+                "reference": "d5b35d16896d3e7e93ff331e9e2119b71e5cb5e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/composer-smaller-lock/zipball/40ae5ddfb4150445e5c7f49f0b2720af7d8e87b3",
-                "reference": "40ae5ddfb4150445e5c7f49f0b2720af7d8e87b3"
+                "url": "https://api.github.com/repos/kubawerlos/composer-smaller-lock/zipball/d5b35d16896d3e7e93ff331e9e2119b71e5cb5e2",
+                "reference": "d5b35d16896d3e7e93ff331e9e2119b71e5cb5e2"
             },
             "require": {
-                "composer-plugin-api": "^2.0.0",
+                "composer-plugin-api": "^2.0.12",
                 "ext-json": "*",
                 "php": "^7.4 || ^8.0"
             },
@@ -861,26 +861,26 @@
         },
         {
             "name": "maglnet/composer-require-checker",
-            "version": "3.3.0",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maglnet/ComposerRequireChecker.git",
-                "reference": "4063254c611acf34f1c15b29b6bcc47d2e7a9a9e"
+                "reference": "f1a5905265b9464d57a7e26ae80b05b7c1411830"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/4063254c611acf34f1c15b29b6bcc47d2e7a9a9e",
-                "reference": "4063254c611acf34f1c15b29b6bcc47d2e7a9a9e"
+                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/f1a5905265b9464d57a7e26ae80b05b7c1411830",
+                "reference": "f1a5905265b9464d57a7e26ae80b05b7c1411830"
             },
             "require": {
                 "composer-runtime-api": "^2.0.0",
                 "ext-json": "*",
                 "ext-phar": "*",
-                "nikic/php-parser": "^4.10.2",
+                "nikic/php-parser": "^4.13.0",
                 "php": "^7.4 || ^8.0",
-                "symfony/console": "^5.2.6",
+                "symfony/console": "^5.3.10",
                 "webmozart/assert": "^1.9.1",
-                "webmozart/glob": "^4.3.0"
+                "webmozart/glob": "^4.4.0"
             },
             "bin": [
                 "bin/composer-require-checker"
@@ -3464,16 +3464,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.11.2",
+            "version": "4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "6fba5eb554f9507b72932f9c75533d8af593688d"
+                "reference": "e42bc4a23f67acba28a23bb09c348e2ff38a1d87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/6fba5eb554f9507b72932f9c75533d8af593688d",
-                "reference": "6fba5eb554f9507b72932f9c75533d8af593688d"
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e42bc4a23f67acba28a23bb09c348e2ff38a1d87",
+                "reference": "e42bc4a23f67acba28a23bb09c348e2ff38a1d87"
             },
             "require": {
                 "amphp/amp": "^2.4.2",
@@ -3496,7 +3496,7 @@
                 "openlss/lib-array2xml": "^1.0",
                 "php": "^7.1|^8",
                 "sebastian/diff": "^3.0 || ^4.0",
-                "symfony/console": "^3.4.17 || ^4.1.6 || ^5.0",
+                "symfony/console": "^3.4.17 || ^4.1.6 || ^5.0 || ^6.0",
                 "webmozart/path-util": "^2.3"
             },
             "provide": {
