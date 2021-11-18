@@ -1,0 +1,16 @@
+--CONFIGURATION--
+{ "phpdoc_add_missing_param_annotation": true, "PhpCsFixerCustomFixers/phpdoc_param_order": true }
+--EXPECTED--
+<?php /* header comment */ $foo = true;
+/**
+ * @param mixed $a
+ * @param mixed $b
+ */
+ function bar($a, $b) {}
+
+--INPUT--
+<?php /* header comment */ $foo = true;
+/**
+ * @param mixed $b
+ */
+ function bar($a, $b) {}

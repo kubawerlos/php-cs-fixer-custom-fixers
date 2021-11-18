@@ -1,0 +1,15 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_commented_out_code": true, "no_extra_blank_lines": true }
+--EXPECTED--
+<?php
+use Foo\Bar;
+
+$y = new Bar();
+
+--INPUT--
+<?php
+use Foo\Bar;
+
+// $x = new Bar();
+
+$y = new Bar();

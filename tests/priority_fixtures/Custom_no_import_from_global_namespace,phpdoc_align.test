@@ -1,0 +1,20 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_import_from_global_namespace": true, "phpdoc_align": true }
+--EXPECTED--
+<?php
+namespace Foo;
+/**
+ * @param bool      $b
+ * @param \DateTime $d
+ */
+function bar($b, $d) {}
+
+--INPUT--
+<?php
+namespace Foo;
+use DateTime;
+/**
+ * @param bool     $b
+ * @param DateTime $d
+ */
+function bar($b, $d) {}

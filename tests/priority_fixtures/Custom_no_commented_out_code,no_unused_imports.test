@@ -1,0 +1,13 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_commented_out_code": true, "no_unused_imports": true }
+--EXPECTED--
+<?php
+use Foo\Bar;
+$x = new Bar();
+
+--INPUT--
+<?php
+use Foo\Bar;
+use Foo\Baz;
+$x = new Bar();
+// $y = new Baz();

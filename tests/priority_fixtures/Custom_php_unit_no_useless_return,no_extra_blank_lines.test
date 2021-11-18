@@ -1,0 +1,21 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/php_unit_no_useless_return": true, "no_extra_blank_lines": true }
+--EXPECTED--
+<?php
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->markTestSkipped();
+
+    }
+}
+
+--INPUT--
+<?php
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->markTestSkipped();
+
+        return;
+
+    }
+}

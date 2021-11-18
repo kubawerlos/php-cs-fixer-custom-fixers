@@ -1,0 +1,13 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_no_superfluous_param": true, "no_empty_phpdoc": true }
+--EXPECTED--
+<?php
+
+ function foo() {}
+
+--INPUT--
+<?php
+/**
+ * @param $x
+ */
+ function foo() {}

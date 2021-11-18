@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_types_trim": true, "phpdoc_align": true }
+--EXPECTED--
+<?php
+/**
+ * @param Foo|Bar $x
+ * @param Foo     $y
+ */
+function foo($x, $y) {}
+
+--INPUT--
+<?php
+/**
+ * @param Foo | Bar $x
+ * @param Foo       $y
+ */
+function foo($x, $y) {}

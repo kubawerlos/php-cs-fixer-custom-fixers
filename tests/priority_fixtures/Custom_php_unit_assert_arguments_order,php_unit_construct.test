@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/php_unit_assert_arguments_order": true, "php_unit_construct": true }
+--EXPECTED--
+<?php
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->assertTrue($value);
+    }
+}
+
+--INPUT--
+<?php
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->assertSame($value, true);
+    }
+}

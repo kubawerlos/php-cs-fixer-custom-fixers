@@ -1,0 +1,14 @@
+--CONFIGURATION--
+{ "comment_to_phpdoc": true, "PhpCsFixerCustomFixers/phpdoc_no_superfluous_param": true }
+--EXPECTED--
+<?php /* header comment */ $foo = true;
+/**
+ */
+ function bar() {}
+
+--INPUT--
+<?php /* header comment */ $foo = true;
+/*
+ * @param $x
+ */
+ function bar() {}

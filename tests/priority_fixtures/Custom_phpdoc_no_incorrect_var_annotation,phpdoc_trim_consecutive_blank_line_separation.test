@@ -1,0 +1,21 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_no_incorrect_var_annotation": true, "phpdoc_trim_consecutive_blank_line_separation": true }
+--EXPECTED--
+<?php
+/**
+ * Foo
+ *
+ * @see example.com
+ */
+$y = 2;
+
+--INPUT--
+<?php
+/**
+ * Foo
+ *
+ * @var int $x
+ *
+ * @see example.com
+ */
+$y = 2;

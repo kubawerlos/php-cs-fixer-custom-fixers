@@ -1,0 +1,14 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/promoted_constructor_property": true, "PhpCsFixerCustomFixers/constructor_empty_braces": true }
+--EXPECTED--
+<?php class Foo {
+    public function __construct(private int $x) {}
+}
+
+--INPUT--
+<?php class Foo {
+    private int $x;
+    public function __construct(int $x) {
+        $this->x = $x;
+    }
+}

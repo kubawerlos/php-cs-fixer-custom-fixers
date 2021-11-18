@@ -1,0 +1,12 @@
+--CONFIGURATION--
+{ "single_line_throw": true, "PhpCsFixerCustomFixers/no_superfluous_concatenation": true }
+--EXPECTED--
+<?php
+throw new Exception("This should not happen");
+
+--INPUT--
+<?php
+throw new Exception(
+    "This should"
+    . " not happen"
+);

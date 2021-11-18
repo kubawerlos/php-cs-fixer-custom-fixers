@@ -1,0 +1,15 @@
+--CONFIGURATION--
+{ "comment_to_phpdoc": true, "PhpCsFixerCustomFixers/phpdoc_param_type": true }
+--EXPECTED--
+<?php /* header comment */ $foo = true;
+/**
+ * @param mixed $x
+ */
+function bar($x) {}
+
+--INPUT--
+<?php /* header comment */ $foo = true;
+/*
+ * @param $x
+ */
+function bar($x) {}

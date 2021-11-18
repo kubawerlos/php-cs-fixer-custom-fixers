@@ -1,0 +1,13 @@
+--CONFIGURATION--
+{ "braces": true, "PhpCsFixerCustomFixers/constructor_empty_braces": true }
+--EXPECTED--
+<?php class Foo
+{
+    public function __construct() {}
+}
+
+--INPUT--
+<?php class Foo
+{
+    public function __construct(){}
+}

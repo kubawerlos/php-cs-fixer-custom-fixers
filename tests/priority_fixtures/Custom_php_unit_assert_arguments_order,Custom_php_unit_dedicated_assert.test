@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/php_unit_assert_arguments_order": true, "PhpCsFixerCustomFixers/php_unit_dedicated_assert": true }
+--EXPECTED--
+<?php
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->assertCount(3, $elements);
+    }
+}
+
+--INPUT--
+<?php
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->assertSame(count($elements), 3);
+    }
+}
