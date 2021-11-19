@@ -1,0 +1,12 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/commented_out_function": true, "PhpCsFixerCustomFixers/no_commented_out_code": true }
+--EXPECTED--
+<?php
+$x = foo();
+bar($x);
+
+--INPUT--
+<?php
+$x = foo();
+var_dump($x);
+bar($x);

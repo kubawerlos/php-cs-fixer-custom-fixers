@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_param_type": true, "phpdoc_align": true }
+--EXPECTED--
+<?php
+/**
+ * @param int   $x
+ * @param mixed $y
+ */
+function foo($x, $y) {}
+
+--INPUT--
+<?php
+/**
+ * @param int $x
+ * @param     $y
+ */
+function foo($x, $y) {}

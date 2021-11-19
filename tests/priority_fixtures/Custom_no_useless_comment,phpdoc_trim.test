@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_useless_comment": true, "phpdoc_trim": true }
+--EXPECTED--
+<?php
+/**
+ * @author John Doe
+ */
+class Foo {}
+
+--INPUT--
+<?php
+/**
+ * Class Foo
+ *
+ * @author John Doe
+ */
+class Foo {}

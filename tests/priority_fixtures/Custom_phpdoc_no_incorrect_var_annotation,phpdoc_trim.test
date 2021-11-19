@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_no_incorrect_var_annotation": true, "phpdoc_trim": true }
+--EXPECTED--
+<?php
+/**
+ * Foo
+ */
+$y = 2;
+
+--INPUT--
+<?php
+/**
+ * Foo
+ *
+ * @var int $x
+ */
+$y = 2;

@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "phpdoc_line_span": true, "PhpCsFixerCustomFixers/phpdoc_single_line_var": true }
+--EXPECTED--
+<?php
+class Foo {
+    /** @var string */
+    private $bar;
+}
+
+--INPUT--
+<?php
+class Foo {
+    /**
+     * @var string
+     */
+    private $bar;
+}

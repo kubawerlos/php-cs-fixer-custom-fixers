@@ -1,0 +1,21 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_useless_comment": true, "phpdoc_trim_consecutive_blank_line_separation": true }
+--EXPECTED--
+<?php
+/**
+ * @version 1.0
+ *
+ * @author John Doe
+ */
+class Foo {}
+
+--INPUT--
+<?php
+/**
+ * @version 1.0
+ *
+ * Class Foo
+ *
+ * @author John Doe
+ */
+class Foo {}

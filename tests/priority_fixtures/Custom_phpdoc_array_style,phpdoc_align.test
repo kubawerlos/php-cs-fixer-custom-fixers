@@ -1,0 +1,19 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_array_style": true, "phpdoc_align": true }
+--EXPECTED--
+<?php
+namespace Foo;
+/**
+ * @param bool       $b
+ * @param array<int> $d
+ */
+function bar($b, $d) {}
+
+--INPUT--
+<?php
+namespace Foo;
+/**
+ * @param bool  $b
+ * @param int[] $d
+ */
+function bar($b, $d) {}

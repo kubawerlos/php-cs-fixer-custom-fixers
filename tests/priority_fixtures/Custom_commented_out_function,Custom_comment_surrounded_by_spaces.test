@@ -1,0 +1,13 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/commented_out_function": true, "PhpCsFixerCustomFixers/comment_surrounded_by_spaces": true }
+--EXPECTED--
+<?php
+$x = foo();
+// var_dump($x);
+bar($x);
+
+--INPUT--
+<?php
+$x = foo();
+var_dump($x);
+bar($x);

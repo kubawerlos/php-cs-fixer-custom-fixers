@@ -1,0 +1,18 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/php_unit_dedicated_assert": true, "no_unused_imports": true }
+--EXPECTED--
+<?php
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->assertCount(3, $elements);
+    }
+}
+
+--INPUT--
+<?php
+use function count;
+class FooTest extends TestCase {
+    public function testFoo() {
+        $this->assertSame(3, count($elements));
+    }
+}

@@ -1,0 +1,9 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_commented_out_code": true, "no_trailing_whitespace": true }
+--EXPECTED--
+<?php
+$foo;
+
+--INPUT--
+<?php
+$foo; // $bar;

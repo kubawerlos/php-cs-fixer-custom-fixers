@@ -1,0 +1,14 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_types_trim": true, "no_superfluous_phpdoc_tags": true }
+--EXPECTED--
+<?php
+/**
+ */
+function f(): ?string {}
+
+--INPUT--
+<?php
+/**
+ * @return string | null
+ */
+function f(): ?string {}

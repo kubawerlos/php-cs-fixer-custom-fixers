@@ -1,0 +1,7 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/comment_surrounded_by_spaces": true, "multiline_comment_opening_closing": true }
+--EXPECTED--
+<?php /** foo */
+
+--INPUT--
+<?php /**foo**/

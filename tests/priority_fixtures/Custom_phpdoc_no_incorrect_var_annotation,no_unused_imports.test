@@ -1,0 +1,11 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_no_incorrect_var_annotation": true, "no_unused_imports": true }
+--EXPECTED--
+<?php
+$y = 2;
+
+--INPUT--
+<?php
+use Foo\Bar;
+/** @var Bar $x */
+$y = 2;

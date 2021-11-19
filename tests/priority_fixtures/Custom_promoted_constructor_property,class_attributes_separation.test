@@ -1,0 +1,21 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/promoted_constructor_property": true, "class_attributes_separation": true }
+--EXPECTED--
+<?php class Foo
+{
+    public function __construct(private int $x, private int $y) {
+    }
+}
+
+--INPUT--
+<?php class Foo
+{
+    private int $x;
+
+    private int $y;
+
+    public function __construct(int $x, int $y) {
+        $this->x = $x;
+        $this->y = $y;
+    }
+}

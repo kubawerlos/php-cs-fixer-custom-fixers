@@ -1,0 +1,14 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_param_type": true, "no_superfluous_phpdoc_tags": true }
+--EXPECTED--
+<?php
+/**
+ */
+function f($x) {}
+
+--INPUT--
+<?php
+/**
+ * @param $x
+ */
+function f($x) {}

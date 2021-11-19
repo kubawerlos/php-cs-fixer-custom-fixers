@@ -1,0 +1,12 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/multiline_comment_opening_closing_alone": true, "multiline_comment_opening_closing": true }
+--EXPECTED--
+<?php
+/**
+ * foo
+ */
+
+--INPUT--
+<?php
+/**foo
+ *******/
