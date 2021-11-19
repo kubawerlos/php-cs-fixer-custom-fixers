@@ -116,6 +116,7 @@ final class PriorityTest extends TestCase
     private static function getFixer(string $name, array $config): FixerInterface
     {
         $name = \preg_replace('/^Custom_/', 'PhpCsFixerCustomFixers/', $name);
+
         $fixers = (new FixerFactory())
             ->registerBuiltInFixers()
             ->registerCustomFixers(new Fixers())
