@@ -5,7 +5,7 @@
 /**
  * @author John Doe
  */
- class Foo {}
+class Foo {}
 
 --INPUT--
 <?php
@@ -14,4 +14,4 @@
  *
  * @author John Doe
  */
- class Foo {}
+class Foo {}

@@ -4,11 +4,11 @@
 <?php /* header comment */ $foo = true;
 /**
  */
- function bar() {}
+function bar() {}
 
 --INPUT--
 <?php /* header comment */ $foo = true;
 /*
  * @param $x
  */
- function bar() {}
+function bar() {}

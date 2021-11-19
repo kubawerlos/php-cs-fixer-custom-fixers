@@ -7,7 +7,7 @@ namespace Foo;
  * @param bool       $b
  * @param array<int> $d
  */
- function bar($b, $d) {}
+function bar($b, $d) {}
 
 --INPUT--
 <?php
@@ -16,4 +16,4 @@ namespace Foo;
  * @param bool  $b
  * @param int[] $d
  */
- function bar($b, $d) {}
+function bar($b, $d) {}

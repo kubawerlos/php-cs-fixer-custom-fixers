@@ -6,11 +6,11 @@
  * @param mixed $a
  * @param mixed $b
  */
- function bar($a, $b) {}
+function bar($a, $b) {}
 
 --INPUT--
 <?php /* header comment */ $foo = true;
 /**
  * @param mixed $b
  */
- function bar($a, $b) {}
+function bar($a, $b) {}

@@ -6,7 +6,7 @@
  * @param $a
  * @param $b
  */
- function bar($a, $b) {}
+function bar($a, $b) {}
 
 --INPUT--
 <?php /* header comment */ $foo = true;
@@ -14,4 +14,4 @@
  * @param $b
  * @param $a
  */
- function bar($a, $b) {}
+function bar($a, $b) {}

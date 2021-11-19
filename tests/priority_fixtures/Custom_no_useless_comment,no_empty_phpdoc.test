@@ -3,11 +3,11 @@
 --EXPECTED--
 <?php
 
- class Foo {}
+class Foo {}
 
 --INPUT--
 <?php
 /**
  * Class Foo
  */
- class Foo {}
+class Foo {}

@@ -1,10 +1,12 @@
 --CONFIGURATION--
 { "PhpCsFixerCustomFixers/multiline_comment_opening_closing_alone": true, "multiline_comment_opening_closing": true }
 --EXPECTED--
-<?php /**
-                    * foo
-                    */
+<?php
+/**
+ * foo
+ */
 
 --INPUT--
-<?php /**foo
-                    *******/
+<?php
+/**foo
+ *******/

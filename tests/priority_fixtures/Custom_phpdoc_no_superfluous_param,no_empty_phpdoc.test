@@ -3,11 +3,11 @@
 --EXPECTED--
 <?php
 
- function foo() {}
+function foo() {}
 
 --INPUT--
 <?php
 /**
  * @param $x
  */
- function foo() {}
+function foo() {}

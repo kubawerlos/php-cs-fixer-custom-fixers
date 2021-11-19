@@ -7,7 +7,7 @@
  * @param string $b
  * @author John Doe
  */
- function bar($a, $b) {}
+function bar($a, $b) {}
 
 --INPUT--
 <?php /* header comment */ $foo = true;
@@ -16,4 +16,4 @@
  * @author John Doe
  * @param int $a
  */
- function bar($a, $b) {}
+function bar($a, $b) {}
