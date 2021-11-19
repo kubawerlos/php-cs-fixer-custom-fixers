@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Tests\Fixer;
 
-use PhpCsFixerCustomFixers\Fixer\PhpUnitDedicatedAssertFixer;
-
 /**
  * @internal
  *
@@ -111,23 +109,20 @@ class FooTest extends TestCase {
             '$this->assertSame ( 3 , \count ( $array ) ) ;',
         ];
 
-        $reflection = new \ReflectionClass(PhpUnitDedicatedAssertFixer::class);
-
-        /** @var array<string> $assertions */
-        $assertions = $reflection->getConstant('ASSERTIONS');
-
-        foreach ($assertions as $assertion) {
-            $expected = 'self::assertCount(3, $array);';
-            $input = \sprintf('self::%s(3, count($array));', $assertion);
-
-            if (\stripos($assertion, 'Not', 6) !== false) {
-                $expected = \str_replace('assert', 'assertNot', $expected);
-                $expected = \str_replace('3', '4', $expected);
-                $input = \str_replace('3', '4', $input);
-            }
-
-            yield \sprintf('Test assertion "%s"', $assertion) => [$expected, $input];
-        }
+        yield 'fix all four assertions' => [
+            '
+                self::assertCount($count, $array);
+                self::assertCount($count, $array);
+                self::assertNotCount($count, $array);
+                self::assertNotCount($count, $array);
+            ',
+            '
+                self::assertEquals($count, count($array));
+                self::assertSame($count, count($array));
+                self::assertNotEquals($count, count($array));
+                self::assertNotSame($count, count($array));
+            ',
+        ];
 
         yield 'fix multiple assertions' => [
             '
