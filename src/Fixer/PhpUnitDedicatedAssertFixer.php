@@ -26,10 +26,10 @@ use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
 final class PhpUnitDedicatedAssertFixer extends AbstractFixer
 {
     private const ASSERTIONS = [
-        'assertEquals',
-        'assertNotEquals',
-        'assertSame',
-        'assertNotSame',
+        'assertequals' => true,
+        'assertnotequals' => true,
+        'assertsame' => true,
+        'assertnotsame' => true,
     ];
     private const REPLACEMENTS_MAP = [
         'count' => [
@@ -110,20 +110,7 @@ class FooTest extends TestCase {
 
     private static function isAssertionToFix(Tokens $tokens, int $index): bool
     {
-        static $assertions;
-
-        if ($assertions === null) {
-            $assertions = \array_flip(
-                \array_map(
-                    static function (string $name): string {
-                        return \strtolower($name);
-                    },
-                    self::ASSERTIONS
-                )
-            );
-        }
-
-        if (!isset($assertions[\strtolower($tokens[$index]->getContent())])) {
+        if (!isset(self::ASSERTIONS[\strtolower($tokens[$index]->getContent())])) {
             return false;
         }
 
