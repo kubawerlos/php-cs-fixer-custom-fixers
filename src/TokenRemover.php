@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PhpCsFixerCustomFixers;
 
 use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -90,13 +89,10 @@ final class TokenRemover
         }
         $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
 
+        /** @var string $contentWithoutTrailingSpacesAndNewline */
         $contentWithoutTrailingSpacesAndNewline = Preg::replace('/\R$/', '', $contentWithoutTrailingSpaces, 1);
 
-        if ($contentWithoutTrailingSpacesAndNewline === '') {
-            $tokens->clearAt($index);
-        } else {
-            $tokens[$index] = new Token([\T_WHITESPACE, $contentWithoutTrailingSpacesAndNewline]);
-        }
+        $tokens->ensureWhitespaceAtIndex($index, 0, $contentWithoutTrailingSpacesAndNewline);
 
         return $contentWithoutTrailingSpaces !== $contentWithoutTrailingSpacesAndNewline;
     }
@@ -105,14 +101,9 @@ final class TokenRemover
     {
         $pattern = $wasNewlineRemoved ? '/^\h+/' : '/^\h*\R/';
 
+        /** @var string $newContent */
         $newContent = Preg::replace($pattern, '', $tokens[$index]->getContent());
 
-        if ($newContent === '') {
-            $tokens->clearAt($index);
-
-            return;
-        }
-
-        $tokens[$index] = new Token([\T_WHITESPACE, $newContent]);
+        $tokens->ensureWhitespaceAtIndex($index, 0, $newContent);
     }
 }
