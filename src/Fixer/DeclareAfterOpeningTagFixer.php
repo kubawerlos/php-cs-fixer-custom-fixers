@@ -65,7 +65,6 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
             return;
         }
 
-        $tokensToInsert = [];
         if ($tokens[1]->isGivenKind(\T_WHITESPACE)) {
             $tokens[1] = new Token([\T_WHITESPACE, \substr($openingTagTokenContent, 5) . $tokens[1]->getContent()]);
         } else {
@@ -80,6 +79,7 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
         /** @var int $semicolonIndex */
         $semicolonIndex = $tokens->getNextMeaningfulToken($closeParenthesisIndex);
 
+        $tokensToInsert = [];
         for ($index = $declareIndex; $index <= $semicolonIndex; $index++) {
             $tokensToInsert[] = $tokens[$index];
         }
