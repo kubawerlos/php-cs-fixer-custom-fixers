@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of PHP CS Fixer: custom fixers.
@@ -8,8 +8,6 @@
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/RulesInterface.php';
 require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
@@ -33,7 +31,6 @@ unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when 
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
 unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
-unset($rules[PhpCsFixerCustomFixers\Fixer\DeclareAfterOpeningTagFixer::name()]); // Only to have PR with this fixer smaller
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
