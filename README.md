@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3029-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3058-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -115,6 +115,16 @@ Data providers must be static.
 -    public function provideSomethingCases() {}
 +    public static function provideSomethingCases() {}
  }
+```
+
+#### DeclareAfterOpeningTagFixer
+Declare statement must be placed in the same line, after opening tag.
+```diff
+-<?php
++<?php declare(strict_types=1);
+ $foo;
+-declare(strict_types=1);
+ $bar;
 ```
 
 #### InternalClassCasingFixer

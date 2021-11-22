@@ -1,0 +1,14 @@
+--CONFIGURATION--
+{ "header_comment": { "header": "The header", "location": "after_open" }, "PhpCsFixerCustomFixers/declare_after_opening_tag": true }
+--EXPECTED--
+<?php declare(strict_types=1);
+
+/*
+ * The header
+ */
+
+
+--INPUT--
+<?php
+
+declare(strict_types=1);
