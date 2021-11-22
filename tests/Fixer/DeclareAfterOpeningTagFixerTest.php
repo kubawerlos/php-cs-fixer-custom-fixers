@@ -38,7 +38,7 @@ final class DeclareAfterOpeningTagFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield 'skis files not starting with PHP opening tag' => ['<html></html>'];
+        yield 'skip files not starting with PHP opening tag' => ['<html></html>'];
 
         yield 'fix inside comments' => [
             '<?php declare(strict_types=1);
