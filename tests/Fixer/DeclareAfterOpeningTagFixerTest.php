@@ -1,0 +1,76 @@
+<?php
+
+/*
+ * This file is part of PHP CS Fixer: custom fixers.
+ *
+ * (c) 2018 Kuba Werłos
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Tests\Fixer;
+
+/**
+ * @internal
+ *
+ * @covers \PhpCsFixerCustomFixers\Fixer\DeclareAfterOpeningTagFixer
+ */
+final class DeclareAfterOpeningTagFixerTest extends AbstractFixerTestCase
+{
+    public function testIsRisky(): void
+    {
+        self::assertFalse($this->fixer->isRisky());
+    }
+
+    /**
+     * @dataProvider provideFixCases
+     */
+    public function testFix(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFixCases(): iterable
+    {
+        yield 'skip files not starting with PHP opening tag' => ['<html></html>'];
+
+        yield 'fix inside comments' => [
+            '<?php declare(strict_types=1);
+// Foo
+// Bar
+            ',
+            '<?php
+// Foo
+declare(strict_types=1);
+// Bar
+            ',
+        ];
+
+        yield 'fix and clean up empty lines' => [
+            '<?php declare(strict_types=1);
+
+/*
+ * Header comment
+ */
+
+// code starts here
+            ',
+            '<?php
+
+/*
+ * Header comment
+ */
+
+declare(strict_types=1);
+
+// code starts here
+            ',
+        ];
+    }
+}
