@@ -2,7 +2,6 @@
 { "blank_line_after_opening_tag": true, "PhpCsFixerCustomFixers/declare_after_opening_tag": true }
 --EXPECTED--
 <?php declare(strict_types=1);
-
 class Foo {}
 
 --INPUT--

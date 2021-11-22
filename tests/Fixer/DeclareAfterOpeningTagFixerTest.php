@@ -50,7 +50,19 @@ declare(strict_types=1);
             ',
         ];
 
-        yield 'fix and clean up empty lines' => [
+        yield 'fix uppercase opening tag' => [
+            '<?PHP declare(strict_types=1);
+// Foo
+class Foo {}
+            ',
+            '<?PHP
+// Foo
+declare(strict_types=1);
+class Foo {}
+            ',
+        ];
+
+        yield 'fix and clean up empty lines left' => [
             '<?php declare(strict_types=1);
 
 /*
@@ -68,6 +80,20 @@ declare(strict_types=1);
 declare(strict_types=1);
 
 // code starts here
+            ',
+        ];
+
+        yield 'fix and clean up empty lines above' => [
+            '<?php declare(strict_types=1);
+
+// Foo
+            ',
+            '<?php
+
+
+declare(strict_types=1);
+
+// Foo
             ',
         ];
     }

@@ -54,19 +54,23 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
         }
 
         $openingTagTokenContent = $tokens[0]->getContent();
-        if ($openingTagTokenContent === '<?php ' && $tokens[1]->isGivenKind(\T_DECLARE)) {
+
+        $tokens[0] = new Token([\T_OPEN_TAG, \substr($openingTagTokenContent, 0, 5) . ' ']);
+
+        /** @var int $declareIndex */
+        $declareIndex = $tokens->getNextTokenOfKind(0, [[\T_DECLARE]]);
+        if ($declareIndex <= 2) {
+            $tokens->clearRange(1, $declareIndex - 1);
+
             return;
         }
 
-        $tokens[0] = new Token([\T_OPEN_TAG, \substr($openingTagTokenContent, 0, 5) . ' ']);
         if ($tokens[1]->isGivenKind(\T_WHITESPACE)) {
             $tokens[1] = new Token([\T_WHITESPACE, \substr($openingTagTokenContent, 5) . $tokens[1]->getContent()]);
         } else {
             $tokens->insertAt(1, new Token([\T_WHITESPACE, \substr($openingTagTokenContent, 5)]));
+            $declareIndex++;
         }
-
-        /** @var int $declareIndex */
-        $declareIndex = $tokens->getNextTokenOfKind(0, [[\T_DECLARE]]);
 
         /** @var int $openParenthesisIndex */
         $openParenthesisIndex = $tokens->getNextMeaningfulToken($declareIndex);
