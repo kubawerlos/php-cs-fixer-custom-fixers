@@ -72,7 +72,6 @@
         "LogicalLowerOr": true,
         "LogicalOr": true,
         "MBString": true,
-        "MethodCallRemoval": true,
         "MinusEqual": true,
         "ModEqual": true,
         "Modulus": true,
