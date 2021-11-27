@@ -1,0 +1,18 @@
+--CONFIGURATION--
+{
+    "PhpCsFixerCustomFixers/multiline_comment_opening_closing_alone": true,
+    "align_multiline_comment": { "comment_type": "all_multiline" }
+}
+--EXPECTED--
+<?php
+    /*
+     * Foo
+    Bar
+    Baz
+     */
+
+--INPUT--
+<?php
+    /* Foo
+    Bar
+    Baz */
