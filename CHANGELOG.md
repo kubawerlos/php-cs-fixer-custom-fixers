@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.5.0
+- Add NoUselessDirnameCallFixer
+
 ## v3.4.0
 - Add DeclareAfterOpeningTagFixer
 
