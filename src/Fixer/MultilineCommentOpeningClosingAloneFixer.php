@@ -29,11 +29,11 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
     }
 
     /**
-     * Must run before MultilineCommentOpeningClosingFixer.
+     * Must run before AlignMultilineCommentFixer, MultilineCommentOpeningClosingFixer.
      */
     public function getPriority(): int
     {
-        return 1;
+        return 28;
     }
 
     public function isCandidate(Tokens $tokens): bool
