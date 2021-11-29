@@ -104,5 +104,16 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
                 /** @var int[] */
               ',
         ];
+
+        $expected = $input = 'string';
+        for ($i = 0; $i < 1000; $i++) {
+            $expected = 'array<' . $expected . '>';
+            $input .= '[]';
+        }
+
+        yield [
+            \sprintf('<?php /** @var %s */', $expected),
+            \sprintf('<?php /** @var %s */', $input),
+        ];
     }
 }
