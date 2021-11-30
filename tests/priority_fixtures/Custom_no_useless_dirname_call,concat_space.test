@@ -1,0 +1,9 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_useless_dirname_call": true, "concat_space": true }
+--EXPECTED--
+<?php
+ __DIR__.'/../path';
+
+--INPUT--
+<?php
+dirname( __DIR__ ).'/path';
