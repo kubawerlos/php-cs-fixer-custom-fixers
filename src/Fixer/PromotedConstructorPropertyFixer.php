@@ -226,10 +226,6 @@ class Foo {
         $properties = [];
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
-        /**
-         * @var int                                                $index
-         * @var array{token: Token, type: string, classIndex: int} $element
-         */
         foreach ($tokensAnalyzer->getClassyElements() as $index => $element) {
             if ($element['classIndex'] !== $classIndex) {
                 continue;

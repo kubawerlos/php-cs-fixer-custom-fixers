@@ -18,7 +18,7 @@ parameters:
     - ../tests
   reportMaybesInMethodSignatures: false
   stubFiles:
-    - ./phpstan.stub
+    - ./sca.stub
 
 includes:
   - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
