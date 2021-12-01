@@ -13,7 +13,6 @@ namespace PhpCsFixerCustomFixersDev;
 
 use PhpCsFixer\Fixer\FixerInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @implements \IteratorAggregate<FixerInterface>
@@ -32,7 +31,6 @@ final class Fixers implements \IteratorAggregate
             ->in(__DIR__ . '/Fixer/')
             ->sortByName();
 
-        /** @var SplFileInfo $fileInfo */
         foreach ($finder as $fileInfo) {
             $className = __NAMESPACE__ . '\\Fixer\\' . $fileInfo->getBasename('.php');
 
