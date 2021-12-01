@@ -1,5 +1,14 @@
 <?php
 
+namespace PhpCsFixer\Fixer\Import {
+    /**
+     * @method void removeUseDeclaration(\PhpCsFixer\Tokenizer\Tokens $tokens, \PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis $useDeclaration)
+     */
+    class NoUnusedImportsFixer
+    {
+    }
+}
+
 namespace PhpCsFixer\Tokenizer {
     class Token
     {
@@ -14,7 +23,8 @@ namespace PhpCsFixer\Tokenizer {
     {
     }
 
-    class TokensAnalyzer {
+    class TokensAnalyzer
+    {
         /**
          * @return array<int, array{token: Token, type: string, classIndex: int}>
          */

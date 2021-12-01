@@ -90,11 +90,19 @@ use Bar;
 
     private function removeUseDeclaration(Tokens $tokens, NamespaceUseAnalysis $useDeclaration): void
     {
+        $removeUseDeclaration = static function (
+            NoUnusedImportsFixer $noUnusedImportsFixer,
+            Tokens $tokens,
+            NamespaceUseAnalysis $useDeclaration
+        ): void {
+            $noUnusedImportsFixer->removeUseDeclaration($tokens, $useDeclaration);
+        };
+
         $noUnusedImportsFixer = new NoUnusedImportsFixer();
 
-        $reflectionMethod = new \ReflectionMethod($noUnusedImportsFixer, 'removeUseDeclaration');
-        $reflectionMethod->setAccessible(true);
+        /** @var \Closure $removeUseDeclaration */
+        $removeUseDeclaration = \Closure::bind($removeUseDeclaration, null, $noUnusedImportsFixer);
 
-        $reflectionMethod->invoke($noUnusedImportsFixer, $tokens, $useDeclaration);
+        $removeUseDeclaration($noUnusedImportsFixer, $tokens, $useDeclaration);
     }
 }
