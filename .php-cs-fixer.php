@@ -31,6 +31,7 @@ unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when 
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
 unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
+$rules['trailing_comma_in_multiline'] = true; // TODO: remove when dropping support to PHP <8.0
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
