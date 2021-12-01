@@ -40,11 +40,11 @@ final class PhpdocArrayStyleFixer extends AbstractFixer
     }
 
     /**
-     * Must run before PhpdocAlignFixer.
+     * Must run before PhpdocAlignFixer, PhpdocTypesOrderFixer.
      */
     public function getPriority(): int
     {
-        return 0;
+        return 1;
     }
 
     public function isCandidate(Tokens $tokens): bool
