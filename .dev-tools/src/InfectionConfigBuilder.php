@@ -31,7 +31,6 @@ final class InfectionConfigBuilder
         'LessThanOrEqualTo',
         'LogicalAnd',
         'LogicalNot',
-        'MethodCallRemoval',
         'Minus',
         'NotIdentical',
         'NotIdenticalNotEqual',
