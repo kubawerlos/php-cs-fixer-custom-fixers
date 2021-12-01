@@ -1,0 +1,15 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_array_style": true, "phpdoc_types_order": true }
+--EXPECTED--
+<?php
+/**
+ * @return array<string>|string
+ */
+function foo() {}
+
+--INPUT--
+<?php
+/**
+ * @return string|string[]
+ */
+function foo() {}
