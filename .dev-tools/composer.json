@@ -8,7 +8,7 @@
         "kubawerlos/types-checker": "^2.1.0",
         "maglnet/composer-require-checker": "^3.5.1",
         "mi-schi/phpmd-extension": "^4.3.0",
-        "phpmd/phpmd": "^2.10.2",
+        "phpmd/phpmd": "^2.11.0",
         "phpstan/extension-installer": "^1.1.0",
         "phpstan/phpstan": "^0.12.99",
         "phpstan/phpstan-phpunit": "^0.12.22",
