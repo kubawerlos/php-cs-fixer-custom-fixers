@@ -29,10 +29,6 @@ final class ConstructorAnalyzer
 
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
-        /**
-         * @var int                             $index
-         * @var array<string, int|string|Token> $element
-         */
         foreach ($tokensAnalyzer->getClassyElements() as $index => $element) {
             if ($element['classIndex'] !== $classIndex) {
                 continue;
