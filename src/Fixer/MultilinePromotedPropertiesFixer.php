@@ -80,7 +80,7 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
                 continue;
             }
 
-            $constructorAnalysis = $constructorAnalyzer->findConstructor($tokens, $index, false);
+            $constructorAnalysis = $constructorAnalyzer->findNonAbstractConstructor($tokens, $index);
             if ($constructorAnalysis === null) {
                 continue;
             }

@@ -18,13 +18,11 @@ final class InfectionConfigBuilder
 {
     private const UNWANTED_MUTATORS = [
         'Concat',
-        'Decrement',
         'DecrementInteger',
         'FalseValue',
         'GreaterThan',
         'GreaterThanOrEqualTo',
         'IdenticalEqual',
-        'Increment',
         'IncrementInteger',
         'IntegerNegation',
         'LessThan',

@@ -21,7 +21,7 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis;
  */
 final class ConstructorAnalyzer
 {
-    public function findConstructor(Tokens $tokens, int $classIndex, bool $allowAbstract): ?ConstructorAnalysis
+    public function findNonAbstractConstructor(Tokens $tokens, int $classIndex): ?ConstructorAnalysis
     {
         if (!$tokens[$classIndex]->isGivenKind(\T_CLASS)) {
             throw new \InvalidArgumentException(\sprintf('Index %d is not a class.', $classIndex));
@@ -39,7 +39,7 @@ final class ConstructorAnalyzer
             }
 
             $constructorAttributes = $tokensAnalyzer->getMethodAttributes($index);
-            if (!$allowAbstract && $constructorAttributes['abstract']) {
+            if ($constructorAttributes['abstract']) {
                 return null;
             }
 
