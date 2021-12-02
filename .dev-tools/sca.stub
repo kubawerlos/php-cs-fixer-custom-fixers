@@ -18,6 +18,7 @@ namespace PhpCsFixer\Tokenizer {
      * @extends \SplFixedArray<Token>
      *
      * @method Token offsetGet()
+     * @method array<Token> toArray()
      */
     class Tokens extends \SplFixedArray
     {

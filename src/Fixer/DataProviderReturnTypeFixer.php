@@ -82,8 +82,8 @@ class FooTest extends TestCase {
             $typeAnalysis = $functionsAnalyzer->getFunctionReturnType($tokens, $dataProviderAnalysis->getNameIndex());
 
             if ($typeAnalysis === null) {
-                /** @var int $argumentsStart */
                 $argumentsStart = $tokens->getNextTokenOfKind($dataProviderAnalysis->getNameIndex(), ['(']);
+                \assert(\is_int($argumentsStart));
                 $argumentsEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $argumentsStart);
                 $tokens->insertAt(
                     $argumentsEnd + 1,
@@ -97,8 +97,8 @@ class FooTest extends TestCase {
             }
 
             if ($typeAnalysis->getName() !== 'iterable') {
-                /** @var int $startIndex */
                 $startIndex = $tokens->getNextMeaningfulToken($typeAnalysis->getStartIndex() - 1);
+                \assert(\is_int($startIndex));
                 $tokens->overrideRange($startIndex, $typeAnalysis->getEndIndex(), [new Token([\T_STRING, 'iterable'])]);
             }
         }

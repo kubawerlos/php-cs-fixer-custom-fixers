@@ -67,8 +67,8 @@ class Foo
                 continue;
             }
 
-            /** @var int $classStartIndex */
             $classStartIndex = $tokens->getNextTokenOfKind($index, ['{']);
+            \assert(\is_int($classStartIndex));
 
             $classEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $classStartIndex);
 
@@ -103,15 +103,15 @@ class Foo
 
     private function addStringableInterface(Tokens $tokens, int $classIndex, bool $isNamespaced): void
     {
-        /** @var int $classNameIndex */
         $classNameIndex = $tokens->getNextTokenOfKind($classIndex, [[\T_STRING]]);
+        \assert(\is_int($classNameIndex));
 
-        /** @var int $implementsIndex */
         $implementsIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{', [\T_IMPLEMENTS]]);
+        \assert(\is_int($implementsIndex));
 
         if ($tokens[$implementsIndex]->equals('{')) {
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($implementsIndex);
+            \assert(\is_int($prevIndex));
 
             $tokens->insertAt(
                 $prevIndex + 1,
@@ -127,14 +127,14 @@ class Foo
             return;
         }
 
-        /** @var int $implementsEndIndex */
         $implementsEndIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{']);
+        \assert(\is_int($implementsEndIndex));
         if ($this->isStringableAlreadyUsed($tokens, $implementsIndex + 1, $implementsEndIndex - 1, $isNamespaced)) {
             return;
         }
 
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($implementsEndIndex);
+        \assert(\is_int($prevIndex));
 
         $tokens->insertAt(
             $prevIndex + 1,
@@ -154,12 +154,12 @@ class Foo
                 continue;
             }
 
-            /** @var int $namespaceSeparatorIndex */
             $namespaceSeparatorIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($namespaceSeparatorIndex));
 
             if ($tokens[$namespaceSeparatorIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-                /** @var int $beforeNamespaceSeparatorIndex */
                 $beforeNamespaceSeparatorIndex = $tokens->getPrevMeaningfulToken($namespaceSeparatorIndex);
+                \assert(\is_int($beforeNamespaceSeparatorIndex));
 
                 if (!$tokens[$beforeNamespaceSeparatorIndex]->isGivenKind(\T_STRING)) {
                     return true;

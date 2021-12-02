@@ -121,8 +121,8 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         $content = $token->getContent();
 
         if (\strpos($content, '/*') === 0) {
-            /** @var string $content */
             $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', \PHP_EOL, $content);
+            \assert(\is_string($content));
         }
 
         return \ltrim($content, '#/');

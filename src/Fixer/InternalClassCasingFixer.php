@@ -76,12 +76,12 @@ final class InternalClassCasingFixer extends AbstractFixer
 
     private function isGlobalClassUsage(Tokens $tokens, int $index, bool $isInGlobalNamespace): bool
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($prevIndex));
 
         if ($tokens[$prevIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
+            \assert(\is_int($prevIndex));
 
             if ($tokens[$prevIndex]->isGivenKind(\T_STRING)) {
                 return false;
@@ -94,8 +94,8 @@ final class InternalClassCasingFixer extends AbstractFixer
             return false;
         }
 
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($nextIndex));
 
         if ($tokens[$nextIndex]->isGivenKind(\T_NS_SEPARATOR)) {
             return false;

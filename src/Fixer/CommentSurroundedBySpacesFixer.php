@@ -56,7 +56,6 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
                 continue;
             }
 
-            /** @var string $newContent */
             $newContent = Preg::replace(
                 [
                     '/^(\/\/|#(?!\[)|\/\*+)((?!(?:\/|\*|\h)).+)$/',
@@ -65,6 +64,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
                 '$1 $2',
                 $tokens[$index]->getContent()
             );
+            \assert(\is_string($newContent));
 
             if ($newContent === $tokens[$index]->getContent()) {
                 continue;

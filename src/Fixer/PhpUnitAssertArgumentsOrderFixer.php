@@ -126,8 +126,8 @@ class FooTest extends TestCase {
 
         $newAssertion = $assertions[\strtolower($oldAssertion)];
 
-        /** @var int $openingBraceIndex */
         $openingBraceIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($openingBraceIndex));
 
         if (!$tokens[$openingBraceIndex]->equals('(')) {
             return null;

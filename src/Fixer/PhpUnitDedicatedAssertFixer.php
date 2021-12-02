@@ -112,8 +112,8 @@ class FooTest extends TestCase {
             return false;
         }
 
-        /** @var int $openingBraceIndex */
         $openingBraceIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($openingBraceIndex));
 
         if (!$tokens[$openingBraceIndex]->equals('(')) {
             return false;
@@ -126,8 +126,8 @@ class FooTest extends TestCase {
     {
         $functionCallIndex = $secondArgument->getStartIndex();
         if ($tokens[$functionCallIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-            /** @var int $functionCallIndex */
             $functionCallIndex = $tokens->getNextMeaningfulToken($functionCallIndex);
+            \assert(\is_int($functionCallIndex));
         }
 
         if (!(new FunctionsAnalyzer())->isGlobalFunctionCall($tokens, $functionCallIndex)) {
@@ -147,8 +147,8 @@ class FooTest extends TestCase {
 
         $newAssertion = self::REPLACEMENTS_MAP[$functionName][\stripos($tokens[$assertionIndex]->getContent(), 'not', 6) === false ? 'positive' : 'negative'];
 
-        /** @var int $openParenthesisIndex */
         $openParenthesisIndex = $tokens->getNextMeaningfulToken($functionCallIndex);
+        \assert(\is_int($openParenthesisIndex));
         $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
 
         if ($closeParenthesisIndex < $secondArgument->getEndIndex()) {

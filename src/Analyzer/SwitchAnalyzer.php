@@ -48,8 +48,8 @@ final class SwitchAnalyzer
 
     private function getCasesStart(Tokens $tokens, int $switchIndex): int
     {
-        /** @var int $parenthesisStartIndex */
         $parenthesisStartIndex = $tokens->getNextMeaningfulToken($switchIndex);
+        \assert(\is_int($parenthesisStartIndex));
         $parenthesisEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $parenthesisStartIndex);
 
         $casesStartIndex = $tokens->getNextMeaningfulToken($parenthesisEndIndex);
@@ -73,8 +73,8 @@ final class SwitchAnalyzer
             }
         }
 
-        /** @var int $afterEndswitchIndex */
         $afterEndswitchIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($afterEndswitchIndex));
 
         return $tokens[$afterEndswitchIndex]->equals(';') ? $afterEndswitchIndex : $index;
     }
@@ -94,8 +94,8 @@ final class SwitchAnalyzer
 
     private function getNextSameLevelToken(Tokens $tokens, int $index): int
     {
-        /** @var int $index */
         $index = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($index));
 
         if ($tokens[$index]->isGivenKind(\T_SWITCH)) {
             return (new self())->getSwitchAnalysis($tokens, $index)->getCasesEnd();

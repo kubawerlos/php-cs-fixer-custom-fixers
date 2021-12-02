@@ -155,8 +155,8 @@ class Foo {
 
     private function isDoctrineEntity(Tokens $tokens, int $index): bool
     {
-        /** @var int $phpDocIndex */
         $phpDocIndex = $tokens->getPrevNonWhitespace($index);
+        \assert(\is_int($phpDocIndex));
 
         if (!$tokens[$phpDocIndex]->isGivenKind(\T_DOC_COMMENT)) {
             return false;
@@ -178,8 +178,8 @@ class Foo {
      */
     private function getPropertyIndex(Tokens $tokens, array $properties, int $assignmentIndex): ?int
     {
-        /** @var int $propertyNameIndex */
         $propertyNameIndex = $tokens->getPrevTokenOfKind($assignmentIndex, [[\T_STRING]]);
+        \assert(\is_int($propertyNameIndex));
 
         $propertyName = $tokens[$propertyNameIndex]->getContent();
 
@@ -204,8 +204,8 @@ class Foo {
             return true;
         }
 
-        /** @var int $phpDocIndex */
         $phpDocIndex = $tokens->getPrevTokenOfKind($propertyIndex, [[\T_DOC_COMMENT]]);
+        \assert(\is_int($phpDocIndex));
 
         $variableIndex = $tokens->getNextTokenOfKind($phpDocIndex, ['{', [\T_VARIABLE]]);
 
@@ -246,15 +246,15 @@ class Foo {
 
         $prevPropertyIndex = $this->getTokenOfKindSibling($tokens, -1, $propertyIndex, ['{', '}', ';', ',']);
 
-        /** @var int $propertyStartIndex */
         $propertyStartIndex = $tokens->getNextMeaningfulToken($prevPropertyIndex);
+        \assert(\is_int($propertyStartIndex));
 
         $propertyEndIndex = $this->getTokenOfKindSibling($tokens, 1, $propertyIndex, [';', ',']);
 
         $prevVisibilityIndex = $this->getTokenOfKindSibling($tokens, -1, $propertyIndex, ['{', '}', ';']);
 
-        /** @var int $visibilityIndex */
         $visibilityIndex = $tokens->getNextMeaningfulToken($prevVisibilityIndex);
+        \assert(\is_int($visibilityIndex));
 
         $visibilityToken = $tokens[$visibilityIndex];
 
@@ -262,8 +262,8 @@ class Foo {
             $visibilityToken = null;
         }
 
-        /** @var int $prevPropertyStartIndex */
         $prevPropertyStartIndex = $tokens->getPrevNonWhitespace($propertyStartIndex);
+        \assert(\is_int($prevPropertyStartIndex));
 
         if ($tokens[$prevPropertyStartIndex]->isGivenKind(\T_DOC_COMMENT)) {
             $propertyStartIndex = $prevPropertyStartIndex;
@@ -272,12 +272,12 @@ class Foo {
         $removeFrom = $propertyStartIndex;
         $removeTo = $propertyEndIndex;
         if ($tokens[$prevPropertyIndex]->equals(',')) {
-            /** @var int $removeFrom */
             $removeFrom = $tokens->getPrevMeaningfulToken($propertyStartIndex);
+            \assert(\is_int($removeFrom));
             $removeTo = $propertyEndIndex - 1;
         } elseif ($tokens[$propertyEndIndex]->equals(',')) {
-            /** @var int $removeFrom */
             $removeFrom = $tokens->getNextMeaningfulToken($visibilityIndex);
+            \assert(\is_int($removeFrom));
             $removeTo = $propertyEndIndex + 1;
         }
 
@@ -311,11 +311,11 @@ class Foo {
 
     private function removeAssignment(Tokens $tokens, int $variableAssignmentIndex): void
     {
-        /** @var int $thisIndex */
         $thisIndex = $tokens->getPrevTokenOfKind($variableAssignmentIndex, [[\T_VARIABLE]]);
+        \assert(\is_int($thisIndex));
 
-        /** @var int $propertyEndIndex */
         $propertyEndIndex = $tokens->getNextTokenOfKind($variableAssignmentIndex, [';']);
+        \assert(\is_int($propertyEndIndex));
 
         $tokens->clearRange($thisIndex + 1, $propertyEndIndex);
         TokenRemover::removeWithLinesIfPossible($tokens, $thisIndex);
@@ -323,11 +323,11 @@ class Foo {
 
     private function addVisibilityToParameter(Tokens $tokens, int $index, Token $visibilityToken): void
     {
-        /** @var int $prevElementIndex */
         $prevElementIndex = $tokens->getPrevTokenOfKind($index, ['(', ',', [CT::T_ATTRIBUTE_CLOSE]]);
+        \assert(\is_int($prevElementIndex));
 
-        /** @var int $propertyStartIndex */
         $propertyStartIndex = $tokens->getNextMeaningfulToken($prevElementIndex);
+        \assert(\is_int($propertyStartIndex));
 
         $insertTokens = [];
         if ($visibilityToken->isGivenKind(\T_PRIVATE)) {

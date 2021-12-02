@@ -64,8 +64,8 @@ class Foo {
                 continue;
             }
 
-            /** @var string $var */
             $var = $matches[1];
+            \assert(\is_string($var));
 
             $newContent = '/** ' . \rtrim($var) . ' */';
 

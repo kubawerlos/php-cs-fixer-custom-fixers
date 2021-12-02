@@ -58,8 +58,8 @@ final class ConstructorAnalyzer
             return false;
         }
 
-        /** @var int $functionNameIndex */
         $functionNameIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($functionNameIndex));
 
         return $tokens[$functionNameIndex]->equals([\T_STRING, '__construct'], false);
     }

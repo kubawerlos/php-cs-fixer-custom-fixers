@@ -70,16 +70,16 @@ function foo(&$x) {}
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 
-        /** @var int $openParenthesis */
         $openParenthesis = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
+        \assert(\is_int($openParenthesis));
 
         $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
         $indices = [];
 
         foreach (\array_keys($argumentsAnalyzer->getArguments($tokens, $openParenthesis, $closeParenthesis)) as $startIndexCandidate) {
-            /** @var int $index */
             $index = $tokens->getNextMeaningfulToken($startIndexCandidate - 1);
+            \assert(\is_int($index));
 
             $indices[] = $index;
         }

@@ -120,8 +120,8 @@ class FooTest extends TestCase {
 
             $usageIndex = $dataProviderAnalysis->getUsageIndices()[0];
 
-            /** @var int $testNameIndex */
             $testNameIndex = $tokens->getNextTokenOfKind($usageIndex, [[\T_STRING]]);
+            \assert(\is_int($testNameIndex));
 
             $dataProviderNewName = $this->getProviderNameForTestName($tokens[$testNameIndex]->getContent());
             if ($tokens->findSequence([[\T_FUNCTION], [\T_STRING, $dataProviderNewName]], $startIndex, $endIndex) !== null) {
@@ -130,12 +130,12 @@ class FooTest extends TestCase {
 
             $tokens[$dataProviderAnalysis->getNameIndex()] = new Token([\T_STRING, $dataProviderNewName]);
 
-            /** @var string $newCommentContent */
             $newCommentContent = Preg::replace(
                 \sprintf('/(@dataProvider\s+)%s/', $dataProviderAnalysis->getName()),
                 \sprintf('$1%s', $dataProviderNewName),
                 $tokens[$usageIndex]->getContent()
             );
+            \assert(\is_string($newCommentContent));
 
             $tokens[$usageIndex] = new Token([\T_DOC_COMMENT, $newCommentContent]);
         }
@@ -143,8 +143,8 @@ class FooTest extends TestCase {
 
     private function getProviderNameForTestName(string $name): string
     {
-        /** @var string $name */
         $name = Preg::replace('/^test_*/i', '', $name);
+        \assert(\is_string($name));
 
         if ($this->prefix === '') {
             $name = \lcfirst($name);

@@ -61,8 +61,8 @@ abstract class AbstractFixerTestCase extends TestCase
             return;
         }
 
-        /** @var string $riskyDescription */
         $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+        \assert(\is_string($riskyDescription));
 
         self::assertRegExp('/^[a-z]/', $riskyDescription);
     }
@@ -75,8 +75,8 @@ abstract class AbstractFixerTestCase extends TestCase
             return;
         }
 
-        /** @var string $riskyDescription */
         $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+        \assert(\is_string($riskyDescription));
 
         self::assertStringEndsNotWith('.', $riskyDescription);
     }

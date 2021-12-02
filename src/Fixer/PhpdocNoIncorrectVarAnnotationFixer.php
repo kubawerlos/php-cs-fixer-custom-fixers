@@ -97,8 +97,8 @@ $bar = new Foo();
             $tokenKinds[] = \T_READONLY;
         }
 
-        /** @var int $variableIndex */
         $variableIndex = $tokens->getTokenNotOfKindsSibling($propertyStartIndex, 1, $tokenKinds);
+        \assert(\is_int($variableIndex));
 
         if (!$tokens[$variableIndex]->isGivenKind(\T_VARIABLE)) {
             $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
@@ -125,8 +125,8 @@ $bar = new Foo();
 
     private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex): void
     {
-        /** @var int $index */
         $index = $tokens->getNextMeaningfulToken($controlIndex);
+        \assert(\is_int($index));
 
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
 

@@ -103,11 +103,11 @@ final class SrcCodeTest extends TestCase
     {
         $reflectionClass = new \ReflectionClass($className);
 
-        /** @var string $fileName */
         $fileName = $reflectionClass->getFileName();
+        \assert(\is_string($fileName));
 
-        /** @var string $content */
         $content = \file_get_contents($fileName);
+        \assert(\is_string($content));
 
         /** @var array<Token> $tokens */
         $tokens = Tokens::fromCode($content)->toArray();

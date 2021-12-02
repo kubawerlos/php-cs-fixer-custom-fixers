@@ -91,10 +91,9 @@ class Foo {
         }
 
         if ($tokens[$nextIndex]->isGivenKind([\T_CLASS, \T_INTERFACE, \T_TRAIT])) {
-            /** @var int $classyNameIndex */
             $classyNameIndex = $tokens->getNextMeaningfulToken($nextIndex);
+            \assert(\is_int($classyNameIndex));
 
-            /** @var string $content */
             $content = Preg::replace(
                 \sprintf('~
                         \R?
@@ -112,13 +111,14 @@ class Foo {
                 '',
                 $content
             );
+            \assert(\is_string($content));
         } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
-            /** @var string $content */
             $content = Preg::replace(
                 '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
                 '',
                 $content
             );
+            \assert(\is_string($content));
         } else {
             return $content;
         }
