@@ -110,6 +110,7 @@
         "Ternary": true,
         "This": true,
         "Throw_": true,
+        "TrueValue": true,
         "UnwrapArrayChangeKeyCase": true,
         "UnwrapArrayChunk": true,
         "UnwrapArrayColumn": true,

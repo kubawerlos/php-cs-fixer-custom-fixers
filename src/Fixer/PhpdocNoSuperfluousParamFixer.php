@@ -121,7 +121,7 @@ function foo($b, $s) {}
 
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
             if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(?=\$)%s\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) === 1 && !isset($foundParamNames[$matches[1]])) {
-                $foundParamNames[$matches[1]] = true;
+                $foundParamNames[$matches[1]] = $matches[1];
                 continue;
             }
 

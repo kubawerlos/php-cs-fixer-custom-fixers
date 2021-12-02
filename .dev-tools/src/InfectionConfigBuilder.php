@@ -35,7 +35,6 @@ final class InfectionConfigBuilder
         'OneZeroInteger',
         'Plus',
         'SyntaxError',
-        'TrueValue',
     ];
 
     /**

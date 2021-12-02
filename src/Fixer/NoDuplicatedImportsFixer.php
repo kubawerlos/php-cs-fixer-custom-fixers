@@ -70,7 +70,7 @@ use Bar;
                 if (isset($used[$key])) {
                     $this->removeUseDeclaration($tokens, $useDeclaration);
                 }
-                $used[$key] = true;
+                $used[$key] = $key;
             }
         }
     }

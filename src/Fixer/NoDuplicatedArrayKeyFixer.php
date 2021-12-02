@@ -114,7 +114,7 @@ $x = [
                 $tokens->clearRange($startIndex + 1, $endIndex);
                 TokenRemover::removeWithLinesIfPossible($tokens, $startIndex);
             }
-            $keys[$key] = true;
+            $keys[$key] = $key;
         }
     }
 
