@@ -66,16 +66,6 @@ final class ConstructorEmptyBracesFixerTest extends AbstractFixerTestCase
             }',
         ];
 
-        yield 'fix space in braces when constructor is abstract' => [
-            '<?php abstract class Foo {
-                abstract public function __construct() {}
-            }',
-            '<?php abstract class Foo {
-                abstract public function __construct() {
-                }
-            }',
-        ];
-
         yield 'fix space between closing parenthesis and opening brace' => [
             '<?php class Foo {
                 public function __construct() {}
