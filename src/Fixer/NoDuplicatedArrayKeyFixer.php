@@ -94,13 +94,13 @@ $x = [
     {
         $arrayAnalyzer = new ArrayAnalyzer();
 
-        $keys = [];
+        $foundKeys = [];
         foreach (\array_reverse($arrayAnalyzer->getElements($tokens, $index)) as $arrayElementAnalysis) {
             $key = $this->getKeyContentIfPossible($tokens, $arrayElementAnalysis);
             if ($key === null) {
                 continue;
             }
-            if (isset($keys[$key])) {
+            if (\in_array($key, $foundKeys, true)) {
                 /** @var int $startIndex */
                 $startIndex = $arrayElementAnalysis->getKeyStartIndex();
 
@@ -114,7 +114,7 @@ $x = [
                 $tokens->clearRange($startIndex + 1, $endIndex);
                 TokenRemover::removeWithLinesIfPossible($tokens, $startIndex);
             }
-            $keys[$key] = $key;
+            $foundKeys[] = $key;
         }
     }
 

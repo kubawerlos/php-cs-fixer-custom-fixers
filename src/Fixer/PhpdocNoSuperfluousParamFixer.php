@@ -117,11 +117,11 @@ function foo($b, $s) {}
         $regexParamNamesPattern = '(\Q' . \implode('\E|\Q', $paramNames) . '\E)';
 
         $doc = new DocBlock($comment);
-        $foundParamNames = [];
 
+        $foundParamNames = [];
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
-            if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(?=\$)%s\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) === 1 && !isset($foundParamNames[$matches[1]])) {
-                $foundParamNames[$matches[1]] = $matches[1];
+            if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(?=\$)%s\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) === 1 && !\in_array($matches[1], $foundParamNames, true)) {
+                $foundParamNames[] = $matches[1];
                 continue;
             }
 
