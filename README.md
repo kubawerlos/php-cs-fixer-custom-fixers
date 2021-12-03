@@ -568,6 +568,5 @@ php .dev-tools/readme > README.md
 make sure all checks pass:
 ```bash
 composer verify
-composer infection
 ```
 and submit pull request.
