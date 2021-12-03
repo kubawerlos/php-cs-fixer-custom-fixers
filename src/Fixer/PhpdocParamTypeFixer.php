@@ -60,10 +60,6 @@ function a($foo, $bar) {}
                 continue;
             }
 
-            if (\stripos($tokens[$index]->getContent(), '@param') === false) {
-                continue;
-            }
-
             $newContent = Preg::replace(
                 '/(@param) {0,7}( *\$)/i',
                 '$1 mixed $2',

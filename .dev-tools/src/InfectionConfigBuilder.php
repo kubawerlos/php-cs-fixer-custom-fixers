@@ -19,7 +19,6 @@ final class InfectionConfigBuilder
     private const UNWANTED_MUTATORS = [
         'Concat',
         'DecrementInteger',
-        'FalseValue',
         'GreaterThan',
         'GreaterThanOrEqualTo',
         'IdenticalEqual',
@@ -76,7 +75,7 @@ final class InfectionConfigBuilder
                 'PhpCsFixerCustomFixers\\Fixer\\*::getConfigurationDefinition',
                 'PhpCsFixerCustomFixers\\Fixer\\*::getDefinition',
                 'PhpCsFixerCustomFixers\\Fixer\\*::isCandidate',
-                NoLeadingSlashInGlobalNamespaceFixer::class . '::isToRemove', // whitespaces and commends cannot be inside FQCN in PHP 8
+                NoLeadingSlashInGlobalNamespaceFixer::class . '::isToRemove', // whitespaces and comments cannot be inside FQCN in PHP 8+
             ],
         ];
 

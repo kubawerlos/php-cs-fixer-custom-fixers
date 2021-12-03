@@ -55,7 +55,7 @@ $bar = new Foo();
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if (!$this->isTokenCandidate($tokens[$index])) {
+            if (!$tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
@@ -86,11 +86,6 @@ $bar = new Foo();
 
             $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
         }
-    }
-
-    private function isTokenCandidate(Token $token): bool
-    {
-        return $token->isGivenKind(\T_DOC_COMMENT) && \stripos($token->getContent(), '@var') !== false;
     }
 
     private function removeForClassElement(Tokens $tokens, int $index, int $propertyStartIndex): void

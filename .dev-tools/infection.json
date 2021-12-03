@@ -57,6 +57,7 @@
         "Equal": true,
         "EqualIdentical": true,
         "Exponentiation": true,
+        "FalseValue": true,
         "Finally_": true,
         "FloatNegation": true,
         "For_": true,

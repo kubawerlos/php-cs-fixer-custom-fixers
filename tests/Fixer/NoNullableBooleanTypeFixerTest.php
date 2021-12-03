@@ -42,13 +42,13 @@ final class NoNullableBooleanTypeFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php function foo(Bool $b) {}',
-            '<?php function foo(?Bool $b) {}',
+            '<?php function foo(boolean $b) {}',
+            '<?php function foo(?boolean $b) {}',
         ];
 
         yield [
-            '<?php function foo(boolean $b) {}',
-            '<?php function foo(?boolean $b) {}',
+            '<?php function foo(Bool $x, Boolean $y) {}',
+            '<?php function foo(?Bool $x, ?Boolean $y) {}',
         ];
 
         yield [

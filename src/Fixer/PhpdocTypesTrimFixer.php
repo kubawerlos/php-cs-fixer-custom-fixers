@@ -89,10 +89,6 @@ function foo($x) {}
 
     private function trimTypes(string $content): string
     {
-        if (\strpos($content, '|') === false && \strpos($content, '&') === false) {
-            return $content;
-        }
-
         /** @var int $tagStartPosition */
         $tagStartPosition = \strpos($content, '@');
 
