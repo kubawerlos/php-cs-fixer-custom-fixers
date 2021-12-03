@@ -63,14 +63,13 @@ use Bar;
                 }
             );
 
-            $used = [];
-
+            $foundDeclarations = [];
             foreach ($currentNamespaceUseDeclarations as $useDeclaration) {
                 $key = $this->getUniqueKey($useDeclaration);
-                if (isset($used[$key])) {
+                if (\in_array($key, $foundDeclarations, true)) {
                     $this->removeUseDeclaration($tokens, $useDeclaration);
                 }
-                $used[$key] = true;
+                $foundDeclarations[] = $key;
             }
         }
     }
