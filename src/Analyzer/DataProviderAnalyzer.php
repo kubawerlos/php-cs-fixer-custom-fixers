@@ -52,12 +52,13 @@ final class DataProviderAnalyzer
 
         $dataProviderAnalyses = [];
         foreach ($dataProviders as $dataProviderName => $dataProviderUsages) {
-            if (!isset($methods[$dataProviderName])) {
+            $lowercaseDataProviderName = \strtolower($dataProviderName);
+            if (!isset($methods[$lowercaseDataProviderName])) {
                 continue;
             }
-            $dataProviderAnalyses[$methods[$dataProviderName]] = new DataProviderAnalysis(
-                $dataProviderName,
-                $methods[$dataProviderName],
+            $dataProviderAnalyses[$methods[$lowercaseDataProviderName]] = new DataProviderAnalysis(
+                $tokens[$methods[$lowercaseDataProviderName]]->getContent(),
+                $methods[$lowercaseDataProviderName],
                 $dataProviderUsages
             );
         }
@@ -85,7 +86,7 @@ final class DataProviderAnalyzer
                 continue;
             }
 
-            $functions[$tokens[$functionNameIndex]->getContent()] = $functionNameIndex;
+            $functions[\strtolower($tokens[$functionNameIndex]->getContent())] = $functionNameIndex;
         }
 
         return $functions;

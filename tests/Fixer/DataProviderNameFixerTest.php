@@ -63,6 +63,25 @@ class FooTest extends TestCase {
 }',
         ];
 
+        yield 'data provider named with different casing' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {}
+    public function provideFooCases() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {}
+    public function PROVIDEFOOCASES() {}
+}',
+        ];
+
         yield 'fixing simple scenario with test class prefixed' => [
             '<?php
 class FooTest extends TestCase {
@@ -280,6 +299,29 @@ class FooTest extends TestCase {
     public function someDataProvider() {}
     public function testFooProvider() {}
     public function testBarProvider() {}
+}',
+        ];
+
+        yield 'fixing when string like expected data provider name is present' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFooCases
+     */
+    public function testFoo() {
+        $foo->provideFooCases(); // do not get fooled that data provider name is already taken
+    }
+    public function provideFooCases() {}
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider fooDataProvider
+     */
+    public function testFoo() {
+        $foo->provideFooCases(); // do not get fooled that data provider name is already taken
+    }
+    public function fooDataProvider() {}
 }',
         ];
 
