@@ -51,6 +51,13 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
                     }
                 }'];
 
+        yield ['<?php class Foo
+            {
+                public function bar() {
+                    $ohject->__toString();
+                }
+            }'];
+
         yield [
             '<?php class Foo implements \Stringable
             {

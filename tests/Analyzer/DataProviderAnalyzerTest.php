@@ -127,6 +127,17 @@ final class DataProviderAnalyzerTest extends TestCase
             }',
         ];
 
+        yield 'data provider being constant' => [
+            [],
+            '<?php class FooTest extends TestCase {
+                private const provider = [];
+                /**
+                 * @dataProvider provider
+                 */
+                public function testFoo() {}
+            }',
+        ];
+
         yield 'ignore anonymous function' => [
             [
                 new DataProviderAnalysis('provider2', 93, [65]),

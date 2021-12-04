@@ -26,7 +26,6 @@ final class InfectionConfigBuilder
         'IntegerNegation',
         'LessThan',
         'LessThanOrEqualTo',
-        'LogicalNot',
         'Minus',
         'NotIdentical',
         'NotIdenticalNotEqual',
