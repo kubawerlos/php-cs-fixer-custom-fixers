@@ -15,7 +15,7 @@ use PhpCsFixer\Console\Command\HelpCommand;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
-use PhpCsFixer\FixerDefinition\CodeSample;
+use PhpCsFixer\FixerDefinition\CodeSampleInterface;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -216,7 +216,7 @@ In your PHP CS Fixer configuration register fixers and use them:
             }
 
             $codeSample = $fixer->getDefinition()->getCodeSamples()[0];
-            \assert($codeSample instanceof CodeSample);
+            \assert($codeSample instanceof CodeSampleInterface);
 
             $originalCode = $codeSample->getCode();
             if ($fixer instanceof ConfigurableFixerInterface) {
