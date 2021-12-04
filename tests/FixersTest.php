@@ -51,8 +51,8 @@ final class FixersTest extends TestCase
             static function (SplFileInfo $fileInfo): array {
                 $className = 'PhpCsFixerCustomFixers\\Fixer\\' . $fileInfo->getBasename('.php');
 
-                /** @var FixerInterface $fixer */
                 $fixer = new $className();
+                \assert($fixer instanceof FixerInterface);
 
                 return [$fixer];
             },

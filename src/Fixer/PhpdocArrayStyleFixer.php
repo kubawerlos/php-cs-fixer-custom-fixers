@@ -71,14 +71,14 @@ final class PhpdocArrayStyleFixer extends AbstractFixer
                     continue;
                 }
 
-                /** @var Line $line */
                 $line = $docBlock->getLine($annotation->getStart());
+                \assert($line instanceof Line);
 
                 $content = $line->getContent();
                 $newContent = $this->fixType($content);
 
-                /** @var Line $line */
                 $line = $docBlock->getLine($annotation->getStart());
+                \assert($line instanceof Line);
                 $line->setContent($newContent);
             }
 

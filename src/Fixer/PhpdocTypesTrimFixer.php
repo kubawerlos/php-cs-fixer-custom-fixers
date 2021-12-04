@@ -67,14 +67,14 @@ function foo($x) {}
                     continue;
                 }
 
-                /** @var Line $line */
                 $line = $docBlock->getLine($annotation->getStart());
+                \assert($line instanceof Line);
 
                 $content = $line->getContent();
                 $newContent = $this->trimTypes($content);
 
-                /** @var Line $line */
                 $line = $docBlock->getLine($annotation->getStart());
+                \assert($line instanceof Line);
                 $line->setContent($newContent);
             }
 

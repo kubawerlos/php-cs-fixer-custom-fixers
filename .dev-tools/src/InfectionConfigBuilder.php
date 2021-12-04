@@ -77,6 +77,12 @@ final class InfectionConfigBuilder
             ],
         ];
 
+        $config['mutators']['InstanceOf_'] = [
+            'ignoreSourceCodeByRegex' => [
+                '\\\\assert\\(.+\\);',
+            ],
+        ];
+
         $config['mutators']['LogicalAnd'] = [
             'ignore' => [
                 'PhpCsFixerCustomFixers\\Fixer\\*::isCandidate',

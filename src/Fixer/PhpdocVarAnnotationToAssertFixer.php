@@ -16,6 +16,7 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -159,7 +160,7 @@ $x = getValue();
 
     private function getCodeForType(string $type, string $variableName): ?string
     {
-        $functionMap = [
+        $typesMap = [
             'array' => 'is_array',
             'bool' => 'is_bool',
             'boolean' => 'is_bool',
@@ -171,8 +172,12 @@ $x = getValue();
             'string' => 'is_string',
         ];
 
-        if (isset($functionMap[$type])) {
-            return \sprintf('%s(%s)', $functionMap[$type], $variableName);
+        if (isset($typesMap[\strtolower($type)])) {
+            return \sprintf('%s(%s)', $typesMap[\strtolower($type)], $variableName);
+        }
+
+        if (Preg::match('/^[a-zA-Z_\x80-\xff][\\\\a-zA-Z0-9_\x80-\xff]*$/', $type) === 1) {
+            return \sprintf('%s instanceof %s', $variableName, $type);
         }
 
         return null;

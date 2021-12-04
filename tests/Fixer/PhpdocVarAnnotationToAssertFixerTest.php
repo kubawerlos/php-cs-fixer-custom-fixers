@@ -131,6 +131,17 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
 
         yield 'single type' => [
             '<?php
+                $y = 42;
+                assert(is_int($y));
+            ',
+            '<?php
+                /** @var int $y */
+                $y = 42;
+            ',
+        ];
+
+        yield 'single type uppercase' => [
+            '<?php
                 /** @var int $x */
                 $y = 42;
                 assert(is_int($y));
@@ -138,19 +149,41 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             ',
             '<?php
                 /** @var int $x */
-                /** @var int $y */
+                /** @var INT $y */
                 $y = 42;
                 /** @var int $z */
             ',
         ];
 
-        yield 'multiple types' => [
+        yield 'multiple simple types' => [
             '<?php
                 $x = getValue();
                 assert(is_bool($x) || is_int($x) || is_string($x));
             ',
             '<?php
                 /** @var bool|int|string $x */
+                $x = getValue();
+            ',
+        ];
+
+        yield 'multiple class types' => [
+            '<?php
+                $x = getValue();
+                assert($x instanceof Foo || $x instanceof Bar || $x instanceof Baz\Qux);
+            ',
+            '<?php
+                /** @var Foo|Bar|Baz\Qux $x */
+                $x = getValue();
+            ',
+        ];
+
+        yield 'mixed types' => [
+            '<?php
+                $x = getValue();
+                assert(is_bool($x) || $x instanceof Foo || is_string($x) || $x instanceof Bar);
+            ',
+            '<?php
+                /** @var bool|Foo|string|Bar $x */
                 $x = getValue();
             ',
         ];
@@ -214,6 +247,23 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
 
                 /** @var array $z */
                 $z = [1, 2, 3];
+            ',
+        ];
+
+        yield 'complex assignment' => [
+            '<?php
+                $x = array_sump(array_map(
+                    function ($x) { $x++; return $x + 6; },
+                    [1, 2, getThirdElement()]
+                ));
+                assert(is_int($x));
+            ',
+            '<?php
+                /** @var int $x */
+                $x = array_sump(array_map(
+                    function ($x) { $x++; return $x + 6; },
+                    [1, 2, getThirdElement()]
+                ));
             ',
         ];
     }

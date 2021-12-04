@@ -39,8 +39,8 @@ abstract class AbstractFixerTestCase extends TestCase
 
         $className = 'PhpCsFixerCustomFixers\\Fixer\\' . \substr($reflectionClass->getShortName(), 0, -4);
 
-        /** @var FixerInterface $fixer */
         $fixer = new $className();
+        \assert($fixer instanceof FixerInterface);
 
         $this->fixer = $fixer;
         if ($this->fixer instanceof WhitespacesAwareFixerInterface) {
