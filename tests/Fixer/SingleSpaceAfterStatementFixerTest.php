@@ -137,6 +137,11 @@ interface    FooInterface {
         yield ['<?php new class() {};'];
 
         yield [
+            '<?php new class {};',
+            '<?php new class{};',
+        ];
+
+        yield [
             '<?php echo "100";',
             '<?php echo"100";',
         ];
