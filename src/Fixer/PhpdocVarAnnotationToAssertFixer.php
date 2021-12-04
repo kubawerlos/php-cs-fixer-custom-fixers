@@ -87,6 +87,11 @@ $x = getValue();
 
     private function getVariableIndex(Tokens $tokens, int $docCommentIndex): ?int
     {
+        $prevIndex = $tokens->getPrevMeaningfulToken($docCommentIndex);
+        if (!$tokens[$prevIndex]->equalsAny([';', '{', '}', [\T_OPEN_TAG]])) {
+            return null;
+        }
+
         $variableIndex = $tokens->getNextMeaningfulToken($docCommentIndex);
         if ($variableIndex === null) {
             return null;
