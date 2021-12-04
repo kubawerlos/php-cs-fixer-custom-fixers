@@ -13,7 +13,6 @@
         <ini name='display_startup_errors' value='1' />
         <ini name='error_reporting' value='-1' />
         <ini name='memory_limit' value='-1' />
-        <ini name='zend.assertions' value='1' />
     </php>
 
     <testsuites>
