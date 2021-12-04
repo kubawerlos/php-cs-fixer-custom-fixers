@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3110-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3144-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -506,6 +506,15 @@ PHPDoc types must be trimmed.
 + * @param null|string $x
   */
  function foo($x) {}
+```
+
+#### PhpdocVarAnnotationToAssertFixer
+Converts `@var` annotations to `assert` calls when used in assignments.
+```diff
+ <?php
+-/** @var string $x */
+ $x = getValue();
++assert(is_string($x));
 ```
 
 #### PromotedConstructorPropertyFixer

@@ -95,16 +95,16 @@ class Bar {
      */
     private function removeImportFromGlobalNamespace(Tokens $tokens, array $imports, int $index): array
     {
-        /** @var int $classNameIndex */
         $classNameIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($classNameIndex));
 
         if ($tokens[$classNameIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-            /** @var int $classNameIndex */
             $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+            \assert(\is_int($classNameIndex));
         }
 
-        /** @var int $semicolonIndex */
         $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+        \assert(\is_int($semicolonIndex));
 
         if ($tokens[$semicolonIndex]->equals(';')) {
             $imports[] = $tokens[$classNameIndex]->getContent();
@@ -140,8 +140,8 @@ class Bar {
             return;
         }
 
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($prevIndex));
 
         if ($tokens[$prevIndex]->isGivenKind([\T_CONST, \T_DOUBLE_COLON, \T_NS_SEPARATOR, \T_OBJECT_OPERATOR, \T_FUNCTION])) {
             return;

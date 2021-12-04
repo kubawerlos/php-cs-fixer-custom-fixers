@@ -41,20 +41,20 @@ final class FunctionAnalyzer
                 continue;
             }
 
-            /** @var int $index */
             $index = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($index));
 
             if (!$tokens[$index]->equals(',')) {
                 continue;
             }
 
-            /** @var int $currentArgumentEnd */
             $currentArgumentEnd = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($currentArgumentEnd));
 
             $arguments[] = self::createArgumentAnalysis($tokens, $currentArgumentStart, $currentArgumentEnd);
 
-            /** @var int $currentArgumentStart */
             $currentArgumentStart = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($currentArgumentStart));
         }
 
         $arguments[] = self::createArgumentAnalysis($tokens, $currentArgumentStart, $argumentsEndIndex);
@@ -71,27 +71,27 @@ final class FunctionAnalyzer
             throw new \InvalidArgumentException(\sprintf('Index %d is not a function.', $index));
         }
 
-        /** @var int $openParenthesis */
         $openParenthesis = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($openParenthesis));
         if (!$tokens[$openParenthesis]->equals('(')) {
             throw new \InvalidArgumentException(\sprintf('Index %d is not a function.', $index));
         }
 
         $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
-        /** @var int $argumentsEndIndex */
         $argumentsEndIndex = $tokens->getPrevMeaningfulToken($closeParenthesis);
+        \assert(\is_int($argumentsEndIndex));
 
         if ($openParenthesis === $argumentsEndIndex) {
             return null;
         }
         if ($tokens[$argumentsEndIndex]->equals(',')) {
-            /** @var int $argumentsEndIndex */
             $argumentsEndIndex = $tokens->getPrevMeaningfulToken($argumentsEndIndex);
+            \assert(\is_int($argumentsEndIndex));
         }
 
-        /** @var int $argumentStartIndex */
         $argumentStartIndex = $tokens->getNextMeaningfulToken($openParenthesis);
+        \assert(\is_int($argumentStartIndex));
 
         return [$argumentStartIndex, $argumentsEndIndex];
     }
@@ -105,8 +105,8 @@ final class FunctionAnalyzer
                 $isConstant = false;
             }
             if ($tokens[$index]->equals('(')) {
-                /** @var int $prevParenthesisIndex */
                 $prevParenthesisIndex = $tokens->getPrevMeaningfulToken($index);
+                \assert(\is_int($prevParenthesisIndex));
 
                 if (!$tokens[$prevParenthesisIndex]->isGivenKind(\T_ARRAY)) {
                     $isConstant = false;

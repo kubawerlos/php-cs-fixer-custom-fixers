@@ -57,8 +57,8 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
 
         $tokens[0] = new Token([\T_OPEN_TAG, \substr($openingTagTokenContent, 0, 5) . ' ']);
 
-        /** @var int $declareIndex */
         $declareIndex = $tokens->getNextTokenOfKind(0, [[\T_DECLARE]]);
+        \assert(\is_int($declareIndex));
         if ($declareIndex <= 2) {
             $tokens->clearRange(1, $declareIndex - 1);
 
@@ -72,12 +72,12 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
             $declareIndex++;
         }
 
-        /** @var int $openParenthesisIndex */
         $openParenthesisIndex = $tokens->getNextMeaningfulToken($declareIndex);
+        \assert(\is_int($openParenthesisIndex));
         $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
 
-        /** @var int $semicolonIndex */
         $semicolonIndex = $tokens->getNextMeaningfulToken($closeParenthesisIndex);
+        \assert(\is_int($semicolonIndex));
 
         $tokensToInsert = [];
         for ($index = $declareIndex; $index <= $semicolonIndex; $index++) {
@@ -85,8 +85,8 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
         }
 
         if ($tokens[$semicolonIndex + 1]->isGivenKind(\T_WHITESPACE)) {
-            /** @var string $content */
             $content = Preg::replace('/^(\R?)(?=\R)/', '', $tokens[$semicolonIndex + 1]->getContent());
+            \assert(\is_string($content));
 
             $tokens->ensureWhitespaceAtIndex($semicolonIndex + 1, 0, $content);
         }

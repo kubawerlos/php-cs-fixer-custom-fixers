@@ -85,8 +85,8 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
                 continue;
             }
 
-            /** @var int $openParenthesis */
             $openParenthesis = $tokens->getNextTokenOfKind($constructorAnalysis->getConstructorIndex(), ['(']);
+            \assert(\is_int($openParenthesis));
             $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
             if (!$this->shouldBeFixed($tokens, $openParenthesis, $closeParenthesis)) {
@@ -124,12 +124,12 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
             $this->whitespacesConfig->getLineEnding() . $indent
         );
 
-        /** @var int $index */
         $index = $tokens->getPrevMeaningfulToken($closeParenthesis);
+        \assert(\is_int($index));
 
         while ($index > $openParenthesis) {
-            /** @var int $index */
             $index = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($index));
 
             /** @var null|array{isStart: bool, type: int} $blockType */
             $blockType = Tokens::detectBlockType($tokens[$index]);

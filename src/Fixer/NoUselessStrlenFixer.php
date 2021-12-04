@@ -67,8 +67,8 @@ $isNotEmpty = strlen($string) > 0;
                 continue;
             }
 
-            /** @var int $openParenthesisIndex */
             $openParenthesisIndex = $tokens->getNextTokenOfKind($index, ['(']);
+            \assert(\is_int($openParenthesisIndex));
 
             $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
 
@@ -82,8 +82,8 @@ $isNotEmpty = strlen($string) > 0;
                 $closeParenthesisIndex => -1,
             ];
 
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($prevIndex));
 
             $startIndex = $index;
             if ($tokens[$prevIndex]->isGivenKind(\T_NS_SEPARATOR)) {
@@ -110,8 +110,8 @@ $isNotEmpty = strlen($string) > 0;
 
     private function transformConditionLeft(Tokens $tokens, int $index): bool
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($prevIndex));
 
         $changeCondition = false;
         if ($tokens[$prevIndex]->equals('<')) {
@@ -120,8 +120,8 @@ $isNotEmpty = strlen($string) > 0;
             return false;
         }
 
-        /** @var int $prevPrevIndex */
         $prevPrevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
+        \assert(\is_int($prevPrevIndex));
 
         if (!$tokens[$prevPrevIndex]->equals([\T_LNUMBER, '0'])) {
             return false;
@@ -138,8 +138,8 @@ $isNotEmpty = strlen($string) > 0;
 
     private function transformConditionRight(Tokens $tokens, int $index): bool
     {
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($nextIndex));
 
         $changeCondition = false;
         if ($tokens[$nextIndex]->equals('>')) {
@@ -148,8 +148,8 @@ $isNotEmpty = strlen($string) > 0;
             return false;
         }
 
-        /** @var int $nextNextIndex */
         $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
+        \assert(\is_int($nextNextIndex));
 
         if (!$tokens[$nextNextIndex]->equals([\T_LNUMBER, '0'])) {
             return false;

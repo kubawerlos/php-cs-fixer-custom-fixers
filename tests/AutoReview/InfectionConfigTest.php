@@ -32,8 +32,8 @@ final class InfectionConfigTest extends TestCase
         $configBuilder = new InfectionConfigBuilder();
         $configFromBuilder = $configBuilder->build();
 
-        /** @var string $json */
         $json = \file_get_contents(__DIR__ . '/../../.dev-tools/infection.json');
+        \assert(\is_string($json));
 
         $actualConfig = \json_decode($json, true);
 

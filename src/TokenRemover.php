@@ -22,8 +22,8 @@ final class TokenRemover
     public static function removeWithLinesIfPossible(Tokens $tokens, int $index): void
     {
         if (self::isTokenOnlyMeaningfulInLine($tokens, $index)) {
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getNonEmptySibling($index, -1);
+            \assert(\is_int($prevIndex));
 
             $wasNewlineRemoved = self::handleWhitespaceBefore($tokens, $prevIndex);
 
@@ -43,8 +43,8 @@ final class TokenRemover
 
     private static function hasMeaningTokenInLineBefore(Tokens $tokens, int $index): bool
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getNonEmptySibling($index, -1);
+        \assert(\is_int($prevIndex));
 
         if (!$tokens[$prevIndex]->isGivenKind([\T_OPEN_TAG, \T_WHITESPACE])) {
             return true;
@@ -55,8 +55,8 @@ final class TokenRemover
         }
 
         if (Preg::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
-            /** @var int $prevPrevIndex */
             $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
+            \assert(\is_int($prevPrevIndex));
 
             if (!$tokens[$prevPrevIndex]->isGivenKind(\T_OPEN_TAG) || Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
                 return true;
@@ -87,8 +87,8 @@ final class TokenRemover
         }
         $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
 
-        /** @var string $contentWithoutTrailingSpacesAndNewline */
         $contentWithoutTrailingSpacesAndNewline = Preg::replace('/\R$/', '', $contentWithoutTrailingSpaces, 1);
+        \assert(\is_string($contentWithoutTrailingSpacesAndNewline));
 
         $tokens->ensureWhitespaceAtIndex($index, 0, $contentWithoutTrailingSpacesAndNewline);
 
@@ -99,8 +99,8 @@ final class TokenRemover
     {
         $pattern = $wasNewlineRemoved ? '/^\h+/' : '/^\h*\R/';
 
-        /** @var string $newContent */
         $newContent = Preg::replace($pattern, '', $tokens[$index]->getContent());
+        \assert(\is_string($newContent));
 
         $tokens->ensureWhitespaceAtIndex($index, 0, $newContent);
     }

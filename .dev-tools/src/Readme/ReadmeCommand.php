@@ -249,8 +249,8 @@ In your PHP CS Fixer configuration register fixers and use them:
 
         $diff = $differ->diff($from, $to);
 
-        /** @var int $start */
         $start = \strpos($diff, "\n", 10);
+        \assert(\is_int($start));
 
         return \substr($diff, $start + 1, -1);
     }

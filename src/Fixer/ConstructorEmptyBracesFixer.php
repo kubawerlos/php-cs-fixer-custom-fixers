@@ -71,16 +71,16 @@ class Foo {
                 continue;
             }
 
-            /** @var int $openParenthesisIndex */
             $openParenthesisIndex = $tokens->getNextTokenOfKind($constructorAnalysis->getConstructorIndex(), ['(']);
+            \assert(\is_int($openParenthesisIndex));
 
             $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
 
-            /** @var int $openBraceIndex */
             $openBraceIndex = $tokens->getNextMeaningfulToken($closeParenthesisIndex);
+            \assert(\is_int($openBraceIndex));
 
-            /** @var int $closeBraceIndex */
             $closeBraceIndex = $tokens->getNextNonWhitespace($openBraceIndex);
+            \assert(\is_int($closeBraceIndex));
             if (!$tokens[$closeBraceIndex]->equals('}')) {
                 continue;
             }

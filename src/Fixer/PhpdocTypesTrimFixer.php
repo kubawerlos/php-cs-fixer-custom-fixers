@@ -89,11 +89,11 @@ function foo($x) {}
 
     private function trimTypes(string $content): string
     {
-        /** @var int $tagStartPosition */
         $tagStartPosition = \strpos($content, '@');
+        \assert(\is_int($tagStartPosition));
 
-        /** @var int $typeStartPosition */
         $typeStartPosition = \strpos($content, ' ', $tagStartPosition);
+        \assert(\is_int($typeStartPosition));
         $typeStartPosition++;
 
         $variableStartPosition = \strpos($content, '$', $typeStartPosition);
@@ -110,15 +110,15 @@ function foo($x) {}
             $descriptionStartPosition = \strlen($content);
         }
 
-        /** @var int $typeEndPosition */
         $typeEndPosition = \min($variableStartPosition, $descriptionStartPosition);
+        \assert(\is_int($typeEndPosition));
 
         $contentBeforeTypes = \substr($content, 0, $typeStartPosition);
         $contentTypes = \substr($content, $typeStartPosition, $typeEndPosition - $typeStartPosition);
         $contentAfterTypes = \substr($content, $typeEndPosition);
 
-        /** @var string $trimmedContentTypes */
         $trimmedContentTypes = Preg::replace('/\h*(&(?!\h*\$)|\|)\h*/', '$1', $contentTypes);
+        \assert(\is_string($trimmedContentTypes));
 
         return $contentBeforeTypes . $trimmedContentTypes . $contentAfterTypes;
     }

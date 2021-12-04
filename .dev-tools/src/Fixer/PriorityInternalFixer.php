@@ -59,24 +59,24 @@ final class PriorityInternalFixer implements FixerInterface
         /** @var array<int> $indices */
         $indices = $tokens->findSequence([[\T_EXTENDS], [\T_STRING, 'AbstractFixer']]);
 
-        /** @var int $sequencesStartIndex */
         $sequencesStartIndex = \key($indices);
+        \assert(\is_int($sequencesStartIndex));
 
-        /** @var int $classNameIndex */
         $classNameIndex = $tokens->getPrevMeaningfulToken($sequencesStartIndex);
+        \assert(\is_int($classNameIndex));
 
         $className = $tokens[$classNameIndex]->getContent();
 
-        /** @var int $startIndex */
         $startIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, ['{']);
+        \assert(\is_int($startIndex));
 
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
         /** @var array<int> $indices */
         $indices = $tokens->findSequence([[\T_PUBLIC], [\T_FUNCTION], [\T_STRING, 'getPriority']], $startIndex, $endIndex);
 
-        /** @var int $sequencesStartIndex */
         $sequencesStartIndex = \key($indices);
+        \assert(\is_int($sequencesStartIndex));
 
         $commentContent = $this->getCommentContent($className);
 
@@ -92,8 +92,8 @@ final class PriorityInternalFixer implements FixerInterface
             );
         }
 
-        /** @var int $returnIndex */
         $returnIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, [[\T_RETURN]]);
+        \assert(\is_int($returnIndex));
 
         $priorityStartIndex = $returnIndex + 2;
 
@@ -101,8 +101,8 @@ final class PriorityInternalFixer implements FixerInterface
             return;
         }
 
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextTokenOfKind($priorityStartIndex, [';']);
+        \assert(\is_int($nextIndex));
 
         $priorityEndIndex = $nextIndex - 1;
 

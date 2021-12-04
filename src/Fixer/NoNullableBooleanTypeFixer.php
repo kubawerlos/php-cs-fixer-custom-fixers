@@ -55,15 +55,15 @@ function foo(?bool $bar) : ?bool
                 continue;
             }
 
-            /** @var int $nextIndex */
             $nextIndex = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($nextIndex));
 
             if (!$tokens[$nextIndex]->equals([\T_STRING, 'bool'], false) && !$tokens[$nextIndex]->equals([\T_STRING, 'boolean'], false)) {
                 continue;
             }
 
-            /** @var int $nextNextIndex */
             $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
+            \assert(\is_int($nextNextIndex));
 
             if (!$tokens[$nextNextIndex]->isGivenKind(\T_VARIABLE) && $tokens[$nextNextIndex]->getContent() !== '{') {
                 continue;

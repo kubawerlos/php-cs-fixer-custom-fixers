@@ -67,8 +67,8 @@ foo(($bar));
             $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             $tokens->clearTokenAndMergeSurroundingWhitespace($blockEndIndex);
 
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($prevIndex));
 
             if ($tokens[$prevIndex]->isGivenKind([\T_RETURN, \T_THROW])) {
                 $tokens->ensureWhitespaceAtIndex($prevIndex + 1, 0, ' ');
@@ -82,10 +82,10 @@ foo(($bar));
             return true;
         }
 
-        /** @var int $prevStartIndex */
         $prevStartIndex = $tokens->getPrevMeaningfulToken($startIndex);
-        /** @var int $nextEndIndex */
+        \assert(\is_int($prevStartIndex));
         $nextEndIndex = $tokens->getNextMeaningfulToken($endIndex);
+        \assert(\is_int($nextEndIndex));
 
         if ((new BlocksAnalyzer())->isBlock($tokens, $prevStartIndex, $nextEndIndex)) {
             return true;
@@ -144,8 +144,8 @@ foo(($bar));
 
     private function isParenthesisBlockInside(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        /** @var int $nextStartIndex */
         $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
+        \assert(\is_int($nextStartIndex));
 
         return $tokens[$nextStartIndex]->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])
             && (new BlocksAnalyzer())->isBlock($tokens, $nextStartIndex, $tokens->getPrevMeaningfulToken($endIndex));
@@ -153,8 +153,8 @@ foo(($bar));
 
     private function isExpressionInside(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        /** @var int $index */
         $index = $tokens->getNextMeaningfulToken($startIndex);
+        \assert(\is_int($index));
 
         while ($index < $endIndex) {
             if (
@@ -171,8 +171,8 @@ foo(($bar));
                 return false;
             }
 
-            /** @var int $index */
             $index = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($index));
         }
 
         return true;
@@ -184,8 +184,8 @@ foo(($bar));
             return;
         }
 
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getNonEmptySibling($index, -1);
+        \assert(\is_int($prevIndex));
 
         if ($tokens[$prevIndex]->isComment()) {
             $tokens->ensureWhitespaceAtIndex($index, 0, \rtrim($tokens[$index]->getContent(), " \t"));

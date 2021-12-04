@@ -89,8 +89,8 @@ var_dump($x);
 
             $startIndex = $index;
 
-            /** @var int $prevIndex */
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($prevIndex));
 
             if ($tokens[$prevIndex]->isGivenKind(\T_NS_SEPARATOR)) {
                 $startIndex = $prevIndex;
@@ -100,13 +100,13 @@ var_dump($x);
                 continue;
             }
 
-            /** @var int $indexParenthesisStart */
             $indexParenthesisStart = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($indexParenthesisStart));
 
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
 
-            /** @var int $semicolonIndex */
             $semicolonIndex = $tokens->getNextMeaningfulToken($endIndex);
+            \assert(\is_int($semicolonIndex));
 
             if (!$tokens[$semicolonIndex]->equalsAny([';', [\T_CLOSE_TAG]])) {
                 continue;
@@ -135,8 +135,8 @@ var_dump($x);
 
     private function isPreviousTokenSeparateStatement(Tokens $tokens, int $index): bool
     {
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($prevIndex));
 
         if ($tokens[$prevIndex]->equalsAny([';', '{', '}', [\T_OPEN_TAG]])) {
             return true;
@@ -203,8 +203,8 @@ var_dump($x);
         $prefix = '//';
         if ($tokens[$startIndex - 1]->isWhitespace()) {
             $startIndex--;
-            /** @var string $prefix */
             $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $tokens[$startIndex]->getContent());
+            \assert(\is_string($prefix));
         }
         $codeToCommentOut = $prefix . \str_replace("\n", "\n//", $codeToCommentOut);
 

@@ -82,15 +82,15 @@ require dirname(__DIR__) . "/vendor/autoload.php";
     {
         $updates = [];
 
-        /** @var int $openParenthesisIndex */
         $openParenthesisIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($openParenthesisIndex));
         if (!$tokens[$openParenthesisIndex]->equals('(')) {
             return null;
         }
         $updates[$openParenthesisIndex] = '';
 
-        /** @var int $dirnameCallIndex */
         $dirnameCallIndex = $tokens->getPrevMeaningfulToken($openParenthesisIndex);
+        \assert(\is_int($dirnameCallIndex));
         if (!$tokens[$dirnameCallIndex]->equals([\T_STRING, 'dirname'], false)) {
             return null;
         }
@@ -99,8 +99,8 @@ require dirname(__DIR__) . "/vendor/autoload.php";
         }
         $updates[$dirnameCallIndex] = '';
 
-        /** @var int $namespaceSeparatorIndex */
         $namespaceSeparatorIndex = $tokens->getPrevMeaningfulToken($dirnameCallIndex);
+        \assert(\is_int($namespaceSeparatorIndex));
         if ($tokens[$namespaceSeparatorIndex]->isGivenKind(\T_NS_SEPARATOR)) {
             $updates[$namespaceSeparatorIndex] = '';
         }
@@ -116,24 +116,24 @@ require dirname(__DIR__) . "/vendor/autoload.php";
         $depthLevel = 1;
         $updates = [];
 
-        /** @var int $commaOrClosingParenthesisIndex */
         $commaOrClosingParenthesisIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($commaOrClosingParenthesisIndex));
         if ($tokens[$commaOrClosingParenthesisIndex]->equals(',')) {
             $updates[$commaOrClosingParenthesisIndex] = '';
-            /** @var int $afterCommaIndex */
             $afterCommaIndex = $tokens->getNextMeaningfulToken($commaOrClosingParenthesisIndex);
+            \assert(\is_int($afterCommaIndex));
             if ($tokens[$afterCommaIndex]->isGivenKind(\T_LNUMBER)) {
                 $depthLevel = (int) $tokens[$afterCommaIndex]->getContent();
                 $updates[$afterCommaIndex] = '';
-                /** @var int $commaOrClosingParenthesisIndex */
                 $commaOrClosingParenthesisIndex = $tokens->getNextMeaningfulToken($afterCommaIndex);
+                \assert(\is_int($commaOrClosingParenthesisIndex));
             }
         }
 
         if ($tokens[$commaOrClosingParenthesisIndex]->equals(',')) {
             $updates[$commaOrClosingParenthesisIndex] = '';
-            /** @var int $commaOrClosingParenthesisIndex */
             $commaOrClosingParenthesisIndex = $tokens->getNextMeaningfulToken($commaOrClosingParenthesisIndex);
+            \assert(\is_int($commaOrClosingParenthesisIndex));
         }
         $closingParenthesisIndex = $commaOrClosingParenthesisIndex;
 
@@ -142,14 +142,14 @@ require dirname(__DIR__) . "/vendor/autoload.php";
         }
         $updates[$closingParenthesisIndex] = '';
 
-        /** @var int $concatenationIndex */
         $concatenationIndex = $tokens->getNextMeaningfulToken($closingParenthesisIndex);
+        \assert(\is_int($concatenationIndex));
         if (!$tokens[$concatenationIndex]->equals('.')) {
             return null;
         }
 
-        /** @var int $stringIndex */
         $stringIndex = $tokens->getNextMeaningfulToken($concatenationIndex);
+        \assert(\is_int($stringIndex));
         if (!$tokens[$stringIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
             return null;
         }

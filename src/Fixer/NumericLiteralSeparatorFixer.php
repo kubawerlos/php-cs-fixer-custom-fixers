@@ -179,8 +179,8 @@ echo 0123_4567; // octal
                 $substringToUpdate = \strrev($substringToUpdate);
             }
 
-            /** @var string $substringToUpdate */
             $substringToUpdate = Preg::replace(\sprintf('/[\da-fA-F]{%d}(?!-)(?!$)/', $groupSize), '$0_', $substringToUpdate);
+            \assert(\is_string($substringToUpdate));
 
             if ($fromRight) {
                 $substringToUpdate = \strrev($substringToUpdate);

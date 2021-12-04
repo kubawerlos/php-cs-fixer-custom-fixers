@@ -41,8 +41,8 @@ final class ConstructorAnalysis
      */
     public function getConstructorPromotableParameters(): array
     {
-        /** @var int $openParenthesis */
         $openParenthesis = $this->tokens->getNextTokenOfKind($this->constructorIndex, ['(']);
+        \assert(\is_int($openParenthesis));
         $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
         $constructorPromotableParameters = [];
@@ -51,13 +51,12 @@ final class ConstructorAnalysis
                 continue;
             }
 
-            /** @var int $typeIndex */
             $typeIndex = $this->tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($typeIndex));
             if ($this->tokens[$typeIndex]->equalsAny(['(', ',', [\T_CALLABLE]])) {
                 continue;
             }
 
-            /** @var int $visibilityIndex */
             $visibilityIndex = $this->tokens->getPrevTokenOfKind(
                 $index,
                 [
@@ -68,6 +67,7 @@ final class ConstructorAnalysis
                     [CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC],
                 ]
             );
+            \assert(\is_int($visibilityIndex));
             if (!$this->tokens[$visibilityIndex]->equalsAny(['(', ','])) {
                 continue;
             }
@@ -83,12 +83,12 @@ final class ConstructorAnalysis
      */
     public function getConstructorPromotableAssignments(): array
     {
-        /** @var int $openParenthesis */
         $openParenthesis = $this->tokens->getNextTokenOfKind($this->constructorIndex, ['(']);
+        \assert(\is_int($openParenthesis));
         $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
 
-        /** @var int $openBrace */
         $openBrace = $this->tokens->getNextTokenOfKind($closeParenthesis, ['{']);
+        \assert(\is_int($openBrace));
         $closeBrace = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openBrace);
 
         $variables = [];
@@ -100,8 +100,8 @@ final class ConstructorAnalysis
                 continue;
             }
 
-            /** @var int $semicolonIndex */
             $semicolonIndex = $this->tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($semicolonIndex));
             if (!$this->tokens[$semicolonIndex]->equals(';')) {
                 continue;
             }
@@ -129,26 +129,26 @@ final class ConstructorAnalysis
 
     private function getPropertyIndex(int $index): ?int
     {
-        /** @var int $assignmentIndex */
         $assignmentIndex = $this->tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($assignmentIndex));
         if (!$this->tokens[$assignmentIndex]->equals('=')) {
             return null;
         }
 
-        /** @var int $propertyIndex */
         $propertyIndex = $this->tokens->getPrevMeaningfulToken($assignmentIndex);
+        \assert(\is_int($propertyIndex));
 
-        /** @var int $objectOperatorIndex */
         $objectOperatorIndex = $this->tokens->getPrevMeaningfulToken($propertyIndex);
+        \assert(\is_int($objectOperatorIndex));
 
-        /** @var int $thisIndex */
         $thisIndex = $this->tokens->getPrevMeaningfulToken($objectOperatorIndex);
+        \assert(\is_int($thisIndex));
         if (!$this->tokens[$thisIndex]->equals([\T_VARIABLE, '$this'])) {
             return null;
         }
 
-        /** @var int $prevThisIndex */
         $prevThisIndex = $this->tokens->getPrevMeaningfulToken($thisIndex);
+        \assert(\is_int($prevThisIndex));
         if (!$this->tokens[$prevThisIndex]->equalsAny(['{', ';'])) {
             return null;
         }

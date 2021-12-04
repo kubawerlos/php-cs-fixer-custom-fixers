@@ -101,11 +101,11 @@ $x = [
                 continue;
             }
             if (\in_array($key, $foundKeys, true)) {
-                /** @var int $startIndex */
                 $startIndex = $arrayElementAnalysis->getKeyStartIndex();
+                \assert(\is_int($startIndex));
 
-                /** @var int $endIndex */
                 $endIndex = $tokens->getNextMeaningfulToken($arrayElementAnalysis->getValueEndIndex());
+                \assert(\is_int($endIndex));
 
                 if ($tokens[$endIndex + 1]->isWhitespace() && Preg::match('/^\h+$/', $tokens[$endIndex + 1]->getContent()) === 1) {
                     $endIndex++;
@@ -124,8 +124,8 @@ $x = [
             return null;
         }
 
-        /** @var int $keyEndIndex */
         $keyEndIndex = $arrayElementAnalysis->getKeyEndIndex();
+        \assert(\is_int($keyEndIndex));
 
         $content = '';
         for ($index = $keyEndIndex; $index >= $arrayElementAnalysis->getKeyStartIndex(); $index--) {

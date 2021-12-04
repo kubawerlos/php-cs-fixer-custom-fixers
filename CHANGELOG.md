@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.6.0
+- Add PhpdocVarAnnotationToAssertFixer
+
 ## v3.5.0
 - Add NoUselessDirnameCallFixer
 

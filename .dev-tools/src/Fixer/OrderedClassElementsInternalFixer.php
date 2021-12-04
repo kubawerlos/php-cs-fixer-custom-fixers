@@ -85,8 +85,8 @@ final class OrderedClassElementsInternalFixer implements FixerInterface
                 continue;
             }
 
-            /** @var int $index */
             $index = $tokens->getNextTokenOfKind($index, ['{']);
+            \assert(\is_int($index));
 
             /** @var array<array<string>> $elements */
             $elements = $this->orderedClassElementsFixerWrapper->getElements($tokens, $index);
@@ -99,8 +99,8 @@ final class OrderedClassElementsInternalFixer implements FixerInterface
             $elements = $this->orderedClassElementsFixerWrapper->sortElements($elements);
             $sorted = $this->sortElements($elements);
 
-            /** @var int $endIndex */
             $endIndex = $elements[\count($elements) - 1]['end'];
+            \assert(\is_int($endIndex));
 
             if ($sorted !== $elements) {
                 $this->orderedClassElementsFixerWrapper->sortTokens($tokens, $index, $endIndex, $sorted);

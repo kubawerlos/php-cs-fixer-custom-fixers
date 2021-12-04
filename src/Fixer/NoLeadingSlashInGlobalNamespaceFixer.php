@@ -66,8 +66,8 @@ $y = new \Baz();
             return false;
         }
 
-        /** @var int $prevIndex */
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($prevIndex));
 
         if ($tokens[$prevIndex]->isGivenKind(\T_STRING)) {
             return false;
@@ -76,8 +76,8 @@ $y = new \Baz();
             return true;
         }
 
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getTokenNotOfKindSibling($index, 1, [[\T_COMMENT], [\T_DOC_COMMENT], [\T_NS_SEPARATOR], [\T_STRING], [\T_WHITESPACE]]);
+        \assert(\is_int($nextIndex));
 
         if ($tokens[$nextIndex]->isGivenKind(\T_DOUBLE_COLON)) {
             return true;
@@ -92,15 +92,15 @@ $y = new \Baz();
             return $index;
         }
 
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($nextIndex));
 
         if ($tokens[$nextIndex]->equals('{')) {
             return $nextIndex;
         }
 
-        /** @var int $nextIndex */
         $nextIndex = $tokens->getNextTokenOfKind($index, ['{', ';']);
+        \assert(\is_int($nextIndex));
 
         if ($tokens[$nextIndex]->equals(';')) {
             return $tokens->count() - 1;

@@ -94,8 +94,8 @@ function foo($b, $s) {}
      */
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
-        /** @var int $paramBlockStartIndex */
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
+        \assert(\is_int($paramBlockStartIndex));
 
         $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
 

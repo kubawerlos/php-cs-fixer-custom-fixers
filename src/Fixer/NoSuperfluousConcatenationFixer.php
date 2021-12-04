@@ -78,8 +78,8 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 continue;
             }
 
-            /** @var int $firstIndex */
             $firstIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($firstIndex));
 
             if (!$tokens[$firstIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
@@ -88,8 +88,8 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 continue;
             }
 
-            /** @var int $secondIndex */
             $secondIndex = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($secondIndex));
 
             if (!$tokens[$secondIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
                 continue;
