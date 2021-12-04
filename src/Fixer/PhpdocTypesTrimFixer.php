@@ -91,7 +91,6 @@ function foo($x) {}
     {
         $tagStartPosition = \strpos($content, '@');
         \assert(\is_int($tagStartPosition));
-        \assert(\is_int($tagStartPosition));
 
         $typeStartPosition = \strpos($content, ' ', $tagStartPosition);
         \assert(\is_int($typeStartPosition));
