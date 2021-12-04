@@ -68,7 +68,11 @@
         "GreaterThanOrEqualToNegotiation": true,
         "Identical": true,
         "Increment": true,
-        "InstanceOf_": true,
+        "InstanceOf_": {
+            "ignoreSourceCodeByRegex": [
+                "\\\\assert\\(.+\\);"
+            ]
+        },
         "LessThanNegotiation": true,
         "LessThanOrEqualToNegotiation": true,
         "LogicalAnd": {
