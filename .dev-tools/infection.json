@@ -78,6 +78,7 @@
         },
         "LogicalLowerAnd": true,
         "LogicalLowerOr": true,
+        "LogicalNot": true,
         "LogicalOr": true,
         "MBString": true,
         "MethodCallRemoval": true,
