@@ -143,7 +143,7 @@ final class ConstructorAnalysis
 
         /** @var int $thisIndex */
         $thisIndex = $this->tokens->getPrevMeaningfulToken($objectOperatorIndex);
-        if (!$this->tokens[$thisIndex]->equals([\T_VARIABLE, '$this'], false)) {
+        if (!$this->tokens[$thisIndex]->equals([\T_VARIABLE, '$this'])) {
             return null;
         }
 

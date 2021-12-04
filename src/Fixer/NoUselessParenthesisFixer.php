@@ -153,14 +153,10 @@ foo(($bar));
 
     private function isExpressionInside(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        $expression = false;
-
         /** @var int $index */
         $index = $tokens->getNextMeaningfulToken($startIndex);
 
         while ($index < $endIndex) {
-            $expression = true;
-
             if (
                 !$tokens[$index]->isGivenKind([
                     \T_CONSTANT_ENCAPSED_STRING,
@@ -179,7 +175,7 @@ foo(($bar));
             $index = $tokens->getNextMeaningfulToken($index);
         }
 
-        return $expression;
+        return true;
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void

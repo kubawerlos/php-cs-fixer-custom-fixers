@@ -60,10 +60,6 @@ class Foo {
                 continue;
             }
 
-            if (\stripos($tokens[$index]->getContent(), '@var') === false) {
-                continue;
-            }
-
             if (Preg::match('#^/\*\*[\s\*]+(@var[^\r\n]+)[\s\*]*\*\/$#u', $tokens[$index]->getContent(), $matches) !== 1) {
                 continue;
             }
