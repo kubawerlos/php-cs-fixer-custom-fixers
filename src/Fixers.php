@@ -35,7 +35,7 @@ final class Fixers implements \IteratorAggregate
             $className = __NAMESPACE__ . '\\Fixer\\' . $fileInfo->getBasename('.php');
 
             $fixer = new $className();
-            \assert($fixer instanceof FixerrInterface);
+            \assert($fixer instanceof FixerInterface);
 
             yield $fixer;
         }
