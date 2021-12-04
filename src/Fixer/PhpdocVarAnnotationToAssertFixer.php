@@ -70,6 +70,10 @@ $x = getValue();
 
             $expressionEndIndex = $this->getExpressionEnd($tokens, $variableIndex);
 
+            if (!$this->canBePlacedAfterExpression($tokens, $expressionEndIndex)) {
+                continue;
+            }
+
             if ($tokens[$variableIndex - 1]->isWhitespace()) {
                 \array_unshift($assertTokens, new Token([\T_WHITESPACE, $tokens[$variableIndex - 1]->getContent()]));
             }
@@ -188,5 +192,20 @@ $x = getValue();
         }
 
         return $index;
+    }
+
+    private function canBePlacedAfterExpression(Tokens $tokens, int $expressionEndIndex): bool
+    {
+        $afterExpressionIndex = $tokens->getNextMeaningfulToken($expressionEndIndex);
+
+        if ($afterExpressionIndex === null) {
+            return true;
+        }
+
+        if ($tokens[$afterExpressionIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+            $afterExpressionIndex = $tokens->getNextMeaningfulToken($afterExpressionIndex);
+        }
+
+        return !$tokens[$afterExpressionIndex]->equals([\T_STRING, 'assert'], false);
     }
 }

@@ -84,6 +84,51 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'already having assert' => [
+            '<?php
+                $a = 42;
+                assert(is_int($a));
+                foo($a);
+
+                /** @var int $b */
+                $b = 42;
+                assert(is_int($b));
+
+                /** @var int $c */
+                $c = 42;
+                ASSERT(IS_INT($c));
+
+                /** @var int $d */
+                $d = 42;
+                \assert(\is_int($d));
+
+                $e = 42;
+                assert(is_int($e));
+                foo($e);
+            ',
+            '<?php
+                /** @var int $a */
+                $a = 42;
+                foo($a);
+
+                /** @var int $b */
+                $b = 42;
+                assert(is_int($b));
+
+                /** @var int $c */
+                $c = 42;
+                ASSERT(IS_INT($c));
+
+                /** @var int $d */
+                $d = 42;
+                \assert(\is_int($d));
+
+                /** @var int $e */
+                $e = 42;
+                foo($e);
+            ',
+        ];
+
         yield 'single type' => [
             '<?php
                 /** @var int $x */
