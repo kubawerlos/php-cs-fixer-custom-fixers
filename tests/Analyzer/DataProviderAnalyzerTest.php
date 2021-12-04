@@ -55,6 +55,17 @@ final class DataProviderAnalyzerTest extends TestCase
             }',
         ];
 
+        yield 'single data provider with different casing' => [
+            [new DataProviderAnalysis('dataProvider', 28, [11])],
+            '<?php class FooTest extends TestCase {
+                /**
+                 * @dataProvider dataPROVIDER
+                 */
+                public function testFoo() {}
+                public function dataProvider() {}
+            }',
+        ];
+
         yield 'single static data provider' => [
             [new DataProviderAnalysis('provider', 30, [11])],
             '<?php class FooTest extends TestCase {

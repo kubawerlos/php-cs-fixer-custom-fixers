@@ -124,7 +124,7 @@ class FooTest extends TestCase {
             $testNameIndex = $tokens->getNextTokenOfKind($usageIndex, [[\T_STRING]]);
 
             $dataProviderNewName = $this->getProviderNameForTestName($tokens[$testNameIndex]->getContent());
-            if ($tokens->findSequence([[\T_FUNCTION], [\T_STRING, $dataProviderNewName]], $startIndex, $endIndex, false) !== null) {
+            if ($tokens->findSequence([[\T_FUNCTION], [\T_STRING, $dataProviderNewName]], $startIndex, $endIndex) !== null) {
                 continue;
             }
 
