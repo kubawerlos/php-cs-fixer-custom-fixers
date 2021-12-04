@@ -80,12 +80,12 @@ function foo($a, $b, $c) {}
             $sorted = $this->getSortedAnnotations($docBlock->getAnnotations(), $paramNames);
 
             foreach ($sorted as $annotationIndex => $annotationContent) {
-                /** @var Annotation $annotation */
                 $annotation = $docBlock->getAnnotation($annotationIndex);
+                \assert($annotation instanceof Annotation);
                 $annotation->remove();
 
-                /** @var Line $line */
                 $line = $docBlock->getLine($annotation->getStart());
+                \assert($line instanceof Line);
                 $line->setContent($annotationContent);
             }
 

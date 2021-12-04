@@ -215,8 +215,8 @@ In your PHP CS Fixer configuration register fixers and use them:
                 }
             }
 
-            /** @var CodeSample $codeSample */
             $codeSample = $fixer->getDefinition()->getCodeSamples()[0];
+            \assert($codeSample instanceof CodeSample);
 
             $originalCode = $codeSample->getCode();
             if ($fixer instanceof ConfigurableFixerInterface) {

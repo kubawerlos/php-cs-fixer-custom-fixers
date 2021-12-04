@@ -54,8 +54,8 @@ final class PriorityCollection
             if ($anythingChanged) {
                 $anythingChanged = false;
             } else {
-                /** @var PriorityFixer $priorityFixer */
                 $priorityFixer = $this->getFirstPriorityFixerWithoutPriority();
+                \assert($priorityFixer instanceof PriorityFixer);
                 $anythingChanged = $priorityFixer->calculatePriority(false);
             }
 
