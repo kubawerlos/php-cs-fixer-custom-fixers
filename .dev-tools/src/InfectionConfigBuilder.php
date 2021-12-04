@@ -26,7 +26,6 @@ final class InfectionConfigBuilder
         'IntegerNegation',
         'LessThan',
         'LessThanOrEqualTo',
-        'LogicalAnd',
         'LogicalNot',
         'Minus',
         'NotIdentical',
@@ -76,6 +75,12 @@ final class InfectionConfigBuilder
                 'PhpCsFixerCustomFixers\\Fixer\\*::getDefinition',
                 'PhpCsFixerCustomFixers\\Fixer\\*::isCandidate',
                 NoLeadingSlashInGlobalNamespaceFixer::class . '::isToRemove', // whitespaces and comments cannot be inside FQCN in PHP 8+
+            ],
+        ];
+
+        $config['mutators']['LogicalAnd'] = [
+            'ignore' => [
+                'PhpCsFixerCustomFixers\\Fixer\\*::isCandidate',
             ],
         ];
 

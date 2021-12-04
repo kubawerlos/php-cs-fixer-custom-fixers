@@ -83,6 +83,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield ['<?php return ($object->function)(new stdClass());'];
         yield ['<?php return ($object->getFunction())(42);'];
         yield ['<?php return ($foo)($bar)($baz);'];
+        yield ['<?php return (1 + 2) * 3;'];
 
         yield [
             '<?php return $bar;',

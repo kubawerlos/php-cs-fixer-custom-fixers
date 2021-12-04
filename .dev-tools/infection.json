@@ -71,6 +71,11 @@
         "InstanceOf_": true,
         "LessThanNegotiation": true,
         "LessThanOrEqualToNegotiation": true,
+        "LogicalAnd": {
+            "ignore": [
+                "PhpCsFixerCustomFixers\\Fixer\\*::isCandidate"
+            ]
+        },
         "LogicalLowerAnd": true,
         "LogicalLowerOr": true,
         "LogicalOr": true,
