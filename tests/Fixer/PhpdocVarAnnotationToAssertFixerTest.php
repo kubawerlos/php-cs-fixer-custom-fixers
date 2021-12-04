@@ -84,6 +84,16 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield '@var inside of property declaration' => [
+            '<?php class Foo {
+                private
+                    /** @var int $x */
+                    $x = 1,
+                    /** @var int $y */
+                    $y = 2;
+            }',
+        ];
+
         yield 'already having assert' => [
             '<?php
                 $a = 42;
@@ -257,6 +267,13 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
                     [1, 2, getThirdElement()]
                 ));
                 assert(is_int($x));
+
+                if ($condition) {
+                    $y = 3;
+                    assert(is_int($y));
+                }
+                $z = 4;
+                assert(is_int($z));
             ',
             '<?php
                 /** @var int $x */
@@ -264,6 +281,13 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
                     function ($x) { $x++; return $x + 6; },
                     [1, 2, getThirdElement()]
                 ));
+
+                if ($condition) {
+                    /** @var int $y */
+                    $y = 3;
+                }
+                /** @var int $z */
+                $z = 4;
             ',
         ];
     }
