@@ -23,6 +23,7 @@
         <InternalMethod errorLevel='suppress' />
         <MissingConstructor errorLevel='suppress' />
         <MoreSpecificImplementedParamType errorLevel='suppress' />
+        <PossiblyInvalidFunctionCall errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />

@@ -62,6 +62,13 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'invalid type' => [
+            '<?php
+                /** @var Foo\Bar\ $x */
+                $x = getValue();
+            ',
+        ];
+
         yield 'different variable name' => [
             '<?php
                 /** @var int $x */
@@ -179,10 +186,10 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
         yield 'multiple class types' => [
             '<?php
                 $x = getValue();
-                assert($x instanceof Foo || $x instanceof Bar || $x instanceof Baz\Qux);
+                assert($x instanceof Foo || $x instanceof Bar || $x instanceof \Baz\Qux);
             ',
             '<?php
-                /** @var Foo|Bar|Baz\Qux $x */
+                /** @var Foo|Bar|\Baz\Qux $x */
                 $x = getValue();
             ',
         ];
