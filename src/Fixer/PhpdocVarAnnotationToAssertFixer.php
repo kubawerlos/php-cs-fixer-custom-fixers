@@ -129,6 +129,10 @@ $x = getValue();
 
         $assertions = [];
         foreach ($types as $type) {
+            if ($type[0] === '?') {
+                $assertions[] = $this->getCodeForType('null', $variableName);
+                $type = \substr($type, 1);
+            }
             $codeForType = $this->getCodeForType($type, $variableName);
             if ($codeForType === null) {
                 return null;
