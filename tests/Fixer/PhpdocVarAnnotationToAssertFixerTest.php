@@ -148,12 +148,23 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
 
         yield 'single type' => [
             '<?php
-                $y = 42;
-                assert(is_int($y));
+                $x = 42;
+                assert(is_int($x));
             ',
             '<?php
-                /** @var int $y */
-                $y = 42;
+                /** @var int $x */
+                $x = 42;
+            ',
+        ];
+
+        yield 'nullable type' => [
+            '<?php
+                $x = 42;
+                assert(is_null($x) || is_int($x));
+            ',
+            '<?php
+                /** @var ?int $x */
+                $x = 42;
             ',
         ];
 
