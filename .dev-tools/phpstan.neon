@@ -1,7 +1,7 @@
 parameters:
   bootstrapFiles:
     - ../vendor/autoload.php
-  excludes_analyse:
+  excludePaths:
     - ./src/Readme
   ignoreErrors:
     - message: '#^Call to an undefined method PhpCsFixer\\Fixer\\FixerInterface::[a-zA-Z]+\(\)\.$#'
@@ -22,9 +22,3 @@ parameters:
 
 includes:
   - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
-
-services:
-  - class: Symplify\PHPStanRules\CognitiveComplexity\Rules\FunctionLikeCognitiveComplexityRule
-    tags: [ phpstan.rules.rule ]
-    arguments:
-      maxMethodCognitiveComplexity: 13

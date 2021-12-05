@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f9d94adb9ea9529c907ad9c71d42671",
+    "content-hash": "20bc59f855523681178167ed4674991a",
     "packages": [
         {
             "name": "amphp/amp",
@@ -176,37 +176,6 @@
             "description": "Restarts a process without Xdebug."
         },
         {
-            "name": "danielstjules/stringy",
-            "version": "3.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/danielstjules/Stringy.git",
-                "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/danielstjules/Stringy/zipball/df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e",
-                "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e"
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "symfony/polyfill-mbstring": "~1.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Stringy\\": "src/"
-                },
-                "files": [
-                    "src/Create.php"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A string manipulation library with multibyte support"
-        },
-        {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "v0.1.1",
             "source": {
@@ -297,16 +266,16 @@
         },
         {
             "name": "ergebnis/composer-normalize",
-            "version": "2.16.0",
+            "version": "2.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/composer-normalize.git",
-                "reference": "21eb186aa37247544674ee75aa4139c1cade7a64"
+                "reference": "0ac8d06d91063ea7b7ade3d635f3700a8012eb57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/composer-normalize/zipball/21eb186aa37247544674ee75aa4139c1cade7a64",
-                "reference": "21eb186aa37247544674ee75aa4139c1cade7a64"
+                "url": "https://api.github.com/repos/ergebnis/composer-normalize/zipball/0ac8d06d91063ea7b7ade3d635f3700a8012eb57",
+                "reference": "0ac8d06d91063ea7b7ade3d635f3700a8012eb57"
             },
             "require": {
                 "composer-plugin-api": "^2.0.0",
@@ -795,45 +764,6 @@
             "description": "A tool to find missing type declarations in PHP 7 code"
         },
         {
-            "name": "latte/latte",
-            "version": "v2.10.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nette/latte.git",
-                "reference": "8a9bd8af76557fc35abae639ab7b966af706fec9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/8a9bd8af76557fc35abae639ab7b966af706fec9",
-                "reference": "8a9bd8af76557fc35abae639ab7b966af706fec9"
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-tokenizer": "*",
-                "php": ">=7.1 <8.2"
-            },
-            "bin": [
-                "bin/latte-lint"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.10-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0-only",
-                "GPL-3.0-only"
-            ],
-            "description": "☕ Latte: the intuitive and fast template engine for those who want the most secure PHP sites. Introduces context-sensitive escaping."
-        },
-        {
             "name": "localheinz/diff",
             "version": "1.1.1",
             "source": {
@@ -862,16 +792,16 @@
         },
         {
             "name": "maglnet/composer-require-checker",
-            "version": "3.5.1",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maglnet/ComposerRequireChecker.git",
-                "reference": "f1a5905265b9464d57a7e26ae80b05b7c1411830"
+                "reference": "e73c0bb75522d861aef3e8d58991d50bf0125a0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/f1a5905265b9464d57a7e26ae80b05b7c1411830",
-                "reference": "f1a5905265b9464d57a7e26ae80b05b7c1411830"
+                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/e73c0bb75522d861aef3e8d58991d50bf0125a0b",
+                "reference": "e73c0bb75522d861aef3e8d58991d50bf0125a0b"
             },
             "require": {
                 "composer-runtime-api": "^2.0.0",
@@ -879,7 +809,7 @@
                 "ext-phar": "*",
                 "nikic/php-parser": "^4.13.0",
                 "php": "^7.4 || ^8.0",
-                "symfony/console": "^5.3.10",
+                "symfony/console": "^5.4.0",
                 "webmozart/assert": "^1.9.1",
                 "webmozart/glob": "^4.4.0"
             },
@@ -959,78 +889,6 @@
                 "OSL-3.0"
             ],
             "description": "Map nested JSON structures onto PHP classes"
-        },
-        {
-            "name": "nette/neon",
-            "version": "v3.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nette/neon.git",
-                "reference": "54b287d8c2cdbe577b02e28ca1713e275b05ece2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nette/neon/zipball/54b287d8c2cdbe577b02e28ca1713e275b05ece2",
-                "reference": "54b287d8c2cdbe577b02e28ca1713e275b05ece2"
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=7.1"
-            },
-            "bin": [
-                "bin/neon-lint"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0-only",
-                "GPL-3.0-only"
-            ],
-            "description": "🍸 Nette NEON: encodes and decodes NEON file format."
-        },
-        {
-            "name": "nette/utils",
-            "version": "v3.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nette/utils.git",
-                "reference": "2f261e55bd6a12057442045bf2c249806abc1d02"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/2f261e55bd6a12057442045bf2c249806abc1d02",
-                "reference": "2f261e55bd6a12057442045bf2c249806abc1d02"
-            },
-            "require": {
-                "php": ">=7.2 <8.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0-only",
-                "GPL-3.0-only"
-            ],
-            "description": "🛠  Nette Utils: lightweight utilities for string & array manipulation, image handling, safe JSON encoding/decoding, validation, slug or strong password generating etc."
         },
         {
             "name": "nikic/php-parser",
@@ -1354,51 +1212,17 @@
             "description": "Composer plugin for automatic installation of PHPStan extensions"
         },
         {
-            "name": "phpstan/phpdoc-parser",
-            "version": "0.5.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "816e826ce0b7fb32098d8cb6de62511ce6021cea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/816e826ce0b7fb32098d8cb6de62511ce6021cea",
-                "reference": "816e826ce0b7fb32098d8cb6de62511ce6021cea"
-            },
-            "require": {
-                "php": "^7.1 || ^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PHPStan\\PhpDocParser\\": [
-                        "src/"
-                    ]
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "PHPDoc parser with support for nullable, intersection and generic types"
-        },
-        {
             "name": "phpstan/phpstan",
-            "version": "0.12.99",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7"
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b4d40f1d759942f523be267a1bab6884f46ca3f7",
-                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cbe085f9fdead5b6d62e4c022ca52dc9427a10ee",
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee"
             },
             "require": {
                 "php": "^7.1|^8.0"
@@ -1410,7 +1234,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -1425,25 +1249,25 @@
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "0.12.22",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc"
+                "reference": "9eb88c9f689003a8a2a5ae9e010338ee94dc39b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc",
-                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc"
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/9eb88c9f689003a8a2a5ae9e010338ee94dc39b3",
+                "reference": "9eb88c9f689003a8a2a5ae9e010338ee94dc39b3"
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.92"
+                "phpstan/phpstan": "^1.0"
             },
             "type": "phpstan-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "1.0-dev"
                 },
                 "phpstan": {
                     "includes": [
@@ -1464,25 +1288,25 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "0.12.11",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "2b72e8e17d2034145f239126e876e5fb659675e2"
+                "reference": "e12d55f74a8cca18c6e684c6450767e055ba7717"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/2b72e8e17d2034145f239126e876e5fb659675e2",
-                "reference": "2b72e8e17d2034145f239126e876e5fb659675e2"
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/e12d55f74a8cca18c6e684c6450767e055ba7717",
+                "reference": "e12d55f74a8cca18c6e684c6450767e055ba7717"
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.96"
+                "phpstan/phpstan": "^1.2.0"
             },
             "type": "phpstan-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "1.0-dev"
                 },
                 "phpstan": {
                     "includes": [
@@ -1934,41 +1758,6 @@
             "description": "A generic function and convention to trigger deprecation notices"
         },
         {
-            "name": "symfony/error-handler",
-            "version": "v6.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/error-handler.git",
-                "reference": "0e8f0c1123a9e9740562f909b7f2daa8525aacd7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/error-handler/zipball/0e8f0c1123a9e9740562f909b7f2daa8525aacd7",
-                "reference": "0e8f0c1123a9e9740562f909b7f2daa8525aacd7"
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "psr/log": "^1|^2|^3",
-                "symfony/var-dumper": "^5.4|^6.0"
-            },
-            "bin": [
-                "Resources/bin/patch-type-declarations"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\ErrorHandler\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Provides tools to manage errors and ease debugging PHP code"
-        },
-        {
             "name": "symfony/event-dispatcher",
             "version": "v5.4.0",
             "source": {
@@ -2106,76 +1895,6 @@
                 "MIT"
             ],
             "description": "Finds files and directories via an intuitive fluent interface"
-        },
-        {
-            "name": "symfony/http-foundation",
-            "version": "v6.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "4c4b5bee0b8b333dd22763dd58a7fade8e2919df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/4c4b5bee0b8b333dd22763dd58a7fade8e2919df",
-                "reference": "4c4b5bee0b8b333dd22763dd58a7fade8e2919df"
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/polyfill-mbstring": "~1.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\HttpFoundation\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Defines an object-oriented layer for the HTTP specification"
-        },
-        {
-            "name": "symfony/http-kernel",
-            "version": "v6.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "62d7d93acfd3b12ae4157b58d0cf82cc7b7ef65b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/62d7d93acfd3b12ae4157b58d0cf82cc7b7ef65b",
-                "reference": "62d7d93acfd3b12ae4157b58d0cf82cc7b7ef65b"
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "psr/log": "^1|^2|^3",
-                "symfony/error-handler": "^5.4|^6.0",
-                "symfony/event-dispatcher": "^5.4|^6.0",
-                "symfony/http-foundation": "^5.4|^6.0",
-                "symfony/polyfill-ctype": "^1.8"
-            },
-            "provide": {
-                "psr/log-implementation": "1.0|2.0|3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\HttpKernel\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Provides a structured process for converting a Request into a Response"
         },
         {
             "name": "symfony/options-resolver",
@@ -2671,604 +2390,6 @@
             "description": "Provides an object-oriented API to strings and deals with bytes, UTF-8 code points and grapheme clusters in a unified way"
         },
         {
-            "name": "symfony/var-dumper",
-            "version": "v6.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "18d9a1737466b7d88df044b8653a13adaa7648f1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/18d9a1737466b7d88df044b8653a13adaa7648f1",
-                "reference": "18d9a1737466b7d88df044b8653a13adaa7648f1"
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "symfony/polyfill-mbstring": "~1.0"
-            },
-            "bin": [
-                "Resources/bin/var-dump-server"
-            ],
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "Resources/functions/dump.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Component\\VarDumper\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Provides mechanisms for walking through any arbitrary PHP variable"
-        },
-        {
-            "name": "symplify/astral",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/astral.git",
-                "reference": "2ed30b1525c5fe0f0fd9bdbef4b80d6c4475f84a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/astral/zipball/2ed30b1525c5fe0f0fd9bdbef4b80d6c4475f84a",
-                "reference": "2ed30b1525c5fe0f0fd9bdbef4b80d6c4475f84a"
-            },
-            "require": {
-                "nette/utils": "^3.2",
-                "nikic/php-parser": "^4.13",
-                "php": ">=8.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symfony/http-kernel": "^5.3|^6.0",
-                "symplify/autowire-array-parameter": "^9.4.70",
-                "symplify/package-builder": "^9.4.70"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\Astral\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Toolking for smart daily work with AST"
-        },
-        {
-            "name": "symplify/autowire-array-parameter",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/autowire-array-parameter.git",
-                "reference": "042e9ce31a7b8a0e66246ea0297147349ecaec60"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/autowire-array-parameter/zipball/042e9ce31a7b8a0e66246ea0297147349ecaec60",
-                "reference": "042e9ce31a7b8a0e66246ea0297147349ecaec60"
-            },
-            "require": {
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symplify/package-builder": "^9.4.70"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\AutowireArrayParameter\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Autowire array parameters for your Symfony applications"
-        },
-        {
-            "name": "symplify/composer-json-manipulator",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/composer-json-manipulator.git",
-                "reference": "e3e5c38e38e2f7fcb86e8ac869a4e9d0d626c655"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/composer-json-manipulator/zipball/e3e5c38e38e2f7fcb86e8ac869a4e9d0d626c655",
-                "reference": "e3e5c38e38e2f7fcb86e8ac869a4e9d0d626c655"
-            },
-            "require": {
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "symfony/config": "^5.3|^6.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symfony/filesystem": "^5.3|^6.0",
-                "symfony/http-kernel": "^5.3|^6.0",
-                "symplify/package-builder": "^9.4.70",
-                "symplify/smart-file-system": "^9.4.70"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\ComposerJsonManipulator\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Package to load, merge and save composer.json file(s)"
-        },
-        {
-            "name": "symplify/console-package-builder",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/console-package-builder.git",
-                "reference": "cd99847c2258122926c9903589a742383b3eeba7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/console-package-builder/zipball/cd99847c2258122926c9903589a742383b3eeba7",
-                "reference": "cd99847c2258122926c9903589a742383b3eeba7"
-            },
-            "require": {
-                "php": ">=8.0",
-                "symfony/console": "^5.3|^6.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symplify/symplify-kernel": "^9.4.70"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\ConsolePackageBuilder\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Package to speed up building command line applications"
-        },
-        {
-            "name": "symplify/easy-testing",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/easy-testing.git",
-                "reference": "915097b3e5686ec6219c61d37c06e9aee71379d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/easy-testing/zipball/915097b3e5686ec6219c61d37c06e9aee71379d8",
-                "reference": "915097b3e5686ec6219c61d37c06e9aee71379d8"
-            },
-            "require": {
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "symfony/console": "^5.3|^6.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symfony/finder": "^5.3|^6.0",
-                "symfony/http-kernel": "^5.3|^6.0",
-                "symplify/console-package-builder": "^9.4.70",
-                "symplify/package-builder": "^9.4.70",
-                "symplify/smart-file-system": "^9.4.70",
-                "symplify/symplify-kernel": "^9.4.70"
-            },
-            "bin": [
-                "bin/easy-testing"
-            ],
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\EasyTesting\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Testing made easy"
-        },
-        {
-            "name": "symplify/latte-phpstan-compiler",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/latte-phpstan-compiler.git",
-                "reference": "c41092efe3b69383cccd4c9b2362366ab78d2fa7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/latte-phpstan-compiler/zipball/c41092efe3b69383cccd4c9b2362366ab78d2fa7",
-                "reference": "c41092efe3b69383cccd4c9b2362366ab78d2fa7"
-            },
-            "require": {
-                "latte/latte": "^2.10",
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "phpstan/phpstan": "^0.12.99",
-                "symplify/astral": "^9.4.70",
-                "symplify/template-phpstan-compiler": "^9.4.70"
-            },
-            "type": "phpstan-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                },
-                "phpstan": {
-                    "includes": [
-                        "config/services.neon"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\LattePHPStanCompiler\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Compile latte template to PHPStan-compatible PHP code to allow its static analysis"
-        },
-        {
-            "name": "symplify/package-builder",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/package-builder.git",
-                "reference": "da7641674c9d044f804b8fb627122a6f9b030e61"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/package-builder/zipball/da7641674c9d044f804b8fb627122a6f9b030e61",
-                "reference": "da7641674c9d044f804b8fb627122a6f9b030e61"
-            },
-            "require": {
-                "nette/neon": "^3.2",
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "symfony/config": "^5.3|^6.0",
-                "symfony/console": "^5.3|^6.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symfony/finder": "^5.3|^6.0",
-                "symfony/http-kernel": "^5.3|^6.0",
-                "symplify/easy-testing": "^9.4.70",
-                "symplify/symplify-kernel": "^9.4.70"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\PackageBuilder\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Dependency Injection, Console and Kernel toolkit for Symplify packages."
-        },
-        {
-            "name": "symplify/phpstan-rules",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/phpstan-rules.git",
-                "reference": "36fb5a3fcb57f65e026b242df0bf0c692ef13ace"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/phpstan-rules/zipball/36fb5a3fcb57f65e026b242df0bf0c692ef13ace",
-                "reference": "36fb5a3fcb57f65e026b242df0bf0c692ef13ace"
-            },
-            "require": {
-                "latte/latte": "^2.10",
-                "nette/utils": "^3.2",
-                "nikic/php-parser": "^4.13",
-                "php": ">=8.0",
-                "phpstan/phpdoc-parser": "^0.5",
-                "phpstan/phpstan": "^0.12.99",
-                "symplify/astral": "^9.4.70",
-                "symplify/composer-json-manipulator": "^9.4.70",
-                "symplify/latte-phpstan-compiler": "^9.4.70",
-                "symplify/package-builder": "^9.4.70",
-                "symplify/rule-doc-generator-contracts": "^9.4.70",
-                "symplify/simple-php-doc-parser": "^9.4.70",
-                "symplify/smart-file-system": "^9.4.70",
-                "symplify/twig-phpstan-compiler": "^9.4.70",
-                "twig/twig": "^3.3",
-                "webmozart/assert": "^1.10"
-            },
-            "type": "phpstan-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                },
-                "phpstan": {
-                    "includes": [
-                        "config/services/services.neon",
-                        "packages/cognitive-complexity/config/cognitive-complexity-services.neon",
-                        "packages/symfony/config/services.neon",
-                        "packages/nette/config/services.neon"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\PHPStanRules\\": "src",
-                    "Symplify\\PHPStanRules\\CognitiveComplexity\\": "packages/cognitive-complexity/src",
-                    "Symplify\\PHPStanRules\\ObjectCalisthenics\\": "packages/object-calisthenics/src",
-                    "Symplify\\PHPStanRules\\Symfony\\": "packages/symfony/src",
-                    "Symplify\\PHPStanRules\\Nette\\": "packages/nette/src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Set of Symplify rules for PHPStan"
-        },
-        {
-            "name": "symplify/rule-doc-generator-contracts",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/rule-doc-generator-contracts.git",
-                "reference": "1f6ea1652dbb52d4f867f159ac12d59540f04e21"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/rule-doc-generator-contracts/zipball/1f6ea1652dbb52d4f867f159ac12d59540f04e21",
-                "reference": "1f6ea1652dbb52d4f867f159ac12d59540f04e21"
-            },
-            "require": {
-                "danielstjules/stringy": "^3.1",
-                "nette/utils": "^3.2",
-                "php": ">=8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\RuleDocGenerator\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Contracts for production code of RuleDocGenerator"
-        },
-        {
-            "name": "symplify/simple-php-doc-parser",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/simple-php-doc-parser.git",
-                "reference": "cffef05f56763745550949f7705b8f4dcdeb7512"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/simple-php-doc-parser/zipball/cffef05f56763745550949f7705b8f4dcdeb7512",
-                "reference": "cffef05f56763745550949f7705b8f4dcdeb7512"
-            },
-            "require": {
-                "php": ">=8.0",
-                "phpstan/phpdoc-parser": "^0.5",
-                "symfony/config": "^5.3|^6.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symfony/http-kernel": "^5.3|^6.0",
-                "symplify/package-builder": "^9.4.70"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\SimplePhpDocParser\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Service integration of phpstan/phpdoc-parser, with few extra goodies for practical simple use"
-        },
-        {
-            "name": "symplify/smart-file-system",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/smart-file-system.git",
-                "reference": "bc9caf6258dabedc032aad4041bc58fd322aa660"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/bc9caf6258dabedc032aad4041bc58fd322aa660",
-                "reference": "bc9caf6258dabedc032aad4041bc58fd322aa660"
-            },
-            "require": {
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "symfony/filesystem": "^5.3|^6.0",
-                "symfony/finder": "^5.3|^6.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\SmartFileSystem\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Sanitized FileInfo with safe getRealPath() and other handy methods"
-        },
-        {
-            "name": "symplify/symplify-kernel",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/symplify-kernel.git",
-                "reference": "c02be3838a59ec002e0a376be287c81547749b92"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/symplify-kernel/zipball/c02be3838a59ec002e0a376be287c81547749b92",
-                "reference": "c02be3838a59ec002e0a376be287c81547749b92"
-            },
-            "require": {
-                "php": ">=8.0",
-                "symfony/console": "^5.3|^6.0",
-                "symfony/dependency-injection": "^5.3|^6.0",
-                "symfony/http-kernel": "^5.3|^6.0",
-                "symplify/autowire-array-parameter": "^9.4.70",
-                "symplify/composer-json-manipulator": "^9.4.70",
-                "symplify/package-builder": "^9.4.70",
-                "symplify/smart-file-system": "^9.4.70"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\SymplifyKernel\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Internal Kernel for Symplify packages"
-        },
-        {
-            "name": "symplify/template-phpstan-compiler",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/template-phpstan-compiler.git",
-                "reference": "f5468a492d700d7cd66066a1839aa6a737f1ef91"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/template-phpstan-compiler/zipball/f5468a492d700d7cd66066a1839aa6a737f1ef91",
-                "reference": "f5468a492d700d7cd66066a1839aa6a737f1ef91"
-            },
-            "require": {
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "phpstan/phpstan": "^0.12.99",
-                "symplify/astral": "^9.4.70"
-            },
-            "type": "phpstan-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                },
-                "phpstan": {
-                    "includes": [
-                        "config/services.neon"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\TemplatePHPStanCompiler\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Internal package for template to PHPStan-compatible compilers"
-        },
-        {
-            "name": "symplify/twig-phpstan-compiler",
-            "version": "9.4.70",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symplify/twig-phpstan-compiler.git",
-                "reference": "00404e507821d9f5f9ab50958e7c16879c4174e0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symplify/twig-phpstan-compiler/zipball/00404e507821d9f5f9ab50958e7c16879c4174e0",
-                "reference": "00404e507821d9f5f9ab50958e7c16879c4174e0"
-            },
-            "require": {
-                "nette/utils": "^3.2",
-                "php": ">=8.0",
-                "phpstan/phpstan": "^0.12.99",
-                "symplify/package-builder": "^9.4.70",
-                "symplify/smart-file-system": "^9.4.70",
-                "symplify/template-phpstan-compiler": "^9.4.70",
-                "twig/twig": "^3.3"
-            },
-            "type": "phpstan-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "9.5-dev"
-                },
-                "phpstan": {
-                    "includes": [
-                        "config/services.neon"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symplify\\TwigPHPStanCompiler\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Compile twig template to PHPStan-compatible PHP code to allow its static analysis"
-        },
-        {
             "name": "thecodingmachine/safe",
             "version": "v1.3.3",
             "source": {
@@ -3396,51 +2517,17 @@
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error"
         },
         {
-            "name": "twig/twig",
-            "version": "v3.3.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "65cb6f0b956485e1664f13d023c55298a4bb59ca"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/65cb6f0b956485e1664f13d023c55298a4bb59ca",
-                "reference": "65cb6f0b956485e1664f13d023c55298a4bb59ca"
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-ctype": "^1.8",
-                "symfony/polyfill-mbstring": "^1.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Twig\\": "src/"
-                }
-            },
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Twig, the flexible, fast, and secure template language for PHP"
-        },
-        {
             "name": "vimeo/psalm",
-            "version": "4.13.1",
+            "version": "v4.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "5cf660f63b548ccd4a56f62d916ee4d6028e01a3"
+                "reference": "14dcbc908ab2625cd7a74258ee6c740cbecc6140"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/5cf660f63b548ccd4a56f62d916ee4d6028e01a3",
-                "reference": "5cf660f63b548ccd4a56f62d916ee4d6028e01a3"
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/14dcbc908ab2625cd7a74258ee6c740cbecc6140",
+                "reference": "14dcbc908ab2625cd7a74258ee6c740cbecc6140"
             },
             "require": {
                 "amphp/amp": "^2.4.2",
@@ -3606,7 +2693,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0"
+        "php": "^8.1"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
