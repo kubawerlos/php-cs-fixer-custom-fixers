@@ -216,6 +216,17 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'avoid duplicates' => [
+            '<?php
+                $x = getValue();
+                assert(is_bool($x) || is_null($x) || is_int($x) || is_string($x));
+            ',
+            '<?php
+                /** @var bool|null|int|null|string $x */
+                $x = getValue();
+            ',
+        ];
+
         yield 'multiple variables' => [
             '<?php
                 $x1 = true;
