@@ -130,14 +130,14 @@ $x = getValue();
         $assertions = [];
         foreach ($types as $type) {
             if ($type[0] === '?') {
-                $assertions[] = $this->getCodeForType('null', $variableName);
+                $assertions['null'] = $this->getCodeForType('null', $variableName);
                 $type = \substr($type, 1);
             }
             $codeForType = $this->getCodeForType($type, $variableName);
             if ($codeForType === null) {
                 return null;
             }
-            $assertions[] = $codeForType;
+            $assertions[$type] = $codeForType;
         }
 
         $tokens = Tokens::fromCode($assertCode . \implode(' || ', $assertions) . ');');
