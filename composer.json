@@ -1,8 +1,8 @@
 {
     "name": "kubawerlos/php-cs-fixer-custom-fixers",
-    "type": "library",
     "description": "A set of custom fixers for PHP CS Fixer",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Kuba Werłos",

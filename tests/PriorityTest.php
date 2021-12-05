@@ -97,6 +97,7 @@ final class PriorityTest extends TestCase
                 --INPUT--\n(?<input>.*)
             $/sx', $test->getContents(), $matches);
 
+            /** @var array<string, array<string>|bool> $configuration */
             $configuration = \json_decode($matches['configuration'], true);
 
             yield $fileName => [
