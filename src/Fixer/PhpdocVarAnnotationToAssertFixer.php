@@ -181,7 +181,7 @@ $x = getValue();
             return \sprintf('%s(%s)', $typesMap[\strtolower($type)], $variableName);
         }
 
-        if (Preg::match('/^[a-zA-Z_\x80-\xff][\\\\a-zA-Z0-9_\x80-\xff]*$/', $type) === 1) {
+        if (Preg::match('/^[\\\\a-zA-Z_\x80-\xff][\\\\a-zA-Z0-9_\x80-\xff]*(?<!\\\\)$/', $type) === 1) {
             return \sprintf('%s instanceof %s', $variableName, $type);
         }
 

@@ -45,8 +45,8 @@ final class TestsCodeTest extends TestCase
     {
         $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
 
-        /** @var \ReflectionNamedType $reflectionType */
         $reflectionType = $reflectionMethod->getReturnType();
+        \assert($reflectionType instanceof \ReflectionNamedType);
 
         self::assertSame('iterable', $reflectionType->getName());
     }

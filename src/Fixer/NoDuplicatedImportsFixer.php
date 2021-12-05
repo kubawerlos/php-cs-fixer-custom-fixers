@@ -99,7 +99,6 @@ use Bar;
 
         $noUnusedImportsFixer = new NoUnusedImportsFixer();
 
-        /** @var \Closure $removeUseDeclaration */
         $removeUseDeclaration = \Closure::bind($removeUseDeclaration, null, $noUnusedImportsFixer);
 
         $removeUseDeclaration($noUnusedImportsFixer, $tokens, $useDeclaration);
