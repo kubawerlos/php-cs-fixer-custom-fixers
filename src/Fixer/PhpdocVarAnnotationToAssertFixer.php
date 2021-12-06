@@ -184,7 +184,7 @@ $x = getValue();
             'string' => 'is_string',
         ];
 
-        if (isset($typesMap[\strtolower($type)])) {
+        if (\array_key_exists(\strtolower($type), $typesMap)) {
             return \sprintf('%s(%s)', $typesMap[\strtolower($type)], $variableName);
         }
 

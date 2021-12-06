@@ -62,7 +62,7 @@ function foo_bar() {}
      */
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['elements'])) {
+        if (\is_array($configuration) && \array_key_exists('elements', $configuration)) {
             $elements = $configuration['elements'];
             $this->elements = $elements;
         }

@@ -56,7 +56,7 @@ var_dump($x);
      */
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['functions'])) {
+        if (\is_array($configuration) && \array_key_exists('functions', $configuration)) {
             $elements = $configuration['functions'];
             $this->functions = $elements;
         }

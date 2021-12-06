@@ -72,7 +72,7 @@ class Foo {
      */
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['promote_only_existing_properties'])) {
+        if (\is_array($configuration) && \array_key_exists('promote_only_existing_properties', $configuration)) {
             $this->promoteOnlyExistingProperties = $configuration['promote_only_existing_properties'];
         }
     }
@@ -133,7 +133,7 @@ class Foo {
         $constructorPromotableAssignments = $constructorAnalysis->getConstructorPromotableAssignments();
 
         foreach ($constructorPromotableParameters as $constructorParameterIndex => $constructorParameterName) {
-            if (!isset($constructorPromotableAssignments[$constructorParameterName])) {
+            if (!\array_key_exists($constructorParameterName, $constructorPromotableAssignments)) {
                 continue;
             }
 

@@ -67,7 +67,7 @@ final class FunctionAnalyzer
      */
     private static function getArgumentsRange(Tokens $tokens, int $index): ?array
     {
-        if (!$tokens[$index]->isGivenKind(\T_STRING)) {
+        if (!$tokens[$index]->isGivenKind([\T_ISSET, \T_STRING])) {
             throw new \InvalidArgumentException(\sprintf('Index %d is not a function.', $index));
         }
 
