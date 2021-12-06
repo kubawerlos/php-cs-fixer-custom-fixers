@@ -16,7 +16,6 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -133,14 +132,14 @@ $x = getValue();
                 $assertions['null'] = $this->getCodeForType('null', $variableName);
                 $type = \substr($type, 1);
             }
-            $codeForType = $this->getCodeForType($type, $variableName);
-            if ($codeForType === null) {
-                return null;
-            }
-            $assertions[$type] = $codeForType;
+            $assertions[$type] = $this->getCodeForType($type, $variableName);
         }
 
-        $tokens = Tokens::fromCode($assertCode . \implode(' || ', $assertions) . ');');
+        try {
+            $tokens = Tokens::fromCode($assertCode . \implode(' || ', $assertions) . ');');
+        } catch (\ParseError $exception) {
+            return null;
+        }
 
         return \array_slice($tokens->toArray(), 1);
     }
@@ -167,7 +166,7 @@ $x = getValue();
         return $varAnnotation;
     }
 
-    private function getCodeForType(string $type, string $variableName): ?string
+    private function getCodeForType(string $type, string $variableName): string
     {
         $typesMap = [
             'array' => 'is_array',
@@ -177,7 +176,11 @@ $x = getValue();
             'double' => 'is_float',
             'float' => 'is_float',
             'int' => 'is_int',
+            'integer' => 'is_int',
+            'iterable' => 'is_iterable',
             'null' => 'is_null',
+            'object' => 'is_object',
+            'resource' => 'is_resource',
             'string' => 'is_string',
         ];
 
@@ -185,11 +188,7 @@ $x = getValue();
             return \sprintf('%s(%s)', $typesMap[\strtolower($type)], $variableName);
         }
 
-        if (Preg::match('/^[\\\\a-zA-Z_\x80-\xff][\\\\a-zA-Z0-9_\x80-\xff]*(?<!\\\\)$/', $type) === 1) {
-            return \sprintf('%s instanceof %s', $variableName, $type);
-        }
-
-        return null;
+        return \sprintf('%s instanceof %s', $variableName, $type);
     }
 
     private function getExpressionEnd(Tokens $tokens, int $index): int
