@@ -66,6 +66,8 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             '<?php
                 /** @var Foo\Bar\ $x */
                 $x = getValue();
+                /** @var Foo\\\\Bar $y */
+                $y = getValue();
             ',
         ];
 
@@ -227,45 +229,6 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             ',
         ];
 
-        yield 'multiple variables' => [
-            '<?php
-                $x1 = true;
-                assert(is_bool($x1));
-                $x2 = false;
-                assert(is_bool($x2));
-                $x3 = function () {};
-                assert(is_callable($x3));
-                $x4 = 0.5;
-                assert(is_float($x4));
-                $x5 = 1.5;
-                assert(is_float($x5));
-                $x6 = 2;
-                assert(is_int($x6));
-                $x7 = null;
-                assert(is_null($x7));
-                $x8 = "foo";
-                assert(is_string($x8));
-            ',
-            '<?php
-                /** @var bool $x1 */
-                $x1 = true;
-                /** @var boolean $x2 */
-                $x2 = false;
-                /** @var callable $x3 */
-                $x3 = function () {};
-                /** @var double $x4 */
-                $x4 = 0.5;
-                /** @var float $x5 */
-                $x5 = 1.5;
-                /** @var int $x6 */
-                $x6 = 2;
-                /** @var null $x7 */
-                $x7 = null;
-                /** @var string $x8 */
-                $x8 = "foo";
-            ',
-        ];
-
         yield 'arrays' => [
             '<?php
                 $x = [1];
@@ -286,6 +249,123 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
 
                 /** @var array $z */
                 $z = [1, 2, 3];
+            ',
+        ];
+
+        yield 'boolean' => [
+            '<?php
+                $x = true;
+                assert(is_bool($x));
+
+                $y = false;
+                assert(is_bool($y));
+            ',
+            '<?php
+                /** @var bool $x */
+                $x = true;
+
+                /** @var boolean $y */
+                $y = false;
+            ',
+        ];
+
+        yield 'callable' => [
+            '<?php
+                $x = function () {};
+                assert(is_callable($x));
+            ',
+            '<?php
+                /** @var callable $x */
+                $x = function () {};
+            ',
+        ];
+
+        yield 'float' => [
+            '<?php
+                $x = 0.5;
+                assert(is_float($x));
+
+                $y = 1.5;
+                assert(is_float($y));
+            ',
+            '<?php
+                /** @var double $x */
+                $x = 0.5;
+
+                /** @var float $y */
+                $y = 1.5;
+            ',
+        ];
+
+        yield 'int' => [
+            '<?php
+                $x = 1;
+                assert(is_int($x));
+
+                $y = 2;
+                assert(is_int($y));
+            ',
+            '<?php
+                /** @var int $x */
+                $x = 1;
+
+                /** @var integer $y */
+                $y = 2;
+            ',
+        ];
+
+        yield 'iterable' => [
+            '<?php
+                $x = [1, 2, 3];
+                assert(is_iterable($x));
+            ',
+            '<?php
+                /** @var iterable $x */
+                $x = [1, 2, 3];
+            ',
+        ];
+
+        yield 'null' => [
+            '<?php
+                $x = null;
+                assert(is_null($x));
+            ',
+            '<?php
+                /** @var null $x */
+                $x = null;
+            ',
+        ];
+
+        yield 'object' => [
+            '<?php
+                $x = DateTime::createFromFormat("U");
+                assert(is_object($x));
+            ',
+            '<?php
+                /** @var object $x */
+                $x = DateTime::createFromFormat("U");
+            ',
+        ];
+
+        yield 'resource' => [
+            '<?php
+                $x = tmpfile();
+                assert(is_resource($x));
+            ',
+            '<?php
+                /** @var resource $x */
+                $x = tmpfile();
+            ',
+        ];
+
+        yield 'string' => [
+            '<?php
+                $x = "foo";
+                assert(is_string($x));
+            ',
+            '<?php
+                /** @var string $x */
+                $x = "foo";
             ',
         ];
 

@@ -140,7 +140,11 @@ $x = getValue();
             $assertions[$type] = $codeForType;
         }
 
-        $tokens = Tokens::fromCode($assertCode . \implode(' || ', $assertions) . ');');
+        try {
+            $tokens = Tokens::fromCode($assertCode . \implode(' || ', $assertions) . ');');
+        } catch (\ParseError) {
+            return null;
+        }
 
         return \array_slice($tokens->toArray(), 1);
     }
@@ -177,7 +181,11 @@ $x = getValue();
             'double' => 'is_float',
             'float' => 'is_float',
             'int' => 'is_int',
+            'integer' => 'is_int',
+            'iterable' => 'is_iterable',
             'null' => 'is_null',
+            'object' => 'is_object',
+            'resource' => 'is_resource',
             'string' => 'is_string',
         ];
 
