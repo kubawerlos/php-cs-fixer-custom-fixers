@@ -16,7 +16,6 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -133,16 +132,12 @@ $x = getValue();
                 $assertions['null'] = $this->getCodeForType('null', $variableName);
                 $type = \substr($type, 1);
             }
-            $codeForType = $this->getCodeForType($type, $variableName);
-            if ($codeForType === null) {
-                return null;
-            }
-            $assertions[$type] = $codeForType;
+            $assertions[$type] = $this->getCodeForType($type, $variableName);
         }
 
         try {
             $tokens = Tokens::fromCode($assertCode . \implode(' || ', $assertions) . ');');
-        } catch (\ParseError) {
+        } catch (\ParseError $exception) {
             return null;
         }
 
@@ -171,7 +166,7 @@ $x = getValue();
         return $varAnnotation;
     }
 
-    private function getCodeForType(string $type, string $variableName): ?string
+    private function getCodeForType(string $type, string $variableName): string
     {
         $typesMap = [
             'array' => 'is_array',
@@ -193,11 +188,7 @@ $x = getValue();
             return \sprintf('%s(%s)', $typesMap[\strtolower($type)], $variableName);
         }
 
-        if (Preg::match('/^[\\\\a-zA-Z_\x80-\xff][\\\\a-zA-Z0-9_\x80-\xff]*(?<!\\\\)$/', $type) === 1) {
-            return \sprintf('%s instanceof %s', $variableName, $type);
-        }
-
-        return null;
+        return \sprintf('%s instanceof %s', $variableName, $type);
     }
 
     private function getExpressionEnd(Tokens $tokens, int $index): int
