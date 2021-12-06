@@ -134,13 +134,14 @@ function foo($a, $b, $c) {}
         foreach ($annotations as $annotation) {
             if ($annotation->getTag()->getName() === 'param') {
                 $paramFound = true;
-                foreach ($paramNames as $paramName) {
-                    if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(\Q%s\E)\b/', $paramName), $annotation->getContent(), $matches) === 1 && !isset($paramsByName[$matches[1]])) {
-                        $paramsByName[$matches[1]] = $annotation->getContent();
-                        continue 2;
-                    }
+                $paramName = $this->getParamName($paramNames, $paramsByName, $annotation->getContent());
+
+                if ($paramName === null) {
+                    $superfluousParams[] = $annotation->getContent();
+                } else {
+                    $paramsByName[$paramName] = $annotation->getContent();
                 }
-                $superfluousParams[] = $annotation->getContent();
+
                 continue;
             }
 
@@ -153,5 +154,26 @@ function foo($a, $b, $c) {}
         }
 
         return \array_merge($annotationsBeforeParams, \array_values(\array_filter($paramsByName)), $superfluousParams, $annotationsAfterParams);
+    }
+
+    /**
+     * @param array<string>              $paramNames
+     * @param array<string, null|string> $paramsByName
+     */
+    private function getParamName(array $paramNames, array $paramsByName, string $annotation): ?string
+    {
+        foreach ($paramNames as $paramName) {
+            if (Preg::match(\sprintf('/@param\s+(?:[^\$](?:[^<\s]|<[^>]*>)*\s+)?(?:&|\.\.\.)?\s*(\Q%s\E)\b/', $paramName), $annotation, $matches) !== 1) {
+                continue;
+            }
+
+            if (\array_key_exists($matches[1], $paramsByName) && $paramsByName[$matches[1]] !== null) {
+                return null;
+            }
+
+            return $matches[1];
+        }
+
+        return null;
     }
 }
