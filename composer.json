@@ -14,7 +14,7 @@
         "ext-filter": "*",
         "ext-tokenizer": "*",
         "friendsofphp/php-cs-fixer": "^3.1.0",
-        "symfony/finder": "^3.0 || ^4.0 || ^5.0"
+        "symfony/finder": "^4.0 || ^5.0 || ^6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5.3 || ^9.1.1"
