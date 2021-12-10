@@ -72,6 +72,16 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'do not promote when types of property and parameter are different' => [
+            '<?php class Foo {
+                private int $x;
+                public function __construct(string $x) {
+                    $this->x = $x;
+                }
+            }
+            ',
+        ];
+
         yield 'do not promote when not simple assignment' => [
             '<?php class Foo {
                 private int $x;
@@ -224,6 +234,35 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                     float $x = 0.0,
                     float $y = 0.0,
                     float $z = 0.0,
+                ) {
+                    $this->x = $x;
+                    $this->y = $y;
+                    $this->z = $z;
+                }
+            }',
+        ];
+
+        yield 'promote only when types are matching' => [
+            '<?php class Foo {
+                public array $x;
+                public int $z;
+                public function __construct(
+                    bool $x,
+                    public bool $y,
+                    bool $z,
+                ) {
+                    $this->x = $x;
+                    $this->z = $z;
+                }
+            }',
+            '<?php class Foo {
+                public array $x;
+                public bool $y;
+                public int $z;
+                public function __construct(
+                    bool $x,
+                    bool $y,
+                    bool $z,
                 ) {
                     $this->x = $x;
                     $this->y = $y;
@@ -696,6 +735,44 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                         $this->y = $y;
                     }
                     $this->z = $z;
+                }
+            }
+            ',
+        ];
+
+        yield 'promote nullable types' => [
+            '<?php class Foo {
+                public function __construct(private ?int $x, private ?int $y, private ?int $z)
+                {
+                }
+            }
+            ',
+            '<?php class Foo {
+                private ?int $x;
+                private ?int $y;
+                private int $z;
+                public function __construct(int $x, ?int $y, ?int $z)
+                {
+                    $this->x = $x;
+                    $this->y = $y;
+                    $this->z = $z;
+                }
+            }
+            ',
+        ];
+
+        yield 'promote weird casing' => [
+            '<?php class Foo {
+                public function __construct(private Bar\BAZ $x)
+                {
+                }
+            }
+            ',
+            '<?php class Foo {
+                private BAR\Baz $x;
+                public function __construct(Bar\BAZ $x)
+                {
+                    $this->x = $x;
                 }
             }
             ',
