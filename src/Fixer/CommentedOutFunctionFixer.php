@@ -52,13 +52,12 @@ var_dump($x);
     }
 
     /**
-     * @param null|array<string, array<string>> $configuration
+     * @param array<string, array<string>> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        if (\is_array($configuration) && \array_key_exists('functions', $configuration)) {
-            $elements = $configuration['functions'];
-            $this->functions = $elements;
+        if (\array_key_exists('functions', $configuration)) {
+            $this->functions = $configuration['functions'];
         }
     }
 

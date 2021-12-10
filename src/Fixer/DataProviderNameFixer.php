@@ -69,13 +69,10 @@ class FooTest extends TestCase {
     }
 
     /**
-     * @param null|array<string, string> $configuration
+     * @param array<string, string> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        /** @var array<string> $configuration */
-        $configuration = $configuration ?? [];
-
         if (\array_key_exists('prefix', $configuration)) {
             $this->prefix = $configuration['prefix'];
         }

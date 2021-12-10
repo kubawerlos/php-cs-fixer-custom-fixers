@@ -55,11 +55,11 @@ $x = [
     }
 
     /**
-     * @param null|array<string, bool> $configuration
+     * @param array<string, bool> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        if (\is_array($configuration) && \array_key_exists('ignore_expressions', $configuration)) {
+        if (\array_key_exists('ignore_expressions', $configuration)) {
             $this->ignoreExpressions = $configuration['ignore_expressions'];
         }
     }

@@ -46,13 +46,13 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
     }
 
     /**
-     * @param null|array<string, bool> $configuration
+     * @param array<string, bool> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        $this->allowPreventingTrailingSpaces = \is_array($configuration)
-            && \array_key_exists('allow_preventing_trailing_spaces', $configuration)
-            && $configuration['allow_preventing_trailing_spaces'] === true;
+        if (\array_key_exists('allow_preventing_trailing_spaces', $configuration)) {
+            $this->allowPreventingTrailingSpaces = $configuration['allow_preventing_trailing_spaces'];
+        }
     }
 
     /**

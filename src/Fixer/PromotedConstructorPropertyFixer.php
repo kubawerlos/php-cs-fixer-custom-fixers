@@ -68,11 +68,11 @@ class Foo {
     }
 
     /**
-     * @param null|array<string, bool> $configuration
+     * @param array<string, bool> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        if (\is_array($configuration) && \array_key_exists('promote_only_existing_properties', $configuration)) {
+        if (\array_key_exists('promote_only_existing_properties', $configuration)) {
             $this->promoteOnlyExistingProperties = $configuration['promote_only_existing_properties'];
         }
     }

@@ -84,13 +84,10 @@ echo 0123_4567; // octal
     }
 
     /**
-     * @param null|array<string, null|bool> $configuration
+     * @param array<string, null|bool> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        /** @var array<null|bool> $configuration */
-        $configuration = $configuration ?? [];
-
         $this->binarySeparator = \array_key_exists('binary', $configuration) ? $configuration['binary'] : $this->binarySeparator;
         $this->decimalSeparator = \array_key_exists('decimal', $configuration) ? $configuration['decimal'] : $this->decimalSeparator;
         $this->floatSeparator = \array_key_exists('float', $configuration) ? $configuration['float'] : $this->floatSeparator;
