@@ -120,7 +120,7 @@ final class InternalClassCasingFixer extends AbstractFixer
 
         $lowercaseClassName = \strtolower($className);
 
-        if (!isset($classes[$lowercaseClassName])) {
+        if (!\array_key_exists($lowercaseClassName, $classes)) {
             return $className;
         }
 

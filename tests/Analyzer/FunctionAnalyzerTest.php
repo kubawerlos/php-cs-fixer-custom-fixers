@@ -127,6 +127,16 @@ final class FunctionAnalyzerTest extends TestCase
             1,
         ];
 
+        yield 'support isset' => [
+            [
+                new ArgumentAnalysis(3, 3, false),
+                new ArgumentAnalysis(6, 6, false),
+                new ArgumentAnalysis(9, 9, false),
+            ],
+            '<?php isset($x, $y, $z);',
+            1,
+        ];
+
         if (\PHP_VERSION_ID >= 70300) {
             yield 'argument with trailing comma' => [
                 [new ArgumentAnalysis(3, 3, false)],

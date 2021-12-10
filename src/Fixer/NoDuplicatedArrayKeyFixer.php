@@ -59,7 +59,7 @@ $x = [
      */
     public function configure(?array $configuration = null): void
     {
-        if (isset($configuration['ignore_expressions'])) {
+        if (\is_array($configuration) && \array_key_exists('ignore_expressions', $configuration)) {
             $this->ignoreExpressions = $configuration['ignore_expressions'];
         }
     }

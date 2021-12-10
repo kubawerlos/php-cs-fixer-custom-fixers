@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3167-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3199-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -133,6 +133,17 @@ Classes defined internally by extension or core must be referenced with the corr
  <?php
 -$foo = new STDClass();
 +$foo = new stdClass();
+```
+
+#### IssetToArrayKeyExistsFixer
+Function `array_key_exists` must be used over `isset` when possible.
+  *Risky: when array is not defined, is multi-dimensional or behaviour is relying on the null value.*
+```diff
+ <?php
+-if (isset($array[$key])) {
++if (array_key_exists($key, $array)) {
+     echo $array[$key];
+ }
 ```
 
 #### MultilineCommentOpeningClosingAloneFixer

@@ -108,7 +108,7 @@ class FooTest extends TestCase {
 
     private static function isAssertionToFix(Tokens $tokens, int $index): bool
     {
-        if (!isset(self::ASSERTIONS[\strtolower($tokens[$index]->getContent())])) {
+        if (!\array_key_exists(\strtolower($tokens[$index]->getContent()), self::ASSERTIONS)) {
             return false;
         }
 
@@ -141,7 +141,7 @@ class FooTest extends TestCase {
 
         $functionName = \strtolower($tokens[$functionCallIndex]->getContent());
 
-        if (!isset(self::REPLACEMENTS_MAP[$functionName])) {
+        if (!\array_key_exists($functionName, self::REPLACEMENTS_MAP)) {
             return;
         }
 

@@ -76,11 +76,11 @@ class FooTest extends TestCase {
         /** @var array<string> $configuration */
         $configuration = $configuration ?? [];
 
-        if (isset($configuration['prefix'])) {
+        if (\array_key_exists('prefix', $configuration)) {
             $this->prefix = $configuration['prefix'];
         }
 
-        if (isset($configuration['suffix'])) {
+        if (\array_key_exists('suffix', $configuration)) {
             $this->suffix = $configuration['suffix'];
         }
     }

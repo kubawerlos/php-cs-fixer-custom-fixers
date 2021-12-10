@@ -120,7 +120,7 @@ class FooTest extends TestCase {
 
         $oldAssertion = $tokens[$index]->getContent();
 
-        if (!isset($assertions[\strtolower($oldAssertion)])) {
+        if (!\array_key_exists(\strtolower($oldAssertion), $assertions)) {
             return null;
         }
 

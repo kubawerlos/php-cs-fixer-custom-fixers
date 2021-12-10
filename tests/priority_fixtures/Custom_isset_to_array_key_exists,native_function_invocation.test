@@ -1,0 +1,9 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/isset_to_array_key_exists": true, "native_function_invocation": true }
+--EXPECTED--
+<?php
+\array_key_exists($key, $array);
+
+--INPUT--
+<?php
+isset($array[$key]);

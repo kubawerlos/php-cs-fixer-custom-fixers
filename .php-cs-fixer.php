@@ -18,7 +18,7 @@ foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     if ($fixer instanceof \PhpCsFixer\Fixer\DeprecatedFixerInterface) {
         continue;
     }
-    if (!isset($rules[$fixer->getName()])) {
+    if (!array_key_exists($fixer->getName(), $rules)) {
         $rules[$fixer->getName()] = true;
     }
 }

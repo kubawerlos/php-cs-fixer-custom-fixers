@@ -53,7 +53,7 @@ final class DataProviderAnalyzer
         $dataProviderAnalyses = [];
         foreach ($dataProviders as $dataProviderName => $dataProviderUsages) {
             $lowercaseDataProviderName = \strtolower($dataProviderName);
-            if (!isset($methods[$lowercaseDataProviderName])) {
+            if (!\array_key_exists($lowercaseDataProviderName, $methods)) {
                 continue;
             }
             $dataProviderAnalyses[$methods[$lowercaseDataProviderName]] = new DataProviderAnalysis(

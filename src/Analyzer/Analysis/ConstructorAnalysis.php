@@ -166,7 +166,7 @@ final class ConstructorAnalysis
         $duplicates = [];
         $values = [];
         foreach ($array as $key => $value) {
-            if (isset($values[$value])) {
+            if (\array_key_exists($value, $values)) {
                 $duplicates[$values[$value]] = $values[$value];
                 $duplicates[$key] = $key;
             }
