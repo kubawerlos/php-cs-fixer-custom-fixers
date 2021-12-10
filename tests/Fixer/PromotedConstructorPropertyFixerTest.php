@@ -674,6 +674,33 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'do not promote when assignment is nested' => [
+            '<?php class Foo {
+                private int $y;
+                public function __construct(private int $x, int $y, private int $z, bool $condition)
+                {
+                    if ($condition) {
+                        $this->y = $y;
+                    }
+                }
+            }
+            ',
+            '<?php class Foo {
+                private int $x;
+                private int $y;
+                private int $z;
+                public function __construct(int $x, int $y, int $z, bool $condition)
+                {
+                    $this->x = $x;
+                    if ($condition) {
+                        $this->y = $y;
+                    }
+                    $this->z = $z;
+                }
+            }
+            ',
+        ];
+
         foreach (
             [
                 '@Document',
