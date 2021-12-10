@@ -100,13 +100,13 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
     }
 
     /**
-     * @param null|array<string, bool> $configuration
+     * @param array<string, bool> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        $this->allowLinebreak = \is_array($configuration)
-            && \array_key_exists('allow_linebreak', $configuration)
-            && $configuration['allow_linebreak'] === true;
+        if (\array_key_exists('allow_linebreak', $configuration)) {
+            $this->allowLinebreak = $configuration['allow_linebreak'];
+        }
     }
 
     public function getPriority(): int

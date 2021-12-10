@@ -58,13 +58,12 @@ function foo_bar() {}
     }
 
     /**
-     * @param null|array<string, array<string>> $configuration
+     * @param array<string, array<string>> $configuration
      */
-    public function configure(?array $configuration = null): void
+    public function configure(array $configuration): void
     {
-        if (\is_array($configuration) && \array_key_exists('elements', $configuration)) {
-            $elements = $configuration['elements'];
-            $this->elements = $elements;
+        if (\array_key_exists('elements', $configuration)) {
+            $this->elements = $configuration['elements'];
         }
     }
 
