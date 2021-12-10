@@ -12,7 +12,7 @@ class Test {
 use Bar\Baz;
 class Test {
     /** @var Baz[] */
-    private array $x;
+    private int $x;
     public function __construct(int $x) {
         $this->x = $x;
     }

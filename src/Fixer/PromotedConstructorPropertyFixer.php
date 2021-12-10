@@ -143,13 +143,29 @@ class Foo {
                 continue;
             }
 
+            $propertyType = '';
+            if ($propertyIndex !== null) {
+                $propertyType = $this->getType($tokens, $propertyIndex);
+            }
+
+            $parameterTypeType = $this->getType($tokens, $constructorParameterIndex);
+
+            if (!$this->typesAllowPromoting($propertyType, $parameterTypeType)) {
+                continue;
+            }
+
             $propertyVisibility = null;
             if ($propertyIndex !== null) {
                 $propertyVisibility = $this->removePropertyAndReturnVisibility($tokens, $propertyIndex, $constructorParameterIndex);
             }
 
             $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
-            $this->addVisibilityToParameter($tokens, $constructorParameterIndex, $propertyVisibility ?? new Token([\T_PUBLIC, 'public']));
+            $this->updateParameterSignature(
+                $tokens,
+                $constructorParameterIndex,
+                $propertyVisibility ?? new Token([\T_PUBLIC, 'public']),
+                \substr($propertyType, 0, 1) === '?'
+            );
         }
     }
 
@@ -216,6 +232,43 @@ class Foo {
         $docBlock = new DocBlock($tokens[$phpDocIndex]->getContent());
 
         return \count($docBlock->getAnnotations()) === 0;
+    }
+
+    private function getType(Tokens $tokens, int $variableIndex): string
+    {
+        $type = '';
+
+        $index = $tokens->getPrevTokenOfKind($variableIndex, ['(', ',', [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_VAR], [CT::T_ATTRIBUTE_CLOSE]]);
+        \assert(\is_int($index));
+
+        $index = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($index));
+
+        while ($index < $variableIndex) {
+            $type .= $tokens[$index]->getContent();
+
+            $index = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($index));
+        }
+
+        return $type;
+    }
+
+    private function typesAllowPromoting(string $propertyType, string $parameterTypeType): bool
+    {
+        if ($propertyType === '') {
+            return true;
+        }
+
+        if (\substr($propertyType, 0, 1) === '?') {
+            $propertyType = \substr($propertyType, 1);
+        }
+
+        if (\substr($parameterTypeType, 0, 1) === '?') {
+            $parameterTypeType = \substr($parameterTypeType, 1);
+        }
+
+        return \strtolower($propertyType) === \strtolower($parameterTypeType);
     }
 
     /**
@@ -321,7 +374,7 @@ class Foo {
         TokenRemover::removeWithLinesIfPossible($tokens, $thisIndex);
     }
 
-    private function addVisibilityToParameter(Tokens $tokens, int $index, Token $visibilityToken): void
+    private function updateParameterSignature(Tokens $tokens, int $index, Token $visibilityToken, bool $makeTypeNullable): void
     {
         $prevElementIndex = $tokens->getPrevTokenOfKind($index, ['(', ',', [CT::T_ATTRIBUTE_CLOSE]]);
         \assert(\is_int($prevElementIndex));
@@ -330,6 +383,7 @@ class Foo {
         \assert(\is_int($propertyStartIndex));
 
         $insertTokens = [];
+
         if ($visibilityToken->isGivenKind(\T_PRIVATE)) {
             $insertTokens[] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE, $visibilityToken->getContent()]);
         } elseif ($visibilityToken->isGivenKind(\T_PROTECTED)) {
@@ -338,6 +392,10 @@ class Foo {
             $insertTokens[] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, $visibilityToken->getContent()]);
         }
         $insertTokens[] = new Token([\T_WHITESPACE, ' ']);
+
+        if ($makeTypeNullable && !$tokens[$propertyStartIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
+            $insertTokens[] = new Token([CT::T_NULLABLE_TYPE, '?']);
+        }
 
         $this->tokensToInsert[$propertyStartIndex] = $insertTokens;
     }
