@@ -106,7 +106,7 @@ final class ConstructorAnalysis
                 continue;
             }
 
-            $propertyIndex = $this->getPropertyIndex($index);
+            $propertyIndex = $this->getPropertyIndex($index, $openBrace);
             if ($propertyIndex === null) {
                 continue;
             }
@@ -127,7 +127,7 @@ final class ConstructorAnalysis
         return \array_flip($variables);
     }
 
-    private function getPropertyIndex(int $index): ?int
+    private function getPropertyIndex(int $index, int $openBrace): ?int
     {
         $assignmentIndex = $this->tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($assignmentIndex));
@@ -149,7 +149,7 @@ final class ConstructorAnalysis
 
         $prevThisIndex = $this->tokens->getPrevMeaningfulToken($thisIndex);
         \assert(\is_int($prevThisIndex));
-        if (!$this->tokens[$prevThisIndex]->equalsAny(['{', ';'])) {
+        if ($prevThisIndex > $openBrace && !$this->tokens[$prevThisIndex]->equalsAny(['}', ';'])) {
             return null;
         }
 

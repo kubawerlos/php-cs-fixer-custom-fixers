@@ -136,5 +136,18 @@ final class ConstructorAnalysisTest extends TestCase
                 }
             }',
         ];
+
+        yield 'nested assignment' => [
+            ['x' => 30, 'z' => 60],
+            '<?php class Foo {
+                public function __construct($x, $y, $z) {
+                    $this->x = $x;
+                    if (shouldBeAssigned()) {
+                        $this->y = $y;
+                    }
+                    $this->z = $z;
+                }
+            }',
+        ];
     }
 }
