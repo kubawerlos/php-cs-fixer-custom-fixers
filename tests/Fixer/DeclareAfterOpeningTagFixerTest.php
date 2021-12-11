@@ -142,7 +142,7 @@ declare(ticks=1);
             ',
             '<?php
 // Foo
-declare(strict_types=1, ticks=1);c
+declare(strict_types=1, ticks=1);
 // Bar
             ',
         ];
