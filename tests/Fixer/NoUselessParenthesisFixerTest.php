@@ -47,6 +47,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield ['<?php isset($x);'];
         yield ['<?php unset($x);'];
         yield ['<?php exit(2);'];
+        yield ['<?php __halt_compiler();'];
         yield ['<?php eval("<?php echo 3;");'];
         yield ['<?php list($x) = [1];'];
         yield ['<?php switch ($x) { default: return true; }'];
