@@ -56,16 +56,22 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield ['<?php $f = function ($x): int { return $x + 2; };'];
         yield ['<?php $f = function ($x) use ($y) { return $x + $y; };'];
         yield ['<?php $f = function ($x) use ($y): int { return $x + $y; };'];
+        yield ['<?php $f = function &($x) { return $x + 2; };'];
+        yield ['<?php $f = function &($x): int { return $x + 2; };'];
         yield ['<?php $arrayOfCallbacks["foo"]($bar);'];
         yield ['<?php do {} while($x);'];
         yield ['<?php Obj::class($x);'];
         yield ['<?php class Foo { public static function create($x) { return new static($x); } }'];
         yield ['<?php class Foo { public static function create($x) { return $this->{$prop}; } }'];
         yield ['<?php $c = new class($x) {};'];
+        yield ['<?php $c = new class($x) implements FooInterface {};'];
+        yield ['<?php $c = new class($x) extends FooClass {};'];
         yield ['<?php $object->{"set_value"}($x);'];
         yield ['<?php $object->{"set_{$name}"}($x);'];
         if (\defined('T_FN')) {
             yield ['<?php $f = fn ($x) => $x + 2;'];
+            yield ['<?php $f = fn &($x) => $x + 2;'];
+            yield ['<?php $f = fn &($x): int => $x + 2;'];
         }
         if (\defined('T_MATCH')) {
             yield ['<?php return match ($x) { default => 0 };'];
