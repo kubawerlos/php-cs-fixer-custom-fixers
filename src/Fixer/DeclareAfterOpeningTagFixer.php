@@ -24,7 +24,7 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Declare statement must be placed in the same line, after opening tag.',
+            'Declare statement for strict types must be placed in the same line, after opening tag.',
             [new CodeSample("<?php\n\$foo;\ndeclare(strict_types=1);\n\$bar;\n")]
         );
     }
@@ -55,26 +55,25 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
 
         $openingTagTokenContent = $tokens[0]->getContent();
 
-        $tokens[0] = new Token([\T_OPEN_TAG, \substr($openingTagTokenContent, 0, 5) . ' ']);
-
         $declareIndex = $tokens->getNextTokenOfKind(0, [[\T_DECLARE]]);
         \assert(\is_int($declareIndex));
+
+        $openParenthesisIndex = $tokens->getNextMeaningfulToken($declareIndex);
+        \assert(\is_int($openParenthesisIndex));
+
+        $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+
+        if (\stripos($tokens->generatePartialCode($openParenthesisIndex, $closeParenthesisIndex), 'strict_types') === false) {
+            return;
+        }
+
+        $tokens[0] = new Token([\T_OPEN_TAG, \substr($openingTagTokenContent, 0, 5) . ' ']);
+
         if ($declareIndex <= 2) {
             $tokens->clearRange(1, $declareIndex - 1);
 
             return;
         }
-
-        if ($tokens[1]->isGivenKind(\T_WHITESPACE)) {
-            $tokens[1] = new Token([\T_WHITESPACE, \substr($openingTagTokenContent, 5) . $tokens[1]->getContent()]);
-        } else {
-            $tokens->insertAt(1, new Token([\T_WHITESPACE, \substr($openingTagTokenContent, 5)]));
-            $declareIndex++;
-        }
-
-        $openParenthesisIndex = $tokens->getNextMeaningfulToken($declareIndex);
-        \assert(\is_int($openParenthesisIndex));
-        $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
 
         $semicolonIndex = $tokens->getNextMeaningfulToken($closeParenthesisIndex);
         \assert(\is_int($semicolonIndex));
@@ -82,6 +81,12 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
         $tokensToInsert = [];
         for ($index = $declareIndex; $index <= $semicolonIndex; $index++) {
             $tokensToInsert[] = $tokens[$index];
+        }
+
+        if ($tokens[1]->isGivenKind(\T_WHITESPACE)) {
+            $tokens[1] = new Token([\T_WHITESPACE, \substr($openingTagTokenContent, 5) . $tokens[1]->getContent()]);
+        } else {
+            $tokensToInsert[] = new Token([\T_WHITESPACE, \substr($openingTagTokenContent, 5)]);
         }
 
         if ($tokens[$semicolonIndex + 1]->isGivenKind(\T_WHITESPACE)) {
