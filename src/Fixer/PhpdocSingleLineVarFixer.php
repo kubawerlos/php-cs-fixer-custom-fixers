@@ -40,7 +40,7 @@ class Foo {
      */
     public function getPriority(): int
     {
-        return -1;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
