@@ -62,6 +62,30 @@ class Foo {}
             ',
         ];
 
+        yield 'fix uppercase declare' => [
+            '<?php DECLARE(strict_types=1);
+// Foo
+class Foo {}
+            ',
+            '<?php
+// Foo
+DECLARE(strict_types=1);
+class Foo {}
+            ',
+        ];
+
+        yield 'fix uppercase strict_types' => [
+            '<?php declare(STRICT_TYPES=1);
+// Foo
+class Foo {}
+            ',
+            '<?php
+// Foo
+declare(STRICT_TYPES=1);
+class Foo {}
+            ',
+        ];
+
         yield 'fix and clean up empty lines left' => [
             '<?php declare(strict_types=1);
 
@@ -94,6 +118,49 @@ declare(strict_types=1);
 declare(strict_types=1);
 
 // Foo
+            ',
+        ];
+
+        yield 'fix with other declares' => [
+            '<?php declare(strict_types=1);
+// Foo
+declare(ticks=1);
+// Bar
+            ',
+            '<?php
+declare(strict_types=1);
+// Foo
+declare(ticks=1);
+// Bar
+            ',
+        ];
+
+        yield 'fix with other directives' => [
+            '<?php declare(strict_types=1, ticks=1);
+// Foo
+// Bar
+            ',
+            '<?php
+// Foo
+declare(strict_types=1, ticks=1);
+// Bar
+            ',
+        ];
+
+        yield 'ignore declare when not for strict types' => [
+            '<?php
+// Foo
+declare(ticks=1);
+// Bar
+            ',
+        ];
+
+        yield 'ignore declare when used with block mode' => [
+            '<?php
+// Foo
+declare(ticks=1) {
+    // Bar
+}
             ',
         ];
     }
