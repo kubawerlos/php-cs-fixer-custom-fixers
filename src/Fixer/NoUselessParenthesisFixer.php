@@ -91,7 +91,7 @@ foo(($bar));
             return true;
         }
 
-        if ($tokens[$nextEndIndex]->equalsAny(['(', '{', [\T_DOUBLE_ARROW], [CT::T_BRACE_CLASS_INSTANTIATION_OPEN], [CT::T_TYPE_COLON]])) {
+        if ($tokens[$nextEndIndex]->equalsAny(['(', '{', [\T_DOUBLE_ARROW], [CT::T_BRACE_CLASS_INSTANTIATION_OPEN], [CT::T_USE_LAMBDA], [CT::T_TYPE_COLON]])) {
             return false;
         }
 
@@ -115,7 +115,6 @@ foo(($bar));
                 \T_EMPTY,
                 \T_EVAL,
                 \T_EXIT,
-                \T_FUNCTION,
                 \T_HALT_COMPILER,
                 \T_ISSET,
                 \T_LIST,
