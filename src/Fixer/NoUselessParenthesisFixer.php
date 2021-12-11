@@ -116,6 +116,7 @@ foo(($bar));
                 \T_EVAL,
                 \T_EXIT,
                 \T_FUNCTION,
+                \T_HALT_COMPILER,
                 \T_ISSET,
                 \T_LIST,
                 \T_STATIC,
