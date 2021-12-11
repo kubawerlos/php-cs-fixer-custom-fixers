@@ -58,7 +58,11 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield ['<?php $f = function ($x) use ($y) { return $x + $y; };'];
         yield ['<?php $f = function ($x) use ($y): int { return $x + $y; };'];
         yield ['<?php $f = function &($x) { return $x + 2; };'];
+        yield ['<?php $f = function &($x) use ($y) { return $x + $y; };'];
         yield ['<?php $f = function &($x): int { return $x + 2; };'];
+        yield ['<?php $f = function &() { return 2; };'];
+        yield ['<?php $f = function &() use ($x) { return $x + 2; };'];
+        yield ['<?php $f = function &(): int { return 2; };'];
         yield ['<?php $arrayOfCallbacks["foo"]($bar);'];
         yield ['<?php do {} while($x);'];
         yield ['<?php Obj::class($x);'];
