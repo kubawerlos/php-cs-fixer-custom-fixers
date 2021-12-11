@@ -93,7 +93,9 @@ function foo($x) {}
         \assert(\is_int($tagStartPosition));
 
         $typeStartPosition = \strpos($content, ' ', $tagStartPosition);
-        \assert(\is_int($typeStartPosition));
+        if ($typeStartPosition === false) {
+            return $content;
+        }
         $typeStartPosition++;
 
         $variableStartPosition = \strpos($content, '$', $typeStartPosition);
