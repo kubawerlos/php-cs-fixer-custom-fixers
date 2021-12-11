@@ -36,23 +36,25 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield [
-            '<?php
+        yield ['<?php
+                /**
+                 * @return
+                 */
+             '];
+
+        yield ['<?php
                 /**
                  * @customAnnotation Foo | Bar ($x) Bar | Foo
                  */
-             ',
-        ];
+             '];
 
-        yield [
-            '<?php
+        yield ['<?php
                 /**
                  * @param    Foo        $x
                  *
                  * @return        Bar
                  */
-             ',
-        ];
+             '];
 
         yield [
             '<?php
