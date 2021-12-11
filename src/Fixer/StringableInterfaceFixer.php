@@ -103,10 +103,7 @@ class Foo
 
     private function addStringableInterface(Tokens $tokens, int $classIndex, bool $isNamespaced): void
     {
-        $classNameIndex = $tokens->getNextTokenOfKind($classIndex, [[\T_STRING]]);
-        \assert(\is_int($classNameIndex));
-
-        $implementsIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{', [\T_IMPLEMENTS]]);
+        $implementsIndex = $tokens->getNextTokenOfKind($classIndex, ['{', [\T_IMPLEMENTS]]);
         \assert(\is_int($implementsIndex));
 
         if ($tokens[$implementsIndex]->equals('{')) {
@@ -127,7 +124,7 @@ class Foo
             return;
         }
 
-        $implementsEndIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{']);
+        $implementsEndIndex = $tokens->getNextTokenOfKind($implementsIndex, ['{']);
         \assert(\is_int($implementsEndIndex));
         if ($this->isStringableAlreadyUsed($tokens, $implementsIndex + 1, $implementsEndIndex - 1, $isNamespaced)) {
             return;
