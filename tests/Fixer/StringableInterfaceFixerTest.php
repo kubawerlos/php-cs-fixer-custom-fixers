@@ -156,6 +156,32 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
+            '<?php new class implements \Stringable {
+                public function __construct() {}
+                public function __toString() {}
+            };
+            ',
+            '<?php new class {
+                public function __construct() {}
+                public function __toString() {}
+            };
+            ',
+        ];
+
+        yield [
+            '<?php new class() implements \Stringable {
+                public function __construct() {}
+                public function __toString() {}
+            };
+            ',
+            '<?php new class() {
+                public function __construct() {}
+                public function __toString() {}
+            };
+            ',
+        ];
+
+        yield [
             '<?php
             class Foo1 implements \Stringable { public function __toString() { return "1"; } }
             class Foo2 { public function __noString() { return "2"; } }
