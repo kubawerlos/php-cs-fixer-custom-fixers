@@ -304,15 +304,13 @@ class Foo {
 
         $propertyEndIndex = $this->getTokenOfKindSibling($tokens, 1, $propertyIndex, [';', ',']);
 
-        $prevVisibilityIndex = $this->getTokenOfKindSibling($tokens, -1, $propertyIndex, ['{', '}', ';']);
+        $prevVisibilityIndex = $this->getTokenOfKindSibling($tokens, -1, $propertyIndex, ['}', ';']);
 
-        $visibilityIndex = $tokens->getNextMeaningfulToken($prevVisibilityIndex);
-        \assert(\is_int($visibilityIndex));
+        $visibilityIndex = $this->getTokenOfKindSibling($tokens, 1, $prevVisibilityIndex, [[\T_PRIVATE], [\T_PROTECTED], [\T_VARIABLE]]);
 
-        $visibilityToken = $tokens[$visibilityIndex];
-
-        if ($tokens[$visibilityIndex]->isGivenKind(\T_VAR)) {
-            $visibilityToken = null;
+        $visibilityToken = null;
+        if (!$tokens[$visibilityIndex]->isGivenKind(\T_VARIABLE)) {
+            $visibilityToken = $tokens[$visibilityIndex];
         }
 
         $prevPropertyStartIndex = $tokens->getPrevNonWhitespace($propertyStartIndex);
@@ -341,22 +339,25 @@ class Foo {
     }
 
     /**
-     * @param array<string> $tokenKinds
+     * @param array<array<int>|string> $tokenKinds
      */
     private function getTokenOfKindSibling(Tokens $tokens, int $direction, int $index, array $tokenKinds): int
     {
-        while (true) {
-            $index += $direction;
+        $index += $direction;
 
-            if ($tokens[$index]->equalsAny($tokenKinds)) {
-                break;
-            }
-
+        while (!$tokens[$index]->equalsAny($tokenKinds)) {
             /** @var null|array{isStart: bool, type: int} $blockType */
             $blockType = Tokens::detectBlockType($tokens[$index]);
-            if ($blockType !== null && $blockType['isStart']) {
-                $index = $tokens->findBlockEnd($blockType['type'], $index);
+
+            if ($blockType !== null) {
+                if ($blockType['isStart']) {
+                    $index = $tokens->findBlockEnd($blockType['type'], $index);
+                } else {
+                    $index = $tokens->findBlockStart($blockType['type'], $index);
+                }
             }
+
+            $index += $direction;
         }
 
         return $index;
