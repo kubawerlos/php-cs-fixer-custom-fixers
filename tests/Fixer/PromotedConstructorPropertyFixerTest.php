@@ -533,7 +533,29 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
-        yield 'promote with attributes' => [
+        yield 'promote with attribute on property' => [
+            '<?php
+                class Foo
+                {
+                    public function __construct(private string $x)
+                    {
+                    }
+                }
+            ',
+            '<?php
+                class Foo
+                {
+                    #[Attribute]
+                    private $x;
+                    public function __construct(string $x)
+                    {
+                        $this->x = $x;
+                    }
+                }
+            ',
+        ];
+
+        yield 'promote with attribute on parameter' => [
             '<?php class Foo {
                 public function __construct(
                     private string $x,
@@ -776,6 +798,31 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                 }
             }
             ',
+        ];
+
+        yield 'promote with complex defaults' => [
+            '<?php class Foo {
+                public function __construct(
+                    private array $a = [1, 2, 3, [4, 5, 6, [7, 8, 9]]],
+                    private float $f = 1 / 3,
+                    private int $i =  4 + 12 * 7 - 3,
+                ) {
+                }
+            }',
+            '<?php class Foo {
+                private array $a;
+                private float $f;
+                private int $i;
+                public function __construct(
+                    array $a = [1, 2, 3, [4, 5, 6, [7, 8, 9]]],
+                    float $f = 1 / 3,
+                    int $i =  4 + 12 * 7 - 3,
+                ) {
+                    $this->a = $a;
+                    $this->f = $f;
+                    $this->i = $i;
+                }
+            }',
         ];
 
         foreach (
