@@ -73,6 +73,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         yield ['<?php $c = new class($x) extends FooClass {};'];
         yield ['<?php $object->{"set_value"}($x);'];
         yield ['<?php $object->{"set_{$name}"}($x);'];
+        yield ['<?php $object->{"set_${name}"}($x);'];
         if (\defined('T_FN')) {
             yield ['<?php $f = fn ($x) => $x + 2;'];
             yield ['<?php $f = fn &($x) => $x + 2;'];
