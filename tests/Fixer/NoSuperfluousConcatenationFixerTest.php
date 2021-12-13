@@ -242,6 +242,26 @@ CONTENT
 CONTENT
         ];
 
+        yield [
+            <<<'CONTENT'
+<?php "2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n";
+CONTENT
+            ,
+            <<<'CONTENT'
+<?php '2 slashes: \\\", 3 slashes: \\\\\", 4 slashes: \\\\\\\";' . "\n";
+CONTENT
+        ];
+
+        yield [
+            <<<'CONTENT'
+<?php "2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n";
+CONTENT
+            ,
+            <<<'CONTENT'
+<?php '2 slashes: \\\\", 3 slashes: \\\\\\", 4 slashes: \\\\\\\\";' . "\n";
+CONTENT
+        ];
+
         for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {
             $char = \chr($bytevalue);
             yield [

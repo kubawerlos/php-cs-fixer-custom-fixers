@@ -169,20 +169,34 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             return $content;
         }
 
-        return \str_replace(
-            [
-                "\\'",
-                '"',
-                '\\\\"',
-                '$',
-            ],
-            [
-                "'",
-                '\\"',
-                '\\\\\\"',
-                '\\$',
-            ],
-            $content
+        // unescape single quote
+        $content = \str_replace('\\\'', '\'', $content);
+
+        // escape dollar sign
+        $content = \str_replace('$', '\\$', $content);
+
+        // escape double quote
+        $pieces = \explode('\\\\', $content);
+        $pieces = \array_map(
+            static function (string $piece): string {
+                $piece = Preg::replace(
+                    [
+                        '/(?<=\\\\)"/',
+                        '/(?<!\\\\)"/',
+                    ],
+                    [
+                        '\\\\\"',
+                        '\\"',
+                    ],
+                    $piece
+                );
+                \assert(\is_string($piece));
+
+                return $piece;
+            },
+            $pieces
         );
+
+        return \implode('\\\\', $pieces);
     }
 }
