@@ -262,6 +262,31 @@ CONTENT
 CONTENT
         ];
 
+        yield [
+            '<?php \'foo\';',
+            '<?php \'\' . \'foo\';',
+        ];
+
+        yield [
+            '<?php \'foo\';',
+            '<?php \'foo\' . \'\';',
+        ];
+
+        yield [
+            '<?php "foo";',
+            '<?php "" . \'foo\';',
+        ];
+
+        yield [
+            '<?php "foo";',
+            '<?php \'foo\' . "";',
+        ];
+
+        yield [
+            '<?php \'\';',
+            '<?php \'\' . \'\';',
+        ];
+
         for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {
             $char = \chr($bytevalue);
             yield [
