@@ -158,6 +158,11 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
     {
         $currentBorder = $content[0];
         $content = \substr($content, 1, -1);
+
+        if ($content === '') {
+            return '';
+        }
+
         if ($currentBorder === '"') {
             if ($escapeDollarWhenIsLastCharacter && $content[\strlen($content) - 1] === '$') {
                 $content = \substr($content, 0, -1) . '\$';
