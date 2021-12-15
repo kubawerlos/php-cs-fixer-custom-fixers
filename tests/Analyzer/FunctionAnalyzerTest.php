@@ -144,7 +144,7 @@ final class FunctionAnalyzerTest extends TestCase
                 1,
             ];
 
-            yield ' multiple arguments with trailing comma' => [
+            yield 'multiple arguments with trailing comma' => [
                 [
                     new ArgumentAnalysis(3, 3, true),
                     new ArgumentAnalysis(6, 6, true),
