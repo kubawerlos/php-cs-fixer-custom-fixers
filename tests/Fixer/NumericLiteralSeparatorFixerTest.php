@@ -22,6 +22,11 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
 {
+    public function testIsRisky(): void
+    {
+        self::assertFalse($this->fixer->isRisky());
+    }
+
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
