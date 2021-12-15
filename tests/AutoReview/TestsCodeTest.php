@@ -38,9 +38,12 @@ final class TestsCodeTest extends TestCase
 
         foreach ($this->getMethods($className, \ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
             self::assertTrue(
-                \strpos($reflectionMethod->getName(), 'test') === 0
-                    || Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()) === 1,
-                'Wrong name: ' . $reflectionMethod->getName()
+                \strpos($reflectionMethod->getName(), 'test') === 0 || Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()) === 1,
+                \sprintf(
+                    'Data provider "%s" in class "%s" is not correctly named.',
+                    $reflectionMethod->getName(),
+                    $className
+                )
             );
         }
     }
@@ -57,7 +60,14 @@ final class TestsCodeTest extends TestCase
         }
 
         foreach ($dataProviders as $dataProvider) {
-            self::assertTrue($dataProvider->isStatic());
+            self::assertTrue(
+                $dataProvider->isStatic(),
+                \sprintf(
+                    'Data provider "%s" in class "%s" is not static.',
+                    $dataProvider->getName(),
+                    $className
+                )
+            );
         }
     }
 
