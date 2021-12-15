@@ -278,11 +278,11 @@ CONTENT
 
         for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {
             $char = \chr($bytevalue);
-            yield \sprintf('single quoted string with character with codepoint %s', $bytevalue) => [
+            yield \sprintf('single quoted string with character with codepoint %d', $bytevalue) => [
                 \sprintf('$bytevalue%d = "a_%sb_c"', $bytevalue, \addcslashes($char, '"$')),
                 \sprintf('$bytevalue%d = \'a_%sb\' . "_c"', $bytevalue, \addcslashes($char, "'")),
             ];
-            yield \sprintf('double quoted string with character with codepoint %s', $bytevalue) => [
+            yield \sprintf('double quoted string with character with codepoint %d', $bytevalue) => [
                 \sprintf('$bytevalue%d = "a_%sb_c"', $bytevalue, \addcslashes($char, '"$')),
                 \sprintf('$bytevalue%d = "a_%sb" . \'_c\'', $bytevalue, \addcslashes($char, '"$')),
             ];
