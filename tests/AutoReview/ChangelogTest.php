@@ -36,7 +36,7 @@ final class ChangelogTest extends TestCase
     public function testFixerDeprecatingIsListed(FixerInterface $fixer): void
     {
         if (!$fixer instanceof DeprecatedFixerInterface) {
-            $this->addToAssertionCount(1);
+            $this->expectNotToPerformAssertions();
 
             return;
         }
