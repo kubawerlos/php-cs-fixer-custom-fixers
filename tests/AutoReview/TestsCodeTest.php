@@ -11,11 +11,10 @@
 
 namespace Tests\AutoReview;
 
-use PhpCsFixer\DocBlock\DocBlock;
+use PhpCsFixer\Preg;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Tests\AssertRegExpTrait;
 
 /**
  * @internal
@@ -24,57 +23,117 @@ use Tests\AssertRegExpTrait;
  */
 final class TestsCodeTest extends TestCase
 {
-    use AssertRegExpTrait;
-
     /**
-     * @dataProvider provideDataProviderCases
+     * @dataProvider provideTestClassCases
      */
-    public function testDataProviderName(string $dataProviderName, string $className): void
+    public function testClassContainsCorrectMethods(string $className): void
     {
-        self::assertRegExp('/^provide[A-Z]\S+Cases$/', $dataProviderName, \sprintf(
-            'Data provider "%s" in class "%s" is not correctly named.',
-            $dataProviderName,
-            $className
-        ));
+        if ((new \ReflectionClass($className))->isTrait()) {
+            foreach ($this->getMethods($className) as $reflectionMethod) {
+                self::assertStringStartsWith('assert', $reflectionMethod->getName());
+            }
+
+            return;
+        }
+
+        foreach ($this->getMethods($className, \ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
+            self::assertTrue(
+                \strpos($reflectionMethod->getName(), 'test') === 0
+                    || Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()) === 1,
+                'Wrong name: ' . $reflectionMethod->getName()
+            );
+        }
     }
 
     /**
-     * @dataProvider provideDataProviderCases
+     * @dataProvider provideTestClassCases
      */
-    public function testDataProviderReturnType(string $dataProviderName, string $className): void
+    public function testDataProvidersAreStatic(string $className): void
     {
-        $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
+        $dataProviders = $this->getDataProviders($className);
 
-        $reflectionType = $reflectionMethod->getReturnType();
-        \assert($reflectionType instanceof \ReflectionNamedType);
+        if ($dataProviders === []) {
+            $this->expectNotToPerformAssertions();
+        }
 
-        self::assertSame('iterable', $reflectionType->getName());
+        foreach ($dataProviders as $dataProvider) {
+            self::assertTrue($dataProvider->isStatic());
+        }
     }
 
     /**
-     * @dataProvider provideDataProviderCases
+     * @dataProvider provideTestClassCases
      */
-    public function testDataProviderIsStatic(string $dataProviderName, string $className): void
+    public function testDataProvidersKeys(string $className): void
     {
-        $reflectionMethod = new \ReflectionMethod($className, $dataProviderName);
+        $dataProviders = $this->getDataProviders($className);
 
-        self::assertTrue($reflectionMethod->isStatic());
+        if ($dataProviders === []) {
+            $this->expectNotToPerformAssertions();
+        }
+
+        foreach ($dataProviders as $dataProvider) {
+            $dataSet = $dataProvider->invoke(null);
+            \assert(\is_array($dataSet) || $dataSet instanceof \Generator);
+
+            if ($dataSet instanceof \Generator) {
+                $dataSet = \iterator_to_array($dataSet);
+            }
+
+            foreach (\array_keys($dataSet) as $key) {
+                if (\is_int($key)) {
+                    $this->addToAssertionCount(1);
+                } else {
+                    self::assertSame(\trim($key), $key);
+                    self::assertStringNotContainsString('  ', $key);
+                    self::assertStringNotContainsString('"', $key);
+                }
+            }
+        }
+    }
+
+    /**
+     * @return array<\ReflectionMethod>
+     */
+    private function getDataProviders(string $className): array
+    {
+        return \array_filter(
+            $this->getMethods($className, \ReflectionMethod::IS_PUBLIC),
+            static function (\ReflectionMethod $reflectionMethod): bool {
+                return \strpos($reflectionMethod->getName(), 'provide') === 0;
+            }
+        );
+    }
+
+    /**
+     * @return array<\ReflectionMethod>
+     */
+    private function getMethods(string $className, ?int $methodFilter = null): array
+    {
+        $reflectionClass = new \ReflectionClass($className);
+
+        return \array_filter(
+            $reflectionClass->getMethods($methodFilter),
+            static function (\ReflectionMethod $reflectionMethod) use ($reflectionClass): bool {
+                return $reflectionMethod->getFileName() === $reflectionClass->getFileName();
+            }
+        );
     }
 
     /**
      * @return iterable<string, array{string, string}>
      */
-    public static function provideDataProviderCases(): iterable
+    public static function provideTestClassCases(): iterable
     {
-        static $dataProviders;
+        static $tests;
 
-        if ($dataProviders === null) {
+        if ($tests === null) {
             $finder = Finder::create()
                 ->files()
                 ->name('*.php')
                 ->in(__DIR__ . '/..');
 
-            $dataProviders = [];
+            $tests = [];
 
             /** @var SplFileInfo $file */
             foreach ($finder as $file) {
@@ -84,42 +143,10 @@ final class TestsCodeTest extends TestCase
                 }
 
                 $className .= '\\' . $file->getBasename('.php');
-                foreach (self::getDataProviderMethodNames($className) as $dataProviderName) {
-                    $dataProviders[\sprintf('%s::%s', $className, $dataProviderName)] = [$dataProviderName, $className];
-                }
+                $tests[$className] = [$className];
             }
         }
 
-        foreach ($dataProviders as $name => $data) {
-            yield $name => $data;
-        }
-    }
-
-    /**
-     * @return array<string>
-     */
-    private static function getDataProviderMethodNames(string $className): array
-    {
-        $reflectionClass = new \ReflectionClass($className);
-
-        $dataProviderMethodNames = [];
-
-        foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-            $docComment = $method->getDocComment();
-            if ($docComment === false) {
-                continue;
-            }
-
-            $docBlock = new DocBlock($docComment);
-            $dataProviderAnnotations = $docBlock->getAnnotationsOfType('dataProvider');
-
-            foreach ($dataProviderAnnotations as $dataProviderAnnotation) {
-                if (\preg_match('/@dataProvider\s+(?P<methodName>\w+)/', $dataProviderAnnotation->getContent(), $matches) === 1) {
-                    $dataProviderMethodNames[] = $matches['methodName'];
-                }
-            }
-        }
-
-        return \array_unique($dataProviderMethodNames);
+        return $tests;
     }
 }

@@ -73,7 +73,7 @@ $bar = new Logger();
 ',
         ];
 
-        yield 'remove PHPDoc when variable name is different in "for" loop' => [
+        yield 'remove PHPDoc when variable name is different in for loop' => [
             '<?php
 for ($i = 0; $i < 100; $i++) {}
 ',
@@ -83,12 +83,12 @@ for ($i = 0; $i < 100; $i++) {}
 ',
         ];
 
-        yield 'keep correct PHPDoc for "for" loop' => ['<?php
+        yield 'keep correct PHPDoc for for loop' => ['<?php
 /** @var int $i */
 for ($i = 0; $i < 100; $i++) {}
 '];
 
-        yield 'remove PHPDoc when variable name is different in "foreach" loop' => [
+        yield 'remove PHPDoc when variable name is different in foreach loop' => [
             '<?php
 foreach ($foo as $v) {}
 ',
@@ -98,17 +98,17 @@ foreach ($foo as $v) {}
 ',
         ];
 
-        yield 'keep correct PHPDoc for array in "foreach" loop' => ['<?php
+        yield 'keep correct PHPDoc for array in foreach loop' => ['<?php
 /** @var int[] $foo */
 foreach ($foo as $bar) {}
 ',
         ];
-        yield 'keep correct PHPDoc for element in "foreach" loop' => ['<?php
+        yield 'keep correct PHPDoc for element in foreach loop' => ['<?php
 /** @var int $value */
 foreach ($foo as $value) {}
 '];
 
-        yield 'remove PHPDoc when variable name is different in "if" condition' => [
+        yield 'remove PHPDoc when variable name is different in if condition' => [
             '<?php
 if (($v = getValue()) !== null) {}
 ',
@@ -118,12 +118,12 @@ if (($v = getValue()) !== null) {}
 ',
         ];
 
-        yield 'keep correct PHPDoc for "if" condition' => ['<?php
+        yield 'keep correct PHPDoc for if condition' => ['<?php
 /** @var int $value */
 if (($value = getValue()) !== null) {}
 '];
 
-        yield 'remove PHPDoc when variable name is different in "switch" condition' => [
+        yield 'remove PHPDoc when variable name is different in switch condition' => [
             '<?php
 switch ($v = getValue()) { default: break; }
 ',
@@ -133,12 +133,12 @@ switch ($v = getValue()) { default: break; }
 ',
         ];
 
-        yield 'keep correct PHPDoc for "switch" condition' => ['<?php
+        yield 'keep correct PHPDoc for switch condition' => ['<?php
 /** @var int $value */
 switch ($value = getValue()) { default: break; }
 '];
 
-        yield 'remove PHPDoc when variable name is different in "while" loop' => [
+        yield 'remove PHPDoc when variable name is different in while loop' => [
             '<?php
 while ($i < 0) { $i++; }
 ',
@@ -148,7 +148,7 @@ while ($i < 0) { $i++; }
 ',
         ];
 
-        yield 'keep correct PHPDoc for "while" loop' => ['<?php
+        yield 'keep correct PHPDoc for while loop' => ['<?php
 /** @var int $index */
 while ($index < 0) { $i++; }
 ',
@@ -170,7 +170,7 @@ $bar = new Logger();
 ',
         ];
 
-        yield 'remove PHPDoc from before "return"' => [
+        yield 'remove PHPDoc from before return' => [
             '<?php
 return true;
 ',

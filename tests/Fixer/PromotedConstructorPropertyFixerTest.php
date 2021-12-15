@@ -442,7 +442,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
         ];
 
         foreach (['array', 'bool', 'int', 'float', 'string', 'Bar', 'Bar\\Baz', '?string', 'self'] as $type) {
-            yield \sprintf('promote when type is "%s"', $type) => [
+            yield \sprintf('promote when type is %s', $type) => [
                 \sprintf('<?php class Foo {
                     public function __construct(
                         private %s $x,
