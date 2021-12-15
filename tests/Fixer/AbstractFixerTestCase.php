@@ -56,7 +56,7 @@ abstract class AbstractFixerTestCase extends TestCase
     final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void
     {
         if (!$this->fixer->isRisky()) {
-            $this->addToAssertionCount(1);
+            $this->expectNotToPerformAssertions();
 
             return;
         }
@@ -70,7 +70,7 @@ abstract class AbstractFixerTestCase extends TestCase
     final public function testFixerDefinitionRiskyDescriptionDoesNotEndWithDot(): void
     {
         if (!$this->fixer->isRisky()) {
-            $this->addToAssertionCount(1);
+            $this->expectNotToPerformAssertions();
 
             return;
         }
