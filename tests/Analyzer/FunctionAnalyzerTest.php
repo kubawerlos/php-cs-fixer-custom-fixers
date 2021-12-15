@@ -39,8 +39,8 @@ final class FunctionAnalyzerTest extends TestCase
      */
     public static function provideForNotFunctionCases(): iterable
     {
-        yield ['<?php $a;', 2];
-        yield ['<?php foo + bar;', 1];
+        yield 'variable' => ['<?php $a;', 2];
+        yield 'constant' => ['<?php foo + bar;', 1];
     }
 
     /**

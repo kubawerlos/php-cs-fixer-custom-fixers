@@ -85,7 +85,7 @@ final class SrcCodeTest extends TestCase
     public static function provideFixerCases(): iterable
     {
         foreach (new Fixers() as $fixer) {
-            yield [$fixer];
+            yield \get_class($fixer) => [$fixer];
         }
     }
 
@@ -154,8 +154,9 @@ final class SrcCodeTest extends TestCase
             if ($file->getRelativePath() !== '') {
                 $namespace .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
             }
+            $className = $namespace . '\\' . $file->getBasename('.php');
 
-            yield [$namespace . '\\' . $file->getBasename('.php')];
+            yield $className => [$className];
         }
     }
 }

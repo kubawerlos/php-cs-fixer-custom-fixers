@@ -5,6 +5,8 @@
          cacheResult='false'
          colors='true'
          executionOrder='default'
+         failOnRisky='true'
+         failOnWarning='true'
          forceCoversAnnotation='true'
 >
 

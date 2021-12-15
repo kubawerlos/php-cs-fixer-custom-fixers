@@ -51,32 +51,32 @@ final class ArrayAnalyzerTest extends TestCase
      */
     public static function provideGettingArrayElementsCases(): iterable
     {
-        yield [
+        yield 'empty array' => [
             [],
             '<?php $a = [];',
         ];
 
-        yield [
+        yield 'single element without index' => [
             [new ArrayElementAnalysis(null, null, 6, 6)],
             '<?php $a = [42];',
         ];
 
-        yield [
+        yield 'single element with index' => [
             [new ArrayElementAnalysis(6, 6, 10, 10)],
             '<?php $a = [1 => 42];',
         ];
 
-        yield [
+        yield 'single element with index and trailing comma' => [
             [new ArrayElementAnalysis(6, 6, 10, 10)],
             '<?php $a = [1 => 42,];',
         ];
 
-        yield [
+        yield 'long syntax array' => [
             [new ArrayElementAnalysis(7, 7, 11, 11)],
             '<?php $a = array(4 => 42);',
         ];
 
-        yield [
+        yield 'multiline array' => [
             [
                 new ArrayElementAnalysis(7, 7, 11, 11),
                 new ArrayElementAnalysis(14, 14, 18, 18),
@@ -91,7 +91,7 @@ final class ArrayAnalyzerTest extends TestCase
             ];',
         ];
 
-        yield [
+        yield 'expressions as keys' => [
             [
                 new ArrayElementAnalysis(7, 13, 17, 25),
                 new ArrayElementAnalysis(28, 34, 38, 49),
@@ -102,7 +102,7 @@ final class ArrayAnalyzerTest extends TestCase
             ];',
         ];
 
-        yield [
+        yield 'mixed short and long syntax' => [
             [
                 new ArrayElementAnalysis(7, 7, 11, 19),
                 new ArrayElementAnalysis(22, 22, 26, 35),
@@ -113,7 +113,7 @@ final class ArrayAnalyzerTest extends TestCase
             ];',
         ];
 
-        yield [
+        yield 'values having commas' => [
             [
                 new ArrayElementAnalysis(7, 7, 11, 17),
                 new ArrayElementAnalysis(20, 20, 24, 50),
@@ -124,7 +124,7 @@ final class ArrayAnalyzerTest extends TestCase
             ];',
         ];
 
-        yield [
+        yield 'key and value surrounded by comments in single-line array' => [
             [
                 new ArrayElementAnalysis(9, 15, 23, 29),
             ],
@@ -133,7 +133,7 @@ final class ArrayAnalyzerTest extends TestCase
             ];',
         ];
 
-        yield [
+        yield 'key and value surrounded by comments in multi-line array' => [
             [
                 new ArrayElementAnalysis(9, 9, 13, 13),
                 new ArrayElementAnalysis(18, 18, 22, 26),
@@ -149,7 +149,7 @@ final class ArrayAnalyzerTest extends TestCase
             ];',
         ];
 
-        yield [
+        yield 'expressions not wrapped in parenthesis as keys' => [
             [
                 new ArrayElementAnalysis(7, 11, 15, 19),
                 new ArrayElementAnalysis(22, 26, 30, 34),
@@ -161,7 +161,7 @@ final class ArrayAnalyzerTest extends TestCase
             ',
         ];
 
-        yield [
+        yield 'arrays as values' => [
             [
                 new ArrayElementAnalysis(null, null, 7, 16),
                 new ArrayElementAnalysis(null, null, 19, 28),

@@ -91,13 +91,17 @@ final class TestsCodeTest extends TestCase
             }
 
             foreach (\array_keys($dataSet) as $key) {
-                if (\is_int($key)) {
-                    $this->addToAssertionCount(1);
-                } else {
-                    self::assertSame(\trim($key), $key);
-                    self::assertStringNotContainsString('  ', $key);
-                    self::assertStringNotContainsString('"', $key);
+                if (!\is_string($key)) {
+                    self::markTestIncomplete(\sprintf(
+                        'Data provider "%s" in class "%s" has non-string keys.',
+                        $dataProvider->getName(),
+                        $className
+                    ));
                 }
+                self::assertIsString($key);
+                self::assertSame(\trim($key), $key);
+                self::assertStringNotContainsString('  ', $key);
+                self::assertStringNotContainsString('"', $key);
             }
         }
     }
