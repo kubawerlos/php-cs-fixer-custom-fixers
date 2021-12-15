@@ -41,8 +41,8 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
             $this->expectNotToPerformAssertions();
         } else {
             self::assertSame(
-                eval(\str_replace('<?php', 'return', $expected)),
-                eval(\str_replace('<?php', 'return', $input))
+                eval('return ' . $expected . ';'),
+                eval('return ' . $input . ';')
             );
         }
     }
@@ -54,7 +54,11 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->doTest($expected, $input, $configuration);
+        $this->doTest(
+            '<?php ' . $expected . ';',
+            $input === null ? null : ('<?php ' . $input . ';'),
+            $configuration
+        );
     }
 
     /**
@@ -62,240 +66,225 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield ['<?php $foo. "bar";'];
-        yield ['<?php "foo" .$bar;'];
+        yield 'non-string on left side' => ['$foo. "bar"'];
+        yield 'non-string on right side' => ['"foo" .$bar'];
+        yield 'linebreak before concatenation' => ["'foo'\n.'bar'"];
+        yield 'linebreak after concatenation' => ["'foo'.\n'bar'"];
+        yield 'double slashes comment between strings' => ["'foo' // comment\n    . 'bar'"];
+        yield 'PHPDoc comment between strings' => ['"foo"/** comment */. "bar"'];
+        yield 'multiline comment between strings' => ["'foo'/* comment\n    */. 'bar'"];
 
-        yield [
-            '<?php "foobar";',
-            '<?php "foo".\'bar\';',
+        yield 'two single quoted strings' => [
+            "'foobar'",
+            "'foo' . 'bar'",
         ];
 
-        yield [
-            '<?php "foobar";',
-            '<?php "foo" . \'bar\';',
+        yield 'two double quoted strings' => [
+            '"foobar"',
+            '"foo" . "bar"',
         ];
 
-        yield [
-            '<?php "foobar";',
-            '<?php \'foo\' . "bar";',
+        yield 'single and double quoted strings with concatenation with spaces' => [
+            '"foobar"',
+            '\'foo\' . "bar"',
         ];
 
-        yield ['<?php "foo"
-                      . "bar";'];
-
-        yield ['<?php "foo" .
-                      "bar";'];
-
-        yield ['<?php "foo" // comment
-                      . "bar";'];
-
-        yield ['<?php "foo"/* comment
-                      */. "bar";'];
-
-        yield [
-            '<?php "foo"/* comment */. "bar";',
+        yield 'double and single quoted strings with concatenation without spaces' => [
+            '"foobar"',
+            '"foo".\'bar\'',
         ];
 
-        yield [
-            '<?php "foobar";',
-            '<?php "foo" . "bar";',
+        yield 'double and single quoted strings with concatenation with spaces' => [
+            '"foobar"',
+            '"foo" . \'bar\'',
         ];
 
-        yield [
-            "<?php 'foobar';",
-            "<?php 'foo' . 'bar';",
+        yield 'two binary strings' => [
+            'b"foobar"',
+            'b"foo" . b"bar"',
         ];
 
-        yield [
-            '<?php b"foobar";',
-            '<?php b"foo" . "bar";',
+        yield 'binary string and non-binary string' => [
+            'b"foobar"',
+            'b"foo" . "bar"',
         ];
 
-        yield [
-            '<?php B"foobar";',
-            '<?php B"foo" . "bar";',
+        yield 'non-binary string and binary string' => [
+            '"foobar"',
+            '"foo" . B"bar"',
         ];
 
-        yield [
-            '<?php "foobar";',
-            '<?php "foo" . B"bar";',
+        yield 'binary string with uppercase B and non-binary string' => [
+            'B"foobar"',
+            'B"foo" . "bar"',
         ];
 
-        yield [
-            '<?php b"foobar";',
-            '<?php b"foo" . b"bar";',
+        yield 'multiple concatenations' => [
+            '"foobarbazqux"',
+            '"foo" . "bar" . "baz" . "qux"',
         ];
 
-        yield [
-            '<?php "foobarbazqux";',
-            '<?php "foo" . "bar" . "baz" . "qux";',
+        yield 'strings with non-ascii characters' => [
+            'b"你好世界"',
+            'b"你好" . b"世界"',
         ];
 
-        yield [
-            '<?php b"你好世界";',
-            '<?php b"你好" . b"世界";',
-        ];
-
-        yield [
-            '<?php
-                $a = "a"
-                   . "a";
-                $b = "b" .
-                     "b";
-                $c = $c . "c";
-                $d = "d" . $d;
-                $e = "ee";
-                $f = "ff";
+        yield 'multiple expressions' => [
+            '"ab";
+             $c . "d";
+             "f"/* f */ . "g";
+             "h" . $i;
+             "j"./** k */"l";
             ',
-            '<?php
-                $a = "a"
-                   . "a";
-                $b = "b" .
-                     "b";
-                $c = $c . "c";
-                $d = "d" . $d;
-                $e = \'e\' . "e";
-                $f = "f" . "f";
+            '"a" . "b";
+             $c . "d";
+             "f"/* f */ . "g";
+             "h" . $i;
+             "j"./** k */"l";
             ',
         ];
 
-        yield [
-            '<?php
-                "ab";
-                $c . "d";
-                "f"/* f */ . "g";
-                "h" . $i;
-                "j"./** k */"l";
+        yield 'multiple assignment expressions' => [
+            '$a = "a"
+                . "a";
+             $b = "b" .
+                  "b";
+             $c = $c . "c";
+             $d = "d" . $d;
+             $e = "ee";
+             $f = "ff";
             ',
-            '<?php
-                "a" . "b";
-                $c . "d";
-                "f"/* f */ . "g";
-                "h" . $i;
-                "j"./** k */"l";
+            '$a = "a"
+                . "a";
+             $b = "b" .
+                  "b";
+             $c = $c . "c";
+             $d = "d" . $d;
+             $e = \'e\' . "e";
+             $f = "f" . "f";
             ',
         ];
 
-        yield [
-            '<?php "Foo  & Bar";',
-            '<?php "Foo " . " & Bar";',
-            ['allow_preventing_trailing_spaces' => true],
-        ];
-
-        yield [
-            '<?php "Foo
-                         & Bar";',
-            '<?php "Foo" . "
-                         & Bar";',
-            ['allow_preventing_trailing_spaces' => true],
-        ];
-
-        yield [
-            '<?php "Foo " . "
-                         & Bar";',
+        yield 'option to prevent trailing spaces' => [
+            '"Foo " . "
+                         & Bar"',
             null,
             ['allow_preventing_trailing_spaces' => true],
         ];
 
-        yield [
-            '<?php "My name is \$foo";',
-            '<?php "My name is $" . "foo";',
+        yield 'option to prevent trailing spaces without trailing spaces' => [
+            '"Foo
+                         & Bar"',
+            '"Foo" . "
+                         & Bar"',
+            ['allow_preventing_trailing_spaces' => true],
         ];
 
-        yield [
-            '<?php "My name is \$foo";',
-            '<?php "My name is $" . \'foo\';',
+        yield 'option to prevent trailing spaces with single line concatenation' => [
+            '"Foo  & Bar"',
+            '"Foo " . " & Bar"',
+            ['allow_preventing_trailing_spaces' => true],
         ];
 
-        yield [
-            '<?php "My name is \$foo";',
-            '<?php \'My name is $\' . "foo";',
+        yield 'dollar as last character in double quotes merged with double quotes' => [
+            '"My name is \$foo"',
+            '"My name is $" . "foo"',
         ];
 
-        yield [
-            '<?php \'My name is $foo\';',
-            '<?php \'My name is $\' . \'foo\';',
+        yield 'dollar as last character in double quotes merged with single quotes' => [
+            '"My name is \$foo"',
+            '"My name is $" . \'foo\'',
         ];
 
-        yield [
-            '<?php "one \$two \$three $";',
-            '<?php "one $" . "two $" . "three $";',
+        yield 'dollar as last character in single quotes merged with double quotes' => [
+            '"My name is \$foo"',
+            '\'My name is $\' . "foo"',
         ];
 
-        yield [
+        yield 'dollar as last character in single quotes merged with single quotes' => [
+            '\'My name is $foo\'',
+            '\'My name is $\' . \'foo\'',
+        ];
+
+        yield 'multiple dollars as last characters' => [
+            '"one \$two \$three $"',
+            '"one $" . "two $" . "three $"',
+        ];
+
+        yield 'escaped double quotes in single quote' => [
             <<<'CONTENT'
-<?php "\\\"Foo\\\"\n";
+"\\\"Foo\\\"\n"
 CONTENT
             ,
             <<<'CONTENT'
-<?php '\"Foo\"' . "\n";
+'\"Foo\"' . "\n"
 CONTENT
         ];
 
-        yield [
+        yield 'escaped double quotes with slash before in single quote' => [
             <<<'CONTENT'
-<?php "\\\"\Foo\\\\\"\n";
+"\\\"\Foo\\\\\"\n"
 CONTENT
             ,
             <<<'CONTENT'
-<?php '\"\Foo\\\"' . "\n";
+'\"\Foo\\\"' . "\n"
 CONTENT
         ];
 
-        yield [
+        yield 'double quotes in single quote with multiple slashes before' => [
             <<<'CONTENT'
-<?php "2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n";
+"2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n"
 CONTENT
             ,
             <<<'CONTENT'
-<?php '2 slashes: \\\", 3 slashes: \\\\\", 4 slashes: \\\\\\\";' . "\n";
+'2 slashes: \\\\", 3 slashes: \\\\\\", 4 slashes: \\\\\\\\";' . "\n"
 CONTENT
         ];
 
-        yield [
+        yield 'double quotes in single quote with multiple slashes before when last slash is not escaped' => [
             <<<'CONTENT'
-<?php "2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n";
+"2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n"
 CONTENT
             ,
             <<<'CONTENT'
-<?php '2 slashes: \\\\", 3 slashes: \\\\\\", 4 slashes: \\\\\\\\";' . "\n";
+'2 slashes: \\\", 3 slashes: \\\\\", 4 slashes: \\\\\\\";' . "\n"
 CONTENT
         ];
 
-        yield [
-            '<?php \'foo\';',
-            '<?php \'\' . \'foo\';',
+        yield 'empty single quoted string on left side' => [
+            '\'foo\'',
+            '\'\' . \'foo\'',
         ];
 
-        yield [
-            '<?php \'foo\';',
-            '<?php \'foo\' . \'\';',
+        yield 'empty single quoted string on right side' => [
+            '\'foo\'',
+            '\'foo\' . \'\'',
         ];
 
-        yield [
-            '<?php "foo";',
-            '<?php "" . \'foo\';',
+        yield 'empty double quoted string on left side' => [
+            '"foo"',
+            '"" . \'foo\'',
         ];
 
-        yield [
-            '<?php "foo";',
-            '<?php \'foo\' . "";',
+        yield 'empty double quoted string on right side' => [
+            '"foo"',
+            '\'foo\' . ""',
         ];
 
-        yield [
-            '<?php \'\';',
-            '<?php \'\' . \'\';',
+        yield 'two empty strings' => [
+            '\'\'',
+            '\'\' . \'\'',
         ];
 
         for ($bytevalue = 0; $bytevalue < 256; $bytevalue++) {
             $char = \chr($bytevalue);
-            yield [
-                \sprintf('<?php $bytevalue%d = "a_%sb_c";', $bytevalue, \addcslashes($char, '"$')),
-                \sprintf('<?php $bytevalue%d = \'a_%sb\' . "_c";', $bytevalue, \addcslashes($char, "'")),
+            yield \sprintf('single quoted string with character with codepoint %d', $bytevalue) => [
+                \sprintf('$bytevalue%d = "a_%sb_c"', $bytevalue, \addcslashes($char, '"$')),
+                \sprintf('$bytevalue%d = \'a_%sb\' . "_c"', $bytevalue, \addcslashes($char, "'")),
             ];
-            yield [
-                \sprintf('<?php $bytevalue%d = "a_%sb_c";', $bytevalue, \addcslashes($char, '"$')),
-                \sprintf('<?php $bytevalue%d = "a_%sb" . \'_c\';', $bytevalue, \addcslashes($char, '"$')),
+            yield \sprintf('double quoted string with character with codepoint %d', $bytevalue) => [
+                \sprintf('$bytevalue%d = "a_%sb_c"', $bytevalue, \addcslashes($char, '"$')),
+                \sprintf('$bytevalue%d = "a_%sb" . \'_c\'', $bytevalue, \addcslashes($char, '"$')),
             ];
         }
     }
