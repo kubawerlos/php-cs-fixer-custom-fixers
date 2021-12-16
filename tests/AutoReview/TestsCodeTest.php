@@ -15,6 +15,7 @@ use PhpCsFixer\Preg;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Tests\Fixer\AbstractFixerTestCase;
 
 /**
  * @internal
@@ -84,13 +85,9 @@ final class TestsCodeTest extends TestCase
 
         foreach ($dataProviders as $dataProvider) {
             $dataSet = $dataProvider->invoke(null);
-            \assert(\is_array($dataSet) || $dataSet instanceof \Generator);
+            \assert($dataSet instanceof \Iterator);
 
-            if ($dataSet instanceof \Generator) {
-                $dataSet = \iterator_to_array($dataSet);
-            }
-
-            foreach (\array_keys($dataSet) as $key) {
+            foreach (\array_keys(\iterator_to_array($dataSet)) as $key) {
                 if (!\is_string($key)) {
                     self::markTestIncomplete(\sprintf(
                         'Data provider "%s" in class "%s" has non-string keys.',
@@ -102,6 +99,48 @@ final class TestsCodeTest extends TestCase
                 self::assertSame(\trim($key), $key);
                 self::assertStringNotContainsString('  ', $key);
                 self::assertStringNotContainsString('"', $key);
+            }
+        }
+    }
+
+    /**
+     * @dataProvider provideTestClassCases
+     */
+    public function testDataProvidersValues(string $className): void
+    {
+        if (!\is_subclass_of($className, AbstractFixerTestCase::class)) {
+            $this->expectNotToPerformAssertions();
+
+            return;
+        }
+
+        $dataProviders = $this->getDataProviders($className);
+
+        foreach ($dataProviders as $dataProvider) {
+            $dataSet = $dataProvider->invoke(null);
+            \assert($dataSet instanceof \Iterator);
+            $dataSet = \iterator_to_array($dataSet);
+
+            $doNotChangeCases = [];
+            foreach ($dataSet as $value) {
+                if (\array_key_exists(1, $value) && $value[1] !== null) {
+                    continue;
+                }
+                $doNotChangeCases[] = $value[0];
+            }
+            foreach ($dataSet as $value) {
+                if (!\array_key_exists(1, $value) || $value[1] === null) {
+                    continue;
+                }
+                self::assertFalse(
+                    \in_array($value[0], $doNotChangeCases, true),
+                    \sprintf(
+                        "Expected value:\n%s\nis already tested if it is not changing, it does not need separate test case (%s::%s).",
+                        $value[0],
+                        $className,
+                        $dataProvider->getName()
+                    )
+                );
             }
         }
     }
@@ -159,6 +198,8 @@ final class TestsCodeTest extends TestCase
                 $className .= '\\' . $file->getBasename('.php');
                 $tests[$className] = [$className];
             }
+
+            $tests = new \ArrayIterator($tests);
         }
 
         return $tests;

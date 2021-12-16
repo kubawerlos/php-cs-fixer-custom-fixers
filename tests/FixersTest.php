@@ -15,7 +15,6 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -47,22 +46,20 @@ final class FixersTest extends TestCase
      */
     public static function provideFixerIsInCollectionCases(): iterable
     {
-        return \array_map(
-            static function (SplFileInfo $fileInfo): array {
-                $className = 'PhpCsFixerCustomFixers\\Fixer\\' . $fileInfo->getBasename('.php');
+        $finder = Finder::create()
+            ->files()
+            ->in(__DIR__ . '/../src/Fixer/')
+            ->notName('AbstractFixer.php')
+            ->notName('DeprecatingFixerInterface.php');
 
-                $fixer = new $className();
-                \assert($fixer instanceof FixerInterface);
+        foreach ($finder as $file) {
+            $className = 'PhpCsFixerCustomFixers\\Fixer\\' . $file->getBasename('.php');
 
-                return [$fixer];
-            },
-            \iterator_to_array(Finder::create()
-                ->files()
-                ->in(__DIR__ . '/../src/Fixer/')
-                ->notName('AbstractFixer.php')
-                ->notName('DeprecatingFixerInterface.php')
-                ->getIterator())
-        );
+            $fixer = new $className();
+            \assert($fixer instanceof FixerInterface);
+
+            yield $className => [$fixer];
+        }
     }
 
     /**
