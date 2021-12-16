@@ -52,17 +52,6 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield 'data provider correctly named' => [
-            '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider provideFooCases
-     */
-    public function testFoo() {}
-    public function provideFooCases() {}
-}',
-        ];
-
         yield 'data provider named with different casing' => [
             '<?php
 class FooTest extends TestCase {

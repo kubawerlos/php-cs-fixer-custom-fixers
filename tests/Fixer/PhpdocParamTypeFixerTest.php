@@ -39,14 +39,6 @@ final class PhpdocParamTypeFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
             /**
-             * @param mixed $foo
-             */
-             ',
-        ];
-
-        yield [
-            '<?php
-            /**
              * @param Foo
              */
              ',

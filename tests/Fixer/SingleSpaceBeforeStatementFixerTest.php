@@ -39,7 +39,6 @@ final class SingleSpaceBeforeStatementFixerTest extends AbstractFixerTestCase
         yield ['<?php $isNotFoo = !require "foo.php";'];
         yield ['<?php foo(new stdClass());'];
         yield ['<?php $content = @include "foo.php";'];
-        yield ['<?php $items = [new Item(), new Item()];'];
         yield ['<?php class Foo {public function bar() {}}'];
         yield ['<?php foo(
                           new Item()
