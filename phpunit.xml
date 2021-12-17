@@ -5,6 +5,8 @@
          cacheResult='false'
          colors='true'
          executionOrder='default'
+         failOnEmptyTestSuite='true'
+         failOnIncomplete='true'
          failOnRisky='true'
          failOnWarning='true'
          forceCoversAnnotation='true'

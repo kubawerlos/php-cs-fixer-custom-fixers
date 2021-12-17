@@ -87,14 +87,19 @@ final class TestsCodeTest extends TestCase
             $dataSet = $dataProvider->invoke(null);
             \assert($dataSet instanceof \Iterator);
 
+            $keyType = null;
             foreach (\array_keys(\iterator_to_array($dataSet)) as $key) {
-                if (!\is_string($key)) {
-                    self::markTestIncomplete(\sprintf(
-                        'Data provider "%s" in class "%s" has non-string keys.',
-                        $dataProvider->getName(),
-                        $className
-                    ));
+                // based on the type of first key determine what type should be for all keys
+                if ($keyType === null) {
+                    $keyType = \is_int($key) ? 'int' : 'string';
                 }
+
+                if (\is_int($key)) {
+                    self::assertSame('int', $keyType);
+                    continue;
+                }
+
+                self::assertSame('string', $keyType);
                 self::assertIsString($key);
                 self::assertSame(\trim($key), $key);
                 self::assertStringNotContainsString('  ', $key);
