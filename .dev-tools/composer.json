@@ -33,7 +33,7 @@
             "types-checker --autoloader=../vendor/autoload.php src ../src ../tests",
             "phpmd ../src text phpmd.xml",
             "phpstan analyse --no-progress",
-            "psalm --no-progress --shepherd"
+            "git checkout vendor/symfony/finder/Finder.php; psalm --no-progress --shepherd"
         ],
         "fix": [
             "@composer normalize --no-check-lock ../composer.json",
