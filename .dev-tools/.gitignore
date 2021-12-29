@@ -1,5 +1,1 @@
-!/vendor/
-/vendor/*
-!/vendor/symfony/
-/vendor/symfony/*
-!/vendor/symfony/finder/
+/vendor/

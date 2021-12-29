@@ -1,7 +1,7 @@
 {
     "require": {
         "php": "^8.1",
-        "ergebnis/composer-normalize": "^2.18.0",
+        "ergebnis/composer-normalize": "^2.22.0",
         "infection/infection": "^0.25.5",
         "kubawerlos/composer-smaller-lock": "^1.0.0",
         "kubawerlos/php-cs-fixer-config": "^3.6.0",
@@ -14,11 +14,20 @@
         "phpstan/phpstan-phpunit": "^1.0.0",
         "phpstan/phpstan-strict-rules": "^1.1.0",
         "squizlabs/php_codesniffer": "^3.6.2",
-        "vimeo/psalm": "^4.15.0"
+        "vimeo/psalm": "^4.16.1"
     },
     "autoload": {
         "psr-4": {
             "PhpCsFixerCustomFixers\\": "../src"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": false,
+            "ergebnis/composer-normalize": true,
+            "infection/extension-installer": false,
+            "kubawerlos/composer-smaller-lock": true,
+            "phpstan/extension-installer": true
         }
     },
     "scripts": {
@@ -33,7 +42,7 @@
             "types-checker --autoloader=../vendor/autoload.php src ../src ../tests",
             "phpmd ../src text phpmd.xml",
             "phpstan analyse --no-progress",
-            "git checkout vendor/symfony/finder/Finder.php; psalm --no-progress --shepherd"
+            "psalm --no-progress --shepherd"
         ],
         "fix": [
             "@composer normalize --no-check-lock ../composer.json",
