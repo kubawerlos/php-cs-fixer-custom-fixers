@@ -88,7 +88,6 @@ final class TokenRemover
         $contentWithoutTrailingSpaces = Preg::replace('/\h+$/', '', $tokens[$index]->getContent());
 
         $contentWithoutTrailingSpacesAndNewline = Preg::replace('/\R$/', '', $contentWithoutTrailingSpaces, 1);
-        \assert(\is_string($contentWithoutTrailingSpacesAndNewline));
 
         $tokens->ensureWhitespaceAtIndex($index, 0, $contentWithoutTrailingSpacesAndNewline);
 
@@ -100,7 +99,6 @@ final class TokenRemover
         $pattern = $wasNewlineRemoved ? '/^\h+/' : '/^\h*\R/';
 
         $newContent = Preg::replace($pattern, '', $tokens[$index]->getContent());
-        \assert(\is_string($newContent));
 
         $tokens->ensureWhitespaceAtIndex($index, 0, $newContent);
     }

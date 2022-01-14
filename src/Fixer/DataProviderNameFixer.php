@@ -132,7 +132,6 @@ class FooTest extends TestCase {
                 \sprintf('$1%s', $dataProviderNewName),
                 $tokens[$usageIndex]->getContent()
             );
-            \assert(\is_string($newCommentContent));
 
             $tokens[$usageIndex] = new Token([\T_DOC_COMMENT, $newCommentContent]);
         }
@@ -141,7 +140,6 @@ class FooTest extends TestCase {
     private function getProviderNameForTestName(string $name): string
     {
         $name = Preg::replace('/^test_*/i', '', $name);
-        \assert(\is_string($name));
 
         if ($this->prefix === '') {
             $name = \lcfirst($name);

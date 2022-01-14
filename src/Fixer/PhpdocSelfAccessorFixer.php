@@ -128,7 +128,6 @@ class Foo {
                     'self',
                     $type
                 );
-                \assert(\is_string($type));
 
                 $types[] = $type;
             }

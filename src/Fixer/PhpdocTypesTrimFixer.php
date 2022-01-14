@@ -120,7 +120,6 @@ function foo($x) {}
         $contentAfterTypes = \substr($content, $typeEndPosition);
 
         $trimmedContentTypes = Preg::replace('/\h*(&(?!\h*\$)|\|)\h*/', '$1', $contentTypes);
-        \assert(\is_string($trimmedContentTypes));
 
         return $contentBeforeTypes . $trimmedContentTypes . $contentAfterTypes;
     }

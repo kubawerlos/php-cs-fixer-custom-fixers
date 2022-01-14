@@ -122,7 +122,6 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
 
         if (\strpos($content, '/*') === 0) {
             $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', \PHP_EOL, $content);
-            \assert(\is_string($content));
         }
 
         return \ltrim($content, '#/');

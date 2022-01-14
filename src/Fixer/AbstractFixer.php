@@ -19,7 +19,6 @@ abstract class AbstractFixer implements FixerInterface
     final public static function name(): string
     {
         $name = Preg::replace('/(?<!^)(?=[A-Z])/', '_', \substr(static::class, 29, -5));
-        \assert(\is_string($name));
 
         return 'PhpCsFixerCustomFixers/' . \strtolower($name);
     }
