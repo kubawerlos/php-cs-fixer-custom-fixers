@@ -34,7 +34,7 @@ $x = getValue();
     }
 
     /**
-     * Must run before NativeFunctionInvocationFixer.
+     * Must run before NativeFunctionInvocationFixer, ReturnAssignmentFixer.
      */
     public function getPriority(): int
     {

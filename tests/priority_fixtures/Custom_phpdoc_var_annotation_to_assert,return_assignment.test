@@ -1,0 +1,17 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_var_annotation_to_assert": true, "return_assignment": true }
+--EXPECTED--
+<?php
+function foo() {
+    $x = 42;
+    assert(is_int($x));
+    return $x;
+}
+
+--INPUT--
+<?php
+function foo() {
+    /** @var int $x */
+    $x = 42;
+    return $x;
+}
