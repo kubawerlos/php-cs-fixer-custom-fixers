@@ -185,14 +185,13 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         $pieces = \array_map(
             static function (string $piece): string {
                 $piece = Preg::replace(
-                    [
-                        '/(?<=\\\\)"/',
-                        '/(?<!\\\\)"/',
-                    ],
-                    [
-                        '\\\\\"',
-                        '\\"',
-                    ],
+                    '/(?<=\\\\)"/',
+                    '\\\\\"',
+                    $piece
+                );
+                $piece = Preg::replace(
+                    '/(?<!\\\\)"/',
+                    '\\"',
                     $piece
                 );
                 \assert(\is_string($piece));
