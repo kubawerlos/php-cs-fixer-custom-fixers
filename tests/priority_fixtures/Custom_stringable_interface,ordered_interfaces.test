@@ -1,0 +1,13 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/stringable_interface": true, "ordered_interfaces": true }
+--EXPECTED--
+<?php class Foo implements \Stringable, Zzz
+{
+    public function __toString() { return "Foo"; }
+}
+
+--INPUT--
+<?php class Foo implements Zzz
+{
+    public function __toString() { return "Foo"; }
+}

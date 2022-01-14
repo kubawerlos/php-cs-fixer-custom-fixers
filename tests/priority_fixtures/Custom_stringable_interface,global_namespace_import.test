@@ -1,0 +1,18 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/stringable_interface": true, "global_namespace_import": true }
+--EXPECTED--
+<?php
+namespace Foo;
+use Stringable;
+class Bar implements Stringable
+{
+    public function __toString() { return "Foo"; }
+}
+
+--INPUT--
+<?php
+namespace Foo;
+class Bar
+{
+    public function __toString() { return "Foo"; }
+}

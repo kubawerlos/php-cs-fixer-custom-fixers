@@ -36,7 +36,7 @@ class Foo
     }
 
     /**
-     * Must run before ClassDefinitionFixer.
+     * Must run before ClassDefinitionFixer, GlobalNamespaceImportFixer, OrderedInterfacesFixer.
      */
     public function getPriority(): int
     {
