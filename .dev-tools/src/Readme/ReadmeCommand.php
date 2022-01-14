@@ -93,7 +93,7 @@ final class ReadmeCommand extends BaseCommand
             $this->badge(
                 'Mutation testing badge',
                 \sprintf('https://badge.stryker-mutator.io/github.com/%s/main', $this->composer()->name),
-                'https://stryker-mutator.github.io'
+                \sprintf('https://dashboard.stryker-mutator.io/reports/github.com/%s/main', $this->composer()->name)
             ),
             $this->badge(
                 'Psalm type coverage',
