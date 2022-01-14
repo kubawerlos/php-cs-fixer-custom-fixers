@@ -19,11 +19,17 @@
     </stubs>
 
     <issueHandlers>
+        <InvalidReturnType errorLevel='suppress' />
+        <InvalidReturnStatement errorLevel='suppress' />
+        <InvalidArgument errorLevel='suppress' />
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
         <MissingConstructor errorLevel='suppress' />
         <MoreSpecificImplementedParamType errorLevel='suppress' />
+        <PossiblyInvalidArgument errorLevel='suppress' />
+        <PossiblyInvalidCast errorLevel='suppress' />
         <PossiblyInvalidFunctionCall errorLevel='suppress' />
+        <PossiblyInvalidOperand errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />

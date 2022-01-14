@@ -189,14 +189,12 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                     '\\\\\"',
                     $piece
                 );
-                $piece = Preg::replace(
+
+                return Preg::replace(
                     '/(?<!\\\\)"/',
                     '\\"',
                     $piece
                 );
-                \assert(\is_string($piece));
-
-                return $piece;
             },
             $pieces
         );

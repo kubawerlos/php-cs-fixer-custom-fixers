@@ -203,7 +203,6 @@ var_dump($x);
         if ($tokens[$startIndex - 1]->isWhitespace()) {
             $startIndex--;
             $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $tokens[$startIndex]->getContent());
-            \assert(\is_string($prefix));
         }
         $codeToCommentOut = $prefix . \str_replace("\n", "\n//", $codeToCommentOut);
 

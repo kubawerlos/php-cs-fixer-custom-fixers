@@ -66,7 +66,6 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
                 '$1 $2',
                 $newContent
             );
-            \assert(\is_string($newContent));
 
             if ($newContent === $tokens[$index]->getContent()) {
                 continue;
