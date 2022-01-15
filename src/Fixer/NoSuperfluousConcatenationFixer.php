@@ -180,6 +180,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         // escape dollar sign
         $content = \str_replace('$', '\\$', $content);
 
+        // escape double quote
         return Preg::replace(
             '/(?<!\\\\)((\\\\{2})*)(\\\\)?"/',
             '$1\\\\$3$3"',
