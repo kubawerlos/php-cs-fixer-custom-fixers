@@ -180,25 +180,10 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         // escape dollar sign
         $content = \str_replace('$', '\\$', $content);
 
-        // escape double quote
-        $pieces = \explode('\\\\', $content);
-        $pieces = \array_map(
-            static function (string $piece): string {
-                $piece = Preg::replace(
-                    '/(?<=\\\\)"/',
-                    '\\\\\"',
-                    $piece
-                );
-
-                return Preg::replace(
-                    '/(?<!\\\\)"/',
-                    '\\"',
-                    $piece
-                );
-            },
-            $pieces
+        return Preg::replace(
+            '/(?<!\\\\)((\\\\{2})*)(\\\\)?"/',
+            '$1\\\\$3$3"',
+            $content
         );
-
-        return \implode('\\\\', $pieces);
     }
 }
