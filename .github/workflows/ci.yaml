@@ -41,6 +41,9 @@ jobs:
             php-version: '8.1'
             install-fixer-from-master-branch: true
             check-description: 'with PHP CS Fixer from master'
+          - os: ubuntu-latest
+            php-version: '8.2'
+            composer_flags: '--ignore-platform-reqs'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
