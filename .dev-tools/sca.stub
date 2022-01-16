@@ -1,18 +1,21 @@
 <?php
 
+namespace PhpCsFixer {
+    /**
+     * @method string replace()
+     */
+    class Preg {}
+}
+
 namespace PhpCsFixer\Fixer\Import {
     /**
      * @method void removeUseDeclaration(\PhpCsFixer\Tokenizer\Tokens $tokens, \PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis $useDeclaration)
      */
-    class NoUnusedImportsFixer
-    {
-    }
+    class NoUnusedImportsFixer {}
 }
 
 namespace PhpCsFixer\Tokenizer {
-    class Token
-    {
-    }
+    final class Token {}
 
     /**
      * @extends \SplFixedArray<Token>
@@ -20,17 +23,10 @@ namespace PhpCsFixer\Tokenizer {
      * @method Token offsetGet()
      * @method array<Token> toArray()
      */
-    class Tokens extends \SplFixedArray
-    {
-    }
+    class Tokens extends \SplFixedArray {}
 
-    class TokensAnalyzer
-    {
-        /**
-         * @return array<int, array{token: Token, type: string, classIndex: int}>
-         */
-        public function getClassyElements()
-        {
-        }
-    }
+    /**
+     * @method array<int, array{token: Token, type: string, classIndex: int}> getClassyElements()
+     */
+    class TokensAnalyzer {}
 }
