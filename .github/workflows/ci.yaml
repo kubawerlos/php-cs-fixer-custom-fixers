@@ -19,21 +19,28 @@ jobs:
       - run: composer analyse
 
   test:
+    name: PHP ${{ matrix.php-version }} on ${{ matrix.os }} ${{ matrix.check-description }}
     strategy:
       fail-fast: false
       matrix:
         os: [ macos-latest, ubuntu-latest, windows-latest ]
         php-version: [ '7.4', '8.1' ]
+        install-fixer-from-master-branch: [false]
         include:
           - os: ubuntu-latest
             php-version: '7.2'
             composer_flags: '--prefer-lowest'
+            check-description: 'with lowest dependencies'
           - os: ubuntu-latest
             php-version: '7.2'
           - os: ubuntu-latest
             php-version: '7.3'
           - os: ubuntu-latest
             php-version: '8.0'
+          - os: ubuntu-latest
+            php-version: '8.1'
+            install-fixer-from-master-branch: true
+            check-description: 'with PHP CS Fixer from master'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
@@ -56,6 +63,8 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+      - if: matrix.install-fixer-from-master-branch
+        run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer_flags }}
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
       - if: steps.coverage-driver.outputs.result != 'none'
