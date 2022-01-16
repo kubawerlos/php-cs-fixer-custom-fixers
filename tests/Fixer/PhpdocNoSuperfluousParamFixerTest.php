@@ -247,6 +247,16 @@ function bar($a) {}
 ',
         ];
 
+        yield [
+            '<?php
+/** first comment */
+/**
+ * @param callable(int): bool $checker
+ */
+function foo(callable $checker) {}
+',
+        ];
+
         foreach (['abstract', 'final', 'private', 'protected', 'public', 'static', '/* private */'] as $modifier) {
             yield [
                 \sprintf('<?php
