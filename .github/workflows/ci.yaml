@@ -34,6 +34,9 @@ jobs:
             php-version: '7.3'
           - os: ubuntu-latest
             php-version: '8.0'
+          - os: ubuntu-latest
+            php-version: '8.1'
+            install-fixer-from-master-branch: true
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
@@ -56,6 +59,8 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+      - if: matrix.install-fixer-from-master-branch
+        run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer_flags }}
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
       - if: steps.coverage-driver.outputs.result != 'none'
