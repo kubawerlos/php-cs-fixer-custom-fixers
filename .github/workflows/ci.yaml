@@ -25,6 +25,7 @@ jobs:
       matrix:
         os: [ macos-latest, ubuntu-latest, windows-latest ]
         php-version: [ '7.4', '8.1' ]
+        install-fixer-from-master-branch: [false]
         include:
           - os: ubuntu-latest
             php-version: '7.2'
