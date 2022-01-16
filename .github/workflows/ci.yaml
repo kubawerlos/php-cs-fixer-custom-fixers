@@ -43,6 +43,7 @@ jobs:
             check-description: 'with PHP CS Fixer from master'
           - os: ubuntu-latest
             php-version: '8.2'
+            composer_flags: '--ignore-platform-req'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
