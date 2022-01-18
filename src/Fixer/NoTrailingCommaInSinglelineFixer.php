@@ -1,0 +1,74 @@
+<?php declare(strict_types=1);
+
+/*
+ * This file is part of PHP CS Fixer: custom fixers.
+ *
+ * (c) 2018 Kuba Werłos
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace PhpCsFixerCustomFixers\Fixer;
+
+use PhpCsFixer\FixerDefinition\CodeSample;
+use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\CT;
+use PhpCsFixer\Tokenizer\Tokens;
+
+final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
+{
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        return new FixerDefinition(
+            'Trailing comma in the list on the same line as the end of the block must be removed.',
+            [
+                new CodeSample("<?php\n\$x = ['foo', 'bar', ];\n"),
+            ]
+        );
+    }
+
+    /**
+     * Must run after MethodArgumentSpaceFixer, TrailingCommaInMultilineFixer.
+     */
+    public function getPriority(): int
+    {
+        return -1;
+    }
+
+    public function isCandidate(Tokens $tokens): bool
+    {
+        return $tokens->isAnyTokenKindsFound([\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN, CT::T_DESTRUCTURING_SQUARE_BRACE_CLOSE, '(']);
+    }
+
+    public function isRisky(): bool
+    {
+        return false;
+    }
+
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        for ($index = $tokens->count() - 1; $index >= 0; $index--) {
+            if (!$tokens[$index]->equalsAny([')', [CT::T_ARRAY_SQUARE_BRACE_CLOSE], [CT::T_DESTRUCTURING_SQUARE_BRACE_CLOSE]])) {
+                continue;
+            }
+
+            $commaIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($commaIndex));
+
+            while ($tokens[$commaIndex]->equals(',')) {
+                if ($tokens->isPartialCodeMultiline($commaIndex, $index)) {
+                    break;
+                }
+
+                $tokens->removeLeadingWhitespace($commaIndex);
+                $tokens->removeTrailingWhitespace($commaIndex);
+                $tokens->clearAt($commaIndex);
+
+                $commaIndex = $tokens->getPrevMeaningfulToken($index);
+                \assert(\is_int($commaIndex));
+            }
+        }
+    }
+}

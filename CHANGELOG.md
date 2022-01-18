@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.7.0
+- Add NoTrailingCommaInSinglelineFixer
+-
 ## v3.6.0
 - Add IssetToArrayKeyExistsFixer
 - Add PhpdocVarAnnotationToAssertFixer
