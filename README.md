@@ -6,7 +6,7 @@
 ![Tests](https://img.shields.io/badge/tests-3322-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
-[![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
+[![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/main.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=main)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)](https://dashboard.stryker-mutator.io/reports/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
