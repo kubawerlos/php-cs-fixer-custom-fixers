@@ -8,7 +8,7 @@ on:
 
 jobs:
   analyse:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       PHP_CS_FIXER_IGNORE_ENV: 1
