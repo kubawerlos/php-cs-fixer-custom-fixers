@@ -60,7 +60,7 @@ jobs:
       - uses: actions/github-script@v5
         id: coverage-driver
         with:
-          script: 'return "${{ matrix.calculate-code-coverage" ? "pcov" : "none"'
+          script: 'return ${{ matrix..calculate-code-coverage }} ? "pcov" : "none"'
           result-encoding: string
       - uses: shivammathur/setup-php@v2
         with:
@@ -77,7 +77,7 @@ jobs:
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer_flags }}
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
-      - if: steps.matrix.calculate-code-coverage
+      - if: matrix.calculate-code-coverage
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
