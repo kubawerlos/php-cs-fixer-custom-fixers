@@ -27,6 +27,7 @@ jobs:
       matrix:
         os: [ macos-latest, ubuntu-latest, windows-latest ]
         php-version: [ '7.4', '8.1' ]
+        calculat-code-coverage: [false]
         install-fixer-from-master-branch: [false]
         include:
           - os: ubuntu-latest
@@ -39,6 +40,10 @@ jobs:
             php-version: '7.3'
           - os: ubuntu-latest
             php-version: '8.0'
+          - os: ubuntu-latest
+            php-version: '8.1'
+            calculate-code-coverage: true
+            description: 'with calculating code coverage'
           - os: ubuntu-latest
             php-version: '8.1'
             install-fixer-from-master-branch: true
@@ -55,7 +60,7 @@ jobs:
       - uses: actions/github-script@v5
         id: coverage-driver
         with:
-          script: 'return "${{ matrix.os }}" == "ubuntu-latest" && "${{ matrix.php-version }}" == "8.1" ? "pcov" : "none"'
+          script: 'return "${{ matrix.calculate-code-coverage" ? "pcov" : "none"'
           result-encoding: string
       - uses: shivammathur/setup-php@v2
         with:
@@ -72,7 +77,7 @@ jobs:
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer_flags }}
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
-      - if: steps.coverage-driver.outputs.result != 'none'
+      - if: steps.matrix.calculate-code-coverage
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
