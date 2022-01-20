@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   analyse:
@@ -21,7 +21,7 @@ jobs:
       - run: composer analyse
 
   test:
-    name: PHP ${{ matrix.php-version }} on ${{ matrix.os }} ${{ matrix.check-description }}
+    name: PHP ${{ matrix.php-version }} on ${{ matrix.os }} ${{ matrix.description }}
     strategy:
       fail-fast: false
       matrix:
@@ -32,7 +32,7 @@ jobs:
           - os: ubuntu-latest
             php-version: '7.2'
             composer_flags: '--prefer-lowest'
-            check-description: 'with lowest dependencies'
+            description: 'with lowest dependencies'
           - os: ubuntu-latest
             php-version: '7.2'
           - os: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
           - os: ubuntu-latest
             php-version: '8.1'
             install-fixer-from-master-branch: true
-            check-description: 'with PHP CS Fixer from master'
+            description: 'with PHP CS Fixer from master'
           - os: ubuntu-latest
             php-version: '8.2'
             composer_flags: '--ignore-platform-reqs'
