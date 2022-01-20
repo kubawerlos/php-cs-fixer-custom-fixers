@@ -44,15 +44,12 @@ return (new PhpCsFixer\Config())
     ->setUsingCache(false)
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->files()
-            ->in(__DIR__ . '/.dev-tools/src')
-            ->in(__DIR__ . '/src')
-            ->in(__DIR__ . '/tests')
+            ->ignoreDotFiles(false)
+            ->in(__DIR__)
             ->notName('php-cs-fixer.config.*.php')
             ->append([
                 __DIR__ . '/.dev-tools/build-infection-config',
                 __DIR__ . '/.dev-tools/readme',
-                __FILE__,
             ])
     )
     ->setRules($rules);
