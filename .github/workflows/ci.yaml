@@ -60,7 +60,7 @@ jobs:
       - uses: actions/github-script@v5
         id: coverage-driver
         with:
-          script: 'return ${{ matrix..calculate-code-coverage }} ? "pcov" : "none"'
+          script: 'return ${{ matrix.calculate-code-coverage }} ? "pcov" : "none"'
           result-encoding: string
       - uses: shivammathur/setup-php@v2
         with:
