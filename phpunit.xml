@@ -10,6 +10,7 @@
          failOnRisky='true'
          failOnWarning='true'
          forceCoversAnnotation='true'
+         verbose='true'
 >
 
     <php>
