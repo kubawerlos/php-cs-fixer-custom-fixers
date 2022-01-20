@@ -128,7 +128,7 @@ $x = getValue();
 
         $assertions = [];
         foreach ($types as $type) {
-            if ($type[0] === '?') {
+            if (\str_starts_with($type, '?')) {
                 $assertions['null'] = $this->getCodeForType('null', $variableName);
                 $type = \substr($type, 1);
             }
