@@ -76,7 +76,7 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
-      - if: steps.coverage-driver.outputs.result != 'none'
+      - if: matrix.coverage-driver != 'none'
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: composer infection
