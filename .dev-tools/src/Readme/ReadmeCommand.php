@@ -82,7 +82,7 @@ final class ReadmeCommand extends BaseCommand
             '',
             $this->badge(
                 'CI Status',
-                \sprintf('https://github.com/%s/workflows/CI/badge.svg?branch=main&event=push', $this->composer()->name),
+                \sprintf('https://github.com/%s/workflows/CI/badge.svg?branch=main', $this->composer()->name),
                 \sprintf('https://github.com/%s/actions', $this->composer()->name)
             ),
             $this->badge(
