@@ -25,33 +25,33 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macos, ubuntu, windows ]
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
         php-version: [ '7.4', '8.1' ]
         coverage-driver: [ none ]
         install-fixer-from-master-branch: [ false ]
         include:
-          - os: ubuntu
+          - os: ubuntu-latest
             php-version: '7.2'
             composer_flags: '--prefer-lowest'
             description: 'with lowest dependencies'
-          - os: ubuntu
+          - os: ubuntu-latest
             php-version: '7.2'
-          - os: ubuntu
+          - os: ubuntu-latest
             php-version: '7.3'
-          - os: ubuntu
+          - os: ubuntu-latest
             php-version: '8.0'
-          - os: ubuntu
+          - os: ubuntu-latest
             php-version: '8.1'
             coverage-driver: pcov
             description: 'with calculating code coverage'
-          - os: ubuntu
+          - os: ubuntu-latest
             php-version: '8.1'
             install-fixer-from-master-branch: true
             description: 'with PHP CS Fixer from master'
-          - os: ubuntu
+          - os: ubuntu-latest
             php-version: '8.2'
             composer_flags: '--ignore-platform-reqs'
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
       PHP_CS_FIXER_FUTURE_MODE: 1
