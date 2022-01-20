@@ -72,11 +72,11 @@ jobs:
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer_flags }}
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
-      - if: matrix.coverage-driver != 'none'
+      - if: matrix.coverage-driver == 'pcov'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
-      - if: matrix.coverage-driver != 'none'
+      - if: matrix.coverage-driver == 'pcov'
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: composer infection
