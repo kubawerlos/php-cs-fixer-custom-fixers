@@ -1,0 +1,20 @@
+--CONFIGURATION--
+{ "method_argument_space": {"on_multiline": "ensure_single_line"}, "PhpCsFixerCustomFixers/no_trailing_comma_in_singleline": true }
+--EXPECTED--
+<?php
+
+foo(1, 2, 3);
+
+function bar($x, $y, $x) {}
+
+--INPUT--
+<?php
+
+foo(1, 2,
+    3,
+);
+
+function bar($x,
+    $y,
+    $x,
+) {}

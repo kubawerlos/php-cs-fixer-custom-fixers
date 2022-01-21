@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3322-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3365-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -289,6 +289,14 @@ Configuration options:
  <?php
 -echo 'foo' . 'bar';
 +echo 'foobar';
+```
+
+#### NoTrailingCommaInSinglelineFixer
+Trailing comma in the list on the same line as the end of the block must be removed.
+```diff
+ <?php
+-$x = ['foo', 'bar', ];
++$x = ['foo', 'bar'];
 ```
 
 #### NoUselessCommentFixer

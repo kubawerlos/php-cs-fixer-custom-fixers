@@ -1,0 +1,19 @@
+--CONFIGURATION--
+{ "trailing_comma_in_multiline": true, "PhpCsFixerCustomFixers/no_trailing_comma_in_singleline": true }
+--EXPECTED--
+<?php
+$foo = [1, 2,
+        3, 4];
+$bar = [5, 6,
+        7, 8];
+$baz = [11, 12,
+        13, 14];
+
+--INPUT--
+<?php
+$foo = [1, 2,
+        3, 4];
+$bar = [5, 6,
+        7, 8,];
+$baz = [11, 12,
+        13, 14, ];

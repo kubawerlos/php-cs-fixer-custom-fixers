@@ -45,13 +45,13 @@ $foo = new Foo();
             '<?php
 /** @var \Foo $foo */
 $foo = new Foo();
-', ];
+'];
 
         yield 'keep correct PHPDoc with nullable' => [
             '<?php
 /** @var ?Foo $foo */
 $foo = new Foo();
-', ];
+'];
 
         yield 'remove PHPDoc when variable name is different' => [
             '<?php
