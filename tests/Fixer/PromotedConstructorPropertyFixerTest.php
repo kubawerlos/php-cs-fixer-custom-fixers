@@ -131,6 +131,16 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             }',
         ];
 
+        yield 'do not promote variable property' => [
+            '<?php class Foo {
+                private string $bar;
+                public function __construct(string $bar) {
+                    $this->$bar = $bar;
+                }
+            }
+            ',
+        ];
+
         yield 'var keywords are not promoted' => [
             '<?php class Foo {
                 public function __construct(public int $x) {

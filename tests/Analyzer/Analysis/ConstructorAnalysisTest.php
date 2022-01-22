@@ -149,5 +149,14 @@ final class ConstructorAnalysisTest extends TestCase
                 }
             }',
         ];
+
+        yield 'variable property assignment' => [
+            [],
+            '<?php class Foo {
+                public function __construct($x) {
+                    $this->$x = $x;
+                }
+            }',
+        ];
     }
 }
