@@ -78,7 +78,7 @@ class Foo {
     }
 
     /**
-     * Must run before BracesFixer, ClassAttributesSeparationFixer, ConstructorEmptyBracesFixer, MultilinePromotedPropertiesFixer, NoExtraBlankLinesFixer, NoUnusedImportsFixer.
+     * Must run before BracesFixer, ClassAttributesSeparationFixer, ConstructorEmptyBracesFixer, MultilinePromotedPropertiesFixer, NoExtraBlankLinesFixer.
      */
     public function getPriority(): int
     {
@@ -154,16 +154,16 @@ class Foo {
                 continue;
             }
 
-            $propertyVisibility = null;
+            $tokensToInsert = [new Token([\T_PUBLIC, 'public'])];
             if ($propertyIndex !== null) {
-                $propertyVisibility = $this->removePropertyAndReturnVisibility($tokens, $propertyIndex, $constructorParameterIndex);
+                $tokensToInsert = $this->removePropertyAndReturnTokensToInsert($tokens, $propertyIndex, $constructorParameterIndex);
             }
 
             $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
             $this->updateParameterSignature(
                 $tokens,
                 $constructorParameterIndex,
-                $propertyVisibility ?? new Token([\T_PUBLIC, 'public']),
+                $tokensToInsert,
                 \substr($propertyType, 0, 1) === '?'
             );
         }
@@ -293,49 +293,46 @@ class Foo {
         return $properties;
     }
 
-    private function removePropertyAndReturnVisibility(Tokens $tokens, int $propertyIndex, int $parameterIndex): ?Token
+    /**
+     * @return array<Token>
+     */
+    private function removePropertyAndReturnTokensToInsert(Tokens $tokens, int $propertyIndex, int $parameterIndex): array
     {
         $tokens[$parameterIndex] = $tokens[$propertyIndex];
 
+        $visibilityIndex = $tokens->getPrevTokenOfKind($propertyIndex, [[\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_VAR]]);
+        \assert(\is_int($visibilityIndex));
+
         $prevPropertyIndex = $this->getTokenOfKindSibling($tokens, -1, $propertyIndex, ['{', '}', ';', ',']);
+        $nextPropertyIndex = $this->getTokenOfKindSibling($tokens, 1, $propertyIndex, [';', ',']);
 
-        $propertyStartIndex = $tokens->getNextMeaningfulToken($prevPropertyIndex);
-        \assert(\is_int($propertyStartIndex));
-
-        $propertyEndIndex = $this->getTokenOfKindSibling($tokens, 1, $propertyIndex, [';', ',']);
-
-        $prevVisibilityIndex = $this->getTokenOfKindSibling($tokens, -1, $propertyIndex, ['}', ';']);
-
-        $visibilityIndex = $this->getTokenOfKindSibling($tokens, 1, $prevVisibilityIndex, [[\T_PRIVATE], [\T_PROTECTED], [\T_VARIABLE]]);
-
-        $visibilityToken = null;
-        if (!$tokens[$visibilityIndex]->isGivenKind(\T_VARIABLE)) {
-            $visibilityToken = $tokens[$visibilityIndex];
-        }
-
-        $prevPropertyStartIndex = $tokens->getPrevNonWhitespace($propertyStartIndex);
-        \assert(\is_int($prevPropertyStartIndex));
-
-        if ($tokens[$prevPropertyStartIndex]->isGivenKind(\T_DOC_COMMENT)) {
-            $propertyStartIndex = $prevPropertyStartIndex;
-        }
-
-        $removeFrom = $propertyStartIndex;
-        $removeTo = $propertyEndIndex;
+        $removeFrom = $tokens->getTokenNotOfKindSibling($prevPropertyIndex, 1, [[\T_WHITESPACE], [\T_COMMENT]]);
+        \assert(\is_int($removeFrom));
+        $removeTo = $nextPropertyIndex;
         if ($tokens[$prevPropertyIndex]->equals(',')) {
-            $removeFrom = $tokens->getPrevMeaningfulToken($propertyStartIndex);
+            $removeFrom = $prevPropertyIndex;
+            $removeTo = $propertyIndex;
+        } elseif ($tokens[$nextPropertyIndex]->equals(',')) {
+            $removeFrom = $tokens->getPrevMeaningfulToken($propertyIndex);
             \assert(\is_int($removeFrom));
-            $removeTo = $propertyEndIndex - 1;
-        } elseif ($tokens[$propertyEndIndex]->equals(',')) {
-            $removeFrom = $tokens->getNextMeaningfulToken($visibilityIndex);
-            \assert(\is_int($removeFrom));
-            $removeTo = $propertyEndIndex + 1;
+            $removeFrom++;
         }
+
+        $tokensToInsert = [];
+        for ($index = $removeFrom; $index <= $visibilityIndex - 1; $index++) {
+            $tokensToInsert[] = $tokens[$index];
+        }
+
+        $visibilityToken = $tokens[$visibilityIndex];
+        if ($tokens[$visibilityIndex]->isGivenKind(\T_VAR)) {
+            $visibilityToken = new Token([\T_PUBLIC, 'public']);
+        }
+        $tokensToInsert[] = $visibilityToken;
 
         $tokens->clearRange($removeFrom + 1, $removeTo);
         TokenRemover::removeWithLinesIfPossible($tokens, $removeFrom);
 
-        return $visibilityToken;
+        return $tokensToInsert;
     }
 
     /**
@@ -375,29 +372,32 @@ class Foo {
         TokenRemover::removeWithLinesIfPossible($tokens, $thisIndex);
     }
 
-    private function updateParameterSignature(Tokens $tokens, int $index, Token $visibilityToken, bool $makeTypeNullable): void
+    /**
+     * @param array<Token> $tokensToInsert
+     */
+    private function updateParameterSignature(Tokens $tokens, int $constructorParameterIndex, array $tokensToInsert, bool $makeTypeNullable): void
     {
-        $prevElementIndex = $tokens->getPrevTokenOfKind($index, ['(', ',', [CT::T_ATTRIBUTE_CLOSE]]);
+        $prevElementIndex = $tokens->getPrevTokenOfKind($constructorParameterIndex, ['(', ',', [CT::T_ATTRIBUTE_CLOSE]]);
         \assert(\is_int($prevElementIndex));
 
         $propertyStartIndex = $tokens->getNextMeaningfulToken($prevElementIndex);
         \assert(\is_int($propertyStartIndex));
 
-        $insertTokens = [];
-
-        if ($visibilityToken->isGivenKind(\T_PRIVATE)) {
-            $insertTokens[] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE, $visibilityToken->getContent()]);
-        } elseif ($visibilityToken->isGivenKind(\T_PROTECTED)) {
-            $insertTokens[] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, $visibilityToken->getContent()]);
-        } elseif ($visibilityToken->isGivenKind(\T_PUBLIC)) {
-            $insertTokens[] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, $visibilityToken->getContent()]);
+        foreach ($tokensToInsert as $index => $token) {
+            if ($token->isGivenKind(\T_PUBLIC)) {
+                $tokensToInsert[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, $token->getContent()]);
+            } elseif ($token->isGivenKind(\T_PROTECTED)) {
+                $tokensToInsert[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, $token->getContent()]);
+            } elseif ($token->isGivenKind(\T_PRIVATE)) {
+                $tokensToInsert[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE, $token->getContent()]);
+            }
         }
-        $insertTokens[] = new Token([\T_WHITESPACE, ' ']);
+        $tokensToInsert[] = new Token([\T_WHITESPACE, ' ']);
 
         if ($makeTypeNullable && !$tokens[$propertyStartIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
-            $insertTokens[] = new Token([CT::T_NULLABLE_TYPE, '?']);
+            $tokensToInsert[] = new Token([CT::T_NULLABLE_TYPE, '?']);
         }
 
-        $this->tokensToInsert[$propertyStartIndex] = $insertTokens;
+        $this->tokensToInsert[$propertyStartIndex] = $tokensToInsert;
     }
 }
