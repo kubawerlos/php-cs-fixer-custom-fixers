@@ -136,6 +136,9 @@ final class ConstructorAnalysis
         }
 
         $propertyIndex = $this->tokens->getPrevMeaningfulToken($assignmentIndex);
+        if (!$this->tokens[$propertyIndex]->isGivenKind(\T_STRING)) {
+            return null;
+        }
         \assert(\is_int($propertyIndex));
 
         $objectOperatorIndex = $this->tokens->getPrevMeaningfulToken($propertyIndex);
