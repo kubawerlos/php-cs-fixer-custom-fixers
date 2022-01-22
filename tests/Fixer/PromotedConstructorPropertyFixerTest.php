@@ -464,11 +464,13 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ];
         }
 
-        yield 'remove property PHPDoc when promoting' => [
+        yield 'carry over property PHPDoc when promoting' => [
             '<?php class Point {
                 public function __construct(
-                    public float $x = 0.0,
-                    public float $y = 0.0,
+                    /** @var float */
+                public float $x = 0.0,
+                    /** @var float */
+                public float $y = 0.0,
                 ) {
                 }
             }',
@@ -537,8 +539,10 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             '<?php
                 class Foo
                 {
-                    public function __construct(private string $x)
-                    {
+                    public function __construct(
+                        #[Attribute]
+                    private string $x
+                    ) {
                     }
                 }
             ',
@@ -547,9 +551,82 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                 {
                     #[Attribute]
                     private $x;
-                    public function __construct(string $x)
-                    {
+                    public function __construct(
+                        string $x
+                    ) {
                         $this->x = $x;
+                    }
+                }
+            ',
+        ];
+
+        yield 'promote with multiple attributes on property' => [
+            '<?php
+                class Foo
+                {
+                    public function __construct(
+                        #[Attribute1]
+                    #[Attribute2]
+                    #[Attribute3]
+                    private string $x
+                    ) {
+                    }
+                }
+            ',
+            '<?php
+                class Foo
+                {
+                    #[Attribute1]
+                    #[Attribute2]
+                    #[Attribute3]
+                    private $x;
+                    public function __construct(
+                        string $x
+                    ) {
+                        $this->x = $x;
+                    }
+                }
+            ',
+        ];
+
+        yield 'promote with multiple attributes on multiple properties' => [
+            '<?php
+                class Foo
+                {
+                    public function __construct(
+                        #[Attribute1]
+                    public string $x,
+                        #[Attribute2]
+                    #[Attribute3]
+                    #[Attribute4]
+                    protected string $y,
+                        #[Attribute5]
+                    #[Attribute6]
+                    private string $z,
+                    ) {
+                    }
+                }
+            ',
+            '<?php
+                class Foo
+                {
+                    #[Attribute1]
+                    public $x;
+                    #[Attribute2]
+                    #[Attribute3]
+                    #[Attribute4]
+                    protected string $y;
+                    #[Attribute5]
+                    #[Attribute6]
+                    private string $z;
+                    public function __construct(
+                        string $x,
+                        string $y,
+                        string $z,
+                    ) {
+                        $this->x = $x;
+                        $this->y = $y;
+                        $this->z = $z;
                     }
                 }
             ',
@@ -715,7 +792,10 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
              * @internal
              */
             class Foo {
-                public function __construct(private int $x) {
+                public function __construct(/**
+                 * @var int
+                 */
+                private int $x) {
                 }
             }
             ',
