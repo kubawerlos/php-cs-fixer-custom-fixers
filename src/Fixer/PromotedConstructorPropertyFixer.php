@@ -156,8 +156,11 @@ class Foo {
 
             $tokensToInsert = [new Token([\T_PUBLIC, 'public'])];
             if ($propertyIndex !== null) {
-                $tokensToInsert = $this->removePropertyAndReturnTokensToInsert($tokens, $propertyIndex, $constructorParameterIndex);
+                $tokensToInsert = $this->removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
             }
+
+            $assignedPropertyIndex = $tokens->getPrevTokenOfKind($constructorPromotableAssignments[$constructorParameterName], [[\T_STRING]]);
+            $tokens[$constructorParameterIndex] = new Token([\T_VARIABLE, '$' . $tokens[$assignedPropertyIndex]->getContent()]);
 
             $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
             $this->updateParameterSignature(
@@ -296,10 +299,8 @@ class Foo {
     /**
      * @return array<Token>
      */
-    private function removePropertyAndReturnTokensToInsert(Tokens $tokens, int $propertyIndex, int $parameterIndex): array
+    private function removePropertyAndReturnTokensToInsert(Tokens $tokens, int $propertyIndex): array
     {
-        $tokens[$parameterIndex] = $tokens[$propertyIndex];
-
         $visibilityIndex = $tokens->getPrevTokenOfKind($propertyIndex, [[\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_VAR]]);
         \assert(\is_int($visibilityIndex));
 
