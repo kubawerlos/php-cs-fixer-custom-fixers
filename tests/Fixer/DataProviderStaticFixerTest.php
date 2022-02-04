@@ -20,23 +20,31 @@ final class DataProviderStaticFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        self::assertFalse($this->fixer->isRisky());
+        self::assertTrue($this->fixer->isRisky());
+    }
+
+    public function testConfiguration(): void
+    {
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('force', $options[0]->getName());
     }
 
     /**
+     * @param null|array<string, bool> $configuration
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     /**
-     * @return iterable<array{0: string, 1?: string}>
+     * @return iterable<array{0: string, 1?: null|string, 2?: array<string, bool>}>
      */
     public static function provideFixCases(): iterable
     {
-        yield 'do not fix when containing dynamic calls' => [
+        yield 'do not fix when containing dynamic calls by default' => [
             '<?php
 class FooTest extends TestCase {
     /**
@@ -45,6 +53,39 @@ class FooTest extends TestCase {
     public function testFoo1() {}
     public function provideFoo1Cases() { $this->init(); }
 }',
+        ];
+
+        yield 'do not fix when containing dynamic calls and with `force` disabled' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFoo1Cases
+     */
+    public function testFoo1() {}
+    public function provideFoo1Cases() { $this->init(); }
+}',
+            null,
+            ['force' => false],
+        ];
+
+        yield 'fix when containing dynamic calls and with `force` enabled' => [
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFoo1Cases
+     */
+    public function testFoo1() {}
+    public static function provideFoo1Cases() { $this->init(); }
+}',
+            '<?php
+class FooTest extends TestCase {
+    /**
+     * @dataProvider provideFoo1Cases
+     */
+    public function testFoo1() {}
+    public function provideFoo1Cases() { $this->init(); }
+}',
+            ['force' => true],
         ];
 
         yield 'fix single' => [

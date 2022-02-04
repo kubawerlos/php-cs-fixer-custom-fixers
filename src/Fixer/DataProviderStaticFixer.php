@@ -11,6 +11,10 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -20,8 +24,11 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
 use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
-final class DataProviderStaticFixer extends AbstractFixer
+final class DataProviderStaticFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
+    /** @var bool */
+    private $force = false;
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -38,8 +45,30 @@ class FooTest extends TestCase {
 }
 '
                 ),
-            ]
+            ],
+            null,
+            'when `force` is set to `true`'
         );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('force', 'whether to make static data providers having dynamic class calls'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault($this->force)
+                ->getOption(),
+        ]);
+    }
+
+    /**
+     * @param array<string, bool> $configuration
+     */
+    public function configure(array $configuration): void
+    {
+        if (\array_key_exists('force', $configuration)) {
+            $this->force = $configuration['force'];
+        }
     }
 
     public function getPriority(): int
@@ -54,7 +83,7 @@ class FooTest extends TestCase {
 
     public function isRisky(): bool
     {
-        return false;
+        return true;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
@@ -77,7 +106,7 @@ class FooTest extends TestCase {
             if ($methodStartIndex !== null) {
                 $methodEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $methodStartIndex);
 
-                if ($tokens->findSequence([[\T_VARIABLE, '$this']], $methodStartIndex, $methodEndIndex) !== null) {
+                if (!$this->force && $tokens->findSequence([[\T_VARIABLE, '$this']], $methodStartIndex, $methodEndIndex) !== null) {
                     continue;
                 }
             }
