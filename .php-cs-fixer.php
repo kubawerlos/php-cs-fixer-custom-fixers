@@ -13,6 +13,8 @@ require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Ru
 require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
+$rules[PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer::name()] = ['allow_preventing_trailing_spaces' => true];
+
 // add new fixers that are not in PhpCsFixerConfig yet
 foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     if ($fixer instanceof \PhpCsFixer\Fixer\DeprecatedFixerInterface) {
@@ -28,6 +30,7 @@ unset($rules['ordered_class_elements']);
 unset($rules['ordered_interfaces']);
 
 unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when dropping support to PHP <8.0
+unset($rules['get_class_to_class_keyword']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
 unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
