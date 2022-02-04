@@ -85,7 +85,7 @@ final class SrcCodeTest extends TestCase
     public static function provideFixerCases(): iterable
     {
         foreach (new Fixers() as $fixer) {
-            yield \get_class($fixer) => [$fixer];
+            yield $fixer::class => [$fixer];
         }
     }
 

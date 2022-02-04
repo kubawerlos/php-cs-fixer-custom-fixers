@@ -13,6 +13,8 @@ require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Ru
 require_once __DIR__ . '/.dev-tools/vendor/kubawerlos/php-cs-fixer-config/src/Rules/LibraryRules.php';
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
+$rules[PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer::name()] = ['allow_preventing_trailing_spaces' => true];
+
 // add new fixers that are not in PhpCsFixerConfig yet
 foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     if ($fixer instanceof \PhpCsFixer\Fixer\DeprecatedFixerInterface) {
