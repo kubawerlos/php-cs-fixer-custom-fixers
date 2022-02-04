@@ -46,9 +46,12 @@ final class Version20180609123456 extends AbstractMigration
         );
     }
 
+    /**
+     * Must run before BracesFixer.
+     */
     public function getPriority(): int
     {
-        return 0;
+        return 36;
     }
 
     public function isCandidate(Tokens $tokens): bool

@@ -1,0 +1,25 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_doctrine_migrations_generated_comment": true, "braces": true }
+--EXPECTED--
+<?php
+use Doctrine\Migrations\AbstractMigration;
+final class Version1234 extends AbstractMigration
+{
+    public function up(Schema $schema) : void
+    {
+        $this->addSql("UPDATE t1 SET col1 = col1 + 1");
+    }
+}
+
+--INPUT--
+<?php
+use Doctrine\Migrations\AbstractMigration;
+final class Version1234 extends AbstractMigration
+{
+    public function up(Schema $schema) : void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+
+        $this->addSql("UPDATE t1 SET col1 = col1 + 1");
+    }
+}
