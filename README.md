@@ -132,6 +132,7 @@ Declare statement for strict types must be placed in the same line, after openin
 
 #### InternalClassCasingFixer
 Classes defined internally by extension or core must be referenced with the correct case.
+  DEPRECATED: use `class_reference_name_casing` instead.
 ```diff
  <?php
 -$foo = new STDClass();

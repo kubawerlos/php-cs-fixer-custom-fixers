@@ -11,16 +11,26 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\Casing\ClassReferenceNameCasingFixer;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
-use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class InternalClassCasingFixer extends AbstractFixer
+/**
+ * @deprecated
+ */
+final class InternalClassCasingFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    /** @var ClassReferenceNameCasingFixer */
+    private $classReferenceNameCasingFixer;
+
+    public function __construct()
+    {
+        $this->classReferenceNameCasingFixer = new ClassReferenceNameCasingFixer();
+    }
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -31,99 +41,26 @@ final class InternalClassCasingFixer extends AbstractFixer
 
     public function getPriority(): int
     {
-        return 0;
+        return $this->classReferenceNameCasingFixer->getPriority();
     }
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(\T_STRING);
+        return $this->classReferenceNameCasingFixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return false;
+        return $this->classReferenceNameCasingFixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
-
-        foreach ($namespaces as $namespace) {
-            $this->fixCasing($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
-        }
+        $this->classReferenceNameCasingFixer->fix($file, $tokens);
     }
 
-    private function fixCasing(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
+    public function getSuccessorsNames(): array
     {
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(\T_STRING)) {
-                continue;
-            }
-
-            if (!$this->isGlobalClassUsage($tokens, $index, $isInGlobalNamespace)) {
-                continue;
-            }
-
-            $correctCase = $this->getCorrectCase($tokens[$index]->getContent());
-
-            if ($correctCase === $tokens[$index]->getContent()) {
-                continue;
-            }
-
-            $tokens[$index] = new Token([\T_STRING, $correctCase]);
-        }
-    }
-
-    private function isGlobalClassUsage(Tokens $tokens, int $index, bool $isInGlobalNamespace): bool
-    {
-        $prevIndex = $tokens->getPrevMeaningfulToken($index);
-        \assert(\is_int($prevIndex));
-
-        if ($tokens[$prevIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-            $prevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
-            \assert(\is_int($prevIndex));
-
-            if ($tokens[$prevIndex]->isGivenKind(\T_STRING)) {
-                return false;
-            }
-        } elseif (!$isInGlobalNamespace) {
-            return false;
-        }
-
-        if ($tokens[$prevIndex]->isGivenKind([\T_AS, \T_CLASS, \T_CONST, \T_DOUBLE_COLON, \T_OBJECT_OPERATOR, CT::T_USE_TRAIT])) {
-            return false;
-        }
-
-        $nextIndex = $tokens->getNextMeaningfulToken($index);
-        \assert(\is_int($nextIndex));
-
-        if ($tokens[$nextIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-            return false;
-        }
-
-        return $tokens[$prevIndex]->isGivenKind([\T_NEW]) || !$tokens[$nextIndex]->equals('(');
-    }
-
-    private function getCorrectCase(string $className): string
-    {
-        /** @var null|array<string, string> $classes */
-        static $classes;
-
-        if ($classes === null) {
-            $classes = [];
-            foreach (\get_declared_classes() as $class) {
-                if ((new \ReflectionClass($class))->isInternal()) {
-                    $classes[\strtolower($class)] = $class;
-                }
-            }
-        }
-
-        $lowercaseClassName = \strtolower($className);
-
-        if (!\array_key_exists($lowercaseClassName, $classes)) {
-            return $className;
-        }
-
-        return $classes[$lowercaseClassName];
+        return [$this->classReferenceNameCasingFixer->getName()];
     }
 }
