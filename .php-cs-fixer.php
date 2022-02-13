@@ -33,6 +33,7 @@ unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when 
 unset($rules['get_class_to_class_keyword']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['use_arrow_functions']); // TODO: remove when dropping support to PHP <7.4
+unset($rules[PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer::name()]); // TODO: remove after new php-cs-fixer-config release
 unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
 $rules['trailing_comma_in_multiline'] = true; // TODO: remove when dropping support to PHP <8.0
 

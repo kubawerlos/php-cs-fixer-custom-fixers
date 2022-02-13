@@ -21,6 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class InfectionConfigTest extends TestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testConfigIsUpToDate(): void
     {
         if (\file_exists(__DIR__ . '/../../.dev-tools/vendor/autoload.php')) {
