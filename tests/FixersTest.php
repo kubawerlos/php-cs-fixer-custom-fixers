@@ -68,9 +68,7 @@ final class FixersTest extends TestCase
     private function fixerNamesFromCollection(): array
     {
         return \array_map(
-            static function (FixerInterface $fixer): string {
-                return $fixer->getName();
-            },
+            static fn (FixerInterface $fixer): string => $fixer->getName(),
             \iterator_to_array(new Fixers())
         );
     }

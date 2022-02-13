@@ -114,14 +114,10 @@ final class SrcCodeTest extends TestCase
 
         $stringTokens = \array_filter(
             $tokens,
-            static function (Token $token): bool {
-                return $token->isGivenKind(\T_STRING);
-            }
+            static fn (Token $token): bool => $token->isGivenKind(\T_STRING)
         );
         $strings = \array_map(
-            static function (Token $token): string {
-                return $token->getContent();
-            },
+            static fn (Token $token): string => $token->getContent(),
             $stringTokens
         );
         $strings = \array_unique($strings);
