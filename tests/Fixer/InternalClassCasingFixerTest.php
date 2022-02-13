@@ -23,6 +23,11 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
         self::assertFalse($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertContains('class_reference_name_casing', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @dataProvider provideFixCases
      */
