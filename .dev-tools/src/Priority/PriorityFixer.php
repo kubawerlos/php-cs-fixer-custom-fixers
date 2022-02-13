@@ -81,9 +81,7 @@ final class PriorityFixer
     private function getFixerNames(array $priorityFixers): array
     {
         $fixers = \array_map(
-            static function (self $priorityFixer): string {
-                return (new \ReflectionObject($priorityFixer->fixer))->getShortName();
-            },
+            static fn (self $priorityFixer): string => (new \ReflectionObject($priorityFixer->fixer))->getShortName(),
             $priorityFixers
         );
 

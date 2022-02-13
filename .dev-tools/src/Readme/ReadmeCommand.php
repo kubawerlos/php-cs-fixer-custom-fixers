@@ -198,9 +198,7 @@ In your PHP CS Fixer configuration register fixers and use them:
 
                 foreach ($fixer->getConfigurationDefinition()->getOptions() as $option) {
                     if ($option->getAllowedValues() !== null) {
-                        $allowed = \array_map(static function (string $value): string {
-                            return \sprintf('\'%s\'', $value);
-                        }, $option->getAllowedValues());
+                        $allowed = \array_map(static fn (string $value): string => \sprintf('\'%s\'', $value), $option->getAllowedValues());
                     } else {
                         /** @var array<string> $allowed */
                         $allowed = $option->getAllowedTypes();

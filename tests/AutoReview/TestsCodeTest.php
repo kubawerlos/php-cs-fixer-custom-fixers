@@ -157,9 +157,7 @@ final class TestsCodeTest extends TestCase
     {
         return \array_filter(
             $this->getMethods($className, \ReflectionMethod::IS_PUBLIC),
-            static function (\ReflectionMethod $reflectionMethod): bool {
-                return \strpos($reflectionMethod->getName(), 'provide') === 0;
-            }
+            static fn (\ReflectionMethod $reflectionMethod): bool => \strpos($reflectionMethod->getName(), 'provide') === 0
         );
     }
 
@@ -172,9 +170,7 @@ final class TestsCodeTest extends TestCase
 
         return \array_filter(
             $reflectionClass->getMethods($methodFilter),
-            static function (\ReflectionMethod $reflectionMethod) use ($reflectionClass): bool {
-                return $reflectionMethod->getFileName() === $reflectionClass->getFileName();
-            }
+            static fn (\ReflectionMethod $reflectionMethod): bool => $reflectionMethod->getFileName() === $reflectionClass->getFileName()
         );
     }
 
