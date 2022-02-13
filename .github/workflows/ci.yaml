@@ -31,13 +31,9 @@ jobs:
         install-fixer-from-master-branch: [ false ]
         include:
           - os: ubuntu-latest
-            php-version: '7.2'
+            php-version: '7.4'
             composer_flags: '--prefer-lowest'
             description: 'with lowest dependencies'
-          - os: ubuntu-latest
-            php-version: '7.2'
-          - os: ubuntu-latest
-            php-version: '7.3'
           - os: ubuntu-latest
             php-version: '8.0'
           - os: ubuntu-latest

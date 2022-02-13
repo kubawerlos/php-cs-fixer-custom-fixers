@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.8.0
+- Update minimum PHP version to 7.4
 - DataProviderStaticFixer - add option "force"
 
 ## v3.7.0

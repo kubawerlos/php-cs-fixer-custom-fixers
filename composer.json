@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.2 || ^8.0",
+        "php": "^7.4 || ^8.0",
         "ext-filter": "*",
         "ext-tokenizer": "*",
         "friendsofphp/php-cs-fixer": "^3.1.0",
