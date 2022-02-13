@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2a700812e1121fbc251fa3f3c27f583",
+    "content-hash": "eeb429c10861ab6a4972a05b51f6bc2a",
     "packages": [
         {
             "name": "amphp/amp",
@@ -489,16 +489,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.5.0",
+            "version": "v3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "333f15e07c866e33e2765e84ba1e0b88e6a3af3b"
+                "reference": "1975e4453eb2726d1f50da0ce7fa91295029a4fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/333f15e07c866e33e2765e84ba1e0b88e6a3af3b",
-                "reference": "333f15e07c866e33e2765e84ba1e0b88e6a3af3b"
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1975e4453eb2726d1f50da0ce7fa91295029a4fa",
+                "reference": "1975e4453eb2726d1f50da0ce7fa91295029a4fa"
             },
             "require": {
                 "composer/semver": "^3.2",
@@ -735,20 +735,20 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v3.7.0",
+            "version": "v3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "623df12c1819734a8c542abc7defec3966eb107f"
+                "reference": "d4c5212e496be50eaf5507950ec827addd01cfb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/623df12c1819734a8c542abc7defec3966eb107f",
-                "reference": "623df12c1819734a8c542abc7defec3966eb107f"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/d4c5212e496be50eaf5507950ec827addd01cfb1",
+                "reference": "d4c5212e496be50eaf5507950ec827addd01cfb1"
             },
             "require": {
-                "friendsofphp/php-cs-fixer": "^3.5.0",
-                "kubawerlos/php-cs-fixer-custom-fixers": "^3.7.0",
+                "friendsofphp/php-cs-fixer": "^3.6.0",
+                "kubawerlos/php-cs-fixer-custom-fixers": "^3.8.0",
                 "php": "^8.0"
             },
             "type": "library",
@@ -764,22 +764,22 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "v3.7.1",
+            "version": "v3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "f274c0857be35289a5fb3822789e2938a99ea5d9"
+                "reference": "3d4af3ed3077cdc613d086209678a31fdbedb0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/f274c0857be35289a5fb3822789e2938a99ea5d9",
-                "reference": "f274c0857be35289a5fb3822789e2938a99ea5d9"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/3d4af3ed3077cdc613d086209678a31fdbedb0bb",
+                "reference": "3d4af3ed3077cdc613d086209678a31fdbedb0bb"
             },
             "require": {
                 "ext-filter": "*",
                 "ext-tokenizer": "*",
-                "friendsofphp/php-cs-fixer": "^3.1.0",
-                "php": "^7.2 || ^8.0",
+                "friendsofphp/php-cs-fixer": "^3.6.0",
+                "php": "^7.4 || ^8.0",
                 "symfony/finder": "^4.0 || ^5.0 || ^6.0"
             },
             "type": "library",
@@ -1276,16 +1276,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.4.5",
+            "version": "1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "150d1fbd82fb71ff76b3bd7f6ea6006d89c5f0c3"
+                "reference": "8a7761f1c520e0dad6e04d862fdc697445457cfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/150d1fbd82fb71ff76b3bd7f6ea6006d89c5f0c3",
-                "reference": "150d1fbd82fb71ff76b3bd7f6ea6006d89c5f0c3"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8a7761f1c520e0dad6e04d862fdc697445457cfe",
+                "reference": "8a7761f1c520e0dad6e04d862fdc697445457cfe"
             },
             "require": {
                 "php": "^7.1|^8.0"
@@ -1528,12 +1528,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Later\\": "src/"
-                },
                 "files": [
                     "src/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Later\\": "src/"
+                }
             },
             "license": [
                 "Apache-2.0"
@@ -2052,12 +2052,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Intl\\Grapheme\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Grapheme\\": ""
+                }
             },
             "license": [
                 "MIT"
@@ -2091,12 +2091,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -2136,12 +2136,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
             },
             "license": [
                 "MIT"
@@ -2175,12 +2175,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php80\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php80\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -2217,12 +2217,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php81\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php81\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -2390,13 +2390,6 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Safe\\": [
-                        "lib/",
-                        "deprecated/",
-                        "generated/"
-                    ]
-                },
                 "files": [
                     "deprecated/apc.php",
                     "deprecated/libevent.php",
@@ -2487,7 +2480,14 @@
                     "generated/yaz.php",
                     "generated/zip.php",
                     "generated/zlib.php"
-                ]
+                ],
+                "psr-4": {
+                    "Safe\\": [
+                        "lib/",
+                        "deprecated/",
+                        "generated/"
+                    ]
+                }
             },
             "license": [
                 "MIT"
