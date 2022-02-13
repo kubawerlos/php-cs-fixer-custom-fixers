@@ -2,6 +2,7 @@
 
 ## v3.8.0
 - Update minimum PHP version to 7.4
+- Update minimum PHP CS Fixer version to 3.6.0
 - DataProviderStaticFixer - add option "force"
 - Deprecate InternalClassCasingFixer
 

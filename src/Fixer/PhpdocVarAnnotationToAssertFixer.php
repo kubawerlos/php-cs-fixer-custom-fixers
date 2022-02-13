@@ -120,9 +120,6 @@ $x = getValue();
         }
 
         $types = $annotation->getTypeExpression()->getTypes();
-        if ($types === []) {
-            return null;
-        }
 
         $assertCode = '<?php assert(';
 
