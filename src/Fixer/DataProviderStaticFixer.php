@@ -83,7 +83,7 @@ class FooTest extends TestCase {
 
     public function isRisky(): bool
     {
-        return true;
+        return $this->force;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
