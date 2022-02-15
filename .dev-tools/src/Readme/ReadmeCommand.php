@@ -20,6 +20,7 @@ use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
+use PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer;
 use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use SebastianBergmann\Diff\Differ;
@@ -186,11 +187,17 @@ In your PHP CS Fixer configuration register fixers and use them:
 
             $output .= $fixer instanceof DeprecatedFixerInterface ? \sprintf("\n  DEPRECATED: use `%s` instead.", \implode('`, `', $fixer->getSuccessorsNames())) : '';
 
+            if ($fixer instanceof DataProviderStaticFixer) {
+                $fixer->configure(['force' => true]);
+            }
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
                     "\n  *Risky: %s.*",
                     $fixer->getDefinition()->getRiskyDescription()
                 );
+            }
+            if ($fixer instanceof DataProviderStaticFixer) {
+                $fixer->configure(['force' => false]);
             }
 
             if ($fixer instanceof ConfigurableFixerInterface) {

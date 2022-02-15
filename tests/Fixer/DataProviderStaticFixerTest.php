@@ -18,9 +18,15 @@ namespace Tests\Fixer;
  */
 final class DataProviderStaticFixerTest extends AbstractFixerTestCase
 {
-    public function testIsRisky(): void
+    public function testIsRiskyWithForceOption(): void
     {
+        $this->fixer->configure(['force' => true]);
         self::assertTrue($this->fixer->isRisky());
+    }
+
+    public function testIsNotRiskyWithoutForceOption(): void
+    {
+        self::assertFalse($this->fixer->isRisky());
     }
 
     public function testConfiguration(): void
