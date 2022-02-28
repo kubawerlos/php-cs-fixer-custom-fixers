@@ -99,22 +99,7 @@ final class NoTrailingCommaInSinglelineFixerTest extends AbstractFixerTestCase
             '<?php list($x, $y) = $list;',
             '<?php list($x, $y , , , ) = $list;',
         ];
-    }
 
-    /**
-     * @requires PHP ^7.3
-     * @dataProvider provideFix73Cases
-     */
-    public function testFix73(string $expected, ?string $input = null): void
-    {
-        $this->doTest($expected, $input);
-    }
-
-    /**
-     * @return iterable<array{0: string, 1?: string}>
-     */
-    public static function provideFix73Cases(): iterable
-    {
         yield [
             '<?php foo($x, $y);',
             '<?php foo($x, $y, );',

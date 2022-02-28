@@ -101,7 +101,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     }
 
     /**
-     * @requires PHP ^7.2
+     * @requires PHP ^7.4
      *
      * @dataProvider provideFix7Cases
      */
