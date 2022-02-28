@@ -143,11 +143,13 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 
         yield 'var keywords are not promoted' => [
             '<?php class Foo {
+                public string $a, $b;
                 public function __construct(public int $x) {
                 }
             }
             ',
             '<?php class Foo {
+                public string $a, $b;
                 var int $x;
                 public function __construct(int $x) {
                     $this->x = $x;
@@ -927,6 +929,23 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                     $this->i = $i;
                 }
             }',
+        ];
+
+        yield 'promote single property when propery is declared last' => [
+            '<?php class Foo {
+                public function namedConstructor($a, $b) { return new self($a . $b); }
+                public function __construct(private string $bar) {
+                }
+            }
+            ',
+            '<?php class Foo {
+                public function namedConstructor($a, $b) { return new self($a . $b); }
+                public function __construct(string $bar) {
+                    $this->bar = $bar;
+                }
+                private string $bar;
+            }
+            ',
         ];
 
         foreach (
