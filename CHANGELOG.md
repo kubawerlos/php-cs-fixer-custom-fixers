@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.9.0
+- Add PhpdocTypesCommaSpacesFixer
+
 ## v3.8.0
 - Update minimum PHP version to 7.4
 - Update minimum PHP CS Fixer version to 3.6.0
