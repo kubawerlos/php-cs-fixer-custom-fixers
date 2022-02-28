@@ -27,7 +27,7 @@ final class Fixers implements \IteratorAggregate
         $finder = Finder::create()
             ->files()
             ->in(__DIR__ . '/Fixer/')
-            ->notName('AbstractFixer.php')
+            ->notName('Abstract*Fixer.php')
             ->notName('DeprecatingFixerInterface.php')
             ->sortByName();
 

@@ -14,6 +14,7 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
+ * @covers \PhpCsFixerCustomFixers\Fixer\AbstractTypesFixer
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocArrayStyleFixer
  */
 final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
@@ -106,7 +107,7 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
         ];
 
         $expected = $input = 'string';
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 128; $i++) {
             $expected = 'array<' . $expected . '>';
             $input .= '[]';
         }

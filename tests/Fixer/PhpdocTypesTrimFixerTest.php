@@ -166,13 +166,6 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 /**
-                 * @return Foo|
-                 *         Bar |
-                 *         Baz
-                 */
-             ',
-            '<?php
-                /**
                  * @return Foo |
                  *         Bar |
                  *         Baz
