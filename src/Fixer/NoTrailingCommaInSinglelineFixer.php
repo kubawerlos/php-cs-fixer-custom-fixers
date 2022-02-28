@@ -54,21 +54,26 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
                 continue;
             }
 
-            $commaIndex = $tokens->getPrevMeaningfulToken($index);
-            \assert(\is_int($commaIndex));
+            $this->removeCommas($tokens, $index);
+        }
+    }
 
-            while ($tokens[$commaIndex]->equals(',')) {
-                if ($tokens->isPartialCodeMultiline($commaIndex, $index)) {
-                    break;
-                }
+    private function removeCommas(Tokens $tokens, int $index): void
+    {
+        $commaIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($commaIndex));
 
-                $tokens->removeLeadingWhitespace($commaIndex);
-                $tokens->removeTrailingWhitespace($commaIndex);
-                $tokens->clearAt($commaIndex);
-
-                $commaIndex = $tokens->getPrevMeaningfulToken($index);
-                \assert(\is_int($commaIndex));
+        while ($tokens[$commaIndex]->equals(',')) {
+            if ($tokens->isPartialCodeMultiline($commaIndex, $index)) {
+                return;
             }
+
+            $tokens->removeLeadingWhitespace($commaIndex);
+            $tokens->removeTrailingWhitespace($commaIndex);
+            $tokens->clearAt($commaIndex);
+
+            $commaIndex = $tokens->getPrevMeaningfulToken($commaIndex);
+            \assert(\is_int($commaIndex));
         }
     }
 }
