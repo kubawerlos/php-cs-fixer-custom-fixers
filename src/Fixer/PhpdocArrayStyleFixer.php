@@ -11,16 +11,12 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
-use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpdocArrayStyleFixer extends AbstractFixer
+final class PhpdocArrayStyleFixer extends AbstractTypesFixer
 {
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -47,53 +43,9 @@ final class PhpdocArrayStyleFixer extends AbstractFixer
         return 1;
     }
 
-    public function isCandidate(Tokens $tokens): bool
+    protected function fixType(string $type): string
     {
-        return $tokens->isTokenKindFound(\T_DOC_COMMENT);
-    }
-
-    public function isRisky(): bool
-    {
-        return false;
-    }
-
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
-    {
-        for ($index = $tokens->count() - 1; $index > 0; $index--) {
-            if (!$tokens[$index]->isGivenKind([\T_DOC_COMMENT])) {
-                continue;
-            }
-
-            $docBlock = new DocBlock($tokens[$index]->getContent());
-
-            foreach ($docBlock->getAnnotations() as $annotation) {
-                if (!$annotation->supportTypes()) {
-                    continue;
-                }
-
-                $line = $docBlock->getLine($annotation->getStart());
-                \assert($line instanceof Line);
-
-                $content = $line->getContent();
-                $newContent = $this->fixType($content);
-
-                $line = $docBlock->getLine($annotation->getStart());
-                \assert($line instanceof Line);
-                $line->setContent($newContent);
-            }
-
-            $newContent = $docBlock->getContent();
-            if ($newContent === $tokens[$index]->getContent()) {
-                continue;
-            }
-
-            $tokens[$index] = new Token([\T_DOC_COMMENT, $newContent]);
-        }
-    }
-
-    private function fixType(string $type): string
-    {
-        $newType = Preg::replace('/([\\\\a-zA-Z0-9>]+)\[\]/', 'array<$1>', $type, -1, $count);
+        $newType = Preg::replace('/([\\\\a-zA-Z0-9>]+)\[\]/', 'array<$1>', $type);
 
         if ($newType === $type) {
             return $type;
