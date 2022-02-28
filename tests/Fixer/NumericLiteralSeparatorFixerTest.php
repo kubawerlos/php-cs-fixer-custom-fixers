@@ -17,8 +17,6 @@ use PhpCsFixer\Tokenizer\Tokens;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
- *
- * @requires PHP 7.4
  */
 final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
 {

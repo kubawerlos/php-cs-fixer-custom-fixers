@@ -236,7 +236,7 @@ baz();
     }
 
     /**
-     * @requires PHP ^7.2
+     * @requires PHP ^7.4
      */
     public function testWithCommentBetweenBackslashAndFunctionCall(): void
     {
