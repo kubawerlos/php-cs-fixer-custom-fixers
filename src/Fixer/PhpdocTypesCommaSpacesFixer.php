@@ -33,8 +33,7 @@ final class PhpdocTypesCommaSpacesFixer extends AbstractTypesFixer
 
     protected function fixType(string $type): string
     {
-        $newType = Preg::replace('/\h*,/', ',', $type);
-        $newType = Preg::replace('/,\s*/', ', ', $newType);
+        $newType = Preg::replace('/\h*,\s*/', ', ', $type);
 
         if ($newType === $type) {
             return $type;
