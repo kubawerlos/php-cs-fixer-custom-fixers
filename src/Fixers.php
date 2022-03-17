@@ -12,7 +12,6 @@
 namespace PhpCsFixerCustomFixers;
 
 use PhpCsFixer\Fixer\FixerInterface;
-use Symfony\Component\Finder\Finder;
 
 /**
  * @implements \IteratorAggregate<FixerInterface>
@@ -24,16 +23,18 @@ final class Fixers implements \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
-        $finder = Finder::create()
-            ->files()
-            ->in(__DIR__ . '/Fixer/')
-            ->notName('Abstract*Fixer.php')
-            ->notName('DeprecatingFixerInterface.php')
-            ->sortByName();
+        $classNames = [];
+        foreach (new \DirectoryIterator(__DIR__ . '/Fixer') as $fileInfo) {
+            $fileName = $fileInfo->getBasename('.php');
+            if (\in_array($fileName, ['.', '..', 'AbstractFixer', 'AbstractTypesFixer', 'DeprecatingFixerInterface'], true)) {
+                continue;
+            }
+            $classNames[] = __NAMESPACE__ . '\\Fixer\\' . $fileName;
+        }
 
-        foreach ($finder as $fileInfo) {
-            $className = __NAMESPACE__ . '\\Fixer\\' . $fileInfo->getBasename('.php');
+        \sort($classNames);
 
+        foreach ($classNames as $className) {
             $fixer = new $className();
             \assert($fixer instanceof FixerInterface);
 
