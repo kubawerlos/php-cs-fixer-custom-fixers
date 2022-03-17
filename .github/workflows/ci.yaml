@@ -25,8 +25,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        coverage-driver: [ none ]
-        install-fixer-from-master-branch: [ false ]
         include:
           - description: 'with lowest dependencies'
             os: ubuntu-latest
