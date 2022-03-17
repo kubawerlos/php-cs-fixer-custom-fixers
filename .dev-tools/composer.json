@@ -37,7 +37,7 @@
             "@composer validate --strict --working-dir=..",
             "@composer normalize --dry-run ../composer.json",
             "@composer normalize --dry-run",
-            "composer-require-checker check ../composer.json",
+            "composer-require-checker check ../composer.json --config-file composer-require-checker.json",
             "phpcs",
             "php-cs-fixer fix --ansi --config=../.php-cs-fixer.php --diff --dry-run --verbose",
             "types-checker --autoloader=../vendor/autoload.php src ../src ../tests",

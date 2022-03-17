@@ -24,7 +24,7 @@ composer require --dev kubawerlos/php-cs-fixer-custom-fixers
 In your PHP CS Fixer configuration register fixers and use them:
 ```diff
  <?php
- return PhpCsFixer\Config::create()
+ return (new PhpCsFixer\Config)
 +    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
      ->setRules([
          '@PSR2' => true,
