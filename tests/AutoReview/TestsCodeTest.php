@@ -122,8 +122,8 @@ final class TestsCodeTest extends TestCase
         $dataProviders = $this->getDataProviders($className);
 
         foreach ($dataProviders as $dataProvider) {
+            /** @var \Iterator<array<int, null|string>> $dataSet */
             $dataSet = $dataProvider->invoke(null);
-            \assert($dataSet instanceof \Iterator);
             $dataSet = \iterator_to_array($dataSet);
 
             $doNotChangeCases = [];

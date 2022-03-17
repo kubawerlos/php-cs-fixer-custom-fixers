@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b37abb9eb51f04ce57ac3f404c731568",
+    "content-hash": "3614461305577a14beede498462efc93",
     "packages": [
         {
             "name": "amphp/amp",
@@ -149,16 +149,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.2.9",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "a951f614bd64dcd26137bc9b7b2637ddcfc57649"
+                "reference": "5d8e574bb0e69188786b8ef77d43341222a41a71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/a951f614bd64dcd26137bc9b7b2637ddcfc57649",
-                "reference": "a951f614bd64dcd26137bc9b7b2637ddcfc57649"
+                "url": "https://api.github.com/repos/composer/semver/zipball/5d8e574bb0e69188786b8ef77d43341222a41a71",
+                "reference": "5d8e574bb0e69188786b8ef77d43341222a41a71"
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0"
@@ -294,16 +294,16 @@
         },
         {
             "name": "ergebnis/composer-normalize",
-            "version": "2.23.1",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/composer-normalize.git",
-                "reference": "a54e28d1338903d9b6043d2187ed0f059d89938f"
+                "reference": "0492b8de602ac601f5d53a5ef9c9558701a18f31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/composer-normalize/zipball/a54e28d1338903d9b6043d2187ed0f059d89938f",
-                "reference": "a54e28d1338903d9b6043d2187ed0f059d89938f"
+                "url": "https://api.github.com/repos/ergebnis/composer-normalize/zipball/0492b8de602ac601f5d53a5ef9c9558701a18f31",
+                "reference": "0492b8de602ac601f5d53a5ef9c9558701a18f31"
             },
             "require": {
                 "composer-plugin-api": "^2.0.0",
@@ -489,20 +489,20 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.6.0",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "1975e4453eb2726d1f50da0ce7fa91295029a4fa"
+                "reference": "7705d5a985132a40282d18a176eb9a4a0497747c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1975e4453eb2726d1f50da0ce7fa91295029a4fa",
-                "reference": "1975e4453eb2726d1f50da0ce7fa91295029a4fa"
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/7705d5a985132a40282d18a176eb9a4a0497747c",
+                "reference": "7705d5a985132a40282d18a176eb9a4a0497747c"
             },
             "require": {
                 "composer/semver": "^3.2",
-                "composer/xdebug-handler": "^3.0",
+                "composer/xdebug-handler": "^3.0.3",
                 "doctrine/annotations": "^1.13",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
@@ -514,8 +514,8 @@
                 "symfony/finder": "^5.4 || ^6.0",
                 "symfony/options-resolver": "^5.4 || ^6.0",
                 "symfony/polyfill-mbstring": "^1.23",
-                "symfony/polyfill-php80": "^1.23",
-                "symfony/polyfill-php81": "^1.23",
+                "symfony/polyfill-php80": "^1.25",
+                "symfony/polyfill-php81": "^1.25",
                 "symfony/process": "^5.4 || ^6.0",
                 "symfony/stopwatch": "^5.4 || ^6.0"
             },
@@ -616,16 +616,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.26.5",
+            "version": "0.26.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "d6f07358cb40e0ccb0ea99247ae6b22120540f7f"
+                "reference": "de9b6b92f00ff1cb39decddf95797a4ebec3a1ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/d6f07358cb40e0ccb0ea99247ae6b22120540f7f",
-                "reference": "d6f07358cb40e0ccb0ea99247ae6b22120540f7f"
+                "url": "https://api.github.com/repos/infection/infection/zipball/de9b6b92f00ff1cb39decddf95797a4ebec3a1ee",
+                "reference": "de9b6b92f00ff1cb39decddf95797a4ebec3a1ee"
             },
             "require": {
                 "composer-runtime-api": "^2.0",
@@ -764,16 +764,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "v3.8.1",
+            "version": "v3.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "cddb6d7a365ce95dd554c357ebc16318b5e6bd0d"
+                "reference": "f5148937829fdb1ea84cbcc78698f1f24cba3541"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/cddb6d7a365ce95dd554c357ebc16318b5e6bd0d",
-                "reference": "cddb6d7a365ce95dd554c357ebc16318b5e6bd0d"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/f5148937829fdb1ea84cbcc78698f1f24cba3541",
+                "reference": "f5148937829fdb1ea84cbcc78698f1f24cba3541"
             },
             "require": {
                 "ext-filter": "*",
@@ -1215,12 +1215,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "84adf86971311eacc5892eeb6e07b0f7056142b6"
+                "reference": "191f1d27e690e10a903bca02a84a00a80ba71184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/84adf86971311eacc5892eeb6e07b0f7056142b6",
-                "reference": "84adf86971311eacc5892eeb6e07b0f7056142b6"
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/191f1d27e690e10a903bca02a84a00a80ba71184",
+                "reference": "191f1d27e690e10a903bca02a84a00a80ba71184"
             },
             "require": {
                 "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0",
@@ -1276,16 +1276,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.4.6",
+            "version": "1.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8a7761f1c520e0dad6e04d862fdc697445457cfe"
+                "reference": "898c479c39caa727bedf4311dd294a8f4e250e72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8a7761f1c520e0dad6e04d862fdc697445457cfe",
-                "reference": "8a7761f1c520e0dad6e04d862fdc697445457cfe"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/898c479c39caa727bedf4311dd294a8f4e250e72",
+                "reference": "898c479c39caa727bedf4311dd294a8f4e250e72"
             },
             "require": {
                 "php": "^7.1|^8.0"
@@ -1295,11 +1295,6 @@
                 "phpstan.phar"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -1568,12 +1563,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Pipeline\\": "src/"
-                },
                 "files": [
                     "src/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Pipeline\\": "src/"
+                }
             },
             "license": [
                 "Apache-2.0"
@@ -1748,16 +1743,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v6.0.5",
+            "version": "v6.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "481846cbd2441cf3444340ee53486fc24da525bd"
+                "reference": "a296611f599d0b28e7af88798f830f9cb4d1e8e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/481846cbd2441cf3444340ee53486fc24da525bd",
-                "reference": "481846cbd2441cf3444340ee53486fc24da525bd"
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a296611f599d0b28e7af88798f830f9cb4d1e8e6",
+                "reference": "a296611f599d0b28e7af88798f830f9cb4d1e8e6"
             },
             "require": {
                 "php": ">=8.0.2",
@@ -1894,16 +1889,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v6.0.5",
+            "version": "v6.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "6646c13f787057d64701a3a0235cf9567c6ccbbd"
+                "reference": "52b888523545b0b4049ab9ce48766802484d7046"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/6646c13f787057d64701a3a0235cf9567c6ccbbd",
-                "reference": "6646c13f787057d64701a3a0235cf9567c6ccbbd"
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/52b888523545b0b4049ab9ce48766802484d7046",
+                "reference": "52b888523545b0b4049ab9ce48766802484d7046"
             },
             "require": {
                 "php": ">=8.0.2",
@@ -1987,7 +1982,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -2029,7 +2024,7 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
@@ -2068,7 +2063,7 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
@@ -2110,7 +2105,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -2152,16 +2147,16 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9"
+                "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/57b712b08eddb97c762a8caa32c84e037892d2e9",
-                "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9"
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/4407588e0d3f1f52efb65fbe92babe41f37fe50c",
+                "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c"
             },
             "require": {
                 "php": ">=7.1"
@@ -2194,7 +2189,7 @@
         },
         {
             "name": "symfony/polyfill-php81",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php81.git",
@@ -2685,5 +2680,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
