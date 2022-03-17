@@ -1,5 +1,5 @@
 <?php
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config)
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->setRules([
         '@PSR2' => true,
