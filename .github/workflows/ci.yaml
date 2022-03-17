@@ -21,20 +21,15 @@ jobs:
       - run: composer analyse
 
   test:
-    name: PHP ${{ matrix.php-version }} on ${{ matrix.os }} ${{ matrix.description }}
+    name: PHP ${{ matrix.php-version }} ${{ matrix.description }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
-        php-version: [ '7.4', '8.1' ]
-        composer-flags: [ '' ]
-        coverage-driver: [ none ]
-        install-fixer-from-master-branch: [ false ]
         include:
-          - os: ubuntu-latest
+          - description: 'with lowest dependencies'
+            os: ubuntu-latest
             php-version: '7.4'
             composer-flags: '--prefer-lowest'
-            description: 'with lowest dependencies'
           - os: ubuntu-latest
             php-version: '8.0'
           - os: ubuntu-latest
@@ -48,6 +43,12 @@ jobs:
           - os: ubuntu-latest
             php-version: '8.2'
             composer-flags: '--ignore-platform-reqs'
+          - description: on macOS
+            os: macos-latest
+            php-version: '8.1'
+          - description: on Windows
+            os: windows-latest
+            php-version: '8.1'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
