@@ -33,12 +33,12 @@
         "analyse": [
             "@install-dev-tools",
             "php-cs-fixer fix --ansi --diff --dry-run --verbose",
-            "@composer --working-dir=.dev-tools analyse"
+            "@composer --no-interaction --working-dir=.dev-tools analyse"
         ],
         "fix": [
             "@install-dev-tools",
             "php-cs-fixer fix --ansi --verbose || exit 0",
-            "@composer --working-dir=.dev-tools fix",
+            "@composer --no-interaction --working-dir=.dev-tools fix",
             "@php .dev-tools/readme > README.md"
         ],
         "infection": [
