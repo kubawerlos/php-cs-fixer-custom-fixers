@@ -39,6 +39,7 @@
             "@composer normalize --dry-run",
             "composer-require-checker check ../composer.json",
             "phpcs",
+            "php-cs-fixer fix --ansi --config=../.php-cs-fixer.php --diff --dry-run --verbose",
             "types-checker --autoloader=../vendor/autoload.php src ../src ../tests",
             "phpmd ../src text phpmd.xml",
             "phpstan analyse --no-progress",
@@ -47,6 +48,7 @@
         "fix": [
             "@composer normalize --no-check-lock ../composer.json",
             "@composer normalize --no-check-lock",
+            "php-cs-fixer fix --ansi --config=../.php-cs-fixer.php --verbose || exit 0",
             "@php build-infection-config",
             "phpcbf || exit 0"
         ],
