@@ -10,6 +10,7 @@
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
+
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
 $rules[PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer::name()] = ['allow_preventing_trailing_spaces' => true];

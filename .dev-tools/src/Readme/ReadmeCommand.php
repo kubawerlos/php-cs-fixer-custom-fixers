@@ -154,6 +154,11 @@ In your PHP CS Fixer configuration register fixers and use them:
 ```diff
 %s
 ```
+:warning: When PHP CS Fixer is installed via [`php-cs-fixer/shim`](https://github.com/PHP-CS-Fixer/shim) package,
+requiring autoload is needed to load `PhpCsFixerCustomFixers` classes:
+```php
+require_once __DIR__ . \'/vendor/autoload.php\';
+```
 ',
             $this->diff(
                 \file_get_contents(__DIR__ . '/php-cs-fixer.config.before.php'),
