@@ -160,7 +160,12 @@ class Foo {
             }
 
             $assignedPropertyIndex = $tokens->getPrevTokenOfKind($constructorPromotableAssignments[$constructorParameterName], [[\T_STRING]]);
-            $tokens[$constructorParameterIndex] = new Token([\T_VARIABLE, '$' . $tokens[$assignedPropertyIndex]->getContent()]);
+            $this->renameVariable(
+                $tokens,
+                $constructorAnalysis->getConstructorIndex(),
+                $tokens[$constructorParameterIndex]->getContent(),
+                '$' . $tokens[$assignedPropertyIndex]->getContent()
+            );
 
             $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
             $this->updateParameterSignature(
@@ -359,6 +364,22 @@ class Foo {
         }
 
         return $index;
+    }
+
+    private function renameVariable(Tokens $tokens, int $constructorIndex, string $oldName, string $newName): void
+    {
+        $parenthesesOpenIndex = $tokens->getNextTokenOfKind($constructorIndex, ['(']);
+        \assert(\is_int($parenthesesOpenIndex));
+        $parenthesesCloseIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $parenthesesOpenIndex);
+        $braceOpenIndex = $tokens->getNextTokenOfKind($parenthesesCloseIndex, ['{']);
+        \assert(\is_int($braceOpenIndex));
+        $braceCloseIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $braceOpenIndex);
+
+        for ($index = $parenthesesOpenIndex; $index < $braceCloseIndex; $index++) {
+            if ($tokens[$index]->equals([\T_VARIABLE, $oldName])) {
+                $tokens[$index] = new Token([\T_VARIABLE, $newName]);
+            }
+        }
     }
 
     private function removeAssignment(Tokens $tokens, int $variableAssignmentIndex): void

@@ -672,13 +672,17 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
         yield 'promote with different name' => [
             '<?php class Foo {
                 public function __construct(private string $x) {
+                    $this->log("Creating with value: " . $x);
+                    $this->sent(sprintf("Created with value %s.", $x));
                 }
             }
             ',
             '<?php class Foo {
                 private string $x;
                 public function __construct(string $y) {
+                    $this->log("Creating with value: " . $y);
                     $this->x = $y;
+                    $this->sent(sprintf("Created with value %s.", $y));
                 }
             }
             ',
