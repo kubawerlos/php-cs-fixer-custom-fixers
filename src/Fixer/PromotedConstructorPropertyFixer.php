@@ -129,6 +129,7 @@ class Foo {
         $isDoctrineEntity = $this->isDoctrineEntity($tokens, $classIndex);
         $properties = $this->getClassProperties($tokens, $classIndex);
 
+        $constructorParameterNames = $constructorAnalysis->getConstructorParameterNames();
         $constructorPromotableParameters = $constructorAnalysis->getConstructorPromotableParameters();
         $constructorPromotableAssignments = $constructorAnalysis->getConstructorPromotableAssignments();
 
@@ -153,6 +154,9 @@ class Foo {
             $assignedPropertyIndex = $tokens->getPrevTokenOfKind($constructorPromotableAssignments[$constructorParameterName], [[\T_STRING]]);
             $oldParameterName = $tokens[$constructorParameterIndex]->getContent();
             $newParameterName = '$' . $tokens[$assignedPropertyIndex]->getContent();
+            if ($oldParameterName !== $newParameterName && \in_array($newParameterName, $constructorParameterNames, true)) {
+                continue;
+            }
 
             $tokensToInsert = $this->removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
 

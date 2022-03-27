@@ -37,6 +37,27 @@ final class ConstructorAnalysis
     }
 
     /**
+     * @return array<string>
+     */
+    public function getConstructorParameterNames(): array
+    {
+        $openParenthesis = $this->tokens->getNextTokenOfKind($this->constructorIndex, ['(']);
+        \assert(\is_int($openParenthesis));
+        $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+
+        $constructorParameterNames = [];
+        for ($index = $openParenthesis + 1; $index < $closeParenthesis; $index++) {
+            if (!$this->tokens[$index]->isGivenKind(\T_VARIABLE)) {
+                continue;
+            }
+
+            $constructorParameterNames[] = $this->tokens[$index]->getContent();
+        }
+
+        return $constructorParameterNames;
+    }
+
+    /**
      * @return array<int, string>
      */
     public function getConstructorPromotableParameters(): array
