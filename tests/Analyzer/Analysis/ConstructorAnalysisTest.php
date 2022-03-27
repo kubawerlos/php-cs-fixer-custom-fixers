@@ -66,8 +66,8 @@ final class ConstructorAnalysisTest extends TestCase
             yield 'some already promoted' => [
                 ['$a', '$b', '$q', '$s', '$t'],
                 '<?php class Foo {
-                public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
-            }',
+                    public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
+                }',
             ];
         }
     }
@@ -116,8 +116,8 @@ final class ConstructorAnalysisTest extends TestCase
             yield 'some already promoted' => [
                 [22 => '$b', 39 => '$s'],
                 '<?php class Foo {
-                public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
-            }',
+                    public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
+                }',
             ];
         }
     }
