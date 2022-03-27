@@ -105,10 +105,17 @@ final class ConstructorAnalysisTest extends TestCase
             }',
         ];
 
-        yield 'callable is not supported' => [
+        yield 'callable is not promotable' => [
             [15 => '$a', 20 => '$b', 35 => '$i'],
             '<?php class Foo {
                 public function __construct(array $a, bool $b, callable $c1, CALLABLE $c1, int $i) {}
+            }',
+        ];
+
+        yield 'variadic parameter is not promotable' => [
+            [15 => '$x', 20 => '$y'],
+            '<?php class Foo {
+                public function __construct(int $x, int $y, int ...$z) {}
             }',
         ];
 

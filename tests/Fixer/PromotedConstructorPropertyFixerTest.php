@@ -72,6 +72,24 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'do not promote with callable type' => [
+            '<?php class Foo {
+                public function __construct(callable $x) {
+                    $this->x = $x;
+                }
+            }
+            ',
+        ];
+
+        yield 'do not promote variadic parameter' => [
+            '<?php class Foo {
+                public function __construct(int ...$x) {
+                    $this->x = $x;
+                }
+            }
+            ',
+        ];
+
         yield 'do not promote when types of property and parameter are different' => [
             '<?php class Foo {
                 private int $x;
@@ -690,23 +708,23 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 
         yield 'do not promote with different name when new one is already used' => [
             '<?php class Foo {
-                private string $x;
+                private int $x;
                 public function __construct(
-                    callable $x,
-                    string $y,
-                    private string $z,
+                    int $x,
+                    int $y,
+                    private int $z,
                 ) {
                     $this->x = $y;
                 }
             }
             ',
             '<?php class Foo {
-                private string $x;
-                private string $z;
+                private int $x;
+                private int $z;
                 public function __construct(
-                    callable $x,
-                    string $y,
-                    string $z,
+                    int $x,
+                    int $y,
+                    int $z,
                 ) {
                     $this->x = $y;
                     $this->z = $z;

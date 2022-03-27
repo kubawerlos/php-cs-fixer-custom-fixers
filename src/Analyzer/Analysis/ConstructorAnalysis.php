@@ -74,7 +74,7 @@ final class ConstructorAnalysis
 
             $typeIndex = $this->tokens->getPrevMeaningfulToken($index);
             \assert(\is_int($typeIndex));
-            if ($this->tokens[$typeIndex]->equalsAny(['(', ',', [\T_CALLABLE]])) {
+            if ($this->tokens[$typeIndex]->equalsAny(['(', ',', [\T_CALLABLE], [\T_ELLIPSIS]])) {
                 continue;
             }
 
