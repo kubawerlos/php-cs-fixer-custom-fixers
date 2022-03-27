@@ -23,6 +23,56 @@ use PHPUnit\Framework\TestCase;
 final class ConstructorAnalysisTest extends TestCase
 {
     /**
+     * @param array<string> $expected
+     *
+     * @dataProvider provideGettingConstructorParameterNamesCases
+     */
+    public function testGettingConstructorParameterNames(array $expected, string $code): void
+    {
+        $tokens = Tokens::fromCode($code);
+        $analysis = new ConstructorAnalysis($tokens, 11);
+
+        self::assertSame(11, $analysis->getConstructorIndex());
+        self::assertSame($expected, $analysis->getConstructorParameterNames());
+    }
+
+    /**
+     * @return iterable<array{array<string>, string}>
+     */
+    public static function provideGettingConstructorParameterNamesCases(): iterable
+    {
+        yield 'parameters without types' => [
+            ['$a', '$b', '$c'],
+            '<?php class Foo {
+                public function __construct($a, $b, $c) {}
+            }',
+        ];
+
+        yield 'parameters with types' => [
+            ['$b', '$c', '$i', '$s'],
+            '<?php class Foo {
+                public function __construct(bool $b, callable $c, int $i, string $s) {}
+            }',
+        ];
+
+        yield 'parameters with defaults' => [
+            ['$x', '$y', '$z'],
+            '<?php class Foo {
+                public function __construct(Foo $x = null, ?Bar $y = null, float $z = 3.14) {}
+            }',
+        ];
+
+        if (\PHP_VERSION_ID >= 80000) {
+            yield 'some already promoted' => [
+                ['$a', '$b', '$q', '$s', '$t'],
+                '<?php class Foo {
+                    public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
+                }',
+            ];
+        }
+    }
+
+    /**
      * @param array<int, string> $expected
      *
      * @dataProvider provideGettingConstructorPromotableParametersCases
@@ -66,8 +116,8 @@ final class ConstructorAnalysisTest extends TestCase
             yield 'some already promoted' => [
                 [22 => '$b', 39 => '$s'],
                 '<?php class Foo {
-                public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
-            }',
+                    public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
+                }',
             ];
         }
     }

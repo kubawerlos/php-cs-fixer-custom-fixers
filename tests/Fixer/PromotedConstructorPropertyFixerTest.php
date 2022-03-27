@@ -688,6 +688,33 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'do not promote with different name when new one is already used' => [
+            '<?php class Foo {
+                private string $x;
+                public function __construct(
+                    callable $x,
+                    string $y,
+                    private string $z,
+                ) {
+                    $this->x = $y;
+                }
+            }
+            ',
+            '<?php class Foo {
+                private string $x;
+                private string $z;
+                public function __construct(
+                    callable $x,
+                    string $y,
+                    string $z,
+                ) {
+                    $this->x = $y;
+                    $this->z = $z;
+                }
+            }
+            ',
+        ];
+
         yield 'promote with different name when not defined' => [
             '<?php class Foo {
                 public function __construct(public string $x) {
