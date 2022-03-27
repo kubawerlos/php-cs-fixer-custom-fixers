@@ -143,29 +143,20 @@ class Foo {
                 continue;
             }
 
-            $propertyType = '';
-            if ($propertyIndex !== null) {
-                $propertyType = $this->getType($tokens, $propertyIndex);
-            }
+            $propertyType = $this->getType($tokens, $propertyIndex);
+            $parameterType = $this->getType($tokens, $constructorParameterIndex);
 
-            $parameterTypeType = $this->getType($tokens, $constructorParameterIndex);
-
-            if (!$this->typesAllowPromoting($propertyType, $parameterTypeType)) {
+            if (!$this->typesAllowPromoting($propertyType, $parameterType)) {
                 continue;
             }
 
-            $tokensToInsert = [new Token([\T_PUBLIC, 'public'])];
-            if ($propertyIndex !== null) {
-                $tokensToInsert = $this->removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
-            }
-
             $assignedPropertyIndex = $tokens->getPrevTokenOfKind($constructorPromotableAssignments[$constructorParameterName], [[\T_STRING]]);
-            $this->renameVariable(
-                $tokens,
-                $constructorAnalysis->getConstructorIndex(),
-                $tokens[$constructorParameterIndex]->getContent(),
-                '$' . $tokens[$assignedPropertyIndex]->getContent()
-            );
+            $oldParameterName = $tokens[$constructorParameterIndex]->getContent();
+            $newParameterName = '$' . $tokens[$assignedPropertyIndex]->getContent();
+
+            $tokensToInsert = $this->removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
+
+            $this->renameVariable($tokens, $constructorAnalysis->getConstructorIndex(), $oldParameterName, $newParameterName);
 
             $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
             $this->updateParameterSignature(
@@ -242,9 +233,11 @@ class Foo {
         return \count($docBlock->getAnnotations()) === 0;
     }
 
-    private function getType(Tokens $tokens, int $variableIndex): string
+    private function getType(Tokens $tokens, ?int $variableIndex): string
     {
-        $type = '';
+        if ($variableIndex === null) {
+            return '';
+        }
 
         $index = $tokens->getPrevTokenOfKind($variableIndex, ['(', ',', [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_VAR], [CT::T_ATTRIBUTE_CLOSE]]);
         \assert(\is_int($index));
@@ -252,6 +245,7 @@ class Foo {
         $index = $tokens->getNextMeaningfulToken($index);
         \assert(\is_int($index));
 
+        $type = '';
         while ($index < $variableIndex) {
             $type .= $tokens[$index]->getContent();
 
@@ -262,7 +256,7 @@ class Foo {
         return $type;
     }
 
-    private function typesAllowPromoting(string $propertyType, string $parameterTypeType): bool
+    private function typesAllowPromoting(string $propertyType, string $parameterType): bool
     {
         if ($propertyType === '') {
             return true;
@@ -272,11 +266,11 @@ class Foo {
             $propertyType = \substr($propertyType, 1);
         }
 
-        if (\substr($parameterTypeType, 0, 1) === '?') {
-            $parameterTypeType = \substr($parameterTypeType, 1);
+        if (\substr($parameterType, 0, 1) === '?') {
+            $parameterType = \substr($parameterType, 1);
         }
 
-        return \strtolower($propertyType) === \strtolower($parameterTypeType);
+        return \strtolower($propertyType) === \strtolower($parameterType);
     }
 
     /**
@@ -304,8 +298,12 @@ class Foo {
     /**
      * @return array<Token>
      */
-    private function removePropertyAndReturnTokensToInsert(Tokens $tokens, int $propertyIndex): array
+    private function removePropertyAndReturnTokensToInsert(Tokens $tokens, ?int $propertyIndex): array
     {
+        if ($propertyIndex === null) {
+            return [new Token([\T_PUBLIC, 'public'])];
+        }
+
         $visibilityIndex = $tokens->getPrevTokenOfKind($propertyIndex, [[\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_VAR]]);
         \assert(\is_int($visibilityIndex));
 

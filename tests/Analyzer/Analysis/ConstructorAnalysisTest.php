@@ -42,21 +42,21 @@ final class ConstructorAnalysisTest extends TestCase
     public static function provideGettingConstructorPromotableParametersCases(): iterable
     {
         yield 'simple parameters' => [
-            [15 => 'a', 20 => 'b', 25 => 'i'],
+            [15 => '$a', 20 => '$b', 25 => '$i'],
             '<?php class Foo {
                 public function __construct(array $a, bool $b, int $i) {}
             }',
         ];
 
         yield 'parameters without types are not supported' => [
-            [21 => 'i'],
+            [21 => '$i'],
             '<?php class Foo {
                 public function __construct($noType1, $noType2, int $i, $noType3) {}
             }',
         ];
 
         yield 'callable is not supported' => [
-            [15 => 'a', 20 => 'b', 35 => 'i'],
+            [15 => '$a', 20 => '$b', 35 => '$i'],
             '<?php class Foo {
                 public function __construct(array $a, bool $b, callable $c1, CALLABLE $c1, int $i) {}
             }',
@@ -64,7 +64,7 @@ final class ConstructorAnalysisTest extends TestCase
 
         if (\PHP_VERSION_ID >= 80000) {
             yield 'some already promoted' => [
-                [22 => 'b', 39 => 's'],
+                [22 => '$b', 39 => '$s'],
                 '<?php class Foo {
                 public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
             }',
@@ -91,7 +91,7 @@ final class ConstructorAnalysisTest extends TestCase
     public static function provideGettingConstructorPromotableAssignmentsCases(): iterable
     {
         yield 'simple assignments' => [
-            ['x' => 30, 'y' => 39, 'z' => 48],
+            ['$x' => 30, '$y' => 39, '$z' => 48],
             '<?php class Foo {
                 public function __construct($x, $y, $z) {
                     $this->a = $x;
@@ -102,7 +102,7 @@ final class ConstructorAnalysisTest extends TestCase
         ];
 
         yield 'duplicated assigned parameters' => [
-            ['x' => 30, 'z' => 59],
+            ['$x' => 30, '$z' => 59],
             '<?php class Foo {
                 public function __construct($x, $y, $z) {
                     $this->a = $x;
@@ -114,7 +114,7 @@ final class ConstructorAnalysisTest extends TestCase
         ];
 
         yield 'duplicated assigned properties' => [
-            ['x' => 30],
+            ['$x' => 30],
             '<?php class Foo {
                 public function __construct($x, $y, $z) {
                     $this->a = $x;
@@ -125,7 +125,7 @@ final class ConstructorAnalysisTest extends TestCase
         ];
 
         yield 'not allowed assignment' => [
-            ['e' => 86],
+            ['$e' => 86],
             '<?php class Foo {
                 public function __construct($a, $b, $c, $d, $e) {
                     $this->a = $a + 1;
@@ -138,7 +138,7 @@ final class ConstructorAnalysisTest extends TestCase
         ];
 
         yield 'nested assignment' => [
-            ['x' => 30, 'z' => 60],
+            ['$x' => 30, '$z' => 60],
             '<?php class Foo {
                 public function __construct($x, $y, $z) {
                     $this->x = $x;

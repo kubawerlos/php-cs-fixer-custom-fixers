@@ -72,7 +72,7 @@ final class ConstructorAnalysis
                 continue;
             }
 
-            $constructorPromotableParameters[$index] = \substr($this->tokens[$index]->getContent(), 1);
+            $constructorPromotableParameters[$index] = $this->tokens[$index]->getContent();
         }
 
         return $constructorPromotableParameters;
@@ -112,7 +112,7 @@ final class ConstructorAnalysis
             }
 
             $properties[$propertyIndex] = $this->tokens[$propertyIndex]->getContent();
-            $variables[$index] = \substr($this->tokens[$index]->getContent(), 1);
+            $variables[$index] = $this->tokens[$index]->getContent();
             $propertyToVariableMap[$propertyIndex] = $index;
         }
 
