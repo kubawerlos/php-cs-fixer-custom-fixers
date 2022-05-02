@@ -1,6 +1,6 @@
 parameters:
   bootstrapFiles:
-    - ../vendor/autoload.php
+    - ./autoload.php
   excludePaths:
     - ./src/Readme
   ignoreErrors:

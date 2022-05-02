@@ -9,20 +9,24 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-if (interface_exists('PhpCsFixer\\Fixer\\FixerInterface')) {
-    return; // all good, PHP CS Fixer is here
-}
+if (!interface_exists('PhpCsFixer\\Fixer\\FixerInterface')) {
+    $phars = [
+        __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer',
+        __DIR__ . '/vendor/php-cs-fixer/shim/php-cs-fixer',
+    ];
 
-$phar = __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer';
-if (file_exists($phar)) {
-    $pharLoaded = Phar::loadPhar($phar, 'php-cs-fixer.phar');
-    if (!$pharLoaded) {
-        exit(sprintf('Phar "%s" not loaded!' . PHP_EOL, $phar));
+    foreach ($phars as $phar) {
+        if (file_exists($phar)) {
+            $pharLoaded = Phar::loadPhar($phar, 'php-cs-fixer.phar');
+            if (!$pharLoaded) {
+                exit(sprintf('Phar "%s" not loaded!' . PHP_EOL, $phar));
+            }
+
+            require_once 'phar://php-cs-fixer.phar/vendor/autoload.php';
+            break;
+        }
     }
-
-    require_once 'phar://php-cs-fixer.phar/vendor/autoload.php';
-
-    return;
 }
 
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';

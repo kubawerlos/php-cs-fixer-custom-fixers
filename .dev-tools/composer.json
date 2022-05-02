@@ -40,7 +40,7 @@
             "composer-require-checker check ../composer.json --config-file composer-require-checker.json",
             "phpcs",
             "php-cs-fixer fix --ansi --config=../.php-cs-fixer.php --diff --dry-run --verbose",
-            "types-checker --autoloader=../vendor/autoload.php src ../src ../tests",
+            "types-checker --autoloader=./autoload.php src ../src ../tests",
             "phpmd ../src text phpmd.xml",
             "phpstan analyse --no-progress",
             "psalm --no-progress --shepherd"
