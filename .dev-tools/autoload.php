@@ -9,12 +9,21 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+$autoloads = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/vendor/autoload.php',
+];
+foreach ($autoloads as $autoload) {
+    if (file_exists($autoload)) {
+        require_once $autoload;
+    }
+}
+
 if (!interface_exists('PhpCsFixer\\Fixer\\FixerInterface')) {
     $phars = [
         __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer',
         __DIR__ . '/vendor/php-cs-fixer/shim/php-cs-fixer',
     ];
-
     foreach ($phars as $phar) {
         if (file_exists($phar)) {
             $pharLoaded = Phar::loadPhar($phar, 'php-cs-fixer.phar');
@@ -27,6 +36,3 @@ if (!interface_exists('PhpCsFixer\\Fixer\\FixerInterface')) {
         }
     }
 }
-
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/vendor/autoload.php';
