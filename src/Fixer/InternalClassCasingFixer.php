@@ -59,6 +59,9 @@ final class InternalClassCasingFixer extends AbstractFixer implements Deprecated
         $this->classReferenceNameCasingFixer->fix($file, $tokens);
     }
 
+    /**
+     * @return array<string>
+     */
     public function getSuccessorsNames(): array
     {
         return [$this->classReferenceNameCasingFixer->getName()];
