@@ -44,6 +44,32 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
         yield ['<?php class Foo implements Stringable  { public function __toString() { return "Foo"; } }'];
         yield ['<?php class Foo implements \Stringable { public function __toString() { return "Foo"; } }'];
 
+        yield ['<?php
+            namespace Foo;
+            use Stringable;
+            class Bar implements Stringable {
+                public function __toString() { return ""; }
+            }
+        '];
+
+        yield ['<?php
+            namespace Foo;
+            use \Stringable;
+            class Bar implements Stringable {
+                public function __toString() { return ""; }
+            }
+        '];
+
+        yield ['<?php
+            namespace Foo;
+            use Bar;
+            use STRINGABLE;
+            use Baz;
+            class Qux implements Stringable {
+                public function __toString() { return ""; }
+            }
+        '];
+
         yield ['<?php class Foo {
                     public function toString() {
                     function () { return 0; };
@@ -152,6 +178,23 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             {
                 public function __TOSTRING() { return "Foo"; }
             }
+            ',
+        ];
+
+        yield [
+            '<?php
+                namespace Foo;
+                use Bar;
+                class Baz implements Stringable, \Stringable {
+                    public function __toString() { return ""; }
+                }
+            ',
+            '<?php
+                namespace Foo;
+                use Bar;
+                class Baz implements Stringable {
+                    public function __toString() { return ""; }
+                }
             ',
         ];
 
