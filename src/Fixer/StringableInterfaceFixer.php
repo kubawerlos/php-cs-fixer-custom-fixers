@@ -55,11 +55,11 @@ class Foo
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $isNamespaced = false;
+        $namespaceStartIndex = null;
 
         for ($index = 1; $index < $tokens->count(); $index++) {
             if ($tokens[$index]->isGivenKind(\T_NAMESPACE)) {
-                $isNamespaced = true;
+                $namespaceStartIndex = $index;
                 continue;
             }
 
@@ -76,7 +76,7 @@ class Foo
                 continue;
             }
 
-            $this->addStringableInterface($tokens, $index, $isNamespaced);
+            $this->addStringableInterface($tokens, $index, $namespaceStartIndex);
         }
     }
 
@@ -101,7 +101,7 @@ class Foo
         return false;
     }
 
-    private function addStringableInterface(Tokens $tokens, int $classIndex, bool $isNamespaced): void
+    private function addStringableInterface(Tokens $tokens, int $classIndex, ?int $namespaceStartIndex): void
     {
         $implementsIndex = $tokens->getNextTokenOfKind($classIndex, ['{', [\T_IMPLEMENTS]]);
         \assert(\is_int($implementsIndex));
@@ -126,7 +126,7 @@ class Foo
 
         $implementsEndIndex = $tokens->getNextTokenOfKind($implementsIndex, ['{']);
         \assert(\is_int($implementsEndIndex));
-        if ($this->isStringableAlreadyUsed($tokens, $implementsIndex + 1, $implementsEndIndex - 1, $isNamespaced)) {
+        if ($this->isStringableAlreadyUsed($tokens, $implementsIndex + 1, $implementsEndIndex - 1, $namespaceStartIndex)) {
             return;
         }
 
@@ -144,7 +144,7 @@ class Foo
         );
     }
 
-    private function isStringableAlreadyUsed(Tokens $tokens, int $implementsStartIndex, int $implementsEndIndex, bool $isNamespaced): bool
+    private function isStringableAlreadyUsed(Tokens $tokens, int $implementsStartIndex, int $implementsEndIndex, ?int $namespaceStartIndex): bool
     {
         for ($index = $implementsStartIndex; $index < $implementsEndIndex; $index++) {
             if (!$tokens[$index]->equals([\T_STRING, 'Stringable'], false)) {
@@ -162,9 +162,35 @@ class Foo
                     return true;
                 }
             } else {
-                if (!$isNamespaced) {
+                if ($namespaceStartIndex === null) {
                     return true;
                 }
+                if ($this->isStringableImported($tokens, $namespaceStartIndex, $index)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private function isStringableImported(Tokens $tokens, int $startIndex, int $endIndex): bool
+    {
+        for ($index = $startIndex; $index < $endIndex; $index++) {
+            if (!$tokens[$index]->equals([\T_STRING, 'Stringable'], false)) {
+                continue;
+            }
+
+            $useIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($useIndex));
+
+            if ($tokens[$useIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+                $useIndex = $tokens->getPrevMeaningfulToken($useIndex);
+                \assert(\is_int($useIndex));
+            }
+
+            if ($tokens[$useIndex]->isGivenKind(\T_USE)) {
+                return true;
             }
         }
 
