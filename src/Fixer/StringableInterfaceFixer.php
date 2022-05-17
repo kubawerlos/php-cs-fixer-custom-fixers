@@ -55,7 +55,7 @@ class Foo
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $namespaceStartIndex = null;
+        $namespaceStartIndex = 0;
 
         for ($index = 1; $index < $tokens->count(); $index++) {
             if ($tokens[$index]->isGivenKind(\T_NAMESPACE)) {
@@ -76,7 +76,11 @@ class Foo
                 continue;
             }
 
-            $this->addStringableInterface($tokens, $index, $namespaceStartIndex);
+            if ($this->doesImplementStringable($tokens, $namespaceStartIndex, $index + 1, $classStartIndex - 1)) {
+                continue;
+            }
+
+            $this->addStringableInterface($tokens, $index);
         }
     }
 
@@ -101,7 +105,92 @@ class Foo
         return false;
     }
 
-    private function addStringableInterface(Tokens $tokens, int $classIndex, ?int $namespaceStartIndex): void
+    private function doesImplementStringable(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex, int $classOpenBraceIndex): bool
+    {
+        $interfaces = $this->getInterfaces($tokens, $classKeywordIndex, $classOpenBraceIndex);
+        if ($interfaces === []) {
+            return false;
+        }
+
+        if (\in_array('\stringable', $interfaces, true)) {
+            return true;
+        }
+
+        if ($namespaceStartIndex === 0 && \in_array('stringable', $interfaces, true)) {
+            return true;
+        }
+
+        foreach ($this->getImports($tokens, $namespaceStartIndex, $classKeywordIndex) as $import) {
+            if (\in_array($import, $interfaces, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getInterfaces(Tokens $tokens, int $classKeywordIndex, int $classOpenBraceIndex): array
+    {
+        $startIndex = $tokens->getNextTokenOfKind($classKeywordIndex, ['{', [\T_IMPLEMENTS]]);
+        \assert(\is_int($startIndex));
+
+        $interfaces = [];
+        for ($index = $startIndex; $index < $classOpenBraceIndex; $index++) {
+            if (!$tokens[$index]->isGivenKind(\T_STRING)) {
+                continue;
+            }
+
+            $interface = \strtolower($tokens[$index]->getContent());
+
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($prevIndex));
+            if ($tokens[$prevIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+                $interface = '\\' . $interface;
+                $prevPrevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
+                \assert(\is_int($prevPrevIndex));
+                if ($tokens[$prevPrevIndex]->isGivenKind(\T_STRING)) {
+                    continue;
+                }
+            }
+
+            $interfaces[] = $interface;
+        }
+
+        return $interfaces;
+    }
+
+    /**
+     * @return iterable<string>
+     */
+    private function getImports(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex): iterable
+    {
+        for ($index = $namespaceStartIndex; $index < $classKeywordIndex; $index++) {
+            if (!$tokens[$index]->isGivenKind(\T_USE)) {
+                continue;
+            }
+            $nameIndex = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($nameIndex));
+
+            if ($tokens[$nameIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+                $nameIndex = $tokens->getNextMeaningfulToken($nameIndex);
+                \assert(\is_int($nameIndex));
+            }
+
+            $nextIndex = $tokens->getNextMeaningfulToken($nameIndex);
+            \assert(\is_int($nextIndex));
+            if ($tokens[$nextIndex]->isGivenKind(\T_AS)) {
+                $nameIndex = $tokens->getNextMeaningfulToken($nextIndex);
+                \assert(\is_int($nameIndex));
+            }
+
+            yield \strtolower($tokens[$nameIndex]->getContent());
+        }
+    }
+
+    private function addStringableInterface(Tokens $tokens, int $classIndex): void
     {
         $implementsIndex = $tokens->getNextTokenOfKind($classIndex, ['{', [\T_IMPLEMENTS]]);
         \assert(\is_int($implementsIndex));
@@ -126,9 +215,6 @@ class Foo
 
         $implementsEndIndex = $tokens->getNextTokenOfKind($implementsIndex, ['{']);
         \assert(\is_int($implementsEndIndex));
-        if ($this->isStringableAlreadyUsed($tokens, $implementsIndex + 1, $implementsEndIndex - 1, $namespaceStartIndex)) {
-            return;
-        }
 
         $prevIndex = $tokens->getPrevMeaningfulToken($implementsEndIndex);
         \assert(\is_int($prevIndex));
@@ -142,58 +228,5 @@ class Foo
                 new Token([\T_STRING, 'Stringable']),
             ]
         );
-    }
-
-    private function isStringableAlreadyUsed(Tokens $tokens, int $implementsStartIndex, int $implementsEndIndex, ?int $namespaceStartIndex): bool
-    {
-        for ($index = $implementsStartIndex; $index < $implementsEndIndex; $index++) {
-            if (!$tokens[$index]->equals([\T_STRING, 'Stringable'], false)) {
-                continue;
-            }
-
-            $namespaceSeparatorIndex = $tokens->getPrevMeaningfulToken($index);
-            \assert(\is_int($namespaceSeparatorIndex));
-
-            if ($tokens[$namespaceSeparatorIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-                $beforeNamespaceSeparatorIndex = $tokens->getPrevMeaningfulToken($namespaceSeparatorIndex);
-                \assert(\is_int($beforeNamespaceSeparatorIndex));
-
-                if (!$tokens[$beforeNamespaceSeparatorIndex]->isGivenKind(\T_STRING)) {
-                    return true;
-                }
-            } else {
-                if ($namespaceStartIndex === null) {
-                    return true;
-                }
-                if ($this->isStringableImported($tokens, $namespaceStartIndex, $index)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private function isStringableImported(Tokens $tokens, int $startIndex, int $endIndex): bool
-    {
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            if (!$tokens[$index]->equals([\T_STRING, 'Stringable'], false)) {
-                continue;
-            }
-
-            $useIndex = $tokens->getPrevMeaningfulToken($index);
-            \assert(\is_int($useIndex));
-
-            if ($tokens[$useIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-                $useIndex = $tokens->getPrevMeaningfulToken($useIndex);
-                \assert(\is_int($useIndex));
-            }
-
-            if ($tokens[$useIndex]->isGivenKind(\T_USE)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
