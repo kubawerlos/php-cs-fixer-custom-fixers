@@ -37,6 +37,7 @@
         "bool",
         "false",
         "int",
+        "iterable",
         "null",
         "self",
         "static",
