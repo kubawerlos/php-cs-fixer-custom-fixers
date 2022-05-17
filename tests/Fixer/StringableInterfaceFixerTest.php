@@ -53,6 +53,21 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
         '];
 
         yield ['<?php
+            use Stringable as Stringy;
+            class Bar implements Stringy {
+                public function __toString() { return ""; }
+            }
+        '];
+
+        yield ['<?php
+            namespace Foo;
+            use Stringable as Stringy;
+            class Bar implements Stringy {
+                public function __toString() { return ""; }
+            }
+        '];
+
+        yield ['<?php
             namespace Foo;
             use \Stringable;
             class Bar implements Stringable {
@@ -106,6 +121,23 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             ',
             '<?php namespace FooNamespace;
             class Foo
+            {
+                public function __toString() { return "Foo"; }
+            }
+            ',
+        ];
+
+        yield [
+            '<?php namespace FooNamespace;
+            use Bar\Stringable;
+            class Foo implements Stringable, \Stringable
+            {
+                public function __toString() { return "Foo"; }
+            }
+            ',
+            '<?php namespace FooNamespace;
+            use Bar\Stringable;
+            class Foo implements Stringable
             {
                 public function __toString() { return "Foo"; }
             }
@@ -238,6 +270,34 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             class Foo3 { public function __toString() { return "3"; } }
             class Foo4 { public function __noString() { return "4"; } }
             class Foo5 { public function __noString() { return "5"; } }
+            ',
+        ];
+
+        yield [
+            '<?php
+                namespace Foo { class C implements I, \Stringable { public function __toString() { return ""; } }}
+                namespace Bar { class C implements \Stringable, I { public function __toString() { return ""; } }}
+                namespace Baz { class C implements I, \Stringable { public function __toString() { return ""; } }}
+            ;
+            ',
+            '<?php
+                namespace Foo { class C implements I { public function __toString() { return ""; } }}
+                namespace Bar { class C implements \Stringable, I { public function __toString() { return ""; } }}
+                namespace Baz { class C implements I { public function __toString() { return ""; } }}
+            ;
+            ',
+        ];
+
+        yield [
+            '<?php
+                namespace Foo { use Stringable as Stringy; class C {} }
+                namespace Bar { class C implements Stringy, \Stringable { public function __toString() { return ""; } }}
+            ;
+            ',
+            '<?php
+                namespace Foo { use Stringable as Stringy; class C {} }
+                namespace Bar { class C implements Stringy { public function __toString() { return ""; } }}
+            ;
             ',
         ];
     }
