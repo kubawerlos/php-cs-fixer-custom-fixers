@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.11.0
+- Add ReadonlyPromotedPropertiesFixer
+
 ## v3.10.0
 - Do not require `friendsofphp/php-cs-fixer` as dependency (to allow using `php-cs-fixer/shim`)
 
