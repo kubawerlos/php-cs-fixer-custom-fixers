@@ -32,7 +32,6 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
     public function __construct(
         public array $a,
         public bool $b,
-        public int $i,
     ) {}
 }
 ',
@@ -44,6 +43,9 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         );
     }
 
+    /**
+     * Must run after PromotedConstructorPropertyFixer.
+     */
     public function getPriority(): int
     {
         return 0;
