@@ -25,6 +25,8 @@ use Symfony\Component\Finder\Finder;
  * @internal
  *
  * @coversNothing
+ *
+ * @requires PHP 8.1
  */
 final class PriorityTest extends TestCase
 {
@@ -32,8 +34,6 @@ final class PriorityTest extends TestCase
 
     /**
      * @dataProvider providePriorityCases
-     *
-     * @requires PHP 8.0
      */
     public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer): void
     {
@@ -42,8 +42,6 @@ final class PriorityTest extends TestCase
 
     /**
      * @dataProvider providePriorityCases
-     *
-     * @requires PHP 8.0
      */
     public function testInOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
@@ -64,8 +62,6 @@ final class PriorityTest extends TestCase
 
     /**
      * @dataProvider providePriorityCases
-     *
-     * @requires PHP 8.0
      */
     public function testInRevertedOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {

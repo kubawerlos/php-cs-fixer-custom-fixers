@@ -78,7 +78,7 @@ class Foo {
     }
 
     /**
-     * Must run before BracesFixer, ClassAttributesSeparationFixer, ConstructorEmptyBracesFixer, MultilinePromotedPropertiesFixer, NoExtraBlankLinesFixer.
+     * Must run before BracesFixer, ClassAttributesSeparationFixer, ConstructorEmptyBracesFixer, MultilinePromotedPropertiesFixer, NoExtraBlankLinesFixer, ReadonlyPromotedPropertiesFixer.
      */
     public function getPriority(): int
     {

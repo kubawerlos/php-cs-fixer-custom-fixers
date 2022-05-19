@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3422-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3450-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -564,6 +564,20 @@ Configuration options:
 -        $this->bar = $bar;
 +    public function __construct(private string $bar) {
      }
+ }
+```
+
+#### ReadonlyPromotedPropertiesFixer
+Promoted properties must readonly.
+  *Risky: when property is written.*
+```diff
+ <?php class Foo {
+     public function __construct(
+-        public array $a,
+-        public bool $b,
++        public readonly array $a,
++        public readonly bool $b,
+     ) {}
  }
 ```
 
