@@ -37,7 +37,7 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array<string>>>
+     * @return iterable<array<string>>
      */
     public static function provideFixCases(): iterable
     {
