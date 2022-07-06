@@ -300,5 +300,17 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             ;
             ',
         ];
+
+        yield ['<?php
+            namespace Foo;
+            use Stringable;
+            class Bar {
+                public function foo() {
+                    new class () implements Stringable {
+                        public function __toString() { return ""; }
+                    };
+                }
+            }
+        '];
     }
 }

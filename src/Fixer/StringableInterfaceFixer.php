@@ -86,16 +86,21 @@ class Foo
 
     private function doesHaveToStringMethod(Tokens $tokens, int $classStartIndex, int $classEndIndex): bool
     {
-        for ($index = $classStartIndex + 1; $index < $classEndIndex; $index++) {
+        $index = $classStartIndex;
+
+        while ($index < $classEndIndex) {
+            $index++;
+
+            if ($tokens[$index]->equals('{')) {
+                $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
+                continue;
+            }
+
             if (!$tokens[$index]->isGivenKind(\T_FUNCTION)) {
                 continue;
             }
 
-            $functionNameIndex = $tokens->getNextTokenOfKind($index, [[\T_STRING]]);
-
-            if ($functionNameIndex === null || $functionNameIndex > $classEndIndex) {
-                return false;
-            }
+            $functionNameIndex = $tokens->getNextMeaningfulToken($index);
 
             if ($tokens[$functionNameIndex]->equals([\T_STRING, '__toString'], false)) {
                 return true;
