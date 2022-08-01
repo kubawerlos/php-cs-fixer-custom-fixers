@@ -116,8 +116,8 @@ class Foo {
         \krsort($this->tokensToInsert);
 
         /**
-         * @var int          $index
-         * @var array<Token> $tokensToInsert
+         * @var int         $index
+         * @var list<Token> $tokensToInsert
          */
         foreach ($this->tokensToInsert as $index => $tokensToInsert) {
             $tokens->insertAt($index, $tokensToInsert);
@@ -344,7 +344,7 @@ class Foo {
     }
 
     /**
-     * @param array<array<int>|string> $tokenKinds
+     * @param array<int, string> $tokenKinds
      */
     private function getTokenOfKindSibling(Tokens $tokens, int $direction, int $index, array $tokenKinds): int
     {

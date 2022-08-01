@@ -63,6 +63,7 @@ $x = getValue();
                 continue;
             }
 
+            /** @var null|list<Token> $assertTokens */
             $assertTokens = $this->getAssertTokens($tokens, $docCommentIndex, $tokens[$variableIndex]->getContent());
             if ($assertTokens === null) {
                 continue;
