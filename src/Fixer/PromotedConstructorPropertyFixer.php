@@ -344,7 +344,7 @@ class Foo {
     }
 
     /**
-     * @param array<array<int>|string> $tokenKinds
+     * @param array<string> $tokenKinds
      */
     private function getTokenOfKindSibling(Tokens $tokens, int $direction, int $index, array $tokenKinds): int
     {
