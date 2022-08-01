@@ -3,7 +3,7 @@
         "php": "^8.1",
         "ergebnis/composer-normalize": "^2.28.1",
         "infection/infection": "^0.26.13",
-        "kubawerlos/composer-smaller-lock": "^1.0.0",
+        "kubawerlos/composer-smaller-lock": "^1.0.1",
         "kubawerlos/php-cs-fixer-config": "^3.11.0",
         "kubawerlos/types-checker": "^2.2.0",
         "maglnet/composer-require-checker": "^4.0.0",

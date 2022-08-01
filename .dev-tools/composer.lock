@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2a3376f726cabf4e2fc18066bee1090",
+    "content-hash": "50157c607eb69aaae0e8b3a71716e936",
     "packages": [
         {
             "name": "amphp/amp",
@@ -599,21 +599,27 @@
         },
         {
             "name": "kubawerlos/composer-smaller-lock",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/composer-smaller-lock.git",
-                "reference": "d5b35d16896d3e7e93ff331e9e2119b71e5cb5e2"
+                "reference": "3b0a8695de0595d471d3383118972f10e31ab41e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/composer-smaller-lock/zipball/d5b35d16896d3e7e93ff331e9e2119b71e5cb5e2",
-                "reference": "d5b35d16896d3e7e93ff331e9e2119b71e5cb5e2"
+                "url": "https://api.github.com/repos/kubawerlos/composer-smaller-lock/zipball/3b0a8695de0595d471d3383118972f10e31ab41e",
+                "reference": "3b0a8695de0595d471d3383118972f10e31ab41e",
+                "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^2.0.12",
                 "ext-json": "*",
                 "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0.12",
+                "mikey179/vfsstream": "^1.6.8",
+                "phpunit/phpunit": "^9.5.4"
             },
             "type": "composer-plugin",
             "extra": {
@@ -624,10 +630,16 @@
                     "ComposerSmallerLock\\": "./src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Plugin to keep composer.lock smaller and readable"
+            "description": "Plugin to keep composer.lock smaller and readable",
+            "support": {
+                "issues": "https://github.com/kubawerlos/composer-smaller-lock/issues",
+                "source": "https://github.com/kubawerlos/composer-smaller-lock/tree/1.0.1"
+            },
+            "time": "2022-07-13T12:06:21+00:00"
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
