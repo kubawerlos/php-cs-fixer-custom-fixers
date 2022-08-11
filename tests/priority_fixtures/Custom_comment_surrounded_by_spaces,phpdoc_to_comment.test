@@ -1,8 +1,9 @@
 --CONFIGURATION--
 { "PhpCsFixerCustomFixers/comment_surrounded_by_spaces": true, "phpdoc_to_comment": true }
 --EXPECTED--
-<?php class Foo
-// foo
+<?php
+/* foo */
 
 --INPUT--
+<?php
 /**foo*/
