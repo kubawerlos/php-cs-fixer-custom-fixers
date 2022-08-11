@@ -31,12 +31,12 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
     }
 
     /**
-     * Must run before MultilineCommentOpeningClosingFixer.
+     * Must run before MultilineCommentOpeningClosingFixer, PhpdocToCommentFixer.
      * Must run after CommentedOutFunctionFixer.
      */
     public function getPriority(): int
     {
-        return 1;
+        return 26;
     }
 
     public function isCandidate(Tokens $tokens): bool
