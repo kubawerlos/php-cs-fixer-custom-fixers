@@ -17,7 +17,6 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - run: composer self-update --snapshot
       - run: composer require friendsofphp/php-cs-fixer --no-update
       - run: composer update --no-progress
       - run: composer analyse
