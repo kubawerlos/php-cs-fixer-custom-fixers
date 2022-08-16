@@ -31,14 +31,6 @@
             "Tests\\": "tests"
         }
     },
-    "config": {
-        "allow-plugins": {
-            "infection/extension-installer": false,
-            "ergebnis/composer-normalize": false,
-            "kubawerlos/composer-smaller-lock": false,
-            "phpstan/extension-installer": false
-        }
-    },
     "scripts": {
         "analyse": [
             "@install-dev-tools",
