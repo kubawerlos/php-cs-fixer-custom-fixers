@@ -66,7 +66,7 @@ var_dump($x);
      */
     public function getPriority(): int
     {
-        return 2;
+        return 27;
     }
 
     public function isCandidate(Tokens $tokens): bool
