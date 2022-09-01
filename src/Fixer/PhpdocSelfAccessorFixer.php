@@ -38,12 +38,9 @@ class Foo {
         );
     }
 
-    /**
-     * Must run before NoSuperfluousPhpdocTagsFixer.
-     */
     public function getPriority(): int
     {
-        return 7;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
