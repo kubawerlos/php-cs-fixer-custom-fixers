@@ -2,19 +2,19 @@
     "require": {
         "php": "^8.1",
         "ergebnis/composer-normalize": "^2.28.3",
-        "infection/infection": "^0.26.13",
+        "infection/infection": "^0.26.14",
         "kubawerlos/composer-smaller-lock": "^1.0.1",
-        "kubawerlos/php-cs-fixer-config": "^3.11.0",
+        "kubawerlos/php-cs-fixer-config": "^3.12.0",
         "kubawerlos/types-checker": "^2.2.0",
-        "maglnet/composer-require-checker": "^4.1.0",
+        "maglnet/composer-require-checker": "^4.2.0",
         "mi-schi/phpmd-extension": "^4.3.0",
         "phpmd/phpmd": "^2.12.0",
         "phpstan/extension-installer": "^1.1.0",
-        "phpstan/phpstan": "^1.8.2",
+        "phpstan/phpstan": "^1.8.3",
         "phpstan/phpstan-phpunit": "^1.1.1",
-        "phpstan/phpstan-strict-rules": "^1.3.0",
+        "phpstan/phpstan-strict-rules": "^1.4.3",
         "squizlabs/php_codesniffer": "^3.7.1",
-        "vimeo/psalm": "^4.25.0"
+        "vimeo/psalm": "^4.26.0"
     },
     "autoload": {
         "psr-4": {
