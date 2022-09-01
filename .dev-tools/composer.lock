@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06a18ab9f23803318f92724360ef27f6",
+    "content-hash": "bd870d14ad612dd986b2286976bbf8ac",
     "packages": [
         {
             "name": "amphp/amp",
@@ -939,16 +939,16 @@
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.11.0",
+            "version": "2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "9141e6f8e1f044aa64aedb0e6894d12618cdcb3e"
+                "reference": "c8cded97b638338ec72837533950de0e2df32667"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/9141e6f8e1f044aa64aedb0e6894d12618cdcb3e",
-                "reference": "9141e6f8e1f044aa64aedb0e6894d12618cdcb3e"
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/c8cded97b638338ec72837533950de0e2df32667",
+                "reference": "c8cded97b638338ec72837533950de0e2df32667"
             },
             "require": {
                 "php": ">=5.3.7",
@@ -2144,16 +2144,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.26.0",
+            "version": "4.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "6998fabb2bf528b65777bf9941920888d23c03ac"
+                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/6998fabb2bf528b65777bf9941920888d23c03ac",
-                "reference": "6998fabb2bf528b65777bf9941920888d23c03ac"
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/faf106e717c37b8c81721845dba9de3d8deed8ff",
+                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff"
             },
             "require": {
                 "amphp/amp": "^2.4.2",
