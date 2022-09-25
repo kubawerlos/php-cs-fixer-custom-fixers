@@ -47,7 +47,7 @@ final class PriorityInternalFixer implements FixerInterface
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->findSequence([[\T_NAMESPACE], [\T_STRING, 'PhpCsFixerCustomFixers']]) !== null
-            && $tokens->findSequence([[\T_EXTENDS], [\T_STRING, 'AbstractFixer']]) !== null
+            && $tokens->findSequence([[\T_FUNCTION], [\T_STRING, 'getDefinition']]) !== null
             && !$tokens->findGivenKind(\T_ABSTRACT);
     }
 
@@ -59,17 +59,17 @@ final class PriorityInternalFixer implements FixerInterface
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         /** @var array<int> $indices */
-        $indices = $tokens->findSequence([[\T_EXTENDS], [\T_STRING, 'AbstractFixer']]);
+        $indices = $tokens->findSequence([[\T_CLASS]]);
 
-        $sequencesStartIndex = \key($indices);
-        \assert(\is_int($sequencesStartIndex));
+        $classStartIndex = \key($indices);
+        \assert(\is_int($classStartIndex));
 
-        $classNameIndex = $tokens->getPrevMeaningfulToken($sequencesStartIndex);
+        $classNameIndex = $tokens->getNextMeaningfulToken($classStartIndex);
         \assert(\is_int($classNameIndex));
 
         $className = $tokens[$classNameIndex]->getContent();
 
-        $startIndex = $tokens->getNextTokenOfKind($sequencesStartIndex, ['{']);
+        $startIndex = $tokens->getNextTokenOfKind($classNameIndex, ['{']);
         \assert(\is_int($startIndex));
 
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);

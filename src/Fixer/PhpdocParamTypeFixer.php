@@ -35,12 +35,12 @@ function a($foo, $bar) {}
     }
 
     /**
-     * Must run before NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer.
+     * Must run before PhpdocAlignFixer.
      * Must run after CommentToPhpdocFixer.
      */
     public function getPriority(): int
     {
-        return 7;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool

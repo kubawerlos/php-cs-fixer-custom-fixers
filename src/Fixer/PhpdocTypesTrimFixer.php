@@ -32,11 +32,11 @@ function foo($x) {}
     }
 
     /**
-     * Must run before NoSuperfluousPhpdocTagsFixer, PhpdocAlignFixer.
+     * Must run before PhpdocAlignFixer.
      */
     public function getPriority(): int
     {
-        return 7;
+        return 0;
     }
 
     protected function fixType(string $type): string
