@@ -97,6 +97,8 @@ final class SrcCodeTest extends TestCase
     }
 
     /**
+     * @param class-string $className
+     *
      * @dataProvider provideThereIsNoPregFunctionUsedDirectlyCases
      */
     public function testThereIsNoPregFunctionUsedDirectly(string $className): void
