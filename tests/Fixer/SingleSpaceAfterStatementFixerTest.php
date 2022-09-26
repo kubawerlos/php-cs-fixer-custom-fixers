@@ -286,7 +286,7 @@ do    {
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
         $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
-        self::assertNotRegExp('/[^\n ] {2,}/', $tokens->generateCode());
+        self::assertDoesNotMatchRegularExpression('/[^\n ] {2,}/', $tokens->generateCode());
     }
 
     /**
