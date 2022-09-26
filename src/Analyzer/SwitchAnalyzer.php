@@ -101,7 +101,6 @@ final class SwitchAnalyzer
             return (new self())->getSwitchAnalysis($tokens, $index)->getCasesEnd();
         }
 
-        /** @var null|array{isStart: bool, type: int} $blockType */
         $blockType = Tokens::detectBlockType($tokens[$index]);
         if ($blockType !== null && $blockType['isStart']) {
             return $tokens->findBlockEnd($blockType['type'], $index) + 1;

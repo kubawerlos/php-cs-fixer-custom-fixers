@@ -131,7 +131,6 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
             $index = $tokens->getPrevMeaningfulToken($index);
             \assert(\is_int($index));
 
-            /** @var null|array{isStart: bool, type: int} $blockType */
             $blockType = Tokens::detectBlockType($tokens[$index]);
             if ($blockType !== null && !$blockType['isStart']) {
                 $index = $tokens->findBlockStart($blockType['type'], $index);

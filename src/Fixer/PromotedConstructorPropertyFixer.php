@@ -351,7 +351,6 @@ class Foo {
         $index += $direction;
 
         while (!$tokens[$index]->equalsAny($tokenKinds)) {
-            /** @var null|array{isStart: bool, type: int} $blockType */
             $blockType = Tokens::detectBlockType($tokens[$index]);
 
             if ($blockType !== null) {
