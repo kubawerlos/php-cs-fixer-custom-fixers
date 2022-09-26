@@ -25,6 +25,8 @@ use Tests\Fixer\AbstractFixerTestCase;
 final class TestsCodeTest extends TestCase
 {
     /**
+     * @param class-string $className
+     *
      * @dataProvider provideTestClassCases
      */
     public function testClassContainsCorrectMethods(string $className): void
@@ -50,6 +52,8 @@ final class TestsCodeTest extends TestCase
     }
 
     /**
+     * @param class-string $className
+     *
      * @dataProvider provideTestClassCases
      */
     public function testDataProvidersAreStatic(string $className): void
@@ -73,6 +77,8 @@ final class TestsCodeTest extends TestCase
     }
 
     /**
+     * @param class-string $className
+     *
      * @dataProvider provideTestClassCases
      */
     public function testDataProvidersKeys(string $className): void
@@ -151,6 +157,8 @@ final class TestsCodeTest extends TestCase
     }
 
     /**
+     * @param class-string $className
+     *
      * @return array<\ReflectionMethod>
      */
     private function getDataProviders(string $className): array
@@ -162,6 +170,8 @@ final class TestsCodeTest extends TestCase
     }
 
     /**
+     * @param class-string $className
+     *
      * @return array<\ReflectionMethod>
      */
     private function getMethods(string $className, ?int $methodFilter = null): array
