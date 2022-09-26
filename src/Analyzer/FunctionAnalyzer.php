@@ -34,7 +34,6 @@ final class FunctionAnalyzer
         $arguments = [];
         $index = $currentArgumentStart = $argumentStartIndex;
         while ($index < $argumentsEndIndex) {
-            /** @var null|array{isStart: bool, type: int} $blockType */
             $blockType = Tokens::detectBlockType($tokens[$index]);
             if ($blockType !== null && $blockType['isStart']) {
                 $index = $tokens->findBlockEnd($blockType['type'], $index);

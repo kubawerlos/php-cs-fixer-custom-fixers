@@ -195,7 +195,6 @@ $x = getValue();
             $index = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($index));
 
-            /** @var null|array{isStart: bool, type: int} $blockType */
             $blockType = Tokens::detectBlockType($tokens[$index]);
             if ($blockType !== null && $blockType['isStart']) {
                 $index = $tokens->findBlockEnd($blockType['type'], $index);
