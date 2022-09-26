@@ -106,7 +106,6 @@ final class TestsCodeTest extends TestCase
                 }
 
                 self::assertSame('string', $keyType);
-                self::assertIsString($key);
                 self::assertSame(\trim($key), $key);
                 self::assertStringNotContainsString('  ', $key);
                 self::assertStringNotContainsString('"', $key);

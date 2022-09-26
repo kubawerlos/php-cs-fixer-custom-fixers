@@ -11,6 +11,7 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\Basic\EncodingFixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
@@ -115,7 +116,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testPriority(): void
     {
-        self::assertIsInt($this->fixer->getPriority());
+        self::assertLessThan((new EncodingFixer())->getPriority(), $this->fixer->getPriority());
     }
 
     /**

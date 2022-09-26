@@ -3,9 +3,6 @@ parameters:
     - ./autoload.php
   excludePaths:
     - ./src/Readme
-  ignoreErrors:
-    - message: '# will always evaluate to true\.$#'
-      path: ../tests
   level: max
   paths:
     - ../src

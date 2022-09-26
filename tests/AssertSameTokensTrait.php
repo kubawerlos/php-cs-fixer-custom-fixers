@@ -23,7 +23,6 @@ trait AssertSameTokensTrait
         /** @var Token $expectedToken */
         foreach ($expectedTokens as $index => $expectedToken) {
             $inputToken = $inputTokens[$index];
-            \assert($inputToken instanceof Token);
 
             self::assertTrue(
                 $expectedToken->equals($inputToken),
