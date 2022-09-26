@@ -4,7 +4,6 @@ parameters:
   excludePaths:
     - ./src/Readme
   ignoreErrors:
-    - '~^Parameter #1 \$token of class PhpCsFixer\\Tokenizer\\Token constructor expects array\{int, string\}\|string, array\{int\|null, string\} given\.$~'
     - message: '#^Call to an undefined method PhpCsFixer\\Fixer\\FixerInterface::[a-zA-Z]+\(\)\.$#'
       path: ../tests
     - message: '#^Parameter \#\d+ \$[a-zA-Z0-9]+ of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given\.$#'
