@@ -19,7 +19,6 @@ use PhpCsFixer\Linter\Linter;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PHPUnit\Framework\TestCase;
-use Tests\AssertRegExpTrait;
 use Tests\AssertSameTokensTrait;
 
 /**
@@ -27,7 +26,6 @@ use Tests\AssertSameTokensTrait;
  */
 abstract class AbstractFixerTestCase extends TestCase
 {
-    use AssertRegExpTrait;
     use AssertSameTokensTrait;
 
     /** @var FixerInterface */
@@ -50,7 +48,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
     {
-        self::assertRegExp('/^[A-Z].*\.$/', $this->fixer->getDefinition()->getSummary());
+        self::assertMatchesRegularExpression('/^[A-Z].*\.$/', $this->fixer->getDefinition()->getSummary());
     }
 
     final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void
@@ -64,7 +62,7 @@ abstract class AbstractFixerTestCase extends TestCase
         $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
         \assert(\is_string($riskyDescription));
 
-        self::assertRegExp('/^[a-z]/', $riskyDescription);
+        self::assertMatchesRegularExpression('/^[a-z]/', $riskyDescription);
     }
 
     final public function testFixerDefinitionRiskyDescriptionDoesNotEndWithDot(): void
@@ -94,7 +92,7 @@ abstract class AbstractFixerTestCase extends TestCase
     {
         $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
 
-        self::assertRegExp('/\n$/', $codeSample->getCode());
+        self::assertMatchesRegularExpression('/\n$/', $codeSample->getCode());
     }
 
     /**
