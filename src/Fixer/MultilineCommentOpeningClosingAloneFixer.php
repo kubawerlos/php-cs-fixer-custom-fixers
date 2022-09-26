@@ -119,7 +119,10 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         $newContent = Preg::replace('#(\R)(.+?)\h*(\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $tokens[$index]->getContent());
 
         if ($newContent !== $tokens[$index]->getContent()) {
-            $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
+            $id = $tokens[$index]->getId();
+            \assert(\is_int($id));
+
+            $tokens[$index] = new Token([$id, $newContent]);
         }
     }
 }

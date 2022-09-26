@@ -72,7 +72,10 @@ class Foo {
                 continue;
             }
 
-            $tokens[$index] = new Token([$tokens[$index]->getId(), $newContent]);
+            $id = $tokens[$index]->getId();
+            \assert(\is_int($id));
+
+            $tokens[$index] = new Token([$id, $newContent]);
         }
     }
 
