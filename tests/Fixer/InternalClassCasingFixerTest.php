@@ -11,8 +11,12 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+
 /**
  * @internal
+ *
+ * @property DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\InternalClassCasingFixer
  */

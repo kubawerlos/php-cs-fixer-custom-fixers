@@ -11,10 +11,13 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 /**
  * @internal
+ *
+ * @property ConfigurableFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer
  */

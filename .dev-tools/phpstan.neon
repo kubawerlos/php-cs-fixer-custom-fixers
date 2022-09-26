@@ -4,8 +4,6 @@ parameters:
   excludePaths:
     - ./src/Readme
   ignoreErrors:
-    - message: '#^Call to an undefined method PhpCsFixer\\Fixer\\FixerInterface::[a-zA-Z]+\(\)\.$#'
-      path: ../tests
     - message: '# will always evaluate to true\.$#'
       path: ../tests
   level: max

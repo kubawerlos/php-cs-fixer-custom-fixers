@@ -11,10 +11,13 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\WhitespacesFixerConfig;
 
 /**
  * @internal
+ *
+ * @property WhitespacesAwareFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer
  *
