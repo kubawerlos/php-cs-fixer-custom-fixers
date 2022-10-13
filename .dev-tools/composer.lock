@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47477b09fe480a7887c70f9359cd6062",
+    "content-hash": "8d13112748197edf597b79df2baf94bb",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1017,16 +1017,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.11.0",
+            "version": "v3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "97e4ebbdd718edf9580e547cc0c1515f09f88ff4"
+                "reference": "a3bb380f7283716a465c2a26f4bebccf19e0b7d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/97e4ebbdd718edf9580e547cc0c1515f09f88ff4",
-                "reference": "97e4ebbdd718edf9580e547cc0c1515f09f88ff4"
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/a3bb380f7283716a465c2a26f4bebccf19e0b7d5",
+                "reference": "a3bb380f7283716a465c2a26f4bebccf19e0b7d5"
             },
             "require": {
                 "ext-json": "*",
@@ -1213,16 +1213,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.6",
+            "version": "1.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "c386ab2741e64cc9e21729f891b28b2b10fe6618"
+                "reference": "08310ce271984587e2a4cda94e1ac66510a6ea07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c386ab2741e64cc9e21729f891b28b2b10fe6618",
-                "reference": "c386ab2741e64cc9e21729f891b28b2b10fe6618"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/08310ce271984587e2a4cda94e1ac66510a6ea07",
+                "reference": "08310ce271984587e2a4cda94e1ac66510a6ea07"
             },
             "require": {
                 "php": "^7.2|^8.0"
@@ -1543,16 +1543,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.1.5",
+            "version": "v6.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "17524a64ebcfab68d237bbed247e9a9917747096"
+                "reference": "7fa3b9cf17363468795e539231a5c91b02b608fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/17524a64ebcfab68d237bbed247e9a9917747096",
-                "reference": "17524a64ebcfab68d237bbed247e9a9917747096"
+                "url": "https://api.github.com/repos/symfony/console/zipball/7fa3b9cf17363468795e539231a5c91b02b608fc",
+                "reference": "7fa3b9cf17363468795e539231a5c91b02b608fc"
             },
             "require": {
                 "php": ">=8.1",
@@ -1992,16 +1992,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v6.1.5",
+            "version": "v6.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "17c08b068176996a1d7db8d00ffae3c248267016"
+                "reference": "7e7e0ff180d4c5a6636eaad57b65092014b61864"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/17c08b068176996a1d7db8d00ffae3c248267016",
-                "reference": "17c08b068176996a1d7db8d00ffae3c248267016"
+                "url": "https://api.github.com/repos/symfony/string/zipball/7e7e0ff180d4c5a6636eaad57b65092014b61864",
+                "reference": "7e7e0ff180d4c5a6636eaad57b65092014b61864"
             },
             "require": {
                 "php": ">=8.1",
@@ -2029,16 +2029,16 @@
         },
         {
             "name": "thecodingmachine/safe",
-            "version": "v2.3.1",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "b141ff557fafcd00a475298883e567fc06bd95dd"
+                "reference": "e788f3d09dcd36f806350aedb77eac348fafadd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/b141ff557fafcd00a475298883e567fc06bd95dd",
-                "reference": "b141ff557fafcd00a475298883e567fc06bd95dd"
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/e788f3d09dcd36f806350aedb77eac348fafadd3",
+                "reference": "e788f3d09dcd36f806350aedb77eac348fafadd3"
             },
             "require": {
                 "php": "^8.0"
@@ -2155,16 +2155,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.27.0",
+            "version": "4.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff"
+                "reference": "7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/faf106e717c37b8c81721845dba9de3d8deed8ff",
-                "reference": "faf106e717c37b8c81721845dba9de3d8deed8ff"
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3",
+                "reference": "7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3"
             },
             "require": {
                 "amphp/amp": "^2.4.2",
