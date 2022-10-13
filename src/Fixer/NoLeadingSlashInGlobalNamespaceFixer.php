@@ -72,6 +72,16 @@ $y = new \Baz();
         if ($tokens[$prevIndex]->isGivenKind(\T_STRING)) {
             return false;
         }
+        
+        $nextIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($nextIndex));
+        $nextNextIndex = $tokens->getNextMeaningfulToken($nextIndex);
+        \assert(\is_int($nextNextIndex));
+
+        if ($tokens[$nextNextIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+            return false;
+        }
+        
         if ($tokens[$prevIndex]->isGivenKind([\T_NEW, CT::T_NULLABLE_TYPE, CT::T_TYPE_COLON])) {
             return true;
         }
