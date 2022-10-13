@@ -29,5 +29,6 @@
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
+        <UndefinedDocblockClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>
