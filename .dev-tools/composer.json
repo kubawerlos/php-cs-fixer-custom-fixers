@@ -49,7 +49,8 @@
             "@composer normalize --no-check-lock ../composer.json",
             "@composer normalize --no-check-lock",
             "php-cs-fixer fix --ansi --config=../.php-cs-fixer.php --verbose || exit 0",
-            "@php build-infection-config",
+            "@php ./build-infection-config.php",
+            "@php ./readme.php > ../README.md",
             "phpcbf || exit 0"
         ],
         "infection": [

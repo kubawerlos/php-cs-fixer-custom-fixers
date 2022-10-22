@@ -10,7 +10,6 @@
     <file>../src</file>
     <file>../tests</file>
     <file>../.php-cs-fixer.php</file>
-    <exclude-pattern>./src/Readme/php-cs-fixer.config.*.php</exclude-pattern>
 
     <rule ref='PSR12'>
         <exclude name='Generic.Files.LineLength' />

@@ -24,7 +24,7 @@ composer require --dev kubawerlos/php-cs-fixer-custom-fixers
 In your PHP CS Fixer configuration register fixers and use them:
 ```diff
  <?php
- return (new PhpCsFixer\Config)
+ return (new PhpCsFixer\Config())
 +    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
      ->setRules([
          '@PSR2' => true,
@@ -619,11 +619,7 @@ A class that implements the `__toString ()` method must explicitly implement the
 ## Contributing
 Request feature or report bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
 
-Alternatively, fork the repo, develop your changes, regenerate `README.md`:
-```bash
-php .dev-tools/readme > README.md
-```
-make sure all checks pass:
+Alternatively, fork the repository, develop your changes, make sure everything is fine:
 ```bash
 composer verify
 ```
