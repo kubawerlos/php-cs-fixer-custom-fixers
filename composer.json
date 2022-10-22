@@ -38,8 +38,7 @@
         ],
         "fix": [
             "@install-dev-tools",
-            "@composer --no-interaction --working-dir=.dev-tools fix",
-            "@php .dev-tools/readme > README.md"
+            "@composer --no-interaction --working-dir=.dev-tools fix"
         ],
         "infection": [
             "@install-dev-tools",

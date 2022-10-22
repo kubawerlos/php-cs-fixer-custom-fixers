@@ -161,8 +161,8 @@ require_once __DIR__ . \'/vendor/autoload.php\';
 ```
 ',
             $this->diff(
-                \file_get_contents(__DIR__ . '/php-cs-fixer.config.before.php'),
-                \file_get_contents(__DIR__ . '/php-cs-fixer.config.after.php')
+                \file_get_contents(__DIR__ . '/php-cs-fixer.config.before.txt'),
+                \file_get_contents(__DIR__ . '/php-cs-fixer.config.after.txt')
             )
         );
     }
@@ -271,17 +271,12 @@ require_once __DIR__ . \'/vendor/autoload.php\';
             '## Contributing
 Request feature or report bug by creating [issue](https://github.com/%s/issues).
 
-Alternatively, fork the repo, develop your changes, regenerate `README.md`:
-```bash
-%s
-```
-make sure all checks pass:
+Alternatively, fork the repository, develop your changes, make sure everything is fine:
 ```bash
 composer verify
 ```
 and submit pull request.',
             $this->composer()->name,
-            \substr(\end($this->composer()->scripts->fix), 1)
         );
     }
 

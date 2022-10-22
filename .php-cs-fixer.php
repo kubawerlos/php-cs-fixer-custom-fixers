@@ -48,10 +48,5 @@ return (new PhpCsFixer\Config())
         PhpCsFixer\Finder::create()
             ->ignoreDotFiles(false)
             ->in(__DIR__)
-            ->notName('php-cs-fixer.config.*.php')
-            ->append([
-                __DIR__ . '/.dev-tools/build-infection-config',
-                __DIR__ . '/.dev-tools/readme',
-            ])
     )
     ->setRules($rules);

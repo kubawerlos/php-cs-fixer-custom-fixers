@@ -619,11 +619,7 @@ A class that implements the `__toString ()` method must explicitly implement the
 ## Contributing
 Request feature or report bug by creating [issue](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues).
 
-Alternatively, fork the repo, develop your changes, regenerate `README.md`:
-```bash
-php .dev-tools/readme > README.md
-```
-make sure all checks pass:
+Alternatively, fork the repo, develop your changes, make sure everything is fine:
 ```bash
 composer verify
 ```
