@@ -75,9 +75,9 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-      - if: ${{ use-shim-package }}
+      - if: ${{ matrix.use-shim-package }}
         run: composer require php-cs-fixer/shim:* --no-update
-      - if: ${{ with-php-cs-fixer-from-master }}
+      - if: ${{ matrix.with-php-cs-fixer-from-master }}
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer-flags }}
       - run: composer show | grep fixer
