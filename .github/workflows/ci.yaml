@@ -76,19 +76,19 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
       - if: ${{ matrix.use-shim-package }}
-        run: composer require php-cs-fixer/shim:* --no-update
+        run: |
+          composer remove friendsofphp/php-cs-fixer --no-update
+          composer require php-cs-fixer/shim:* --no-update
       - if: ${{ matrix.with-php-cs-fixer-from-master }}
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer-flags }}
       - run: composer show | grep fixer
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
       - if: ${{ matrix.calculate-coverage }}
+        run: |
+          composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies
+          ./vendor/bin/php-coveralls --verbose
+          composer infection
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
-      - if: ${{ matrix.calculate-coverage }}
-        run: |
-          composer infection
-          ./vendor/bin/php-coveralls --verbose
-        env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
