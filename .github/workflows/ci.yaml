@@ -56,7 +56,6 @@ jobs:
             description: 'on Windows'
             php-version: '8.1'
           - os: ubuntu-latest
-            composer-flags: '--ignore-platform-reqs'
             php-version: '8.2'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -82,7 +81,7 @@ jobs:
       - if: ${{ matrix.with-php-cs-fixer-from-master }}
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer-flags }}
-      - run: composer show | grep fixer
+      - run: composer show | grep php-cs-fixer
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
       - if: ${{ matrix.calculate-coverage }}
         run: |
