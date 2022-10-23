@@ -17,53 +17,46 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - run: composer require friendsofphp/php-cs-fixer --no-update
       - run: composer update --no-progress
       - run: composer analyse
 
   test:
-    name: PHP ${{ matrix.php-version }} with ${{ matrix.with-package }} ${{ matrix.description }}
+    name: PHP ${{ matrix.php-version }} ${{ matrix.description }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - description: 'with lowest dependencies'
-            os: ubuntu-latest
-            php-version: '7.4'
-            with-package: friendsofphp/php-cs-fixer:*
+          - os: ubuntu-latest
+            description: 'with lowest dependencies'
             composer-flags: '--prefer-lowest'
-          - description: 'with lowest dependencies'
-            os: ubuntu-latest
             php-version: '7.4'
-            with-package: php-cs-fixer/shim:*
+          - os: ubuntu-latest
+            description: 'with lowest dependencies and shim package'
             composer-flags: '--prefer-lowest'
+            use-shim-package: true
+            php-version: '7.4'
           - os: ubuntu-latest
             php-version: '8.0'
-            with-package: friendsofphp/php-cs-fixer:*
           - os: ubuntu-latest
-            php-version: '8.1'
-            with-package: friendsofphp/php-cs-fixer:*
-            calculate-coverage: true
             description: 'with calculating code coverage'
-          - os: ubuntu-latest
+            calculate-coverage: true
             php-version: '8.1'
-            with-package: friendsofphp/php-cs-fixer:dev-master
+          - os: ubuntu-latest
             description: 'with PHP CS Fixer from master'
+            with-php-cs-fixer-from-master: true
+            php-version: '8.1'
           - os: ubuntu-latest
+            description: 'with shim package'
+            use-shim-package: true
             php-version: '8.1'
-            with-package: php-cs-fixer/shim:*
-          - description: on macOS
-            os: macos-latest
+          - os: macos-latest
+            description: 'on macOS'
             php-version: '8.1'
-            with-package: friendsofphp/php-cs-fixer:*
-          - description: on Windows
-            os: windows-latest
+          - os: windows-latest
+            description: 'on Windows'
             php-version: '8.1'
-            with-package: friendsofphp/php-cs-fixer:*
           - os: ubuntu-latest
             php-version: '8.2'
-            with-package: friendsofphp/php-cs-fixer:*
-            composer-flags: '--ignore-platform-reqs'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
@@ -81,14 +74,20 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-      - run: composer require ${{ matrix.with-package }} --no-update
+      - if: ${{ matrix.use-shim-package }}
+        run: |
+          composer remove friendsofphp/php-cs-fixer --no-update
+          composer require php-cs-fixer/shim:* --no-update
+      - if: ${{ matrix.with-php-cs-fixer-from-master }}
+        run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer-flags }}
+      - run: composer show | grep php-cs-fixer
       - run: composer test -- --coverage-clover=./build/logs/clover.xml
       - if: ${{ matrix.calculate-coverage }}
+        run: |
+          composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies
+          ./vendor/bin/php-coveralls --verbose
+          composer infection
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
-      - if: ${{  matrix.calculate-coverage }}
-        env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: composer infection
