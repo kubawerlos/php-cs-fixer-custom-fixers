@@ -30,11 +30,11 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
     }
 
     /**
-     * Must run after MethodArgumentSpaceFixer, TrailingCommaInMultilineFixer.
+     * Must run after MethodArgumentSpaceFixer.
      */
     public function getPriority(): int
     {
-        return -1;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
