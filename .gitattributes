@@ -1,3 +1,5 @@
+/.dev-tools/* -linguist-detectable
+
 /.* export-ignore
 /tests/ export-ignore
 /phpunit.xml export-ignore
