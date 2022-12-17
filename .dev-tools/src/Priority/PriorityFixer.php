@@ -33,6 +33,11 @@ final class PriorityFixer
         $this->priority = $priority;
     }
 
+    public function name(): string
+    {
+        return \get_class($this->fixer);
+    }
+
     public function addFixerToRunAfter(self $priorityFixer): void
     {
         $this->fixersToRunAfter[] = $priorityFixer;
