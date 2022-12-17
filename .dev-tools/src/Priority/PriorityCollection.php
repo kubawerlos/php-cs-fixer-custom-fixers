@@ -13,6 +13,7 @@ namespace PhpCsFixerCustomFixersDev\Priority;
 
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
+use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
 use PhpCsFixerCustomFixers\Fixers;
 use Tests\PriorityTest;
 
@@ -84,12 +85,35 @@ final class PriorityCollection
 
     private function getFirstPriorityFixerWithoutPriority(): ?PriorityFixer
     {
-        foreach ($this->priorityFixers as $priorityFixer) {
-            if (!$priorityFixer->hasPriority()) {
-                return $priorityFixer;
-            }
+        static $firstFixers = [
+            CommentSurroundedBySpacesFixer::class,
+        ];
+
+        $priorityFixersWithoutPriorities = \array_filter(
+            $this->priorityFixers,
+            static fn (PriorityFixer $priorityFixer) => !$priorityFixer->hasPriority()
+        );
+
+        if ($priorityFixersWithoutPriorities === []) {
+            return null;
         }
 
-        return null;
+        \usort(
+            $priorityFixersWithoutPriorities,
+            static function (PriorityFixer $p1, PriorityFixer $p2) use ($firstFixers): int {
+                foreach ($firstFixers as $firstFixer) {
+                    if ($p1->name() === $firstFixer) {
+                        return -1;
+                    }
+                    if ($p2->name() === $firstFixer) {
+                        return 1;
+                    }
+                }
+
+                return $p1->name() <=> $p2->name();
+            }
+        );
+
+        return \reset($priorityFixersWithoutPriorities);
     }
 }
