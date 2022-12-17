@@ -14,6 +14,7 @@ namespace PhpCsFixerCustomFixersDev\Priority;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer;
+use PhpCsFixerCustomFixers\Fixer\NoCommentedOutCodeFixer;
 use PhpCsFixerCustomFixers\Fixers;
 use Tests\PriorityTest;
 
@@ -87,6 +88,7 @@ final class PriorityCollection
     {
         static $firstFixers = [
             CommentSurroundedBySpacesFixer::class,
+            NoCommentedOutCodeFixer::class,
         ];
 
         $priorityFixersWithoutPriorities = \array_filter(

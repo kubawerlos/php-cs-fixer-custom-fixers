@@ -1,0 +1,21 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/no_commented_out_code": true, "class_attributes_separation": true }
+--EXPECTED--
+<?php
+class Foo
+{
+    const C1 = 1;
+
+    const C3 = 3;
+}
+
+--INPUT--
+<?php
+class Foo
+{
+    const C1 = 1;
+
+    // const C2 = 2;
+
+    const C3 = 3;
+}

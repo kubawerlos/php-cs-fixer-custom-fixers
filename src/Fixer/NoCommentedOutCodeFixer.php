@@ -31,12 +31,12 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     }
 
     /**
-     * Must run before NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer.
+     * Must run before ClassAttributesSeparationFixer, NoExtraBlankLinesFixer, NoTrailingWhitespaceFixer, NoUnusedImportsFixer.
      * Must run after CommentedOutFunctionFixer.
      */
     public function getPriority(): int
     {
-        return 1;
+        return 56;
     }
 
     public function isCandidate(Tokens $tokens): bool
