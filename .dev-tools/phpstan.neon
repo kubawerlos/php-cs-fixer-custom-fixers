@@ -1,8 +1,6 @@
 parameters:
   bootstrapFiles:
-    - ./autoload.php
-  excludePaths:
-    - ./src/Readme
+    - ../vendor/autoload.php
   level: max
   paths:
     - ../src
