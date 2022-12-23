@@ -2,7 +2,7 @@
 
 <phpunit xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
          xsi:noNamespaceSchemaLocation='./vendor/phpunit/phpunit/phpunit.xsd'
-         bootstrap='.dev-tools/autoload.php'
+         bootstrap='./tests/autoload.php'
          cacheResult='false'
          colors='true'
          executionOrder='default'

@@ -9,7 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-require_once __DIR__ . '/.dev-tools/autoload.php';
+require_once __DIR__ . '/.dev-tools/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 

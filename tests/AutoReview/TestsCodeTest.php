@@ -194,6 +194,7 @@ final class TestsCodeTest extends TestCase
             $finder = Finder::create()
                 ->files()
                 ->name('*.php')
+                ->notName('autoload.php')
                 ->in(__DIR__ . '/..');
 
             $tests = [];
