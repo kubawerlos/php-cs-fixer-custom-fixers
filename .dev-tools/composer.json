@@ -7,7 +7,7 @@
         "kubawerlos/composer-smaller-lock": "^1.0.1",
         "kubawerlos/php-cs-fixer-config": "^3.15",
         "kubawerlos/types-checker": "^2.2",
-        "maglnet/composer-require-checker": "^4.4",
+        "maglnet/composer-require-checker": "^4.5",
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.13",
         "phpstan/extension-installer": "^1.2",
