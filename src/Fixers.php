@@ -26,7 +26,7 @@ final class Fixers implements \IteratorAggregate
         $classNames = [];
         foreach (new \DirectoryIterator(__DIR__ . '/Fixer') as $fileInfo) {
             $fileName = $fileInfo->getBasename('.php');
-            if (\in_array($fileName, ['.', '..', 'AbstractFixer', 'AbstractTypesFixer', 'DeprecatingFixerInterface'], true)) {
+            if (\in_array($fileName, ['.', '..', 'AbstractFixer', 'AbstractTypesFixer'], true)) {
                 continue;
             }
             $classNames[] = __NAMESPACE__ . '\\Fixer\\' . $fileName;

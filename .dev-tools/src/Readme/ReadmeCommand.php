@@ -21,7 +21,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
 use PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer;
-use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
@@ -183,11 +182,6 @@ require_once __DIR__ . \'/vendor/autoload.php\';
                 "\n#### %s\n%s",
                 $reflectionClass->getShortName(),
                 $fixer->getDefinition()->getSummary()
-            );
-
-            $output .= !$fixer instanceof DeprecatingFixerInterface ? '' : \sprintf(
-                "\n  *To be deprecated after [this](https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/%d) is merged and released.*",
-                $fixer->getPullRequestId()
             );
 
             $output .= $fixer instanceof DeprecatedFixerInterface ? \sprintf("\n  DEPRECATED: use `%s` instead.", \implode('`, `', $fixer->getSuccessorsNames())) : '';

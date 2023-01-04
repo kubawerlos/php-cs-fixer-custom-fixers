@@ -49,8 +49,7 @@ final class FixersTest extends TestCase
         $finder = Finder::create()
             ->files()
             ->in(__DIR__ . '/../src/Fixer/')
-            ->notName('Abstract*Fixer.php')
-            ->notName('DeprecatingFixerInterface.php');
+            ->notName('Abstract*Fixer.php');
 
         foreach ($finder as $file) {
             $className = 'PhpCsFixerCustomFixers\\Fixer\\' . $file->getBasename('.php');
