@@ -31,7 +31,6 @@ final class OrderedClassElementsInternalFixer implements FixerInterface
         'name',
         'getName',
         'getPriority',
-        'getPullRequestId',
         'supports',
         'isCandidate',
         'isRisky',

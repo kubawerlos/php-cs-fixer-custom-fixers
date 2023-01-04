@@ -17,7 +17,6 @@ use PhpCsFixer\FixerNameValidator;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
-use PhpCsFixerCustomFixers\Fixer\DeprecatingFixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
@@ -57,14 +56,6 @@ final class SrcCodeTest extends TestCase
     public function testFixerIsFinal(FixerInterface $fixer): void
     {
         self::assertTrue((new \ReflectionObject($fixer))->isFinal());
-    }
-
-    /**
-     * @dataProvider provideFixerCases
-     */
-    public function testFixerIsNotBothDeprecatingAndDeprecated(FixerInterface $fixer): void
-    {
-        self::assertFalse($fixer instanceof DeprecatingFixerInterface && $fixer instanceof DeprecatedFixerInterface);
     }
 
     /**
