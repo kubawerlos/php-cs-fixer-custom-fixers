@@ -11,13 +11,14 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
-use PhpCsFixer\WhitespacesFixerConfig;
+use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 /**
  * @internal
  *
- * @property WhitespacesAwareFixerInterface $fixer
+ * @property ConfigurableFixerInterface&WhitespacesAwareFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer
  *
@@ -25,22 +26,32 @@ use PhpCsFixer\WhitespacesFixerConfig;
  */
 final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
 {
+    public function testConfiguration(): void
+    {
+        /** @var array<FixerOptionInterface> $options */
+        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('minimum_number_of_parameters', $options[0]->getName());
+        self::assertSame(1, $options[0]->getDefault());
+    }
+
     public function testIsRisky(): void
     {
         self::assertFalse($this->fixer->isRisky());
     }
 
     /**
+     * @param array<string, int> $configuration
+     *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
-        $this->fixer->setWhitespacesConfig(new WhitespacesFixerConfig());
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     /**
-     * @return iterable<array<string>>
+     * @return iterable<array{0: string, 1: null|string, 2?: array<string, int>}>
      */
     public static function provideFixCases(): iterable
     {
@@ -146,5 +157,67 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
                 public function __construct(private int $x, private int $y, private int $z) {}
             }',
         ];
+
+        yield '0 parameters with 0 configured' => [
+            '<?php class Foo {
+                    public function __construct() {}
+                }',
+            null,
+            ['minimum_number_of_parameters' => 0],
+        ];
+
+        foreach ([0, 1, 2] as $numberOfParameters) {
+            yield \sprintf('2 parameters with %d configured', $numberOfParameters) => [
+                '<?php class Foo {
+                    public function __construct(
+                        private int $x,
+                        private int $y
+                    ) {}
+                }',
+                '<?php class Foo {
+                    public function __construct(private int $x, private int $y) {}
+                }',
+                ['minimum_number_of_parameters' => $numberOfParameters],
+            ];
+            yield \sprintf('2 parameters and only one promoted with %d configured', $numberOfParameters) => [
+                '<?php class Foo {
+                    public function __construct(
+                        int $x,
+                        private int $y
+                    ) {}
+                }',
+                '<?php class Foo {
+                    public function __construct(int $x, private int $y) {}
+                }',
+                ['minimum_number_of_parameters' => $numberOfParameters],
+            ];
+        }
+
+        foreach ([3, 4] as $numberOfParameters) {
+            yield \sprintf('2 parameters with %d configured', $numberOfParameters) => [
+                '<?php class Foo {
+                    public function __construct(private int $x, private int $y) {}
+                }',
+                null,
+                ['minimum_number_of_parameters' => $numberOfParameters],
+            ];
+            yield \sprintf('2 parameters and only one promoted with %d configured', $numberOfParameters) => [
+                '<?php class Foo {
+                    public function __construct(int $x, private int $y) {}
+                }',
+                null,
+                ['minimum_number_of_parameters' => $numberOfParameters],
+            ];
+        }
+
+        foreach ([1, 2, 3, 4] as $numberOfParameters) {
+            yield \sprintf('2 parameters and none promoted with %d configured', $numberOfParameters) => [
+                '<?php class Foo {
+                    public function __construct(int $x, int $y) {}
+                }',
+                null,
+                ['minimum_number_of_parameters' => $numberOfParameters],
+            ];
+        }
     }
 }

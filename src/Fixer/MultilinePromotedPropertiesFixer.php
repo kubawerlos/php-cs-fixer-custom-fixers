@@ -11,7 +11,11 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\FixerDefinition\VersionSpecification;
@@ -22,10 +26,10 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 
-final class MultilinePromotedPropertiesFixer extends AbstractFixer implements WhitespacesAwareFixerInterface
+final class MultilinePromotedPropertiesFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {
-    /** @var WhitespacesFixerConfig */
-    private $whitespacesConfig;
+    private int $minimumNumberOfParameters = 1;
+    private WhitespacesFixerConfig $whitespacesConfig;
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -41,6 +45,26 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
                 ),
             ]
         );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('minimum_number_of_parameters', 'minimum number of parameters in constructor to fix'))
+                ->setAllowedTypes(['int'])
+                ->setDefault($this->minimumNumberOfParameters)
+                ->getOption(),
+        ]);
+    }
+
+    /**
+     * @param array<string, int> $configuration
+     */
+    public function configure(array $configuration): void
+    {
+        if (\array_key_exists('minimum_number_of_parameters', $configuration)) {
+            $this->minimumNumberOfParameters = $configuration['minimum_number_of_parameters'];
+        }
     }
 
     public function setWhitespacesConfig(WhitespacesFixerConfig $config): void
@@ -99,7 +123,12 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
 
     private function shouldBeFixed(Tokens $tokens, int $openParenthesis, int $closeParenthesis): bool
     {
+        $promotedParameterFound = false;
+        $minimumNumberOfParameters = 0;
         for ($index = $openParenthesis + 1; $index < $closeParenthesis; $index++) {
+            if ($tokens[$index]->isGivenKind(\T_VARIABLE)) {
+                $minimumNumberOfParameters++;
+            }
             if (
                 $tokens[$index]->isGivenKind([
                     CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
@@ -107,11 +136,11 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Wh
                     CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
                 ])
             ) {
-                return true;
+                $promotedParameterFound = true;
             }
         }
 
-        return false;
+        return $promotedParameterFound && $minimumNumberOfParameters >= $this->minimumNumberOfParameters;
     }
 
     private function fixParameters(Tokens $tokens, int $openParenthesis, int $closeParenthesis): void

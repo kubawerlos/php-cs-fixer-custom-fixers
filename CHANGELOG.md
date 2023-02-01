@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.12.0
+- MultilinePromotedPropertiesFixer - add option "minimum_number_of_parameters"
+
 ## v3.11.0
 - Add ReadonlyPromotedPropertiesFixer
 
