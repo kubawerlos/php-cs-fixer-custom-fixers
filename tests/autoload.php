@@ -12,10 +12,19 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 if (!interface_exists('PhpCsFixer\\Fixer\\FixerInterface')) {
-    $phar = __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer';
-    $pharLoaded = Phar::loadPhar($phar, 'php-cs-fixer.phar');
-    if (!$pharLoaded) {
-        exit(sprintf('Phar "%s" not loaded!' . PHP_EOL, $phar));
+    $phars = [
+        __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer.phar',
+        __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer',
+    ];
+    foreach ($phars as $phar) {
+        if (!file_exists($phar)) {
+            continue;
+        }
+        $pharLoaded = Phar::loadPhar($phar, 'php-cs-fixer.phar');
+        if (!$pharLoaded) {
+            exit(sprintf('Phar "%s" not loaded!' . PHP_EOL, $phar));
+        }
+        break;
     }
     require_once 'phar://php-cs-fixer.phar/vendor/autoload.php';
 }
