@@ -3,7 +3,7 @@
     "require": {
         "php": "^8.2",
         "ergebnis/composer-normalize": "^2.29",
-        "infection/infection": "^0.26.16",
+        "infection/infection": "^0.26.18",
         "kubawerlos/composer-smaller-lock": "^1.0.1",
         "kubawerlos/php-cs-fixer-config": "^3.15",
         "kubawerlos/types-checker": "^2.2",
