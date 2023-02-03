@@ -167,9 +167,9 @@ Multiline comments or PHPDocs must contain an opening and closing line with no a
 ```
 
 #### MultilinePromotedPropertiesFixer
-Constructor having promoted properties must have them in separate lines.
+A constructor with promoted properties must have them in separate lines.
 Configuration options:
-- `minimum_number_of_parameters` (`int`): minimum number of parameters in constructor to fix; defaults to `1`
+- `minimum_number_of_parameters` (`int`): minimum number of parameters in the constructor to fix; defaults to `1`
 ```diff
  <?php class Foo {
 -    public function __construct(private array $a, private bool $b, private int $i) {}

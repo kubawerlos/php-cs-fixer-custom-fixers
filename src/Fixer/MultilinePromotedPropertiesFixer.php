@@ -34,7 +34,7 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Constructor having promoted properties must have them in separate lines.',
+            'A constructor with promoted properties must have them in separate lines.',
             [
                 new VersionSpecificCodeSample(
                     '<?php class Foo {
@@ -50,7 +50,7 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
     public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('minimum_number_of_parameters', 'minimum number of parameters in constructor to fix'))
+            (new FixerOptionBuilder('minimum_number_of_parameters', 'minimum number of parameters in the constructor to fix'))
                 ->setAllowedTypes(['int'])
                 ->setDefault($this->minimumNumberOfParameters)
                 ->getOption(),
