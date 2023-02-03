@@ -24,7 +24,7 @@ use PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer;
 use PhpCsFixerCustomFixers\Fixers;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
-use Symfony\Component\Console\Command\Command as BaseCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
@@ -32,8 +32,10 @@ use Symfony\Component\Process\Process;
 /**
  * @internal
  */
-final class ReadmeCommand extends BaseCommand
+final class ReadmeCommand extends Command
 {
+    protected static $defaultName = 'readme';
+
     private const NAME = 'PHP CS Fixer: custom fixers';
     private const SHIELDS_HOST = 'https://img.shields.io';
 
@@ -49,7 +51,7 @@ final class ReadmeCommand extends BaseCommand
             . $this->contributing() . "\n"
         );
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function badges(): string
