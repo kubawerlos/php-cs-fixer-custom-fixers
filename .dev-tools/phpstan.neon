@@ -5,6 +5,7 @@ parameters:
   paths:
     - ../src
     - ../tests
+    - ../bootstrap.php
   reportMaybesInMethodSignatures: false
   stubFiles:
     - ./sca.stub
