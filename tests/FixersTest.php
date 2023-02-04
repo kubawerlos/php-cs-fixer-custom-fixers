@@ -68,7 +68,7 @@ final class FixersTest extends TestCase
     {
         return \array_map(
             static fn (FixerInterface $fixer): string => $fixer->getName(),
-            \iterator_to_array(new Fixers())
+            \iterator_to_array(new Fixers()),
         );
     }
 }

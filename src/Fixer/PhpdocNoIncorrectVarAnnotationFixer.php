@@ -30,7 +30,7 @@ final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
             [new CodeSample('<?php
 /** @var Foo $foo */
 $bar = new Foo();
-')]
+')],
         );
     }
 
@@ -119,7 +119,7 @@ $bar = new Foo();
         $this->removeVarAnnotationNotMatchingPattern(
             $tokens,
             $index,
-            '/(\Q' . \implode('\E|\Q', $allowedVariables) . '\E)\b/i'
+            '/(\Q' . \implode('\E|\Q', $allowedVariables) . '\E)\b/i',
         );
     }
 

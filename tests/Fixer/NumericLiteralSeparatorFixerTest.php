@@ -62,7 +62,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
                 'float' => true,
                 'hexadecimal' => true,
                 'octal' => true,
-            ]
+            ],
         );
     }
 
@@ -76,7 +76,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         $this->doTest(
             $expected,
             $input,
-            $configuration
+            $configuration,
         );
     }
 

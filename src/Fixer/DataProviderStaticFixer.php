@@ -43,11 +43,11 @@ class FooTest extends TestCase {
     public function testSomething($expected, $actual) {}
     public function provideSomethingCases() {}
 }
-'
+',
                 ),
             ],
             null,
-            'when `force` is set to `true`'
+            'when `force` is set to `true`',
         );
     }
 
@@ -120,7 +120,7 @@ class FooTest extends TestCase {
 
             $tokens->insertAt(
                 $functionIndex,
-                [new Token([\T_STATIC, 'static']), new Token([\T_WHITESPACE, ' '])]
+                [new Token([\T_STATIC, 'static']), new Token([\T_WHITESPACE, ' '])],
             );
         }
     }

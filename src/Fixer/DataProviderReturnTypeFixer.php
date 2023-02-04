@@ -37,11 +37,11 @@ class FooTest extends TestCase {
     public function testSomething($expected, $actual) {}
     public function provideSomethingCases(): array {}
 }
-'
+',
                 ),
             ],
             null,
-            'when relying on signature of data provider'
+            'when relying on signature of data provider',
         );
     }
 
@@ -91,7 +91,7 @@ class FooTest extends TestCase {
                         new Token([CT::T_TYPE_COLON, ':']),
                         new Token([\T_WHITESPACE, ' ']),
                         new Token([\T_STRING, 'iterable']),
-                    ]
+                    ],
                 );
                 continue;
             }

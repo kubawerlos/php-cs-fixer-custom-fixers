@@ -152,8 +152,8 @@ abstract class AbstractFixerTestCase extends TestCase
                 \sprintf(
                     "Expected code:\n```\n%s\n```\nGot:\n```\n%s\n```\n",
                     $expected,
-                    $actual
-                )
+                    $actual,
+                ),
             );
 
             self::assertSameTokens($expectedTokens, $inputTokens);

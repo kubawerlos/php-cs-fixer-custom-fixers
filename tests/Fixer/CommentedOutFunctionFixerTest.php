@@ -246,7 +246,7 @@ baz();
     {
         $this->doTest(
             '<?php //\/* foo */var_dump/** bar */($x);',
-            '<?php \/* foo */var_dump/** bar */($x);'
+            '<?php \/* foo */var_dump/** bar */($x);',
         );
     }
 }

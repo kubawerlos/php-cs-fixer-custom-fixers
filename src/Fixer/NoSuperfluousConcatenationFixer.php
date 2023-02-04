@@ -31,7 +31,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
     {
         return new FixerDefinition(
             'There should be no superfluous concatenation of strings.',
-            [new CodeSample("<?php\necho 'foo' . 'bar';\n")]
+            [new CodeSample("<?php\necho 'foo' . 'bar';\n")],
         );
     }
 
@@ -148,9 +148,9 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 new Token(
                     [\T_CONSTANT_ENCAPSED_STRING,
                         $prefix . $border . $this->getContentForBorder($firstContent, $border, true) . $this->getContentForBorder($secondContent, $border, false) . $border,
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
     }
 
@@ -184,7 +184,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         return Preg::replace(
             '/(?<!\\\\)((\\\\{2})*)(\\\\)?"/',
             '$1\\\\$3$3"',
-            $content
+            $content,
         );
     }
 }

@@ -28,7 +28,7 @@ final class NoUselessParenthesisFixer extends AbstractFixer
                 new CodeSample('<?php
 foo(($bar));
 '),
-            ]
+            ],
         );
     }
 

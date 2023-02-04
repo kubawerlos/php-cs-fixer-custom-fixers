@@ -34,7 +34,7 @@ final class PhpdocParamOrderFixer extends AbstractFixer
  * @param int $c
  */
 function foo($a, $b, $c) {}
-')]
+')],
         );
     }
 

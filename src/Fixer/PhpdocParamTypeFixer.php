@@ -30,7 +30,7 @@ final class PhpdocParamTypeFixer extends AbstractFixer
  * @param        $bar
  */
 function a($foo, $bar) {}
-')]
+')],
         );
     }
 
@@ -63,7 +63,7 @@ function a($foo, $bar) {}
             $newContent = Preg::replace(
                 '/(@param) {0,7}( *\$)/i',
                 '$1 mixed $2',
-                $tokens[$index]->getContent()
+                $tokens[$index]->getContent(),
             );
 
             if ($newContent === $tokens[$index]->getContent()) {

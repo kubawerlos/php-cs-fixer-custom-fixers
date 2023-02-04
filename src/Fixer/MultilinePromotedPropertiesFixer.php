@@ -41,9 +41,9 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
     public function __construct(private array $a, private bool $b, private int $i) {}
 }
 ',
-                    new VersionSpecification(80000)
+                    new VersionSpecification(80000),
                 ),
-            ]
+            ],
         );
     }
 
@@ -150,7 +150,7 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
         $tokens->ensureWhitespaceAtIndex(
             $closeParenthesis - 1,
             1,
-            $this->whitespacesConfig->getLineEnding() . $indent
+            $this->whitespacesConfig->getLineEnding() . $indent,
         );
 
         $index = $tokens->getPrevMeaningfulToken($closeParenthesis);
@@ -173,7 +173,7 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
             $tokens->ensureWhitespaceAtIndex(
                 $index + 1,
                 0,
-                $this->whitespacesConfig->getLineEnding() . $indent . $this->whitespacesConfig->getIndent()
+                $this->whitespacesConfig->getLineEnding() . $indent . $this->whitespacesConfig->getIndent(),
             );
         }
     }

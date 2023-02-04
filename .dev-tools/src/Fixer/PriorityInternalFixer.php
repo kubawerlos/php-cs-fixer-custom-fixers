@@ -90,7 +90,7 @@ final class PriorityInternalFixer implements FixerInterface
                 [
                     new Token([\T_DOC_COMMENT, $commentContent]),
                     new Token([\T_WHITESPACE, "\n    "]),
-                ]
+                ],
             );
         }
 

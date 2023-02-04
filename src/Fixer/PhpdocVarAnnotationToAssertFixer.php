@@ -29,7 +29,7 @@ final class PhpdocVarAnnotationToAssertFixer extends AbstractFixer
             [new CodeSample('<?php
 /** @var string $x */
 $x = getValue();
-')]
+')],
         );
     }
 

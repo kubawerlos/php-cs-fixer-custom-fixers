@@ -31,7 +31,7 @@ final class NoUselessDoctrineRepositoryCommentFixer extends AbstractFixer
  * repository methods below.
  */
 class FooRepository extends EntityRepository {}
-')]
+')],
         );
     }
 

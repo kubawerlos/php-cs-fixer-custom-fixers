@@ -35,11 +35,11 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
     ) {}
 }
 ',
-                    new VersionSpecification(80100)
+                    new VersionSpecification(80100),
                 ),
             ],
             null,
-            'when property is written'
+            'when property is written',
         );
     }
 
@@ -115,7 +115,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 [
                     new Token([\T_WHITESPACE, ' ']),
                     new Token([\T_READONLY, 'readonly']),
-                ]
+                ],
             );
         }
     }

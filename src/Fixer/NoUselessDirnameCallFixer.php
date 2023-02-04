@@ -26,7 +26,7 @@ final class NoUselessDirnameCallFixer extends AbstractFixer
             'Function `dirname` call must be removed if not needed.',
             [new CodeSample('<?php
 require dirname(__DIR__) . "/vendor/autoload.php";
-')]
+')],
         );
     }
 

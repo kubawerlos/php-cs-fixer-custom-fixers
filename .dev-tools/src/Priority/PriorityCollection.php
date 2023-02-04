@@ -93,7 +93,7 @@ final class PriorityCollection
 
         $priorityFixersWithoutPriorities = \array_filter(
             $this->priorityFixers,
-            static fn (PriorityFixer $priorityFixer) => !$priorityFixer->hasPriority()
+            static fn (PriorityFixer $priorityFixer) => !$priorityFixer->hasPriority(),
         );
 
         if ($priorityFixersWithoutPriorities === []) {
@@ -113,7 +113,7 @@ final class PriorityCollection
                 }
 
                 return $p1->name() <=> $p2->name();
-            }
+            },
         );
 
         return \reset($priorityFixersWithoutPriorities);

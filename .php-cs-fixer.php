@@ -34,7 +34,7 @@ unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when 
 unset($rules['get_class_to_class_keyword']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
 unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
-$rules['trailing_comma_in_multiline'] = true; // TODO: remove when dropping support to PHP <8.0
+$rules['trailing_comma_in_multiline'] = ['elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
@@ -48,6 +48,6 @@ return (new PhpCsFixer\Config())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->ignoreDotFiles(false)
-            ->in(__DIR__)
+            ->in(__DIR__),
     )
     ->setRules($rules);

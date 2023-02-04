@@ -52,8 +52,8 @@ echo 1_234.456_78e-4_321; // float
 echo 0xAE_B0_42_FC; // hexadecimal
 echo 0123_4567; // octal
 ',
-                new VersionSpecification(70400)
-            )]
+                new VersionSpecification(70400),
+            )],
         );
     }
 

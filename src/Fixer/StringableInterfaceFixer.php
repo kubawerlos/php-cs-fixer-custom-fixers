@@ -31,7 +31,7 @@ class Foo
         return "Foo";
    }
 }
-')]
+')],
         );
     }
 
@@ -212,7 +212,7 @@ class Foo
                     new Token([\T_WHITESPACE, ' ']),
                     new Token([\T_NS_SEPARATOR, '\\']),
                     new Token([\T_STRING, 'Stringable']),
-                ]
+                ],
             );
 
             return;
@@ -231,7 +231,7 @@ class Foo
                 new Token([\T_WHITESPACE, ' ']),
                 new Token([\T_NS_SEPARATOR, '\\']),
                 new Token([\T_STRING, 'Stringable']),
-            ]
+            ],
         );
     }
 }

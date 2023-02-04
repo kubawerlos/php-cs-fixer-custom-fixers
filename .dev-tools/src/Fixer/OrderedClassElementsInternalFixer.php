@@ -148,7 +148,7 @@ final class OrderedClassElementsInternalFixer implements FixerInterface
                 }
 
                 return $a['position'] <=> $b['position'];
-            }
+            },
         );
 
         return $elements;

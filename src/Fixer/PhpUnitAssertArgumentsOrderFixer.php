@@ -52,7 +52,7 @@ class FooTest extends TestCase {
 }
 ')],
             null,
-            'when original PHPUnit methods are overwritten'
+            'when original PHPUnit methods are overwritten',
         );
     }
 

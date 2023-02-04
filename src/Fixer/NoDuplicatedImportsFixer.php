@@ -31,7 +31,7 @@ namespace FooBar;
 use Foo;
 use Foo;
 use Bar;
-')]
+')],
         );
     }
 
@@ -60,7 +60,7 @@ use Bar;
                 static function (NamespaceUseAnalysis $useDeclaration) use ($namespace): bool {
                     return $useDeclaration->getStartIndex() >= $namespace->getScopeStartIndex()
                         && $useDeclaration->getEndIndex() <= $namespace->getScopeEndIndex();
-                }
+                },
             );
 
             $foundDeclarations = [];
