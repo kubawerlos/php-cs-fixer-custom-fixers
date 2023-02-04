@@ -46,7 +46,7 @@ class FooTest extends TestCase {
     }
 }', $case);
                 },
-                $fixCase
+                $fixCase,
             );
         }
     }

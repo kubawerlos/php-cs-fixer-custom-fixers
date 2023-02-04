@@ -46,7 +46,7 @@ final class SrcCodeTest extends TestCase
 
         self::assertTrue(
             $validator->isValid($fixer->getName(), true),
-            \sprintf('Fixer name "%s" is incorrect', $fixer->getName())
+            \sprintf('Fixer name "%s" is incorrect', $fixer->getName()),
         );
     }
 
@@ -66,7 +66,7 @@ final class SrcCodeTest extends TestCase
         $comment = (new \ReflectionObject($fixer))->getDocComment();
         self::assertSame(
             $fixer instanceof DeprecatedFixerInterface,
-            \strpos($comment === false ? '' : $comment, '@deprecated') !== false
+            \strpos($comment === false ? '' : $comment, '@deprecated') !== false,
         );
     }
 
@@ -107,11 +107,11 @@ final class SrcCodeTest extends TestCase
 
         $stringTokens = \array_filter(
             $tokens,
-            static fn (Token $token): bool => $token->isGivenKind(\T_STRING)
+            static fn (Token $token): bool => $token->isGivenKind(\T_STRING),
         );
         $strings = \array_map(
             static fn (Token $token): string => $token->getContent(),
-            $stringTokens
+            $stringTokens,
         );
         $strings = \array_unique($strings);
         $message = \sprintf('Class %s must not use preg_*, it shall use Preg::* instead.', $className);

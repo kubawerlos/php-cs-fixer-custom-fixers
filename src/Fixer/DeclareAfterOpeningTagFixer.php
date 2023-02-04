@@ -25,7 +25,7 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
     {
         return new FixerDefinition(
             'Declare statement for strict types must be placed in the same line, after opening tag.',
-            [new CodeSample("<?php\n\$foo;\ndeclare(strict_types=1);\n\$bar;\n")]
+            [new CodeSample("<?php\n\$foo;\ndeclare(strict_types=1);\n\$bar;\n")],
         );
     }
 

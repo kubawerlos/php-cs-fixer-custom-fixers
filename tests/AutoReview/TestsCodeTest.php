@@ -45,8 +45,8 @@ final class TestsCodeTest extends TestCase
                 \sprintf(
                     'Data provider "%s" in class "%s" is not correctly named.',
                     $reflectionMethod->getName(),
-                    $className
-                )
+                    $className,
+                ),
             );
         }
     }
@@ -70,8 +70,8 @@ final class TestsCodeTest extends TestCase
                 \sprintf(
                     'Data provider "%s" in class "%s" is not static.',
                     $dataProvider->getName(),
-                    $className
-                )
+                    $className,
+                ),
             );
         }
     }
@@ -148,8 +148,8 @@ final class TestsCodeTest extends TestCase
                         "Expected value:\n%s\nis already tested if it is not changing, it does not need separate test case (%s::%s).",
                         $value[0],
                         $className,
-                        $dataProvider->getName()
-                    )
+                        $dataProvider->getName(),
+                    ),
                 );
             }
         }
@@ -164,7 +164,7 @@ final class TestsCodeTest extends TestCase
     {
         return \array_filter(
             $this->getMethods($className, \ReflectionMethod::IS_PUBLIC),
-            static fn (\ReflectionMethod $reflectionMethod): bool => \strpos($reflectionMethod->getName(), 'provide') === 0
+            static fn (\ReflectionMethod $reflectionMethod): bool => \strpos($reflectionMethod->getName(), 'provide') === 0,
         );
     }
 
@@ -179,7 +179,7 @@ final class TestsCodeTest extends TestCase
 
         return \array_filter(
             $reflectionClass->getMethods($methodFilter),
-            static fn (\ReflectionMethod $reflectionMethod): bool => $reflectionMethod->getFileName() === $reflectionClass->getFileName()
+            static fn (\ReflectionMethod $reflectionMethod): bool => $reflectionMethod->getFileName() === $reflectionClass->getFileName(),
         );
     }
 

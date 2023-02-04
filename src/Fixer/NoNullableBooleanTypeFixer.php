@@ -29,7 +29,7 @@ function foo(?bool $bar) : ?bool
  }
 ')],
             null,
-            'when the null is used'
+            'when the null is used',
         );
     }
 

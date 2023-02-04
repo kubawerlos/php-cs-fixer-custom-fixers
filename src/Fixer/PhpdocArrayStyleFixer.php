@@ -29,9 +29,9 @@ final class PhpdocArrayStyleFixer extends AbstractTypesFixer
  * @return int[]
  */
  function foo() { return [1, 2]; }
-'
+',
                 ),
-            ]
+            ],
         );
     }
 

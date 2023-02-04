@@ -31,8 +31,8 @@ final class PhpUnitNoUselessReturnFixer extends AbstractFixer
                 'PHPUnit %s functions should not be followed directly by return.',
                 Utils::naturalLanguageJoinWithBackticks(\array_map(
                     static fn (array $token): string => $token[1],
-                    self::FUNCTION_TOKENS
-                ))
+                    self::FUNCTION_TOKENS,
+                )),
             ),
             [new CodeSample('<?php
 class FooTest extends TestCase {
@@ -43,7 +43,7 @@ class FooTest extends TestCase {
 }
 ')],
             'They will throw an exception anyway.',
-            'when original PHPUnit methods are overwritten'
+            'when original PHPUnit methods are overwritten',
         );
     }
 

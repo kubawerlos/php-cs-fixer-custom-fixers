@@ -37,7 +37,7 @@ class Foo {
     function getBar() {}
 }
 '),
-            ]
+            ],
         );
     }
 
@@ -86,7 +86,7 @@ class Foo {
         $nextIndex = $tokens->getTokenNotOfKindSibling(
             $index,
             1,
-            [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]]
+            [[\T_WHITESPACE], [\T_COMMENT], [\T_ABSTRACT], [\T_FINAL], [\T_PUBLIC], [\T_PROTECTED], [\T_PRIVATE], [\T_STATIC]],
         );
 
         if ($nextIndex === null) {
@@ -112,13 +112,13 @@ class Foo {
                         (?=\R|\*/$|$)
                     ~ix', $tokens[$classyNameIndex]->getContent()),
                 '',
-                $content
+                $content,
             );
         } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
             $content = Preg::replace(
                 '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
                 '',
-                $content
+                $content,
             );
         } else {
             return $content;

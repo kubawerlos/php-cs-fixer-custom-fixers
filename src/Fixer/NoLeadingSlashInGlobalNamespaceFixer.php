@@ -27,7 +27,7 @@ final class NoLeadingSlashInGlobalNamespaceFixer extends AbstractFixer
 $x = new \Foo();
 namespace Bar;
 $y = new \Baz();
-')]
+')],
         );
     }
 

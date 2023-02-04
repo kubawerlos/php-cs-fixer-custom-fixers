@@ -86,7 +86,7 @@ final class ConstructorAnalysis
                     [CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE],
                     [CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED],
                     [CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC],
-                ]
+                ],
             );
             \assert(\is_int($visibilityIndex));
             if (!$this->tokens[$visibilityIndex]->equalsAny(['(', ','])) {

@@ -51,9 +51,9 @@ class Foo {
     }
 }
 ',
-                    new VersionSpecification(80000)
+                    new VersionSpecification(80000),
                 ),
-            ]
+            ],
         );
     }
 
@@ -167,7 +167,7 @@ class Foo {
                 $tokens,
                 $constructorParameterIndex,
                 $tokensToInsert,
-                \substr($propertyType, 0, 1) === '?'
+                \substr($propertyType, 0, 1) === '?',
             );
         }
     }

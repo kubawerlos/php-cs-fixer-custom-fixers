@@ -30,11 +30,11 @@ final class IssetToArrayKeyExistsFixer extends AbstractFixer
 if (isset($array[$key])) {
     echo $array[$key];
 }
-'
+',
                 ),
             ],
             null,
-            'when array is not defined, is multi-dimensional or behaviour is relying on the null value'
+            'when array is not defined, is multi-dimensional or behaviour is relying on the null value',
         );
     }
 

@@ -138,7 +138,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     {
         $this->doTest(
             '<?php function f(Bar | Baz | Qux $x) {};',
-            '<?php function f(\Bar | \Baz | \Qux $x) {};'
+            '<?php function f(\Bar | \Baz | \Qux $x) {};',
         );
     }
 }

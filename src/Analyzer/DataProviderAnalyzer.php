@@ -32,7 +32,7 @@ final class DataProviderAnalyzer
             $docCommentIndex = $tokens->getTokenNotOfKindSibling(
                 $methodIndex,
                 -1,
-                [[\T_ABSTRACT], [\T_COMMENT], [\T_FINAL], [\T_FUNCTION], [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_STATIC], [\T_WHITESPACE]]
+                [[\T_ABSTRACT], [\T_COMMENT], [\T_FINAL], [\T_FUNCTION], [\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_STATIC], [\T_WHITESPACE]],
             );
             \assert(\is_int($docCommentIndex));
 
@@ -59,7 +59,7 @@ final class DataProviderAnalyzer
             $dataProviderAnalyses[$methods[$lowercaseDataProviderName]] = new DataProviderAnalysis(
                 $tokens[$methods[$lowercaseDataProviderName]]->getContent(),
                 $methods[$lowercaseDataProviderName],
-                $dataProviderUsages
+                $dataProviderUsages,
             );
         }
 

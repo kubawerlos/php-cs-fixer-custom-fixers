@@ -34,7 +34,7 @@ class Foo {
      */
      private $instance;
 }
-')]
+')],
         );
     }
 
@@ -123,7 +123,7 @@ class Foo {
                 $type = Preg::replace(
                     \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $classyName, \preg_quote($fqcn, '/')),
                     'self',
-                    $type
+                    $type,
                 );
 
                 $types[] = $type;

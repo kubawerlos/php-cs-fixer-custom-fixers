@@ -33,7 +33,7 @@ final class PhpdocNoSuperfluousParamFixer extends AbstractFixer
  * @param string $s duplicated
  */
 function foo($b, $s) {}
-')]
+')],
         );
     }
 

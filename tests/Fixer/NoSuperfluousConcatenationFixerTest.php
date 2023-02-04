@@ -46,7 +46,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         } else {
             self::assertSame(
                 eval('return ' . $expected . ';'),
-                eval('return ' . $input . ';')
+                eval('return ' . $input . ';'),
             );
         }
     }
@@ -61,7 +61,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         $this->doTest(
             '<?php ' . $expected . ';',
             $input === null ? null : ('<?php ' . $input . ';'),
-            $configuration
+            $configuration,
         );
     }
 

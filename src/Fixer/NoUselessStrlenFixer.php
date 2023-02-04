@@ -30,11 +30,11 @@ final class NoUselessStrlenFixer extends AbstractFixer
                     '<?php
 $isEmpty = strlen($string) === 0;
 $isNotEmpty = strlen($string) > 0;
-'
+',
                 ),
             ],
             null,
-            'when the function `strlen` is overridden'
+            'when the function `strlen` is overridden',
         );
     }
 

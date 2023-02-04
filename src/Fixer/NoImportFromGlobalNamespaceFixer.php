@@ -32,7 +32,7 @@ use DateTime;
 class Bar {
     public function __construct(DateTime $dateTime) {}
 }
-')]
+')],
         );
     }
 

@@ -42,8 +42,8 @@ final class PhpdocOnlyAllowedAnnotationsFixer extends AbstractFixer implements C
  */
 function foo_bar() {}
 ',
-                ['elements' => ['author', 'version']]
-            )]
+                ['elements' => ['author', 'version']],
+            )],
         );
     }
 

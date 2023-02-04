@@ -32,7 +32,7 @@ final class NoPhpStormGeneratedCommentFixer extends AbstractFixer
  * Time: 12:00
  */
 namespace Foo;
-')]
+')],
         );
     }
 

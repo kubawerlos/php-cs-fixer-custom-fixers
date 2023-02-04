@@ -48,7 +48,7 @@ final class ReadmeCommand extends Command
             . $this->installation() . "\n\n"
             . $this->usage() . "\n\n"
             . $this->fixers() . "\n\n"
-            . $this->contributing() . "\n"
+            . $this->contributing() . "\n",
         );
 
         return self::SUCCESS;
@@ -60,47 +60,47 @@ final class ReadmeCommand extends Command
             $this->badge(
                 'Latest stable version',
                 \sprintf('%s/packagist/v/%s.svg?label=current%%20version', self::SHIELDS_HOST, $this->composer()->name),
-                \sprintf('https://packagist.org/packages/%s', $this->composer()->name)
+                \sprintf('https://packagist.org/packages/%s', $this->composer()->name),
             ),
             $this->badge(
                 'PHP version',
                 \sprintf('%s/packagist/php-v/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
-                'https://php.net'
+                'https://php.net',
             ),
             $this->badge(
                 'License',
                 \sprintf('%s/github/license/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
-                'LICENSE'
+                'LICENSE',
             ),
             $this->badge(
                 'Tests',
-                \sprintf('%s/badge/tests-%d-brightgreen.svg', self::SHIELDS_HOST, $this->numberOfTests())
+                \sprintf('%s/badge/tests-%d-brightgreen.svg', self::SHIELDS_HOST, $this->numberOfTests()),
             ),
             $this->badge(
                 'Downloads',
                 \sprintf('%s/packagist/dt/%s.svg', self::SHIELDS_HOST, $this->composer()->name),
-                \sprintf('https://packagist.org/packages/%s', $this->composer()->name)
+                \sprintf('https://packagist.org/packages/%s', $this->composer()->name),
             ),
             '',
             $this->badge(
                 'CI Status',
                 \sprintf('https://github.com/%s/workflows/CI/badge.svg?branch=main', $this->composer()->name),
-                \sprintf('https://github.com/%s/actions', $this->composer()->name)
+                \sprintf('https://github.com/%s/actions', $this->composer()->name),
             ),
             $this->badge(
                 'Code coverage',
                 \sprintf('%s/coveralls/github/%s/main.svg', self::SHIELDS_HOST, $this->composer()->name),
-                \sprintf('https://coveralls.io/github/%s?branch=main', $this->composer()->name)
+                \sprintf('https://coveralls.io/github/%s?branch=main', $this->composer()->name),
             ),
             $this->badge(
                 'Mutation testing badge',
                 \sprintf('https://badge.stryker-mutator.io/github.com/%s/main', $this->composer()->name),
-                \sprintf('https://dashboard.stryker-mutator.io/reports/github.com/%s/main', $this->composer()->name)
+                \sprintf('https://dashboard.stryker-mutator.io/reports/github.com/%s/main', $this->composer()->name),
             ),
             $this->badge(
                 'Psalm type coverage',
                 \sprintf('https://shepherd.dev/github/%s/coverage.svg', $this->composer()->name),
-                \sprintf('https://shepherd.dev/github/%s', $this->composer()->name)
+                \sprintf('https://shepherd.dev/github/%s', $this->composer()->name),
             ),
         ]);
     }
@@ -129,7 +129,7 @@ final class ReadmeCommand extends Command
         return \str_replace(
             'PHP CS Fixer',
             '[PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)',
-            $this->composer()->description
+            $this->composer()->description,
         ) . '.';
     }
 
@@ -143,7 +143,7 @@ composer require --dev %s
 ```
 ',
             self::NAME,
-            $this->composer()->name
+            $this->composer()->name,
         );
     }
 
@@ -163,8 +163,8 @@ require_once __DIR__ . \'/vendor/autoload.php\';
 ',
             $this->diff(
                 \file_get_contents(__DIR__ . '/php-cs-fixer.config.before.txt'),
-                \file_get_contents(__DIR__ . '/php-cs-fixer.config.after.txt')
-            )
+                \file_get_contents(__DIR__ . '/php-cs-fixer.config.after.txt'),
+            ),
         );
     }
 
@@ -183,7 +183,7 @@ require_once __DIR__ . \'/vendor/autoload.php\';
             $output .= \sprintf(
                 "\n#### %s\n%s",
                 $reflectionClass->getShortName(),
-                $fixer->getDefinition()->getSummary()
+                $fixer->getDefinition()->getSummary(),
             );
 
             $output .= $fixer instanceof DeprecatedFixerInterface ? \sprintf("\n  DEPRECATED: use `%s` instead.", \implode('`, `', $fixer->getSuccessorsNames())) : '';
@@ -194,7 +194,7 @@ require_once __DIR__ . \'/vendor/autoload.php\';
             if ($fixer->isRisky()) {
                 $output .= \sprintf(
                     "\n  *Risky: %s.*",
-                    $fixer->getDefinition()->getRiskyDescription()
+                    $fixer->getDefinition()->getRiskyDescription(),
                 );
             }
             if ($fixer instanceof DataProviderStaticFixer) {
@@ -216,7 +216,7 @@ require_once __DIR__ . \'/vendor/autoload.php\';
                         $option->getName(),
                         \implode('`, `', $allowed),
                         $option->getDescription(),
-                        HelpCommand::toString($option->getDefault())
+                        HelpCommand::toString($option->getDefault()),
                     );
                 }
             }
@@ -234,7 +234,7 @@ require_once __DIR__ . \'/vendor/autoload.php\';
 
             $output .= \sprintf(
                 "\n```diff\n%s\n```\n",
-                $this->diff($originalCode, $fixedCode)
+                $this->diff($originalCode, $fixedCode),
             );
         }
 

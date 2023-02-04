@@ -26,7 +26,7 @@ trait AssertSameTokensTrait
 
             self::assertTrue(
                 $expectedToken->equals($inputToken),
-                \sprintf("Token at index %d must be:\n%s,\ngot:\n%s.", $index, $expectedToken->toJson(), $inputToken->toJson())
+                \sprintf("Token at index %d must be:\n%s,\ngot:\n%s.", $index, $expectedToken->toJson(), $inputToken->toJson()),
             );
         }
     }

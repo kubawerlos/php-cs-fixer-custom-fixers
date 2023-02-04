@@ -37,7 +37,7 @@ final class CommentedOutFunctionFixer extends AbstractFixer implements Configura
 var_dump($x);
 ')],
             null,
-            'when any of the configured functions have side effects or are overwritten'
+            'when any of the configured functions have side effects or are overwritten',
         );
     }
 
@@ -172,7 +172,7 @@ var_dump($x);
         $tokens->overrideRange(
             $startIndex,
             $endIndex,
-            [new Token([\T_COMMENT, '/*' . $tokens->generatePartialCode($startIndex, $endIndex) . '*/'])]
+            [new Token([\T_COMMENT, '/*' . $tokens->generatePartialCode($startIndex, $endIndex) . '*/'])],
         );
     }
 
@@ -223,7 +223,7 @@ var_dump($x);
         $tokens->overrideRange(
             $startIndex,
             $endIndex,
-            $newTokens
+            $newTokens,
         );
     }
 }

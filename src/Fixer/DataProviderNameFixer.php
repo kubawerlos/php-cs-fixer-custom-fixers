@@ -46,11 +46,11 @@ class FooTest extends TestCase {
     public function testSomething($expected, $actual) {}
     public function dataProvider() {}
 }
-'
+',
                 ),
             ],
             null,
-            'when relying on name of data provider function'
+            'when relying on name of data provider function',
         );
     }
 
@@ -130,7 +130,7 @@ class FooTest extends TestCase {
             $newCommentContent = Preg::replace(
                 \sprintf('/(@dataProvider\s+)%s/', $dataProviderAnalysis->getName()),
                 \sprintf('$1%s', $dataProviderNewName),
-                $tokens[$usageIndex]->getContent()
+                $tokens[$usageIndex]->getContent(),
             );
 
             $tokens[$usageIndex] = new Token([\T_DOC_COMMENT, $newCommentContent]);

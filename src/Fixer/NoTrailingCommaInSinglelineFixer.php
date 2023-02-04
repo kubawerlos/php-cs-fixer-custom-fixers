@@ -25,7 +25,7 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
             'Trailing comma in the list on the same line as the end of the block must be removed.',
             [
                 new CodeSample("<?php\n\$x = ['foo', 'bar', ];\n"),
-            ]
+            ],
         );
     }
 

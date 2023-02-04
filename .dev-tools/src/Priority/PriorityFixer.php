@@ -87,7 +87,7 @@ final class PriorityFixer
     {
         $fixers = \array_map(
             static fn (self $priorityFixer): string => (new \ReflectionObject($priorityFixer->fixer))->getShortName(),
-            $priorityFixers
+            $priorityFixers,
         );
 
         \sort($fixers);

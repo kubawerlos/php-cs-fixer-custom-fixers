@@ -1031,7 +1031,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                             $this->doNotPromoteThisOne = $doNotPromoteThisOne;
                         }
                     }',
-                    $annotation
+                    $annotation,
                 ),
                 \sprintf(
                     '<?php
@@ -1056,7 +1056,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                             $this->promoteThisOneToo = $promoteThisOneToo;
                         }
                     }',
-                    $annotation
+                    $annotation,
                 ),
             ];
         }

@@ -42,7 +42,7 @@ final class Version20180609123456 extends AbstractMigration
         $this->addSql("UPDATE t1 SET col1 = col1 - 1");
     }
 }
-')]
+')],
         );
     }
 

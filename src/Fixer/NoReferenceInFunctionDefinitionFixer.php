@@ -27,7 +27,7 @@ final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
 function foo(&$x) {}
 ')],
             null,
-            'when rely on reference'
+            'when rely on reference',
         );
     }
 

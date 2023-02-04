@@ -26,7 +26,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
             'Comments must be surrounded by spaces.',
             [new CodeSample('<?php
 /*foo*/
-')]
+')],
         );
     }
 
@@ -60,14 +60,14 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
             $newContent = Preg::replace(
                 '/^(\/\/|#(?!\[)|\/\*+)(?!(?:\/|\*|\s|$))/',
                 '$1 ',
-                $tokens[$index]->getContent()
+                $tokens[$index]->getContent(),
             );
 
             // ensure whitespace at the end
             $newContent = Preg::replace(
                 '/(?<!(?:\/|\*|\h))(\*+\/)$/',
                 ' $1',
-                $newContent
+                $newContent,
             );
 
             if ($newContent === $tokens[$index]->getContent()) {
