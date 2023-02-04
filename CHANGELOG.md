@@ -2,6 +2,7 @@
 
 ## v3.12.0
 - MultilinePromotedPropertiesFixer - add option "minimum_number_of_parameters"
+- Add `bootstrap.php`
 
 ## v3.11.0
 - Add ReadonlyPromotedPropertiesFixer

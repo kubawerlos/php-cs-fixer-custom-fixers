@@ -51,6 +51,10 @@ jobs:
             description: 'with shim package'
             use-shim-package: true
             php-version: '8.2'
+          - os: ubuntu-latest
+            description: 'with bootstrap'
+            with-bootstrap: true
+            php-version: '8.2'
           - os: macos-latest
             description: 'on macOS'
             php-version: '8.2'
@@ -76,6 +80,12 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+      - if: ${{ matrix.with-bootstrap }}
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: |
+            jq -r --indent 4 'del(.autoload."psr-4")' composer.json > composer.tmp
+            jq -r --indent 4 '.autoload += {"files": ["bootstrap.php"]}' composer.tmp > composer.json
       - if: ${{ matrix.use-shim-package }}
         run: |
           composer remove friendsofphp/php-cs-fixer --no-update
