@@ -33,6 +33,8 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
         self::assertArrayHasKey(0, $options);
         self::assertSame('minimum_number_of_parameters', $options[0]->getName());
         self::assertSame(1, $options[0]->getDefault());
+        self::assertSame('keep_blank_lines', $options[1]->getName());
+        self::assertFalse($options[1]->getDefault());
     }
 
     public function testIsRisky(): void
@@ -51,7 +53,7 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array{0: string, 1: null|string, 2?: array<string, int>}>
+     * @return iterable<array{0: string, 1: null|string, 2?: array<string, bool|int>}>
      */
     public static function provideFixCases(): iterable
     {
@@ -219,5 +221,43 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
                 ['minimum_number_of_parameters' => $numberOfParameters],
             ];
         }
+
+        yield 'blank lines removed' => [
+            '<?php class Foo {
+                public function __construct(
+                    private int $x,
+                    private int $y,
+                    private int $z
+                ) {}
+            }',
+            '<?php class Foo {
+                public function __construct(
+                    private int $x,
+
+                    private int $y,
+
+                    private int $z
+                ) {}
+            }',
+        ];
+
+        yield 'blank lines kept' => [
+            '<?php class Foo {
+                public function __construct(
+                    private int $x,
+                    private int $y,
+
+                    private int $z
+                ) {}
+            }',
+            '<?php class Foo {
+                public function __construct(
+                    private int $x, private int $y,
+
+                    private int $z
+                ) {}
+            }',
+            ['keep_blank_lines' => true],
+        ];
     }
 }
