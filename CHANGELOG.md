@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.13.0
+- MultilinePromotedPropertiesFixer - add option "keep_blank_lines"
+
 ## v3.12.0
 - MultilinePromotedPropertiesFixer - add option "minimum_number_of_parameters"
 - Add `bootstrap.php`
