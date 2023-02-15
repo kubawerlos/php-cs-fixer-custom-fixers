@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3409-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3411-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -170,6 +170,7 @@ Multiline comments or PHPDocs must contain an opening and closing line with no a
 A constructor with promoted properties must have them in separate lines.
 Configuration options:
 - `minimum_number_of_parameters` (`int`): minimum number of parameters in the constructor to fix; defaults to `1`
+- `keep_blank_lines` (`bool`): whether to keep blank lines between properties; defaults to `false`
 ```diff
  <?php class Foo {
 -    public function __construct(private array $a, private bool $b, private int $i) {}

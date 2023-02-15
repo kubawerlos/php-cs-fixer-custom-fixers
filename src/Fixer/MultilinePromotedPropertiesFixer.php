@@ -29,6 +29,7 @@ use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 final class MultilinePromotedPropertiesFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {
     private int $minimumNumberOfParameters = 1;
+    private bool $keepBlankLines = false;
     private WhitespacesFixerConfig $whitespacesConfig;
 
     public function getDefinition(): FixerDefinitionInterface
@@ -54,16 +55,23 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
                 ->setAllowedTypes(['int'])
                 ->setDefault($this->minimumNumberOfParameters)
                 ->getOption(),
+            (new FixerOptionBuilder('keep_blank_lines', 'whether to keep blank lines between properties'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault($this->keepBlankLines)
+                ->getOption(),
         ]);
     }
 
     /**
-     * @param array<string, int> $configuration
+     * @param array{minimum_number_of_parameters?: int, keep_blank_lines?: bool} $configuration
      */
     public function configure(array $configuration): void
     {
         if (\array_key_exists('minimum_number_of_parameters', $configuration)) {
             $this->minimumNumberOfParameters = $configuration['minimum_number_of_parameters'];
+        }
+        if (\array_key_exists('keep_blank_lines', $configuration)) {
+            $this->keepBlankLines = $configuration['keep_blank_lines'];
         }
     }
 
@@ -170,11 +178,20 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
                 continue;
             }
 
-            $tokens->ensureWhitespaceAtIndex(
-                $index + 1,
-                0,
-                $this->whitespacesConfig->getLineEnding() . $indent . $this->whitespacesConfig->getIndent(),
-            );
+            $this->fixParameter($tokens, $index + 1, $indent);
         }
+    }
+
+    private function fixParameter(Tokens $tokens, int $index, string $indent): void
+    {
+        if ($this->keepBlankLines && $tokens[$index]->isWhitespace() && \str_contains($tokens[$index]->getContent(), "\n")) {
+            return;
+        }
+
+        $tokens->ensureWhitespaceAtIndex(
+            $index,
+            0,
+            $this->whitespacesConfig->getLineEnding() . $indent . $this->whitespacesConfig->getIndent(),
+        );
     }
 }
