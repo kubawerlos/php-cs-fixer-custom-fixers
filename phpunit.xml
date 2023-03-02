@@ -5,7 +5,7 @@
          bootstrap='./tests/autoload.php'
          cacheResult='false'
          colors='true'
-         executionOrder='default'
+         displayDetailsOnTestsThatTriggerDeprecations='true'
          failOnEmptyTestSuite='true'
          failOnIncomplete='true'
          failOnRisky='true'
@@ -31,7 +31,6 @@
             <directory>./src</directory>
         </include>
         <report>
-            <clover outputFile='./build/logs/clover.xml'/>
             <text outputFile='php://stdout' showOnlySummary='true' />
         </report>
     </coverage>
