@@ -6,6 +6,8 @@
        allowStringToStandInForClass='true'
        autoloader='../vendor/autoload.php'
        errorLevel='1'
+       findUnusedBaselineEntry='true'
+       findUnusedCode='false'
        findUnusedVariablesAndParams='true'
        strictBinaryOperands='true'
        usePhpDocMethodsWithoutMagicCall='true'
@@ -19,16 +21,14 @@
     </stubs>
 
     <issueHandlers>
-        <ArgumentTypeCoercion errorLevel='suppress' />
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
         <MissingConstructor errorLevel='suppress' />
         <MoreSpecificImplementedParamType errorLevel='suppress' />
-        <PossiblyInvalidFunctionCall errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />
         <PossiblyNullArrayOffset errorLevel='suppress' />
+        <PossiblyNullFunctionCall errorLevel='suppress' />
         <PossiblyNullOperand errorLevel='suppress' />
-        <UndefinedDocblockClass errorLevel='suppress' />
     </issueHandlers>
 </psalm>
