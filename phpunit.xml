@@ -10,8 +10,7 @@
          failOnIncomplete='true'
          failOnRisky='true'
          failOnWarning='true'
-         forceCoversAnnotation='true'
-         verbose='true'
+         requireCoverageMetadata='true'
 >
 
     <php>
