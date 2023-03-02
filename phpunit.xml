@@ -5,13 +5,12 @@
          bootstrap='./tests/autoload.php'
          cacheResult='false'
          colors='true'
-         executionOrder='default'
+         displayDetailsOnTestsThatTriggerDeprecations='true'
          failOnEmptyTestSuite='true'
          failOnIncomplete='true'
          failOnRisky='true'
          failOnWarning='true'
-         forceCoversAnnotation='true'
-         verbose='true'
+         requireCoverageMetadata='true'
 >
 
     <php>
@@ -31,9 +30,6 @@
         <include>
             <directory>./src</directory>
         </include>
-        <report>
-            <text outputFile='php://stdout' showOnlySummary='true' />
-        </report>
     </coverage>
 
 </phpunit>

@@ -42,6 +42,7 @@ jobs:
           - os: ubuntu-latest
             description: 'with calculating code coverage'
             calculate-coverage: true
+            phpunit-flags: '--coverage-clover=./build/logs/clover.xml'
             php-version: '8.2'
           - os: ubuntu-latest
             description: 'with PHP CS Fixer from master'
@@ -94,7 +95,7 @@ jobs:
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer-flags }}
       - run: composer show | grep php-cs-fixer
-      - run: composer test -- --coverage-clover=./build/logs/clover.xml
+      - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
       - if: ${{ matrix.calculate-coverage }}
         run: |
           composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies
