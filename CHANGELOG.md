@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.14.0
+- Add EmptyFunctionBodyFixer
+
 ## v3.13.0
 - MultilinePromotedPropertiesFixer - add option "keep_blank_lines"
 

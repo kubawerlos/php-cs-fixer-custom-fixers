@@ -1,0 +1,99 @@
+<?php declare(strict_types=1);
+
+/*
+ * This file is part of PHP CS Fixer: custom fixers.
+ *
+ * (c) 2018 Kuba Werłos
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace Tests\Fixer;
+
+/**
+ * @internal
+ *
+ * @covers \PhpCsFixerCustomFixers\Fixer\EmptyFunctionBodyFixer
+ */
+final class EmptyFunctionBodyFixerTest extends AbstractFixerTestCase
+{
+    public function testIsRisky(): void
+    {
+        self::assertFalse($this->fixer->isRisky());
+    }
+
+    /**
+     * @dataProvider provideFixCases
+     */
+    public function testFix(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFixCases(): iterable
+    {
+        yield 'functions' => [
+            '<?php
+                function f1 () {}
+                function f2 () {}
+                function f3 () {}
+            ',
+            '<?php
+                function f1 ()
+                {}
+                function f2 () {
+                }
+                function f3 ()
+                {
+                }
+            ',
+        ];
+
+        yield 'remove spaces' => [
+            '<?php
+                function f1 () {}
+                function f2 () {}
+                function f3 () {}
+            ',
+            '<?php
+                function f1 () { }
+                function f2 () { }
+                function f3 () { }
+            ',
+        ];
+
+        yield 'add spaces' => [
+            '<?php
+                function f1 () {}
+                function f2 () {}
+                function f3 () {}
+            ',
+            '<?php
+                function f1 (){}
+                function f2 (){}
+                function f3 (){}
+            ',
+        ];
+
+        yield 'abstract function' => [
+            '<?php abstract class C {
+                abstract function f1();
+                function f2() {}
+                abstract function f3();
+            }
+            if (true)    {    }
+            ',
+            '<?php abstract class C {
+                abstract function f1();
+                function f2()    {    }
+                abstract function f3();
+            }
+            if (true)    {    }
+            ',
+        ];
+    }
+}
