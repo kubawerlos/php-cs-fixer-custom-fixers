@@ -66,7 +66,11 @@ final class EmptyFunctionBodyFixer extends AbstractFixer
             }
 
             $tokens->ensureWhitespaceAtIndex($openBraceIndex + 1, 0, '');
-            $tokens->ensureWhitespaceAtIndex($openBraceIndex - 1, 1, ' ');
+
+            $beforeOpenBraceIndex = $tokens->getPrevNonWhitespace($openBraceIndex);
+            if (!$tokens[$beforeOpenBraceIndex]->isGivenKind([\T_COMMENT, \T_DOC_COMMENT])) {
+                $tokens->ensureWhitespaceAtIndex($openBraceIndex - 1, 1, ' ');
+            }
         }
     }
 }

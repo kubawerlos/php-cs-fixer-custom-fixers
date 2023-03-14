@@ -36,46 +36,83 @@ final class EmptyFunctionBodyFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
+        yield 'non-empty body' => [
+            '<?php
+                function f1()
+                { /* foo */ }
+                function f2()
+                { /** foo */ }
+                function f3()
+                { // foo
+                }
+                function f4()
+                {
+                    return true;
+                }
+            ',
+        ];
+
         yield 'functions' => [
             '<?php
-                function f1 () {}
-                function f2 () {}
-                function f3 () {}
+                function notThis1()    { return 1; }
+                function f1() {}
+                function f2() {}
+                function f3() {}
+                function notThis2(){ return 1; }
             ',
             '<?php
-                function f1 ()
+                function notThis1()    { return 1; }
+                function f1()
                 {}
-                function f2 () {
+                function f2() {
                 }
-                function f3 ()
+                function f3()
                 {
                 }
+                function notThis2(){ return 1; }
             ',
         ];
 
         yield 'remove spaces' => [
             '<?php
-                function f1 () {}
-                function f2 () {}
-                function f3 () {}
+                function f1() {}
+                function f2() {}
+                function f3() {}
             ',
             '<?php
-                function f1 () { }
-                function f2 () { }
-                function f3 () { }
+                function f1() { }
+                function f2() { }
+                function f3() { }
             ',
         ];
 
         yield 'add spaces' => [
             '<?php
-                function f1 () {}
-                function f2 () {}
-                function f3 () {}
+                function f1() {}
+                function f2() {}
+                function f3() {}
             ',
             '<?php
-                function f1 (){}
-                function f2 (){}
-                function f3 (){}
+                function f1(){}
+                function f2(){}
+                function f3(){}
+            ',
+        ];
+
+        yield 'with return types' => [
+            '<?php
+                function f1(): void {}
+                function f2(): \Foo\Bar {}
+                function f3(): ?string {}
+            ',
+            '<?php
+                function f1(): void
+                {}
+                function f2(): \Foo\Bar    {    }
+                function f3(): ?string {
+
+
+                }
             ',
         ];
 
@@ -93,6 +130,43 @@ final class EmptyFunctionBodyFixerTest extends AbstractFixerTestCase
                 abstract function f3();
             }
             if (true)    {    }
+            ',
+        ];
+
+        yield 'comment before body' => [
+            '<?php
+                function f1()
+                // foo
+                {}
+                function f2()
+                /* foo */
+                {}
+                function f3()
+                /** foo */
+                {}
+                function f3()
+                /** foo */
+                /** bar */
+                {}
+            ',
+            '<?php
+                function f1()
+                // foo
+                {
+                }
+                function f2()
+                /* foo */
+                {
+
+                }
+                function f3()
+                /** foo */
+                {
+                }
+                function f3()
+                /** foo */
+                /** bar */
+                {    }
             ',
         ];
     }
