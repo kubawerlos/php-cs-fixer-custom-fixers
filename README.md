@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3411-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3439-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -133,6 +133,17 @@ Declare statement for strict types must be placed in the same line, after openin
  $foo;
 -declare(strict_types=1);
  $bar;
+```
+
+#### EmptyFunctionBodyFixer
+Empty function body must be abbreviated as `{}` and placed on the same line as the previous symbol, separated by a space.
+```diff
+ <?php function foo(
+     int $x
+-)
+-{
+-}
++) {}
 ```
 
 #### InternalClassCasingFixer
