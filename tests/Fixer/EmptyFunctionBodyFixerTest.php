@@ -133,6 +133,27 @@ final class EmptyFunctionBodyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'every token in separate line' => [
+            '<?php
+                function
+                foo
+                (
+                )
+                :
+                void {}
+            ',
+            '<?php
+                function
+                foo
+                (
+                )
+                :
+                void
+                {
+                }
+            ',
+        ];
+
         yield 'comment before body' => [
             '<?php
                 function f1()
