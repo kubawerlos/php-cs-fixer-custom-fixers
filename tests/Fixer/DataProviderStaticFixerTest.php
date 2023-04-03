@@ -12,11 +12,12 @@
 namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 
 /**
  * @internal
  *
- * @property ConfigurableFixerInterface $fixer
+ * @property ConfigurableFixerInterface&DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer
  */
