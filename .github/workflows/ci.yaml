@@ -88,9 +88,7 @@ jobs:
             jq -r --indent 4 'del(.autoload."psr-4")' composer.json > composer.tmp
             jq -r --indent 4 '.autoload += {"files": ["bootstrap.php"]}' composer.tmp > composer.json
       - if: ${{ matrix.use-shim-package }}
-        run: |
-          composer remove friendsofphp/php-cs-fixer --no-update
-          composer require php-cs-fixer/shim:* --no-update
+        run: sed -i 's#friendsofphp/php-cs-fixer#php-cs-fixer/shim#g' composer.json
       - if: ${{ matrix.with-php-cs-fixer-from-master }}
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer-flags }}
