@@ -12,27 +12,33 @@
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\PhpUnit\PhpUnitDataProviderStaticFixer;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\TokensAnalyzer;
-use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
-final class DataProviderStaticFixer extends AbstractFixer implements ConfigurableFixerInterface
+/**
+ * @deprecated
+ */
+final class DataProviderStaticFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
-    /** @var bool */
-    private $force = false;
+    private bool $force = false;
+    private PhpUnitDataProviderStaticFixer $phpUnitDataProviderStaticFixer;
+
+    public function __construct()
+    {
+        $this->phpUnitDataProviderStaticFixer = new PhpUnitDataProviderStaticFixer();
+    }
 
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Data providers must be static.',
+            $this->phpUnitDataProviderStaticFixer->getDefinition()->getSummary(),
             [
                 new CodeSample(
                     '<?php
@@ -69,16 +75,17 @@ class FooTest extends TestCase {
         if (\array_key_exists('force', $configuration)) {
             $this->force = $configuration['force'];
         }
+        $this->phpUnitDataProviderStaticFixer->configure(['force' => $this->force]);
     }
 
     public function getPriority(): int
     {
-        return 0;
+        return $this->phpUnitDataProviderStaticFixer->getPriority();
     }
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([\T_CLASS, \T_DOC_COMMENT, \T_EXTENDS, \T_FUNCTION, \T_STRING]);
+        return $this->phpUnitDataProviderStaticFixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
@@ -88,40 +95,14 @@ class FooTest extends TestCase {
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-
-        /** @var array<int> $indices */
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->fixStatic($tokens, $indices[0], $indices[1]);
-        }
+        $this->phpUnitDataProviderStaticFixer->fix($file, $tokens);
     }
 
-    private function fixStatic(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @return array<string>
+     */
+    public function getSuccessorsNames(): array
     {
-        $dataProviderAnalyzer = new DataProviderAnalyzer();
-        $tokensAnalyzer = new TokensAnalyzer($tokens);
-
-        foreach (\array_reverse($dataProviderAnalyzer->getDataProviders($tokens, $startIndex, $endIndex)) as $dataProviderAnalysis) {
-            $methodStartIndex = $tokens->getNextTokenOfKind($dataProviderAnalysis->getNameIndex(), ['{']);
-            if ($methodStartIndex !== null) {
-                $methodEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $methodStartIndex);
-
-                if (!$this->force && $tokens->findSequence([[\T_VARIABLE, '$this']], $methodStartIndex, $methodEndIndex) !== null) {
-                    continue;
-                }
-            }
-            $functionIndex = $tokens->getPrevTokenOfKind($dataProviderAnalysis->getNameIndex(), [[\T_FUNCTION]]);
-            \assert(\is_int($functionIndex));
-
-            $methodAttributes = $tokensAnalyzer->getMethodAttributes($functionIndex);
-            if ($methodAttributes['static'] !== false) {
-                continue;
-            }
-
-            $tokens->insertAt(
-                $functionIndex,
-                [new Token([\T_STATIC, 'static']), new Token([\T_WHITESPACE, ' '])],
-            );
-        }
+        return [$this->phpUnitDataProviderStaticFixer->getName()];
     }
 }

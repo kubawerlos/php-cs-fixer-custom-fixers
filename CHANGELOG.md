@@ -2,6 +2,8 @@
 
 ## v3.14.0
 - Add EmptyFunctionBodyFixer
+- Deprecate DataProviderStaticFixer - use "php_unit_data_provider_static"
+- Update minimum PHP CS Fixer version to 3.16.0
 
 ## v3.13.0
 - MultilinePromotedPropertiesFixer - add option "keep_blank_lines"

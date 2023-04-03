@@ -110,6 +110,7 @@ The types returned by data providers must be `iterable`.
 
 #### DataProviderStaticFixer
 Data providers must be static.
+  DEPRECATED: use `php_unit_data_provider_static` instead.
   *Risky: when `force` is set to `true`.*
 Configuration options:
 - `force` (`bool`): whether to make static data providers having dynamic class calls; defaults to `false`
