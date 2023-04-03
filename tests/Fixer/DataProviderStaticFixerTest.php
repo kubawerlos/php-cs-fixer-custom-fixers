@@ -33,6 +33,11 @@ final class DataProviderStaticFixerTest extends AbstractFixerTestCase
         self::assertFalse($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertContains('php_unit_data_provider_static', $this->fixer->getSuccessorsNames());
+    }
+
     public function testConfiguration(): void
     {
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
