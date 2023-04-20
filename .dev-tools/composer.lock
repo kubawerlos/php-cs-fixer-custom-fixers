@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d9211ef93a4c8c239f051de466371f9",
+    "content-hash": "bdca89d6fe6448c7c9968a6a18c11f3f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -642,16 +642,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.26.19",
+            "version": "0.26.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "bd7351c88f3a797ea8977e68fe6a3f4d4c5f457f"
+                "reference": "37dd2f590bec3d0058e11dbeefc8f93fc9132c62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/bd7351c88f3a797ea8977e68fe6a3f4d4c5f457f",
-                "reference": "bd7351c88f3a797ea8977e68fe6a3f4d4c5f457f"
+                "url": "https://api.github.com/repos/infection/infection/zipball/37dd2f590bec3d0058e11dbeefc8f93fc9132c62",
+                "reference": "37dd2f590bec3d0058e11dbeefc8f93fc9132c62"
             },
             "require": {
                 "colinodell/json5": "^2.2",
@@ -668,7 +668,7 @@
                 "justinrainbow/json-schema": "^5.2.10",
                 "nikic/php-parser": "^4.15.1",
                 "ondram/ci-detector": "^4.1.0",
-                "php": "^8.0",
+                "php": "^8.1",
                 "sanmai/later": "^0.1.1",
                 "sanmai/pipeline": "^5.1 || ^6",
                 "sebastian/diff": "^3.0.2 || ^4.0 || ^5.0",
