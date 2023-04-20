@@ -26,10 +26,10 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
             <directory>./src</directory>
         </include>
-    </coverage>
+    </source>
 
 </phpunit>
