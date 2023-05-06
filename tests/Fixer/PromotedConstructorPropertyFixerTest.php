@@ -574,7 +574,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                 class Foo
                 {
                     public function __construct(
-                        #[Attribute]
+                        #[AnAttribute]
                     private string $x
                     ) {
                     }
@@ -583,7 +583,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             '<?php
                 class Foo
                 {
-                    #[Attribute]
+                    #[AnAttribute]
                     private $x;
                     public function __construct(
                         string $x
@@ -670,7 +670,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             '<?php class Foo {
                 public function __construct(
                     private string $x,
-                    #[Attribute(1, 2, 3)]
+                    #[AnAttribute(1, 2, 3)]
                     private string $y,
                 ) {
                 }
@@ -681,7 +681,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                 private string $y;
                 public function __construct(
                     string $x,
-                    #[Attribute(1, 2, 3)]
+                    #[AnAttribute(1, 2, 3)]
                     string $y,
                 ) {
                     $this->x = $x;

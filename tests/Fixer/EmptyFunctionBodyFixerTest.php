@@ -165,7 +165,7 @@ final class EmptyFunctionBodyFixerTest extends AbstractFixerTestCase
                 function f3()
                 /** foo */
                 {}
-                function f3()
+                function f4()
                 /** foo */
                 /** bar */
                 {}
@@ -184,7 +184,7 @@ final class EmptyFunctionBodyFixerTest extends AbstractFixerTestCase
                 /** foo */
                 {
                 }
-                function f3()
+                function f4()
                 /** foo */
                 /** bar */
                 {    }
