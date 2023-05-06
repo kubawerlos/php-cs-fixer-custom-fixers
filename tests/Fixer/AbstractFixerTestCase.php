@@ -17,6 +17,7 @@ use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\Linter\Linter;
+use PhpCsFixer\Linter\ProcessLinter;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PHPUnit\Framework\TestCase;
@@ -171,7 +172,7 @@ abstract class AbstractFixerTestCase extends TestCase
         static $linter;
 
         if ($linter === null) {
-            $linter = new Linter();
+            $linter = \getenv('FAST_LINT_TEST_CASES') !== false ? new Linter() : new ProcessLinter();
         }
 
         try {
