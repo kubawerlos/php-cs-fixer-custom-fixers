@@ -72,7 +72,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                     readonly public int $d,
                     public readonly int $e,
                     readonly public int $f,
-                    public readonly int $f,
+                    public readonly int $g,
                 ) {}
             }',
             '<?php class Foo {
@@ -83,19 +83,19 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                     readonly public int $d,
                     public int $e,
                     readonly public int $f,
-                    public readonly int $f,
+                    public readonly int $g,
                 ) {}
             }',
         ];
         yield [
             '<?php
                 class Foo { public function __construct(public readonly int $x) {} }
-                class Bar { public function notConstruct(public int $x) {} }
+                class Bar { public function notConstruct(int $x) {} }
                 class Baz { public function __construct(public readonly int $x) {} }
             ',
             '<?php
                 class Foo { public function __construct(public int $x) {} }
-                class Bar { public function notConstruct(public int $x) {} }
+                class Bar { public function notConstruct(int $x) {} }
                 class Baz { public function __construct(public int $x) {} }
             ',
         ];

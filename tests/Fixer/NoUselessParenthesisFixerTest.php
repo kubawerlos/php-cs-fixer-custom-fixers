@@ -165,11 +165,6 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php $foo = $bar{1};',
-            '<?php $foo = $bar{(1)};',
-        ];
-
-        yield [
             '<?php echo (new stdClass())->foo;',
             '<?php echo ((new stdClass()))->foo;',
         ];
@@ -375,5 +370,16 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
                 return (1);
             ',
         ];
+    }
+
+    /**
+     * @requires PHP <8.0
+     */
+    public function testFix74(): void
+    {
+        $this->doTest(
+            '<?php $foo = $bar{1};',
+            '<?php $foo = $bar{(1)};',
+        );
     }
 }
