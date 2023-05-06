@@ -1,10 +1,12 @@
 <?php
 
 namespace PhpCsFixer {
-    /**
-     * @method string replace()
-     */
-    class Preg {}
+    class Preg {
+        /**
+         * @param string|string[] $subject
+         */
+        public static function replace(string $pattern, string $replacement, $subject, int $limit = -1, ?int &$count = null): string {}
+    }
 }
 
 namespace PhpCsFixer\Fixer\Import {
