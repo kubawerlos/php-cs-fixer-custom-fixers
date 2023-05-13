@@ -491,6 +491,7 @@ Configuration options:
 
 #### PhpdocParamOrderFixer
 The `@param` annotations must be in the same order as the function parameters.
+  DEPRECATED: use `phpdoc_param_order` instead.
 ```diff
  <?php
  /**
