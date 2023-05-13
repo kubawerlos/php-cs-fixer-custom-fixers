@@ -21,7 +21,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "git@github.com:grubersjoe/PHP-CS-Fixer.git"
+            "url": "https://github.com/grubersjoe/PHP-CS-Fixer.git"
         }
     ],
     "autoload": {
