@@ -40,6 +40,6 @@ final class InfectionConfigTest extends TestCase
 
         $actualConfig = \json_decode($json, true);
 
-        self::assertNotSame($configFromBuilder, $actualConfig, 'Infection config is not up to date, run "php ./.dev-tools/build-infection-config".');
+        self::assertSame($configFromBuilder, $actualConfig, 'Infection config is not up to date, run "php ./.dev-tools/build-infection-config".');
     }
 }
