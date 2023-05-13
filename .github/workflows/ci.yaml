@@ -69,9 +69,11 @@ jobs:
       PHP_CS_FIXER_FUTURE_MODE: 1
     steps:
       - uses: actions/checkout@v3
+      - run: echo $GITHUB_WORKSPACE
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          ini-values: pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
       - id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
