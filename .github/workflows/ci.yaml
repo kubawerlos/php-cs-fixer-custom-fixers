@@ -91,7 +91,7 @@ jobs:
 #      - if: ${{ matrix.with-php-cs-fixer-from-master }}
 #        run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
       - run: composer update --no-progress ${{ matrix.composer-flags }}
-      - run: composer show | grep php-cs-fixer
+#      - run: composer show | grep php-cs-fixer
       - run: composer infection
 #      - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
 #      - if: ${{ matrix.calculate-coverage }}

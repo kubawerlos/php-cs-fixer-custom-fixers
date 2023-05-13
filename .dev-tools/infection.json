@@ -18,6 +18,18 @@
         "customPath": "../vendor/phpunit/phpunit/phpunit"
     },
     "mutators": {
+        "RoundingFamily": true,
+        "SharedCaseRemoval": true,
+        "ShiftLeft": true,
+        "ShiftRight": true,
+        "Spaceship": true,
+        "SpreadAssignment": true,
+        "SpreadOneItem": true,
+        "SpreadRemoval": true,
+        "Ternary": true,
+        "This": true,
+        "Throw_": true,
+        "TrueValue": true,
         "UnwrapArrayChangeKeyCase": true,
         "UnwrapArrayChunk": true,
         "UnwrapArrayColumn": true,
