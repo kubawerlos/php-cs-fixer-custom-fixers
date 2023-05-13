@@ -6,6 +6,7 @@
          cacheResult='false'
          colors='true'
          displayDetailsOnTestsThatTriggerDeprecations='true'
+         executionOrder='default'
          failOnEmptyTestSuite='true'
          failOnIncomplete='true'
          failOnRisky='true'
