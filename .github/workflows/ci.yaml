@@ -94,7 +94,7 @@ jobs:
       - run: composer show | grep php-cs-fixer
       - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
       - if: ${{ matrix.calculate-coverage }}
-        run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies &&./vendor/bin/php-coveralls --verbose
+        run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
       - if: ${{ matrix.calculate-coverage }}
         run: composer infection
         env:
