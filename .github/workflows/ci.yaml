@@ -94,9 +94,10 @@ jobs:
       - run: composer show | grep php-cs-fixer
       - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
       - if: ${{ matrix.calculate-coverage }}
-        run: composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies && ./vendor/bin/php-coveralls --verbose
-      - if: ${{ matrix.calculate-coverage }}
-        run: composer infection
+        run: |
+          composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies
+          ./vendor/bin/php-coveralls --verbose
+          composer infection
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
