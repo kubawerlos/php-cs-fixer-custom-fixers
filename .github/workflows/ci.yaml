@@ -81,7 +81,7 @@ jobs:
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
 
       - id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-dir)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         with:
