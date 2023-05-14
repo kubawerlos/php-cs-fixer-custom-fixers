@@ -78,10 +78,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: none, dom, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
-          ini-values: pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
+          ini-values: opcache.enable_cli=1, pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
-
-      - run: php -m
 
       - id: composer-cache
         shell: bash
