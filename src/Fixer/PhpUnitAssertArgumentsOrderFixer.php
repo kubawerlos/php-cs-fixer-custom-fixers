@@ -24,20 +24,20 @@ use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
 final class PhpUnitAssertArgumentsOrderFixer extends AbstractFixer
 {
     private const ASSERTIONS = [
-        'assertEquals' => true,
-        'assertNotEquals' => true,
-        'assertEqualsCanonicalizing' => true,
-        'assertNotEqualsCanonicalizing' => true,
-        'assertEqualsIgnoringCase' => true,
-        'assertNotEqualsIgnoringCase' => true,
-        'assertEqualsWithDelta' => true,
-        'assertNotEqualsWithDelta' => true,
-        'assertSame' => true,
-        'assertNotSame' => true,
-        'assertGreaterThan' => 'assertLessThan',
-        'assertGreaterThanOrEqual' => 'assertLessThanOrEqual',
-        'assertLessThan' => 'assertGreaterThan',
-        'assertLessThanOrEqual' => 'assertGreaterThanOrEqual',
+        'assertequals' => true,
+        'assertnotequals' => true,
+        'assertequalscanonicalizing' => true,
+        'assertnotequalscanonicalizing' => true,
+        'assertequalsignoringcase' => true,
+        'assertnotequalsignoringcase' => true,
+        'assertequalswithdelta' => true,
+        'assertnotequalswithdelta' => true,
+        'assertsame' => true,
+        'assertnotsame' => true,
+        'assertgreaterthan' => 'assertLessThan',
+        'assertgreaterthanorequal' => 'assertLessThanOrEqual',
+        'assertlessthan' => 'assertGreaterThan',
+        'assertlessthanorequal' => 'assertGreaterThanOrEqual',
     ];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -108,23 +108,13 @@ class FooTest extends TestCase {
 
     private static function getNewAssertion(Tokens $tokens, int $index): ?string
     {
-        /** @var null|array<string, bool|string> $assertions */
-        static $assertions;
-
-        if ($assertions === null) {
-            $assertions = [];
-            foreach (self::ASSERTIONS as $old => $new) {
-                $assertions[\strtolower($old)] = $new;
-            }
-        }
-
         $oldAssertion = $tokens[$index]->getContent();
 
-        if (!\array_key_exists(\strtolower($oldAssertion), $assertions)) {
+        if (!\array_key_exists(\strtolower($oldAssertion), self::ASSERTIONS)) {
             return null;
         }
 
-        $newAssertion = $assertions[\strtolower($oldAssertion)];
+        $newAssertion = self::ASSERTIONS[\strtolower($oldAssertion)];
 
         $openingBraceIndex = $tokens->getNextMeaningfulToken($index);
         \assert(\is_int($openingBraceIndex));
