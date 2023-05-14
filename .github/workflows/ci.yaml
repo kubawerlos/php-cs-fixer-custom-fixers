@@ -77,8 +77,11 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+#          extensions: none, dom, json, mbstring, openssl, simplexml, tokenizer, xml, xmlwriter
           ini-values: pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
+
+      - run: php -m | wc -l && php -m
 
       - id: composer-cache
         shell: bash
