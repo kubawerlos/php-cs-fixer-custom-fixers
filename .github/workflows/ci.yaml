@@ -81,6 +81,8 @@ jobs:
           ini-values: pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
 
+      - run: php -m
+
       - id: composer-cache
         shell: bash
         run: echo "dir=$(composer config cache-dir)" >> $GITHUB_OUTPUT
