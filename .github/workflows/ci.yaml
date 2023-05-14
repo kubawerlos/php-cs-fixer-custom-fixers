@@ -69,35 +69,48 @@ jobs:
       PHP_CS_FIXER_FUTURE_MODE: 1
     steps:
       - uses: actions/checkout@v3
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           ini-values: pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
+
       - id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
       - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+
       - if: ${{ matrix.with-bootstrap }}
         uses: sergeysova/jq-action@v2
         with:
           cmd: |
             jq -r --indent 4 'del(.autoload."psr-4")' composer.json > composer.tmp
             jq -r --indent 4 '.autoload += {"files": ["bootstrap.php"]}' composer.tmp > composer.json
+
       - if: ${{ matrix.use-shim-package }}
         run: sed -i 's#friendsofphp/php-cs-fixer#php-cs-fixer/shim#g' composer.json
+
       - if: ${{ matrix.with-php-cs-fixer-from-master }}
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
-      - run: composer update --no-progress ${{ matrix.composer-flags }}
-      - run: composer show | grep php-cs-fixer
-      - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
+
       - if: ${{ matrix.calculate-coverage }}
-        run: |
-          composer require --dev php-coveralls/php-coveralls --quiet --with-all-dependencies
-          ./vendor/bin/php-coveralls --verbose
-          composer infection
+        run: composer require --dev php-coveralls/php-coveralls --no-update
+
+      - run: composer update --no-progress --classmap-authoritative ${{ matrix.composer-flags }}
+
+      - run: composer show | grep php-cs-fixer
+
+      - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
+
+      - if: ${{ matrix.calculate-coverage }}
+        run: ./vendor/bin/php-coveralls --verbose
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
+      - if: ${{ matrix.calculate-coverage }}
+        run: composer infection
