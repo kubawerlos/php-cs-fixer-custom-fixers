@@ -79,7 +79,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: none, dom, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
           ini-values: |
-            opcache.enable_cli=1,
+            opcache.enable_cli=${{ (matrix.calculate-coverage && '1') || '0' }},
             opcache.jit=${{ (matrix.calculate-coverage && 'disable') || 'function' }},
             pcov.directory=$GITHUB_WORKSPACE/src,
             zend.assertions=1,
