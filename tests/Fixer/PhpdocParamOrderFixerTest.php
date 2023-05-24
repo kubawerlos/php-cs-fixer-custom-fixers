@@ -23,6 +23,11 @@ final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
         self::assertFalse($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertContains('phpdoc_param_order', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @dataProvider provideFixCases
      */
