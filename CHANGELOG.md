@@ -2,6 +2,7 @@
 
 ## v3.15.0
 - Deprecate PhpdocParamOrderFixer
+- Update minimum PHP CS Fixer version to 3.17.0
 
 ## v3.14.0
 - Add EmptyFunctionBodyFixer
