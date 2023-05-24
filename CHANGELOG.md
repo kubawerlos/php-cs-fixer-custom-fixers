@@ -1,5 +1,9 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.15.0
+- Deprecate PhpdocParamOrderFixer
+- Update minimum PHP CS Fixer version to 3.17.0
+
 ## v3.14.0
 - Add EmptyFunctionBodyFixer
 - Deprecate DataProviderStaticFixer - use "php_unit_data_provider_static"

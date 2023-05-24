@@ -11,8 +11,13 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+
 /**
  * @internal
+ *
+ * @property ConfigurableFixerInterface&DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer
  */
@@ -21,6 +26,11 @@ final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
     public function testIsRisky(): void
     {
         self::assertFalse($this->fixer->isRisky());
+    }
+
+    public function testSuccessorName(): void
+    {
+        self::assertContains('phpdoc_param_order', $this->fixer->getSuccessorsNames());
     }
 
     /**
