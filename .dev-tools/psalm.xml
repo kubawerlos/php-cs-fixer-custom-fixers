@@ -21,6 +21,7 @@
     </stubs>
 
     <issueHandlers>
+        <DeprecatedClass errorLevel='suppress' />
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
         <MissingConstructor errorLevel='suppress' />

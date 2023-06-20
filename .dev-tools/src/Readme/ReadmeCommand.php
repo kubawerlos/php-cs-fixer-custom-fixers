@@ -11,13 +11,13 @@
 
 namespace PhpCsFixerCustomFixersDev\Readme;
 
-use PhpCsFixer\Console\Command\HelpCommand;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSampleInterface;
 use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Utils;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
 use PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer;
@@ -219,7 +219,7 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
                         $option->getName(),
                         \implode('`, `', $allowed),
                         $option->getDescription(),
-                        HelpCommand::toString($option->getDefault()),
+                        Utils::toString($option->getDefault()),
                     );
                 }
             }
