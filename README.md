@@ -8,7 +8,7 @@
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
 [![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/main.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=main)
-[![Mutation testing badge](https://badge.stryker-mutator.io/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)](https://dashboard.stryker-mutator.io/reports/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fkubawerlos%2Fphp-cs-fixer-custom-fixers%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)
 [![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
