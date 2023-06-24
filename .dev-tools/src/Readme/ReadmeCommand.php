@@ -96,11 +96,11 @@ final class ReadmeCommand extends Command
             ),
             $this->badge(
                 'Mutation testing badge',
-                \sprintf('https://badge.stryker-mutator.io/github.com/%s/main', $this->composer()->name),
                 \sprintf(
                     'https://img.shields.io/endpoint?style=flat&url=%s',
                     \rawurlencode(\sprintf('https://badge-api.stryker-mutator.io/github.com/%s/main', $this->composer()->name)),
                 ),
+                \sprintf('https://dashboard.stryker-mutator.io/reports/github.com/%s/main', $this->composer()->name),
             ),
             $this->badge(
                 'Psalm type coverage',
