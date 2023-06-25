@@ -14,6 +14,7 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
+ * @covers \PhpCsFixerCustomFixers\Fixer\AbstractTypesFixer
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocTypesTrimFixer
  */
 final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase

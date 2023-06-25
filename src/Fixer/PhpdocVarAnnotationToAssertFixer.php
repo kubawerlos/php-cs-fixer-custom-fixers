@@ -120,12 +120,15 @@ $x = getValue();
             return null;
         }
 
-        $types = $annotation->getTypeExpression()->getTypes();
+        $typeExpression = $annotation->getTypeExpression();
+        if ($typeExpression === null) {
+            return null;
+        }
 
         $assertCode = '<?php assert(';
 
         $assertions = [];
-        foreach ($types as $type) {
+        foreach ($typeExpression->getTypes() as $type) {
             if (\substr($type, 0, 1) === '?') {
                 $assertions['null'] = $this->getCodeForType('null', $variableName);
                 $type = \substr($type, 1);
