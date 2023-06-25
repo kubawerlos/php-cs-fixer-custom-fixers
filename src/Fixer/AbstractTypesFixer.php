@@ -41,7 +41,12 @@ abstract class AbstractTypesFixer extends AbstractFixer
                     continue;
                 }
 
-                $type = $annotation->getTypeExpression()->toString();
+                $typeExpression = $annotation->getTypeExpression();
+                if ($typeExpression === null) {
+                    continue;
+                }
+
+                $type = $typeExpression->toString();
                 $type = $this->fixType($type);
                 $annotation->setTypes([$type]);
             }
