@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3444-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3445-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -75,7 +75,8 @@ Constructor's empty braces must be single line.
 ```
 
 #### DataProviderNameFixer
-Data provider names used only once must match the name of the test.
+Data provider names must match the name of the test.
+  DEPRECATED: use `php_unit_data_provider_name` instead.
   *Risky: when relying on name of data provider function.*
 Configuration options:
 - `prefix` (`string`): prefix that replaces "test"; defaults to `'provide'`

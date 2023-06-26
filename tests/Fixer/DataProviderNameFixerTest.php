@@ -12,12 +12,13 @@
 namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 /**
  * @internal
  *
- * @property ConfigurableFixerInterface $fixer
+ * @property ConfigurableFixerInterface&DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer
  */
@@ -38,6 +39,11 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
     public function testIsRisky(): void
     {
         self::assertTrue($this->fixer->isRisky());
+    }
+
+    public function testSuccessorName(): void
+    {
+        self::assertContains('php_unit_data_provider_name', $this->fixer->getSuccessorsNames());
     }
 
     /**
@@ -179,16 +185,6 @@ class FooTest extends TestCase {
             '<?php
 class FooTest extends TestCase {
     /**
-     * @dataProvider provideFooCases
-     * @dataProvider foo2DataProvider
-     */
-    public function testFoo() {}
-    public function provideFooCases() {}
-    public function foo2DataProvider() {}
-}',
-            '<?php
-class FooTest extends TestCase {
-    /**
      * @dataProvider foo1DataProvider
      * @dataProvider foo2DataProvider
      */
@@ -235,13 +231,13 @@ class FooTest extends TestCase {
 
     /**
      * @dataProvider reusedDataProvider
-     * @dataProvider provideFooCases
+     * @dataProvider dataFooProvider
      */
     public function testFoo() {}
 
     /**
      * @dataProvider reusedDataProvider
-     * @dataProvider provideBarCases
+     * @dataProvider dataBarProvider
      */
     public function testBar() {}
 
@@ -254,8 +250,8 @@ class FooTest extends TestCase {
     /** @dataProvider provideSomethingCases */
     public function testSomething() {}
     public function provideSomethingCases() {}
-    public function provideFooCases() {}
-    public function provideBarCases() {}
+    public function dataFooProvider() {}
+    public function dataBarProvider() {}
 }',
             '<?php
 class FooTest extends TestCase {
@@ -270,13 +266,13 @@ class FooTest extends TestCase {
 
     /**
      * @dataProvider reusedDataProvider
-     * @dataProvider testFooProvider
+     * @dataProvider dataFooProvider
      */
     public function testFoo() {}
 
     /**
      * @dataProvider reusedDataProvider
-     * @dataProvider testBarProvider
+     * @dataProvider dataBarProvider
      */
     public function testBar() {}
 
@@ -289,8 +285,8 @@ class FooTest extends TestCase {
     /** @dataProvider someDataProvider */
     public function testSomething() {}
     public function someDataProvider() {}
-    public function testFooProvider() {}
-    public function testBarProvider() {}
+    public function dataFooProvider() {}
+    public function dataBarProvider() {}
 }',
         ];
 
