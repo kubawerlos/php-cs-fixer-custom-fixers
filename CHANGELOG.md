@@ -3,7 +3,7 @@
 ## v3.15.0
 - Deprecate DataProviderNameFixer - use "php_unit_data_provider_name"
 - Deprecate PhpdocParamOrderFixer
-- Update minimum PHP CS Fixer version to 3.17.0
+- Update minimum PHP CS Fixer version to 3.19.0
 
 ## v3.14.0
 - Add EmptyFunctionBodyFixer
