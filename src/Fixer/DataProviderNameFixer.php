@@ -12,20 +12,28 @@
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\PhpUnit\PhpUnitDataProviderNameFixer;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
-final class DataProviderNameFixer extends AbstractFixer implements ConfigurableFixerInterface
+/**
+ * @deprecated
+ */
+final class DataProviderNameFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
+    private PhpUnitDataProviderNameFixer $phpUnitDataProviderNameFixer;
+
+    public function __construct()
+    {
+        $this->phpUnitDataProviderNameFixer = new PhpUnitDataProviderNameFixer();
+    }
+
     /** @var string */
     private $prefix = 'provide';
 
@@ -35,7 +43,7 @@ final class DataProviderNameFixer extends AbstractFixer implements ConfigurableF
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Data provider names used only once must match the name of the test.',
+            $this->phpUnitDataProviderNameFixer->getDefinition()->getSummary(),
             [
                 new CodeSample(
                     '<?php
@@ -73,80 +81,34 @@ class FooTest extends TestCase {
      */
     public function configure(array $configuration): void
     {
-        if (\array_key_exists('prefix', $configuration)) {
-            $this->prefix = $configuration['prefix'];
-        }
-
-        if (\array_key_exists('suffix', $configuration)) {
-            $this->suffix = $configuration['suffix'];
-        }
+        $this->phpUnitDataProviderNameFixer->configure($configuration);
     }
 
     public function getPriority(): int
     {
-        return 0;
+        return $this->phpUnitDataProviderNameFixer->getPriority();
     }
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([\T_CLASS, \T_DOC_COMMENT, \T_EXTENDS, \T_FUNCTION, \T_STRING]);
+        return $this->phpUnitDataProviderNameFixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return true;
+        return $this->phpUnitDataProviderNameFixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-
-        /** @var array<int> $indices */
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->fixNames($tokens, $indices[0], $indices[1]);
-        }
+        $this->phpUnitDataProviderNameFixer->fix($file, $tokens);
     }
 
-    private function fixNames(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @return array<string>
+     */
+    public function getSuccessorsNames(): array
     {
-        $dataProviderAnalyzer = new DataProviderAnalyzer();
-        foreach ($dataProviderAnalyzer->getDataProviders($tokens, $startIndex, $endIndex) as $dataProviderAnalysis) {
-            if (\count($dataProviderAnalysis->getUsageIndices()) > 1) {
-                continue;
-            }
-
-            $usageIndex = $dataProviderAnalysis->getUsageIndices()[0];
-
-            $testNameIndex = $tokens->getNextTokenOfKind($usageIndex, [[\T_STRING]]);
-            \assert(\is_int($testNameIndex));
-
-            $dataProviderNewName = $this->getProviderNameForTestName($tokens[$testNameIndex]->getContent());
-            if ($tokens->findSequence([[\T_FUNCTION], [\T_STRING, $dataProviderNewName]], $startIndex, $endIndex) !== null) {
-                continue;
-            }
-
-            $tokens[$dataProviderAnalysis->getNameIndex()] = new Token([\T_STRING, $dataProviderNewName]);
-
-            $newCommentContent = Preg::replace(
-                \sprintf('/(@dataProvider\s+)%s/', $dataProviderAnalysis->getName()),
-                \sprintf('$1%s', $dataProviderNewName),
-                $tokens[$usageIndex]->getContent(),
-            );
-
-            $tokens[$usageIndex] = new Token([\T_DOC_COMMENT, $newCommentContent]);
-        }
-    }
-
-    private function getProviderNameForTestName(string $name): string
-    {
-        $name = Preg::replace('/^test_*/i', '', $name);
-
-        if ($this->prefix === '') {
-            $name = \lcfirst($name);
-        } elseif (\substr($this->prefix, -1) !== '_') {
-            $name = \ucfirst($name);
-        }
-
-        return $this->prefix . $name . $this->suffix;
+        return [$this->phpUnitDataProviderNameFixer->getName()];
     }
 }
