@@ -40,11 +40,11 @@ class Foo {
     }
 
     /**
-     * Must run after BracesFixer, PromotedConstructorPropertyFixer.
+     * Must run after BracesFixer, CurlyBracesPositionFixer, PromotedConstructorPropertyFixer.
      */
     public function getPriority(): int
     {
-        return 0;
+        return -3;
     }
 
     public function isCandidate(Tokens $tokens): bool
