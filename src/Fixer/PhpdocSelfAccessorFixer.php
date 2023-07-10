@@ -129,7 +129,9 @@ class Foo {
                 $types[] = $type;
             }
 
-            $annotation->setTypes($types);
+            if ($types !== []) {
+                $annotation->setTypes($types);
+            }
         }
 
         return $docBlock->getContent();
