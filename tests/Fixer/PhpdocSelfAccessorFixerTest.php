@@ -227,5 +227,18 @@ interface Foo {
                 }
             ',
         ];
+
+        yield [
+            '<?php class Foo
+{
+    /**
+     * @return array{
+     *     bar: string
+     * }
+     */
+    public function baz(array $a) {}
+}
+',
+        ];
     }
 }
