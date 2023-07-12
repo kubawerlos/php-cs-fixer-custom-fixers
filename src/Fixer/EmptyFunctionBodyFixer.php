@@ -28,6 +28,7 @@ final class EmptyFunctionBodyFixer extends AbstractFixer
 {
 }
 ')],
+            '',
         );
     }
 

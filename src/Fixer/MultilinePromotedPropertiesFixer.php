@@ -45,6 +45,7 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
                     new VersionSpecification(80000),
                 ),
             ],
+            '',
         );
     }
 

@@ -28,7 +28,7 @@ function foo(?bool $bar) : ?bool
      return $bar;
  }
 ')],
-            null,
+            '',
             'when the null is used',
         );
     }

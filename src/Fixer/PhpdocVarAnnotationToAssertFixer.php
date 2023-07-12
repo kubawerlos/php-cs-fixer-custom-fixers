@@ -30,6 +30,7 @@ final class PhpdocVarAnnotationToAssertFixer extends AbstractFixer
 /** @var string $x */
 $x = getValue();
 ')],
+            '',
         );
     }
 

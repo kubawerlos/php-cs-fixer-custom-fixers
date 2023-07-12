@@ -27,6 +27,7 @@ final class NoUselessDirnameCallFixer extends AbstractFixer
             [new CodeSample('<?php
 require dirname(__DIR__) . "/vendor/autoload.php";
 ')],
+            '',
         );
     }
 

@@ -38,7 +38,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                     new VersionSpecification(80100),
                 ),
             ],
-            null,
+            '',
             'when property is written',
         );
     }

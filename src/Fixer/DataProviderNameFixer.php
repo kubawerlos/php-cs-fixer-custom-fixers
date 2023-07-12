@@ -57,7 +57,7 @@ class FooTest extends TestCase {
 ',
                 ),
             ],
-            null,
+            '',
             'when relying on name of data provider function',
         );
     }

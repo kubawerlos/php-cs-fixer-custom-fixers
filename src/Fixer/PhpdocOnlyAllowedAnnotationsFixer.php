@@ -44,6 +44,7 @@ function foo_bar() {}
 ',
                 ['elements' => ['author', 'version']],
             )],
+            '',
         );
     }
 

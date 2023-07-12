@@ -36,6 +36,7 @@ final class InternalClassCasingFixer extends AbstractFixer implements Deprecated
         return new FixerDefinition(
             'Classes defined internally by extension or core must be referenced with the correct case.',
             [new CodeSample("<?php\n\$foo = new STDClass();\n")],
+            '',
         );
     }
 

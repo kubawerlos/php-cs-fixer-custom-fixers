@@ -35,6 +35,7 @@ class Foo {
      private $instance;
 }
 ')],
+            '',
         );
     }
 

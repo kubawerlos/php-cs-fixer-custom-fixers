@@ -33,7 +33,7 @@ $isNotEmpty = strlen($string) > 0;
 ',
                 ),
             ],
-            null,
+            '',
             'when the function `strlen` is overridden',
         );
     }

@@ -42,6 +42,7 @@ final class PhpdocParamOrderFixer extends AbstractFixer implements DeprecatedFix
  */
 function foo($a, $b, $c) {}
 ')],
+            '',
         );
     }
 

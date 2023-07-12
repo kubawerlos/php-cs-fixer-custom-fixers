@@ -40,7 +40,7 @@ class FooTest extends TestCase {
 ',
                 ),
             ],
-            null,
+            '',
             'when relying on signature of data provider',
         );
     }

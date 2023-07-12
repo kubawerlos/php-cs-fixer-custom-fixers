@@ -28,6 +28,7 @@ $x = new \Foo();
 namespace Bar;
 $y = new \Baz();
 ')],
+            '',
         );
     }
 

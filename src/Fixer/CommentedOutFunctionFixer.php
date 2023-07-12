@@ -36,7 +36,7 @@ final class CommentedOutFunctionFixer extends AbstractFixer implements Configura
             [new CodeSample('<?php
 var_dump($x);
 ')],
-            null,
+            '',
             'when any of the configured functions have side effects or are overwritten',
         );
     }

@@ -32,6 +32,7 @@ use Foo;
 use Foo;
 use Bar;
 ')],
+            '',
         );
     }
 

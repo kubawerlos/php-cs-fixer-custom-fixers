@@ -27,6 +27,7 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
             [new CodeSample('<?php
 /*foo*/
 ')],
+            '',
         );
     }
 
