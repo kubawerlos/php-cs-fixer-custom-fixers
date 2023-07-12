@@ -28,6 +28,7 @@ final class PhpdocTypesTrimFixer extends AbstractTypesFixer
  */
 function foo($x) {}
 ')],
+            '',
         );
     }
 

@@ -54,6 +54,7 @@ echo 0123_4567; // octal
 ',
                 new VersionSpecification(70400),
             )],
+            '',
         );
     }
 

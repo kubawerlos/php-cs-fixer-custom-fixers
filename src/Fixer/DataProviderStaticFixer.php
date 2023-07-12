@@ -52,7 +52,7 @@ class FooTest extends TestCase {
 ',
                 ),
             ],
-            null,
+            '',
             'when `force` is set to `true`',
         );
     }

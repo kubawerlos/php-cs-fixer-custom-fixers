@@ -26,6 +26,7 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
             [
                 new CodeSample("<?php\n\$x = ['foo', 'bar', ];\n"),
             ],
+            '',
         );
     }
 

@@ -25,6 +25,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         return new FixerDefinition(
             'Multiline comments or PHPDocs must contain an opening and closing line with no additional content.',
             [new CodeSample("<?php\n/** Hello\n * World!\n */;\n")],
+            '',
         );
     }
 

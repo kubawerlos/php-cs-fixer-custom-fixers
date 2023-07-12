@@ -32,6 +32,7 @@ final class PhpdocArrayStyleFixer extends AbstractTypesFixer
 ',
                 ),
             ],
+            '',
         );
     }
 

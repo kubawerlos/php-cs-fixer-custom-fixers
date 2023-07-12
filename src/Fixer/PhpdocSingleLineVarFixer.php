@@ -32,6 +32,7 @@ class Foo {
     private $name;
 }
 ')],
+            '',
         );
     }
 

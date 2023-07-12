@@ -34,6 +34,7 @@ final class PhpdocNoSuperfluousParamFixer extends AbstractFixer
  */
 function foo($b, $s) {}
 ')],
+            '',
         );
     }
 

@@ -32,6 +32,7 @@ final class NoUselessDoctrineRepositoryCommentFixer extends AbstractFixer
  */
 class FooRepository extends EntityRepository {}
 ')],
+            '',
         );
     }
 

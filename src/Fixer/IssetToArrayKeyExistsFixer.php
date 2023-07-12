@@ -33,7 +33,7 @@ if (isset($array[$key])) {
 ',
                 ),
             ],
-            null,
+            '',
             'when array is not defined, is multi-dimensional or behaviour is relying on the null value',
         );
     }

@@ -54,6 +54,7 @@ class Foo {
                     new VersionSpecification(80000),
                 ),
             ],
+            '',
         );
     }
 

@@ -26,7 +26,7 @@ final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
             [new CodeSample('<?php
 function foo(&$x) {}
 ')],
-            null,
+            '',
             'when rely on reference',
         );
     }

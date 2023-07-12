@@ -29,6 +29,7 @@ final class NoUselessParenthesisFixer extends AbstractFixer
 foo(($bar));
 '),
             ],
+            '',
         );
     }
 

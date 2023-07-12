@@ -33,6 +33,7 @@ final class NoPhpStormGeneratedCommentFixer extends AbstractFixer
  */
 namespace Foo;
 ')],
+            '',
         );
     }
 

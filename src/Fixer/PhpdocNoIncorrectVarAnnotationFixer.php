@@ -31,6 +31,7 @@ final class PhpdocNoIncorrectVarAnnotationFixer extends AbstractFixer
 /** @var Foo $foo */
 $bar = new Foo();
 ')],
+            '',
         );
     }
 
