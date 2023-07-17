@@ -50,15 +50,15 @@ final class TokenRemover
             return true;
         }
 
-        if ($tokens[$prevIndex]->isGivenKind(\T_OPEN_TAG) && Preg::match('/\R$/', $tokens[$prevIndex]->getContent()) !== 1) {
+        if ($tokens[$prevIndex]->isGivenKind(\T_OPEN_TAG) && !Preg::match('/\R$/', $tokens[$prevIndex]->getContent())) {
             return true;
         }
 
-        if (Preg::match('/\R/', $tokens[$prevIndex]->getContent()) !== 1) {
+        if (!Preg::match('/\R/', $tokens[$prevIndex]->getContent())) {
             $prevPrevIndex = $tokens->getNonEmptySibling($prevIndex, -1);
             \assert(\is_int($prevPrevIndex));
 
-            if (!$tokens[$prevPrevIndex]->isGivenKind(\T_OPEN_TAG) || Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent()) !== 1) {
+            if (!$tokens[$prevPrevIndex]->isGivenKind(\T_OPEN_TAG) || !Preg::match('/\R$/', $tokens[$prevPrevIndex]->getContent())) {
                 return true;
             }
         }
@@ -77,7 +77,7 @@ final class TokenRemover
             return true;
         }
 
-        return Preg::match('/\R/', $tokens[$nextIndex]->getContent()) !== 1;
+        return !Preg::match('/\R/', $tokens[$nextIndex]->getContent());
     }
 
     private static function handleWhitespaceBefore(Tokens $tokens, int $index): bool

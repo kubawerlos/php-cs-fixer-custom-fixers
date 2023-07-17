@@ -107,7 +107,7 @@ $bar = new Foo();
             return;
         }
 
-        if (Preg::match('/@var\h+(.+\h+)?\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent()) === 1) {
+        if (Preg::match('/@var\h+(.+\h+)?\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent())) {
             $this->removeVarAnnotation($tokens, $index, [$tokens[$variableIndex]->getContent()]);
         }
     }
@@ -149,7 +149,7 @@ $bar = new Foo();
         $doc = new DocBlock($tokens[$index]->getContent());
 
         foreach ($doc->getAnnotationsOfType(['var']) as $annotation) {
-            if ($pattern === null || Preg::match($pattern, $annotation->getContent()) !== 1) {
+            if ($pattern === null || !Preg::match($pattern, $annotation->getContent())) {
                 $annotation->remove();
             }
         }

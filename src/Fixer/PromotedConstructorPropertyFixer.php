@@ -185,7 +185,7 @@ class Foo {
         $docBlock = new DocBlock($tokens[$phpDocIndex]->getContent());
 
         foreach ($docBlock->getAnnotations() as $annotation) {
-            if (Preg::match('/\*\h+(@Document|@Entity|@Mapping\\\\Entity|@ODM\\\\Document|@ORM\\\\Entity|@ORM\\\\Mapping\\\\Entity)/', $annotation->getContent()) === 1) {
+            if (Preg::match('/\*\h+(@Document|@Entity|@Mapping\\\\Entity|@ODM\\\\Document|@ORM\\\\Entity|@ORM\\\\Mapping\\\\Entity)/', $annotation->getContent())) {
                 return true;
             }
         }

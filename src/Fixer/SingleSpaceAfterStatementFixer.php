@@ -143,7 +143,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
     private function canAddSpaceAfter(Tokens $tokens, int $index): bool
     {
         if ($tokens[$index + 1]->isGivenKind(\T_WHITESPACE)) {
-            return !$this->allowLinebreak || Preg::match('/\R/', $tokens[$index + 1]->getContent()) !== 1;
+            return !$this->allowLinebreak || !Preg::match('/\R/', $tokens[$index + 1]->getContent());
         }
 
         if ($tokens[$index]->isGivenKind(\T_CLASS) && $tokens[$index + 1]->equals('(')) {

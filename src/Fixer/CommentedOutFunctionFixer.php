@@ -182,7 +182,7 @@ var_dump($x);
             return true;
         }
 
-        if (Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent()) === 1) {
+        if (Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent())) {
             return true;
         }
 
@@ -207,7 +207,7 @@ var_dump($x);
         $codeToCommentOut = $prefix . \str_replace("\n", "\n//", $codeToCommentOut);
 
         if ($tokens->offsetExists($endIndex + 1)) {
-            if (Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent()) === 0) {
+            if (!Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent())) {
                 $codeToCommentOut .= "\n";
                 if ($tokens[$endIndex + 1]->isWhitespace()) {
                     $endIndex++;
