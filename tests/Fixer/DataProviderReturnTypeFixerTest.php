@@ -38,6 +38,11 @@ class FooTest extends TestCase {
         self::assertTrue($this->fixer->isRisky());
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertContains('php_unit_data_provider_return_type', $this->fixer->getSuccessorsNames());
+    }
+
     /**
      * @dataProvider provideFixCases
      */

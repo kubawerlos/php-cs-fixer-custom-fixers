@@ -11,6 +11,8 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\PhpUnit\PhpUnitDataProviderReturnTypeFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -21,12 +23,22 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
-final class DataProviderReturnTypeFixer extends AbstractFixer
+/**
+ * @deprecated
+ */
+final class DataProviderReturnTypeFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    private PhpUnitDataProviderReturnTypeFixer $phpUnitDataProviderReturnTypeFixer;
+
+    public function __construct()
+    {
+        $this->phpUnitDataProviderReturnTypeFixer = new PhpUnitDataProviderReturnTypeFixer();
+    }
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'The types returned by data providers must be `iterable`.',
+            $this->phpUnitDataProviderReturnTypeFixer->getDefinition()->getSummary(),
             [
                 new CodeSample(
                     '<?php
@@ -50,57 +62,29 @@ class FooTest extends TestCase {
      */
     public function getPriority(): int
     {
-        return 0;
+        return $this->phpUnitDataProviderReturnTypeFixer->getPriority();
     }
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([\T_CLASS, \T_DOC_COMMENT, \T_EXTENDS, \T_FUNCTION, \T_STRING]);
+        return $this->phpUnitDataProviderReturnTypeFixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return true;
+        return $this->phpUnitDataProviderReturnTypeFixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
-
-        /** @var array<int> $indices */
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->fixReturnTypes($tokens, $indices[0], $indices[1]);
-        }
+        $this->phpUnitDataProviderReturnTypeFixer->fix($file, $tokens);
     }
 
-    private function fixReturnTypes(Tokens $tokens, int $startIndex, int $endIndex): void
+    /**
+     * @return array<string>
+     */
+    public function getSuccessorsNames(): array
     {
-        $dataProviderAnalyzer = new DataProviderAnalyzer();
-        $functionsAnalyzer = new FunctionsAnalyzer();
-
-        foreach (\array_reverse($dataProviderAnalyzer->getDataProviders($tokens, $startIndex, $endIndex)) as $dataProviderAnalysis) {
-            $typeAnalysis = $functionsAnalyzer->getFunctionReturnType($tokens, $dataProviderAnalysis->getNameIndex());
-
-            if ($typeAnalysis === null) {
-                $argumentsStart = $tokens->getNextTokenOfKind($dataProviderAnalysis->getNameIndex(), ['(']);
-                \assert(\is_int($argumentsStart));
-                $argumentsEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $argumentsStart);
-                $tokens->insertAt(
-                    $argumentsEnd + 1,
-                    [
-                        new Token([CT::T_TYPE_COLON, ':']),
-                        new Token([\T_WHITESPACE, ' ']),
-                        new Token([\T_STRING, 'iterable']),
-                    ],
-                );
-                continue;
-            }
-
-            if ($typeAnalysis->getName() !== 'iterable') {
-                $startIndex = $tokens->getNextMeaningfulToken($typeAnalysis->getStartIndex() - 1);
-                \assert(\is_int($startIndex));
-                $tokens->overrideRange($startIndex, $typeAnalysis->getEndIndex(), [new Token([\T_STRING, 'iterable'])]);
-            }
-        }
+        return [$this->phpUnitDataProviderReturnTypeFixer->getName()];
     }
 }
