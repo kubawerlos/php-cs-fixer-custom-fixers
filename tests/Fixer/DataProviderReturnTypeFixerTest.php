@@ -11,8 +11,13 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+
 /**
  * @internal
+ *
+ * @property ConfigurableFixerInterface&DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer
  */
@@ -36,6 +41,11 @@ class FooTest extends TestCase {
     public function testIsRisky(): void
     {
         self::assertTrue($this->fixer->isRisky());
+    }
+
+    public function testSuccessorName(): void
+    {
+        self::assertContains('php_unit_data_provider_return_type', $this->fixer->getSuccessorsNames());
     }
 
     /**
@@ -205,32 +215,6 @@ class FooTest extends TestCase {
                 ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
             ];
         }
-    }
-
-    /**
-     * @requires PHP ^7.4
-     *
-     * @dataProvider provideFix7Cases
-     */
-    public function testFix7(string $expected, ?string $input = null): void
-    {
-        $this->doTest($expected, $input);
-    }
-
-    /**
-     * @return iterable<array{string, string}>
-     */
-    public static function provideFix7Cases(): iterable
-    {
-        yield 'data provider with return type namespaced class starting with iterable' => self::mapToTemplate(
-            ': iterable',
-            ': iterable \ Foo',
-        );
-
-        yield 'data provider with return type namespaced class and comments' => self::mapToTemplate(
-            ': iterable',
-            ': Foo/* Some info */\/* More info */Bar',
-        );
     }
 
     /**

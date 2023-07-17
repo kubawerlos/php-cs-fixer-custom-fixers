@@ -1,5 +1,9 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.16.0
+- Deprecate DataProviderReturnTypeFixer - use "php_unit_data_provider_return_type"
+- Update minimum PHP CS Fixer version to 3.22.0
+
 ## v3.15.0
 - Deprecate DataProviderNameFixer - use "php_unit_data_provider_name"
 - Deprecate PhpdocParamOrderFixer - use "phpdoc_param_order"
