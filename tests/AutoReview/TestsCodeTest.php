@@ -41,7 +41,7 @@ final class TestsCodeTest extends TestCase
 
         foreach ($this->getMethods($className, \ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
             self::assertTrue(
-                \strpos($reflectionMethod->getName(), 'test') === 0 || Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()) === 1,
+                \strpos($reflectionMethod->getName(), 'test') === 0 || Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()),
                 \sprintf(
                     'Data provider "%s" in class "%s" is not correctly named.',
                     $reflectionMethod->getName(),

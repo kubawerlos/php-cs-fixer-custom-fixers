@@ -111,7 +111,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             if (!$tokens[$index]->isGivenKind(\T_WHITESPACE)) {
                 return false;
             }
-            if (Preg::match('/\R/', $tokens[$index]->getContent()) === 1) {
+            if (Preg::match('/\R/', $tokens[$index]->getContent())) {
                 return false;
             }
         }
@@ -127,8 +127,8 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
         if (
             $this->allowPreventingTrailingSpaces
-            && Preg::match('/\h(\\\'|")$/', $firstContent) === 1
-            && Preg::match('/^(\\\'|")\R/', $secondContent) === 1
+            && Preg::match('/\h(\\\'|")$/', $firstContent)
+            && Preg::match('/^(\\\'|")\R/', $secondContent)
         ) {
             return;
         }
