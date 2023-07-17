@@ -3,7 +3,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3446-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3445-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI Status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/workflows/CI/badge.svg?branch=main)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions)
@@ -95,7 +95,8 @@ Configuration options:
 ```
 
 #### DataProviderReturnTypeFixer
-The types returned by data providers must be `iterable`.
+The return type of PHPUnit data provider must be `iterable`.
+  DEPRECATED: use `php_unit_data_provider_return_type` instead.
   *Risky: when relying on signature of data provider.*
 ```diff
  <?php

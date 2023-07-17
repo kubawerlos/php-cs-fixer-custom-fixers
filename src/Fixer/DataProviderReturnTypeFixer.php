@@ -16,12 +16,7 @@ use PhpCsFixer\Fixer\PhpUnit\PhpUnitDataProviderReturnTypeFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
-use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
-use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerCustomFixers\Analyzer\DataProviderAnalyzer;
 
 /**
  * @deprecated
