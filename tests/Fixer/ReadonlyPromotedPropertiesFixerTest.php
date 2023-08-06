@@ -100,6 +100,35 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                 class Baz { public function __construct(public int $x) {} }
             ',
         ];
+
+        yield [
+            '<?php class Foo {
+                public function __construct(public int $x) {}
+                public function doSomething() { $this->x = 42; }
+            }',
+        ];
+
+        yield [
+            '<?php class Foo {
+                public function __construct(public readonly int $x) {}
+                public function doSomething() { $object->x = 42; }
+            }',
+            '<?php class Foo {
+                public function __construct(public int $x) {}
+                public function doSomething() { $object->x = 42; }
+            }',
+        ];
+
+        yield [
+            '<?php class Foo {
+                public function __construct(public int $x, public readonly int $y, public int $z) {}
+                public function doSomething() { $this->x = 42;  $this->z = 10; }
+            }',
+            '<?php class Foo {
+                public function __construct(public int $x, public int $y, public int $z) {}
+                public function doSomething() { $this->x = 42;  $this->z = 10; }
+            }',
+        ];
     }
 
     /**

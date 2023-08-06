@@ -83,11 +83,21 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 continue;
             }
 
-            $openParenthesis = $tokens->getNextTokenOfKind($constructorAnalysis->getConstructorIndex(), ['(']);
-            \assert(\is_int($openParenthesis));
-            $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+            $classOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
+            \assert(\is_int($classOpenBraceIndex));
+            $classCloseBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $classOpenBraceIndex);
 
-            $this->fixParameters($tokens, $openParenthesis, $closeParenthesis);
+            $constructorOpenParenthesisIndex = $tokens->getNextTokenOfKind($constructorAnalysis->getConstructorIndex(), ['(']);
+            \assert(\is_int($constructorOpenParenthesisIndex));
+            $constructorCloseParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $constructorOpenParenthesisIndex);
+
+            $this->fixParameters(
+                $tokens,
+                $classOpenBraceIndex,
+                $classCloseBraceIndex,
+                $constructorOpenParenthesisIndex,
+                $constructorCloseParenthesisIndex,
+            );
         }
     }
 
@@ -101,9 +111,14 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         return $tokens[$index]->isGivenKind(\T_READONLY);
     }
 
-    private function fixParameters(Tokens $tokens, int $openParenthesis, int $closeParenthesis): void
-    {
-        for ($index = $closeParenthesis; $index > $openParenthesis; $index--) {
+    private function fixParameters(
+        Tokens $tokens,
+        int $classOpenBraceIndex,
+        int $classCloseBraceIndex,
+        int $constructorOpenParenthesisIndex,
+        int $constructorCloseParenthesisIndex
+    ): void {
+        for ($index = $constructorCloseParenthesisIndex; $index > $constructorOpenParenthesisIndex; $index--) {
             if (
                 !$tokens[$index]->isGivenKind([
                     CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
@@ -121,6 +136,22 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if ($tokens[$prevIndex]->isGivenKind(\T_READONLY)) {
+                continue;
+            }
+
+            $propertyIndex = $tokens->getNextTokenOfKind($index, [[\T_VARIABLE]]);
+            \assert(\is_int($propertyIndex));
+
+            $propertyAssignment = $tokens->findSequence(
+                [
+                    [\T_VARIABLE, '$this'],
+                    [\T_OBJECT_OPERATOR],
+                    [\T_STRING, \substr($tokens[$propertyIndex]->getContent(), 1)],
+                ],
+                $classOpenBraceIndex,
+                $classCloseBraceIndex,
+            );
+            if ($propertyAssignment !== null) {
                 continue;
             }
 
