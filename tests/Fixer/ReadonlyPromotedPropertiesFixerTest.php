@@ -130,5 +130,18 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
         ) {
             yield [\sprintf($template, $classModifiers)];
         }
+
+        yield [
+            '<?php
+                class Foo { public function __construct(public readonly int $x) {} }
+                readonly class Bar { public function __construct(int $x) {} }
+                class Baz { public function __construct(public readonly int $x) {} }
+            ',
+            '<?php
+                class Foo { public function __construct(public int $x) {} }
+                readonly class Bar { public function __construct(int $x) {} }
+                class Baz { public function __construct(public int $x) {} }
+            ',
+        ];
     }
 }
