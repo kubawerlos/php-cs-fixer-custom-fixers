@@ -87,6 +87,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                 ) {}
             }',
         ];
+
         yield [
             '<?php
                 class Foo { public function __construct(public readonly int $x) {} }
@@ -99,5 +100,35 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                 class Baz { public function __construct(public int $x) {} }
             ',
         ];
+    }
+
+    /**
+     * @dataProvider provideFix82Cases
+     *
+     * @requires PHP 8.2
+     */
+    public function testFix82(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array<string>>
+     */
+    public static function provideFix82Cases(): iterable
+    {
+        $template = '<?php %s class C1 { public function __construct(public int $x) {} }';
+
+        foreach (
+            [
+                'readonly',
+                'abstract readonly',
+                'final readonly',
+                'readonly final',
+                'readonly abstract',
+            ] as $classModifiers
+        ) {
+            yield [\sprintf($template, $classModifiers)];
+        }
     }
 }
