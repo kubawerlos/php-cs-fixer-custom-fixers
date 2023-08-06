@@ -74,6 +74,10 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 continue;
             }
 
+            if ($this->isClassReadonly($tokens, $index)) {
+                continue;
+            }
+
             $constructorAnalysis = $constructorAnalyzer->findNonAbstractConstructor($tokens, $index);
             if ($constructorAnalysis === null) {
                 continue;
@@ -85,6 +89,16 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 
             $this->fixParameters($tokens, $openParenthesis, $closeParenthesis);
         }
+    }
+
+    private function isClassReadonly(Tokens $tokens, int $index): bool
+    {
+        do {
+            $index = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($index));
+        } while ($tokens[$index]->isGivenKind([\T_ABSTRACT, \T_FINAL]));
+
+        return $tokens[$index]->isGivenKind(\T_READONLY);
     }
 
     private function fixParameters(Tokens $tokens, int $openParenthesis, int $closeParenthesis): void
