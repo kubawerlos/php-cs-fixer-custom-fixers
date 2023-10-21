@@ -1,7 +1,7 @@
 name: Update README.md
 
 on:
-  push: ~
+  pull_request: ~
 
 concurrency:
   group: readme_${{ github.head_ref || github.run_id }}
@@ -22,6 +22,7 @@ jobs:
           coverage: none
       - run: composer update --no-progress
       - run: php ./.dev-tools/generate_readme.php > ./README.md
+      - run: git remote -v
       - run: git add ./README.md
       - run: git config user.email github-actions
       - run: git config user.name github-actions@github.com
