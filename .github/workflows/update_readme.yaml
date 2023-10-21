@@ -1,0 +1,25 @@
+name: Update README.md
+
+on:
+  push: ~
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  update_readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: none, curl, dom, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
+          coverage: none
+      - run: composer update --no-progress
+      - run: php ./.dev-tools/generate_readme.php > ./README.md
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update README.md
+          file_pattern: 'README.md'
