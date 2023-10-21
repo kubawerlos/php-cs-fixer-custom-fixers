@@ -30,7 +30,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'There should be no superfluous concatenation of strings.',
+            'There must be no superfluous concatenation of literal strings.',
             [new CodeSample("<?php\necho 'foo' . 'bar';\n")],
             '',
         );

@@ -21,7 +21,7 @@ final class PhpdocTypesCommaSpacesFixer extends AbstractTypesFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'PHPDoc types commas must not be preceded by whitespace, and must be succeeded by single whitespace.',
+            'PHPDoc types commas must not be preceded by a whitespace, and must be succeeded by a single whitespace.',
             [new CodeSample("<?php /** @var array<int,string> */\n")],
             '',
         );

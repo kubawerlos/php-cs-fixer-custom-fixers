@@ -23,7 +23,7 @@ final class IssetToArrayKeyExistsFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Function `array_key_exists` must be used over `isset` when possible.',
+            'Function `array_key_exists` must be used instead of `isset` when possible.',
             [
                 new CodeSample(
                     '<?php

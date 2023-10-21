@@ -21,7 +21,7 @@ final class EmptyFunctionBodyFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Empty function body must be abbreviated as `{}` and placed on the same line as the previous symbol, separated by a space.',
+            'Empty function body must be abbreviated as `{}` and placed on the same line as the previous symbol, separated with a space.',
             [new CodeSample('<?php function foo(
     int $x
 )

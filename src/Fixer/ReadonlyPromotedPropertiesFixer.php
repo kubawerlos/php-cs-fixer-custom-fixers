@@ -25,7 +25,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Promoted properties must readonly.',
+            'Promoted properties must be declared as read-only.',
             [
                 new VersionSpecificCodeSample(
                     '<?php class Foo {

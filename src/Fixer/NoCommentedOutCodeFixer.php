@@ -25,7 +25,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'There can be no commented out code.',
+            'There must be no commented out code.',
             [new CodeSample("<?php\n//var_dump(\$_POST);\nprint_r(\$_POST);\n")],
             '',
         );

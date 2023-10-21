@@ -24,7 +24,7 @@ final class NoUselessStrlenFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'The `strlen` or` mb_strlen` functions should not be compared against 0.',
+            'Functions `strlen` and `mb_strlen` must not be compared to 0.',
             [
                 new CodeSample(
                     '<?php
