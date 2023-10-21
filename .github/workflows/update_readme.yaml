@@ -26,4 +26,4 @@ jobs:
       - run: git config user.email github-actions
       - run: git config user.name github-actions@github.com
       - run: git commit --message 'Update README.md'
-      - run: git push
+      - run: git push origin HEAD
