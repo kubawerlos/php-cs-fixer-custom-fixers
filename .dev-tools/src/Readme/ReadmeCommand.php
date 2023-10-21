@@ -271,13 +271,13 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
     {
         return \sprintf(
             '## Contributing
-Request feature or report bug by creating [issue](https://github.com/%s/issues).
+Request a feature or report a bug by creating an [issue](https://github.com/%s/issues).
 
-Alternatively, fork the repository, develop your changes, make sure everything is fine:
+Alternatively, fork the repository, commit your changes, and make sure everything is fine:
 ```bash
 composer verify
 ```
-and submit pull request.',
+and submit a pull request.',
             $this->composer()->name,
         );
     }

@@ -33,7 +33,7 @@ final class NoDuplicatedArrayKeyFixer extends AbstractFixer implements Configura
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'There can be no duplicate array keys.',
+            'There must be no duplicate array keys.',
             [new CodeSample('<?php
 $x = [
     "foo" => 1,

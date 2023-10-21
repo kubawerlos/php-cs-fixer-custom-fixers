@@ -23,7 +23,7 @@ final class NoUselessDirnameCallFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Function `dirname` call must be removed if not needed.',
+            'There must be no useless `dirname` calls.',
             [new CodeSample('<?php
 require dirname(__DIR__) . "/vendor/autoload.php";
 ')],

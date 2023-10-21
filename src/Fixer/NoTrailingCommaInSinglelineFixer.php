@@ -22,7 +22,7 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Trailing comma in the list on the same line as the end of the block must be removed.',
+            'An element list written on one line cannot contain a trailing comma.',
             [
                 new CodeSample("<?php\n\$x = ['foo', 'bar', ];\n"),
             ],

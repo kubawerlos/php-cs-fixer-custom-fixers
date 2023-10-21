@@ -31,10 +31,10 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
         /** @var array<FixerOptionInterface> $options */
         $options = $this->fixer->getConfigurationDefinition()->getOptions();
         self::assertArrayHasKey(0, $options);
-        self::assertSame('minimum_number_of_parameters', $options[0]->getName());
-        self::assertSame(1, $options[0]->getDefault());
-        self::assertSame('keep_blank_lines', $options[1]->getName());
-        self::assertFalse($options[1]->getDefault());
+        self::assertSame('keep_blank_lines', $options[0]->getName());
+        self::assertFalse($options[0]->getDefault());
+        self::assertSame('minimum_number_of_parameters', $options[1]->getName());
+        self::assertSame(1, $options[1]->getDefault());
     }
 
     public function testIsRisky(): void
