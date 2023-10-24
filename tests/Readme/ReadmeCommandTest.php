@@ -34,6 +34,7 @@ final class ReadmeCommandTest extends TestCase
         self::assertStringEqualsFile(
             __DIR__ . '/../../README.md',
             $tester->getDisplay(),
+            'README.md is not up to date, run "composer fix" to update it.',
         );
     }
 }
