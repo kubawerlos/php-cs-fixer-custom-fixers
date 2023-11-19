@@ -267,6 +267,22 @@ class Foo
                     private int|string $intOrString;
                 }',
             ];
+
+            yield 'keep correct PHPDoc for promoted properties, PHP 8.0' => [
+                '<?php class Foo
+                {
+                    public function __construct(
+                        /** @var array<Foo> */
+                        public array $a,
+                        /** @var array<Foo> */
+                        public array $b,
+                        /** @var array<Foo> */
+                        protected array $c,
+                        /** @var array<Foo> */
+                        private array $d,
+                    ) {}
+                }',
+            ];
         }
 
         if (\PHP_VERSION_ID >= 80100) {
