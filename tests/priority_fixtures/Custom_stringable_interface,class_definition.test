@@ -2,9 +2,9 @@
 { "PhpCsFixerCustomFixers/stringable_interface": true, "class_definition": true }
 --EXPECTED--
 <?php class Foo implements
+    \Stringable,
     Bar,
-    Baz,
-    \Stringable
+    Baz
 {
     public function __toString() { return "Foo"; }
 }
