@@ -130,7 +130,7 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
         yield [
             '<?php namespace FooNamespace;
             use Bar\Stringable;
-            class Foo implements Stringable, \Stringable
+            class Foo implements \Stringable, Stringable
             {
                 public function __toString() { return "Foo"; }
             }
@@ -167,13 +167,13 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
 
         foreach ($implementedInterfacesCases as $implementedInterface) {
             yield [
-                \sprintf($template, $implementedInterface . ', \Stringable'),
+                \sprintf($template, '\Stringable, ' . $implementedInterface),
                 \sprintf($template, $implementedInterface),
             ];
         }
 
         yield [
-            '<?php class Foo implements FooInterface, \Stringable
+            '<?php class Foo implements \Stringable, FooInterface
             {
                 public function __toString() { return "Foo"; }
             }
@@ -215,7 +215,7 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             '<?php
                 namespace Foo;
                 use Bar;
-                class Baz implements Stringable, \Stringable {
+                class Baz implements \Stringable, Stringable {
                     public function __toString() { return ""; }
                 }
             ',
@@ -273,15 +273,17 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php
-                namespace Foo { class C implements I, \Stringable { public function __toString() { return ""; } }}
+                namespace Foo { class C implements \Stringable, I { public function __toString() { return ""; } }}
                 namespace Bar { class C implements \Stringable, I { public function __toString() { return ""; } }}
                 namespace Baz { class C implements I, \Stringable { public function __toString() { return ""; } }}
+                namespace Qux { class C implements \Stringable, I { public function __toString() { return ""; } }}
             ;
             ',
             '<?php
                 namespace Foo { class C implements I { public function __toString() { return ""; } }}
                 namespace Bar { class C implements \Stringable, I { public function __toString() { return ""; } }}
-                namespace Baz { class C implements I { public function __toString() { return ""; } }}
+                namespace Baz { class C implements I, \Stringable { public function __toString() { return ""; } }}
+                namespace Qux { class C implements I { public function __toString() { return ""; } }}
             ;
             ',
         ];
@@ -289,7 +291,7 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 namespace Foo { use Stringable as Stringy; class C {} }
-                namespace Bar { class C implements Stringy, \Stringable { public function __toString() { return ""; } }}
+                namespace Bar { class C implements \Stringable, Stringy { public function __toString() { return ""; } }}
             ;
             ',
             '<?php

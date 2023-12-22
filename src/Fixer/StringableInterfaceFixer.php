@@ -216,19 +216,16 @@ class Foo
             return;
         }
 
-        $implementsEndIndex = $tokens->getNextTokenOfKind($implementsIndex, ['{']);
-        \assert(\is_int($implementsEndIndex));
-
-        $prevIndex = $tokens->getPrevMeaningfulToken($implementsEndIndex);
-        \assert(\is_int($prevIndex));
+        $afterImplementsIndex = $tokens->getNextMeaningfulToken($implementsIndex);
+        \assert(\is_int($afterImplementsIndex));
 
         $tokens->insertAt(
-            $prevIndex + 1,
+            $afterImplementsIndex,
             [
-                new Token(','),
-                new Token([\T_WHITESPACE, ' ']),
                 new Token([\T_NS_SEPARATOR, '\\']),
                 new Token([\T_STRING, 'Stringable']),
+                new Token(','),
+                new Token([\T_WHITESPACE, ' ']),
             ],
         );
     }
