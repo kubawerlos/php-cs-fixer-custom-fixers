@@ -77,7 +77,7 @@ class Foo
                 continue;
             }
 
-            if ($this->doesImplementStringable($tokens, $namespaceStartIndex, $index + 1, $classStartIndex - 1)) {
+            if ($this->doesImplementStringable($tokens, $namespaceStartIndex, $index, $classStartIndex)) {
                 continue;
             }
 
@@ -140,29 +140,26 @@ class Foo
      */
     private function getInterfaces(Tokens $tokens, int $classKeywordIndex, int $classOpenBraceIndex): array
     {
-        $startIndex = $tokens->getNextTokenOfKind($classKeywordIndex, ['{', [\T_IMPLEMENTS]]);
-        \assert(\is_int($startIndex));
+        $implementsIndex = $tokens->getNextTokenOfKind($classKeywordIndex, ['{', [\T_IMPLEMENTS]]);
+        \assert(\is_int($implementsIndex));
 
         $interfaces = [];
-        for ($index = $startIndex; $index < $classOpenBraceIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(\T_STRING)) {
+        $interface = '';
+        for (
+            $index = $tokens->getNextMeaningfulToken($implementsIndex);
+            $index < $classOpenBraceIndex;
+            $index = $tokens->getNextMeaningfulToken($index)
+        ) {
+            \assert(\is_int($index));
+            if ($tokens[$index]->equals(',')) {
+                $interfaces[] = \strtolower($interface);
+                $interface = '';
                 continue;
             }
-
-            $interface = \strtolower($tokens[$index]->getContent());
-
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            \assert(\is_int($prevIndex));
-            if ($tokens[$prevIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-                $interface = '\\' . $interface;
-                $prevPrevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
-                \assert(\is_int($prevPrevIndex));
-                if ($tokens[$prevPrevIndex]->isGivenKind(\T_STRING)) {
-                    continue;
-                }
-            }
-
-            $interfaces[] = $interface;
+            $interface .= $tokens[$index]->getContent();
+        }
+        if ($interface !== '') {
+            $interfaces[] = \strtolower($interface);
         }
 
         return $interfaces;

@@ -144,35 +144,33 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             ',
         ];
 
-        yield [
-            '<?php namespace FooNamespace;
-            class Foo implements Stringable, \Stringable
+        $template = '<?php
+            namespace FooNamespace;
+            class Test implements %s
             {
                 public function __toString() { return "Foo"; }
             }
-            ',
-            '<?php namespace FooNamespace;
-            class Foo implements Stringable
-            {
-                public function __toString() { return "Foo"; }
-            }
-            ',
+        ';
+
+        $implementedInterfacesCases = [
+            'Stringable',
+            'Foo\Stringable',
+            '\Foo\Stringable',
+            'Foo\Stringable\Bar',
+            '\Foo\Stringable\Bar',
+            'Foo\Stringable, Bar\Stringable',
+            'Stringable\Foo, Stringable\Bar',
+            '\Stringable\Foo, Stringable\Bar',
+            'Foo\Stringable\Bar',
+            '\Foo\Stringable\Bar',
         ];
 
-        yield [
-            '<?php namespace FooNamespace;
-            class Foo implements Bar\Stringable, \Stringable
-            {
-                public function __toString() { return "Foo"; }
-            }
-            ',
-            '<?php namespace FooNamespace;
-            class Foo implements Bar\Stringable
-            {
-                public function __toString() { return "Foo"; }
-            }
-            ',
-        ];
+        foreach ($implementedInterfacesCases as $implementedInterface) {
+            yield [
+                \sprintf($template, $implementedInterface . ', \Stringable'),
+                \sprintf($template, $implementedInterface),
+            ];
+        }
 
         yield [
             '<?php class Foo implements FooInterface, \Stringable
