@@ -240,9 +240,9 @@ baz();
     }
 
     /**
-     * @requires PHP ^7.4
+     * @requires PHP <8.0
      */
-    public function testWithCommentBetweenBackslashAndFunctionCall(): void
+    public function testFixPre80(): void
     {
         $this->doTest(
             '<?php //\/* foo */var_dump/** bar */($x);',

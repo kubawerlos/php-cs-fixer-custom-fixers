@@ -44,7 +44,6 @@ abstract class AbstractFixerTestCase extends TestCase
         'testStringIsTheSame',
         'testSuccessorName',
         'testTokenIsUseful',
-        'testWithCommentBetweenBackslashAndFunctionCall',
     ];
 
     protected FixerInterface $fixer;
