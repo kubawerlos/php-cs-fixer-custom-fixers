@@ -13,6 +13,7 @@ namespace Tests\AutoReview;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\FixerNameValidator;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -82,9 +83,7 @@ final class SrcCodeTest extends TestCase
 
     public function testFixerSupportsAllFilesByDefault(): void
     {
-        $fixer = $this->getMockForAbstractClass(AbstractFixer::class);
-
-        self::assertTrue($fixer->supports($this->createMock(\SplFileInfo::class)));
+        self::assertTrue($this->createAbstractFixerDouble()->supports($this->createSplFileInfoDouble()));
     }
 
     /**
@@ -147,5 +146,40 @@ final class SrcCodeTest extends TestCase
 
             yield $className => [$className];
         }
+    }
+
+    private function createAbstractFixerDouble(): AbstractFixer
+    {
+        return new class () extends AbstractFixer {
+            public function isCandidate(Tokens $tokens): bool
+            {
+                throw new \BadMethodCallException('Not implemented.');
+            }
+
+            public function isRisky(): bool
+            {
+                throw new \BadMethodCallException('Not implemented.');
+            }
+
+            public function fix(\SplFileInfo $file, Tokens $tokens): void
+            {
+                throw new \BadMethodCallException('Not implemented.');
+            }
+
+            public function getDefinition(): FixerDefinitionInterface
+            {
+                throw new \BadMethodCallException('Not implemented.');
+            }
+
+            public function getPriority(): int
+            {
+                throw new \BadMethodCallException('Not implemented.');
+            }
+        };
+    }
+
+    private function createSplFileInfoDouble(): \SplFileInfo
+    {
+        return new class ('') extends \SplFileInfo {};
     }
 }

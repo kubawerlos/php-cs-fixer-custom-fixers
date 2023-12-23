@@ -107,7 +107,7 @@ abstract class AbstractFixerTestCase extends TestCase
         Tokens::clearCache();
         $tokens = Tokens::fromCode($codeSample->getCode());
 
-        self::getFixer()->fix($this->createMock(\SplFileInfo::class), $tokens);
+        self::getFixer()->fix($this->createSplFileInfoDouble(), $tokens);
 
         self::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
@@ -180,7 +180,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
             self::assertTrue($fixer->isCandidate($inputTokens));
 
-            $fixer->fix($this->createMock(\SplFileInfo::class), $inputTokens);
+            $fixer->fix($this->createSplFileInfoDouble(), $inputTokens);
             $inputTokens->clearEmptyTokens();
 
             self::assertSame(
@@ -196,7 +196,7 @@ abstract class AbstractFixerTestCase extends TestCase
             self::assertSameTokens($expectedTokens, $inputTokens);
         }
 
-        $fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
+        $fixer->fix($this->createSplFileInfoDouble(), $expectedTokens);
 
         self::assertSame($expected, $expectedTokens->generateCode());
 
@@ -241,5 +241,10 @@ abstract class AbstractFixerTestCase extends TestCase
         $fixer = self::getFixer();
         self::assertInstanceOf(DeprecatedFixerInterface::class, $fixer);
         self::assertSame([$successorName], $fixer->getSuccessorsNames());
+    }
+
+    private function createSplFileInfoDouble(): \SplFileInfo
+    {
+        return new class ('') extends \SplFileInfo {};
     }
 }
