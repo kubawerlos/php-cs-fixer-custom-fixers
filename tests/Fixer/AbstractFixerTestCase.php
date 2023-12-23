@@ -30,8 +30,26 @@ abstract class AbstractFixerTestCase extends TestCase
 {
     use AssertSameTokensTrait;
 
-    /** @var FixerInterface */
-    protected $fixer;
+    private const ALLOWED_TEST_METHOD_NAMES = [
+        'testConfiguration',
+        'testExampleWithAllTokensHasAllSpacesFixed',
+        'testFix',
+        'testFix7',
+        'testFix74',
+        'testFix80',
+        'testFix82',
+        'testFixOnPhp8',
+        'testIsNotRiskyWithoutForceOption',
+        'testIsRisky',
+        'testIsRiskyWithForceOption',
+        'testReversingCodeSample',
+        'testStringIsTheSame',
+        'testSuccessorName',
+        'testTokenIsUseful',
+        'testWithCommentBetweenBackslashAndFunctionCall',
+    ];
+
+    protected FixerInterface $fixer;
 
     final protected function setUp(): void
     {
@@ -118,6 +136,29 @@ abstract class AbstractFixerTestCase extends TestCase
     final public function testPriority(): void
     {
         self::assertLessThan((new EncodingFixer())->getPriority(), $this->fixer->getPriority());
+    }
+
+    final public function testMethodNames(): void
+    {
+        $fixerReflection = new \ReflectionObject($this);
+
+        $testMethods = \array_filter(
+            $fixerReflection->getMethods(\ReflectionMethod::IS_PUBLIC),
+            static fn (\ReflectionMethod $reflectionMethod): bool => $reflectionMethod->getFileName() === $fixerReflection->getFileName()
+                && \str_starts_with($reflectionMethod->getName(), 'test'),
+        );
+
+        foreach ($testMethods as $testMethod) {
+            self::assertContains(
+                $testMethod->getName(),
+                self::ALLOWED_TEST_METHOD_NAMES,
+                \sprintf(
+                    'Method "%s" found, allowed names are: "%s".',
+                    $testMethod->getName(),
+                    \implode('", "', self::ALLOWED_TEST_METHOD_NAMES),
+                ),
+            );
+        }
     }
 
     /**

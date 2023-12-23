@@ -24,25 +24,6 @@ use Tests\Fixer\AbstractFixerTestCase;
  */
 final class TestsCodeTest extends TestCase
 {
-    private const ALLOWED_TEST_METHOD_NAMES = [
-        'testConfiguration',
-        'testExampleWithAllTokensHasAllSpacesFixed',
-        'testFix',
-        'testFix7',
-        'testFix74',
-        'testFix80',
-        'testFix82',
-        'testFixOnPhp8',
-        'testIsNotRiskyWithoutForceOption',
-        'testIsRisky',
-        'testIsRiskyWithForceOption',
-        'testReversingCodeSample',
-        'testStringIsTheSame',
-        'testSuccessorName',
-        'testTokenIsUseful',
-        'testWithCommentBetweenBackslashAndFunctionCall',
-    ];
-
     /**
      * @param class-string $className
      *
@@ -59,32 +40,14 @@ final class TestsCodeTest extends TestCase
         }
 
         foreach ($this->getMethods($className, \ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
-            $methodName = $reflectionMethod->getName();
-            if (!\str_starts_with($methodName, 'test')) {
-                self::assertTrue(
-                    Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()),
-                    \sprintf(
-                        'Data provider "%s" in class "%s" is not correctly named.',
-                        $reflectionMethod->getName(),
-                        $className,
-                    ),
-                );
-                continue;
-            }
-
-            self::assertStringStartsWith('test', $methodName);
-
-            if (\is_subclass_of($className, AbstractFixerTestCase::class)) {
-                self::assertTrue(
-                    \in_array($methodName, self::ALLOWED_TEST_METHOD_NAMES, true),
-                    \sprintf(
-                        'Method "%s::%s" found, allowed names are: "%s".',
-                        $className,
-                        $methodName,
-                        \implode('", "', self::ALLOWED_TEST_METHOD_NAMES),
-                    ),
-                );
-            }
+            self::assertTrue(
+                \strpos($reflectionMethod->getName(), 'test') === 0 || Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()),
+                \sprintf(
+                    'Data provider "%s" in class "%s" is not correctly named.',
+                    $reflectionMethod->getName(),
+                    $className,
+                ),
+            );
         }
     }
 
