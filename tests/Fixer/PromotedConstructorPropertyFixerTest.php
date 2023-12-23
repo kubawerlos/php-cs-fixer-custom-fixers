@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-
 /**
  * @internal
- *
- * @property ConfigurableFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer
  *
@@ -26,7 +22,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('promote_only_existing_properties', $options[0]->getName());
     }

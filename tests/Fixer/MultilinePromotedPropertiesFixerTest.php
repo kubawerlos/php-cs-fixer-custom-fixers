@@ -11,14 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
-
 /**
  * @internal
- *
- * @property ConfigurableFixerInterface&WhitespacesAwareFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer
  *
@@ -28,8 +22,7 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
     {
-        /** @var array<FixerOptionInterface> $options */
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('keep_blank_lines', $options[0]->getName());
         self::assertFalse($options[0]->getDefault());

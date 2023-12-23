@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-
 /**
  * @internal
- *
- * @property ConfigurableFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoDuplicatedArrayKeyFixer
  */
@@ -29,7 +25,7 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
 
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('ignore_expressions', $options[0]->getName());
     }

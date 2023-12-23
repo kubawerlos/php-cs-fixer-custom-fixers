@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-
 /**
  * @internal
- *
- * @property ConfigurableFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer
  */
@@ -24,7 +20,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('functions', $options[0]->getName());
     }
@@ -41,8 +37,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
      */
     public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        $this->fixer->configure($configuration ?? []);
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     /**

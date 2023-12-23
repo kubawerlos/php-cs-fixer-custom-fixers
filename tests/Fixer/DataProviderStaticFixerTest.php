@@ -11,13 +11,12 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 
 /**
  * @internal
  *
- * @property ConfigurableFixerInterface&DeprecatedFixerInterface $fixer
+ * @property DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer
  */
@@ -35,7 +34,7 @@ final class DataProviderStaticFixerTest extends AbstractFixerTestCase
 
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('force', $options[0]->getName());
     }

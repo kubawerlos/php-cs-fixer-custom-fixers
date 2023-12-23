@@ -11,13 +11,10 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @internal
- *
- * @property ConfigurableFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
  */
@@ -30,7 +27,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
 
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('binary', $options[0]->getName());
         self::assertArrayHasKey(1, $options);
