@@ -42,12 +42,14 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
 
     public function testReversingCodeSample(): void
     {
-        $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
+        $fixer = self::getFixer();
+
+        $codeSample = $fixer->getDefinition()->getCodeSamples()[0];
 
         Tokens::clearCache();
         $tokens = Tokens::fromCode($codeSample->getCode());
 
-        $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+        $fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
         self::assertNull($this->lintSource($tokens->generateCode()));
 
         $this->doTest(

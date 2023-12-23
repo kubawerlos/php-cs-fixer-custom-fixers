@@ -45,37 +45,20 @@ abstract class AbstractFixerTestCase extends TestCase
         'testTokenIsUseful',
     ];
 
-    protected FixerInterface $fixer;
-
-    final protected function setUp(): void
-    {
-        $reflectionClass = new \ReflectionClass(static::class);
-
-        $className = 'PhpCsFixerCustomFixers\\Fixer\\' . \substr($reflectionClass->getShortName(), 0, -4);
-
-        $fixer = new $className();
-        \assert($fixer instanceof FixerInterface);
-
-        $this->fixer = $fixer;
-        if ($this->fixer instanceof WhitespacesAwareFixerInterface) {
-            $this->fixer->setWhitespacesConfig(new WhitespacesFixerConfig());
-        }
-    }
-
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
     {
-        self::assertMatchesRegularExpression('/^[A-Z].*\.$/', $this->fixer->getDefinition()->getSummary());
+        self::assertMatchesRegularExpression('/^[A-Z].*\.$/', self::getFixer()->getDefinition()->getSummary());
     }
 
     final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void
     {
-        if (!$this->fixer->isRisky()) {
+        if (!self::getFixer()->isRisky()) {
             $this->expectNotToPerformAssertions();
 
             return;
         }
 
-        $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+        $riskyDescription = self::getFixer()->getDefinition()->getRiskyDescription();
         \assert(\is_string($riskyDescription));
 
         self::assertMatchesRegularExpression('/^[a-z]/', $riskyDescription);
@@ -83,13 +66,13 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionRiskyDescriptionDoesNotEndWithDot(): void
     {
-        if (!$this->fixer->isRisky()) {
+        if (!self::getFixer()->isRisky()) {
             $this->expectNotToPerformAssertions();
 
             return;
         }
 
-        $riskyDescription = $this->fixer->getDefinition()->getRiskyDescription();
+        $riskyDescription = self::getFixer()->getDefinition()->getRiskyDescription();
         \assert(\is_string($riskyDescription));
 
         self::assertStringEndsNotWith('.', $riskyDescription);
@@ -97,16 +80,16 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionHasExactlyOneCodeSample(): void
     {
-        if ($this->fixer instanceof DeprecatedFixerInterface) {
-            self::assertGreaterThanOrEqual(1, \count($this->fixer->getDefinition()->getCodeSamples()));
+        if (self::getFixer() instanceof DeprecatedFixerInterface) {
+            self::assertGreaterThanOrEqual(1, \count(self::getFixer()->getDefinition()->getCodeSamples()));
         } else {
-            self::assertCount(1, $this->fixer->getDefinition()->getCodeSamples());
+            self::assertCount(1, self::getFixer()->getDefinition()->getCodeSamples());
         }
     }
 
     final public function testCodeSampleEndsWithNewLine(): void
     {
-        $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
+        $codeSample = self::getFixer()->getDefinition()->getCodeSamples()[0];
 
         self::assertMatchesRegularExpression('/\n$/', $codeSample->getCode());
     }
@@ -116,22 +99,22 @@ abstract class AbstractFixerTestCase extends TestCase
      */
     final public function testCodeSampleIsChangedDuringFixing(): void
     {
-        $codeSample = $this->fixer->getDefinition()->getCodeSamples()[0];
-        if ($this->fixer instanceof ConfigurableFixerInterface) {
-            $this->fixer->configure($codeSample->getConfiguration() ?? []);
+        $codeSample = self::getFixer()->getDefinition()->getCodeSamples()[0];
+        if (self::getFixer() instanceof ConfigurableFixerInterface) {
+            self::getFixer()->configure($codeSample->getConfiguration() ?? []);
         }
 
         Tokens::clearCache();
         $tokens = Tokens::fromCode($codeSample->getCode());
 
-        $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+        self::getFixer()->fix($this->createMock(\SplFileInfo::class), $tokens);
 
         self::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
 
     final public function testPriority(): void
     {
-        self::assertLessThan((new EncodingFixer())->getPriority(), $this->fixer->getPriority());
+        self::assertLessThan((new EncodingFixer())->getPriority(), self::getFixer()->getPriority());
     }
 
     final public function testMethodNames(): void
@@ -157,13 +140,29 @@ abstract class AbstractFixerTestCase extends TestCase
         }
     }
 
+    final protected static function getFixer(): FixerInterface
+    {
+        $className = \str_replace('Tests', 'PhpCsFixerCustomFixers', \substr(static::class, 0, -4));
+
+        $fixer = new $className();
+        \assert($fixer instanceof FixerInterface);
+
+        if ($fixer instanceof WhitespacesAwareFixerInterface) {
+            $fixer->setWhitespacesConfig(new WhitespacesFixerConfig());
+        }
+
+        return $fixer;
+    }
+
     /**
      * @param null|array<string, mixed> $configuration
      */
     final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
     {
-        if ($this->fixer instanceof ConfigurableFixerInterface) {
-            $this->fixer->configure($configuration ?? []);
+        $fixer = self::getFixer();
+
+        if ($fixer instanceof ConfigurableFixerInterface) {
+            $fixer->configure($configuration ?? []);
         }
 
         if ($expected === $input) {
@@ -179,9 +178,9 @@ abstract class AbstractFixerTestCase extends TestCase
             Tokens::clearCache();
             $inputTokens = Tokens::fromCode($input);
 
-            self::assertTrue($this->fixer->isCandidate($inputTokens));
+            self::assertTrue($fixer->isCandidate($inputTokens));
 
-            $this->fixer->fix($this->createMock(\SplFileInfo::class), $inputTokens);
+            $fixer->fix($this->createMock(\SplFileInfo::class), $inputTokens);
             $inputTokens->clearEmptyTokens();
 
             self::assertSame(
@@ -197,7 +196,7 @@ abstract class AbstractFixerTestCase extends TestCase
             self::assertSameTokens($expectedTokens, $inputTokens);
         }
 
-        $this->fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
+        $fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
 
         self::assertSame($expected, $expectedTokens->generateCode());
 
@@ -209,9 +208,10 @@ abstract class AbstractFixerTestCase extends TestCase
      */
     final protected function getConfigurationOptions(): array
     {
-        self::assertInstanceOf(ConfigurableFixerInterface::class, $this->fixer);
+        $fixer = self::getFixer();
+        self::assertInstanceOf(ConfigurableFixerInterface::class, $fixer);
 
-        return $this->fixer->getConfigurationDefinition()->getOptions();
+        return $fixer->getConfigurationDefinition()->getOptions();
     }
 
     final protected function lintSource(string $source): ?string
@@ -233,12 +233,13 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final protected function assertRiskiness(bool $isRisky): void
     {
-        self::assertSame($isRisky, $this->fixer->isRisky());
+        self::assertSame($isRisky, self::getFixer()->isRisky());
     }
 
     final protected function assertSuccessorName(string $successorName): void
     {
-        self::assertInstanceOf(DeprecatedFixerInterface::class, $this->fixer);
-        self::assertSame([$successorName], $this->fixer->getSuccessorsNames());
+        $fixer = self::getFixer();
+        self::assertInstanceOf(DeprecatedFixerInterface::class, $fixer);
+        self::assertSame([$successorName], $fixer->getSuccessorsNames());
     }
 }
