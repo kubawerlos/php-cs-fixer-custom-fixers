@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-
 /**
  * @internal
- *
- * @property DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\InternalClassCasingFixer
  */
@@ -29,7 +25,7 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
 
     public function testSuccessorName(): void
     {
-        self::assertContains('class_reference_name_casing', $this->fixer->getSuccessorsNames());
+        self::assertSuccessorName('class_reference_name_casing');
     }
 
     /**

@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-
 /**
  * @internal
- *
- * @property DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer
  */
@@ -44,7 +40,7 @@ class FooTest extends TestCase {
 
     public function testSuccessorName(): void
     {
-        self::assertContains('php_unit_data_provider_return_type', $this->fixer->getSuccessorsNames());
+        self::assertSuccessorName('php_unit_data_provider_return_type');
     }
 
     /**
