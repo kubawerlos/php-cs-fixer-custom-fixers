@@ -11,15 +11,12 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer;
 
 /**
  * @internal
- *
- * @property ConfigurableFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer
  */
@@ -105,7 +102,7 @@ interface    FooInterface {
 
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('allow_linebreak', $options[0]->getName());
     }

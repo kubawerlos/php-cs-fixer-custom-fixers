@@ -13,7 +13,6 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 /**
  * @internal
@@ -26,8 +25,7 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
     {
-        /** @var array<FixerOptionInterface> $options */
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('prefix', $options[0]->getName());
         self::assertSame('provide', $options[0]->getDefault());

@@ -35,7 +35,7 @@ final class DataProviderStaticFixerTest extends AbstractFixerTestCase
 
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('force', $options[0]->getName());
     }

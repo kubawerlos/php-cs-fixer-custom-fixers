@@ -16,6 +16,7 @@ use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixer\Linter\Linter;
 use PhpCsFixer\Linter\ProcessLinter;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -201,6 +202,16 @@ abstract class AbstractFixerTestCase extends TestCase
         self::assertSame($expected, $expectedTokens->generateCode());
 
         self::assertFalse($expectedTokens->isChanged());
+    }
+
+    /**
+     * @return array<FixerOptionInterface>
+     */
+    final protected function getConfigurationOptions(): array
+    {
+        self::assertInstanceOf(ConfigurableFixerInterface::class, $this->fixer);
+
+        return $this->fixer->getConfigurationDefinition()->getOptions();
     }
 
     final protected function lintSource(string $source): ?string

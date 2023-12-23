@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-
 /**
  * @internal
- *
- * @property ConfigurableFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer
  */
@@ -29,7 +25,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
 
     public function testConfiguration(): void
     {
-        $options = $this->fixer->getConfigurationDefinition()->getOptions();
+        $options = self::getConfigurationOptions();
         self::assertArrayHasKey(0, $options);
         self::assertSame('allow_preventing_trailing_spaces', $options[0]->getName());
     }
