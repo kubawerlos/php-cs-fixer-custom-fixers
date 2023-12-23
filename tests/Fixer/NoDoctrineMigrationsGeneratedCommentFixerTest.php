@@ -20,7 +20,7 @@ final class NoDoctrineMigrationsGeneratedCommentFixerTest extends AbstractFixerT
 {
     public function testIsRisky(): void
     {
-        self::assertFalse($this->fixer->isRisky());
+        self::assertRiskiness(false);
     }
 
     /**

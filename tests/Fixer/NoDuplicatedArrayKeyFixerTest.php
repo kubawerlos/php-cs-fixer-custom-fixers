@@ -24,7 +24,7 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        self::assertFalse($this->fixer->isRisky());
+        self::assertRiskiness(false);
     }
 
     public function testConfiguration(): void

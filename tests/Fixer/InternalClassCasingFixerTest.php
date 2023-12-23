@@ -24,7 +24,7 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        self::assertFalse($this->fixer->isRisky());
+        self::assertRiskiness(false);
     }
 
     public function testSuccessorName(): void

@@ -20,7 +20,7 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
 {
     public function testIsRisky(): void
     {
-        self::assertFalse($this->fixer->isRisky());
+        self::assertRiskiness(false);
     }
 
     /**

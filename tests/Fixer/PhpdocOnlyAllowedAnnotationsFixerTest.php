@@ -31,7 +31,7 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
 
     public function testIsRisky(): void
     {
-        self::assertFalse($this->fixer->isRisky());
+        self::assertRiskiness(false);
     }
 
     /**

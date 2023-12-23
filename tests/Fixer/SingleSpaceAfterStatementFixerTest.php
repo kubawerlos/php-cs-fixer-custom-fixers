@@ -112,7 +112,7 @@ interface    FooInterface {
 
     public function testIsRisky(): void
     {
-        self::assertFalse($this->fixer->isRisky());
+        self::assertRiskiness(false);
     }
 
     /**
