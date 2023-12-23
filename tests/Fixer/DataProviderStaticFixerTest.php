@@ -23,15 +23,9 @@ use PhpCsFixer\Fixer\DeprecatedFixerInterface;
  */
 final class DataProviderStaticFixerTest extends AbstractFixerTestCase
 {
-    public function testIsRiskyWithForceOption(): void
+    public function testIsRisky(): void
     {
-        $this->fixer->configure(['force' => true]);
         self::assertTrue($this->fixer->isRisky());
-    }
-
-    public function testIsNotRiskyWithoutForceOption(): void
-    {
-        self::assertFalse($this->fixer->isRisky());
     }
 
     public function testSuccessorName(): void
