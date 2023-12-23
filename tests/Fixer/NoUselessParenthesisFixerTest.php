@@ -375,7 +375,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
     /**
      * @requires PHP <8.0
      */
-    public function testFix74(): void
+    public function testFixPre80(): void
     {
         $this->doTest(
             '<?php $foo = $bar{1};',

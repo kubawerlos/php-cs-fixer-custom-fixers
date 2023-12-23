@@ -101,11 +101,11 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     }
 
     /**
-     * @requires PHP ^7.4
+     * @requires PHP <8.0
      *
-     * @dataProvider provideFix7Cases
+     * @dataProvider provideFixPre80Cases
      */
-    public function testFix7(string $expected, ?string $input = null): void
+    public function testFixPre80(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
     }
@@ -113,7 +113,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     /**
      * @return iterable<array{string, string}>
      */
-    public static function provideFix7Cases(): iterable
+    public static function provideFixPre80Cases(): iterable
     {
         yield [
             '<?php $foo =  Bar::value();',
@@ -134,7 +134,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     /**
      * @requires PHP ^8.0
      */
-    public function testFixOnPhp8(): void
+    public function testFix80(): void
     {
         $this->doTest(
             '<?php function f(Bar | Baz | Qux $x) {};',
