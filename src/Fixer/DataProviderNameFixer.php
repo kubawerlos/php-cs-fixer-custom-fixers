@@ -29,16 +29,16 @@ final class DataProviderNameFixer extends AbstractFixer implements ConfigurableF
 {
     private PhpUnitDataProviderNameFixer $phpUnitDataProviderNameFixer;
 
-    public function __construct()
-    {
-        $this->phpUnitDataProviderNameFixer = new PhpUnitDataProviderNameFixer();
-    }
-
     /** @var string */
     private $prefix = 'provide';
 
     /** @var string */
     private $suffix = 'Cases';
+
+    public function __construct()
+    {
+        $this->phpUnitDataProviderNameFixer = new PhpUnitDataProviderNameFixer();
+    }
 
     public function getDefinition(): FixerDefinitionInterface
     {
