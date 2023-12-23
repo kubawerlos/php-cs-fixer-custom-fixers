@@ -310,7 +310,7 @@ class Bar {
     /**
      * @requires PHP ^8.0
      */
-    public function testFixOnPhp8(): void
+    public function testFix80(): void
     {
         $this->doTest(
             '<?php
