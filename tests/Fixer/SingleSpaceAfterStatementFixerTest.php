@@ -284,7 +284,7 @@ do    {
     public function testExampleWithAllTokensHasAllSpacesFixed(): void
     {
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
-        $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+        self::getFixer()->fix($this->createMock(\SplFileInfo::class), $tokens);
 
         self::assertDoesNotMatchRegularExpression('/[^\n ] {2,}/', $tokens->generateCode());
     }
@@ -294,20 +294,22 @@ do    {
      */
     public function testTokenIsUseful(int $token): void
     {
-        $expectedTokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
-        $this->fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
+        $fixer = self::getFixer();
 
-        $reflectionObject = new \ReflectionObject($this->fixer);
+        $expectedTokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
+        $fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
+
+        $reflectionObject = new \ReflectionObject($fixer);
         $property = $reflectionObject->getProperty('tokens');
         $property->setAccessible(true);
 
         /** @var array<int> $tokens */
-        $tokens = $property->getValue($this->fixer);
+        $tokens = $property->getValue($fixer);
 
-        $property->setValue($this->fixer, \array_diff($tokens, [$token]));
+        $property->setValue($fixer, \array_diff($tokens, [$token]));
 
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
-        $this->fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+        $fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
 
         self::assertNotSame(
             $expectedTokens->generateCode(),
