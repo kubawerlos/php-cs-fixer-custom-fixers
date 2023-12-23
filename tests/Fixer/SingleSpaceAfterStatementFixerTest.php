@@ -284,7 +284,7 @@ do    {
     public function testExampleWithAllTokensHasAllSpacesFixed(): void
     {
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
-        self::getFixer()->fix($this->createMock(\SplFileInfo::class), $tokens);
+        self::getFixer()->fix($this->createSplFileInfoDouble(), $tokens);
 
         self::assertDoesNotMatchRegularExpression('/[^\n ] {2,}/', $tokens->generateCode());
     }
@@ -297,7 +297,7 @@ do    {
         $fixer = self::getFixer();
 
         $expectedTokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
-        $fixer->fix($this->createMock(\SplFileInfo::class), $expectedTokens);
+        $fixer->fix($this->createSplFileInfoDouble(), $expectedTokens);
 
         $reflectionObject = new \ReflectionObject($fixer);
         $property = $reflectionObject->getProperty('tokens');
@@ -309,7 +309,7 @@ do    {
         $property->setValue($fixer, \array_diff($tokens, [$token]));
 
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
-        $fixer->fix($this->createMock(\SplFileInfo::class), $tokens);
+        $fixer->fix($this->createSplFileInfoDouble(), $tokens);
 
         self::assertNotSame(
             $expectedTokens->generateCode(),
@@ -334,5 +334,10 @@ do    {
         foreach ($tokens as $token) {
             yield [$token];
         }
+    }
+
+    private function createSplFileInfoDouble(): \SplFileInfo
+    {
+        return new class ('') extends \SplFileInfo {};
     }
 }
