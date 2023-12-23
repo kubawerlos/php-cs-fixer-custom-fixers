@@ -40,7 +40,7 @@ class FooTest extends TestCase {
 
     public function testIsRisky(): void
     {
-        self::assertTrue($this->fixer->isRisky());
+        self::assertRiskiness(true);
     }
 
     public function testSuccessorName(): void

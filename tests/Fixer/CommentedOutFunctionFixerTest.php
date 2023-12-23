@@ -31,7 +31,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
 
     public function testIsRisky(): void
     {
-        self::assertTrue($this->fixer->isRisky());
+        self::assertRiskiness(true);
     }
 
     /**

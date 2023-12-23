@@ -20,7 +20,7 @@ final class NoReferenceInFunctionDefinitionFixerTest extends AbstractFixerTestCa
 {
     public function testIsRisky(): void
     {
-        self::assertTrue($this->fixer->isRisky());
+        self::assertRiskiness(true);
     }
 
     /**

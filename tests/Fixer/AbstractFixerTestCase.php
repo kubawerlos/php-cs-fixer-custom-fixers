@@ -219,4 +219,9 @@ abstract class AbstractFixerTestCase extends TestCase
 
         return null;
     }
+
+    final protected function assertRiskiness(bool $isRisky): void
+    {
+        self::assertSame($isRisky, $this->fixer->isRisky());
+    }
 }
