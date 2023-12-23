@@ -235,4 +235,11 @@ abstract class AbstractFixerTestCase extends TestCase
     {
         self::assertSame($isRisky, $this->fixer->isRisky());
     }
+
+    final protected function assertSuccessorName(string $successorName): void
+    {
+        self::assertInstanceOf(DeprecatedFixerInterface::class, $this->fixer);
+
+        self::assertSame([$successorName], $this->fixer->getSuccessorsNames());
+    }
 }

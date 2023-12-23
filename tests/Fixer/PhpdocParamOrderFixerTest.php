@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-
 /**
  * @internal
- *
- * @property DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer
  */
@@ -29,7 +25,7 @@ final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
 
     public function testSuccessorName(): void
     {
-        self::assertContains('phpdoc_param_order', $this->fixer->getSuccessorsNames());
+        self::assertSuccessorName('phpdoc_param_order');
     }
 
     /**

@@ -11,12 +11,8 @@
 
 namespace Tests\Fixer;
 
-use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-
 /**
  * @internal
- *
- * @property DeprecatedFixerInterface $fixer
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer
  */
@@ -40,7 +36,7 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
 
     public function testSuccessorName(): void
     {
-        self::assertContains('php_unit_data_provider_name', $this->fixer->getSuccessorsNames());
+        self::assertSuccessorName('php_unit_data_provider_name');
     }
 
     /**
