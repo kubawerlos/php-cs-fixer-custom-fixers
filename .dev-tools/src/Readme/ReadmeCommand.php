@@ -36,10 +36,10 @@ use Symfony\Component\Process\Process;
 #[AsCommand(name: 'readme')]
 final class ReadmeCommand extends Command
 {
-    protected static $defaultName = 'readme';
-
     private const NAME = 'PHP CS Fixer: custom fixers';
     private const SHIELDS_HOST = 'https://img.shields.io';
+
+    protected static $defaultName = 'readme';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
