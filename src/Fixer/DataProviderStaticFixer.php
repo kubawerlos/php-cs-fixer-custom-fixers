@@ -90,7 +90,7 @@ class FooTest extends TestCase {
 
     public function isRisky(): bool
     {
-        return $this->force;
+        return $this->phpUnitDataProviderStaticFixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
