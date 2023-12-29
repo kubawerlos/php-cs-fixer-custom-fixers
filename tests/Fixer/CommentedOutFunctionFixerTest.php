@@ -31,7 +31,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param null|array<string, array<string>> $configuration
+     * @param null|array<string, list<string>> $configuration
      *
      * @dataProvider provideFixCases
      */
@@ -41,7 +41,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array{0: string, 1?: string, 2?: array<string, array<string>>}>
+     * @return iterable<array{0: string, 1?: string, 2?: array<string, list<string>>}>
      */
     public static function provideFixCases(): iterable
     {

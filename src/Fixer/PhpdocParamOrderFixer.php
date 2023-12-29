@@ -71,7 +71,7 @@ function foo($a, $b, $c) {}
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     public function getSuccessorsNames(): array
     {

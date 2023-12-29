@@ -78,7 +78,7 @@ class FooTest extends TestCase {
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
 
-        /** @var array<int> $indexes */
+        /** @var list<int> $indexes */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
             $this->fixArgumentsOrder($tokens, $indexes[0], $indexes[1]);
         }
@@ -135,7 +135,7 @@ class FooTest extends TestCase {
     }
 
     /**
-     * @param array<ArgumentAnalysis> $arguments
+     * @param list<ArgumentAnalysis> $arguments
      */
     private static function shouldArgumentsBeSwapped(array $arguments): bool
     {
@@ -151,7 +151,7 @@ class FooTest extends TestCase {
     }
 
     /**
-     * @param array<ArgumentAnalysis> $arguments
+     * @param list<ArgumentAnalysis> $arguments
      */
     private static function swapArguments(Tokens $tokens, array $arguments): void
     {

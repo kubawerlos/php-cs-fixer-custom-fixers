@@ -25,7 +25,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpdocOnlyAllowedAnnotationsFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var array<string> */
+    /** @var list<string> */
     private $elements = [];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -59,7 +59,7 @@ function foo_bar() {}
     }
 
     /**
-     * @param array<string, array<string>> $configuration
+     * @param array<string, list<string>> $configuration
      */
     public function configure(array $configuration): void
     {

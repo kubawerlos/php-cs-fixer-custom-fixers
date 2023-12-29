@@ -37,7 +37,7 @@ final class ConstructorAnalysis
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     public function getConstructorParameterNames(): array
     {
@@ -183,7 +183,7 @@ final class ConstructorAnalysis
     /**
      * @param array<int, string> $array
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     private function getDuplicatesIndices(array $array): array
     {

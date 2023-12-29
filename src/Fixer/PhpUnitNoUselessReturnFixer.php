@@ -69,7 +69,7 @@ class FooTest extends TestCase {
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
 
-        /** @var array<int> $indexes */
+        /** @var list<int> $indexes */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
             $this->removeUselessReturns($tokens, $indexes[0], $indexes[1]);
         }

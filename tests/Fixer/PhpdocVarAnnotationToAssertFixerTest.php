@@ -32,7 +32,7 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array{0: string, 1?: string, 2?: array<string, array<string>>}>
+     * @return iterable<array{0: string, 1?: string, 2?: array<string, list<string>>}>
      */
     public static function provideFixCases(): iterable
     {

@@ -34,7 +34,7 @@ final class ArrayAnalyzerTest extends TestCase
     }
 
     /**
-     * @param array<ArrayElementAnalysis> $expected
+     * @param list<ArrayElementAnalysis> $expected
      *
      * @dataProvider provideGettingArrayElementsCases
      */
@@ -47,7 +47,7 @@ final class ArrayAnalyzerTest extends TestCase
     }
 
     /**
-     * @return iterable<array{array<ArrayElementAnalysis>, string}>
+     * @return iterable<array{list<ArrayElementAnalysis>, string}>
      */
     public static function provideGettingArrayElementsCases(): iterable
     {

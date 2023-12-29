@@ -64,7 +64,6 @@ $x = getValue();
                 continue;
             }
 
-            /** @var null|list<Token> $assertTokens */
             $assertTokens = $this->getAssertTokens($tokens, $docCommentIndex, $tokens[$variableIndex]->getContent());
             if ($assertTokens === null) {
                 continue;
@@ -112,7 +111,7 @@ $x = getValue();
     }
 
     /**
-     * @return null|array<Token>
+     * @return null|list<Token>
      */
     private function getAssertTokens(Tokens $tokens, int $docCommentIndex, string $variableName): ?array
     {
@@ -143,7 +142,10 @@ $x = getValue();
             return null;
         }
 
-        return \array_slice($tokens->toArray(), 1);
+        /** @var list<Token> $arrayTokens */
+        $arrayTokens = $tokens->toArray();
+
+        return \array_slice($arrayTokens, 1);
     }
 
     private function getAnnotationForVariable(Tokens $tokens, int $docCommentIndex, string $variableName): ?Annotation

@@ -215,7 +215,7 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
                     if ($option->getAllowedValues() !== null) {
                         $allowed = \array_map(static fn (string $value): string => \sprintf('\'%s\'', $value), $option->getAllowedValues());
                     } else {
-                        /** @var array<string> $allowed */
+                        /** @var list<string> $allowed */
                         $allowed = $option->getAllowedTypes();
                     }
                     $output .= \sprintf(

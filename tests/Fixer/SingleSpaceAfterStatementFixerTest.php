@@ -303,7 +303,7 @@ do    {
         $property = $reflectionObject->getProperty('tokens');
         $property->setAccessible(true);
 
-        /** @var array<int> $tokens */
+        /** @var list<int> $tokens */
         $tokens = $property->getValue($fixer);
 
         $property->setValue($fixer, \array_diff($tokens, [$token]));
@@ -328,7 +328,7 @@ do    {
         $property = $reflectionObject->getProperty('tokens');
         $property->setAccessible(true);
 
-        /** @var array<int> $tokens */
+        /** @var list<int> $tokens */
         $tokens = $property->getValue($fixer);
 
         foreach ($tokens as $token) {
