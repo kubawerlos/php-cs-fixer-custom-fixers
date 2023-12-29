@@ -122,12 +122,17 @@ final class ReadmeCommand extends Command
         return $badge;
     }
 
-    private function numberOfTests(): int
+    private static function numberOfTests(): int
     {
-        $process = new Process([__DIR__ . '/../../../vendor/bin/phpunit', '--list-tests'], __DIR__ . '/../../..');
-        $process->run();
+        static $numberOfTests = null;
+        if ($numberOfTests === null) {
+            $process = new Process([__DIR__ . '/../../../vendor/bin/phpunit', '--list-tests'], __DIR__ . '/../../..');
+            $process->run();
 
-        return \substr_count($process->getOutput(), \PHP_EOL) - 3; // 3 is for header
+            $numberOfTests = \substr_count($process->getOutput(), \PHP_EOL) - 3; // 3 is for header
+        }
+
+        return $numberOfTests;
     }
 
     private function description(): string
