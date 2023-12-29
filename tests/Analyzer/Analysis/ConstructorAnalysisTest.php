@@ -64,7 +64,7 @@ final class ConstructorAnalysisTest extends TestCase
     }
 
     /**
-     * @param array<string> $expected
+     * @param list<string> $expected
      *
      * @dataProvider provideGettingConstructorParameterNames80Cases
      *
@@ -80,7 +80,7 @@ final class ConstructorAnalysisTest extends TestCase
     }
 
     /**
-     * @return iterable<array{array<string>, string}>
+     * @return iterable<array{list<string>, string}>
      */
     public static function provideGettingConstructorParameterNames80Cases(): iterable
     {

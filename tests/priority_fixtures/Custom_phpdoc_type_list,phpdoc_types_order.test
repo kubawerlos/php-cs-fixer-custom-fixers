@@ -1,0 +1,15 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_type_list": true, "phpdoc_types_order": true }
+--EXPECTED--
+<?php
+/**
+ * @return bool|list<int>
+ */
+function foo() {}
+
+--INPUT--
+<?php
+/**
+ * @return array<int>|bool
+ */
+function foo() {}
