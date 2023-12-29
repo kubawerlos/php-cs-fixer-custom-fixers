@@ -78,9 +78,9 @@ class FooTest extends TestCase {
     {
         $phpUnitTestCaseIndicator = new PhpUnitTestCaseIndicator();
 
-        /** @var list<int> $indexes */
-        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indexes) {
-            $this->fixArgumentsOrder($tokens, $indexes[0], $indexes[1]);
+        /** @var array<int> $indices */
+        foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
+            $this->fixArgumentsOrder($tokens, $indices[0], $indices[1]);
         }
     }
 
