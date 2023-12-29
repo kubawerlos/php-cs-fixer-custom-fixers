@@ -67,6 +67,8 @@ final class ConstructorAnalysisTest extends TestCase
      * @param array<string> $expected
      *
      * @dataProvider provideGettingConstructorParameterNames80Cases
+     *
+     * @requires PHP ^8.0
      */
     public function testGettingConstructorParameterNames80(array $expected, string $code): void
     {
