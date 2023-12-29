@@ -48,9 +48,10 @@ final class ReadmeCommandTest extends TestCase
         );
         $expectedNumberOfTests = (int) $matches[1];
 
-        $numberOfTests = new \ReflectionMethod(ReadmeCommand::class, 'numberOfTests');
+        $readmeCommand = new \ReflectionClass(ReadmeCommand::class);
+        $numberOfTests = $readmeCommand->getMethod('numberOfTests');
         $numberOfTests->setAccessible(true);
-        $actualNumberOfTests = $numberOfTests->invoke(null);
+        $actualNumberOfTests = $numberOfTests->invoke($readmeCommand->newInstance());
 
         self::assertSame($expectedNumberOfTests, $actualNumberOfTests);
     }
