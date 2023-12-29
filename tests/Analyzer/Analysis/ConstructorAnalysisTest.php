@@ -61,15 +61,35 @@ final class ConstructorAnalysisTest extends TestCase
                 public function __construct(Foo $x = null, ?Bar $y = null, float $z = 3.14) {}
             }',
         ];
+    }
 
-        if (\PHP_VERSION_ID >= 80000) {
-            yield 'some already promoted' => [
-                ['$a', '$b', '$q', '$s', '$t'],
-                '<?php class Foo {
+    /**
+     * @param array<string> $expected
+     *
+     * @dataProvider provideGettingConstructorParameterNames80Cases
+     *
+     * @requires PHP ^8.0
+     */
+    public function testGettingConstructorParameterNames80(array $expected, string $code): void
+    {
+        $tokens = Tokens::fromCode($code);
+        $analysis = new ConstructorAnalysis($tokens, 11);
+
+        self::assertSame(11, $analysis->getConstructorIndex());
+        self::assertSame($expected, $analysis->getConstructorParameterNames());
+    }
+
+    /**
+     * @return iterable<array{array<string>, string}>
+     */
+    public static function provideGettingConstructorParameterNames80Cases(): iterable
+    {
+        yield 'some already promoted' => [
+            ['$a', '$b', '$q', '$s', '$t'],
+            '<?php class Foo {
                     public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
                 }',
-            ];
-        }
+        ];
     }
 
     /**
@@ -118,15 +138,35 @@ final class ConstructorAnalysisTest extends TestCase
                 public function __construct(int $x, int $y, int ...$z) {}
             }',
         ];
+    }
 
-        if (\PHP_VERSION_ID >= 80000) {
-            yield 'some already promoted' => [
-                [22 => '$b', 39 => '$s'],
-                '<?php class Foo {
+    /**
+     * @param array<int, string> $expected
+     *
+     * @dataProvider provideGettingConstructorPromotableParameters80Cases
+     *
+     * @requires PHP ^8.0
+     */
+    public function testGettingConstructorPromotableParameters80(array $expected, string $code): void
+    {
+        $tokens = Tokens::fromCode($code);
+        $analysis = new ConstructorAnalysis($tokens, 11);
+
+        self::assertSame(11, $analysis->getConstructorIndex());
+        self::assertSame($expected, $analysis->getConstructorPromotableParameters());
+    }
+
+    /**
+     * @return iterable<array{array<int, string>, string}>
+     */
+    public static function provideGettingConstructorPromotableParameters80Cases(): iterable
+    {
+        yield 'some already promoted' => [
+            [22 => '$b', 39 => '$s'],
+            '<?php class Foo {
                     public function __construct(public array $a, bool $b, protected ?Bar\Baz\Qux $q, string $s, private OtherType $t) {}
                 }',
-            ];
-        }
+        ];
     }
 
     /**

@@ -19,11 +19,12 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixersDev\Readme\ReadmeCommand
- *
- * @requires PHP ^8.1
  */
 final class ReadmeCommandTest extends TestCase
 {
+    /**
+     * @requires PHP ^8.1
+     */
     public function testReadmeIsUpToDate(): void
     {
         $tester = new CommandTester(new ReadmeCommand());
@@ -36,5 +37,22 @@ final class ReadmeCommandTest extends TestCase
             $tester->getDisplay(),
             'README.md is not up to date, run "composer fix" to update it.',
         );
+    }
+
+    public function testNumberOfTests(): void
+    {
+        \preg_match(
+            '~https://img.shields.io/badge/tests-(\d+)-brightgreen.svg~',
+            (string) \file_get_contents(__DIR__ . '/../../README.md'),
+            $matches,
+        );
+        $expectedNumberOfTests = (int) $matches[1];
+
+        $readmeCommand = new \ReflectionClass(ReadmeCommand::class);
+        $numberOfTests = $readmeCommand->getMethod('numberOfTests');
+        $numberOfTests->setAccessible(true);
+        $actualNumberOfTests = $numberOfTests->invoke($readmeCommand->newInstance());
+
+        self::assertSame($expectedNumberOfTests, $actualNumberOfTests);
     }
 }

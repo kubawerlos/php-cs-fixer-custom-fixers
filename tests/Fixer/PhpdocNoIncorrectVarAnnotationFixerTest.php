@@ -259,45 +259,6 @@ class Foo
             ];
         }
 
-        if (\PHP_VERSION_ID >= 80000) {
-            yield 'keep correct PHPDoc for class properties, PHP 8.0' => [
-                '<?php class Foo
-                {
-                    /** @var int|string */
-                    private int|string $intOrString;
-                }',
-            ];
-
-            yield 'keep correct PHPDoc for promoted properties, PHP 8.0' => [
-                '<?php class Foo
-                {
-                    public function __construct(
-                        /** @var array<Foo> */
-                        public array $a,
-                        /** @var array<Foo> */
-                        public array $b,
-                        /** @var array<Foo> */
-                        protected array $c,
-                        /** @var array<Foo> */
-                        private array $d,
-                    ) {}
-                }',
-            ];
-        }
-
-        if (\PHP_VERSION_ID >= 80100) {
-            yield 'keep correct PHPDoc for class properties, PHP 8.1' => [
-                '<?php class Foo
-                {
-                    /** @var string */
-                    private readonly string $readonlyString;
-
-                    /** @var Bar&Vendor\\Baz */
-                    private Bar&Vendor\\Baz $barAndBaz;
-                }',
-            ];
-        }
-
         yield 'remove PHPDoc for class properties' => [
             '<?php
 class Foo
@@ -465,6 +426,73 @@ $x = 0;
                 /** @var int */
                 private const D = 4;
             }',
+        ];
+    }
+
+    /**
+     * @dataProvider provideFix80Cases
+     *
+     * @requires PHP ^8.0
+     */
+    public function testFix80(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix80Cases(): iterable
+    {
+        yield 'keep correct PHPDoc for class properties, PHP 8.0' => [
+            '<?php class Foo
+                {
+                    /** @var int|string */
+                    private int|string $intOrString;
+                }',
+        ];
+
+        yield 'keep correct PHPDoc for promoted properties, PHP 8.0' => [
+            '<?php class Foo
+                {
+                    public function __construct(
+                        /** @var array<Foo> */
+                        public array $a,
+                        /** @var array<Foo> */
+                        public array $b,
+                        /** @var array<Foo> */
+                        protected array $c,
+                        /** @var array<Foo> */
+                        private array $d,
+                    ) {}
+                }',
+        ];
+    }
+
+    /**
+     * @dataProvider provideFix81Cases
+     *
+     * @requires PHP ^8.1
+     */
+    public function testFix81(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix81Cases(): iterable
+    {
+        yield 'keep correct PHPDoc for class properties, PHP 8.1' => [
+            '<?php class Foo
+                {
+                    /** @var string */
+                    private readonly string $readonlyString;
+
+                    /** @var Bar&Vendor\\Baz */
+                    private Bar&Vendor\\Baz $barAndBaz;
+                }',
         ];
     }
 }

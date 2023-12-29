@@ -79,9 +79,6 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
             yield ['<?php $f = fn &($x) => $x + 2;'];
             yield ['<?php $f = fn &($x): int => $x + 2;'];
         }
-        if (\defined('T_MATCH')) {
-            yield ['<?php return match ($x) { default => 0 };'];
-        }
         yield ['<?php class Foo {
                     public function createSelf() {
                         return new self([1, 2]);
@@ -380,6 +377,16 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
         $this->doTest(
             '<?php $foo = $bar{1};',
             '<?php $foo = $bar{(1)};',
+        );
+    }
+
+    /**
+     * @requires PHP 8.0
+     */
+    public function testFix80(): void
+    {
+        $this->doTest(
+            '<?php return match ($x) { default => 0 };',
         );
     }
 }
