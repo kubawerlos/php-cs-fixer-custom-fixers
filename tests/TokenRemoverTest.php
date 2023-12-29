@@ -47,7 +47,7 @@ final class TokenRemoverTest extends TestCase
     }
 
     /**
-     * @return iterable<array<string>>
+     * @return iterable<list<string>>
      */
     public static function provideFixCases(): iterable
     {

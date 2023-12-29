@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
 final class DataProviderAnalyzerTest extends TestCase
 {
     /**
-     * @param array<DataProviderAnalysis> $expected
+     * @param list<DataProviderAnalysis> $expected
      *
      * @dataProvider provideGettingDataProvidersCases
      */
@@ -40,7 +40,7 @@ final class DataProviderAnalyzerTest extends TestCase
     }
 
     /**
-     * @return iterable<array{array<DataProviderAnalysis>, string}>
+     * @return iterable<array{list<DataProviderAnalysis>, string}>
      */
     public static function provideGettingDataProvidersCases(): iterable
     {

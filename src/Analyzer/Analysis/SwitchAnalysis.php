@@ -22,11 +22,11 @@ final class SwitchAnalysis
     /** @var int */
     private $casesEnd;
 
-    /** @var array<CaseAnalysis> */
+    /** @var list<CaseAnalysis> */
     private $cases = [];
 
     /**
-     * @param array<CaseAnalysis> $cases
+     * @param list<CaseAnalysis> $cases
      */
     public function __construct(int $casesStart, int $casesEnd, array $cases)
     {
@@ -46,7 +46,7 @@ final class SwitchAnalysis
     }
 
     /**
-     * @return array<CaseAnalysis>
+     * @return list<CaseAnalysis>
      */
     public function getCases(): array
     {

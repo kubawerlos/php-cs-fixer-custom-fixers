@@ -31,7 +31,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class PromotedConstructorPropertyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var array<int, array<Token>> */
+    /** @var array<int, array<int, Token>> */
     private $tokensToInsert;
 
     /** @var bool */
@@ -194,7 +194,7 @@ class Foo {
     }
 
     /**
-     * @param array<int> $properties
+     * @param array<string, int> $properties
      */
     private function getPropertyIndex(Tokens $tokens, array $properties, int $assignmentIndex): ?int
     {
@@ -301,7 +301,7 @@ class Foo {
     }
 
     /**
-     * @return array<Token>
+     * @return list<Token>
      */
     private function removePropertyAndReturnTokensToInsert(Tokens $tokens, ?int $propertyIndex): array
     {
@@ -397,7 +397,7 @@ class Foo {
     }
 
     /**
-     * @param array<Token> $tokensToInsert
+     * @param list<Token> $tokensToInsert
      */
     private function updateParameterSignature(Tokens $tokens, int $constructorParameterIndex, array $tokensToInsert, bool $makeTypeNullable): void
     {

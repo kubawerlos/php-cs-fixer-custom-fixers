@@ -58,7 +58,7 @@ final class PriorityInternalFixer implements FixerInterface
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        /** @var array<int> $indices */
+        /** @var list<int> $indices */
         $indices = $tokens->findSequence([[\T_CLASS]]);
 
         $classStartIndex = \key($indices);
@@ -74,7 +74,7 @@ final class PriorityInternalFixer implements FixerInterface
 
         $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
 
-        /** @var array<int> $indices */
+        /** @var list<int> $indices */
         $indices = $tokens->findSequence([[\T_PUBLIC], [\T_FUNCTION], [\T_STRING, 'getPriority']], $startIndex, $endIndex);
 
         $sequencesStartIndex = \key($indices);

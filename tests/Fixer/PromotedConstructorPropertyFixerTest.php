@@ -33,7 +33,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param null|array<string, array<string>> $configuration
+     * @param null|array<string, list<string>> $configuration
      *
      * @dataProvider provideFixCases
      */

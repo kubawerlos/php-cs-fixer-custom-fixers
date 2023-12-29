@@ -72,7 +72,7 @@ final class SrcCodeTest extends TestCase
     }
 
     /**
-     * @return iterable<array<FixerInterface>>
+     * @return iterable<list<FixerInterface>>
      */
     public static function provideFixerCases(): iterable
     {
@@ -101,7 +101,7 @@ final class SrcCodeTest extends TestCase
         $content = \file_get_contents($fileName);
         \assert(\is_string($content));
 
-        /** @var array<Token> $tokens */
+        /** @var list<Token> $tokens */
         $tokens = Tokens::fromCode($content)->toArray();
 
         $stringTokens = \array_filter(

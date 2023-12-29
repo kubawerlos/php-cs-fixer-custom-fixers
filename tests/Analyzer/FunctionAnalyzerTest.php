@@ -44,7 +44,7 @@ final class FunctionAnalyzerTest extends TestCase
     }
 
     /**
-     * @param array<ArgumentAnalysis> $expected
+     * @param list<ArgumentAnalysis> $expected
      *
      * @dataProvider provideGettingArgumentsCases
      */
@@ -56,7 +56,7 @@ final class FunctionAnalyzerTest extends TestCase
     }
 
     /**
-     * @return iterable<array{array<ArgumentAnalysis>, string, int}>
+     * @return iterable<array{list<ArgumentAnalysis>, string, int}>
      */
     public static function provideGettingArgumentsCases(): iterable
     {

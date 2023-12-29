@@ -191,28 +191,28 @@ final class TestsCodeTest extends TestCase
     /**
      * @param class-string $className
      *
-     * @return array<\ReflectionMethod>
+     * @return list<\ReflectionMethod>
      */
     private function getDataProviders(string $className): array
     {
-        return \array_filter(
+        return \array_values(\array_filter(
             $this->getMethods($className, \ReflectionMethod::IS_PUBLIC),
             static fn (\ReflectionMethod $reflectionMethod): bool => \strpos($reflectionMethod->getName(), 'provide') === 0,
-        );
+        ));
     }
 
     /**
      * @param class-string $className
      *
-     * @return array<\ReflectionMethod>
+     * @return list<\ReflectionMethod>
      */
     private function getMethods(string $className, ?int $methodFilter = null): array
     {
         $reflectionClass = new \ReflectionClass($className);
 
-        return \array_filter(
+        return \array_values(\array_filter(
             $reflectionClass->getMethods($methodFilter),
             static fn (\ReflectionMethod $reflectionMethod): bool => $reflectionMethod->getFileName() === $reflectionClass->getFileName(),
-        );
+        ));
     }
 }

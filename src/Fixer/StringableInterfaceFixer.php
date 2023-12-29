@@ -136,7 +136,7 @@ class Foo
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     private function getInterfaces(Tokens $tokens, int $classKeywordIndex, int $classOpenBraceIndex): array
     {

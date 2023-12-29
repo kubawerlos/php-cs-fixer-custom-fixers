@@ -93,7 +93,7 @@ final class PriorityTest extends TestCase
                 --INPUT--\n(?<input>.*)
             $/sx', $test->getContents(), $matches);
 
-            /** @var array<string, array<string>|bool> $configuration */
+            /** @var array<string, array<string, string>|bool> $configuration */
             $configuration = \json_decode($matches['configuration'], true);
 
             yield $fileName => [
@@ -106,7 +106,7 @@ final class PriorityTest extends TestCase
     }
 
     /**
-     * @param array<string, array<string>|bool> $config
+     * @param array<string, array<string, string>|bool> $config
      */
     private static function getFixer(string $name, array $config): FixerInterface
     {

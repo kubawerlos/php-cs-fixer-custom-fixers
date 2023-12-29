@@ -99,7 +99,7 @@ class FooTest extends TestCase {
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     public function getSuccessorsNames(): array
     {

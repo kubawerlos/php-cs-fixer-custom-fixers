@@ -20,7 +20,7 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
 final class FunctionAnalyzer
 {
     /**
-     * @return array<ArgumentAnalysis>
+     * @return list<ArgumentAnalysis>
      */
     public static function getFunctionArguments(Tokens $tokens, int $index): array
     {
