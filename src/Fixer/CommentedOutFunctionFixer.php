@@ -26,7 +26,7 @@ use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
 
 final class CommentedOutFunctionFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var array<string> */
+    /** @var list<string> */
     private $functions = ['print_r', 'var_dump', 'var_export'];
 
     public function getDefinition(): FixerDefinitionInterface
@@ -52,7 +52,7 @@ var_dump($x);
     }
 
     /**
-     * @param array<string, array<string>> $configuration
+     * @param array<string, list<string>> $configuration
      */
     public function configure(array $configuration): void
     {

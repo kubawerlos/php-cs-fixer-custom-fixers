@@ -42,7 +42,7 @@ final class FixersTest extends TestCase
     }
 
     /**
-     * @return iterable<array<FixerInterface>>
+     * @return iterable<list<FixerInterface>>
      */
     public static function provideFixerIsInCollectionCases(): iterable
     {
@@ -62,7 +62,7 @@ final class FixersTest extends TestCase
     }
 
     /**
-     * @return array<string>
+     * @return array<int, string>
      */
     private function fixerNamesFromCollection(): array
     {

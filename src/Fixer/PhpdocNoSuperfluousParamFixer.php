@@ -91,7 +91,7 @@ function foo($b, $s) {}
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     private function getParamNames(Tokens $tokens, int $functionIndex): array
     {
@@ -111,7 +111,7 @@ function foo($b, $s) {}
     }
 
     /**
-     * @param array<string> $paramNames
+     * @param list<string> $paramNames
      */
     private function getFilteredDocComment(string $comment, array $paramNames): string
     {

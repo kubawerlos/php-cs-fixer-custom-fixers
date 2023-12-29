@@ -34,7 +34,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array<string>>
+     * @return iterable<list<string>>
      */
     public static function provideFixCases(): iterable
     {
@@ -142,7 +142,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array<string>>
+     * @return iterable<list<string>>
      */
     public static function provideFix82Cases(): iterable
     {

@@ -61,7 +61,7 @@ final class InternalClassCasingFixer extends AbstractFixer implements Deprecated
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     public function getSuccessorsNames(): array
     {

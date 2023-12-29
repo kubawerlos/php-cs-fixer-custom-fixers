@@ -205,7 +205,7 @@ abstract class AbstractFixerTestCase extends TestCase
     }
 
     /**
-     * @return array<FixerOptionInterface>
+     * @return list<FixerOptionInterface>
      */
     final protected function getConfigurationOptions(): array
     {
