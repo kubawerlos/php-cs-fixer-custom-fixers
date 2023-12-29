@@ -142,7 +142,10 @@ $x = getValue();
             return null;
         }
 
-        return \array_values(\array_slice($tokens->toArray(), 1));
+        /** @var list<Token> $arrayTokens */
+        $arrayTokens = $tokens->toArray();
+
+        return \array_slice($arrayTokens, 1);
     }
 
     private function getAnnotationForVariable(Tokens $tokens, int $docCommentIndex, string $variableName): ?Annotation

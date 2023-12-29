@@ -118,8 +118,8 @@ final class OrderedClassElementsInternalFixer implements FixerInterface
         \usort(
             $elements,
             /**
-             * @param list<string> $a
-             * @param list<string> $b
+             * @param array<string, string> $a
+             * @param array<string, string> $b
              */
             static function (array $a, array $b): int {
                 if (
