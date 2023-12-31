@@ -21,7 +21,7 @@ final class PhpdocTypeListFixer extends AbstractTypesFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'PHPDoc type `list` must be used over `array` without a key type.',
+            'PHPDoc type `list` must be used instead of `array` without a key type.',
             [new CodeSample('<?php
 /**
  * @param array<string>

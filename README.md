@@ -546,7 +546,7 @@ The `@var` annotation must be on a single line if it is the only content.
 ```
 
 #### PhpdocTypeListFixer
-PHPDoc type `list` must be used over `array` without a key type.
+PHPDoc type `list` must be used instead of `array` without a key type.
 ```diff
  <?php
  /**
