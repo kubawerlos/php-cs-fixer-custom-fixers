@@ -16,42 +16,33 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 
-final class PhpdocArrayStyleFixer extends AbstractTypesFixer
+final class PhpdocTypeListFixer extends AbstractTypesFixer
 {
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Generic array style should be used in PHPDoc.',
-            [
-                new CodeSample(
-                    '<?php
+            'PHPDoc type `list` must be used instead of `array` without a key type.',
+            [new CodeSample('<?php
 /**
- * @return int[]
+ * @param array<string>
  */
- function foo() { return [1, 2]; }
-',
-                ),
-            ],
+function foo($x) {}
+')],
             '',
         );
     }
 
     /**
-     * Must run before PhpdocAlignFixer, PhpdocTypeListFixer, PhpdocTypesOrderFixer.
+     * Must run before PhpdocAlignFixer, PhpdocTypesOrderFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocArrayStyleFixer.
      */
     public function getPriority(): int
     {
-        return 2;
+        return 1;
     }
 
     protected function fixType(string $type): string
     {
-        $newType = Preg::replace('/([\\\\a-zA-Z0-9>]+)\[\]/', 'array<$1>', $type);
-
-        if ($newType === $type) {
-            return $type;
-        }
-
-        return $this->fixType($newType);
+        return Preg::replace('/array(?=<[^,]+(>|<|{|\\())/', 'list', $type);
     }
 }

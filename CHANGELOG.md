@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.18.0
+- Add PhpdocTypeListFixer
+
 ## v3.17.0
 - PhpdocNoIncorrectVarAnnotationFixer - support promoted properties
 
