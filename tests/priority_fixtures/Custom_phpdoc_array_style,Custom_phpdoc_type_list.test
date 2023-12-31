@@ -1,0 +1,15 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_array_style": true, "PhpCsFixerCustomFixers/phpdoc_type_list": true }
+--EXPECTED--
+<?php
+/**
+ * @return list<int>
+ */
+function bar() {}
+
+--INPUT--
+<?php
+/**
+ * @return int[]
+ */
+function bar() {}

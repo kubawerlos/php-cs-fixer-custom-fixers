@@ -34,7 +34,7 @@ function foo($x) {}
 
     /**
      * Must run before PhpdocAlignFixer, PhpdocTypesOrderFixer.
-     * Must run after CommentToPhpdocFixer.
+     * Must run after CommentToPhpdocFixer, PhpdocArrayStyleFixer.
      */
     public function getPriority(): int
     {

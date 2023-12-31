@@ -68,5 +68,10 @@ final class PhpdocTypeListFixerTest extends AbstractFixerTestCase
             '<?php /** @var list<callable(int, int): string> */',
             '<?php /** @var array<callable(int, int): string> */',
         ];
+
+        yield [
+            '<?php /** @var non-empty-list<Type> */',
+            '<?php /** @var non-empty-array<Type> */',
+        ];
     }
 }

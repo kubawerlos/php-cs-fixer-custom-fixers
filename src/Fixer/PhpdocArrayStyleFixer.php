@@ -37,11 +37,11 @@ final class PhpdocArrayStyleFixer extends AbstractTypesFixer
     }
 
     /**
-     * Must run before PhpdocAlignFixer, PhpdocTypesOrderFixer.
+     * Must run before PhpdocAlignFixer, PhpdocTypeListFixer, PhpdocTypesOrderFixer.
      */
     public function getPriority(): int
     {
-        return 1;
+        return 2;
     }
 
     protected function fixType(string $type): string
