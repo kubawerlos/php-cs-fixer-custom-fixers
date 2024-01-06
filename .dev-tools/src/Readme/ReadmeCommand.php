@@ -86,9 +86,9 @@ final class ReadmeCommand extends Command
             ),
             '',
             $this->badge(
-                'CI Status',
-                \sprintf('https://github.com/%s/workflows/CI/badge.svg?branch=main', $this->composer()->name),
-                \sprintf('https://github.com/%s/actions', $this->composer()->name),
+                'CI status',
+                \sprintf('https://github.com/%s/actions/workflows/ci.yaml/badge.svg', $this->composer()->name),
+                \sprintf('https://github.com/%s/actions/workflows/ci.yaml', $this->composer()->name),
             ),
             $this->badge(
                 'Code coverage',
