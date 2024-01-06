@@ -18,7 +18,7 @@ $rules[PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer::name()] = [
 
 // add new fixers that are not in PhpCsFixerConfig yet
 foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
-    if ($fixer instanceof \PhpCsFixer\Fixer\DeprecatedFixerInterface) {
+    if ($fixer instanceof PhpCsFixer\Fixer\DeprecatedFixerInterface) {
         continue;
     }
     if (!array_key_exists($fixer->getName(), $rules)) {
