@@ -26,6 +26,9 @@ foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     }
 }
 
+unset($rules['class_keyword']); // temporary
+unset($rules['phpdoc_to_property_type']); // temporary
+
 // PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer will handle this
 unset($rules['ordered_class_elements']);
 unset($rules['ordered_interfaces']);
