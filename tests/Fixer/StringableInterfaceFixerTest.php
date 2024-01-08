@@ -153,7 +153,7 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
         ';
 
         $implementedInterfacesCases = [
-            'Stringable',
+            \Stringable::class,
             'Foo\Stringable',
             '\Foo\Stringable',
             'Foo\Stringable\Bar',

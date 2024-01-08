@@ -11,7 +11,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-if (!interface_exists('PhpCsFixer\\Fixer\\FixerInterface')) {
+if (!interface_exists(PhpCsFixer\Fixer\FixerInterface::class)) {
     $phars = [
         __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer.phar',
         __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer',

@@ -209,7 +209,7 @@ class Foo
                     new Token([\T_IMPLEMENTS, 'implements']),
                     new Token([\T_WHITESPACE, ' ']),
                     new Token([\T_NS_SEPARATOR, '\\']),
-                    new Token([\T_STRING, 'Stringable']),
+                    new Token([\T_STRING, \Stringable::class]),
                 ],
             );
 
@@ -223,7 +223,7 @@ class Foo
             $afterImplementsIndex,
             [
                 new Token([\T_NS_SEPARATOR, '\\']),
-                new Token([\T_STRING, 'Stringable']),
+                new Token([\T_STRING, \Stringable::class]),
                 new Token(','),
                 new Token([\T_WHITESPACE, ' ']),
             ],
