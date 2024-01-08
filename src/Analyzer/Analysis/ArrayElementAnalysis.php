@@ -16,12 +16,8 @@ namespace PhpCsFixerCustomFixers\Analyzer\Analysis;
  */
 final class ArrayElementAnalysis
 {
-    /** @var ?int */
     private ?int $keyStartIndex;
-
-    /** @var ?int */
     private ?int $keyEndIndex;
-
     private int $valueStartIndex;
     private int $valueEndIndex;
 
