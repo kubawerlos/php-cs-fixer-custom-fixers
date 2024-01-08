@@ -62,5 +62,22 @@ final class NoUselessStrlenFixerTest extends AbstractFixerTestCase
         yield ['<?php $s !== \'\';', '<?php \mb_strlen($s) > 0;'];
 
         yield ['<?php $s !== \'\';', '<?php strlen ( $s ) > 0;'];
+
+        yield [
+            '<?php
+                $a !== \'\';
+                Foo\strlen($a) > 0;
+                strlen($a) > 1;
+                strlen($a, $b) > 0;
+                $a !== \'\';
+            ',
+            '<?php
+                strlen($a) > 0;
+                Foo\strlen($a) > 0;
+                strlen($a) > 1;
+                strlen($a, $b) > 0;
+                strlen($a) > 0;
+            ',
+        ];
     }
 }
