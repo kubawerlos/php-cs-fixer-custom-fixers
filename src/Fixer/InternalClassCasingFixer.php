@@ -23,8 +23,7 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class InternalClassCasingFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
-    /** @var ClassReferenceNameCasingFixer */
-    private $classReferenceNameCasingFixer;
+    private ClassReferenceNameCasingFixer $classReferenceNameCasingFixer;
 
     public function __construct()
     {

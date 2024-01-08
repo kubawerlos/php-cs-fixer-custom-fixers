@@ -16,14 +16,11 @@ namespace PhpCsFixerCustomFixers\Analyzer\Analysis;
  */
 final class SwitchAnalysis
 {
-    /** @var int */
-    private $casesStart;
-
-    /** @var int */
-    private $casesEnd;
+    private int $casesStart;
+    private int $casesEnd;
 
     /** @var list<CaseAnalysis> */
-    private $cases = [];
+    private array $cases = [];
 
     /**
      * @param list<CaseAnalysis> $cases

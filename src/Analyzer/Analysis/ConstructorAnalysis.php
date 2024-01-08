@@ -19,11 +19,8 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class ConstructorAnalysis
 {
-    /** @var Tokens */
-    private $tokens;
-
-    /** @var int */
-    private $constructorIndex;
+    private Tokens $tokens;
+    private int $constructorIndex;
 
     public function __construct(Tokens $tokens, int $constructorIndex)
     {

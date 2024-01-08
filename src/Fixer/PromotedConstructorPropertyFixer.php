@@ -32,10 +32,9 @@ use PhpCsFixerCustomFixers\TokenRemover;
 final class PromotedConstructorPropertyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var array<int, array<int, Token>> */
-    private $tokensToInsert;
+    private array $tokensToInsert;
 
-    /** @var bool */
-    private $promoteOnlyExistingProperties = false;
+    private bool $promoteOnlyExistingProperties = false;
 
     public function getDefinition(): FixerDefinitionInterface
     {

@@ -16,8 +16,7 @@ namespace PhpCsFixerCustomFixers\Analyzer\Analysis;
  */
 final class CaseAnalysis
 {
-    /** @var int */
-    private $colonIndex;
+    private int $colonIndex;
 
     public function __construct(int $colonIndex)
     {

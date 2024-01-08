@@ -69,6 +69,7 @@ jobs:
           - os: windows-latest
             description: 'on Windows'
             php-version: '8.3'
+            FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
             php-version: '8.4'
     runs-on: ${{ matrix.os }}
@@ -115,6 +116,8 @@ jobs:
       - run: composer show | grep php-cs-fixer
 
       - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
+        env:
+          FAST_LINT_TEST_CASES: ${{ matrix.FAST_LINT_TEST_CASES }}
 
       - if: ${{ matrix.calculate-coverage }}
         env:

@@ -27,8 +27,7 @@ use PhpCsFixerCustomFixers\TokenRemover;
 
 final class NoDuplicatedArrayKeyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var bool */
-    private $ignoreExpressions = true;
+    private bool $ignoreExpressions = true;
 
     public function getDefinition(): FixerDefinitionInterface
     {
