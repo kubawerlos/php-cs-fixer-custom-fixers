@@ -38,8 +38,7 @@ final class OrderedClassElementsInternalFixer implements FixerInterface
         'getSuccessorsNames',
     ];
 
-    /** @var OrderedClassElementsFixerWrapper */
-    private $orderedClassElementsFixerWrapper;
+    private OrderedClassElementsFixerWrapper $orderedClassElementsFixerWrapper;
 
     public function __construct()
     {

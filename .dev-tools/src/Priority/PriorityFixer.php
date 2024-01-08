@@ -15,17 +15,15 @@ use PhpCsFixer\Fixer\FixerInterface;
 
 final class PriorityFixer
 {
-    /** @var FixerInterface */
-    private $fixer;
+    private FixerInterface $fixer;
 
     /** @var list<self> */
-    private $fixersToRunAfter = [];
+    private array $fixersToRunAfter = [];
 
     /** @var list<self> */
-    private $fixersToRunBefore = [];
+    private array $fixersToRunBefore = [];
 
-    /** @var null|int */
-    private $priority;
+    private ?int $priority;
 
     public function __construct(FixerInterface $fixer, ?int $priority)
     {

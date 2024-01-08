@@ -24,8 +24,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoSuperfluousConcatenationFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var bool */
-    private $allowPreventingTrailingSpaces = false;
+    private bool $allowPreventingTrailingSpaces = false;
 
     public function getDefinition(): FixerDefinitionInterface
     {

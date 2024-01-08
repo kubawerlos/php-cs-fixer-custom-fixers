@@ -22,8 +22,7 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class PhpdocParamOrderFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
-    /** @var \PhpCsFixer\Fixer\Phpdoc\PhpdocParamOrderFixer */
-    private $phpdocParamOrderFixer;
+    private \PhpCsFixer\Fixer\Phpdoc\PhpdocParamOrderFixer $phpdocParamOrderFixer;
 
     public function __construct()
     {

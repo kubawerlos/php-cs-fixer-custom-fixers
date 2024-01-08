@@ -25,20 +25,11 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NumericLiteralSeparatorFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
-    /** @var null|bool */
-    private $binarySeparator = false;
-
-    /** @var null|bool */
-    private $decimalSeparator = false;
-
-    /** @var null|bool */
-    private $floatSeparator = false;
-
-    /** @var null|bool */
-    private $hexadecimalSeparator = false;
-
-    /** @var null|bool */
-    private $octalSeparator = false;
+    private ?bool $binarySeparator = false;
+    private ?bool $decimalSeparator = false;
+    private ?bool $floatSeparator = false;
+    private ?bool $hexadecimalSeparator = false;
+    private ?bool $octalSeparator = false;
 
     public function getDefinition(): FixerDefinitionInterface
     {

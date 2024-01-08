@@ -16,14 +16,9 @@ namespace PhpCsFixerCustomFixers\Analyzer\Analysis;
  */
 final class ArgumentAnalysis
 {
-    /** @var int */
-    private $startIndex;
-
-    /** @var int */
-    private $endIndex;
-
-    /** @var bool */
-    private $isConstant;
+    private int $startIndex;
+    private int $endIndex;
+    private bool $isConstant;
 
     public function __construct(int $startIndex, int $endIndex, bool $isConstant)
     {

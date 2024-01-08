@@ -19,17 +19,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class OrderedClassElementsFixerWrapper
 {
-    /** @var OrderedClassElementsFixer */
-    private $orderedClassElementsFixer;
-
-    /** @var \ReflectionMethod */
-    private $getElements;
-
-    /** @var \ReflectionMethod */
-    private $sortElements;
-
-    /** @var \ReflectionMethod */
-    private $sortTokens;
+    private OrderedClassElementsFixer $orderedClassElementsFixer;
+    private \ReflectionMethod $getElements;
+    private \ReflectionMethod $sortElements;
+    private \ReflectionMethod $sortTokens;
 
     public function __construct()
     {

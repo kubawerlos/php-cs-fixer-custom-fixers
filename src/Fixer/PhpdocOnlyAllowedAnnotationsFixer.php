@@ -26,7 +26,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class PhpdocOnlyAllowedAnnotationsFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var list<string> */
-    private $elements = [];
+    private array $elements = [];
 
     public function getDefinition(): FixerDefinitionInterface
     {

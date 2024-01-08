@@ -16,17 +16,10 @@ namespace PhpCsFixerCustomFixers\Analyzer\Analysis;
  */
 final class ArrayElementAnalysis
 {
-    /** @var ?int */
-    private $keyStartIndex;
-
-    /** @var ?int */
-    private $keyEndIndex;
-
-    /** @var int */
-    private $valueStartIndex;
-
-    /** @var int */
-    private $valueEndIndex;
+    private ?int $keyStartIndex;
+    private ?int $keyEndIndex;
+    private int $valueStartIndex;
+    private int $valueEndIndex;
 
     public function __construct(?int $keyStartIndex, ?int $keyEndIndex, int $valueStartIndex, int $valueEndIndex)
     {
