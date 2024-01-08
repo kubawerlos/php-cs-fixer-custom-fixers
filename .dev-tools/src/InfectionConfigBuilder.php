@@ -53,7 +53,6 @@ final class InfectionConfigBuilder
                 'customPath' => '../vendor/phpunit/phpunit/phpunit',
             ],
             'mutators' => [],
-            'bootstrap' => '../vendor/autoload.php',
         ];
 
         $mutators = \array_keys(ProfileList::ALL_MUTATORS);

@@ -51,6 +51,7 @@ jobs:
             calculate-coverage: true
             phpunit-flags: '--coverage-clover=./build/logs/clover.xml'
             php-version: '8.3'
+            FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
             description: 'with PHP CS Fixer from master'
             with-php-cs-fixer-from-master: true

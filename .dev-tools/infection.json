@@ -178,6 +178,5 @@
         "While_": true,
         "YieldValue": true,
         "Yield_": true
-    },
-    "bootstrap": "../vendor/autoload.php"
+    }
 }
