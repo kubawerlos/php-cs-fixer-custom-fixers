@@ -32,7 +32,7 @@
     "scripts": {
         "analyse": [
             "@install-dev-tools",
-            "php-cs-fixer fix --ansi --diff --dry-run --verbose",
+            "php-cs-fixer fix --ansi --show-progress=dots --diff --dry-run --verbose",
             "@composer --no-interaction --working-dir=.dev-tools analyse"
         ],
         "fix": [

@@ -28,12 +28,8 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class DataProviderNameFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
     private PhpUnitDataProviderNameFixer $phpUnitDataProviderNameFixer;
-
-    /** @var string */
-    private $prefix = 'provide';
-
-    /** @var string */
-    private $suffix = 'Cases';
+    private string $prefix = 'provide';
+    private string $suffix = 'Cases';
 
     public function __construct()
     {

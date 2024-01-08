@@ -25,7 +25,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var list<int> */
-    private $tokens = [
+    private array $tokens = [
         \T_ABSTRACT,
         \T_AS,
         \T_BREAK,
@@ -78,8 +78,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
         CT::T_USE_LAMBDA,
     ];
 
-    /** @var bool */
-    private $allowLinebreak = false;
+    private bool $allowLinebreak = false;
 
     public function getDefinition(): FixerDefinitionInterface
     {
