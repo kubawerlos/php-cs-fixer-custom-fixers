@@ -76,7 +76,7 @@ jobs:
     env:
       PHP_CS_FIXER_FUTURE_MODE: 1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: shivammathur/setup-php@v2
         with:
