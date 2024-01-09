@@ -17,6 +17,11 @@
         "squizlabs/php_codesniffer": "^3.8.0",
         "vimeo/psalm": "^5.18"
     },
+    "autoload": {
+        "psr-4": {
+            "PhpCsFixer\\": "../vendor/friendsofphp/php-cs-fixer/src"
+        }
+    },
     "config": {
         "allow-plugins": {
             "composer/package-versions-deprecated": false,
