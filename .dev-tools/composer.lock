@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5973fa0f4f91f6772abed11fa84235d9",
+    "content-hash": "17c6c57521b9ec69b466d1fd97c43042",
     "packages": [
         {
             "name": "amphp/amp",
@@ -561,52 +561,6 @@
             "description": "Tiny utility to get the number of CPU cores."
         },
         {
-            "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.46.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "be6831c9af1740470d2a773119b9273f8ac1c3d2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/be6831c9af1740470d2a773119b9273f8ac1c3d2",
-                "reference": "be6831c9af1740470d2a773119b9273f8ac1c3d2"
-            },
-            "require": {
-                "composer/semver": "^3.4",
-                "composer/xdebug-handler": "^3.0.3",
-                "ext-filter": "*",
-                "ext-json": "*",
-                "ext-tokenizer": "*",
-                "php": "^7.4 || ^8.0",
-                "sebastian/diff": "^4.0 || ^5.0",
-                "symfony/console": "^5.4 || ^6.0 || ^7.0",
-                "symfony/event-dispatcher": "^5.4 || ^6.0 || ^7.0",
-                "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
-                "symfony/finder": "^5.4 || ^6.0 || ^7.0",
-                "symfony/options-resolver": "^5.4 || ^6.0 || ^7.0",
-                "symfony/polyfill-mbstring": "^1.28",
-                "symfony/polyfill-php80": "^1.28",
-                "symfony/polyfill-php81": "^1.28",
-                "symfony/process": "^5.4 || ^6.0 || ^7.0",
-                "symfony/stopwatch": "^5.4 || ^6.0 || ^7.0"
-            },
-            "bin": [
-                "php-cs-fixer"
-            ],
-            "type": "application",
-            "autoload": {
-                "psr-4": {
-                    "PhpCsFixer\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A tool to automatically fix PHP code style"
-        },
-        {
             "name": "infection/abstract-testframework-adapter",
             "version": "0.5.0",
             "source": {
@@ -809,21 +763,21 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v3.21.0",
+            "version": "v3.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "13fba7eae682d460f0f12bc55b7c63e01ad0078a"
+                "reference": "92552afd5e7e6b414f80ab0e2db7da30a8283b57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/13fba7eae682d460f0f12bc55b7c63e01ad0078a",
-                "reference": "13fba7eae682d460f0f12bc55b7c63e01ad0078a"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/92552afd5e7e6b414f80ab0e2db7da30a8283b57",
+                "reference": "92552afd5e7e6b414f80ab0e2db7da30a8283b57"
             },
             "require": {
-                "friendsofphp/php-cs-fixer": "^3.42",
                 "kubawerlos/php-cs-fixer-custom-fixers": "^3.18",
-                "php": "^7.4 || ^8.0"
+                "php": "^7.4 || ^8.0",
+                "php-cs-fixer/shim": "^3.42"
             },
             "type": "library",
             "autoload": {
@@ -1126,6 +1080,37 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer"
+        },
+        {
+            "name": "php-cs-fixer/shim",
+            "version": "v3.46.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHP-CS-Fixer/shim.git",
+                "reference": "e9fc76796f284c050615937b9bd2df7688452c33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/e9fc76796f284c050615937b9bd2df7688452c33",
+                "reference": "e9fc76796f284c050615937b9bd2df7688452c33"
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-tokenizer": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "replace": {
+                "friendsofphp/php-cs-fixer": "self.version"
+            },
+            "bin": [
+                "php-cs-fixer",
+                "php-cs-fixer.phar"
+            ],
+            "type": "application",
+            "license": [
+                "MIT"
+            ],
+            "description": "A tool to automatically fix PHP code style"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1457,38 +1442,6 @@
                 "MIT"
             ],
             "description": "Common Container Interface (PHP FIG PSR-11)"
-        },
-        {
-            "name": "psr/event-dispatcher",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/event-dispatcher.git",
-                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/dbefd12671e8a14ec7f180cab83036ed26714bb0",
-                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
-            },
-            "require": {
-                "php": ">=7.2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\EventDispatcher\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Standard interfaces for event handling."
         },
         {
             "name": "psr/log",
@@ -1831,78 +1784,6 @@
             "description": "A generic function and convention to trigger deprecation notices"
         },
         {
-            "name": "symfony/event-dispatcher",
-            "version": "v7.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "098b62ae81fdd6cbf941f355059f617db28f4f9a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/098b62ae81fdd6cbf941f355059f617db28f4f9a",
-                "reference": "098b62ae81fdd6cbf941f355059f617db28f4f9a"
-            },
-            "require": {
-                "php": ">=8.2",
-                "symfony/event-dispatcher-contracts": "^2.5|^3"
-            },
-            "provide": {
-                "psr/event-dispatcher-implementation": "1.0",
-                "symfony/event-dispatcher-implementation": "2.0|3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\EventDispatcher\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Provides tools that allow your application components to communicate with each other by dispatching events and listening to them"
-        },
-        {
-            "name": "symfony/event-dispatcher-contracts",
-            "version": "v3.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/event-dispatcher-contracts.git",
-                "reference": "a76aed96a42d2b521153fb382d418e30d18b59df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher-contracts/zipball/a76aed96a42d2b521153fb382d418e30d18b59df",
-                "reference": "a76aed96a42d2b521153fb382d418e30d18b59df"
-            },
-            "require": {
-                "php": ">=8.1",
-                "psr/event-dispatcher": "^1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "3.4-dev"
-                },
-                "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Contracts\\EventDispatcher\\": ""
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Generic abstractions related to dispatching event"
-        },
-        {
             "name": "symfony/filesystem",
             "version": "v6.4.0",
             "source": {
@@ -1963,37 +1844,6 @@
                 "MIT"
             ],
             "description": "Finds files and directories via an intuitive fluent interface"
-        },
-        {
-            "name": "symfony/options-resolver",
-            "version": "v7.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "700ff4096e346f54cb628ea650767c8130f1001f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/700ff4096e346f54cb628ea650767c8130f1001f",
-                "reference": "700ff4096e346f54cb628ea650767c8130f1001f"
-            },
-            "require": {
-                "php": ">=8.2",
-                "symfony/deprecation-contracts": "^2.5|^3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\OptionsResolver\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Provides an improved replacement for the array_replace PHP function"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2161,90 +2011,6 @@
             "description": "Symfony polyfill for the Mbstring extension"
         },
         {
-            "name": "symfony/polyfill-php80",
-            "version": "v1.28.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "6caa57379c4aec19c0a12a38b59b26487dcfe4b5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/6caa57379c4aec19c0a12a38b59b26487dcfe4b5",
-                "reference": "6caa57379c4aec19c0a12a38b59b26487dcfe4b5"
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.28-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php80\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions"
-        },
-        {
-            "name": "symfony/polyfill-php81",
-            "version": "v1.28.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php81.git",
-                "reference": "7581cd600fa9fd681b797d00b02f068e2f13263b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php81/zipball/7581cd600fa9fd681b797d00b02f068e2f13263b",
-                "reference": "7581cd600fa9fd681b797d00b02f068e2f13263b"
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.28-dev"
-                },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php81\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Symfony polyfill backporting some PHP 8.1+ features to lower PHP versions"
-        },
-        {
             "name": "symfony/process",
             "version": "v6.4.2",
             "source": {
@@ -2313,37 +2079,6 @@
                 "MIT"
             ],
             "description": "Generic abstractions related to writing services"
-        },
-        {
-            "name": "symfony/stopwatch",
-            "version": "v7.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "7bbfa3dd564a0ce12eb4acaaa46823c740f9cb7a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/7bbfa3dd564a0ce12eb4acaaa46823c740f9cb7a",
-                "reference": "7bbfa3dd564a0ce12eb4acaaa46823c740f9cb7a"
-            },
-            "require": {
-                "php": ">=8.2",
-                "symfony/service-contracts": "^2.5|^3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Stopwatch\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Provides a way to profile code"
         },
         {
             "name": "symfony/string",
