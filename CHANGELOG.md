@@ -1,5 +1,9 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.19.0
+- Deprecate NumericLiteralSeparatorFixer - use "numeric_literal_separator "
+- Update minimum PHP CS Fixer version to 3.47.0
+
 ## v3.18.0
 - Add PhpdocTypeListFixer
 
