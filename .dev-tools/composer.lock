@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44391e9677accd49a6ae7a9818b2abe7",
+    "content-hash": "7fa5ed075f31abc0e7614985e45b765a",
     "packages": [
         {
             "name": "amphp/amp",
@@ -819,39 +819,6 @@
                 "MIT"
             ],
             "description": "A set of custom fixers for PHP CS Fixer"
-        },
-        {
-            "name": "kubawerlos/types-checker",
-            "version": "v2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kubawerlos/types-checker.git",
-                "reference": "ebadae6e8a48a13f726d234c64d81ae45d728391"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/types-checker/zipball/ebadae6e8a48a13f726d234c64d81ae45d728391",
-                "reference": "ebadae6e8a48a13f726d234c64d81ae45d728391"
-            },
-            "require": {
-                "ext-tokenizer": "*",
-                "php": "^7.2 || ^8.0",
-                "symfony/console": "^3.4 || ^4.0 || ^5.0 || ^6.0",
-                "symfony/finder": "^3.4 || ^4.0 || ^5.0 || ^6.0"
-            },
-            "bin": [
-                "types-checker"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "TypesChecker\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A tool to find missing type declarations in PHP 7 code"
         },
         {
             "name": "localheinz/diff",
