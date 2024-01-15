@@ -26,10 +26,6 @@ foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
     }
 }
 
-// PhpCsFixerCustomFixersDev\Fixer\OrderedClassElementsInternalFixer will handle this
-unset($rules['ordered_class_elements']);
-unset($rules['ordered_interfaces']);
-
 unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['get_class_to_class_keyword']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0

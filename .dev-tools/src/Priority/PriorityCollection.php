@@ -24,18 +24,6 @@ final class PriorityCollection
     /** @var list<PriorityFixer> */
     private array $priorityFixers = [];
 
-    public static function create(): self
-    {
-        /** @var null|self $instance */
-        static $instance;
-
-        if ($instance === null) {
-            $instance = new self();
-        }
-
-        return $instance;
-    }
-
     public function __construct()
     {
         $fixerFactory = new FixerFactory();
@@ -68,6 +56,18 @@ final class PriorityCollection
                 }
             }
         }
+    }
+
+    public static function create(): self
+    {
+        /** @var null|self $instance */
+        static $instance;
+
+        if ($instance === null) {
+            $instance = new self();
+        }
+
+        return $instance;
     }
 
     public function getPriorityFixer(string $name): PriorityFixer
