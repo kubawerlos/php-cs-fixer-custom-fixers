@@ -6,7 +6,6 @@
         "infection/infection": "^0.26.21",
         "kubawerlos/composer-smaller-lock": "^1.0.1",
         "kubawerlos/php-cs-fixer-config": "^3.22",
-        "kubawerlos/types-checker": "^2.2",
         "maglnet/composer-require-checker": "^4.8",
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
@@ -40,7 +39,6 @@
             "@composer normalize --dry-run",
             "composer-require-checker check ../composer.json --config-file composer-require-checker.json",
             "phpcs",
-            "types-checker --autoloader=../vendor/autoload.php src ../src ../tests",
             "phpmd ../src text phpmd.xml",
             "phpstan analyse --no-progress",
             "psalm --no-progress --shepherd"
