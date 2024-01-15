@@ -56,6 +56,7 @@
         "DivEqual": true,
         "Division": true,
         "DoWhile": true,
+        "ElseIfNegation": true,
         "Equal": true,
         "EqualIdentical": true,
         "Exponentiation": true,
@@ -69,6 +70,7 @@
         "GreaterThanNegotiation": true,
         "GreaterThanOrEqualToNegotiation": true,
         "Identical": true,
+        "IfNegation": true,
         "Increment": true,
         "InstanceOf_": {
             "ignoreSourceCodeByRegex": [
@@ -82,10 +84,16 @@
                 "PhpCsFixerCustomFixers\\Fixer\\*::isCandidate"
             ]
         },
+        "LogicalAndAllSubExprNegation": true,
+        "LogicalAndNegation": true,
+        "LogicalAndSingleSubExprNegation": true,
         "LogicalLowerAnd": true,
         "LogicalLowerOr": true,
         "LogicalNot": true,
         "LogicalOr": true,
+        "LogicalOrAllSubExprNegation": true,
+        "LogicalOrNegation": true,
+        "LogicalOrSingleSubExprNegation": true,
         "MBString": true,
         "MatchArmRemoval": true,
         "MethodCallRemoval": true,

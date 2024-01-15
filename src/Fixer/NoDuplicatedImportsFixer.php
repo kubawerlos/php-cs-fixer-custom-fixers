@@ -66,26 +66,13 @@ use Bar;
 
             $foundDeclarations = [];
             foreach ($currentNamespaceUseDeclarations as $useDeclaration) {
-                $key = $this->getUniqueKey($useDeclaration);
+                $key = \sprintf('key_%d_%s', $useDeclaration->getType(), $useDeclaration->getShortName());
                 if (\in_array($key, $foundDeclarations, true)) {
                     $this->removeUseDeclaration($tokens, $useDeclaration);
                 }
                 $foundDeclarations[] = $key;
             }
         }
-    }
-
-    private function getUniqueKey(NamespaceUseAnalysis $useDeclaration): string
-    {
-        if ($useDeclaration->isClass()) {
-            return $useDeclaration->getShortName();
-        }
-
-        if ($useDeclaration->isFunction()) {
-            return 'function ' . $useDeclaration->getShortName();
-        }
-
-        return 'constant ' . $useDeclaration->getShortName();
     }
 
     private function removeUseDeclaration(Tokens $tokens, NamespaceUseAnalysis $useDeclaration): void
