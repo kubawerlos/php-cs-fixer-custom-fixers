@@ -40,6 +40,11 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         self::assertSame('octal', $options[4]->getName());
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertSuccessorName('numeric_literal_separator');
+    }
+
     public function testReversingCodeSample(): void
     {
         $fixer = self::getFixer();

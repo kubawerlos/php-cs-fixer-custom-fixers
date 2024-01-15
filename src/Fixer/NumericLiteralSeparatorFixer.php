@@ -11,7 +11,9 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\Basic\NumericLiteralSeparatorFixer as NLSFixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
@@ -23,7 +25,10 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class NumericLiteralSeparatorFixer extends AbstractFixer implements ConfigurableFixerInterface
+/**
+ * @deprecated
+ */
+final class NumericLiteralSeparatorFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
     private ?bool $binarySeparator = false;
     private ?bool $decimalSeparator = false;
@@ -119,6 +124,14 @@ echo 0123_4567; // octal
                 $tokens[$index] = new Token([$id, $newContent]);
             }
         }
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getSuccessorsNames(): array
+    {
+        return [(new NLSFixer())->getName()];
     }
 
     private function getNewContent(string $content): string

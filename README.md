@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3525-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3526-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -385,6 +385,7 @@ Functions `strlen` and `mb_strlen` must not be compared to 0.
 
 #### NumericLiteralSeparatorFixer
 Numeric literals must have configured separators.
+  DEPRECATED: use `numeric_literal_separator` instead.
 Configuration options:
 - `binary` (`bool`, `null`): whether add, remove or ignore separators in binary numbers.; defaults to `false`
 - `decimal` (`bool`, `null`): whether add, remove or ignore separators in decimal numbers.; defaults to `false`
