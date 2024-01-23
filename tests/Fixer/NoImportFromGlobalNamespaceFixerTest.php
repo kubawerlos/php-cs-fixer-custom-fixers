@@ -308,7 +308,7 @@ class Bar {
 
         $expected = "<?php\nnamespace Foo;\n";
         $input = "<?php\nnamespace Foo;\n use Bar;\n";
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 256; $i++) {
             $expected .= \sprintf("echo \\Bar::BAZ_%d;\n", $i);
             $input .= \sprintf("echo Bar::BAZ_%d;\n", $i);
         }
