@@ -85,7 +85,7 @@ class Bar {
                 continue;
             }
 
-            $this->updateUsage($tokens, $imports, $index);
+            $endIndex += $this->updateUsageAndReturnNumberOfInsertedTokens($tokens, $imports, $index);
         }
     }
 
@@ -135,19 +135,21 @@ class Bar {
     /**
      * @param list<string> $imports
      */
-    private function updateUsage(Tokens $tokens, array $imports, int $index): void
+    private function updateUsageAndReturnNumberOfInsertedTokens(Tokens $tokens, array $imports, int $index): int
     {
         if (!\in_array($tokens[$index]->getContent(), $imports, true)) {
-            return;
+            return 0;
         }
 
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($prevIndex));
 
         if ($tokens[$prevIndex]->isGivenKind([\T_CONST, \T_DOUBLE_COLON, \T_NS_SEPARATOR, \T_OBJECT_OPERATOR, \T_FUNCTION])) {
-            return;
+            return 0;
         }
 
         $tokens->insertAt($index, new Token([\T_NS_SEPARATOR, '\\']));
+
+        return 1;
     }
 }
