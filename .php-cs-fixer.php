@@ -12,6 +12,19 @@
 require_once __DIR__ . '/.dev-tools/vendor/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
+// sanity check
+$expectedPath = realpath(__DIR__ . '/src/Fixers.php');
+$actualPath = (new ReflectionClass(PhpCsFixerCustomFixers\Fixers::class))->getFileName();
+if ($expectedPath !== $actualPath) {
+    printf(
+        'Class %s must be loaded from "%s", but loaded from "%s"!' . PHP_EOL,
+        PhpCsFixerCustomFixers\Fixers::class,
+        $expectedPath,
+        $actualPath,
+    );
+    exit(1);
+}
+
 $rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
 $rules[PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer::name()] = ['allow_preventing_trailing_spaces' => true];
