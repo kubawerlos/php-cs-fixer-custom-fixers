@@ -18,6 +18,7 @@
     },
     "autoload": {
         "psr-4": {
+            "PhpCsFixerCustomFixers\\": "../src",
             "PhpCsFixer\\": "../vendor/friendsofphp/php-cs-fixer/src"
         }
     },
