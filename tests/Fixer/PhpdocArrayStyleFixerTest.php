@@ -105,6 +105,11 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
               ',
         ];
 
+        yield [
+            '<?php /** @var array<Hello_Legacy_Naming> */',
+            '<?php /** @var Hello_Legacy_Naming[] */',
+        ];
+
         $expected = $input = 'string';
         for ($i = 0; $i < 128; $i++) {
             $expected = 'array<' . $expected . '>';
