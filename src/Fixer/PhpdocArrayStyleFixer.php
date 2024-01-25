@@ -46,7 +46,7 @@ final class PhpdocArrayStyleFixer extends AbstractTypesFixer
 
     protected function fixType(string $type): string
     {
-        $newType = Preg::replace('/([\\\\a-zA-Z0-9>]+)\[\]/', 'array<$1>', $type);
+        $newType = Preg::replace('/([\\\\a-zA-Z0-9_>]+)\[\]/', 'array<$1>', $type);
 
         if ($newType === $type) {
             return $type;
