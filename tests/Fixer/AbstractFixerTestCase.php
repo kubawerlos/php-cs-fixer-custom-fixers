@@ -100,15 +100,17 @@ abstract class AbstractFixerTestCase extends TestCase
      */
     final public function testCodeSampleIsChangedDuringFixing(): void
     {
-        $codeSample = self::getFixer()->getDefinition()->getCodeSamples()[0];
-        if (self::getFixer() instanceof ConfigurableFixerInterface) {
-            self::getFixer()->configure($codeSample->getConfiguration() ?? []);
+        $fixer = self::getFixer();
+
+        $codeSample = $fixer->getDefinition()->getCodeSamples()[0];
+        if ($fixer instanceof ConfigurableFixerInterface) {
+            $fixer->configure($codeSample->getConfiguration() ?? []);
         }
 
         Tokens::clearCache();
         $tokens = Tokens::fromCode($codeSample->getCode());
 
-        self::getFixer()->fix($this->createSplFileInfoDouble(), $tokens);
+        $fixer->fix($this->createSplFileInfoDouble(), $tokens);
 
         self::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }

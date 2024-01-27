@@ -61,7 +61,6 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
         yield [
             '<?php /** @var array<bool>|array<float>|array<int>|array<string> */',
             '<?php /** @var array<bool>|float[]|array<int>|string[] */',
-            ['style' => 'generic'],
         ];
 
         yield [
