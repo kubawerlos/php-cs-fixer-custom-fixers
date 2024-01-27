@@ -23,6 +23,11 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
         self::assertRiskiness(false);
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertSuccessorName('phpdoc_array_style');
+    }
+
     /**
      * @dataProvider provideFixCases
      */

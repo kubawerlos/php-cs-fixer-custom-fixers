@@ -13,11 +13,17 @@
         "php": "^7.4 || ^8.0",
         "ext-filter": "*",
         "ext-tokenizer": "*",
-        "friendsofphp/php-cs-fixer": "^3.47"
+        "friendsofphp/php-cs-fixer": "dev-add_PhpdocListTypeFixer as 3.40.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6.4 || ^10.0.14"
     },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "git@github.com:6b7562617765726c6f73/PHP-CS-Fixer.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "PhpCsFixerCustomFixers\\": "src"

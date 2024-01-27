@@ -11,13 +11,26 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocArrayStyleFixer as SuccessorFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpdocTypeListFixer extends AbstractTypesFixer
+/**
+ * @deprecated
+ */
+final class PhpdocTypeListFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    private SuccessorFixer $successorFixer;
+
+    public function __construct()
+    {
+        $this->successorFixer = new SuccessorFixer();
+        $this->successorFixer->configure(['strategy' => 'array_to_list']);
+    }
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -41,8 +54,26 @@ function foo($x) {}
         return 1;
     }
 
-    protected function fixType(string $type): string
+    public function isCandidate(Tokens $tokens): bool
     {
-        return Preg::replace('/array(?=<[^,]+(>|<|{|\\())/', 'list', $type);
+        return $this->successorFixer->isCandidate($tokens);
+    }
+
+    public function isRisky(): bool
+    {
+        return $this->successorFixer->isRisky();
+    }
+
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        $this->successorFixer->fix($file, $tokens);
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getSuccessorsNames(): array
+    {
+        return [$this->successorFixer->getName()];
     }
 }

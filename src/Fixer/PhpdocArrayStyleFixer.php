@@ -11,13 +11,25 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocArrayStyleFixer as SuccessorFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpdocArrayStyleFixer extends AbstractTypesFixer
+/**
+ * @deprecated
+ */
+final class PhpdocArrayStyleFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    private SuccessorFixer $successorFixer;
+
+    public function __construct()
+    {
+        $this->successorFixer = new SuccessorFixer();
+    }
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -44,14 +56,26 @@ final class PhpdocArrayStyleFixer extends AbstractTypesFixer
         return 2;
     }
 
-    protected function fixType(string $type): string
+    public function isCandidate(Tokens $tokens): bool
     {
-        $newType = Preg::replace('/([\\\\a-zA-Z0-9_>]+)\[\]/', 'array<$1>', $type);
+        return $this->successorFixer->isCandidate($tokens);
+    }
 
-        if ($newType === $type) {
-            return $type;
-        }
+    public function isRisky(): bool
+    {
+        return $this->successorFixer->isRisky();
+    }
 
-        return $this->fixType($newType);
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        $this->successorFixer->fix($file, $tokens);
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getSuccessorsNames(): array
+    {
+        return [$this->successorFixer->getName()];
     }
 }

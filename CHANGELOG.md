@@ -1,7 +1,12 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.19.0
-- Deprecate NumericLiteralSeparatorFixer - use "numeric_literal_separator "
+- Deprecate PhpdocArrayStyleFixer - use "phpdoc_array_style"
+- Deprecate PhpdocTypeListFixer - use "phpdoc_array_style"
+- Update minimum PHP CS Fixer version to 3.49.0
+
+## v3.19.0
+- Deprecate NumericLiteralSeparatorFixer - use "numeric_literal_separator"
 - Update minimum PHP CS Fixer version to 3.47.0
 
 ## v3.18.0
