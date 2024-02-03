@@ -81,7 +81,7 @@ class Bar {
             }
         }
 
-        self::clearImports($tokens, ...\array_values($importedClassesIndices));
+        self::clearImports($tokens, $importedClassesIndices);
     }
 
     /**
@@ -168,7 +168,10 @@ class Bar {
         return $importedClassesIndices;
     }
 
-    private static function clearImports(Tokens $tokens, ?int ...$importedClassesIndices): void
+    /**
+     * @param array<string, null|int> $importedClassesIndices
+     */
+    private static function clearImports(Tokens $tokens, array $importedClassesIndices): void
     {
         foreach ($importedClassesIndices as $importedClassIndex) {
             if ($importedClassIndex === null) {
