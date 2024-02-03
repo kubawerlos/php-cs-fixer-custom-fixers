@@ -80,7 +80,8 @@ class Bar {
                 $importedClassesIndices = $this->updateUsage($tokens, $importedClassesIndices, $index);
             }
         }
-        self::clearImports($tokens, ...$importedClassesIndices);
+
+        self::clearImports($tokens, ...\array_values($importedClassesIndices));
     }
 
     /**
