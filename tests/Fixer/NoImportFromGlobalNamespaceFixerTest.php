@@ -131,12 +131,13 @@ class Baz {
         yield [
             '<?php
 namespace Foo;
+use DateTime;
 class Bar {
     public function __construct() {
         new \DateTime();
         new Baz\DateTime();
         \DateTime::createFromFormat("Y-m-d");
-        \DateTime\Baz::createFromFormat("Y-m-d");
+        DateTime\Baz::createFromFormat("Y-m-d");
         Baz::DateTime();
         $baz->DateTime();
     }
@@ -161,6 +162,7 @@ class Bar {
         yield [
             '<?php
 namespace Foo;
+use DateTime;
 class Bar {
     /**
      * @param \DateTime $a
@@ -170,7 +172,7 @@ class Bar {
      * @param int|\DateTime $e
      * @param \DateTime|string $f
      * @param bool|\DateTime|string $g
-     * @param \DateTime\Baz $h
+     * @param DateTime\Baz $h
      * @param DateTimeBaz $i
      */
     public function __construct($a, $b, $c, $d, $e, $f, $g, $h, $i) {}
@@ -313,6 +315,152 @@ class Bar {
             $input .= \sprintf("echo Bar::BAZ_%d;\n", $i);
         }
         yield [$expected, $input];
+
+        yield [
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                use NotClassButPartOfNamespace;
+                class Bar
+                {
+                    public function baz()
+                    {
+                        return new NotClassButPartOfNamespace\ThisIsClass();
+                    }
+                }
+                PHP,
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                namespace N;
+                use Foo;
+                class C
+                {
+                    public function f1() { return new Foo\Bar(); }
+                    public function f2() { return new Bar\Foo(); }
+                    public function f3() { return new Bar\Foo\Baz(); }
+                }
+                PHP,
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                use Namespace1;
+                use Namespace1\Namespace2;
+                class Bar
+                {
+                    public function f1() { return new \Namespace1(); }
+                    public function f2() { return new Namespace1\Namespace2(); }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                use Namespace1;
+                use Namespace1\Namespace2;
+                class Bar
+                {
+                    public function f1() { return new Namespace1(); }
+                    public function f2() { return new Namespace1\Namespace2(); }
+                }
+                PHP,
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                use Vendor;
+                class Bar
+                {
+                    /**
+                     * @param \Vendor $x
+                     * @param Vendor\SomeClass $y
+                     */
+                    public function baz($x, $y) {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                use Vendor;
+                class Bar
+                {
+                    /**
+                     * @param Vendor $x
+                     * @param Vendor\SomeClass $y
+                     */
+                    public function baz($x, $y) {}
+                }
+                PHP,
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                namespace Root;
+                use Vendor1\Class1a;
+                use Vendor1\Class1b;
+                use Vendor3;
+                use Vendor4\Class4;
+                class Test
+                {
+                    /** @return \Vendor2 */
+                    public function f1() {}
+                    /** @return Vendor3\Class3 */
+                    public function f2() {}
+                    /** @return \Vendor4 */
+                    public function f3() {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                namespace Root;
+                use Vendor1\Class1a;
+                use Vendor1\Class1b;
+                use Vendor2;
+                use Vendor3;
+                use Vendor4;
+                use Vendor4\Class4;
+                class Test
+                {
+                    /** @return Vendor2 */
+                    public function f1() {}
+                    /** @return Vendor3\Class3 */
+                    public function f2() {}
+                    /** @return Vendor4 */
+                    public function f3() {}
+                }
+                PHP,
+        ];
+        yield [
+            <<<'PHP'
+                <?php
+                namespace Root;
+                use Vendor2;
+                class Test
+                {
+                    public function f1(): \Vendor2 {}
+                    public function f2(): Vendor2\Class2 {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                namespace Root;
+                use Vendor1;
+                use Vendor2;
+                use Vendor3;
+                class Test
+                {
+                    public function f1(): Vendor2 {}
+                    public function f2(): Vendor2\Class2 {}
+                }
+                PHP,
+        ];
     }
 
     /**

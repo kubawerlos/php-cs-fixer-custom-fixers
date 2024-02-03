@@ -64,92 +64,127 @@ class Bar {
 
     private function fixImports(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
     {
-        $imports = [];
+        $importedClassesIndices = self::getImportCandidateIndices($tokens, $startIndex, $endIndex);
 
-        for ($index = $startIndex; $index < $endIndex; $index++) {
-            if ($tokens[$index]->isGivenKind(\T_USE)) {
-                $imports = $this->removeImportFromGlobalNamespace($tokens, $imports, $index);
-                continue;
+        if (!$isInGlobalNamespace) {
+            for ($index = $endIndex; $index > $startIndex; $index--) {
+                if ($tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
+                    $importedClassesIndices = $this->updateComment($tokens, $importedClassesIndices, $index);
+                    continue;
+                }
+
+                if (!$tokens[$index]->isGivenKind(\T_STRING)) {
+                    continue;
+                }
+
+                $importedClassesIndices = $this->updateUsage($tokens, $importedClassesIndices, $index);
             }
-
-            if ($isInGlobalNamespace) {
-                continue;
-            }
-
-            if ($tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
-                $this->updateComment($tokens, $imports, $index);
-                continue;
-            }
-
-            if (!$tokens[$index]->isGivenKind(\T_STRING)) {
-                continue;
-            }
-
-            $endIndex += $this->updateUsageAndReturnNumberOfInsertedTokens($tokens, $imports, $index);
         }
+
+        self::clearImports($tokens, $importedClassesIndices);
     }
 
     /**
-     * @param list<string> $imports
-     *
-     * @return list<string>
+     * @return array<string, null|int>
      */
-    private function removeImportFromGlobalNamespace(Tokens $tokens, array $imports, int $index): array
+    private static function getImportCandidateIndices(Tokens $tokens, int $startIndex, int $endIndex): array
     {
-        $classNameIndex = $tokens->getNextMeaningfulToken($index);
-        \assert(\is_int($classNameIndex));
+        $importedClassesIndices = [];
 
-        if ($tokens[$classNameIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-            $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+        foreach (\array_keys($tokens->findGivenKind(\T_USE, $startIndex, $endIndex)) as $index) {
+            $classNameIndex = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($classNameIndex));
+
+            if ($tokens[$classNameIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+                $classNameIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+                \assert(\is_int($classNameIndex));
+            }
+
+            $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
+            \assert(\is_int($semicolonIndex));
+
+            if (!$tokens[$semicolonIndex]->equals(';')) {
+                continue;
+            }
+
+            $importedClassesIndices[$tokens[$classNameIndex]->getContent()] = $classNameIndex;
         }
 
-        $semicolonIndex = $tokens->getNextMeaningfulToken($classNameIndex);
-        \assert(\is_int($semicolonIndex));
-
-        if ($tokens[$semicolonIndex]->equals(';')) {
-            $imports[] = $tokens[$classNameIndex]->getContent();
-            $tokens->clearRange($index, $semicolonIndex);
-            TokenRemover::removeWithLinesIfPossible($tokens, $semicolonIndex);
-        }
-
-        return $imports;
+        return $importedClassesIndices;
     }
 
     /**
-     * @param list<string> $imports
+     * @param array<string, null|int> $importedClassesIndices
+     *
+     * @return array<string, null|int>
      */
-    private function updateComment(Tokens $tokens, array $imports, int $index): void
+    private function updateComment(Tokens $tokens, array $importedClassesIndices, int $index): array
     {
         $content = $tokens[$index]->getContent();
 
-        foreach ($imports as $import) {
-            $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s\b/', $import), '\\' . $import, $content);
+        foreach ($importedClassesIndices as $importedClassName => $importedClassIndex) {
+            $content = Preg::replace(\sprintf('/\b(?<!\\\\)%s(?!\\\\)\b/', $importedClassName), '\\' . $importedClassName, $content);
+            if ($importedClassIndex !== null && Preg::match(\sprintf('/\b(?<!\\\\)%s(?=\\\\)\b/', $importedClassName), $content)) {
+                $importedClassesIndices[$importedClassName] = null;
+            }
         }
 
         if ($content !== $tokens[$index]->getContent()) {
             $tokens[$index] = new Token([\T_DOC_COMMENT, $content]);
         }
+
+        return $importedClassesIndices;
     }
 
     /**
-     * @param list<string> $imports
+     * @param array<string, null|int> $importedClassesIndices
+     *
+     * @return array<string, null|int>
      */
-    private function updateUsageAndReturnNumberOfInsertedTokens(Tokens $tokens, array $imports, int $index): int
+    private function updateUsage(Tokens $tokens, array $importedClassesIndices, int $index): array
     {
-        if (!\in_array($tokens[$index]->getContent(), $imports, true)) {
-            return 0;
+        if (!\in_array($tokens[$index]->getContent(), \array_keys($importedClassesIndices), true)) {
+            return $importedClassesIndices;
         }
 
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($prevIndex));
 
-        if ($tokens[$prevIndex]->isGivenKind([\T_CONST, \T_DOUBLE_COLON, \T_NS_SEPARATOR, \T_OBJECT_OPERATOR, \T_FUNCTION])) {
-            return 0;
+        if ($tokens[$prevIndex]->isGivenKind([\T_CONST, \T_DOUBLE_COLON, \T_FUNCTION, \T_NS_SEPARATOR, \T_OBJECT_OPERATOR, \T_USE])) {
+            return $importedClassesIndices;
+        }
+
+        $nextIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($nextIndex));
+
+        if ($tokens[$nextIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+            $importedClassesIndices[$tokens[$index]->getContent()] = null;
+
+            return $importedClassesIndices;
         }
 
         $tokens->insertAt($index, new Token([\T_NS_SEPARATOR, '\\']));
 
-        return 1;
+        return $importedClassesIndices;
+    }
+
+    /**
+     * @param array<string, null|int> $importedClassesIndices
+     */
+    private static function clearImports(Tokens $tokens, array $importedClassesIndices): void
+    {
+        foreach ($importedClassesIndices as $importedClassIndex) {
+            if ($importedClassIndex === null) {
+                continue;
+            }
+            $useIndex = $tokens->getPrevTokenOfKind($importedClassIndex, [[\T_USE]]);
+            \assert(\is_int($useIndex));
+
+            $semicolonIndex = $tokens->getNextTokenOfKind($importedClassIndex, [';']);
+            \assert(\is_int($semicolonIndex));
+
+            $tokens->clearRange($useIndex, $semicolonIndex);
+            TokenRemover::removeWithLinesIfPossible($tokens, $useIndex);
+        }
     }
 }
