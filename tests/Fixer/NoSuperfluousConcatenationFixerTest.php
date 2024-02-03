@@ -218,7 +218,7 @@ CONTENT
             ,
             <<<'CONTENT'
 '\"Foo\"' . "\n"
-CONTENT
+CONTENT,
         ];
 
         yield 'escaped double quotes with slash before in single quote' => [
@@ -228,7 +228,7 @@ CONTENT
             ,
             <<<'CONTENT'
 '\"\Foo\\\"' . "\n"
-CONTENT
+CONTENT,
         ];
 
         yield 'double quotes in single quote with multiple slashes before' => [
@@ -238,7 +238,7 @@ CONTENT
             ,
             <<<'CONTENT'
 '2 slashes: \\\\", 3 slashes: \\\\\\", 4 slashes: \\\\\\\\";' . "\n"
-CONTENT
+CONTENT,
         ];
 
         yield 'double quotes in single quote with multiple slashes before when last slash is not escaped' => [
@@ -248,7 +248,7 @@ CONTENT
             ,
             <<<'CONTENT'
 '2 slashes: \\\", 3 slashes: \\\\\", 4 slashes: \\\\\\\";' . "\n"
-CONTENT
+CONTENT,
         ];
 
         yield 'empty single quoted string on left side' => [
