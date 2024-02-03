@@ -11,13 +11,25 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocListTypeFixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpdocTypeListFixer extends AbstractTypesFixer
+/**
+ * @deprecated
+ */
+final class PhpdocTypeListFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    private PhpdocListTypeFixer $phpdocListTypeFixer;
+
+    public function __construct()
+    {
+        $this->phpdocListTypeFixer = new PhpdocListTypeFixer();
+    }
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -41,8 +53,26 @@ function foo($x) {}
         return 1;
     }
 
-    protected function fixType(string $type): string
+    public function isCandidate(Tokens $tokens): bool
     {
-        return Preg::replace('/array(?=<[^,]+(>|<|{|\\())/', 'list', $type);
+        return $this->phpdocListTypeFixer->isCandidate($tokens);
+    }
+
+    public function isRisky(): bool
+    {
+        return false;
+    }
+
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        $this->phpdocListTypeFixer->fix($file, $tokens);
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getSuccessorsNames(): array
+    {
+        return [$this->phpdocListTypeFixer->getName()];
     }
 }

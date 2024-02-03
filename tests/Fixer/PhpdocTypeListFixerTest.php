@@ -23,6 +23,11 @@ final class PhpdocTypeListFixerTest extends AbstractFixerTestCase
         self::assertRiskiness(false);
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertSuccessorName('phpdoc_list_type');
+    }
+
     /**
      * @dataProvider provideFixCases
      */
