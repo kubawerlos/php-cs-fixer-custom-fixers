@@ -367,6 +367,19 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
                 return (1);
             ',
         ];
+
+        yield ['<?php $test = (true and false);'];
+        yield ['<?php $test = (false xor true);'];
+        yield ['<?php $test = (false or true);'];
+
+        yield [
+            '<?php $test = false || true;',
+            '<?php $test = (false || true);',
+        ];
+        yield [
+            '<?php $test = false && true;',
+            '<?php $test = (false && true);',
+        ];
     }
 
     /**

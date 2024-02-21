@@ -104,6 +104,10 @@ foo(($bar));
             return true;
         }
 
+        if ($this->hasLowPrecedenceLogicOperator($tokens, $startIndex, $endIndex)) {
+            return false;
+        }
+
         return $tokens[$prevStartIndex]->equalsAny(['=', [\T_RETURN], [\T_THROW]]) && $tokens[$nextEndIndex]->equals(';');
     }
 
@@ -174,6 +178,29 @@ foo(($bar));
         }
 
         return true;
+    }
+
+    private function hasLowPrecedenceLogicOperator(Tokens $tokens, int $startIndex, int $endIndex): bool
+    {
+        $index = $tokens->getNextMeaningfulToken($startIndex);
+        \assert(\is_int($index));
+
+        while ($index < $endIndex) {
+            if (
+                $tokens[$index]->isGivenKind([
+                    \T_LOGICAL_XOR,
+                    \T_LOGICAL_AND,
+                    \T_LOGICAL_OR,
+                ])
+            ) {
+                return true;
+            }
+
+            $index = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($index));
+        }
+
+        return false;
     }
 
     private function clearWhitespace(Tokens $tokens, int $index): void
