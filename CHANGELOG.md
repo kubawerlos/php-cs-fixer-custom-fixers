@@ -1,5 +1,9 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.21.0
+- Deprecate PhpdocArrayStyleFixer - use "phpdoc_array_type"
+- Update minimum PHP CS Fixer version to 3.50.0
+
 ## v3.20.0
 - Deprecate PhpdocTypeListFixer - use "phpdoc_list_type"
 - Update minimum PHP CS Fixer version to 3.49.0
