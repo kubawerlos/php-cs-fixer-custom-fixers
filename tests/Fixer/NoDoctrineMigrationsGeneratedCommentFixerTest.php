@@ -39,8 +39,8 @@ final class NoDoctrineMigrationsGeneratedCommentFixerTest extends AbstractFixerT
         yield 'do not remove when comments were changed' => [
             '<?php
 namespace Migrations;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\\DBAL\\Schema\\Schema;
+use Doctrine\\Migrations\\AbstractMigration;
 /**
  * This migration will change the world!
  */
@@ -62,8 +62,8 @@ final class Version20180609123456 extends AbstractMigration
         yield 'handle standard case' => [
             '<?php
 namespace Migrations;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\\DBAL\\Schema\\Schema;
+use Doctrine\\Migrations\\AbstractMigration;
 final class Version20180609123456 extends AbstractMigration
 {
     public function up(Schema $schema) : void
@@ -78,8 +78,8 @@ final class Version20180609123456 extends AbstractMigration
 ',
             '<?php
 namespace Migrations;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\\DBAL\\Schema\\Schema;
+use Doctrine\\Migrations\\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
@@ -102,8 +102,8 @@ final class Version20180609123456 extends AbstractMigration
         yield 'handle without class comment' => [
             '<?php
 namespace Migrations;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\\DBAL\\Schema\\Schema;
+use Doctrine\\Migrations\\AbstractMigration;
 final class Version20180609123456 extends AbstractMigration
 {
     public function up(Schema $schema) : void
@@ -119,8 +119,8 @@ final class Version20180609123456 extends AbstractMigration
 ',
             '<?php
 namespace Migrations;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\\DBAL\\Schema\\Schema;
+use Doctrine\\Migrations\\AbstractMigration;
 final class Version20180609123456 extends AbstractMigration
 {
     public function up(Schema $schema) : void
@@ -141,8 +141,8 @@ final class Version20180609123456 extends AbstractMigration
         yield 'handle with mixed comments' => [
             '<?php
 namespace Migrations;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\\DBAL\\Schema\\Schema;
+use Doctrine\\Migrations\\AbstractMigration;
 final class Version20180609123456 extends AbstractMigration
 {
     public function up(Schema $schema) : void
@@ -158,8 +158,8 @@ final class Version20180609123456 extends AbstractMigration
 ',
             '<?php
 namespace Migrations;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\\DBAL\\Schema\\Schema;
+use Doctrine\\Migrations\\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */

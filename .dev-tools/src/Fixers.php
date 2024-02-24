@@ -32,7 +32,7 @@ final class Fixers implements \IteratorAggregate
             ->sortByName();
 
         foreach ($finder as $fileInfo) {
-            $className = __NAMESPACE__ . '\Fixer\\' . $fileInfo->getBasename('.php');
+            $className = __NAMESPACE__ . '\\Fixer\\' . $fileInfo->getBasename('.php');
 
             $fixer = new $className();
             \assert($fixer instanceof FixerInterface);

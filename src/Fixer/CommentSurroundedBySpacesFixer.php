@@ -59,14 +59,14 @@ final class CommentSurroundedBySpacesFixer extends AbstractFixer
 
             // ensure whitespace at the beginning
             $newContent = Preg::replace(
-                '/^(\/\/|#(?!\[)|\/\*+)(?!(?:\/|\*|\s|$))/',
+                '/^(\\/\\/|#(?!\\[)|\\/\\*+)(?!(?:\\/|\\*|\\s|$))/',
                 '$1 ',
                 $tokens[$index]->getContent(),
             );
 
             // ensure whitespace at the end
             $newContent = Preg::replace(
-                '/(?<!(?:\/|\*|\h))(\*+\/)$/',
+                '/(?<!(?:\\/|\\*|\\h))(\\*+\\/)$/',
                 ' $1',
                 $newContent,
             );

@@ -123,8 +123,8 @@ class Bar {
         $content = $tokens[$index]->getContent();
 
         foreach ($importedClassesIndices as $importedClassName => $importedClassIndex) {
-            $content = Preg::replace(\sprintf('/\b(?<!\\\)%s(?!\\\)\b/', $importedClassName), '\\' . $importedClassName, $content);
-            if ($importedClassIndex !== null && Preg::match(\sprintf('/\b(?<!\\\)%s(?=\\\)\b/', $importedClassName), $content)) {
+            $content = Preg::replace(\sprintf('/\\b(?<!\\\\)%s(?!\\\\)\\b/', $importedClassName), '\\' . $importedClassName, $content);
+            if ($importedClassIndex !== null && Preg::match(\sprintf('/\\b(?<!\\\\)%s(?=\\\\)\\b/', $importedClassName), $content)) {
                 $importedClassesIndices[$importedClassName] = null;
             }
         }

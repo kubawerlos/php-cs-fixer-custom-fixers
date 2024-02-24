@@ -182,7 +182,7 @@ var_dump($x);
             return true;
         }
 
-        if (Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent())) {
+        if (Preg::match('/^\\R/', $tokens[$endIndex + 1]->getContent())) {
             return true;
         }
 
@@ -202,12 +202,12 @@ var_dump($x);
         $prefix = '//';
         if ($tokens[$startIndex - 1]->isWhitespace()) {
             $startIndex--;
-            $prefix = Preg::replace('/(^|\R)(\h*$)/D', '$1//$2', $tokens[$startIndex]->getContent());
+            $prefix = Preg::replace('/(^|\\R)(\\h*$)/D', '$1//$2', $tokens[$startIndex]->getContent());
         }
         $codeToCommentOut = $prefix . \str_replace("\n", "\n//", $codeToCommentOut);
 
         if ($tokens->offsetExists($endIndex + 1)) {
-            if (!Preg::match('/^\R/', $tokens[$endIndex + 1]->getContent())) {
+            if (!Preg::match('/^\\R/', $tokens[$endIndex + 1]->getContent())) {
                 $codeToCommentOut .= "\n";
                 if ($tokens[$endIndex + 1]->isWhitespace()) {
                     $endIndex++;

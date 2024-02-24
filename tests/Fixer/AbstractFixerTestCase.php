@@ -48,7 +48,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionSummaryStartWithCorrectCase(): void
     {
-        self::assertMatchesRegularExpression('/^[A-Z].*\.$/', self::getFixer()->getDefinition()->getSummary());
+        self::assertMatchesRegularExpression('/^[A-Z].*\\.$/', self::getFixer()->getDefinition()->getSummary());
     }
 
     final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void
@@ -92,7 +92,7 @@ abstract class AbstractFixerTestCase extends TestCase
     {
         $codeSample = self::getFixer()->getDefinition()->getCodeSamples()[0];
 
-        self::assertMatchesRegularExpression('/\n$/', $codeSample->getCode());
+        self::assertMatchesRegularExpression('/\\n$/', $codeSample->getCode());
     }
 
     /**

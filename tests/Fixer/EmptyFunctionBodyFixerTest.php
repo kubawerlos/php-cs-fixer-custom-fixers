@@ -102,13 +102,13 @@ final class EmptyFunctionBodyFixerTest extends AbstractFixerTestCase
         yield 'with return types' => [
             '<?php
                 function f1(): void {}
-                function f2(): \Foo\Bar {}
+                function f2(): \\Foo\\Bar {}
                 function f3(): ?string {}
             ',
             '<?php
                 function f1(): void
                 {}
-                function f2(): \Foo\Bar    {    }
+                function f2(): \\Foo\\Bar    {    }
                 function f3(): ?string {
 
 

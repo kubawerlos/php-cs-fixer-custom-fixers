@@ -88,9 +88,9 @@ final class PriorityTest extends TestCase
             [$firstFixer, $secondFixer] = \explode(',', $fileName);
 
             \preg_match('/^
-                --CONFIGURATION--\n(?<configuration>.*)\n
-                --EXPECTED--\n(?<expected>.*)\n
-                --INPUT--\n(?<input>.*)
+                --CONFIGURATION--\\n(?<configuration>.*)\\n
+                --EXPECTED--\\n(?<expected>.*)\\n
+                --INPUT--\\n(?<input>.*)
             $/sx', $test->getContents(), $matches);
 
             /** @var array<string, array<string, string>|bool> $configuration */

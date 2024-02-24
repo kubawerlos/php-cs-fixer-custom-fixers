@@ -97,7 +97,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             ',
             '<?php
             /**
-             * Class Foo\Bar.
+             * Class Foo\\Bar.
              */
             class Bar {}
             ',
@@ -458,7 +458,7 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             ',
             '<?php
             /**
-             * Class Foo\Bar.
+             * Class Foo\\Bar.
              */
             class Bar {}
             // foo

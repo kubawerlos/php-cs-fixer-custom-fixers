@@ -36,7 +36,7 @@ final class NoUselessDirnameCallFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield ['<?php Vendor\dirname(__DIR__) . "/path";'];
+        yield ['<?php Vendor\\dirname(__DIR__) . "/path";'];
         yield ['<?php dearname(__DIR__) . "/path";'];
         yield ['<?php dirname(__DIR__, LEVEL) . "/path";'];
         yield ['<?php dirname(__DIR__) . $path;'];
@@ -54,12 +54,12 @@ final class NoUselessDirnameCallFixerTest extends AbstractFixerTestCase
 
         yield [
             '<?php __DIR__ . "/../path";',
-            '<?php \dirname(__DIR__) . "/path";',
+            '<?php \\dirname(__DIR__) . "/path";',
         ];
 
         yield [
             '<?php __DIR__ . "/../../../path";',
-            '<?php \dirname(__DIR__,3) . "/path";',
+            '<?php \\dirname(__DIR__,3) . "/path";',
         ];
 
         yield [
@@ -96,7 +96,7 @@ final class NoUselessDirnameCallFixerTest extends AbstractFixerTestCase
 
             yield [
                 '<?php __DIR__ . "/../../../path";',
-                '<?php \dirname(__DIR__,3,) . "/path";',
+                '<?php \\dirname(__DIR__,3,) . "/path";',
             ];
         }
     }

@@ -43,7 +43,7 @@ $foo = new Foo();
 
         yield 'keep correct PHPDoc with leading slash' => [
             '<?php
-/** @var \Foo $foo */
+/** @var \\Foo $foo */
 $foo = new Foo();
 '];
 
@@ -253,8 +253,8 @@ class Foo
                     /** @var Bar */
                     private Bar $bar;
 
-                    /** @var Vendor\Baz */
-                    private Vendor\Baz $baz;
+                    /** @var Vendor\\Baz */
+                    private Vendor\\Baz $baz;
                 }',
             ];
         }
@@ -490,8 +490,8 @@ $x = 0;
                     /** @var string */
                     private readonly string $readonlyString;
 
-                    /** @var Bar&Vendor\Baz */
-                    private Bar&Vendor\Baz $barAndBaz;
+                    /** @var Bar&Vendor\\Baz */
+                    private Bar&Vendor\\Baz $barAndBaz;
                 }',
         ];
     }

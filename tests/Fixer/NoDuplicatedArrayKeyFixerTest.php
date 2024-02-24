@@ -49,7 +49,7 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
             '<?php $x = [1, 1, 2, 2];',
         ];
 
-        foreach (['1', '1.0', '"foo"', "'foo'", 'KEY_123', 'Constants::CONFIG_KEY', 'Library\Constants::CONFIG_KEY'] as $duplicatedKey) {
+        foreach (['1', '1.0', '"foo"', "'foo'", 'KEY_123', 'Constants::CONFIG_KEY', 'Library\\Constants::CONFIG_KEY'] as $duplicatedKey) {
             yield [
                 \sprintf('<?php
                 $x = [

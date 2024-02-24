@@ -29,7 +29,7 @@ final class Fixers implements \IteratorAggregate
             if (\in_array($fileName, ['.', '..', 'AbstractFixer', 'AbstractTypesFixer'], true)) {
                 continue;
             }
-            $classNames[] = __NAMESPACE__ . '\Fixer\\' . $fileName;
+            $classNames[] = __NAMESPACE__ . '\\Fixer\\' . $fileName;
         }
 
         \sort($classNames);

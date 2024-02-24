@@ -62,7 +62,7 @@ function a($foo, $bar) {}
             }
 
             $newContent = Preg::replace(
-                '/(@param) {0,7}( *\$)/i',
+                '/(@param) {0,7}( *\\$)/i',
                 '$1 mixed $2',
                 $tokens[$index]->getContent(),
             );

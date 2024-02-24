@@ -87,18 +87,18 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
 /**
- * @ORM\Id
- * @ORM\Column(type="integer")
+ * @ORM\\Id
+ * @ORM\\Column(type="integer")
  */
 ',
             '<?php
 /**
- * @ORM\Id
- * @ORM\GeneratedValue
- * @ORM\Column(type="integer")
+ * @ORM\\Id
+ * @ORM\\GeneratedValue
+ * @ORM\\Column(type="integer")
  */
 ',
-            ['elements' => ['ORM\Id', 'ORM\Column']],
+            ['elements' => ['ORM\\Id', 'ORM\\Column']],
         ];
 
         yield [

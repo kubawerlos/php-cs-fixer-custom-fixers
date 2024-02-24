@@ -63,7 +63,7 @@ class FooTest extends TestCase {
         yield 'ignore other assertions' => ['self::assertGreaterThan(2, count($array));'];
         yield 'ignore other functions' => ['self::assertSame(2, countIncorrectly($array));'];
         yield 'ignore function in first argument' => ['self::assertSame(count($array), 2);'];
-        yield 'ignore function from namespace' => ['self::assertSame(2, count\better_count($array));'];
+        yield 'ignore function from namespace' => ['self::assertSame(2, count\\better_count($array));'];
         yield 'ignore function used with 2 arguments' => ['self::assertSame(3, count($array, COUNT_RECURSIVE));'];
         yield 'ignore assertion with code after function' => ['self::assertSame(3, count($array) + 1);'];
 
@@ -99,12 +99,12 @@ class FooTest extends TestCase {
 
         yield 'fix with leading slash' => [
             'self::assertCount(3, $array);',
-            'self::assertSame(3, \count($array));',
+            'self::assertSame(3, \\count($array));',
         ];
 
         yield 'fix with many spaces' => [
             '$this->assertCount ( 3 ,  $array  ) ;',
-            '$this->assertSame ( 3 , \count ( $array ) ) ;',
+            '$this->assertSame ( 3 , \\count ( $array ) ) ;',
         ];
 
         yield 'fix all four assertions' => [

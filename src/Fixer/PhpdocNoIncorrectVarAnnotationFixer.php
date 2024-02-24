@@ -61,7 +61,7 @@ $bar = new Foo();
             }
 
             // remove ones not having type at the beginning
-            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\s+[\?\\\a-zA-Z_\x7f-\xff]/');
+            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\\s+[\\?\\\\a-zA-Z_\\x7f-\\xff]/');
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);
 
@@ -107,7 +107,7 @@ $bar = new Foo();
             return;
         }
 
-        if (Preg::match('/@var\h+(.+\h+)?\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $tokens[$index]->getContent())) {
+        if (Preg::match('/@var\\h+(.+\\h+)?\\$[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*/', $tokens[$index]->getContent())) {
             $this->removeVarAnnotation($tokens, $index, [$tokens[$variableIndex]->getContent()]);
         }
     }
@@ -120,7 +120,7 @@ $bar = new Foo();
         $this->removeVarAnnotationNotMatchingPattern(
             $tokens,
             $index,
-            '/(\Q' . \implode('\E|\Q', $allowedVariables) . '\E)\b/i',
+            '/(\\Q' . \implode('\\E|\\Q', $allowedVariables) . '\\E)\\b/i',
         );
     }
 

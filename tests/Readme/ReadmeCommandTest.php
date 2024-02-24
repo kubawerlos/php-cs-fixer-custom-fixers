@@ -42,7 +42,7 @@ final class ReadmeCommandTest extends TestCase
     public function testNumberOfTests(): void
     {
         \preg_match(
-            '~https://img.shields.io/badge/tests-(\d+)-brightgreen.svg~',
+            '~https://img.shields.io/badge/tests-(\\d+)-brightgreen.svg~',
             (string) \file_get_contents(__DIR__ . '/../../README.md'),
             $matches,
         );

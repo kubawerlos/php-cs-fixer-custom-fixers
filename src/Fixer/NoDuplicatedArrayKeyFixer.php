@@ -107,7 +107,7 @@ $x = [
                 $endIndex = $tokens->getNextMeaningfulToken($arrayElementAnalysis->getValueEndIndex());
                 \assert(\is_int($endIndex));
 
-                if ($tokens[$endIndex + 1]->isWhitespace() && Preg::match('/^\h+$/', $tokens[$endIndex + 1]->getContent())) {
+                if ($tokens[$endIndex + 1]->isWhitespace() && Preg::match('/^\\h+$/', $tokens[$endIndex + 1]->getContent())) {
                     $endIndex++;
                 }
 

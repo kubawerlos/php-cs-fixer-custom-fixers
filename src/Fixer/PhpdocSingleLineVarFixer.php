@@ -61,7 +61,7 @@ class Foo {
                 continue;
             }
 
-            if (!Preg::match('#^/\*\*[\s\*]+(@var[^\r\n]+)[\s\*]*\*\/$#u', $tokens[$index]->getContent(), $matches)) {
+            if (!Preg::match('#^/\\*\\*[\\s\\*]+(@var[^\\r\\n]+)[\\s\\*]*\\*\\/$#u', $tokens[$index]->getContent(), $matches)) {
                 continue;
             }
 
