@@ -84,7 +84,7 @@ class FooTest extends TestCase {
 
         yield 'data provider with return type namespaced class' => self::mapToTemplate(
             ': iterable',
-            ': Foo\Bar',
+            ': Foo\\Bar',
         );
 
         yield 'data provider with iterable return type in different case' => self::mapToTemplate(

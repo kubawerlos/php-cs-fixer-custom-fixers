@@ -99,7 +99,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
                 continue;
             }
 
-            foreach (Preg::split('/\s+/u', $content) as $line) {
+            foreach (Preg::split('/\\s+/u', $content) as $line) {
                 if (\filter_var($line, \FILTER_VALIDATE_URL) !== false) {
                     return [];
                 }
@@ -121,7 +121,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         $content = $token->getContent();
 
         if (\strpos($content, '/*') === 0) {
-            $content = Preg::replace('~^/\*+|\R\s*\*\s+|\*+/$~', \PHP_EOL, $content);
+            $content = Preg::replace('~^/\\*+|\\R\\s*\\*\\s+|\\*+/$~', \PHP_EOL, $content);
         }
 
         return \ltrim($content, '#/');

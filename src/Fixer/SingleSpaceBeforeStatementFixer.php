@@ -121,7 +121,7 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 
     private function fixTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
     {
-        if ($tokens[$index - 1]->isGivenKind(\T_WHITESPACE) && !Preg::match('/\R/', $tokens[$index - 2]->getContent())) {
+        if ($tokens[$index - 1]->isGivenKind(\T_WHITESPACE) && !Preg::match('/\\R/', $tokens[$index - 2]->getContent())) {
             $tokens->clearAt($index - 1);
         }
     }
@@ -129,7 +129,7 @@ final class SingleSpaceBeforeStatementFixer extends AbstractFixer
     private function fixMoreThanTwoTokensAfterOpenTag(Tokens $tokens, int $index): void
     {
         if ($tokens[$index - 1]->isGivenKind(\T_WHITESPACE)) {
-            if (!Preg::match('/\R/', $tokens[$index - 1]->getContent())) {
+            if (!Preg::match('/\\R/', $tokens[$index - 1]->getContent())) {
                 $tokens[$index - 1] = new Token([\T_WHITESPACE, ' ']);
             }
 

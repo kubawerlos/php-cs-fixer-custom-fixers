@@ -194,7 +194,7 @@ class FooTest extends TestCase {
      * @dataProvider provideFooCases
      */
     public function testFoo() {
-        $x = Foo\ProvideFooCases::X_DEFAULT;
+        $x = Foo\\ProvideFooCases::X_DEFAULT;
     }
     public function provideFooCases() {}
 }',
@@ -204,7 +204,7 @@ class FooTest extends TestCase {
      * @dataProvider foo
      */
     public function testFoo() {
-        $x = Foo\ProvideFooCases::X_DEFAULT;
+        $x = Foo\\ProvideFooCases::X_DEFAULT;
     }
     public function foo() {}
 }',

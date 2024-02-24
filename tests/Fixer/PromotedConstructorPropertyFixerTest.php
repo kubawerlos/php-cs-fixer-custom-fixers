@@ -471,7 +471,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             }',
         ];
 
-        foreach (['array', 'bool', 'int', 'float', 'string', 'Bar', 'Bar\Baz', '?string', 'self'] as $type) {
+        foreach (['array', 'bool', 'int', 'float', 'string', 'Bar', 'Bar\\Baz', '?string', 'self'] as $type) {
             yield \sprintf('promote when type is %s', $type) => [
                 \sprintf('<?php class Foo {
                     public function __construct(
@@ -940,14 +940,14 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 
         yield 'promote weird casing' => [
             '<?php class Foo {
-                public function __construct(private Bar\BAZ $x)
+                public function __construct(private Bar\\BAZ $x)
                 {
                 }
             }
             ',
             '<?php class Foo {
-                private BAR\Baz $x;
-                public function __construct(Bar\BAZ $x)
+                private BAR\\Baz $x;
+                public function __construct(Bar\\BAZ $x)
                 {
                     $this->x = $x;
                 }
@@ -1001,10 +1001,10 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             [
                 '@Document',
                 '@Entity',
-                '@Mapping\Entity',
-                '@ODM\Document',
-                '@ORM\Entity',
-                '@ORM\Mapping\Entity',
+                '@Mapping\\Entity',
+                '@ODM\\Document',
+                '@ORM\\Entity',
+                '@ORM\\Mapping\\Entity',
             ] as $annotation
         ) {
             yield \sprintf('promote only properties without PHPDoc with tag when class has %s annotation', $annotation) => [

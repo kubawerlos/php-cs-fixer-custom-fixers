@@ -59,8 +59,8 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php /** @var array<Foo\Bar> */',
-            '<?php /** @var Foo\Bar[] */',
+            '<?php /** @var array<Foo\\Bar> */',
+            '<?php /** @var Foo\\Bar[] */',
         ];
 
         yield [

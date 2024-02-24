@@ -38,13 +38,13 @@ final class NoImportFromGlobalNamespaceFixerTest extends AbstractFixerTestCase
     {
         yield ['<?php
 namespace Foo;
-use Bar\DateTime;
+use Bar\\DateTime;
 class Baz {}
 '];
 
         yield ['<?php
 namespace Foo;
-use DateTime\Bar;
+use DateTime\\Bar;
 class Baz {}
 '];
 
@@ -52,7 +52,7 @@ class Baz {}
             '<?php
 namespace Foo;
 class Bar {
-    public function __construct(\DateTime $dateTime) {}
+    public function __construct(\\DateTime $dateTime) {}
 }
 ',
             '<?php
@@ -82,12 +82,12 @@ class Bar {
             '<?php
 namespace Foo;
 class Bar {
-    public function __construct(\DateTime $dateTime) {}
+    public function __construct(\\DateTime $dateTime) {}
 }
 ',
             '<?php
 namespace Foo;
-use \DateTime;
+use \\DateTime;
 class Bar {
     public function __construct(DateTime $dateTime) {}
 }
@@ -98,14 +98,14 @@ class Bar {
             '<?php
 namespace Foo;
 class Bar {
-    public function __construct(\DateTime $dateTime) {}
+    public function __construct(\\DateTime $dateTime) {}
 }
 ',
             '<?php
 namespace Foo;
 use DateTime;
 class Bar {
-    public function __construct(\DateTime $dateTime) {}
+    public function __construct(\\DateTime $dateTime) {}
 }
 ',
         ];
@@ -114,7 +114,7 @@ class Bar {
             '<?php
 namespace Foo;
 class Baz {
-    use \DateTime;
+    use \\DateTime;
     public function __construct() {}
 }
 ',
@@ -134,10 +134,10 @@ namespace Foo;
 use DateTime;
 class Bar {
     public function __construct() {
-        new \DateTime();
-        new Baz\DateTime();
-        \DateTime::createFromFormat("Y-m-d");
-        DateTime\Baz::createFromFormat("Y-m-d");
+        new \\DateTime();
+        new Baz\\DateTime();
+        \\DateTime::createFromFormat("Y-m-d");
+        DateTime\\Baz::createFromFormat("Y-m-d");
         Baz::DateTime();
         $baz->DateTime();
     }
@@ -149,9 +149,9 @@ use DateTime;
 class Bar {
     public function __construct() {
         new DateTime();
-        new Baz\DateTime();
+        new Baz\\DateTime();
         DateTime::createFromFormat("Y-m-d");
-        DateTime\Baz::createFromFormat("Y-m-d");
+        DateTime\\Baz::createFromFormat("Y-m-d");
         Baz::DateTime();
         $baz->DateTime();
     }
@@ -165,14 +165,14 @@ namespace Foo;
 use DateTime;
 class Bar {
     /**
-     * @param \DateTime $a
-     * @param \DateTime $b
+     * @param \\DateTime $a
+     * @param \\DateTime $b
      * @param NotDateTime $c
-     * @param Baz\DateTime $d
-     * @param int|\DateTime $e
-     * @param \DateTime|string $f
-     * @param bool|\DateTime|string $g
-     * @param DateTime\Baz $h
+     * @param Baz\\DateTime $d
+     * @param int|\\DateTime $e
+     * @param \\DateTime|string $f
+     * @param bool|\\DateTime|string $g
+     * @param DateTime\\Baz $h
      * @param DateTimeBaz $i
      */
     public function __construct($a, $b, $c, $d, $e, $f, $g, $h, $i) {}
@@ -184,13 +184,13 @@ use DateTime;
 class Bar {
     /**
      * @param DateTime $a
-     * @param \DateTime $b
+     * @param \\DateTime $b
      * @param NotDateTime $c
-     * @param Baz\DateTime $d
+     * @param Baz\\DateTime $d
      * @param int|DateTime $e
      * @param DateTime|string $f
      * @param bool|DateTime|string $g
-     * @param DateTime\Baz $h
+     * @param DateTime\\Baz $h
      * @param DateTimeBaz $i
      */
     public function __construct($a, $b, $c, $d, $e, $f, $g, $h, $i) {}
@@ -202,7 +202,7 @@ class Bar {
             '<?php
 namespace Foo;
 class A {
-    public function __construct(\DateTime $d) {}
+    public function __construct(\\DateTime $d) {}
 }
 namespace Bar;
 class A {
@@ -210,7 +210,7 @@ class A {
 }
 namespace Baz;
 class A {
-    public function __construct(\DateTime $d) {}
+    public function __construct(\\DateTime $d) {}
 }
 ',
             '<?php
@@ -257,7 +257,7 @@ namespace Foo;
  */
 class Bar {
     /**
-     * @param \DateTime $a
+     * @param \\DateTime $a
      */
     public function __construct($a) {}
 }
@@ -291,12 +291,12 @@ class Bar {
 
         yield [
             '<?php
-                namespace N1;  new \DateTime();
-                namespace N2;  new \DateTime();
-                namespace N3;  new \DateTime();
-                namespace N4;  new \DateTime();
-                namespace N5;  new \DateTime();
-                namespace N6;   new \DateTime(); new \stdClass();
+                namespace N1;  new \\DateTime();
+                namespace N2;  new \\DateTime();
+                namespace N3;  new \\DateTime();
+                namespace N4;  new \\DateTime();
+                namespace N5;  new \\DateTime();
+                namespace N6;   new \\DateTime(); new \\stdClass();
             ',
             '<?php
                 namespace N1; use DateTime; new DateTime();
@@ -471,7 +471,7 @@ class Bar {
         $this->doTest(
             '<?php
                 namespace Foo;
-                function f(\Bar | \Baz $x) {}
+                function f(\\Bar | \\Baz $x) {}
                 ',
             '<?php
                 namespace Foo;

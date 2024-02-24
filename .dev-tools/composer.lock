@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b74f35b8c1da7c8197287a73db0ee7ba",
+    "content-hash": "679d80519558d8d43fcc6679f26ce473",
     "packages": [
         {
             "name": "amphp/amp",
@@ -764,21 +764,21 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v3.25.0",
+            "version": "v3.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "03ac60c56f59f8cbd3d9cdc39196ae6370d5d44d"
+                "reference": "c8be2877b535b6134cf478498c36c7ba0bf8f117"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/03ac60c56f59f8cbd3d9cdc39196ae6370d5d44d",
-                "reference": "03ac60c56f59f8cbd3d9cdc39196ae6370d5d44d"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/c8be2877b535b6134cf478498c36c7ba0bf8f117",
+                "reference": "c8be2877b535b6134cf478498c36c7ba0bf8f117"
             },
             "require": {
-                "kubawerlos/php-cs-fixer-custom-fixers": "^3.20",
+                "kubawerlos/php-cs-fixer-custom-fixers": "^3.21",
                 "php": "^7.4 || ^8.0",
-                "php-cs-fixer/shim": "^3.49"
+                "php-cs-fixer/shim": "^3.50"
             },
             "type": "library",
             "autoload": {
@@ -793,21 +793,21 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "v3.20.0",
+            "version": "v3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "a80cd2b18460fbaf3262139c431f1428470d322f"
+                "reference": "3d1bb75be0df6c6fba4487c75b9e425a2c1d27c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/a80cd2b18460fbaf3262139c431f1428470d322f",
-                "reference": "a80cd2b18460fbaf3262139c431f1428470d322f"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/3d1bb75be0df6c6fba4487c75b9e425a2c1d27c9",
+                "reference": "3d1bb75be0df6c6fba4487c75b9e425a2c1d27c9"
             },
             "require": {
                 "ext-filter": "*",
                 "ext-tokenizer": "*",
-                "friendsofphp/php-cs-fixer": "^3.49",
+                "friendsofphp/php-cs-fixer": "^3.50",
                 "php": "^7.4 || ^8.0"
             },
             "type": "library",

@@ -187,17 +187,17 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         ];
 
         yield 'dollar as last character in double quotes merged with double quotes' => [
-            '"My name is \$foo"',
+            '"My name is \\$foo"',
             '"My name is $" . "foo"',
         ];
 
         yield 'dollar as last character in double quotes merged with single quotes' => [
-            '"My name is \$foo"',
+            '"My name is \\$foo"',
             '"My name is $" . \'foo\'',
         ];
 
         yield 'dollar as last character in single quotes merged with double quotes' => [
-            '"My name is \$foo"',
+            '"My name is \\$foo"',
             '\'My name is $\' . "foo"',
         ];
 
@@ -207,7 +207,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
         ];
 
         yield 'multiple dollars as last characters' => [
-            '"one \$two \$three $"',
+            '"one \\$two \\$three $"',
             '"one $" . "two $" . "three $"',
         ];
 

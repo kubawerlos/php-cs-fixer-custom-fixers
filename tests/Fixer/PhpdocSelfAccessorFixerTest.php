@@ -45,8 +45,8 @@ class Foo {
      private $instance;
 
      /**
-      * @param Foo\Bar $x
-      * @param Bar\Foo $x
+      * @param Foo\\Bar $x
+      * @param Bar\\Foo $x
       * @param int $x count of Foo
       * @see Foo documentation
       */
@@ -87,15 +87,15 @@ class Foo {
 
      /**
       * @param Foo $x
-      * @param \Foo $x
+      * @param \\Foo $x
       * @param bool|Foo $x
       * @param Foo|int $x
       * @param bool|Foo|int $x
-      * @param bool|\Foo|int $x
+      * @param bool|\\Foo|int $x
       * @param Foo[] $foos
-      * @param \Foo[] $foos
+      * @param \\Foo[] $foos
       * @param Array<int, Foo> $foos
-      * @param Array<\Foo, int> $foos
+      * @param Array<\\Foo, int> $foos
       *
       * @return Foo
       */
@@ -105,18 +105,18 @@ class Foo {
 
         yield [ // with namespace - do not change
             '<?php
-namespace Some\Thing;
+namespace Some\\Thing;
 class Foo {
      /**
-      * @param \Foo $x
-      * @param Some\Foo $x
-      * @param Thing\Foo $x
-      * @param Some\Thing\Foo $x
-      * @param Foo\Some $x
-      * @param Foo\Some\Thing $x
-      * @param Foo\Some\Thing\Foo $x
-      * @param \Foo[] $foos
-      * @param Array<int, \Foo> $foos
+      * @param \\Foo $x
+      * @param Some\\Foo $x
+      * @param Thing\\Foo $x
+      * @param Some\\Thing\\Foo $x
+      * @param Foo\\Some $x
+      * @param Foo\\Some\\Thing $x
+      * @param Foo\\Some\\Thing\\Foo $x
+      * @param \\Foo[] $foos
+      * @param Array<int, \\Foo> $foos
       */
       public function bar(...$params) {}
 }',
@@ -124,7 +124,7 @@ class Foo {
 
         yield [ // with namespace - change
             '<?php
-namespace Some\Thing;
+namespace Some\\Thing;
 class Foo {
      /**
       * @param self $x
@@ -140,18 +140,18 @@ class Foo {
       public function bar(...$params) {}
 }',
             '<?php
-namespace Some\Thing;
+namespace Some\\Thing;
 class Foo {
      /**
       * @param Foo $x
-      * @param \Some\Thing\Foo $x
-      * @param bool|\Some\Thing\Foo $x
-      * @param \Some\Thing\Foo|int $x
-      * @param bool|\Some\Thing\Foo|int $x
+      * @param \\Some\\Thing\\Foo $x
+      * @param bool|\\Some\\Thing\\Foo $x
+      * @param \\Some\\Thing\\Foo|int $x
+      * @param bool|\\Some\\Thing\\Foo|int $x
       * @param Foo[] $foos
-      * @param \Some\Thing\Foo[] $foos
+      * @param \\Some\\Thing\\Foo[] $foos
       * @param Array<int, Foo> $foos
-      * @param Array<\Some\Thing\Foo, int> $foos
+      * @param Array<\\Some\\Thing\\Foo, int> $foos
       */
       public function bar(...$params) {}
 }',
@@ -159,7 +159,7 @@ class Foo {
 
         yield [
             '<?php
-namespace Some\Thing;
+namespace Some\\Thing;
 class Foo {
      /**
       * @author Jon Doe
@@ -169,7 +169,7 @@ class Foo {
       public function bar(...$params) {}
 }',
             '<?php
-namespace Some\Thing;
+namespace Some\\Thing;
 class Foo {
      /**
       * @author Jon Doe
@@ -182,7 +182,7 @@ class Foo {
 
         yield [
             '<?php
-namespace Some\Thing;
+namespace Some\\Thing;
 interface Foo {
      /**
       * @return Bar
@@ -194,7 +194,7 @@ interface Foo {
       public function getInstance();
 }',
             '<?php
-namespace Some\Thing;
+namespace Some\\Thing;
 interface Foo {
      /**
       * @return Bar
@@ -209,7 +209,7 @@ interface Foo {
 
         yield [
             '<?php
-                namespace Custom\Error;
+                namespace Custom\\Error;
                 class ReadingError {
                      /**
                       * @return self
@@ -218,10 +218,10 @@ interface Foo {
                 }
             ',
             '<?php
-                namespace Custom\Error;
+                namespace Custom\\Error;
                 class ReadingError {
                      /**
-                      * @return \Custom\Error\ReadingError
+                      * @return \\Custom\\Error\\ReadingError
                       */
                       public static function create() {}
                 }

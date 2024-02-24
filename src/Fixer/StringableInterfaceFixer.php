@@ -118,7 +118,7 @@ class Foo
             return false;
         }
 
-        if (\in_array('\stringable', $interfaces, true)) {
+        if (\in_array('\\stringable', $interfaces, true)) {
             return true;
         }
 

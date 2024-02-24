@@ -25,7 +25,7 @@ final class SingleSpaceAfterStatementFixerTest extends AbstractFixerTestCase
     private const EXAMPLE_WITH_ALL_TOKENS = '<?php
 namespace    FooNamespace;
 
-use    Foo\Bar as    FooBar;
+use    Foo\\Bar as    FooBar;
 use    const       SOME_CONST;
 use    function    someFunction;
 
@@ -75,7 +75,7 @@ abstract    class    FooClass extends    AbstractFoo implements    FooInterface
             for    ($i = 0; $i < 10; $i++ ) {
                 doThis();
             }
-        } catch    (\Exception $x) {
+        } catch    (\\Exception $x) {
             do    {
                 $i++;
             } while    (false);
@@ -286,7 +286,7 @@ do    {
         $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
         self::getFixer()->fix($this->createSplFileInfoDouble(), $tokens);
 
-        self::assertDoesNotMatchRegularExpression('/[^\n ] {2,}/', $tokens->generateCode());
+        self::assertDoesNotMatchRegularExpression('/[^\\n ] {2,}/', $tokens->generateCode());
     }
 
     /**

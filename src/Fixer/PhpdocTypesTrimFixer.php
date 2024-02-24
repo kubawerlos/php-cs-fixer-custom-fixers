@@ -42,6 +42,6 @@ function foo($x) {}
 
     protected function fixType(string $type): string
     {
-        return Preg::replace('/\h*(&|\|)\h*/', '$1', $type);
+        return Preg::replace('/\\h*(&|\\|)\\h*/', '$1', $type);
     }
 }

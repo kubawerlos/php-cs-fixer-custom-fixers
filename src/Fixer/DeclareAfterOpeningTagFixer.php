@@ -91,7 +91,7 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
         }
 
         if ($tokens[$semicolonIndex + 1]->isGivenKind(\T_WHITESPACE)) {
-            $content = Preg::replace('/^(\R?)(?=\R)/', '', $tokens[$semicolonIndex + 1]->getContent());
+            $content = Preg::replace('/^(\\R?)(?=\\R)/', '', $tokens[$semicolonIndex + 1]->getContent());
 
             $tokens->ensureWhitespaceAtIndex($semicolonIndex + 1, 0, $content);
         }

@@ -110,7 +110,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             if (!$tokens[$index]->isGivenKind(\T_WHITESPACE)) {
                 return false;
             }
-            if (Preg::match('/\R/', $tokens[$index]->getContent())) {
+            if (Preg::match('/\\R/', $tokens[$index]->getContent())) {
                 return false;
             }
         }
@@ -126,8 +126,8 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
         if (
             $this->allowPreventingTrailingSpaces
-            && Preg::match('/\h(\\\'|")$/', $firstContent)
-            && Preg::match('/^(\\\'|")\R/', $secondContent)
+            && Preg::match('/\\h(\\\'|")$/', $firstContent)
+            && Preg::match('/^(\\\'|")\\R/', $secondContent)
         ) {
             return;
         }
@@ -165,7 +165,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
         if ($currentBorder === '"') {
             if ($escapeDollarWhenIsLastCharacter && $content[\strlen($content) - 1] === '$') {
-                $content = \substr($content, 0, -1) . '\$';
+                $content = \substr($content, 0, -1) . '\\$';
             }
 
             return $content;
@@ -178,12 +178,12 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         $content = \str_replace('\\\'', '\'', $content);
 
         // escape dollar sign
-        $content = \str_replace('$', '\$', $content);
+        $content = \str_replace('$', '\\$', $content);
 
         // escape double quote
         return Preg::replace(
-            '/(?<!\\\)((\\\{2})*)(\\\)?"/',
-            '$1\\\$3$3"',
+            '/(?<!\\\\)((\\\\{2})*)(\\\\)?"/',
+            '$1\\\\$3$3"',
             $content,
         );
     }

@@ -36,7 +36,7 @@ final class NoUselessStrlenFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield ['<?php Foo\strlen($s) > 0;'];
+        yield ['<?php Foo\\strlen($s) > 0;'];
         yield ['<?php strsize($s) > 0;'];
         yield ['<?php strlen($s) > 1;'];
         yield ['<?php 1 < strlen($s);'];
@@ -52,28 +52,28 @@ final class NoUselessStrlenFixerTest extends AbstractFixerTestCase
         yield ['<?php \'\' !== $s;', '<?php 0 < strlen($s);'];
         yield ['<?php \'\' === $s;', '<?php 0 === strlen($s);'];
         yield ['<?php \'\' == $s;', '<?php 0 == strlen($s);'];
-        yield ['<?php \'\' !== $s;', '<?php 0 !== \strlen($s);'];
-        yield ['<?php \'\' != $s;', '<?php 0 != \strlen($s);'];
+        yield ['<?php \'\' !== $s;', '<?php 0 !== \\strlen($s);'];
+        yield ['<?php \'\' != $s;', '<?php 0 != \\strlen($s);'];
 
-        yield ['<?php $s !== \'\';', '<?php \strlen($s) > 0;'];
+        yield ['<?php $s !== \'\';', '<?php \\strlen($s) > 0;'];
         yield ['<?php $s !== \'\';', '<?php mb_strlen($s) > 0;'];
         yield ['<?php $s !== \'\';', '<?php StrLen($s) > 0;'];
         yield ['<?php $s !== \'\';', '<?php MB_strlen($s) > 0;'];
-        yield ['<?php $s !== \'\';', '<?php \mb_strlen($s) > 0;'];
+        yield ['<?php $s !== \'\';', '<?php \\mb_strlen($s) > 0;'];
 
         yield ['<?php $s !== \'\';', '<?php strlen ( $s ) > 0;'];
 
         yield [
             '<?php
                 $a !== \'\';
-                Foo\strlen($a) > 0;
+                Foo\\strlen($a) > 0;
                 strlen($a) > 1;
                 strlen($a, $b) > 0;
                 $a !== \'\';
             ',
             '<?php
                 strlen($a) > 0;
-                Foo\strlen($a) > 0;
+                Foo\\strlen($a) > 0;
                 strlen($a) > 1;
                 strlen($a, $b) > 0;
                 strlen($a) > 0;

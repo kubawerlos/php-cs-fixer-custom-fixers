@@ -5,7 +5,7 @@
         "ergebnis/composer-normalize": "^2.42.0",
         "infection/infection": "^0.27.10",
         "kubawerlos/composer-smaller-lock": "^1.0.1",
-        "kubawerlos/php-cs-fixer-config": "^3.25",
+        "kubawerlos/php-cs-fixer-config": "^3.26",
         "maglnet/composer-require-checker": "^4.8",
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",

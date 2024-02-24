@@ -48,7 +48,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
         yield 'ignore method' => ['<?php $printingHelper->var_dump($foo);'];
         yield 'ignore in function' => ['<?php prettify(print_r($x, true));'];
         yield 'ignore static method' => ['<?php PrintingHelper::var_dump($foo);'];
-        yield 'ignore namespaced function' => ['<?php PrintingHelper\var_dump($foo);'];
+        yield 'ignore namespaced function' => ['<?php PrintingHelper\\var_dump($foo);'];
         yield 'ignore constant' => ['<?php define("var_dump", "foo"); var_dump; bar($baz);'];
         yield 'ignore function definition' => ['<?php namespace Foo; function var_dump($bar) { return $baz; }'];
         yield 'ignore when not separate statement' => ['<?php echo "<pre>" . print_r($foo, true) . "</pre>";'];
@@ -150,8 +150,8 @@ bar($x);
         ];
 
         yield 'with leading backslash' => [
-            '<?php //\var_dump($x);',
-            '<?php \var_dump($x);',
+            '<?php //\\var_dump($x);',
+            '<?php \\var_dump($x);',
         ];
 
         yield 'with custom function' => [
@@ -240,8 +240,8 @@ baz();
     public function testFixPre80(): void
     {
         $this->doTest(
-            '<?php //\/* foo */var_dump/** bar */($x);',
-            '<?php \/* foo */var_dump/** bar */($x);',
+            '<?php //\\/* foo */var_dump/** bar */($x);',
+            '<?php \\/* foo */var_dump/** bar */($x);',
         );
     }
 }

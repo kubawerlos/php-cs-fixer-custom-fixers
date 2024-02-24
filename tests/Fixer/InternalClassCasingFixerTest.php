@@ -43,9 +43,9 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
     {
         yield ['<?php class STDCLASS {};'];
         yield ['<?php class STDCLASS { use EXCEPTION; };'];
-        yield ['<?php use TheVendor\TheException as EXCEPTION;'];
-        yield ['<?php new Foo\STDClass();'];
-        yield ['<?php new STDClass\Foo();'];
+        yield ['<?php use TheVendor\\TheException as EXCEPTION;'];
+        yield ['<?php new Foo\\STDClass();'];
+        yield ['<?php new STDClass\\Foo();'];
         yield ['<?php namespace Foo; new STDClass();'];
         yield ['<?php namespace STDClass; new Foo();'];
         yield ['<?php $foo->STDCLASS();'];
@@ -54,7 +54,7 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
         yield ['<?php Foo::STDCLASS;'];
         yield ['<?php function STDCLASS() { return 42; }; '];
         yield ['<?php STDCLASS();'];
-        yield ['<?php \STDCLASS();'];
+        yield ['<?php \\STDCLASS();'];
         yield ['<?php const STDCLASS = 42;'];
 
         yield [
@@ -63,13 +63,13 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
         ];
 
         yield [
-            '<?php new \stdClass();',
-            '<?php new \STDClass();',
+            '<?php new \\stdClass();',
+            '<?php new \\STDClass();',
         ];
 
         yield [
-            '<?php namespace Foo; new \stdClass();',
-            '<?php namespace Foo; new \STDClass();',
+            '<?php namespace Foo; new \\stdClass();',
+            '<?php namespace Foo; new \\STDClass();',
         ];
 
         yield [
@@ -85,15 +85,15 @@ final class InternalClassCasingFixerTest extends AbstractFixerTestCase
         yield [
             '<?php
                 $a = STDCLASS();
-                $b = new Foo\STDCLASS();
-                $c = new \stdClass();
-                $d = new \stdClass();
+                $b = new Foo\\STDCLASS();
+                $c = new \\stdClass();
+                $d = new \\stdClass();
             ',
             '<?php
                 $a = STDCLASS();
-                $b = new Foo\STDCLASS();
-                $c = new \stdClass();
-                $d = new \STDCLASS();
+                $b = new Foo\\STDCLASS();
+                $c = new \\stdClass();
+                $d = new \\STDCLASS();
             ',
         ];
     }

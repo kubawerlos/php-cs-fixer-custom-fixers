@@ -151,7 +151,7 @@ echo 0123_4567; // octal
             return $this->updateContent($content, 'x', null, 2, $this->hexadecimalSeparator);
         }
 
-        if (Preg::match('/e-?[\d_]+$/i', $content)) {
+        if (Preg::match('/e-?[\\d_]+$/i', $content)) {
             $content = $this->updateContent($content, null, 'e', 3, $this->floatSeparator);
 
             return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
@@ -184,7 +184,7 @@ echo 0123_4567; // octal
                 $substringToUpdate = \strrev($substringToUpdate);
             }
 
-            $substringToUpdate = Preg::replace(\sprintf('/[\da-fA-F]{%d}(?!-)(?!$)/', $groupSize), '$0_', $substringToUpdate);
+            $substringToUpdate = Preg::replace(\sprintf('/[\\da-fA-F]{%d}(?!-)(?!$)/', $groupSize), '$0_', $substringToUpdate);
 
             if ($fromRight) {
                 $substringToUpdate = \strrev($substringToUpdate);
