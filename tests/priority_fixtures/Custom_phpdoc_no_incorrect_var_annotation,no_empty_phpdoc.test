@@ -2,7 +2,6 @@
 { "PhpCsFixerCustomFixers/phpdoc_no_incorrect_var_annotation": true, "no_empty_phpdoc": true }
 --EXPECTED--
 <?php
-
 $y = 2;
 
 --INPUT--

@@ -122,7 +122,7 @@ class Foo {
             $types = [];
             foreach ($annotation->getTypes() as $type) {
                 $type = Preg::replace(
-                    \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])(%s|%s)\b(?!\\\\)/', $classyName, \preg_quote($fqcn, '/')),
+                    \sprintf('/(?<![a-zA-Z0-9_\x7f-\xff\\\])(%s|%s)\b(?!\\\)/', $classyName, \preg_quote($fqcn, '/')),
                     'self',
                     $type,
                 );

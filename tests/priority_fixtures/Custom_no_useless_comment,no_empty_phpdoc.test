@@ -2,7 +2,6 @@
 { "PhpCsFixerCustomFixers/no_useless_comment": true, "no_empty_phpdoc": true }
 --EXPECTED--
 <?php
-
 class Foo {}
 
 --INPUT--

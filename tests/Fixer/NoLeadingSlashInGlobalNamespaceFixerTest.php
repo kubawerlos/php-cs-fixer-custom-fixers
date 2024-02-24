@@ -36,66 +36,66 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
      */
     public static function provideFixCases(): iterable
     {
-        yield ['<?php namespace Foo; $y = new \\Bar();'];
+        yield ['<?php namespace Foo; $y = new \Bar();'];
         yield ['<?php \foo(\bar(), \baz());'];
 
         yield [
             '<?php $foo = new Bar();',
-            '<?php $foo = new \\Bar();',
+            '<?php $foo = new \Bar();',
         ];
 
         yield [
-            '<?php $foo = new Bar\\Baz();',
-            '<?php $foo = new \\Bar\\Baz();',
+            '<?php $foo = new Bar\Baz();',
+            '<?php $foo = new \Bar\Baz();',
         ];
 
         yield [
             '<?php $foo = Bar::NAME;',
-            '<?php $foo = \\Bar::NAME;',
+            '<?php $foo = \Bar::NAME;',
         ];
 
         yield [
-            '<?php $foo = Bar\\Baz::NAME;',
-            '<?php $foo = \\Bar\\Baz::NAME;',
+            '<?php $foo = Bar\Baz::NAME;',
+            '<?php $foo = \Bar\Baz::NAME;',
         ];
 
         yield [
             '<?php function f(Bar $bar, Baz $baz, ?Qux $qux) {};',
-            '<?php function f(\\Bar $bar, \\Baz $baz, ?\\Qux $qux) {};',
+            '<?php function f(\Bar $bar, \Baz $baz, ?\Qux $qux) {};',
         ];
 
         yield [
             '<?php function f(): Bar {};',
-            '<?php function f(): \\Bar {};',
+            '<?php function f(): \Bar {};',
         ];
 
         yield [
             '<?php
                 namespace { $x = new Foo(); }
-                namespace Bar { $y = new \\Baz(); }
+                namespace Bar { $y = new \Baz(); }
                 namespace { $x = new Foo2(); }
-                namespace Bar2 { $y = new \\Baz2(); }
+                namespace Bar2 { $y = new \Baz2(); }
             ',
             '<?php
-                namespace { $x = new \\Foo(); }
-                namespace Bar { $y = new \\Baz(); }
-                namespace { $x = new \\Foo2(); }
-                namespace Bar2 { $y = new \\Baz2(); }
+                namespace { $x = new \Foo(); }
+                namespace Bar { $y = new \Baz(); }
+                namespace { $x = new \Foo2(); }
+                namespace Bar2 { $y = new \Baz2(); }
             ',
         ];
 
         yield [
-            '<?php $x = \\getcwd();',
+            '<?php $x = \getcwd();',
         ];
 
         yield [
             '<?php
-                $a = new Foo\\Bar();
+                $a = new Foo\Bar();
                 $b = new Baz();
             ',
             '<?php
-                $a = new \\Foo\\Bar();
-                $b = new \\Baz();
+                $a = new \Foo\Bar();
+                $b = new \Baz();
             ',
         ];
     }
@@ -117,17 +117,17 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     {
         yield [
             '<?php $foo =  Bar::value();',
-            '<?php $foo = \\ Bar::value();',
+            '<?php $foo = \ Bar::value();',
         ];
 
         yield [
             '<?php $foo = /* comment */Bar::value();',
-            '<?php $foo = \\/* comment */Bar::value();',
+            '<?php $foo = \/* comment */Bar::value();',
         ];
 
         yield [
             '<?php $foo = /** comment */Bar::value();',
-            '<?php $foo = \\/** comment */Bar::value();',
+            '<?php $foo = \/** comment */Bar::value();',
         ];
     }
 

@@ -61,7 +61,7 @@ $bar = new Foo();
             }
 
             // remove ones not having type at the beginning
-            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\s+[\?\\\\a-zA-Z_\x7f-\xff]/');
+            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\s+[\?\\\a-zA-Z_\x7f-\xff]/');
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);
 

@@ -104,7 +104,7 @@ class Foo {
                         (?<=\n|\r|\r\n|^\#|^/{2}|^/\*[^\*\s]|^/\*{2})
                         \h*\**\h*
                         (
-                            (class|interface|trait)\h+([a-zA-Z\d\\\\]+)
+                            (class|interface|trait)\h+([a-zA-Z\d\\\]+)
                             |
                             %s
                         )
@@ -117,7 +117,7 @@ class Foo {
             );
         } elseif ($tokens[$nextIndex]->isGivenKind(\T_FUNCTION)) {
             $content = Preg::replace(
-                '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\\_]+|([A-Za-z0-9\\\\_]+\h+)?constructor).?(?=\R|$)/i',
+                '/\R?(?<=\n|\r|\r\n|^#|^\/\/|^\/\*|^\/\*\*)\h+\**\h*((adds?|gets?|removes?|sets?)\h+[A-Za-z0-9\\\_]+|([A-Za-z0-9\\\_]+\h+)?constructor).?(?=\R|$)/i',
                 '',
                 $content,
             );
