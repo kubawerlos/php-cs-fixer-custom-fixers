@@ -69,28 +69,28 @@ final class InfectionConfigBuilder
         $config['mutators']['ArrayItemRemoval'] = [
             'settings' => ['remove' => 'all'],
             'ignore' => [
-                'PhpCsFixerCustomFixers\\Fixer\\*::getConfigurationDefinition',
-                'PhpCsFixerCustomFixers\\Fixer\\*::getDefinition',
-                'PhpCsFixerCustomFixers\\Fixer\\*::isCandidate',
+                'PhpCsFixerCustomFixers\Fixer\*::getConfigurationDefinition',
+                'PhpCsFixerCustomFixers\Fixer\*::getDefinition',
+                'PhpCsFixerCustomFixers\Fixer\*::isCandidate',
                 NoLeadingSlashInGlobalNamespaceFixer::class . '::isToRemove', // whitespaces and comments cannot be inside FQCN in PHP 8+
             ],
         ];
 
         $config['mutators']['InstanceOf_'] = [
             'ignoreSourceCodeByRegex' => [
-                '\\\\assert\\(.+\\);',
+                '\\\assert\(.+\);',
             ],
         ];
 
         $config['mutators']['LogicalAnd'] = [
             'ignore' => [
-                'PhpCsFixerCustomFixers\\Fixer\\*::isCandidate',
+                'PhpCsFixerCustomFixers\Fixer\*::isCandidate',
             ],
         ];
 
         $config['mutators']['PublicVisibility'] = [
             'ignore' => [
-                'PhpCsFixerCustomFixers\\Fixer\\AbstractFixer::name',
+                'PhpCsFixerCustomFixers\Fixer\AbstractFixer::name',
             ],
         ];
 

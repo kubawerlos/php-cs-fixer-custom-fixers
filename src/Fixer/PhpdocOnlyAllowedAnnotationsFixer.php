@@ -98,7 +98,7 @@ function foo_bar() {}
 
             foreach ($docBlock->getAnnotations() as $annotation) {
                 if (
-                    Preg::match('/@([a-zA-Z0-9_\\-\\\\]+)/', $annotation->getContent(), $matches)
+                    Preg::match('/@([a-zA-Z0-9_\-\\\]+)/', $annotation->getContent(), $matches)
                     && \in_array($matches[1], $this->elements, true)
                 ) {
                     continue;

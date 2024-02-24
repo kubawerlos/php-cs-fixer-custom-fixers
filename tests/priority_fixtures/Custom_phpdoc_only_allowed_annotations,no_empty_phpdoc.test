@@ -2,7 +2,6 @@
 { "PhpCsFixerCustomFixers/phpdoc_only_allowed_annotations": true, "no_empty_phpdoc": true }
 --EXPECTED--
 <?php
-
 class Foo {}
 
 --INPUT--

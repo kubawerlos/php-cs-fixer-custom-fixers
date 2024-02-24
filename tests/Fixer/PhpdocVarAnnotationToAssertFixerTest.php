@@ -66,7 +66,7 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             '<?php
                 /** @var Foo\Bar\ $x */
                 $x = getValue();
-                /** @var Foo\\\\Bar $y */
+                /** @var Foo\\\Bar $y */
                 $y = getValue();
             ',
         ];

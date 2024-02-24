@@ -52,7 +52,7 @@ final class FixersTest extends TestCase
             ->notName('Abstract*Fixer.php');
 
         foreach ($finder as $file) {
-            $className = 'PhpCsFixerCustomFixers\\Fixer\\' . $file->getBasename('.php');
+            $className = 'PhpCsFixerCustomFixers\Fixer\\' . $file->getBasename('.php');
 
             $fixer = new $className();
             \assert($fixer instanceof FixerInterface);
