@@ -2,6 +2,7 @@
 
 ## v3.21.0
 - Deprecate PhpdocArrayStyleFixer - use "phpdoc_array_type"
+- NoUselessParenthesisFixer - keep parentheses around `and`, `xor` and `or`
 - Update minimum PHP CS Fixer version to 3.50.0
 
 ## v3.20.0
