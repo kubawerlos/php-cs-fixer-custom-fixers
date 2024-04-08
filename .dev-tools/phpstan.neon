@@ -9,6 +9,7 @@ parameters:
   reportMaybesInMethodSignatures: false
   stubFiles:
     - ./sca.stub
+  treatPhpDocTypesAsCertain: false
 
 includes:
   - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
