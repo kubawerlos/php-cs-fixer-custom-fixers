@@ -151,7 +151,7 @@ function foo($x) {}
             '<?php
 /**
  * @param Type $x First one
- * @param Type $x Second one one
+ * @param Type $x Second one
  */
 function foo($x) {}
 ',

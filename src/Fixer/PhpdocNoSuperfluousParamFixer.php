@@ -115,15 +115,17 @@ function foo($b, $s) {}
      */
     private function getFilteredDocComment(string $comment, array $paramNames): string
     {
-        $regexParamNamesPattern = '(\\Q' . \implode('\\E|\\Q', $paramNames) . '\\E)';
-
         $doc = new DocBlock($comment);
 
         $foundParamNames = [];
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
-            if (Preg::match(\sprintf('/@param\\s+(?:[^\\$](?:[^<.]|<[^>]*>)*\\s*)?(?:&|\\.\\.\\.)?\\s*(?=\\$)%s\\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) && !\in_array($matches[1], $foundParamNames, true)) {
-                \assert(\is_string($matches[1]));
-                $foundParamNames[] = $matches[1];
+            $paramName = $this->getParamName($annotation->getContent());
+            if ($paramName === null) {
+                continue;
+            }
+
+            if (\in_array($paramName, $paramNames, true) && !\in_array($paramName, $foundParamNames, true)) {
+                $foundParamNames[] = $paramName;
                 continue;
             }
 
@@ -131,5 +133,16 @@ function foo($b, $s) {}
         }
 
         return $doc->getContent();
+    }
+
+    private function getParamName(string $annotation): ?string
+    {
+        Preg::match('/@param\\s+(?:[^\\$]+)?\\s*(\\$[a-zA-Z_\\x80-\\xff][a-zA-Z0-9_\\x80-\\xff]*)\\b/', $annotation, $matches);
+
+        if (!\is_string($matches[1])) {
+            return null;
+        }
+
+        return $matches[1];
     }
 }
