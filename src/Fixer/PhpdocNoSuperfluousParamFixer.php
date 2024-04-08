@@ -122,6 +122,7 @@ function foo($b, $s) {}
         $foundParamNames = [];
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
             if (Preg::match(\sprintf('/@param\\s+(?:[^\\$](?:[^<.]|<[^>]*>)*\\s*)?(?:&|\\.\\.\\.)?\\s*(?=\\$)%s\\b/', $regexParamNamesPattern), $annotation->getContent(), $matches) && !\in_array($matches[1], $foundParamNames, true)) {
+                \assert(\is_string($matches[1]));
                 $foundParamNames[] = $matches[1];
                 continue;
             }
