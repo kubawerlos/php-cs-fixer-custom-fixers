@@ -151,7 +151,7 @@ function foo($x) {}
             '<?php
 /**
  * @param Type $x First one
- * @param Type $x Second one one
+ * @param Type $x Second one
  */
 function foo($x) {}
 ',
@@ -278,5 +278,26 @@ function foo(callable $checker) {}
                 ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
             ];
         }
+
+        yield [
+            <<<'PHP'
+                <?php
+                /**
+                 */
+                function foo($x) {}
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @param $a
+                 * @param
+                 * @param
+                 * @param $b
+                 * @param no variable
+                 * @param no variable
+                 */
+                function foo($x) {}
+                PHP,
+        ];
     }
 }
