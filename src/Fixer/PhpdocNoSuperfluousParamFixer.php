@@ -136,7 +136,7 @@ function foo($b, $s) {}
     {
         Preg::match('/@param\\s+(?:[^\\$]+)?\\s*(\\$[a-zA-Z_\\x80-\\xff][a-zA-Z0-9_\\x80-\\xff]*)\\b/', $annotation, $matches);
 
-        if (!\is_string($matches[1])) {
+        if (!\array_key_exists(1, $matches) || !\is_string($matches[1])) {
             return null;
         }
 

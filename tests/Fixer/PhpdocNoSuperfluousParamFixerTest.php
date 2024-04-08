@@ -279,15 +279,25 @@ function foo(callable $checker) {}
             ];
         }
 
-        yield [<<<'PHP'
-            <?php
-            /**
-             * @param $d
-             * @param
-             * @param no variable
-             * @param no variable
-             */
-            function foo($x) {}
-            PHP];
+        yield [
+            <<<'PHP'
+                <?php
+                /**
+                 */
+                function foo($x) {}
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @param $a
+                 * @param
+                 * @param
+                 * @param $b
+                 * @param no variable
+                 * @param no variable
+                 */
+                function foo($x) {}
+                PHP,
+        ];
     }
 }
