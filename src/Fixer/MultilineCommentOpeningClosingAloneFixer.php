@@ -70,6 +70,8 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
 
         Preg::match('#\\R(\\h*)#', $tokens[$index]->getContent(), $matches);
+        \assert(\is_string($matches[1]));
+
         $indent = $matches[1] . '*';
 
         Preg::match('#^(?<opening>/\\*+)(?<before_newline>.*?)(?<newline>\\R)(?<after_newline>.*)$#s', $tokens[$index]->getContent(), $matches);
