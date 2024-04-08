@@ -120,9 +120,6 @@ function foo($b, $s) {}
         $foundParamNames = [];
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
             $paramName = $this->getParamName($annotation->getContent());
-            if ($paramName === null) {
-                continue;
-            }
 
             if (\in_array($paramName, $paramNames, true) && !\in_array($paramName, $foundParamNames, true)) {
                 $foundParamNames[] = $paramName;

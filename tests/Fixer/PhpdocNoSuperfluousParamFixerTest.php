@@ -278,5 +278,16 @@ function foo(callable $checker) {}
                 ', $modifier, $modifier === 'abstract' ? ';' : '{}'),
             ];
         }
+
+        yield [<<<'PHP'
+            <?php
+            /**
+             * @param $d
+             * @param
+             * @param no variable
+             * @param no variable
+             */
+            function foo($x) {}
+            PHP];
     }
 }
