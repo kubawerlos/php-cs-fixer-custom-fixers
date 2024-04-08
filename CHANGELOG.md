@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.22.0
+- NoPhpStormGeneratedCommentFixer - handle more comments
+
 ## v3.21.0
 - Deprecate PhpdocArrayStyleFixer - use "phpdoc_array_type"
 - NoUselessParenthesisFixer - keep parentheses around `and`, `xor` and `or`

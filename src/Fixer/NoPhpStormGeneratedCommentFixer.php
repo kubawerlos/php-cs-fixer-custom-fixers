@@ -59,7 +59,7 @@ namespace Foo;
                 continue;
             }
 
-            if (!Preg::match('/\\*\\h+Created by PhpStorm/i', $tokens[$index]->getContent(), $matches)) {
+            if (!Preg::match('/\\*\\h+Created by( JetBrains)? PhpStorm/i', $tokens[$index]->getContent(), $matches)) {
                 continue;
             }
 

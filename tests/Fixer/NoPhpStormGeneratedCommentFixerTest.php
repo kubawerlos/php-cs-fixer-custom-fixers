@@ -167,5 +167,22 @@ namespace Foo;
 namespace Foo;
 ',
         ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                $foo = 2;
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * Created by JetBrains PhpStorm.
+                 * User: john
+                 * Date: 1/1/11
+                 * Time: 11:11 AM
+                 */
+                $foo = 2;
+                PHP,
+        ];
     }
 }
