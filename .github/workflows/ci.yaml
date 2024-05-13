@@ -22,6 +22,8 @@ jobs:
           php-version: '8.3'
           extensions: none, curl, dom, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
           coverage: none
+      - if: ${{ github.event_name != 'pull_request' }}
+        run: rm ./.dev-tools/composer.lock
       - run: composer update --no-progress
       - run: composer analyse
 
