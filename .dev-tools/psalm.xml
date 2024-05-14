@@ -24,6 +24,7 @@
         <DeprecatedClass errorLevel='suppress' />
         <InternalClass errorLevel='suppress' />
         <InternalMethod errorLevel='suppress' />
+        <MissingClassConstType errorLevel='suppress' />
         <MissingConstructor errorLevel='suppress' />
         <MoreSpecificImplementedParamType errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
