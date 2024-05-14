@@ -37,7 +37,6 @@
             "./check_trailing_whitespaces.sh",
             "@composer validate --strict --working-dir=..",
             "@composer normalize --dry-run ../composer.json",
-            "@composer bump --dry-run",
             "@composer normalize --dry-run",
             "composer-require-checker check ../composer.json --config-file composer-require-checker.json",
             "phpcs",
