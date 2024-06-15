@@ -45,6 +45,9 @@ unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP 
 unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
 $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
 
+$rules[PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';
+$rules[PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'use';
+
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
 }

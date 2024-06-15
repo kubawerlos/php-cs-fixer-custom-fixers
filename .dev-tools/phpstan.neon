@@ -5,7 +5,7 @@ parameters:
     -
       message: '/^Class PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+Fixer implements generic interface PhpCsFixer\\Fixer\\ConfigurableFixerInterface but does not specify its types/'
       path: ../src
-      count: 10
+      count: 9
   level: max
   paths:
     - ../src

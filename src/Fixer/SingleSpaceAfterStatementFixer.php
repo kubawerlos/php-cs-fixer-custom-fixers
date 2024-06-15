@@ -12,6 +12,7 @@
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\ConfigurableFixerTrait;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
@@ -22,8 +23,16 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @implements ConfigurableFixerInterface<InputConfig, InputConfig>
+ *
+ * @phpstan-type InputConfig array{allow_linebreak: bool    }
+ */
 final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
+    /** @use ConfigurableFixerTrait<InputConfig, InputConfig> */
+    use ConfigurableFixerTrait;
+
     /** @var list<int> */
     private array $tokens = [
         \T_ABSTRACT,
@@ -89,7 +98,7 @@ final class SingleSpaceAfterStatementFixer extends AbstractFixer implements Conf
         );
     }
 
-    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    public function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('allow_linebreak', 'whether to allow statement followed by linebreak'))
