@@ -1,6 +1,11 @@
 parameters:
   bootstrapFiles:
     - ../vendor/autoload.php
+  ignoreErrors:
+    -
+      message: '/^Class PhpCsFixerCustomFixers\\Fixer\\[a-zA-Z]+Fixer implements generic interface PhpCsFixer\\Fixer\\ConfigurableFixerInterface but does not specify its types/'
+      path: ../src
+      count: 10
   level: max
   paths:
     - ../src

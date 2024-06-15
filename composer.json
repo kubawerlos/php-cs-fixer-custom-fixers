@@ -13,11 +13,18 @@
         "php": "^7.4 || ^8.0",
         "ext-filter": "*",
         "ext-tokenizer": "*",
-        "friendsofphp/php-cs-fixer": "^3.50"
+        "friendsofphp/php-cs-fixer": "dev-options_template as 3.59.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6.4 || ^10.0.14"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/keradus/PHP-CS-Fixer.git",
+            "canonical": false
+        }
+    ],
     "autoload": {
         "psr-4": {
             "PhpCsFixerCustomFixers\\": "src"

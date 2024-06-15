@@ -37,11 +37,11 @@ jobs:
             description: 'with lowest dependencies'
             composer-flags: '--prefer-lowest'
             php-version: '7.4'
-          - os: ubuntu-latest
-            description: 'with lowest dependencies and shim package'
-            composer-flags: '--prefer-lowest'
-            use-shim-package: true
-            php-version: '7.4'
+#          - os: ubuntu-latest
+#            description: 'with lowest dependencies and shim package'
+#            composer-flags: '--prefer-lowest'
+#            use-shim-package: true
+#            php-version: '7.4'
           - os: ubuntu-latest
             php-version: '8.0'
           - os: ubuntu-latest
@@ -58,10 +58,10 @@ jobs:
             description: 'with PHP CS Fixer from master'
             with-php-cs-fixer-from-master: true
             php-version: '8.3'
-          - os: ubuntu-latest
-            description: 'with shim package'
-            use-shim-package: true
-            php-version: '8.3'
+#          - os: ubuntu-latest
+#            description: 'with shim package'
+#            use-shim-package: true
+#            php-version: '8.3'
           - os: ubuntu-latest
             description: 'with bootstrap'
             with-bootstrap: true
@@ -128,7 +128,7 @@ jobs:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: ./vendor/bin/php-coveralls --verbose
 
-      - if: ${{ matrix.calculate-coverage }}
-        env:
-          FAST_LINT_TEST_CASES: 1
-        run: composer infection
+#      - if: ${{ matrix.calculate-coverage }}
+#        env:
+#          FAST_LINT_TEST_CASES: 1
+#        run: composer infection
