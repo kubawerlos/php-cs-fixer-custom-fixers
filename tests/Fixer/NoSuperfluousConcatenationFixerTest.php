@@ -186,6 +186,12 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
             ['allow_preventing_trailing_spaces' => true],
         ];
 
+        yield 'option for leaving double-quoted string and single-quoted string concatendated' => [
+            '\'abc\'."def"',
+            null,
+            ['keep_concatenation_for_different_quotes' => true]
+        ];
+
         yield 'dollar as last character in double quotes merged with double quotes' => [
             '"My name is \\$foo"',
             '"My name is $" . "foo"',
