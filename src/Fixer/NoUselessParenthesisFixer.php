@@ -132,7 +132,6 @@ foo(($bar));
                 \T_VARIABLE,
                 \T_WHILE,
                 CT::T_CLASS_CONSTANT,
-                CT::T_DOLLAR_CLOSE_CURLY_BRACES,
             ])
         ) {
             return true;
