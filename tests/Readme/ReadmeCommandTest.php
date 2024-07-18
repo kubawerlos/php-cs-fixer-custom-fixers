@@ -46,6 +46,8 @@ final class ReadmeCommandTest extends TestCase
             (string) \file_get_contents(__DIR__ . '/../../README.md'),
             $matches,
         );
+        self::assertArrayHasKey(1, $matches);
+
         $expectedNumberOfTests = (int) $matches[1];
 
         $readmeCommand = new \ReflectionClass(ReadmeCommand::class);
