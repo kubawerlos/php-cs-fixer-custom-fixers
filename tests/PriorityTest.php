@@ -92,6 +92,9 @@ final class PriorityTest extends TestCase
                 --EXPECTED--\\n(?<expected>.*)\\n
                 --INPUT--\\n(?<input>.*)
             $/sx', $test->getContents(), $matches);
+            self::assertArrayHasKey('configuration', $matches);
+            self::assertArrayHasKey('expected', $matches);
+            self::assertArrayHasKey('input', $matches);
 
             /** @var array<string, array<string, string>|bool> $configuration */
             $configuration = \json_decode($matches['configuration'], true);
