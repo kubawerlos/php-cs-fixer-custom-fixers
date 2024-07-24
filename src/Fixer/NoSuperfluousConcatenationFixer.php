@@ -31,6 +31,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class NoSuperfluousConcatenationFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     private bool $allowPreventingTrailingSpaces = false;
+    private bool $keepConcatenationForDifferentQuotes = false;
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -48,6 +49,10 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 ->setAllowedTypes(['bool'])
                 ->setDefault($this->allowPreventingTrailingSpaces)
                 ->getOption(),
+            (new FixerOptionBuilder('keep_concatenation_for_different_quotes', 'whether to keep concatenation if single-quoted and double-quoted would be concatenated'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault($this->keepConcatenationForDifferentQuotes)
+                ->getOption(),
         ]);
     }
 
@@ -58,6 +63,9 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
     {
         if (\array_key_exists('allow_preventing_trailing_spaces', $configuration)) {
             $this->allowPreventingTrailingSpaces = $configuration['allow_preventing_trailing_spaces'];
+        }
+        if (\array_key_exists('keep_concatenation_for_different_quotes', $configuration)) {
+            $this->keepConcatenationForDifferentQuotes = $configuration['keep_concatenation_for_different_quotes'];
         }
     }
 
@@ -103,6 +111,12 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 continue;
             }
             if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
+                continue;
+            }
+            if (
+                $this->keepConcatenationForDifferentQuotes
+                && substr($tokens[$firstIndex]->getContent(), 0, 1) !== substr($tokens[$secondIndex]->getContent(), 0, 1)
+            ) {
                 continue;
             }
 
