@@ -12,7 +12,9 @@
 include __DIR__ . '/../vendor/autoload.php';
 include __DIR__ . '/vendor/autoload.php';
 
-$configBuilder = new PhpCsFixerCustomFixersDev\InfectionConfigBuilder();
+use PhpCsFixerCustomFixersDev\InfectionConfigBuilder;
+
+$configBuilder = new InfectionConfigBuilder();
 $config = $configBuilder->build();
 
 file_put_contents(__DIR__ . '/infection.json', json_encode($config, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . "\n");
