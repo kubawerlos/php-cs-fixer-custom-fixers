@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.22.0
+- NoSuperfluousConcatenationFixer - add option "keep_concatenation_for_different_quotes"
 - NoPhpStormGeneratedCommentFixer - handle more comments
 - Update minimum PHP CS Fixer version to 3.59.0
 
