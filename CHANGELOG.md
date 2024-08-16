@@ -3,7 +3,7 @@
 ## v3.22.0
 - NoSuperfluousConcatenationFixer - add option "keep_concatenation_for_different_quotes"
 - NoPhpStormGeneratedCommentFixer - handle more comments
-- Update minimum PHP CS Fixer version to 3.59.0
+- Update minimum PHP CS Fixer version to 3.61.1
 
 ## v3.21.0
 - Deprecate PhpdocArrayStyleFixer - use "phpdoc_array_type"
