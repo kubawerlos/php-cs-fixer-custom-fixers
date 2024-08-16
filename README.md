@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3543-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3545-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -313,6 +313,7 @@ There must be no parameters passed by reference in functions.
 There must be no superfluous concatenation of literal strings.
 Configuration options:
 - `allow_preventing_trailing_spaces` (`bool`): whether to keep concatenation if it prevents having trailing spaces in string; defaults to `false`
+- `keep_concatenation_for_different_quotes` (`bool`): whether to keep concatenation if single-quoted and double-quoted would be concatenated; defaults to `false`
 ```diff
  <?php
 -echo 'foo' . 'bar';
