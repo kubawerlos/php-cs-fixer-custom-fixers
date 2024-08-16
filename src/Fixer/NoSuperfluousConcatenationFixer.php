@@ -94,25 +94,16 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 continue;
             }
 
-            $firstIndex = $tokens->getPrevMeaningfulToken($index);
-            \assert(\is_int($firstIndex));
-
-            if (!$tokens[$firstIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
-                continue;
-            }
-            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $firstIndex, $index)) {
+            $firstIndex = $this->getFirstIndex($tokens, $index);
+            if ($firstIndex === null) {
                 continue;
             }
 
-            $secondIndex = $tokens->getNextMeaningfulToken($index);
-            \assert(\is_int($secondIndex));
+            $secondIndex = $this->getSecondIndex($tokens, $index);
+            if ($secondIndex === null) {
+                continue;
+            }
 
-            if (!$tokens[$secondIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
-                continue;
-            }
-            if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
-                continue;
-            }
             if (
                 $this->keepConcatenationForDifferentQuotes
                 && \substr($tokens[$firstIndex]->getContent(), 0, 1) !== \substr($tokens[$secondIndex]->getContent(), 0, 1)
@@ -122,6 +113,36 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
 
             $this->fixConcat($tokens, $firstIndex, $secondIndex);
         }
+    }
+
+    private function getFirstIndex(Tokens $tokens, int $index): ?int
+    {
+        $firstIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($firstIndex));
+
+        if (!$tokens[$firstIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
+            return null;
+        }
+        if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $firstIndex, $index)) {
+            return null;
+        }
+
+        return $firstIndex;
+    }
+
+    private function getSecondIndex(Tokens $tokens, int $index): ?int
+    {
+        $secondIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($secondIndex));
+
+        if (!$tokens[$secondIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
+            return null;
+        }
+        if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
+            return null;
+        }
+
+        return $secondIndex;
     }
 
     private function areOnlyHorizontalWhitespacesBetween(Tokens $tokens, int $indexStart, int $indexEnd): bool
