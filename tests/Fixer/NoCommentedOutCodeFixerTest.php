@@ -40,6 +40,7 @@ final class NoCommentedOutCodeFixerTest extends AbstractFixerTestCase
         yield ['<?php # do not remove me'];
         yield ['<?php /* do not remove me */'];
         yield ['<?php /** do not remove me */'];
+        yield ['<?php /** Abstract class Foo */'];
         yield ['<?php
                     /**
                      * do not remove me
