@@ -131,7 +131,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
     {
         try {
             @Tokens::fromCode($content);
-        } catch (\CompileError|\ParseError $error) {
+        } catch (\CompileError $error) {
             return false;
         }
 
