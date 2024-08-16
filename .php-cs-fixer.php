@@ -12,26 +12,35 @@
 require_once __DIR__ . '/.dev-tools/vendor/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixerConfig\Rules\LibraryRules;
+use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
+use PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer;
+use PhpCsFixerCustomFixers\Fixers;
+
 // sanity check
 $expectedPath = realpath(__DIR__ . '/src/Fixers.php');
-$actualPath = (new ReflectionClass(PhpCsFixerCustomFixers\Fixers::class))->getFileName();
+$actualPath = (new ReflectionClass(Fixers::class))->getFileName();
 if ($expectedPath !== $actualPath) {
     printf(
         'Class %s must be loaded from "%s", but loaded from "%s"!' . PHP_EOL,
-        PhpCsFixerCustomFixers\Fixers::class,
+        Fixers::class,
         $expectedPath,
         $actualPath,
     );
     exit(1);
 }
 
-$rules = (new PhpCsFixerConfig\Rules\LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
+$rules = (new LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
-$rules[PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer::name()] = ['allow_preventing_trailing_spaces' => true];
+$rules[NoSuperfluousConcatenationFixer::name()] = ['allow_preventing_trailing_spaces' => true];
 
 // add new fixers that are not in PhpCsFixerConfig yet
-foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
-    if ($fixer instanceof PhpCsFixer\Fixer\DeprecatedFixerInterface) {
+foreach (new Fixers() as $fixer) {
+    if ($fixer instanceof DeprecatedFixerInterface) {
         continue;
     }
     if (!array_key_exists($fixer->getName(), $rules)) {
@@ -42,20 +51,23 @@ foreach (new PhpCsFixerCustomFixers\Fixers() as $fixer) {
 unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['get_class_to_class_keyword']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
-unset($rules[PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
+unset($rules['php_unit_attributes']); // TODO: remove when dropping support to PHP <8.0
+unset($rules[PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
 $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
+
+$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
 }
 
-return (new PhpCsFixer\Config())
-    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
+return (new Config())
+    ->registerCustomFixers(new Fixers())
     ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
     ->setRiskyAllowed(true)
     ->setUsingCache(false)
     ->setFinder(
-        PhpCsFixer\Finder::create()
+        Finder::create()
             ->ignoreDotFiles(false)
             ->in(__DIR__),
     )

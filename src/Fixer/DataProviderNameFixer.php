@@ -24,6 +24,11 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @deprecated
+ *
+ * @implements ConfigurableFixerInterface<_InputConfig, _Config>
+ *
+ * @phpstan-type _InputConfig array{prefix?: string, suffix?: string}
+ * @phpstan-type _Config array{prefix: string, suffix: string}
  */
 final class DataProviderNameFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
@@ -72,9 +77,6 @@ class FooTest extends TestCase {
         ]);
     }
 
-    /**
-     * @param array<string, string> $configuration
-     */
     public function configure(array $configuration): void
     {
         $this->phpUnitDataProviderNameFixer->configure($configuration);

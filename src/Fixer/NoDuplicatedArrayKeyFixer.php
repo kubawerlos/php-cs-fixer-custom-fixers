@@ -25,6 +25,12 @@ use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ArrayAnalyzer;
 use PhpCsFixerCustomFixers\TokenRemover;
 
+/**
+ * @implements ConfigurableFixerInterface<_InputConfig, _Config>
+ *
+ * @phpstan-type _InputConfig array{ignore_expressions?: bool}
+ * @phpstan-type _Config array{ignore_expressions: bool}
+ */
 final class NoDuplicatedArrayKeyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     private bool $ignoreExpressions = true;

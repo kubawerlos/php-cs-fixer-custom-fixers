@@ -2,6 +2,7 @@
 
 ## v3.22.0
 - NoPhpStormGeneratedCommentFixer - handle more comments
+- Update minimum PHP CS Fixer version to 3.59.0
 
 ## v3.21.0
 - Deprecate PhpdocArrayStyleFixer - use "phpdoc_array_type"

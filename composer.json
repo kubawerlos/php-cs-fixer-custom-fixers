@@ -13,10 +13,10 @@
         "php": "^7.4 || ^8.0",
         "ext-filter": "*",
         "ext-tokenizer": "*",
-        "friendsofphp/php-cs-fixer": "^3.50"
+        "friendsofphp/php-cs-fixer": "^3.61.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.6.4 || ^10.0.14"
+        "phpunit/phpunit": "^9.6.4 || ^10.5.29"
     },
     "autoload": {
         "psr-4": {

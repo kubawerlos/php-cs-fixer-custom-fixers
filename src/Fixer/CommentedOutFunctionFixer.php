@@ -24,6 +24,12 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
 
+/**
+ * @implements ConfigurableFixerInterface<_InputConfig, _Config>
+ *
+ * @phpstan-type _InputConfig array{functions?: list<string>}
+ * @phpstan-type _Config array{functions: list<string>}
+ */
 final class CommentedOutFunctionFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     /** @var list<string> */

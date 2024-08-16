@@ -22,6 +22,12 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @implements ConfigurableFixerInterface<_InputConfig, _Config>
+ *
+ * @phpstan-type _InputConfig array{allow_preventing_trailing_spaces?: bool}
+ * @phpstan-type _Config array{allow_preventing_trailing_spaces: bool}
+ */
 final class NoSuperfluousConcatenationFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
     private bool $allowPreventingTrailingSpaces = false;

@@ -27,6 +27,11 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @deprecated
+ *
+ * @implements ConfigurableFixerInterface<_InputConfig, _Config>
+ *
+ * @phpstan-type _InputConfig array{binary?: bool, decimal?: bool, float?: bool, hexadecimal?: bool, octal?: bool}
+ * @phpstan-type _Config array{binary: bool, decimal: bool, float: bool, hexadecimal: bool, octal: bool}
  */
 final class NumericLiteralSeparatorFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
