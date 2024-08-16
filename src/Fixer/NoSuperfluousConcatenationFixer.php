@@ -115,7 +115,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             }
             if (
                 $this->keepConcatenationForDifferentQuotes
-                && substr($tokens[$firstIndex]->getContent(), 0, 1) !== substr($tokens[$secondIndex]->getContent(), 0, 1)
+                && \substr($tokens[$firstIndex]->getContent(), 0, 1) !== \substr($tokens[$secondIndex]->getContent(), 0, 1)
             ) {
                 continue;
             }

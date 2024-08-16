@@ -186,10 +186,26 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
             ['allow_preventing_trailing_spaces' => true],
         ];
 
-        yield 'option for leaving double-quoted string and single-quoted string concatendated' => [
+        yield 'option for leaving double-quoted string and single-quoted string concatenated' => [
             '\'abc\'."def"',
             null,
-            ['keep_concatenation_for_different_quotes' => true]
+            ['keep_concatenation_for_different_quotes' => true],
+        ];
+
+        yield 'keep concatenation for different quotes and merge others' => [
+            <<<'CONTENT'
+                "ab";
+                "c" . 'd';
+                'e' . "f";
+                'gh';
+                CONTENT,
+            <<<'CONTENT'
+                "a" . "b";
+                "c" . 'd';
+                'e' . "f";
+                'g' . 'h';
+                CONTENT,
+            ['keep_concatenation_for_different_quotes' => true],
         ];
 
         yield 'dollar as last character in double quotes merged with double quotes' => [
