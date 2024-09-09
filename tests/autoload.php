@@ -37,5 +37,5 @@ if (!interface_exists(FixerInterface::class)) {
         }
         break;
     }
-    require_once 'phar://php-cs-fixer.phar/vendor/autoload.php';
+    require_once 'phar://php-cs-fixer.phar/vendor/autoload.php'; // @phpstan-ignore-line
 }
