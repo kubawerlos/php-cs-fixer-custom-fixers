@@ -70,7 +70,6 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
 
         Preg::match('#\\R(\\h*)#', $tokens[$index]->getContent(), $matches);
-        \assert(\is_string($matches[1]));
 
         $indent = $matches[1] . '*';
 
@@ -80,16 +79,9 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
 
         $opening = $matches['opening'];
-        \assert(\is_string($opening));
-
         $beforeNewline = $matches['before_newline'];
-        \assert(\is_string($beforeNewline));
-
         $newline = $matches['newline'];
-        \assert(\is_string($newline));
-
         $afterNewline = $matches['after_newline'];
-        \assert(\is_string($afterNewline));
 
         if ($beforeNewline[0] !== ' ') {
             $indent .= ' ';
@@ -117,7 +109,6 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         Preg::match('#\\R(\\h*)#', $tokens[$index]->getContent(), $matches);
 
         $indent = $matches[1];
-        \assert(\is_string($indent));
 
         $newContent = Preg::replace('#(\\R)(.+?)\\h*(\\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $tokens[$index]->getContent());
 
