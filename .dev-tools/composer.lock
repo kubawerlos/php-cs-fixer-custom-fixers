@@ -4,25 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "496b1007182f74a276f0d8d554155330",
+    "content-hash": "89958a6feafcc454b20a878af30d6151",
     "packages": [
         {
             "name": "colinodell/json5",
-            "version": "v2.3.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/colinodell/json5.git",
-                "reference": "15b063f8cb5e6deb15f0cd39123264ec0d19c710"
+                "reference": "5724d21bc5c910c2560af1b8915f0cc0163579c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/colinodell/json5/zipball/15b063f8cb5e6deb15f0cd39123264ec0d19c710",
-                "reference": "15b063f8cb5e6deb15f0cd39123264ec0d19c710"
+                "url": "https://api.github.com/repos/colinodell/json5/zipball/5724d21bc5c910c2560af1b8915f0cc0163579c8",
+                "reference": "5724d21bc5c910c2560af1b8915f0cc0163579c8"
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": "^7.1.3|^8.0"
+                "php": "^8.0"
             },
             "bin": [
                 "bin/json5"
@@ -30,7 +30,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "3.0-dev"
+                    "dev-main": "4.0-dev"
                 }
             },
             "autoload": {
@@ -430,19 +430,19 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.27.11",
+            "version": "0.29.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "6d55979c457eef2a5d0d80446c67ca533f201961"
+                "reference": "a8510c1d472892dda2ae32e2c4b2e795533db810"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/6d55979c457eef2a5d0d80446c67ca533f201961",
-                "reference": "6d55979c457eef2a5d0d80446c67ca533f201961"
+                "url": "https://api.github.com/repos/infection/infection/zipball/a8510c1d472892dda2ae32e2c4b2e795533db810",
+                "reference": "a8510c1d472892dda2ae32e2c4b2e795533db810"
             },
             "require": {
-                "colinodell/json5": "^2.2",
+                "colinodell/json5": "^2.2 || ^3.0",
                 "composer-runtime-api": "^2.0",
                 "composer/xdebug-handler": "^2.0 || ^3.0",
                 "ext-dom": "*",
@@ -453,8 +453,9 @@
                 "infection/abstract-testframework-adapter": "^0.5.0",
                 "infection/extension-installer": "^0.1.0",
                 "infection/include-interceptor": "^0.2.5",
+                "infection/mutator": "^0.4",
                 "justinrainbow/json-schema": "^5.2.10",
-                "nikic/php-parser": "^4.15.1",
+                "nikic/php-parser": "^5.0",
                 "ondram/ci-detector": "^4.1.0",
                 "php": "^8.1",
                 "sanmai/later": "^0.1.1",
@@ -480,6 +481,33 @@
                 "BSD-3-Clause"
             ],
             "description": "Infection is a Mutation Testing framework for PHP. The mutation adequacy score can be used to measure the effectiveness of a test set in terms of its ability to detect faults."
+        },
+        {
+            "name": "infection/mutator",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/infection/mutator.git",
+                "reference": "51d6d01a2357102030aee9d603063c4bad86b144"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/infection/mutator/zipball/51d6d01a2357102030aee9d603063c4bad86b144",
+                "reference": "51d6d01a2357102030aee9d603063c4bad86b144"
+            },
+            "require": {
+                "nikic/php-parser": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Infection\\Mutator\\": "src/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Mutator interface to implement custom mutators (mutation operators) for Infection"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -630,47 +658,6 @@
             "description": "Fork of sebastian/diff for use with ergebnis/composer-normalize"
         },
         {
-            "name": "maglnet/composer-require-checker",
-            "version": "4.12.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maglnet/ComposerRequireChecker.git",
-                "reference": "404a092708799953b1de6bfca5473b8536ba98b9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/404a092708799953b1de6bfca5473b8536ba98b9",
-                "reference": "404a092708799953b1de6bfca5473b8536ba98b9"
-            },
-            "require": {
-                "composer-runtime-api": "^2.0.0",
-                "ext-phar": "*",
-                "nikic/php-parser": "^4.19.1",
-                "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
-                "symfony/console": "^6.4.1 || ^7.0.1",
-                "webmozart/assert": "^1.11.0",
-                "webmozart/glob": "^4.7.0"
-            },
-            "bin": [
-                "bin/composer-require-checker"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ComposerRequireChecker\\": "src/ComposerRequireChecker"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "CLI tool to analyze composer dependencies and verify that no unknown symbols are used in the sources of a package"
-        },
-        {
             "name": "mi-schi/phpmd-extension",
             "version": "4.3.0",
             "source": {
@@ -699,20 +686,22 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.19.2",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "0ed4c8949a32986043e977dbe14776c14d644c45"
+                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/0ed4c8949a32986043e977dbe14776c14d644c45",
-                "reference": "0ed4c8949a32986043e977dbe14776c14d644c45"
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
+                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb"
             },
             "require": {
+                "ext-ctype": "*",
+                "ext-json": "*",
                 "ext-tokenizer": "*",
-                "php": ">=7.1"
+                "php": ">=7.4"
             },
             "bin": [
                 "bin/php-parse"
@@ -720,7 +709,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.9-dev"
+                    "dev-master": "5.0-dev"
                 }
             },
             "autoload": {
@@ -1162,6 +1151,38 @@
                 "BSD-3-Clause"
             ],
             "description": "Diff implementation"
+        },
+        {
+            "name": "shipmonk/composer-dependency-analyser",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shipmonk-rnd/composer-dependency-analyser.git",
+                "reference": "bca862b2830a453734aee048eb0cdab82e5c9da3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shipmonk-rnd/composer-dependency-analyser/zipball/bca862b2830a453734aee048eb0cdab82e5c9da3",
+                "reference": "bca862b2830a453734aee048eb0cdab82e5c9da3"
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-tokenizer": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "bin": [
+                "bin/composer-dependency-analyser"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ShipMonk\\ComposerDependencyAnalyser\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Fast detection of composer dependency issues (dead dependencies, shadow dependencies, misplaced dependencies)"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1851,38 +1872,6 @@
                 "MIT"
             ],
             "description": "Assertions to validate method input/output with nice error messages."
-        },
-        {
-            "name": "webmozart/glob",
-            "version": "4.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webmozarts/glob.git",
-                "reference": "8a2842112d6916e61e0e15e316465b611f3abc17"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/glob/zipball/8a2842112d6916e61e0e15e316465b611f3abc17",
-                "reference": "8a2842112d6916e61e0e15e316465b611f3abc17"
-            },
-            "require": {
-                "php": "^7.3 || ^8.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webmozart\\Glob\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A PHP implementation of Ant's glob."
         }
     ],
     "packages-dev": [],
