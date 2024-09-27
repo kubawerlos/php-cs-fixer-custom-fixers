@@ -9,7 +9,7 @@
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^1.12.4",
+        "phpstan/phpstan": "^1.12.5",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6.1",
         "shipmonk/composer-dependency-analyser": "^1.7",
