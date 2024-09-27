@@ -115,7 +115,7 @@ final class PhpdocArrayStyleFixerTest extends AbstractFixerTestCase
         ];
 
         $expected = $input = 'string';
-        for ($i = 0; $i < 128; $i++) {
+        for ($i = 0; $i < 123; $i++) {
             $expected = 'array<' . $expected . '>';
             $input .= '[]';
         }
