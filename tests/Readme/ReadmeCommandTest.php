@@ -18,13 +18,12 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * @internal
  *
+ * @requires PHP ^8.2
+ *
  * @covers \PhpCsFixerCustomFixersDev\Readme\ReadmeCommand
  */
 final class ReadmeCommandTest extends TestCase
 {
-    /**
-     * @requires PHP ^8.1
-     */
     public function testReadmeIsUpToDate(): void
     {
         $tester = new CommandTester(new ReadmeCommand());
