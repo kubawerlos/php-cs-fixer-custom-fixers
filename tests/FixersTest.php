@@ -62,7 +62,7 @@ final class FixersTest extends TestCase
     }
 
     /**
-     * @return array<int, string>
+     * @return array<array-key, string>
      */
     private function fixerNamesFromCollection(): array
     {

@@ -7,12 +7,6 @@ parameters:
     - ../vendor/autoload.php
   ignoreErrors:
     -
-      message: '#^Method PhpCsFixerCustomFixers\\Analyzer\\Analysis\\ConstructorAnalysis\:\:getDuplicatesIndices\(\) should return array\<int, int\> but returns array\.$#'
-      identifier: return.type
-      count: 1
-      path: ../src/Analyzer/Analysis/ConstructorAnalysis.php
-
-    -
       message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 80000 is always true\.$#'
       identifier: greaterOrEqual.alwaysTrue
       count: 1
@@ -23,37 +17,6 @@ parameters:
       identifier: greaterOrEqual.alwaysTrue
       count: 1
       path: ../src/Fixer/StringableInterfaceFixer.php
-
-    -
-      message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, mixed given\.$#'
-      identifier: argument.type
-      count: 1
-      path: ../tests/AutoReview/ChangelogTest.php
-
-    -
-      message: '#^Method Tests\\AutoReview\\TestsCodeTest\:\:provideTestClassCases\(\) should return iterable\<string, array\{string, string\}\> but returns mixed\.$#'
-      identifier: return.type
-      count: 1
-      path: ../tests/AutoReview/TestsCodeTest.php
-
-    -
-      message: '#^Cannot call method check\(\) on mixed\.$#'
-      identifier: method.nonObject
-      count: 1
-      path: ../tests/Fixer/AbstractFixerTestCase.php
-
-    -
-      message: '#^Cannot call method lintSource\(\) on mixed\.$#'
-      identifier: method.nonObject
-      count: 1
-      path: ../tests/Fixer/AbstractFixerTestCase.php
-
-    -
-      message: '#^Method Tests\\FixersTest\:\:fixerNamesFromCollection\(\) should return array\<int, string\> but returns array\<string\>\.$#'
-      identifier: return.type
-      count: 1
-      path: ../tests/FixersTest.php
-
   level: max
   paths:
     - ../src

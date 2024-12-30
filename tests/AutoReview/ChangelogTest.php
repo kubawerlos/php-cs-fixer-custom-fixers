@@ -52,6 +52,7 @@ final class ChangelogTest extends TestCase
             $changelog = \file_get_contents(__DIR__ . '/../../CHANGELOG.md');
         }
 
+        self::assertIsString($changelog);
         self::assertStringContainsString($content, $changelog);
     }
 }

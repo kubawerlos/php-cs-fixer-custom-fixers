@@ -188,7 +188,9 @@ final class ConstructorAnalysis
         $values = [];
         foreach ($array as $key => $value) {
             if (\array_key_exists($value, $values)) {
+                \assert(\is_int($values[$value]));
                 $duplicates[$values[$value]] = $values[$value];
+
                 $duplicates[$key] = $key;
             }
             $values[$value] = $key;
