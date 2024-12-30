@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           extensions: none, curl, dom, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
           coverage: none
       - if: ${{ github.event_name != 'pull_request' }}
@@ -49,32 +49,34 @@ jobs:
           - os: ubuntu-latest
             php-version: '8.2'
           - os: ubuntu-latest
+            php-version: '8.3'
+          - os: ubuntu-latest
             description: 'with calculating code coverage and Infection'
             calculate-coverage: true
             phpunit-flags: '--coverage-clover=./build/logs/clover.xml'
-            php-version: '8.3'
+            php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
             description: 'with PHP CS Fixer from master'
             with-php-cs-fixer-from-master: true
-            php-version: '8.3'
+            php-version: '8.4'
           - os: ubuntu-latest
             description: 'with shim package'
             use-shim-package: true
-            php-version: '8.3'
+            php-version: '8.4'
           - os: ubuntu-latest
             description: 'with bootstrap'
             with-bootstrap: true
-            php-version: '8.3'
+            php-version: '8.4'
           - os: macos-latest
             description: 'on macOS'
-            php-version: '8.3'
+            php-version: '8.4'
           - os: windows-latest
             description: 'on Windows'
-            php-version: '8.3'
+            php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
-            php-version: '8.4'
+            php-version: '8.5'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     env:
