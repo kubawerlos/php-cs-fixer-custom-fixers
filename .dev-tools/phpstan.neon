@@ -5,26 +5,12 @@ includes:
 parameters:
   bootstrapFiles:
     - ../vendor/autoload.php
-  ignoreErrors:
-    -
-      message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 80000 is always true\.$#'
-      identifier: greaterOrEqual.alwaysTrue
-      count: 1
-      path: ../src/Fixer/PromotedConstructorPropertyFixer.php
-
-    -
-      message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 80000 is always true\.$#'
-      identifier: greaterOrEqual.alwaysTrue
-      count: 1
-      path: ../src/Fixer/StringableInterfaceFixer.php
   level: max
   paths:
     - ../src
     - ../tests
     - ../bootstrap.php
   reportMaybesInMethodSignatures: false
-  stubFiles:
-    - ./sca.stub
   treatPhpDocTypesAsCertain: false
   type_coverage:
       declare: 100

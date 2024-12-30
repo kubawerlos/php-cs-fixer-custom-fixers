@@ -80,6 +80,7 @@ use Bar;
             Tokens $tokens,
             NamespaceUseAnalysis $useDeclaration
         ): void {
+            // @phpstan-ignore method.private
             $noUnusedImportsFixer->removeUseDeclaration($tokens, $useDeclaration);
         };
 
