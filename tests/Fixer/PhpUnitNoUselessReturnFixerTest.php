@@ -38,14 +38,12 @@ final class PhpUnitNoUselessReturnFixerTest extends AbstractFixerTestCase
     {
         foreach (self::getFixCases() as $fixCase) {
             yield \array_map(
-                static function (string $case): string {
-                    return \sprintf('<?php
+                static fn (string $case): string => \sprintf('<?php
 class FooTest extends TestCase {
     public function testFoo() {
         %s
     }
-}', $case);
-                },
+}', $case),
                 $fixCase,
             );
         }

@@ -18,6 +18,8 @@
         "customPath": "../vendor/phpunit/phpunit/phpunit"
     },
     "mutators": {
+        "ArrayAll": true,
+        "ArrayAny": true,
         "ArrayItem": true,
         "ArrayItemRemoval": {
             "settings": {
