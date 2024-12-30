@@ -237,9 +237,8 @@ class Foo
 ',
         ];
 
-        if (\PHP_VERSION_ID >= 70400) {
-            yield 'keep correct PHPDoc for class properties, PHP 7.4' => [
-                '<?php class Foo
+        yield 'keep correct PHPDoc for class properties, PHP 7.4' => [
+            '<?php class Foo
                 {
                     /** @var array */
                     private array $array;
@@ -256,8 +255,7 @@ class Foo
                     /** @var Vendor\\Baz */
                     private Vendor\\Baz $baz;
                 }',
-            ];
-        }
+        ];
 
         yield 'remove PHPDoc for class properties' => [
             '<?php

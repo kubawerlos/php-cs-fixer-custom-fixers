@@ -13,12 +13,6 @@ parameters:
       path: ../src/Analyzer/Analysis/ConstructorAnalysis.php
 
     -
-      message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 70400 is always true\.$#'
-      identifier: greaterOrEqual.alwaysTrue
-      count: 1
-      path: ../src/Fixer/NumericLiteralSeparatorFixer.php
-
-    -
       message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 80000 is always true\.$#'
       identifier: greaterOrEqual.alwaysTrue
       count: 1
@@ -29,12 +23,6 @@ parameters:
       identifier: greaterOrEqual.alwaysTrue
       count: 1
       path: ../src/Fixer/StringableInterfaceFixer.php
-
-    -
-      message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 70300 is always true\.$#'
-      identifier: greaterOrEqual.alwaysTrue
-      count: 1
-      path: ../tests/Analyzer/FunctionAnalyzerTest.php
 
     -
       message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, mixed given\.$#'
@@ -59,18 +47,6 @@ parameters:
       identifier: method.nonObject
       count: 1
       path: ../tests/Fixer/AbstractFixerTestCase.php
-
-    -
-      message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 70300 is always true\.$#'
-      identifier: greaterOrEqual.alwaysTrue
-      count: 1
-      path: ../tests/Fixer/NoUselessDirnameCallFixerTest.php
-
-    -
-      message: '#^Comparison operation "\>\=" between int\<80400, 80499\> and 70400 is always true\.$#'
-      identifier: greaterOrEqual.alwaysTrue
-      count: 1
-      path: ../tests/Fixer/PhpdocNoIncorrectVarAnnotationFixerTest.php
 
     -
       message: '#^Method Tests\\FixersTest\:\:fixerNamesFromCollection\(\) should return array\<int, string\> but returns array\<string\>\.$#'
