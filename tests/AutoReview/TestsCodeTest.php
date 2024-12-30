@@ -156,10 +156,11 @@ final class TestsCodeTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{string, string}>
+     * @return iterable<string, array{string}>
      */
     public static function provideTestClassCases(): iterable
     {
+        /** @var \ArrayIterator<string, array{string}> */
         static $tests;
 
         if ($tests === null) {

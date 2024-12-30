@@ -18,6 +18,7 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixer\Linter\Linter;
+use PhpCsFixer\Linter\LinterInterface;
 use PhpCsFixer\Linter\ProcessLinter;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -219,6 +220,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final protected function lintSource(string $source): ?string
     {
+        /** @var null|LinterInterface $linter */
         static $linter;
 
         if ($linter === null) {
