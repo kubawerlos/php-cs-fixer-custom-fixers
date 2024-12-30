@@ -239,22 +239,22 @@ class Foo
 
         yield 'keep correct PHPDoc for class properties, PHP 7.4' => [
             '<?php class Foo
-                {
-                    /** @var array */
-                    private array $array;
+            {
+                /** @var array */
+                private array $array;
 
-                    /** @var bool */
-                    private bool $boolean;
+                /** @var bool */
+                private bool $boolean;
 
-                    /** @var null|string */
-                    private ?string $nullableString;
+                /** @var null|string */
+                private ?string $nullableString;
 
-                    /** @var Bar */
-                    private Bar $bar;
+                /** @var Bar */
+                private Bar $bar;
 
-                    /** @var Vendor\\Baz */
-                    private Vendor\\Baz $baz;
-                }',
+                /** @var Vendor\\Baz */
+                private Vendor\\Baz $baz;
+            }',
         ];
 
         yield 'remove PHPDoc for class properties' => [
