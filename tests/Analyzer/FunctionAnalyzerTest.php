@@ -137,22 +137,20 @@ final class FunctionAnalyzerTest extends TestCase
             1,
         ];
 
-        if (\PHP_VERSION_ID >= 70300) {
-            yield 'argument with trailing comma' => [
-                [new ArgumentAnalysis(3, 3, false)],
-                '<?php foo($x);',
-                1,
-            ];
+        yield 'argument with trailing comma' => [
+            [new ArgumentAnalysis(3, 3, false)],
+            '<?php foo($x);',
+            1,
+        ];
 
-            yield 'multiple arguments with trailing comma' => [
-                [
-                    new ArgumentAnalysis(3, 3, true),
-                    new ArgumentAnalysis(6, 6, true),
-                    new ArgumentAnalysis(9, 9, true),
-                ],
-                '<?php foo(1, 2, 3,);',
-                1,
-            ];
-        }
+        yield 'multiple arguments with trailing comma' => [
+            [
+                new ArgumentAnalysis(3, 3, true),
+                new ArgumentAnalysis(6, 6, true),
+                new ArgumentAnalysis(9, 9, true),
+            ],
+            '<?php foo(1, 2, 3,);',
+            1,
+        ];
     }
 }

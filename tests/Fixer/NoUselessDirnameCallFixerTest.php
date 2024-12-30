@@ -88,16 +88,14 @@ final class NoUselessDirnameCallFixerTest extends AbstractFixerTestCase
         ];
 
         // test with trailing comma
-        if (\PHP_VERSION_ID >= 70300) {
-            yield [
-                '<?php __DIR__ . "/../path";',
-                '<?php dirname(__DIR__,) . "/path";',
-            ];
+        yield [
+            '<?php __DIR__ . "/../path";',
+            '<?php dirname(__DIR__,) . "/path";',
+        ];
 
-            yield [
-                '<?php __DIR__ . "/../../../path";',
-                '<?php \\dirname(__DIR__,3,) . "/path";',
-            ];
-        }
+        yield [
+            '<?php __DIR__ . "/../../../path";',
+            '<?php \\dirname(__DIR__,3,) . "/path";',
+        ];
     }
 }
