@@ -101,6 +101,9 @@ final class ClassConstantUsageFixer extends AbstractFixer
         }
     }
 
+    /**
+     * @return array{array<string, string>, array<int, true>}
+     */
     private function getClassConstants(Tokens $tokens, int $openParenthesisIndex, int $closeParenthesisIndex): array
     {
         $constants = [];
@@ -111,9 +114,13 @@ final class ClassConstantUsageFixer extends AbstractFixer
             }
 
             $assignTokenIndex = $tokens->getNextTokenOfKind($index, ['=']);
+            \assert(\is_int($assignTokenIndex));
 
             $constantNameIndex = $tokens->getPrevMeaningfulToken($assignTokenIndex);
+            \assert(\is_int($constantNameIndex));
+
             $constantValueIndex = $tokens->getNextMeaningfulToken($assignTokenIndex);
+            \assert(\is_int($constantValueIndex));
 
             $constantsIndices[$constantValueIndex] = true;
 
@@ -127,6 +134,11 @@ final class ClassConstantUsageFixer extends AbstractFixer
         return [$this->getClassConstantsMap($constants), $constantsIndices];
     }
 
+    /**
+     * @param array<string, string> $constants
+     *
+     * @return array<string, string>
+     */
     private function getClassConstantsMap(array $constants): array
     {
         $map = [];
@@ -134,10 +146,9 @@ final class ClassConstantUsageFixer extends AbstractFixer
 
         foreach ($constants as $name => $value) {
             $map[$value] = $name;
-            $valuesCount[$value] = $valuesCount[$value] ?? 0;
-            $valuesCount[$value]++;
+            $valuesCount[$value] = ($valuesCount[$value] ?? 0) + 1;
 
-            if (($valuesCount[$value] ?? 0) > 1) {
+            if ($valuesCount[$value] > 1) {
                 unset($map[$value]);
             }
         }
