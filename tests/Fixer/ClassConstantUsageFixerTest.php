@@ -36,6 +36,20 @@ final class ClassConstantUsageFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
+        yield 'non-string constants are ignored' => [
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                    public const B = true;
+                    public const I = 10;
+                    public function f()
+                    {
+                        return 10 * f1(true, false, true);
+                    }
+                }
+                PHP,
+        ];
         yield 'multiple constants with the same value' => [
             <<<'PHP'
                 <?php
