@@ -50,6 +50,7 @@ final class ClassConstantUsageFixerTest extends AbstractFixerTestCase
                 }
                 PHP,
         ];
+
         yield 'multiple constants with the same value' => [
             <<<'PHP'
                 <?php
@@ -68,26 +69,28 @@ final class ClassConstantUsageFixerTest extends AbstractFixerTestCase
         yield 'constants all over the class' => [
             <<<'PHP'
                 <?php
-                class Foo
+                class C
                 {
-                    public const BAR = 'bar';
+                    public const FOO = 'foo';
+                    public const F00 = 0;
                     public function f()
                     {
-                        return self::BAR . self::BAZ;
+                        return 'Hello ' . self::FOO . self::BAR . '!';
                     }
-                    public const BAZ = 'baz';
+                    public const BAR = 'bar';
                 }
                 PHP,
             <<<'PHP'
                 <?php
-                class Foo
+                class C
                 {
-                    public const BAR = 'bar';
+                    public const FOO = 'foo';
+                    public const F00 = 0;
                     public function f()
                     {
-                        return 'bar' . 'baz';
+                        return 'Hello ' . 'foo' . 'bar' . '!';
                     }
-                    public const BAZ = 'baz';
+                    public const BAR = 'bar';
                 }
                 PHP,
         ];
