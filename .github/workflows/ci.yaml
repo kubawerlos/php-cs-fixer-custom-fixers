@@ -22,7 +22,7 @@ jobs:
           php-version: '8.4'
           extensions: none, curl, dom, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
           coverage: none
-      - if: ${{ github.event_name != 'pull_request' }}
+      - if: github.event_name != 'pull_request'
         run: rm ./.dev-tools/composer.lock
       - run: composer update --no-progress
       - run: composer analyse
@@ -100,20 +100,20 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
 
-      - if: ${{ matrix.with-bootstrap }}
+      - if: matrix.with-bootstrap
         uses: sergeysova/jq-action@v2
         with:
           cmd: |
             jq -r --indent 4 'del(.autoload."psr-4")' composer.json > composer.tmp
             jq -r --indent 4 '.autoload += {"files": ["bootstrap.php"]}' composer.tmp > composer.json
 
-      - if: ${{ matrix.use-shim-package }}
+      - if: matrix.use-shim-package
         run: sed -i 's#friendsofphp/php-cs-fixer#php-cs-fixer/shim#g' composer.json
 
-      - if: ${{ matrix.with-php-cs-fixer-from-master }}
+      - if: matrix.with-php-cs-fixer-from-master
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
 
-      - if: ${{ matrix.calculate-coverage }}
+      - if: matrix.calculate-coverage
         run: composer require --dev php-coveralls/php-coveralls --no-update
 
       - run: composer update --no-progress --classmap-authoritative ${{ matrix.composer-flags }}
@@ -124,13 +124,13 @@ jobs:
         env:
           FAST_LINT_TEST_CASES: ${{ matrix.FAST_LINT_TEST_CASES }}
 
-      - if: ${{ matrix.calculate-coverage }}
+      - if: matrix.calculate-coverage
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: ./vendor/bin/php-coveralls --verbose
 
-      - if: ${{ matrix.calculate-coverage }}
+      - if: matrix.calculate-coverage
         env:
           FAST_LINT_TEST_CASES: 1
         run: composer infection
