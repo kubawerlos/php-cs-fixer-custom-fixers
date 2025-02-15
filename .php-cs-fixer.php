@@ -15,6 +15,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 use PhpCsFixerConfig\Rules\LibraryRules;
 use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
@@ -62,6 +63,7 @@ foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
 }
 
 return (new Config())
+    ->setParallelConfig(ParallelConfigFactory::detect())
     ->registerCustomFixers(new Fixers())
     ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
     ->setRiskyAllowed(true)
