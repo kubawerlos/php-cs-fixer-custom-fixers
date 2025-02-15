@@ -132,7 +132,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     }
 
     /**
-     * @requires PHP ^8.0
+     * @requires PHP 8.0
      */
     public function testFix80(): void
     {
