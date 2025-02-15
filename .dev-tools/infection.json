@@ -134,7 +134,11 @@
         "Ternary": true,
         "This": true,
         "Throw_": true,
-        "TrueValue": true,
+        "TrueValue": {
+            "ignore": [
+                "PhpCsFixerCustomFixers\\Fixer\\ClassConstantUsageFixer::getClassConstants"
+            ]
+        },
         "UnwrapArrayChangeKeyCase": true,
         "UnwrapArrayChunk": true,
         "UnwrapArrayColumn": true,

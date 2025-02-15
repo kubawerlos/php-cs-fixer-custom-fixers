@@ -94,6 +94,12 @@ final class InfectionConfigBuilder
             ],
         ];
 
+        $config['mutators']['TrueValue'] = [
+            'ignore' => [
+                'PhpCsFixerCustomFixers\\Fixer\\ClassConstantUsageFixer::getClassConstants',
+            ],
+        ];
+
         return $config;
     }
 }

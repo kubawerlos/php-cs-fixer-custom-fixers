@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3546-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3570-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -43,6 +43,21 @@ require __DIR__ . '/vendor/kubawerlos/php-cs-fixer-custom-fixers/bootstrap.php';
 
 
 ## Fixers
+#### ClassConstantUsageFixer
+Class constant must be used instead of a copy of string.
+```diff
+ <?php
+ class Foo
+ {
+     public const BAR = 'bar';
+     public function bar()
+     {
+-        return 'bar';
++        return self::BAR;
+     }
+ }
+```
+
 #### CommentSurroundedBySpacesFixer
 Comments must be surrounded by spaces.
 ```diff
