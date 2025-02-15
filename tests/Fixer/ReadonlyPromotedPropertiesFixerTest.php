@@ -16,7 +16,7 @@ namespace Tests\Fixer;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\ReadonlyPromotedPropertiesFixer
  *
- * @requires PHP 8.1
+ * @requires PHP >= 8.1
  */
 final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
 {
@@ -134,7 +134,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFix82Cases
      *
-     * @requires PHP 8.2
+     * @requires PHP >= 8.2
      */
     public function testFix82(string $expected, ?string $input = null): void
     {

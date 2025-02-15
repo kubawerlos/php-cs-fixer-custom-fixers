@@ -68,7 +68,7 @@ final class ConstructorAnalysisTest extends TestCase
      *
      * @dataProvider provideGettingConstructorParameterNames80Cases
      *
-     * @requires PHP ^8.0
+     * @requires PHP >= 8.0
      */
     public function testGettingConstructorParameterNames80(array $expected, string $code): void
     {
@@ -145,7 +145,7 @@ final class ConstructorAnalysisTest extends TestCase
      *
      * @dataProvider provideGettingConstructorPromotableParameters80Cases
      *
-     * @requires PHP ^8.0
+     * @requires PHP >= 8.0
      */
     public function testGettingConstructorPromotableParameters80(array $expected, string $code): void
     {

@@ -16,7 +16,7 @@ namespace Tests\Fixer;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer
  *
- * @requires PHP 8.0
+ * @requires PHP >= 8.0
  */
 final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 {
