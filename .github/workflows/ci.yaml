@@ -76,6 +76,10 @@ jobs:
             php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
+            description: 'with PHPUnit 12'
+            php-version: '8.4'
+            install-phpunit-12: true
+          - os: ubuntu-latest
             php-version: '8.5'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -116,7 +120,15 @@ jobs:
       - if: matrix.calculate-coverage
         run: composer require --dev php-coveralls/php-coveralls --no-update
 
+      - if: matrix.install-phpunit-12
+        run: composer require --dev friendsofphp/php-cs-fixer:dev-master phpunit/phpunit:^12.0.2 --no-update
+
       - run: composer update --no-progress --classmap-authoritative ${{ matrix.composer-flags }}
+
+      - if: matrix.install-phpunit-12
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: 1
+        run: ./vendor/bin/php-cs-fixer fix --quiet --rules=php_unit_attributes
 
       - run: composer show | grep php-cs-fixer
 
