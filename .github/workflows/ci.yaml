@@ -68,9 +68,11 @@ jobs:
             description: 'with bootstrap'
             with-bootstrap: true
             php-version: '8.4'
+            phpunit-flags: '--display-skipped'
           - os: macos-latest
             description: 'on macOS'
             php-version: '8.4'
+            phpunit-flags: '--display-skipped'
           - os: windows-latest
             description: 'on Windows'
             php-version: '8.4'
@@ -80,6 +82,7 @@ jobs:
             php-version: '8.4'
             install-phpunit-12: true
             with-php-cs-fixer-from-master: true # @todo: remove this
+            phpunit-flags: '--display-skipped'
           - os: ubuntu-latest
             php-version: '8.5'
     runs-on: ${{ matrix.os }}
