@@ -20,6 +20,8 @@
     "mutators": {
         "ArrayAll": true,
         "ArrayAny": true,
+        "ArrayFind": true,
+        "ArrayFindKey": true,
         "ArrayItem": true,
         "ArrayItemRemoval": {
             "settings": {
