@@ -151,6 +151,14 @@ final class PhpUnitRequiresExplicitConstraintFixerTest extends AbstractFixerTest
      */
     public static function provideFix80Cases(): iterable
     {
+        yield 'attribute with constraints' => [
+            '<?php class FooTest extends TestCase {
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhp("^8.4")]
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhpunit("~11.0")]
+                public function testFoo(): void {}
+            }',
+        ];
+
         yield 'attribute' => [
             '<?php class FooTest extends TestCase {
                 #[
