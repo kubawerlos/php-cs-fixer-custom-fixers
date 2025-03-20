@@ -53,7 +53,7 @@ jobs:
           - os: ubuntu-latest
             description: 'with calculating code coverage and Infection'
             calculate-coverage: true
-            phpunit-flags: '--coverage-clover=./build/logs/clover.xml'
+            phpunit-flags: '--cache-directory=.phpunit.cache --coverage-clover=./build/logs/clover.xml'
             php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
