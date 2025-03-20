@@ -48,8 +48,6 @@ final class InfectionConfigBuilder
                 'github' => true,
                 'stryker' => ['report' => 'main'],
             ],
-            'testFramework' => 'phpunit',
-            'testFrameworkOptions' => '--cache-directory=.phpunit.cache',
             'phpUnit' => [
                 'configDir' => '..',
                 'customPath' => '../vendor/phpunit/phpunit/phpunit',
