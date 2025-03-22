@@ -1,7 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.24.0
-- Add PhpUnitRequiresExplicitConstraintFixer
+- Add PhpUnitRequiresConstraintFixer
 
 ## v3.23.0
 - Add ClassConstantUsageFixer

@@ -14,9 +14,9 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\PhpUnitRequiresExplicitConstraintFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\PhpUnitRequiresConstraintFixer
  */
-final class PhpUnitRequiresExplicitConstraintFixerTest extends AbstractFixerTestCase
+final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
@@ -224,6 +224,21 @@ final class PhpUnitRequiresExplicitConstraintFixerTest extends AbstractFixerTest
                 public function testFoo(): void {}
             }',
         ];
+
+        yield 'attributes with comparison constraints' => [
+            '<?php class FooTest extends TestCase {
+                #[\\LeaveMeAlone("1.2")]
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhp("!= 8.2")]
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhpunit("< 11")]
+                public function testFoo(): void {}
+            }',
+            '<?php class FooTest extends TestCase {
+                #[\\LeaveMeAlone("1.2")]
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhp("!=8.2")]
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhpunit("<11")]
+                public function testFoo(): void {}
+            }',
+        ];
     }
 
     /**
@@ -233,12 +248,21 @@ final class PhpUnitRequiresExplicitConstraintFixerTest extends AbstractFixerTest
     {
         yield 'no PHPDoc' => [''];
 
-        yield 'single annotation' => [
+        yield 'single annotation without operator' => [
             '/**
               * @requires PHP >= 8.4
               */',
             '/**
               * @requires PHP 8.4
+              */',
+        ];
+
+        yield 'single annotation without space' => [
+            '/**
+              * @requires PHP >= 8.4
+              */',
+            '/**
+              * @requires PHP >=8.4
               */',
         ];
 
@@ -253,12 +277,12 @@ final class PhpUnitRequiresExplicitConstraintFixerTest extends AbstractFixerTest
 
         yield 'multiple annotations' => [
             '/**
-              * @requires PHP >= 7
-              * @requires PHPUnit >= 11
+              * @requires PHP > 7
+              * @requires PHPUnit < 12
               */',
             '/**
-              * @requires PHP 7
-              * @requires PHPUnit 11
+              * @requires PHP >7
+              * @requires PHPUnit <    12
               */',
         ];
     }

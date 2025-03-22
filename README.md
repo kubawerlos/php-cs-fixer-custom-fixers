@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3607-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3610-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -463,14 +463,20 @@ PHPUnit `fail`, `markTestIncomplete` and `markTestSkipped` functions must not be
  }
 ```
 
-#### PhpUnitRequiresExplicitConstraintFixer
-Assertions and attributes for PHP and PHPUnit versions must have explicit version constraint.
+#### PhpUnitRequiresConstraintFixer
+Assertions and attributes for PHP and PHPUnit versions must have explicit version constraint and space after comparison operator.
 ```diff
  <?php
- class FooTest extends TestCase {
+ class MyTest extends TestCase {
      /**
--     * @requires PHP 8.4
-+     * @requires PHP >= 8.4
+-     * @requires PHP 8.1
++     * @requires PHP >= 8.1
+      */
+     public function testFoo() {}
+ 
+     /**
+-     * @requires PHP <8.3
++     * @requires PHP < 8.3
       */
      public function testBar() {}
  
