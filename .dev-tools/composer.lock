@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c5d949a4c8e16e74915523d48853f6f",
+    "content-hash": "9a66f07992e3415481408de1f22cc730",
     "packages": [
         {
             "name": "colinodell/json5",
@@ -529,16 +529,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.3.0",
+            "version": "6.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "fbb4049557dbac6ff554985eed95ba763c37528a"
+                "reference": "c9f00dec766a67bf82c277b71d71d254357db92c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/fbb4049557dbac6ff554985eed95ba763c37528a",
-                "reference": "fbb4049557dbac6ff554985eed95ba763c37528a"
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/c9f00dec766a67bf82c277b71d71d254357db92c",
+                "reference": "c9f00dec766a67bf82c277b71d71d254357db92c"
             },
             "require": {
                 "ext-json": "*",
@@ -598,21 +598,21 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v4.6.0",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "6a0374647ef1499d2188893104c13b1f23d720c4"
+                "reference": "54c23b314ba26ea078d1b8862b8fadf82688f659"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/6a0374647ef1499d2188893104c13b1f23d720c4",
-                "reference": "6a0374647ef1499d2188893104c13b1f23d720c4"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/54c23b314ba26ea078d1b8862b8fadf82688f659",
+                "reference": "54c23b314ba26ea078d1b8862b8fadf82688f659"
             },
             "require": {
-                "kubawerlos/php-cs-fixer-custom-fixers": "^3.23",
+                "kubawerlos/php-cs-fixer-custom-fixers": "^3.24",
                 "php": "^8.1",
-                "php-cs-fixer/shim": "^3.70"
+                "php-cs-fixer/shim": "^3.71"
             },
             "bin": [
                 "fixinit"
@@ -630,16 +630,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "v3.23.0",
+            "version": "v3.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "b3210c6e546bdfc95664297a8971ae3b6b1f4a5a"
+                "reference": "93222100a91399314c3726857e249e76c4a7d760"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/b3210c6e546bdfc95664297a8971ae3b6b1f4a5a",
-                "reference": "b3210c6e546bdfc95664297a8971ae3b6b1f4a5a"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/93222100a91399314c3726857e249e76c4a7d760",
+                "reference": "93222100a91399314c3726857e249e76c4a7d760"
             },
             "require": {
                 "ext-filter": "*",
@@ -889,16 +889,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.72.0",
+            "version": "v3.73.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "f5131b7a7d0103919a1b478a2763bd76c98e472e"
+                "reference": "6bcfe9ff734019315cf9c6ea4f43cbcd87d1cc82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/f5131b7a7d0103919a1b478a2763bd76c98e472e",
-                "reference": "f5131b7a7d0103919a1b478a2763bd76c98e472e"
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/6bcfe9ff734019315cf9c6ea4f43cbcd87d1cc82",
+                "reference": "6bcfe9ff734019315cf9c6ea4f43cbcd87d1cc82"
             },
             "require": {
                 "ext-json": "*",
@@ -1052,16 +1052,16 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "8b88b5f818bfa301e0c99154ab622dace071c3ba"
+                "reference": "3e139cbe67fafa3588e1dbe27ca50f31fdb6236a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/8b88b5f818bfa301e0c99154ab622dace071c3ba",
-                "reference": "8b88b5f818bfa301e0c99154ab622dace071c3ba"
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/3e139cbe67fafa3588e1dbe27ca50f31fdb6236a",
+                "reference": "3e139cbe67fafa3588e1dbe27ca50f31fdb6236a"
             },
             "require": {
                 "php": "^7.4 || ^8.0",
@@ -1285,16 +1285,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.11.3",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10"
+                "reference": "2d1b63db139c3c6ea0c927698e5160f8b3b8d630"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10"
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/2d1b63db139c3c6ea0c927698e5160f8b3b8d630",
+                "reference": "2d1b63db139c3c6ea0c927698e5160f8b3b8d630"
             },
             "require": {
                 "ext-simplexml": "*",
