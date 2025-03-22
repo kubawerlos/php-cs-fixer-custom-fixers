@@ -23,18 +23,23 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
-final class PhpUnitRequiresExplicitConstraintFixer extends AbstractFixer
+final class PhpUnitRequiresConstraintFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Assertions and attributes for PHP and PHPUnit versions must have explicit version constraint.',
+            'Assertions and attributes for PHP and PHPUnit versions must have explicit version constraint and space after comparison operator.',
             [new CodeSample(
                 <<<'PHP'
                 <?php
-                class FooTest extends TestCase {
+                class MyTest extends TestCase {
                     /**
-                     * @requires PHP 8.4
+                     * @requires PHP 8.1
+                     */
+                    public function testFoo() {}
+
+                    /**
+                     * @requires PHP <8.3
                      */
                     public function testBar() {}
 
@@ -115,11 +120,8 @@ final class PhpUnitRequiresExplicitConstraintFixer extends AbstractFixer
                     \assert(\is_string($matches[1]));
                     \assert(\is_string($matches[2]));
                     \assert(\is_string($matches[3]));
-                    if (Preg::match('/^[\\d\\.-]+(dev|(RC|alpha|beta)[\\d\\.])?$/', $matches[2])) {
-                        $matches[2] = '>= ' . $matches[2];
-                    }
 
-                    return $matches[1] . $matches[2] . $matches[3];
+                    return $matches[1] . self::fixString($matches[2]) . $matches[3];
                 },
                 $tokens[$index]->getContent(),
             ),
@@ -161,9 +163,9 @@ final class PhpUnitRequiresExplicitConstraintFixer extends AbstractFixer
     private static function fixString(string $string): string
     {
         if (Preg::match('/^[\\d\\.-]+(dev|(RC|alpha|beta)[\\d\\.])?$/', $string)) {
-            return '>= ' . $string;
+            $string = '>=' . $string;
         }
 
-        return $string;
+        return Preg::replace('/^([<>=!]{0,2})\\s*([\\d\\.-]+(dev|(RC|alpha|beta)[\\d\\.])?)$/', '$1 $2', $string);
     }
 }
