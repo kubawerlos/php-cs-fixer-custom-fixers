@@ -2,18 +2,18 @@
     "type": "project",
     "require": {
         "php": "^8.4",
-        "ergebnis/composer-normalize": "^2.45",
+        "ergebnis/composer-normalize": "^2.46",
         "infection/infection": "^0.29.14",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
         "kubawerlos/php-cs-fixer-config": "^4.7",
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.1.10",
-        "phpstan/phpstan-phpunit": "^2.0.4",
+        "phpstan/phpstan": "^2.1.11",
+        "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-strict-rules": "^2.0.4",
         "shipmonk/composer-dependency-analyser": "^1.8.2",
-        "squizlabs/php_codesniffer": "^3.12.0",
+        "squizlabs/php_codesniffer": "^3.12.2",
         "tomasvotruba/type-coverage": "^2.0.2"
     },
     "autoload": {
