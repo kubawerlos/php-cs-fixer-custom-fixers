@@ -38,6 +38,9 @@ final class ReadmeCommandTest extends TestCase
         );
     }
 
+    /**
+     * @requires PHP >= 8.4
+     */
     public function testNumberOfTests(): void
     {
         \preg_match(
