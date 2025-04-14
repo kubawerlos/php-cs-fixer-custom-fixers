@@ -180,6 +180,8 @@ abstract class AbstractFixerTestCase extends TestCase
         $expectedTokens = Tokens::fromCode($expected);
 
         if ($input !== null) {
+            self::assertNull($this->lintSource($input));
+
             Tokens::clearCache();
             $inputTokens = Tokens::fromCode($input);
 
@@ -225,7 +227,7 @@ abstract class AbstractFixerTestCase extends TestCase
         static $linter;
 
         if ($linter === null) {
-            $linter = \getenv('FAST_LINT_TEST_CASES') !== false ? new Linter() : new ProcessLinter();
+            $linter = \getenv('FAST_LINT_TEST_CASES') === '1' ? new Linter() : new ProcessLinter();
         }
 
         try {
