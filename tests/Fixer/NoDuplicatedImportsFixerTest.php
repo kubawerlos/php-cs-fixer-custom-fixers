@@ -28,6 +28,9 @@ final class NoDuplicatedImportsFixerTest extends AbstractFixerTestCase
      */
     public function testFix(string $expected, ?string $input = null): void
     {
+        if (\getenv('FAST_LINT_TEST_CASES') !== '1') {
+            self::markTestSkipped('Duplicated imports can be tested only if FAST_LINT_TEST_CASES is enabled.');
+        }
         $this->doTest($expected, $input);
     }
 
