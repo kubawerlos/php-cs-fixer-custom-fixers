@@ -53,11 +53,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return \defined('T_READONLY') && $tokens->isAnyTokenKindsFound([
-            CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
-            CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
-            CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
-        ]);
+        return \defined('T_READONLY') && $tokens->isAnyTokenKindsFound(self::getPromotedPropertyVisibilityKinds());
     }
 
     public function isRisky(): bool
@@ -82,6 +78,8 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
             if ($constructorAnalysis === null) {
                 continue;
             }
+
+            $constructorNameIndex = $tokens->getNextMeaningfulToken($constructorAnalysis->getConstructorIndex());
 
             $classOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
             \assert(\is_int($classOpenBraceIndex));
@@ -119,34 +117,20 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         int $constructorCloseParenthesisIndex
     ): void {
         for ($index = $constructorCloseParenthesisIndex; $index > $constructorOpenParenthesisIndex; $index--) {
-            if (
-                !$tokens[$index]->isGivenKind([
-                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
-                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
-                    CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
-                ])
-            ) {
+            if (!$tokens[$index]->isGivenKind(\T_VARIABLE)) {
                 continue;
             }
 
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
-            if ($tokens[$nextIndex]->isGivenKind(\T_READONLY)) {
+            $insertIndex = self::getInsertIndex($tokens, $index);
+            if ($insertIndex === null) {
                 continue;
             }
-
-            $prevIndex = $tokens->getPrevMeaningfulToken($index);
-            if ($tokens[$prevIndex]->isGivenKind(\T_READONLY)) {
-                continue;
-            }
-
-            $propertyIndex = $tokens->getNextTokenOfKind($index, [[\T_VARIABLE]]);
-            \assert(\is_int($propertyIndex));
 
             $propertyAssignment = $tokens->findSequence(
                 [
                     [\T_VARIABLE, '$this'],
                     [\T_OBJECT_OPERATOR],
-                    [\T_STRING, \substr($tokens[$propertyIndex]->getContent(), 1)],
+                    [\T_STRING, \substr($tokens[$index]->getContent(), 1)],
                 ],
                 $classOpenBraceIndex,
                 $classCloseBraceIndex,
@@ -156,12 +140,56 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
             }
 
             $tokens->insertAt(
-                $index + 1,
+                $insertIndex + 1,
                 [
                     new Token([\T_WHITESPACE, ' ']),
                     new Token([\T_READONLY, 'readonly']),
                 ],
             );
         }
+    }
+
+    private static function getInsertIndex(Tokens $tokens, int $index): ?int
+    {
+        $insertIndex = null;
+
+        $index = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($index));
+        while (!$tokens[$index]->equalsAny([',', '('])) {
+            $index = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($index));
+            if ($tokens[$index]->isGivenKind(\T_READONLY)) {
+                return null;
+            }
+            if ($insertIndex === null && $tokens[$index]->isGivenKind(self::getPromotedPropertyVisibilityKinds())) {
+                $insertIndex = $index;
+            }
+        }
+
+        return $insertIndex;
+    }
+
+    /**
+     * @return list<int>
+     */
+    private static function getPromotedPropertyVisibilityKinds(): array
+    {
+        /** @var null|list<int> $promotedPropertyVisibilityKinds */
+        static $promotedPropertyVisibilityKinds = null;
+
+        if ($promotedPropertyVisibilityKinds === null) {
+            $promotedPropertyVisibilityKinds = [
+                CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
+                CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
+                CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
+            ];
+            if (\defined('T_PUBLIC_SET')) {
+                $promotedPropertyVisibilityKinds[] = \T_PUBLIC_SET;
+                $promotedPropertyVisibilityKinds[] = \T_PROTECTED_SET;
+                $promotedPropertyVisibilityKinds[] = \T_PRIVATE_SET;
+            }
+        }
+
+        return $promotedPropertyVisibilityKinds;
     }
 }

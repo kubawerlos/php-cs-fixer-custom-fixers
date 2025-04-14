@@ -255,6 +255,5 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             }
             PHP,
         ];
-
     }
 }
