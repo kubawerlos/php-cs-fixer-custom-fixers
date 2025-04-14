@@ -25,17 +25,17 @@ final class ClassConstantUsageFixer extends AbstractFixer
             'Class constant must be used instead of a copy of string.',
             [new CodeSample(
                 <<<'PHP'
-                <?php
-                class Foo
-                {
-                    public const BAR = 'bar';
-                    public function bar()
+                    <?php
+                    class Foo
                     {
-                        return 'bar';
+                        public const BAR = 'bar';
+                        public function bar()
+                        {
+                            return 'bar';
+                        }
                     }
-                }
 
-                PHP,
+                    PHP,
             )],
             '',
         );
