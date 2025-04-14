@@ -173,4 +173,87 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             ',
         ];
     }
+
+    /**
+     * @dataProvider provideFix84Cases
+     *
+     * @requires PHP >= 8.4
+     */
+    public function testFix84(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<string, array{0: string, 1?: string}>
+     */
+    public static function provideFix84Cases(): iterable
+    {
+        yield 'asymmetric visibility with both visibilities' => [
+            <<<'PHP'
+            <?php
+            final class Foo {
+                public function __construct(
+                    public public(set) readonly int $a,
+                    public protected(set) readonly int $b,
+                    public private(set) readonly int $c,
+                    protected protected(set) readonly int $d,
+                    protected private(set) readonly int $e,
+                    private private(set) readonly int $f,
+                ) {}
+            }
+            PHP,
+            <<<'PHP'
+            <?php
+            final class Foo {
+                public function __construct(
+                    public public(set) int $a,
+                    public protected(set) int $b,
+                    public private(set) int $c,
+                    protected protected(set) int $d,
+                    protected private(set) int $e,
+                    private private(set) int $f,
+                ) {}
+            }
+            PHP,
+        ];
+
+        yield 'asymmetric visibility with only write visibility' => [
+            <<<'PHP'
+            <?php
+            final class Foo {
+                public function __construct(
+                    public(set) readonly int $a,
+                    protected(set) readonly int $b,
+                    private(set) readonly int $c,
+                ) {}
+            }
+            PHP,
+            <<<'PHP'
+            <?php
+            final class Foo {
+                public function __construct(
+                    public(set) int $a,
+                    protected(set) int $b,
+                    private(set) int $c,
+                ) {}
+            }
+            PHP,
+        ];
+
+        yield 'readonly asymmetric visibility' => [
+            <<<'PHP'
+            <?php
+            final class Foo {
+                public function __construct(
+                    readonly public public(set) int $a,
+                    public readonly protected(set) int $b,
+                    public private(set) readonly int $c,
+                    readonly private(set) int $e,
+                    private(set) readonly int $f,
+                ) {}
+            }
+            PHP,
+        ];
+    }
 }

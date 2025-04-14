@@ -40,6 +40,7 @@ abstract class AbstractFixerTestCase extends TestCase
         'testFix80',
         'testFix81',
         'testFix82',
+        'testFix84',
         'testIsRisky',
         'testReversingCodeSample',
         'testStringIsTheSame',

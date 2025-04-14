@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.25.0
+- ReadonlyPromotedPropertiesFixer - support asymmetric visibility
+
 ## v3.24.0
 - Add PhpUnitRequiresConstraintFixer
 
