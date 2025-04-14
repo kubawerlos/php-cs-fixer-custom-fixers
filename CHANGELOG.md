@@ -1,6 +1,7 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
 ## v3.25.0
+- Add NoUselessWriteVisibilityFixer
 - ReadonlyPromotedPropertiesFixer - support asymmetric visibility
 
 ## v3.24.0
