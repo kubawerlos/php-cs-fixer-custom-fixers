@@ -18,7 +18,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * @internal
  *
- * @requires PHP >= 8.2
+ * @requires PHP >= 8.4
  *
  * @covers \PhpCsFixerCustomFixersDev\Readme\ReadmeCommand
  */
@@ -38,9 +38,6 @@ final class ReadmeCommandTest extends TestCase
         );
     }
 
-    /**
-     * @requires PHP >= 8.4
-     */
     public function testNumberOfTests(): void
     {
         \preg_match(
