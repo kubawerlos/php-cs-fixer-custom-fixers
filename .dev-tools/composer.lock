@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f282ab2e1f46ba3d1ab8005195841ecb",
+    "content-hash": "91ec07708d0ddf8da60847da8e1cdafd",
     "packages": [
         {
             "name": "colinodell/json5",
@@ -598,16 +598,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v4.7.0",
+            "version": "v4.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "54c23b314ba26ea078d1b8862b8fadf82688f659"
+                "reference": "cc7440f76c814d15093d575d22506828d1b3baf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/54c23b314ba26ea078d1b8862b8fadf82688f659",
-                "reference": "54c23b314ba26ea078d1b8862b8fadf82688f659"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/cc7440f76c814d15093d575d22506828d1b3baf0",
+                "reference": "cc7440f76c814d15093d575d22506828d1b3baf0"
             },
             "require": {
                 "kubawerlos/php-cs-fixer-custom-fixers": "^3.24",

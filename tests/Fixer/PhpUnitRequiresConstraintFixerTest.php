@@ -37,29 +37,29 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
     public static function provideFixCases(): iterable
     {
         yield 'PHPDoc on variable before class' => [<<<'PHP'
-                <?php
-                /**
-                 * The file @requires PHP 8.4
-                 */
-                $minPHPVersion = '8.4';
-                /**
-                 * Foo test starts here
-                 */
-                class FooTest extends TestCase {
-                    public function testFoo() {}
-                }
-                PHP];
+            <?php
+            /**
+             * The file @requires PHP 8.4
+             */
+            $minPHPVersion = '8.4';
+            /**
+             * Foo test starts here
+             */
+            class FooTest extends TestCase {
+                public function testFoo() {}
+            }
+            PHP];
 
         yield 'PHPDoc on property' => [<<<'PHP'
-                <?php
-                class FooTest extends TestCase {
-                    /**
-                     * @requires PHP 8.4
-                     */
-                    private $prop;
-                    public function testFoo() {}
-                }
-                PHP];
+            <?php
+            class FooTest extends TestCase {
+                /**
+                 * @requires PHP 8.4
+                 */
+                private $prop;
+                public function testFoo() {}
+            }
+            PHP];
 
         yield 'anonymous class' => [
             <<<'PHP'

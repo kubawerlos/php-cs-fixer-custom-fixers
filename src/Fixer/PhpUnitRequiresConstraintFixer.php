@@ -31,23 +31,23 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
             'Assertions and attributes for PHP and PHPUnit versions must have explicit version constraint and space after comparison operator.',
             [new CodeSample(
                 <<<'PHP'
-                <?php
-                class MyTest extends TestCase {
-                    /**
-                     * @requires PHP 8.1
-                     */
-                    public function testFoo() {}
+                    <?php
+                    class MyTest extends TestCase {
+                        /**
+                         * @requires PHP 8.1
+                         */
+                        public function testFoo() {}
 
-                    /**
-                     * @requires PHP <8.3
-                     */
-                    public function testBar() {}
+                        /**
+                         * @requires PHP <8.3
+                         */
+                        public function testBar() {}
 
-                    #[\PHPUnit\Framework\Attributes\RequiresPhpunit('12.0')]
-                    public function testBaz() {}
-                }
+                        #[\PHPUnit\Framework\Attributes\RequiresPhpunit('12.0')]
+                        public function testBaz() {}
+                    }
 
-                PHP,
+                    PHP,
             )],
         );
     }

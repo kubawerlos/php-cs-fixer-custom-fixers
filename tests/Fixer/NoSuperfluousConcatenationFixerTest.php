@@ -235,42 +235,42 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
 
         yield 'escaped double quotes in single quote' => [
             <<<'CONTENT'
-"\\\"Foo\\\"\n"
-CONTENT
+                "\\\"Foo\\\"\n"
+                CONTENT
             ,
             <<<'CONTENT'
-'\"Foo\"' . "\n"
-CONTENT,
+                '\"Foo\"' . "\n"
+                CONTENT,
         ];
 
         yield 'escaped double quotes with slash before in single quote' => [
             <<<'CONTENT'
-"\\\"\Foo\\\\\"\n"
-CONTENT
+                "\\\"\Foo\\\\\"\n"
+                CONTENT
             ,
             <<<'CONTENT'
-'\"\Foo\\\"' . "\n"
-CONTENT,
+                '\"\Foo\\\"' . "\n"
+                CONTENT,
         ];
 
         yield 'double quotes in single quote with multiple slashes before' => [
             <<<'CONTENT'
-"2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n"
-CONTENT
+                "2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n"
+                CONTENT
             ,
             <<<'CONTENT'
-'2 slashes: \\\\", 3 slashes: \\\\\\", 4 slashes: \\\\\\\\";' . "\n"
-CONTENT,
+                '2 slashes: \\\\", 3 slashes: \\\\\\", 4 slashes: \\\\\\\\";' . "\n"
+                CONTENT,
         ];
 
         yield 'double quotes in single quote with multiple slashes before when last slash is not escaped' => [
             <<<'CONTENT'
-"2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n"
-CONTENT
+                "2 slashes: \\\\\", 3 slashes: \\\\\\\", 4 slashes: \\\\\\\\\";\n"
+                CONTENT
             ,
             <<<'CONTENT'
-'2 slashes: \\\", 3 slashes: \\\\\", 4 slashes: \\\\\\\";' . "\n"
-CONTENT,
+                '2 slashes: \\\", 3 slashes: \\\\\", 4 slashes: \\\\\\\";' . "\n"
+                CONTENT,
         ];
 
         yield 'empty single quoted string on left side' => [
