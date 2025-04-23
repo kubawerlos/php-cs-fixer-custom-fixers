@@ -86,7 +86,10 @@ final class NoUselessWriteVisibilityFixer extends AbstractFixer
 
         if (!$tokens[$prevIndex]->isGivenKind($this->predecessorKindMap[$kind])) {
             if ($makePublicIfNone) {
-                $tokens[$index] = new Token([\T_PUBLIC, 'public']);
+                $prevDeciderIndex = $tokens->getPrevTokenOfKind($index, ['(', ';', '{']);
+                \assert(\is_int($prevDeciderIndex));
+                $kind = $tokens[$prevDeciderIndex]->equals('(') ? CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC : \T_PUBLIC;
+                $tokens[$index] = new Token([$kind, 'public']);
             }
 
             return;

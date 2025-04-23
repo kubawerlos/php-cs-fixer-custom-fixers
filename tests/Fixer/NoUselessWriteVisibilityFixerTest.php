@@ -58,12 +58,34 @@ final class NoUselessWriteVisibilityFixerTest extends AbstractFixerTestCase
         yield 'only write visibility' => [
             <<<'PHP'
                 <?php class Foo {
-                    public string $x;
+                    public string $a;
+                    public string $b;
+                    public function __construct(
+                        public string $x,
+                        public string $y,
+                    ) {}
+                    public string $c;
+                    public string $d;
+                }
+                abstract class Bar {
+                    abstract public function __construct();
+                    public string $a;
                 }
                 PHP,
             <<<'PHP'
                 <?php class Foo {
-                    public(set) string $x;
+                    public(set) string $a;
+                    public(set) string $b;
+                    public function __construct(
+                        public(set) string $x,
+                        public(set) string $y,
+                    ) {}
+                    public(set) string $c;
+                    public(set) string $d;
+                }
+                abstract class Bar {
+                    abstract public function __construct();
+                    public(set) string $a;
                 }
                 PHP,
         ];
