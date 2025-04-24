@@ -1,5 +1,5 @@
 --CONFIGURATION--
-{ "braces": true, "PhpCsFixerCustomFixers/constructor_empty_braces": true }
+{ "braces_position": true, "PhpCsFixerCustomFixers/constructor_empty_braces": true }
 --EXPECTED--
 <?php class Foo
 {
