@@ -1,5 +1,5 @@
 --CONFIGURATION--
-{ "PhpCsFixerCustomFixers/multiline_promoted_properties": true, "braces": true }
+{ "PhpCsFixerCustomFixers/multiline_promoted_properties": true, "braces_position": true }
 --EXPECTED--
 <?php class Foo
 {

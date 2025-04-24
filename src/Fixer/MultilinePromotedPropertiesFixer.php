@@ -88,12 +88,12 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
     }
 
     /**
-     * Must run before BracesFixer.
+     * Must run before BracesPositionFixer.
      * Must run after PromotedConstructorPropertyFixer.
      */
     public function getPriority(): int
     {
-        return 36;
+        return 0;
     }
 
     public function isCandidate(Tokens $tokens): bool
