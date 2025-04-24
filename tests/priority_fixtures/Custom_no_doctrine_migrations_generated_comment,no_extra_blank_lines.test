@@ -1,5 +1,5 @@
 --CONFIGURATION--
-{ "PhpCsFixerCustomFixers/no_doctrine_migrations_generated_comment": true, "braces": true }
+{ "PhpCsFixerCustomFixers/no_doctrine_migrations_generated_comment": true, "no_extra_blank_lines": {"tokens": ["curly_brace_block"]} }
 --EXPECTED--
 <?php
 use Doctrine\Migrations\AbstractMigration;

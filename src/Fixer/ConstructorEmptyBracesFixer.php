@@ -41,7 +41,7 @@ class Foo {
     }
 
     /**
-     * Must run after BracesFixer, CurlyBracesPositionFixer, PromotedConstructorPropertyFixer.
+     * Must run after BracesPositionFixer, PromotedConstructorPropertyFixer.
      */
     public function getPriority(): int
     {

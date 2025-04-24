@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3638-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3607-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -397,19 +397,6 @@ Functions `strlen` and `mb_strlen` must not be compared to 0.
 -$isNotEmpty = strlen($string) > 0;
 +$isEmpty = $string === '';
 +$isNotEmpty = $string !== '';
-```
-
-#### NoUselessWriteVisibilityFixer
-There must be no useless write visibility.
-```diff
- <?php class Foo {
--    public public(set) $x;
--    public(set) $y;
--    protected protected(set) $z;
-+    public $x;
-+    public $y;
-+    protected $z;
- }
 ```
 
 #### NumericLiteralSeparatorFixer

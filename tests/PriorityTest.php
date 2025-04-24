@@ -11,6 +11,8 @@
 
 namespace Tests;
 
+use PhpCsFixer\AbstractFixer;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerFactory;
@@ -45,6 +47,13 @@ final class PriorityTest extends TestCase
      */
     public function testInOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
+        if ($firstFixer instanceof AbstractFixer) {
+            self::assertNotInstanceOf(DeprecatedFixerInterface::class, $firstFixer);
+        }
+        if ($secondFixer instanceof AbstractFixer) {
+            self::assertNotInstanceOf(DeprecatedFixerInterface::class, $secondFixer);
+        }
+
         Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
 
