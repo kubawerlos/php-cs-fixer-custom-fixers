@@ -152,7 +152,7 @@ final class ForeachUseValueFixer extends AbstractFixer
         int $closeBraceIndex,
         Token $arrayToken,
         string $keyName,
-        string $variableName,
+        string $variableName
     ): void {
         $sequence = [
             $arrayToken,
