@@ -6,6 +6,8 @@ parameters:
   bootstrapFiles:
     - ../vendor/autoload.php
   level: max
+  ignoreErrors:
+    - '~internal (class|method) PhpCsFixer(CustomFixers(Dev)?)?\\~'
   paths:
     - ../src
     - ../tests
