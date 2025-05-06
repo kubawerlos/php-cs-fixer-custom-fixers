@@ -23,7 +23,7 @@ final class TrimKeyFixer extends AbstractFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'A string array and yield keys must be trimmed and have no double spaces.',
+            'The string key of an array or generator must be trimmed and have no double spaces.',
             [new CodeSample(<<<'PHP'
                 <?php
                 $array = [
