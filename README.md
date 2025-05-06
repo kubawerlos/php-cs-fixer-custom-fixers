@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3666-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3691-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -710,6 +710,18 @@ A class that implements the `__toString()` method must explicitly implement the 
          return "Foo";
     }
  }
+```
+
+#### TrimKeyFixer
+A string array and yield keys must be trimmed and have no double spaces.
+```diff
+ <?php
+ $array = [
+-    'option 1 ' => 'v1',
+-    'option 2  or 3' => 'v23',
++    'option 1' => 'v1',
++    'option 2 or 3' => 'v23',
+ ];
 ```
 
 
