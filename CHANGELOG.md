@@ -3,6 +3,7 @@
 ## v3.25.0
 - Add ForeachUseValueFixer
 - Add NoUselessWriteVisibilityFixer
+- Add TrimKeyFixer
 - ReadonlyPromotedPropertiesFixer - support asymmetric visibility
 
 ## v3.24.0
