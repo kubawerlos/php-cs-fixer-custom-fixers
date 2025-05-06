@@ -713,7 +713,7 @@ A class that implements the `__toString()` method must explicitly implement the 
 ```
 
 #### TrimKeyFixer
-A string array and yield keys must be trimmed and have no double spaces.
+The string key of an array or generator must be trimmed and have no double spaces.
 ```diff
  <?php
  $array = [
