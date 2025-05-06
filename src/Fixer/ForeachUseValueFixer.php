@@ -57,6 +57,7 @@ final class ForeachUseValueFixer extends AbstractFixer
                     PHP,
             )],
             '',
+            'when the value is re-used or being sorted',
         );
     }
 
@@ -72,7 +73,7 @@ final class ForeachUseValueFixer extends AbstractFixer
 
     public function isRisky(): bool
     {
-        return false;
+        return true;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
@@ -155,11 +156,7 @@ final class ForeachUseValueFixer extends AbstractFixer
         string $variableName
     ): void {
         $sequence = [
-            $arrayToken,
-            '[',
-            [\T_VARIABLE, $keyName],
-            ']',
-        ];
+            $arrayToken, '[', [\T_VARIABLE, $keyName], ']'];
 
         $index = $openBraceIndex;
         while (($found = $tokens->findSequence($sequence, $index, $closeBraceIndex)) !== null) {

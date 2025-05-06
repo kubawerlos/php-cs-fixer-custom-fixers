@@ -20,7 +20,7 @@ final class ForeachUseValueFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        self::assertRiskiness(false);
+        self::assertRiskiness(true);
     }
 
     /**

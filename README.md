@@ -168,6 +168,7 @@ Empty function body must be abbreviated as `{}` and placed on the same line as t
 
 #### ForeachUseValueFixer
 Value from `foreach` must not be used if possible.
+  *Risky: when the value is re-used or being sorted.*
 ```diff
  <?php
  foreach ($elements as $key => $value) {
