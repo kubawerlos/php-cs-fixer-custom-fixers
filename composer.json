@@ -31,20 +31,25 @@
     },
     "scripts": {
         "analyse": [
-            "@install-dev-tools",
+            "@prepare-dev-tools",
             "php-cs-fixer check --ansi --show-progress=dots --diff --verbose",
             "@composer --no-interaction --working-dir=.dev-tools analyse"
         ],
+        "apply-php_unit_attributes": [
+            "@prepare-dev-tools",
+            "php-cs-fixer fix --quiet --rules=php_unit_attributes || exit 0"
+        ],
         "fix": [
-            "@install-dev-tools",
+            "@prepare-dev-tools",
             "php-cs-fixer fix --ansi --verbose || exit 0",
             "@composer --no-interaction --working-dir=.dev-tools fix"
         ],
         "infection": [
-            "@install-dev-tools",
+            "@prepare-dev-tools",
             "@composer --working-dir=.dev-tools infection"
         ],
-        "install-dev-tools": [
+        "prepare-dev-tools": [
+            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
             "@composer --working-dir=.dev-tools --quiet install --classmap-authoritative"
         ],
         "test": [
