@@ -5,7 +5,7 @@
         "ergebnis/composer-normalize": "^2.47",
         "infection/infection": "^0.29.14",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
-        "kubawerlos/php-cs-fixer-config": "^4.8",
+        "kubawerlos/php-cs-fixer-config": "^4.9",
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4.3",

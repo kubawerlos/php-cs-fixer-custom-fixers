@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8d8319734af577144c7594948865f9a",
+    "content-hash": "2851862894af1e1c9343ddd755ff0328",
     "packages": [
         {
             "name": "colinodell/json5",
@@ -598,19 +598,19 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v4.8.0",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "cc7440f76c814d15093d575d22506828d1b3baf0"
+                "reference": "4321093f5b1597ab5f917a78f3c0ab2ee5bf26b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/cc7440f76c814d15093d575d22506828d1b3baf0",
-                "reference": "cc7440f76c814d15093d575d22506828d1b3baf0"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/4321093f5b1597ab5f917a78f3c0ab2ee5bf26b6",
+                "reference": "4321093f5b1597ab5f917a78f3c0ab2ee5bf26b6"
             },
             "require": {
-                "kubawerlos/php-cs-fixer-custom-fixers": "^3.24",
+                "kubawerlos/php-cs-fixer-custom-fixers": "^3.25",
                 "php": "^8.1",
                 "php-cs-fixer/shim": "^3.71"
             },
