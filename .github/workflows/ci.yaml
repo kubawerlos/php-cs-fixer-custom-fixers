@@ -13,8 +13,6 @@ concurrency:
 jobs:
   analyse:
     runs-on: ubuntu-latest
-    env:
-      PHP_CS_FIXER_IGNORE_ENV: 1
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -126,11 +124,8 @@ jobs:
       - run: composer update --no-progress --classmap-authoritative ${{ matrix.composer-flags }}
 
       - if: matrix.install-phpunit-12
-        env:
-          PHP_CS_FIXER_IGNORE_ENV: 1
         run: |
-          composer install-dev-tools
-          ./vendor/bin/php-cs-fixer fix --quiet --rules=php_unit_attributes
+          composer apply-php_unit_attributes
 
       - run: composer show | grep php-cs-fixer
 
