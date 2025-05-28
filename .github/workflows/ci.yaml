@@ -124,10 +124,7 @@ jobs:
       - run: composer update --no-progress --classmap-authoritative ${{ matrix.composer-flags }}
 
       - if: matrix.install-phpunit-12
-        run: |
-          composer apply-php_unit_attributes
-
-      - run: composer show | grep php-cs-fixer
+        run: composer apply-php_unit_attributes
 
       - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
         env:
