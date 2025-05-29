@@ -726,7 +726,6 @@ The string key of an array or generator must be trimmed and have no double space
 
 #### TypedClassConstantFixer
 Class constants must have a type.
-  *Risky: when constant can be of different types.*
 ```diff
  <?php
  class Foo {

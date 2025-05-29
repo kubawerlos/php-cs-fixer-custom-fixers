@@ -20,7 +20,7 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {
-        self::assertRiskiness(true);
+        self::assertRiskiness(false);
     }
 
     /**

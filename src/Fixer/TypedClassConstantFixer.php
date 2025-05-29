@@ -38,8 +38,6 @@ final class TypedClassConstantFixer extends AbstractFixer
                     new VersionSpecification(80300),
                 ),
             ],
-            '',
-            'when constant can be of different types',
         );
     }
 
@@ -55,7 +53,7 @@ final class TypedClassConstantFixer extends AbstractFixer
 
     public function isRisky(): bool
     {
-        return true;
+        return false;
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
