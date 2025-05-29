@@ -80,6 +80,16 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             '<?php class Foo { public const BAR = 1000 * (701 + 22); }',
         ];
 
+        yield 'integer shift left operator' => [
+            '<?php class Foo { public const int BAR = 1 << 16; }',
+            '<?php class Foo { public const BAR = 1 << 16; }',
+        ];
+
+        yield 'integer shift right operator' => [
+            '<?php class Foo { public const int BAR = 1024 >> 1; }',
+            '<?php class Foo { public const BAR = 1024 >> 1; }',
+        ];
+
         yield 'float' => [
             '<?php class Foo { public const float BAR = 2.5; }',
             '<?php class Foo { public const BAR = 2.5; }',

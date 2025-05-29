@@ -21,6 +21,10 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class TypedClassConstantFixer extends AbstractFixer
 {
+    private const INTEGER_KINDS = [\T_LNUMBER, '+', '-', '*', '(', ')', \T_SL, \T_SR];
+    private const FLOAT_KINDS = [\T_DNUMBER, ...self::INTEGER_KINDS, '/'];
+    private const STRING_KINDS = [\T_CONSTANT_ENCAPSED_STRING, '.', \T_LNUMBER, \T_DNUMBER];
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -140,15 +144,15 @@ final class TypedClassConstantFixer extends AbstractFixer
      */
     private static function getTypeOfExpressionForTokenKinds(array $tokenKinds): string
     {
-        if (self::hasExclusivelyKinds($tokenKinds, [\T_LNUMBER, '+', '-', '*', '(', ')'])) {
+        if (self::hasExclusivelyKinds($tokenKinds, self::INTEGER_KINDS)) {
             return 'int';
         }
 
-        if (self::hasExclusivelyKinds($tokenKinds, [\T_DNUMBER, \T_LNUMBER, '+', '-', '*', '/', '(', ')'])) {
+        if (self::hasExclusivelyKinds($tokenKinds, self::FLOAT_KINDS)) {
             return 'float';
         }
 
-        if (self::hasExclusivelyKinds($tokenKinds, [\T_CONSTANT_ENCAPSED_STRING, '.', \T_LNUMBER, \T_DNUMBER])) {
+        if (self::hasExclusivelyKinds($tokenKinds, self::STRING_KINDS)) {
             return 'string';
         }
 
