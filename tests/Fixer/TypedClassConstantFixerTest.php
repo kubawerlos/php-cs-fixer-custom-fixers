@@ -146,6 +146,11 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 PHP,
         ];
 
+        yield 'anonymous class' => [
+            '<?php new class () { public const int BAR = 0; };',
+            '<?php new class () { public const BAR = 0; };',
+        ];
+
         yield 'unknown other constant' => [
             '<?php class Foo { public const mixed BAR = CONSTANT_FROM_FAR_AWAY; }',
             '<?php class Foo { public const BAR = CONSTANT_FROM_FAR_AWAY; }',
