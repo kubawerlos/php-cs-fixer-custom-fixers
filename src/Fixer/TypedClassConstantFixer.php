@@ -21,7 +21,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class TypedClassConstantFixer extends AbstractFixer
 {
-    private const INTEGER_KINDS = [\T_LNUMBER, '+', '-', '*', '(', ')', \T_SL, \T_SR];
+    private const INTEGER_KINDS = [\T_LNUMBER, '+', '-', '*', '(', ')', \T_POW, \T_SL, \T_SR];
     private const FLOAT_KINDS = [\T_DNUMBER, ...self::INTEGER_KINDS, '/'];
     private const STRING_KINDS = [\T_CONSTANT_ENCAPSED_STRING, '.', \T_LNUMBER, \T_DNUMBER];
 
