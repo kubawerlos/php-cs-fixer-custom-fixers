@@ -125,9 +125,14 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             "<?php class Foo { public const BAR = 'John Doe'; }",
         ];
 
-        yield 'string as result of concatenation' => [
+        yield 'string as result of concatenations' => [
             '<?php class Foo { public const string BAR = "A" . 1 . "B" . 0.25 . "C"; }',
             '<?php class Foo { public const BAR = "A" . 1 . "B" . 0.25 . "C"; }',
+        ];
+
+        yield 'string as result of concatenation with other constant' => [
+            '<?php class Foo { public const string BAR = "A" . Baz::C; }',
+            '<?php class Foo { public const BAR = "A" . Baz::C; }',
         ];
 
         yield 'multiple constants' => [

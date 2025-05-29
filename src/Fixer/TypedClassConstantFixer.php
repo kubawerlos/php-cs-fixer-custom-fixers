@@ -23,7 +23,7 @@ final class TypedClassConstantFixer extends AbstractFixer
 {
     private const INTEGER_KINDS = [\T_LNUMBER, '+', '-', '*', '(', ')', \T_POW, \T_SL, \T_SR];
     private const FLOAT_KINDS = [\T_DNUMBER, ...self::INTEGER_KINDS, '/'];
-    private const STRING_KINDS = [\T_CONSTANT_ENCAPSED_STRING, '.', \T_LNUMBER, \T_DNUMBER];
+    private const STRING_KINDS = [\T_CONSTANT_ENCAPSED_STRING, \T_LNUMBER, \T_DNUMBER];
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -144,15 +144,15 @@ final class TypedClassConstantFixer extends AbstractFixer
      */
     private static function getTypeOfExpressionForTokenKinds(array $tokenKinds): string
     {
-        if (self::hasExclusivelyKinds($tokenKinds, self::INTEGER_KINDS)) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, self::INTEGER_KINDS)) {
             return 'int';
         }
 
-        if (self::hasExclusivelyKinds($tokenKinds, self::FLOAT_KINDS)) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, self::FLOAT_KINDS)) {
             return 'float';
         }
 
-        if (self::hasExclusivelyKinds($tokenKinds, self::STRING_KINDS)) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, self::STRING_KINDS, '.')) {
             return 'string';
         }
 
@@ -160,17 +160,20 @@ final class TypedClassConstantFixer extends AbstractFixer
     }
 
     /**
-     * @param list<int|string> $tokenKinds
+     * @param list<int|string> $expressionTokenKinds
      * @param list<int|string> $expectedKinds
      */
-    private static function hasExclusivelyKinds(array $tokenKinds, array $expectedKinds): bool
+    private static function isOfTypeBasedOnKinds(array $expressionTokenKinds, array $expectedKinds, ?string $instantWinner = null): bool
     {
-        foreach ($tokenKinds as $index => $tokenKind) {
-            if (\in_array($tokenKind, $expectedKinds, true)) {
-                unset($tokenKinds[$index]);
+        foreach ($expressionTokenKinds as $index => $expressionTokenKind) {
+            if ($expressionTokenKind === $instantWinner) {
+                return true;
+            }
+            if (\in_array($expressionTokenKind, $expectedKinds, true)) {
+                unset($expressionTokenKinds[$index]);
             }
         }
 
-        return $tokenKinds === [];
+        return $expressionTokenKinds === [];
     }
 }
