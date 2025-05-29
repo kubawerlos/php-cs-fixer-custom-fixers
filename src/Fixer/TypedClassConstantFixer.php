@@ -21,13 +21,6 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class TypedClassConstantFixer extends AbstractFixer
 {
-    private const TOKEN_TO_TYPE_MAP = [
-        \T_DNUMBER => 'float',
-        \T_LNUMBER => 'int',
-        \T_CONSTANT_ENCAPSED_STRING => 'string',
-        CT::T_ARRAY_SQUARE_BRACE_CLOSE => 'array',
-    ];
-
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -110,38 +103,72 @@ final class TypedClassConstantFixer extends AbstractFixer
         }
     }
 
-    private static function getTypeOfExpression(Tokens $tokens, int $assignmentIndex): string
+    private static function getTypeOfExpression(Tokens $tokens, int $index): string
     {
-        $semicolonIndex = $tokens->getNextTokenOfKind($assignmentIndex, [';']);
+        $semicolonIndex = $tokens->getNextTokenOfKind($index, [';']);
         \assert(\is_int($semicolonIndex));
 
         $beforeSemicolonIndex = $tokens->getPrevMeaningfulToken($semicolonIndex);
         \assert(\is_int($beforeSemicolonIndex));
 
-        $tokenId = $tokens[$beforeSemicolonIndex]->getId();
+        $foundKinds = [];
 
-        if (isset(self::TOKEN_TO_TYPE_MAP[$tokenId])) {
-            return self::TOKEN_TO_TYPE_MAP[$tokenId];
+        $index = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($index));
+
+        if ($tokens[$index]->isGivenKind([\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
+            return 'array';
         }
 
-        if ($tokens[$beforeSemicolonIndex]->isGivenKind(\T_STRING)) {
+        do {
+            $foundKinds[] = $tokens[$index]->getId() ?? $tokens[$index]->getContent();
+
+            $index = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($index));
+        } while ($index < $semicolonIndex);
+
+        if ($foundKinds === [\T_STRING]) {
             $lowercasedContent = \strtolower($tokens[$beforeSemicolonIndex]->getContent());
             if (\in_array($lowercasedContent, ['false', 'true', 'null'], true)) {
                 return $lowercasedContent;
             }
         }
 
-        if ($tokens[$beforeSemicolonIndex]->equals(')')) {
-            $openParenthesisIndex = $tokens->findBlockStart(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $beforeSemicolonIndex);
+        return self::getTypeOfExpressionForTokenKinds($foundKinds);
+    }
 
-            $arrayIndex = $tokens->getPrevMeaningfulToken($openParenthesisIndex);
-            \assert(\is_int($arrayIndex));
+    /**
+     * @param list<int|string> $tokenKinds
+     */
+    private static function getTypeOfExpressionForTokenKinds(array $tokenKinds): string
+    {
+        if (self::hasExclusivelyKinds($tokenKinds, [\T_LNUMBER, '+', '-', '*', '(', ')'])) {
+            return 'int';
+        }
 
-            if ($tokens[$arrayIndex]->isGivenKind(\T_ARRAY)) {
-                return 'array';
-            }
+        if (self::hasExclusivelyKinds($tokenKinds, [\T_DNUMBER, \T_LNUMBER, '+', '-', '*', '/', '(', ')'])) {
+            return 'float';
+        }
+
+        if (self::hasExclusivelyKinds($tokenKinds, [\T_CONSTANT_ENCAPSED_STRING, '.', \T_LNUMBER, \T_DNUMBER])) {
+            return 'string';
         }
 
         return 'mixed';
+    }
+
+    /**
+     * @param list<int|string> $tokenKinds
+     * @param list<int|string> $expectedKinds
+     */
+    private static function hasExclusivelyKinds(array $tokenKinds, array $expectedKinds): bool
+    {
+        foreach ($tokenKinds as $index => $tokenKind) {
+            if (\in_array($tokenKind, $expectedKinds, true)) {
+                unset($tokenKinds[$index]);
+            }
+        }
+
+        return $tokenKinds === [];
     }
 }

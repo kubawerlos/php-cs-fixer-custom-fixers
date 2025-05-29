@@ -50,6 +50,11 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             '<?php class Foo { public const BAR = [true, 1, "foo"]; }',
         ];
 
+        yield 'array as result of an expression' => [
+            '<?php class Foo { public const array BAR = [1 => 2] + array(3 => 4) + [5 => 6]; }',
+            '<?php class Foo { public const BAR = [1 => 2] + array(3 => 4) + [5 => 6]; }',
+        ];
+
         yield 'false' => [
             '<?php class Foo { public const false BAR = false; }',
             '<?php class Foo { public const BAR = false; }',
@@ -60,19 +65,29 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             '<?php class Foo { public const BAR = true; }',
         ];
 
-        yield 'float' => [
-            '<?php class Foo { public const float BAR = 2.5; }',
-            '<?php class Foo { public const BAR = 2.5; }',
-        ];
-
         yield 'integer' => [
             '<?php class Foo { public const int BAR = 123; }',
             '<?php class Foo { public const BAR = 123; }',
         ];
 
-        yield 'integer as result of sum' => [
-            '<?php class Foo { public const int BAR = 1 + 2 + 3; }',
-            '<?php class Foo { public const BAR = 1 + 2 + 3; }',
+        yield 'integer as result of an expression' => [
+            '<?php class Foo { public const int BAR = 1 + 2 - 3 * 4; }',
+            '<?php class Foo { public const BAR = 1 + 2 - 3 * 4; }',
+        ];
+
+        yield 'integer as result of an expression with parentheses' => [
+            '<?php class Foo { public const int BAR = 1000 * (701 + 22); }',
+            '<?php class Foo { public const BAR = 1000 * (701 + 22); }',
+        ];
+
+        yield 'float' => [
+            '<?php class Foo { public const float BAR = 2.5; }',
+            '<?php class Foo { public const BAR = 2.5; }',
+        ];
+
+        yield 'float as result of expression' => [
+            '<?php class Foo { public const float BAR = 1 + (2 - 3) * 4 / 5; }',
+            '<?php class Foo { public const BAR = 1 + (2 - 3) * 4 / 5; }',
         ];
 
         yield 'null' => [
@@ -95,14 +110,9 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             "<?php class Foo { public const BAR = 'John Doe'; }",
         ];
 
-        yield 'unknown other constant' => [
-            '<?php class Foo { public const mixed BAR = CONSTANT_FROM_FAR_AWAY; }',
-            '<?php class Foo { public const BAR = CONSTANT_FROM_FAR_AWAY; }',
-        ];
-
-        yield 'expression of unknown type' => [
-            '<?php class Foo { public const mixed BAR = 10 * (FLOAT_OR_INTEGER + 7); }',
-            '<?php class Foo { public const BAR = 10 * (FLOAT_OR_INTEGER + 7); }',
+        yield 'string as result of concatenation' => [
+            '<?php class Foo { public const string BAR = "A" . 1 . "B" . 0.25 . "C"; }',
+            '<?php class Foo { public const BAR = "A" . 1 . "B" . 0.25 . "C"; }',
         ];
 
         yield 'multiple constants' => [
@@ -136,9 +146,18 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 PHP,
         ];
 
-        // if someone does these, they deserve to have their code broken
+        yield 'unknown other constant' => [
+            '<?php class Foo { public const mixed BAR = CONSTANT_FROM_FAR_AWAY; }',
+            '<?php class Foo { public const BAR = CONSTANT_FROM_FAR_AWAY; }',
+        ];
+
+        yield 'expression of unknown type' => [
+            '<?php class Foo { public const mixed BAR = 10 * FLOAT_OR_INTEGER + 3; }',
+            '<?php class Foo { public const BAR = 10 * FLOAT_OR_INTEGER + 3; }',
+        ];
+
         yield 'constant that can be of different types' => [
-            '<?php class Foo { public const string BAR = SHOULD_BE_INT ? 1 : "one"; }',
+            '<?php class Foo { public const mixed BAR = SHOULD_BE_INT ? 1 : "one"; }',
             '<?php class Foo { public const BAR = SHOULD_BE_INT ? 1 : "one"; }',
         ];
 
@@ -147,7 +166,7 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 <?php
                 class HellCoreServiceManagerHelper
                 {
-                    const float OPTION_666__YES__1010011010_VALUE_4_1_3
+                    const mixed OPTION_666__YES__1010011010_VALUE_4_1_3
                         = IS_OVERRIDEN_BY_BEELZEBOSS
                             ? "Hell yeah"
                             : CIRCLES_MANAGER_ACCESS === [0o1232, 'super_manager', false, -66.6]
