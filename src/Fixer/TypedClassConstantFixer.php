@@ -129,7 +129,7 @@ final class TypedClassConstantFixer extends AbstractFixer
                 $foundKinds = [];
                 continue;
             }
-            $foundKinds[] = $tokens[$index]->getId() ?? $tokens[$index]->getContent();
+            $foundKinds[] = $kind;
 
             $index = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($index));
