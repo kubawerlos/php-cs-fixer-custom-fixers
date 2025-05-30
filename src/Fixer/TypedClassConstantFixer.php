@@ -144,10 +144,6 @@ final class TypedClassConstantFixer extends AbstractFixer
      */
     private static function getTypeOfExpressionForTokenKinds(array $tokenKinds): string
     {
-        if (self::isOfTypeBasedOnKinds($tokenKinds, [], [\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
-            return 'array';
-        }
-
         if (self::isOfTypeBasedOnKinds($tokenKinds, self::INTEGER_KINDS, [])) {
             return 'int';
         }
