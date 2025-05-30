@@ -118,7 +118,17 @@ final class TypedClassConstantFixer extends AbstractFixer
         $index = $tokens->getNextMeaningfulToken($index);
         \assert(\is_int($index));
 
+        $questionMarkCount = 0;
         do {
+            if ($questionMarkCount > 1) {
+                return 'mixed';
+            }
+            $kind = $tokens[$index]->getId() ?? $tokens[$index]->getContent();
+            if ($kind === '?') {
+                $questionMarkCount++;
+                $foundKinds = [];
+                continue;
+            }
             $foundKinds[] = $tokens[$index]->getId() ?? $tokens[$index]->getContent();
 
             $index = $tokens->getNextMeaningfulToken($index);
@@ -152,7 +162,7 @@ final class TypedClassConstantFixer extends AbstractFixer
             return 'float';
         }
 
-        if (self::isOfTypeBasedOnKinds($tokenKinds, self::STRING_KINDS, ['.'])) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, self::STRING_KINDS, ['.', CT::T_CLASS_CONSTANT])) {
             return 'string';
         }
 

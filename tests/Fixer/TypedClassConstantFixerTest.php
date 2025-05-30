@@ -169,9 +169,24 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 PHP,
         ];
 
-        yield 'string as result of concatenations' => [
-            '<?php class Foo { public const string BAR = "A" . 1 . "B" . 0.25 . "C"; }',
-            '<?php class Foo { public const BAR = "A" . 1 . "B" . 0.25 . "C"; }',
+        yield 'string as reference to other class' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public const string BAR = FooFoo::class;
+                    public const mixed BAZ = CONFIG_66 ? FooFoo::class : -1;
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public const BAR = FooFoo::class;
+                    public const BAZ = CONFIG_66 ? FooFoo::class : -1;
+                }
+                PHP,
+        ];
+
+        yield 'string as result of concatenations with parentheses' => [
+            '<?php class Foo { public const string BAR = "A" . 1 . ("B" . 0.25) . "C"; }',
+            '<?php class Foo { public const BAR = "A" . 1 . ("B" . 0.25) . "C"; }',
         ];
 
         yield 'string as result of concatenation with other constant' => [
