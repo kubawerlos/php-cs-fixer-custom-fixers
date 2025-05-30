@@ -144,15 +144,19 @@ final class TypedClassConstantFixer extends AbstractFixer
      */
     private static function getTypeOfExpressionForTokenKinds(array $tokenKinds): string
     {
-        if (self::isOfTypeBasedOnKinds($tokenKinds, self::INTEGER_KINDS)) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, [], [\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
+            return 'array';
+        }
+
+        if (self::isOfTypeBasedOnKinds($tokenKinds, self::INTEGER_KINDS, [])) {
             return 'int';
         }
 
-        if (self::isOfTypeBasedOnKinds($tokenKinds, self::FLOAT_KINDS)) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, self::FLOAT_KINDS, [])) {
             return 'float';
         }
 
-        if (self::isOfTypeBasedOnKinds($tokenKinds, self::STRING_KINDS, '.')) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, self::STRING_KINDS, ['.'])) {
             return 'string';
         }
 
@@ -162,11 +166,18 @@ final class TypedClassConstantFixer extends AbstractFixer
     /**
      * @param list<int|string> $expressionTokenKinds
      * @param list<int|string> $expectedKinds
+     * @param list<int|string> $instantWinners
      */
-    private static function isOfTypeBasedOnKinds(array $expressionTokenKinds, array $expectedKinds, ?string $instantWinner = null): bool
-    {
+    private static function isOfTypeBasedOnKinds(
+        array $expressionTokenKinds,
+        array $expectedKinds,
+        array $instantWinners,
+    ): bool {
         foreach ($expressionTokenKinds as $index => $expressionTokenKind) {
-            if ($expressionTokenKind === $instantWinner) {
+            if ($expressionTokenKind === '?') {
+                return false;
+            }
+            if (\in_array($expressionTokenKind, $instantWinners, true)) {
                 return true;
             }
             if (\in_array($expressionTokenKind, $expectedKinds, true)) {

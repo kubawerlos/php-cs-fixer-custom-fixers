@@ -55,6 +55,16 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             '<?php class Foo { public const BAR = [1 => 2] + array(3 => 4) + [5 => 6]; }',
         ];
 
+        yield 'array as sum of long syntax array and constant' => [
+            '<?php class Foo { public const array BAR = Baz::C + array(1); }',
+            '<?php class Foo { public const BAR = Baz::C + array(1); }',
+        ];
+
+        yield 'array as sum of short syntax array and constant' => [
+            '<?php class Foo { public const array BAR = Baz::C1 + [2] + Baz::C2; }',
+            '<?php class Foo { public const BAR = Baz::C1 + [2] + Baz::C2; }',
+        ];
+
         yield 'false' => [
             '<?php class Foo { public const false BAR = false; }',
             '<?php class Foo { public const BAR = false; }',
