@@ -171,7 +171,7 @@ final class TypedClassConstantFixer extends AbstractFixer
     private static function isOfTypeBasedOnKinds(
         array $expressionTokenKinds,
         array $expectedKinds,
-        array $instantWinners,
+        array $instantWinners
     ): bool {
         foreach ($expressionTokenKinds as $index => $expressionTokenKind) {
             if ($expressionTokenKind === '?') {
