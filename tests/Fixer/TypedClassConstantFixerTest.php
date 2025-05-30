@@ -135,6 +135,39 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             "<?php class Foo { public const BAR = 'John Doe'; }",
         ];
 
+        yield 'string with heredoc syntax' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public const string BAR = <<<STRING
+                        the content
+                    STRING;
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public const BAR = <<<STRING
+                        the content
+                    STRING;
+                }
+                PHP,
+        ];
+        yield 'string with nowdoc syntax' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public const string BAR = <<<'STRING'
+                        the content
+                    STRING;
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public const BAR = <<<'STRING'
+                        the content
+                    STRING;
+                }
+                PHP,
+        ];
+
         yield 'string as result of concatenations' => [
             '<?php class Foo { public const string BAR = "A" . 1 . "B" . 0.25 . "C"; }',
             '<?php class Foo { public const BAR = "A" . 1 . "B" . 0.25 . "C"; }',
