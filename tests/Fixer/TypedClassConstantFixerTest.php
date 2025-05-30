@@ -151,6 +151,7 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 }
                 PHP,
         ];
+
         yield 'string with nowdoc syntax' => [
             <<<'PHP'
                 <?php class Foo {
