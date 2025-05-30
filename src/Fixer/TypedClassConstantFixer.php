@@ -180,9 +180,6 @@ final class TypedClassConstantFixer extends AbstractFixer
         array $instantWinners
     ): bool {
         foreach ($expressionTokenKinds as $index => $expressionTokenKind) {
-            if ($expressionTokenKind === '?') {
-                return false;
-            }
             if (\in_array($expressionTokenKind, $instantWinners, true)) {
                 return true;
             }

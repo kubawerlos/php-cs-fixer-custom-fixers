@@ -240,9 +240,19 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             '<?php class Foo { public const BAR = 10 * FLOAT_OR_INTEGER + 3; }',
         ];
 
-        yield 'constant that can be of different types' => [
-            '<?php class Foo { public const mixed BAR = SHOULD_BE_INT ? 1 : ["one"]; }',
-            '<?php class Foo { public const BAR = SHOULD_BE_INT ? 1 : ["one"]; }',
+        yield 'constants that can be of different types' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public const mixed BAR = SHOULD_BE_INT ? 1 : ["one"];
+                    public const mixed BAZ = NAME === 'A' . 'b' ? 1 : ["one"];
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public const BAR = SHOULD_BE_INT ? 1 : ["one"];
+                    public const BAZ = NAME === 'A' . 'b' ? 1 : ["one"];
+                }
+                PHP,
         ];
 
         yield 'constant that can be of different types - more complex case' => [
