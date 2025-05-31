@@ -21,9 +21,9 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class TypedClassConstantFixer extends AbstractFixer
 {
-    private const INTEGER_KINDS = [\T_LNUMBER, '+', '-', '*', '(', ')', \T_POW, \T_SL, \T_SR];
+    private const INTEGER_KINDS = [\T_LNUMBER, '+', '-', '*', '(', ')', \T_POW, \T_SL, \T_SR, \T_LINE];
     private const FLOAT_KINDS = [\T_DNUMBER, ...self::INTEGER_KINDS, '/'];
-    private const STRING_KINDS = [\T_CONSTANT_ENCAPSED_STRING, \T_START_HEREDOC, \T_ENCAPSED_AND_WHITESPACE, \T_END_HEREDOC, \T_LNUMBER, \T_DNUMBER];
+    private const STRING_KINDS = [\T_CONSTANT_ENCAPSED_STRING, \T_START_HEREDOC, \T_ENCAPSED_AND_WHITESPACE, \T_END_HEREDOC, \T_LNUMBER, \T_DNUMBER, \T_CLASS_C, \T_DIR, \T_FILE, \T_FUNC_C, \T_METHOD_C, \T_NS_C, \T_TRAIT_C];
 
     public function getDefinition(): FixerDefinitionInterface
     {

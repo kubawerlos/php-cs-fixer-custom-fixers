@@ -184,6 +184,35 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 PHP,
         ];
 
+        yield 'string as magic constant' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public const string C1 = __CLASS__;
+                    public const string C2 = __DIR__;
+                    public const string C3 = __FILE__;
+                    public const string C4 = __FUNCTION__;
+                    public const int C5 = __LINE__;
+                    public const float C5_HALF = __LINE__ / 2;
+                    public const string C6 = __METHOD__;
+                    public const string C7 = __NAMESPACE__;
+                    public const string C8 = __TRAIT__;
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public const C1 = __CLASS__;
+                    public const C2 = __DIR__;
+                    public const C3 = __FILE__;
+                    public const C4 = __FUNCTION__;
+                    public const C5 = __LINE__;
+                    public const C5_HALF = __LINE__ / 2;
+                    public const C6 = __METHOD__;
+                    public const C7 = __NAMESPACE__;
+                    public const C8 = __TRAIT__;
+                }
+                PHP,
+        ];
+
         yield 'string as result of concatenations with parentheses' => [
             '<?php class Foo { public const string BAR = "A" . 1 . ("B" . 0.25) . "C"; }',
             '<?php class Foo { public const BAR = "A" . 1 . ("B" . 0.25) . "C"; }',
