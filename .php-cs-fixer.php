@@ -20,6 +20,7 @@ use PhpCsFixerConfig\Rules\LibraryRules;
 use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
 use PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer;
+use PhpCsFixerCustomFixers\Fixer\TypedClassConstantFixer;
 use PhpCsFixerCustomFixers\Fixers;
 
 // sanity check
@@ -54,6 +55,7 @@ unset($rules['get_class_to_class_keyword']); // TODO: remove when dropping suppo
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['php_unit_attributes']); // TODO: remove when dropping support to PHP <8.0
 unset($rules[PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
+unset($rules[TypedClassConstantFixer::name()]); // TODO: remove when dropping support to PHP <8.3
 $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
 
 $rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';

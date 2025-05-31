@@ -23,6 +23,8 @@ jobs:
       - if: github.event_name != 'pull_request'
         run: rm ./.dev-tools/composer.lock
       - run: composer update --no-progress
+      - run: "sed -i 's#constant: 0#constant: 100#g' .dev-tools/phpstan.neon"
+      - run: composer apply-typed_class_constant
       - run: composer analyse
 
   test:
