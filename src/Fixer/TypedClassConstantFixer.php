@@ -96,7 +96,15 @@ final class TypedClassConstantFixer extends AbstractFixer
                 continue;
             }
 
-            $type = self::getTypeOfExpression($tokens, $assignmentIndex);
+            $expressionStartIndex = $tokens->getNextMeaningfulToken($assignmentIndex);
+            \assert(\is_int($expressionStartIndex));
+
+            if ($tokens[$expressionStartIndex]->isGivenKind(\T_NS_SEPARATOR)) {
+                $expressionStartIndex = $tokens->getNextMeaningfulToken($expressionStartIndex);
+                \assert(\is_int($expressionStartIndex));
+            }
+
+            $type = self::getTypeOfExpression($tokens, $expressionStartIndex);
 
             $tokens->insertAt(
                 $constantNameIndex,
@@ -117,9 +125,6 @@ final class TypedClassConstantFixer extends AbstractFixer
         \assert(\is_int($beforeSemicolonIndex));
 
         $foundKinds = [];
-
-        $index = $tokens->getNextMeaningfulToken($index);
-        \assert(\is_int($index));
 
         $questionMarkCount = 0;
         do {

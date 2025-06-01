@@ -125,6 +125,23 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
             '<?php class Foo { public const BAR = NULL; }',
         ];
 
+        yield 'values with a leading backslash' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public const false C_FALSE = \false;
+                    public const true C_TRUE = \true;
+                    public const null C_NULL = \null;
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public const C_FALSE = \false;
+                    public const C_TRUE = \true;
+                    public const C_NULL = \null;
+                }
+                PHP,
+        ];
+
         yield 'string with double quotes' => [
             '<?php class Foo { public const string BAR = "Jane Doe"; }',
             '<?php class Foo { public const BAR = "Jane Doe"; }',
@@ -133,6 +150,11 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
         yield 'string with single quotes' => [
             "<?php class Foo { public const string BAR = 'John Doe'; }",
             "<?php class Foo { public const BAR = 'John Doe'; }",
+        ];
+
+        yield 'binary string' => [
+            '<?php class Foo { public const string BAR = b"Jane Doe"; }',
+            '<?php class Foo { public const BAR = b"Jane Doe"; }',
         ];
 
         yield 'string with heredoc syntax' => [
