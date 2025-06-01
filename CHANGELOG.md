@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.26.0
+- Add TypedClassConstantFixer
+
 ## v3.25.0
 - Add ForeachUseValueFixer
 - Add NoUselessWriteVisibilityFixer

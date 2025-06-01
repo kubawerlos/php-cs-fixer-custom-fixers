@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3691-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3750-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -722,6 +722,18 @@ The string key of an array or generator must be trimmed and have no double space
 +    'option 1' => 'v1',
 +    'option 2 or 3' => 'v23',
  ];
+```
+
+#### TypedClassConstantFixer
+Class constants must have a type.
+```diff
+ <?php
+ class Foo {
+-    public const MAX_VALUE_OF_SOMETHING = 42;
+-    public const THE_NAME_OF_SOMEONE = 'John Doe';
++    public const int MAX_VALUE_OF_SOMETHING = 42;
++    public const string THE_NAME_OF_SOMEONE = 'John Doe';
+ }
 ```
 
 

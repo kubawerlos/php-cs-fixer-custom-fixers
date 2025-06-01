@@ -39,6 +39,10 @@
             "@prepare-dev-tools",
             "php-cs-fixer fix --quiet --rules=php_unit_attributes || exit 0"
         ],
+        "apply-typed_class_constant": [
+            "@prepare-dev-tools",
+            "php-cs-fixer fix --quiet --rules=PhpCsFixerCustomFixers/typed_class_constant || exit 0"
+        ],
         "fix": [
             "@prepare-dev-tools",
             "php-cs-fixer fix --ansi --verbose || exit 0",
