@@ -1,0 +1,14 @@
+--CONFIGURATION--
+{ "single_class_element_per_statement": true, "PhpCsFixerCustomFixers/typed_class_constant": true }
+--EXPECTED--
+<?php
+class Foo {
+    const int BAR = 1;
+    const string BAZ = "two";
+}
+
+--INPUT--
+<?php
+class Foo {
+    const BAR = 1, BAZ = "two";
+}

@@ -45,6 +45,9 @@ final class TypedClassConstantFixer extends AbstractFixer
         );
     }
 
+    /**
+     * Must run after SingleClassElementPerStatementFixer.
+     */
     public function getPriority(): int
     {
         return 0;
