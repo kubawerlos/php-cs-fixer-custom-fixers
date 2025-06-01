@@ -337,9 +337,9 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 PHP,
         ];
 
-        yield 'make multiple constants definition mixed type' => [
-            '<?php class Foo { public const mixed BAR = 1, BAZ = "two"; }',
-            '<?php class Foo { public const BAR = 1, BAZ = "two"; }',
+        yield 'make multiple constants definition statement mixed type even if of single type' => [
+            '<?php class Foo { public const mixed BAR = 1, BAZ = 2; }',
+            '<?php class Foo { public const BAR = 1, BAZ = 2; }',
         ];
     }
 }
