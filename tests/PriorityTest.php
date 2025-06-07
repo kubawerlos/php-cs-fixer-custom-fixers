@@ -37,7 +37,7 @@ final class PriorityTest extends TestCase
     /**
      * @dataProvider providePriorityCases
      */
-    public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer): void
+    public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
         self::assertLessThan($firstFixer->getPriority(), $secondFixer->getPriority());
     }
