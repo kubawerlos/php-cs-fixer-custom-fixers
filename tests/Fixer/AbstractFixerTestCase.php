@@ -97,9 +97,6 @@ abstract class AbstractFixerTestCase extends TestCase
         self::assertMatchesRegularExpression('/\\n$/', $codeSample->getCode());
     }
 
-    /**
-     * @coversNothing
-     */
     final public function testCodeSampleIsChangedDuringFixing(): void
     {
         $fixer = self::getFixer();
