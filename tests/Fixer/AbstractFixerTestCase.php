@@ -164,6 +164,7 @@ abstract class AbstractFixerTestCase extends TestCase
         $fixer = self::getFixer();
 
         if ($whitespacesFixerConfig instanceof WhitespacesFixerConfig) {
+            self::assertInstanceOf(WhitespacesAwareFixerInterface::class, $fixer);
             $fixer->setWhitespacesConfig($whitespacesFixerConfig);
         }
 

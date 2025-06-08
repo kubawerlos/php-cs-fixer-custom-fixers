@@ -59,7 +59,7 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<string, array{0: string, 1?: null|string, 2?: array{path_prefix?: string, description?: string}, 3?: string}>
+     * @return iterable<string, array{0: string, 1?: null|string, 2?: array{path_prefix?: string, description?: string}, 3?: WhitespacesFixerConfig}>
      */
     public static function provideFixCases(): iterable
     {
