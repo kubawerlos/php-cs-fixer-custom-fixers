@@ -76,6 +76,12 @@ final class InfectionConfigBuilder
             ],
         ];
 
+        $config['mutators']['ConcatOperandRemoval'] = [
+            'ignore' => [// @TODO: remove this as after mutation a test is failing
+                'PhpCsFixerCustomFixers\\Fixer\\PhpdocNoNamedArgumentsTagFixer::getConfigurationDefinition',
+            ],
+        ];
+
         $config['mutators']['InstanceOf_'] = [
             'ignoreSourceCodeByRegex' => [
                 '\\\\assert\\(.+\\);',

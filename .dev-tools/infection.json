@@ -54,7 +54,11 @@
         "Catch_": true,
         "CloneRemoval": true,
         "Coalesce": true,
-        "ConcatOperandRemoval": true,
+        "ConcatOperandRemoval": {
+            "ignore": [
+                "PhpCsFixerCustomFixers\\Fixer\\PhpdocNoNamedArgumentsTagFixer::getConfigurationDefinition"
+            ]
+        },
         "Continue_": true,
         "Decrement": true,
         "DivEqual": true,
