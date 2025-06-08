@@ -69,13 +69,13 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
                 PHP,
         ];
 
-        yield 'do not touch for different prefix' => [
+        yield 'do not touch for different directory' => [
             <<<'PHP'
                 <?php
                 class Foo {}
                 PHP,
             null,
-            ['directory' => __DIR__ . '/../../tests'],
+            ['directory' => __DIR__ . '/../../src/Fixer'],
         ];
 
         yield 'create PHPDoc comment' => [
@@ -105,6 +105,33 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
             <<<'PHP'
                 <?php
                 class Foo {}
+                PHP,
+            ['description' => 'Some description'],
+        ];
+
+        yield 'multiple classes' => [
+            <<<'PHP'
+                <?php
+
+                /**
+                 * @no-named-arguments Some description
+                 */
+                class Foo {}
+
+                new class {};
+
+                /**
+                 * @no-named-arguments Some description
+                 */
+                class Bar {}
+                PHP,
+            <<<'PHP'
+                <?php
+                class Foo {}
+
+                new class {};
+
+                class Bar {}
                 PHP,
             ['description' => 'Some description'],
         ];
