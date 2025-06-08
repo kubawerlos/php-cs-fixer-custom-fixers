@@ -61,8 +61,7 @@ $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => 
 $rules[PhpdocNoNamedArgumentsTagFixer::name()] = false; // TODO: change to ['directory' => __DIR__ . '/src/']
 
 $rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';
-$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'codeCoverageIgnoreStart';
-$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'codeCoverageIgnoreEnd';
+$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'codeCoverageIgnore';
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;

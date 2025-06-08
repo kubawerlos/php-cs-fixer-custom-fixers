@@ -269,7 +269,7 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
 
     private function createSplFileInfoDouble(): \SplFileInfo
     {
-        return new class (\getcwd() . '/file.php') extends \SplFileInfo {
+        return new class (\getcwd() . \DIRECTORY_SEPARATOR . 'file.php') extends \SplFileInfo {
             public function __construct(string $filename)
             {
                 parent::__construct($filename);

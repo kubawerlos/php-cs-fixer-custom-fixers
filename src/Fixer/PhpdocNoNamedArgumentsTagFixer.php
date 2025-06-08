@@ -152,26 +152,26 @@ final class PhpdocNoNamedArgumentsTagFixer extends AbstractFixer implements Conf
 
         if ($abstractPhpUnitFixer === null) {
             $abstractPhpUnitFixer = new class () extends AbstractPhpUnitFixer implements WhitespacesAwareFixerInterface {
-                /**
-                 * @codeCoverageIgnoreStart
-                 */
-                protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
+                public function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void
                 {
-                    throw new \BadMethodCallException('Not implemented');
+                    $this->setWhitespacesConfig($whitespacesConfig);
+                    $this->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
                 }
 
+                /**
+                 * @codeCoverageIgnore
+                 */
                 public function getDefinition(): FixerDefinitionInterface
                 {
                     throw new \BadMethodCallException('Not implemented');
                 }
 
                 /**
-                 * @codeCoverageIgnoreEnd
+                 * @codeCoverageIgnore
                  */
-                public function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void
+                protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
                 {
-                    $this->setWhitespacesConfig($whitespacesConfig);
-                    $this->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
+                    throw new \BadMethodCallException('Not implemented');
                 }
             };
         }
