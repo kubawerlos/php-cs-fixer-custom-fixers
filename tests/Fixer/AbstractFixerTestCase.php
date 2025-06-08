@@ -159,9 +159,13 @@ abstract class AbstractFixerTestCase extends TestCase
     /**
      * @param null|array<string, mixed> $configuration
      */
-    final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null): void
+    final protected function doTest(string $expected, ?string $input = null, ?array $configuration = null, ?WhitespacesFixerConfig $whitespacesFixerConfig = null): void
     {
         $fixer = self::getFixer();
+
+        if ($whitespacesFixerConfig instanceof WhitespacesFixerConfig) {
+            $fixer->setWhitespacesConfig($whitespacesFixerConfig);
+        }
 
         if ($fixer instanceof ConfigurableFixerInterface) {
             $fixer->configure($configuration ?? []);

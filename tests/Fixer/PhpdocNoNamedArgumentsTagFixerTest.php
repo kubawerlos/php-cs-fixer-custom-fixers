@@ -13,6 +13,7 @@ namespace Tests\Fixer;
 
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\WhitespacesFixerConfig;
 
 /**
  * @internal
@@ -52,9 +53,9 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = [], ?WhitespacesFixerConfig $whitespacesFixerConfig = null): void
     {
-        $this->doTest($expected, $input, $configuration);
+        $this->doTest($expected, $input, $configuration, $whitespacesFixerConfig);
     }
 
     /**
@@ -93,12 +94,12 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
                 PHP,
         ];
 
-        yield 'change the description' => [
+        yield 'create PHPDoc with description' => [
             <<<'PHP'
                 <?php
 
                 /**
-                 * @no-named-arguments Some description
+                 * @no-named-arguments The description
                  */
                 class Foo {}
                 PHP,
@@ -106,7 +107,60 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
                 <?php
                 class Foo {}
                 PHP,
-            ['description' => 'Some description'],
+            ['description' => 'The description'],
+        ];
+
+        yield 'add description' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @no-named-arguments New description
+                 */
+                class Foo {}
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @no-named-arguments
+                 */
+                class Foo {}
+                PHP,
+            ['description' => 'New description'],
+        ];
+
+        yield 'change description' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @no-named-arguments New description
+                 */
+                class Foo {}
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @no-named-arguments Old description
+                 */
+                class Foo {}
+                PHP,
+            ['description' => 'New description'],
+        ];
+
+        yield 'remove description' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @no-named-arguments
+                 */
+                class Foo {}
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @no-named-arguments Description to remove
+                 */
+                class Foo {}
+                PHP,
         ];
 
         yield 'multiple classes' => [
@@ -114,14 +168,14 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
                 <?php
 
                 /**
-                 * @no-named-arguments Some description
+                 * @no-named-arguments
                  */
                 class Foo {}
 
                 new class {};
 
                 /**
-                 * @no-named-arguments Some description
+                 * @no-named-arguments
                  */
                 class Bar {}
                 PHP,
@@ -133,7 +187,32 @@ final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
 
                 class Bar {}
                 PHP,
-            ['description' => 'Some description'],
+        ];
+
+        yield 'tabs and Windows Line endings' => [
+            \str_replace(
+                ['    ', "\n"],
+                ["\t", "\r\n"],
+                <<<'PHP'
+                    <?php
+
+                    /**
+                     * @no-named-arguments
+                     */
+                    class Foo {}
+                    PHP,
+            ),
+            \str_replace(
+                ['    ', "\n"],
+                ["\t", "\r\n"],
+                <<<'PHP'
+                    <?php
+
+                    class Foo {}
+                    PHP,
+            ),
+            [],
+            new WhitespacesFixerConfig("\t", "\r\n"),
         ];
     }
 }

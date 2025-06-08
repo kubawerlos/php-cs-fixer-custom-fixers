@@ -138,7 +138,7 @@ final class PhpdocNoNamedArgumentsTagFixer extends AbstractFixer implements Conf
 
             $content = $tokens[$docBlockIndex]->getContent();
 
-            $newContent = Preg::replace('/@no-named-arguments.*(\\R)/', \rtrim('@no-named-arguments ' . $this->description) . '$1', $content);
+            $newContent = Preg::replace('/@no-named-arguments.*\\R/', \rtrim('@no-named-arguments ' . $this->description) . $this->whitespacesConfig->getLineEnding(), $content);
 
             if ($newContent !== $content) {
                 $tokens[$docBlockIndex] = new Token([\T_DOC_COMMENT, $newContent]);
