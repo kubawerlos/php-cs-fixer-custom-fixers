@@ -250,6 +250,16 @@ abstract class AbstractFixerTestCase extends TestCase
 
     private function createSplFileInfoDouble(): \SplFileInfo
     {
-        return new class ('') extends \SplFileInfo {};
+        return new class (\getcwd() . '/src/file.php') extends \SplFileInfo {
+            public function __construct(string $filename)
+            {
+                parent::__construct($filename);
+            }
+
+            public function getRealPath(): string
+            {
+                return $this->getPathname();
+            }
+        };
     }
 }

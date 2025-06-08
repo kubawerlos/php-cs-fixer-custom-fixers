@@ -15,7 +15,6 @@ use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSampleInterface;
-use PhpCsFixer\StdinFileInfo;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Utils;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -236,7 +235,7 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
                 $fixer->configure($codeSample->getConfiguration() ?? []);
             }
             $tokens = Tokens::fromCode($originalCode);
-            $fixer->fix(new StdinFileInfo(), $tokens);
+            $fixer->fix($this->createSplFileInfoDouble(), $tokens);
             $fixedCode = $tokens->generateCode();
 
             $output .= \sprintf(
@@ -266,6 +265,21 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
         \assert(\is_int($start));
 
         return \substr($diff, $start + 1, -1);
+    }
+
+    private function createSplFileInfoDouble(): \SplFileInfo
+    {
+        return new class (\getcwd() . '/file.php') extends \SplFileInfo {
+            public function __construct(string $filename)
+            {
+                parent::__construct($filename);
+            }
+
+            public function getRealPath(): string
+            {
+                return $this->getPathname();
+            }
+        };
     }
 
     private function contributing(): string
