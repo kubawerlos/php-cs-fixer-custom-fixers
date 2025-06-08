@@ -58,9 +58,11 @@ unset($rules['php_unit_attributes']); // TODO: remove when dropping support to P
 unset($rules[PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
 unset($rules[TypedClassConstantFixer::name()]); // TODO: remove when dropping support to PHP <8.3
 $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
-$rules[PhpdocNoNamedArgumentsTagFixer::name()] = ['directory' => __DIR__ . '/src/Analyzer/Analysis/']; // TODO: change to ['directory' => __DIR__ . '/src/']
+$rules[PhpdocNoNamedArgumentsTagFixer::name()] = false; // TODO: change to ['directory' => __DIR__ . '/src/']
 
 $rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';
+$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'codeCoverageIgnoreStart';
+$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'codeCoverageIgnoreEnd';
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;

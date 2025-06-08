@@ -82,9 +82,7 @@ final class PhpdocNoNamedArgumentsTagFixer extends AbstractFixer implements Conf
                         throw new InvalidFixerConfigurationException($fixerName, \sprintf('The directory "%s" does not exists.', $value));
                     }
 
-                    $value = realpath($value) . \DIRECTORY_SEPARATOR;
-
-                    return $value;
+                    return \realpath($value) . \DIRECTORY_SEPARATOR;
                 })
                 ->getOption(),
         ]);
@@ -150,30 +148,35 @@ final class PhpdocNoNamedArgumentsTagFixer extends AbstractFixer implements Conf
 
     private function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index): void
     {
-        /** @var \Closure(Tokens, int, WhitespacesFixerConfig): void $closure */
-        static $closure;
+        static $abstractPhpUnitFixer;
 
-        if ($closure === null) {
-            $function = function (Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void {
-                $object = new class () extends AbstractPhpUnitFixer implements WhitespacesAwareFixerInterface {
-                    public function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void
-                    {
-                        $this->setWhitespacesConfig($whitespacesConfig);
-                        $this->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
-                    }
+        if ($abstractPhpUnitFixer === null) {
+            $abstractPhpUnitFixer = new class () extends AbstractPhpUnitFixer implements WhitespacesAwareFixerInterface {
+                /**
+                 * @codeCoverageIgnoreStart
+                 */
+                protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
+                {
+                    throw new \BadMethodCallException('Not implemented');
+                }
 
-                    protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void {}
+                public function getDefinition(): FixerDefinitionInterface
+                {
+                    throw new \BadMethodCallException('Not implemented');
+                }
 
-                    public function getDefinition(): FixerDefinitionInterface
-                    {
-                        throw new \BadMethodCallException('Not implemented');
-                    }
-                };
-                $object->ensureIsDocBlockWithNoNameArgumentsTag($tokens, $index, $whitespacesConfig);
+                /**
+                 * @codeCoverageIgnoreEnd
+                 */
+                public function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void
+                {
+                    $this->setWhitespacesConfig($whitespacesConfig);
+                    $this->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
+                }
             };
-            $closure = \Closure::bind($function, null, AbstractPhpUnitFixer::class);
         }
 
-        $closure($tokens, $index, $this->whitespacesConfig);
+        // @phpstan-ignore method.nonObject
+        $abstractPhpUnitFixer->ensureIsDocBlockWithNoNameArgumentsTag($tokens, $index, $this->whitespacesConfig);
     }
 }
