@@ -59,6 +59,7 @@ unset($rules[TypedClassConstantFixer::name()]); // TODO: remove when dropping su
 $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
 
 $rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';
+$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'codeCoverageIgnore';
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;
