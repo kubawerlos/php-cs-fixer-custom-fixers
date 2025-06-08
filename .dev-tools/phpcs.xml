@@ -15,6 +15,7 @@
         <exclude name='Generic.Files.LineLength' />
         <exclude name='PSR12.Files.FileHeader.SpacingAfterBlock' />
         <exclude name='PSR12.Files.OpenTag.NotAlone' />
+        <exclude name='Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine' />
         <exclude name='Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore' />
     </rule>
 

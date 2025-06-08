@@ -1,0 +1,179 @@
+<?php declare(strict_types=1);
+
+/*
+ * This file is part of PHP CS Fixer: custom fixers.
+ *
+ * (c) 2018 Kuba Werłos
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace PhpCsFixerCustomFixers\Fixer;
+
+use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
+use PhpCsFixer\Fixer\AbstractPhpUnitFixer;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
+use PhpCsFixer\FixerDefinition\CodeSample;
+use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Token;
+use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\WhitespacesFixerConfig;
+use Symfony\Component\OptionsResolver\Options;
+
+/**
+ * @implements ConfigurableFixerInterface<_InputConfig, _Config>
+ *
+ * @phpstan-type _InputConfig array{directory?: string, description?: string}
+ * @phpstan-type _Config array{directory: string, description: string}
+ */
+final class PhpdocNoNamedArgumentsTagFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+{
+    private string $description = '';
+    private string $directory = '';
+    private WhitespacesFixerConfig $whitespacesConfig;
+
+    public function setWhitespacesConfig(WhitespacesFixerConfig $config): void
+    {
+        $this->whitespacesConfig = $config;
+    }
+
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        return new FixerDefinition(
+            'There must be `@no-named-arguments` tag in PHPDoc of a class/enum/interface/trait.',
+            [new CodeSample(<<<'PHP'
+                <?php
+                class Foo
+                {
+                    public function bar(string $s) {}
+                }
+
+                PHP)],
+            '',
+        );
+    }
+
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    {
+        $fixerName = $this->getName();
+
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('description', 'description of the tag'))
+                ->setAllowedTypes(['string'])
+                ->setDefault($this->description)
+                ->getOption(),
+            (new FixerOptionBuilder('directory', 'directory in which apply the changes, empty value will result with current working directory (result of `getcwd` call)'))
+                ->setAllowedTypes(['string'])
+                ->setDefault($this->directory)
+                ->setNormalizer(static function (Options $options, string $value) use ($fixerName): string {
+                    if ($value === '') {
+                        $value = \getcwd();
+                        \assert(\is_string($value));
+                    }
+
+                    if (!\is_dir($value)) {
+                        throw new InvalidFixerConfigurationException($fixerName, \sprintf('The directory "%s" does not exists.', $value));
+                    }
+
+                    $value = realpath($value) . \DIRECTORY_SEPARATOR;
+
+                    return $value;
+                })
+                ->getOption(),
+        ]);
+    }
+
+    /**
+     * @param _InputConfig $configuration
+     */
+    public function configure(array $configuration): void
+    {
+        /** @var array{directory: string, description: string} $configuration */
+        $configuration = $this->getConfigurationDefinition()->resolve($configuration);
+
+        $this->directory = $configuration['directory'];
+        $this->description = $configuration['description'];
+    }
+
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
+    public function isCandidate(Tokens $tokens): bool
+    {
+        return $tokens->isAnyTokenKindsFound(Token::getClassyTokenKinds());
+    }
+
+    public function isRisky(): bool
+    {
+        return false;
+    }
+
+    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    {
+        if (!\str_starts_with($file->getRealPath(), $this->directory)) {
+            return;
+        }
+
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
+            if (!$tokens[$index]->isClassy()) {
+                continue;
+            }
+
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            if ($tokens[$prevIndex]->isGivenKind(\T_NEW)) {
+                continue;
+            }
+
+            $this->ensureIsDocBlockWithNoNameArgumentsTag($tokens, $index);
+
+            $docBlockIndex = $tokens->getPrevTokenOfKind($index + 2, [[\T_DOC_COMMENT]]);
+            \assert(\is_int($docBlockIndex));
+
+            $content = $tokens[$docBlockIndex]->getContent();
+
+            $newContent = Preg::replace('/@no-named-arguments.*(\\R)/', \rtrim('@no-named-arguments ' . $this->description) . '$1', $content);
+
+            if ($newContent !== $content) {
+                $tokens[$docBlockIndex] = new Token([\T_DOC_COMMENT, $newContent]);
+            }
+        }
+    }
+
+    private function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index): void
+    {
+        /** @var \Closure(Tokens, int, WhitespacesFixerConfig): void $closure */
+        static $closure;
+
+        if ($closure === null) {
+            $function = function (Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void {
+                $object = new class () extends AbstractPhpUnitFixer implements WhitespacesAwareFixerInterface {
+                    public function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void
+                    {
+                        $this->setWhitespacesConfig($whitespacesConfig);
+                        $this->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
+                    }
+
+                    protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void {}
+
+                    public function getDefinition(): FixerDefinitionInterface
+                    {
+                        throw new \BadMethodCallException('Not implemented');
+                    }
+                };
+                $object->ensureIsDocBlockWithNoNameArgumentsTag($tokens, $index, $whitespacesConfig);
+            };
+            $closure = \Closure::bind($function, null, AbstractPhpUnitFixer::class);
+        }
+
+        $closure($tokens, $index, $this->whitespacesConfig);
+    }
+}
