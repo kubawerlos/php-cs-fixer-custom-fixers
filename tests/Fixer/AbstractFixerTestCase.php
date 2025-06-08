@@ -157,7 +157,7 @@ abstract class AbstractFixerTestCase extends TestCase
     }
 
     /**
-     * @param null|array<string, mixed> $configuration
+     * @param array<string, mixed> $configuration
      */
     final protected function doTest(string $expected, ?string $input = null, array $configuration = [], ?WhitespacesFixerConfig $whitespacesFixerConfig = null): void
     {
