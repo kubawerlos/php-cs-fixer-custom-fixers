@@ -123,8 +123,6 @@ jobs:
       - if: matrix.install-phpunit-12
         run: composer require --dev phpunit/phpunit:^12.0.2 --no-update
 
-      - run: php tests/test_chdir.php
-
       - run: composer update --no-progress --classmap-authoritative ${{ matrix.composer-flags }}
 
       - if: matrix.install-phpunit-12

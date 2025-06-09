@@ -189,6 +189,14 @@ final class TestsCodeTest extends TestCase
         return $tests;
     }
 
+    public function testCwd(): void
+    {
+        self::assertSame(
+            \realpath(__DIR__ . '/../..'),
+            \getcwd(),
+        );
+    }
+
     /**
      * @param class-string $className
      *
