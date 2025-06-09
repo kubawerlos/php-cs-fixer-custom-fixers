@@ -40,11 +40,11 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param null|array<string, string> $configuration
+     * @param array<string, string> $configuration
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);
     }
