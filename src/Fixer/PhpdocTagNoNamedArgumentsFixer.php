@@ -25,7 +25,6 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
-use Symfony\Component\OptionsResolver\Options;
 
 /**
  * @implements ConfigurableFixerInterface<_InputConfig, _Config>
@@ -62,28 +61,14 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
 
     public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
-        $fixerName = $this->getName();
-
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder('description', 'description of the tag'))
                 ->setAllowedTypes(['string'])
-                ->setDefault($this->description)
+                ->setDefault('')
                 ->getOption(),
             (new FixerOptionBuilder('directory', 'directory in which apply the changes, empty value will result with current working directory (result of `getcwd` call)'))
                 ->setAllowedTypes(['string'])
-                ->setDefault($this->directory)
-                ->setNormalizer(static function (Options $options, string $value) use ($fixerName): string {
-                    if ($value === '') {
-                        $value = \getcwd();
-                        \assert(\is_string($value));
-                    }
-
-                    if (!\is_dir($value)) {
-                        throw new InvalidFixerConfigurationException($fixerName, \sprintf('The directory "%s" does not exists.', $value));
-                    }
-
-                    return \realpath($value) . \DIRECTORY_SEPARATOR;
-                })
+                ->setDefault('')
                 ->getOption(),
         ]);
     }
@@ -97,6 +82,20 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
         $configuration = $this->getConfigurationDefinition()->resolve($configuration);
 
         $this->directory = $configuration['directory'];
+
+        if ($this->directory === '') {
+            $cwd = \getcwd();
+            \assert(\is_string($cwd));
+            $this->directory = $cwd;
+        }
+
+        if (!\is_dir($this->directory)) {
+            throw new InvalidFixerConfigurationException($this->getName(), \sprintf('The directory "%s" does not exists.', $this->directory));
+        }
+
+        // @infection-ignore-all
+        $this->directory = \realpath($this->directory) . \DIRECTORY_SEPARATOR;
+
         $this->description = $configuration['description'];
     }
 
