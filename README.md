@@ -530,23 +530,6 @@ The `@var` annotations must be used correctly in code.
  $bar = new Foo();
 ```
 
-#### PhpdocNoNamedArgumentsTagFixer
-There must be `@no-named-arguments` tag in PHPDoc of a class/enum/interface/trait.
-Configuration options:
-- `description` (`string`): description of the tag; defaults to `''`
-- `directory` (`string`): directory in which apply the changes, empty value will result with current working directory (result of `getcwd` call); defaults to `''`
-```diff
- <?php
-+
-+/**
-+ * @no-named-arguments
-+ */
- class Foo
- {
-     public function bar(string $s) {}
- }
-```
-
 #### PhpdocNoSuperfluousParamFixer
 There must be no superfluous parameters in PHPDoc.
 ```diff
@@ -624,6 +607,23 @@ The `@var` annotation must be on a single line if it is the only content.
 -     */
 +    /** @var string */
      private $name;
+ }
+```
+
+#### PhpdocTagNoNamedArgumentsFixer
+There must be `@no-named-arguments` tag in PHPDoc of a class/enum/interface/trait.
+Configuration options:
+- `description` (`string`): description of the tag; defaults to `''`
+- `directory` (`string`): directory in which apply the changes, empty value will result with current working directory (result of `getcwd` call); defaults to `''`
+```diff
+ <?php
++
++/**
++ * @no-named-arguments
++ */
+ class Foo
+ {
+     public function bar(string $s) {}
  }
 ```
 

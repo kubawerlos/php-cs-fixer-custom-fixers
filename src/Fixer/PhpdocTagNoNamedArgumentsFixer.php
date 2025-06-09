@@ -33,7 +33,7 @@ use Symfony\Component\OptionsResolver\Options;
  * @phpstan-type _InputConfig array{directory?: string, description?: string}
  * @phpstan-type _Config array{directory: string, description: string}
  */
-final class PhpdocNoNamedArgumentsTagFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {
     private string $description = '';
     private string $directory = '';

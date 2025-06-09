@@ -18,9 +18,9 @@ use PhpCsFixer\WhitespacesFixerConfig;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocNoNamedArgumentsTagFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocTagNoNamedArgumentsFixer
  */
-final class PhpdocNoNamedArgumentsTagFixerTest extends AbstractFixerTestCase
+final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
     {

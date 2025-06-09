@@ -78,8 +78,8 @@ final class InfectionConfigBuilder
         ];
 
         $config['mutators']['ConcatOperandRemoval'] = [
-            'ignore' => [// @TODO: remove this as after mutation a test is failing
-                'PhpCsFixerCustomFixers\\Fixer\\PhpdocNoNamedArgumentsTagFixer::getConfigurationDefinition',
+            'ignore' => [ // @TODO: remove this as after mutation a test is failing
+                'PhpCsFixerCustomFixers\\Fixer\\PhpdocTagNoNamedArgumentsFixer::getConfigurationDefinition',
             ],
         ];
 

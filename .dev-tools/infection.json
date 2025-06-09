@@ -57,7 +57,7 @@
         "Coalesce": true,
         "ConcatOperandRemoval": {
             "ignore": [
-                "PhpCsFixerCustomFixers\\Fixer\\PhpdocNoNamedArgumentsTagFixer::getConfigurationDefinition"
+                "PhpCsFixerCustomFixers\\Fixer\\PhpdocTagNoNamedArgumentsFixer::getConfigurationDefinition"
             ]
         },
         "Continue_": true,
