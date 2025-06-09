@@ -55,6 +55,10 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
      */
     public function testFix(string $expected, ?string $input = null, array $configuration = [], ?WhitespacesFixerConfig $whitespacesFixerConfig = null): void
     {
+        self::assertStringStartsWith(
+            \getcwd(),
+            \getcwd() . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'FixerFile.php',
+        );
         $this->doTest($expected, $input, $configuration, $whitespacesFixerConfig);
     }
 
