@@ -52,6 +52,7 @@ final class InfectionConfigBuilder
                 'configDir' => '..',
                 'customPath' => '../vendor/phpunit/phpunit/phpunit',
             ],
+            'minCoveredMsi' => 100,
             'mutators' => [],
         ];
 

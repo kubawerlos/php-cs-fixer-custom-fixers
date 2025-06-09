@@ -31,11 +31,11 @@ final class NoDuplicatedArrayKeyFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param null|array<string, bool> $configuration
+     * @param array<string, bool> $configuration
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);
     }

@@ -33,11 +33,11 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param null|array<string, list<string>> $configuration
+     * @param array<string, list<string>> $configuration
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);
     }

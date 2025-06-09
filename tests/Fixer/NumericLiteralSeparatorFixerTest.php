@@ -71,11 +71,11 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param null|array<string, null|bool> $configuration
+     * @param array<string, null|bool> $configuration
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null, ?array $configuration = null): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest(
             $expected,
