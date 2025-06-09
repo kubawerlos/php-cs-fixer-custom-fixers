@@ -12,8 +12,8 @@
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
-use PhpCsFixer\Fixer\AbstractPhpUnitFixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\PhpUnit\PhpUnitInternalClassFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
@@ -148,35 +148,21 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
 
     private function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index): void
     {
-        static $abstractPhpUnitFixer;
+        /** @var callable(WhitespacesFixerConfig, Tokens, int): void $ensureIsDocBlockWithTagNoNameArguments */
+        static $ensureIsDocBlockWithTagNoNameArguments;
 
-        if ($abstractPhpUnitFixer === null) {
-            $abstractPhpUnitFixer = new class () extends AbstractPhpUnitFixer implements WhitespacesAwareFixerInterface {
-                public function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index, WhitespacesFixerConfig $whitespacesConfig): void
-                {
-                    $this->setWhitespacesConfig($whitespacesConfig);
-                    $this->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
-                }
-
-                /**
-                 * @codeCoverageIgnore
-                 */
-                public function getDefinition(): FixerDefinitionInterface
-                {
-                    throw new \BadMethodCallException('Not implemented');
-                }
-
-                /**
-                 * @codeCoverageIgnore
-                 */
-                protected function applyPhpUnitClassFix(Tokens $tokens, int $startIndex, int $endIndex): void
-                {
-                    throw new \BadMethodCallException('Not implemented');
-                }
-            };
+        if ($ensureIsDocBlockWithTagNoNameArguments === null) {
+            $ensureIsDocBlockWithTagNoNameArguments = \Closure::bind(
+                static function (WhitespacesFixerConfig $whitespacesConfig, Tokens $tokens, int $index): void {
+                    $phpUnitInternalClassFixer = new PhpUnitInternalClassFixer();
+                    $phpUnitInternalClassFixer->setWhitespacesConfig($whitespacesConfig);
+                    $phpUnitInternalClassFixer->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
+                },
+                null,
+                PhpUnitInternalClassFixer::class,
+            );
         }
 
-        // @phpstan-ignore method.nonObject
-        $abstractPhpUnitFixer->ensureIsDocBlockWithNoNameArgumentsTag($tokens, $index, $this->whitespacesConfig);
+        $ensureIsDocBlockWithTagNoNameArguments($this->whitespacesConfig, $tokens, $index);
     }
 }
