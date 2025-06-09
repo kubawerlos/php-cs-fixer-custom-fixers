@@ -22,6 +22,8 @@ use PhpCsFixer\Fixer\FixerInterface;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+chdir(__DIR__ . '/..');
+
 if (!interface_exists(FixerInterface::class)) {
     $phars = [
         __DIR__ . '/../vendor/php-cs-fixer/shim/php-cs-fixer.phar',

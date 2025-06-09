@@ -93,8 +93,7 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
             throw new InvalidFixerConfigurationException($this->getName(), \sprintf('The directory "%s" does not exists.', $this->directory));
         }
 
-        // @infection-ignore-all
-        $this->directory = \realpath($this->directory) . \DIRECTORY_SEPARATOR;
+        $this->directory = \realpath($this->directory) . '/';
 
         $this->description = $configuration['description'];
     }
