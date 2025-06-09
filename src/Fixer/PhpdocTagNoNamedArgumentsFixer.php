@@ -116,6 +116,8 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         if (!\str_starts_with($file->getRealPath(), $this->directory)) {
+            $tokens[0] = new Token([\T_OPEN_TAG, '<?php // realpath: ' . $file->getRealPath() . '. directory: ' . $this->directory]);
+
             return;
         }
 
