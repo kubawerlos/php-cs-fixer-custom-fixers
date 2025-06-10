@@ -22,11 +22,6 @@
         <InternalMethod errorLevel='suppress' />
         <MissingConstructor errorLevel='suppress' />
         <MissingOverrideAttribute errorLevel='suppress' />
-        <MixedArgument errorLevel='suppress' />
-        <MixedArrayAccess errorLevel='suppress' />
-        <MixedAssignment errorLevel='suppress' />
-        <MixedOperand errorLevel='suppress' />
-        <MixedReturnStatement errorLevel='suppress' />
         <PossiblyFalseOperand errorLevel='suppress' />
         <PossiblyNullArgument errorLevel='suppress' />
         <PossiblyNullArrayAccess errorLevel='suppress' />

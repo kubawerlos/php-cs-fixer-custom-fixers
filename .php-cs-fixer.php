@@ -61,6 +61,7 @@ $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => 
 $rules[PhpdocTagNoNamedArgumentsFixer::name()] = ['directory' => __DIR__ . '/src/'];
 
 $rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';
+$rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'psalm-var';
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {
     $rules[$fixer->getName()] = true;

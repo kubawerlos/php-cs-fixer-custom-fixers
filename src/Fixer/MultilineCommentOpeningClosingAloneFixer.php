@@ -74,6 +74,9 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
         Preg::match('#\\R(\\h*)#', $tokens[$index]->getContent(), $matches);
 
+        // @phpstan-ignore function.alreadyNarrowedType
+        \assert(\is_string($matches[1]));
+
         $indent = $matches[1] . '*';
 
         Preg::match('#^(?<opening>/\\*+)(?<before_newline>.*?)(?<newline>\\R)(?<after_newline>.*)$#s', $tokens[$index]->getContent(), $matches);
@@ -81,9 +84,16 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
             return;
         }
 
+        /** @psalm-var string $opening */
         $opening = $matches['opening'];
+
+        /** @psalm-var string $beforeNewline */
         $beforeNewline = $matches['before_newline'];
+
+        /** @psalm-var string $newline */
         $newline = $matches['newline'];
+
+        /** @psalm-var string $afterNewline */
         $afterNewline = $matches['after_newline'];
 
         if ($beforeNewline[0] !== ' ') {
@@ -111,6 +121,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
         Preg::match('#\\R(\\h*)#', $tokens[$index]->getContent(), $matches);
 
+        /** @psalm-var string $indent */
         $indent = $matches[1];
 
         $newContent = Preg::replace('#(\\R)(.+?)\\h*(\\*+/)$#', \sprintf('$1$2$1%s$3', $indent), $tokens[$index]->getContent());

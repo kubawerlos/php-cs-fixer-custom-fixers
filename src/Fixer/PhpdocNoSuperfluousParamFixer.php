@@ -143,6 +143,9 @@ function foo($b, $s) {}
             return null;
         }
 
+        // @phpstan-ignore function.alreadyNarrowedType
+        \assert(\is_string($matches[1]));
+
         return $matches[1];
     }
 }
