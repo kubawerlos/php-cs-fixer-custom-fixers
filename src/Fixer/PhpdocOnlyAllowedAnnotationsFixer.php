@@ -75,7 +75,7 @@ function foo_bar() {}
     }
 
     /**
-     * Must run before NoEmptyPhpdocFixer.
+     * Must run before NoEmptyPhpdocFixer, PhpdocTagNoNamedArgumentsFixer.
      * Must run after CommentToPhpdocFixer.
      */
     public function getPriority(): int

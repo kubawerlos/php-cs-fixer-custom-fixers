@@ -98,6 +98,10 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
         $this->description = $configuration['description'];
     }
 
+    /**
+     * Must run before PhpdocSeparationFixer.
+     * Must run after PhpdocOnlyAllowedAnnotationsFixer.
+     */
     public function getPriority(): int
     {
         return 0;

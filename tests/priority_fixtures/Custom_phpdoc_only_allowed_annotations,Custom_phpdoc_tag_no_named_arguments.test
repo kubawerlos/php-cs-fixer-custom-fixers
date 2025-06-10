@@ -1,0 +1,20 @@
+--CONFIGURATION--
+{ "PhpCsFixerCustomFixers/phpdoc_only_allowed_annotations": {"elements": ["author"]}, "PhpCsFixerCustomFixers/phpdoc_tag_no_named_arguments": true }
+--EXPECTED--
+<?php
+/**
+ * @author John Doe
+ * @no-named-arguments
+ */
+class Foo
+{
+}
+
+--INPUT--
+<?php
+/**
+ * @author John Doe
+ */
+class Foo
+{
+}
