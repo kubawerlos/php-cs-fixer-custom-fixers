@@ -20,6 +20,8 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @deprecated
+ *
+ * @no-named-arguments
  */
 final class InternalClassCasingFixer extends AbstractFixer implements DeprecatedFixerInterface
 {

@@ -23,6 +23,9 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class PhpUnitRequiresConstraintFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

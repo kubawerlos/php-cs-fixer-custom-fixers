@@ -5,7 +5,7 @@
 [![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 [![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
 [![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3750-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-3788-brightgreen.svg)
 [![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
 
 [![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
@@ -607,6 +607,23 @@ The `@var` annotation must be on a single line if it is the only content.
 -     */
 +    /** @var string */
      private $name;
+ }
+```
+
+#### PhpdocTagNoNamedArgumentsFixer
+There must be `@no-named-arguments` tag in PHPDoc of a class/enum/interface/trait.
+Configuration options:
+- `description` (`string`): description of the tag; defaults to `''`
+- `directory` (`string`): directory in which apply the changes, empty value will result with current working directory (result of `getcwd` call); defaults to `''`
+```diff
+ <?php
++
++/**
++ * @no-named-arguments
++ */
+ class Foo
+ {
+     public function bar(string $s) {}
  }
 ```
 

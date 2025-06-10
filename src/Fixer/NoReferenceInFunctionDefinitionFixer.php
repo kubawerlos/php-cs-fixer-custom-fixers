@@ -17,6 +17,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class NoReferenceInFunctionDefinitionFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

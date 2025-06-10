@@ -17,6 +17,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 
+/**
+ * @no-named-arguments
+ */
 final class ConstructorEmptyBracesFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

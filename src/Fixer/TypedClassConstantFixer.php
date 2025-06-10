@@ -19,6 +19,9 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class TypedClassConstantFixer extends AbstractFixer
 {
     private const INTEGER_KINDS = [\T_LNUMBER, '+', '-', '*', '(', ')', \T_POW, \T_SL, \T_SR, \T_LINE];

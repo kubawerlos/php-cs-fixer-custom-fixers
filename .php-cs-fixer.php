@@ -19,6 +19,7 @@ use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 use PhpCsFixerConfig\Rules\LibraryRules;
 use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
 use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocTagNoNamedArgumentsFixer;
 use PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer;
 use PhpCsFixerCustomFixers\Fixer\TypedClassConstantFixer;
 use PhpCsFixerCustomFixers\Fixers;
@@ -57,6 +58,7 @@ unset($rules['php_unit_attributes']); // TODO: remove when dropping support to P
 unset($rules[PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
 unset($rules[TypedClassConstantFixer::name()]); // TODO: remove when dropping support to PHP <8.3
 $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
+$rules[PhpdocTagNoNamedArgumentsFixer::name()] = ['directory' => __DIR__ . '/src/'];
 
 $rules[PhpdocOnlyAllowedAnnotationsFixer::name()]['elements'][] = 'phpstan-type';
 

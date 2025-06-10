@@ -27,6 +27,8 @@ use PhpCsFixer\Tokenizer\Tokens;
  *
  * @phpstan-type _InputConfig array{allow_preventing_trailing_spaces?: bool}
  * @phpstan-type _Config array{allow_preventing_trailing_spaces: bool}
+ *
+ * @no-named-arguments
  */
 final class NoSuperfluousConcatenationFixer extends AbstractFixer implements ConfigurableFixerInterface
 {

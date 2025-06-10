@@ -30,6 +30,8 @@ use PhpCsFixerCustomFixers\TokenRemover;
  *
  * @phpstan-type _InputConfig array{ignore_expressions?: bool}
  * @phpstan-type _Config array{ignore_expressions: bool}
+ *
+ * @no-named-arguments
  */
 final class NoDuplicatedArrayKeyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {

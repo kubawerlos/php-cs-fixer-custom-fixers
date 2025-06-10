@@ -17,6 +17,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class StringableInterfaceFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

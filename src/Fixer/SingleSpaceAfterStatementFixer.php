@@ -27,6 +27,8 @@ use PhpCsFixer\Tokenizer\Tokens;
  *
  * @phpstan-type _InputConfig array{allow_linebreak?: bool}
  * @phpstan-type _Config array{allow_linebreak: bool}
+ *
+ * @no-named-arguments
  */
 final class SingleSpaceAfterStatementFixer extends AbstractFixer implements ConfigurableFixerInterface
 {

@@ -20,6 +20,9 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
+/**
+ * @no-named-arguments
+ */
 final class NoImportFromGlobalNamespaceFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

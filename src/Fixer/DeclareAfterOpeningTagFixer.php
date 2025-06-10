@@ -19,6 +19,9 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
+/**
+ * @no-named-arguments
+ */
 final class DeclareAfterOpeningTagFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

@@ -21,6 +21,9 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
 
+/**
+ * @no-named-arguments
+ */
 final class PhpUnitDedicatedAssertFixer extends AbstractFixer
 {
     private const ASSERTIONS = [

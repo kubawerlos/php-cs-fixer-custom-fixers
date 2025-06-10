@@ -18,6 +18,9 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class NoUselessWriteVisibilityFixer extends AbstractFixer
 {
     /** @var non-empty-array<int, list<int>> */

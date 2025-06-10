@@ -18,6 +18,9 @@ use PhpCsFixer\Tokenizer\Analyzer\AlternativeSyntaxAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class ForeachUseValueFixer extends AbstractFixer
 {
     private const NOT_ALLOWED_NEXT_TOKENS = [

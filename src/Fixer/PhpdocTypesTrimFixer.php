@@ -16,6 +16,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 
+/**
+ * @no-named-arguments
+ */
 final class PhpdocTypesTrimFixer extends AbstractTypesFixer
 {
     public function getDefinition(): FixerDefinitionInterface

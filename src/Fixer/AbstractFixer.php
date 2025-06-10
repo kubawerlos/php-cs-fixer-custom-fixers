@@ -14,6 +14,9 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Preg;
 
+/**
+ * @no-named-arguments
+ */
 abstract class AbstractFixer implements FixerInterface
 {
     final public static function name(): string

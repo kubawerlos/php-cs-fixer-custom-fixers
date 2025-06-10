@@ -17,6 +17,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class NoLeadingSlashInGlobalNamespaceFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

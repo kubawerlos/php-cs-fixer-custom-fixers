@@ -20,6 +20,9 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Utils;
 use PhpCsFixerCustomFixers\TokenRemover;
 
+/**
+ * @no-named-arguments
+ */
 final class PhpUnitNoUselessReturnFixer extends AbstractFixer
 {
     private const FUNCTION_TOKENS = [[\T_STRING, 'fail'], [\T_STRING, 'markTestIncomplete'], [\T_STRING, 'markTestSkipped']];

@@ -20,6 +20,8 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @deprecated
+ *
+ * @no-named-arguments
  */
 final class DataProviderReturnTypeFixer extends AbstractFixer implements DeprecatedFixerInterface
 {

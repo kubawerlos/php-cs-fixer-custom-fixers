@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.27.0
+- Add PhpdocTagNoNamedArgumentsFixer
+
 ## v3.26.0
 - Add TypedClassConstantFixer
 

@@ -18,6 +18,9 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
 
+/**
+ * @no-named-arguments
+ */
 final class IssetToArrayKeyExistsFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

@@ -19,6 +19,9 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class PhpdocNoSuperfluousParamFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

@@ -16,6 +16,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class EmptyFunctionBodyFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

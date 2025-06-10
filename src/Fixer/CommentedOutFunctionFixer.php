@@ -29,6 +29,8 @@ use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
  *
  * @phpstan-type _InputConfig array{functions?: list<string>}
  * @phpstan-type _Config array{functions: list<string>}
+ *
+ * @no-named-arguments
  */
 final class CommentedOutFunctionFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
