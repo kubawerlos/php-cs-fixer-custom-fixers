@@ -63,20 +63,30 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
      */
     public static function provideFixCases(): iterable
     {
-        yield 'do not touch anonymous class' => [
+        yield 'do not add for anonymous class' => [
             <<<'PHP'
                 <?php
                 new class () {};
                 PHP,
         ];
 
-        yield 'do not touch for different directory' => [
+        yield 'do not add for different directory' => [
             <<<'PHP'
                 <?php
                 class Foo {}
                 PHP,
             null,
             ['directory' => __DIR__ . '/../../src/Fixer'],
+        ];
+
+        yield 'do not add for internal class' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @internal
+                 */
+                class Foo {}
+                PHP,
         ];
 
         yield 'create PHPDoc comment' => [

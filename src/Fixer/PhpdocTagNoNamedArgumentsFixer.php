@@ -158,7 +158,7 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
                 static function (WhitespacesFixerConfig $whitespacesConfig, Tokens $tokens, int $index): void {
                     $phpUnitInternalClassFixer = new PhpUnitInternalClassFixer();
                     $phpUnitInternalClassFixer->setWhitespacesConfig($whitespacesConfig);
-                    $phpUnitInternalClassFixer->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['no-named-arguments'], []);
+                    $phpUnitInternalClassFixer->ensureIsDocBlockWithAnnotation($tokens, $index, 'no-named-arguments', ['internal', 'no-named-arguments'], []);
                 },
                 null,
                 PhpUnitInternalClassFixer::class,
