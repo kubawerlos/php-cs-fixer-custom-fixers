@@ -152,7 +152,7 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
 
     private function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index): void
     {
-        /** @var callable(WhitespacesFixerConfig, Tokens, int): void $ensureIsDocBlockWithTagNoNameArguments */
+        /** @var null|callable(WhitespacesFixerConfig, Tokens, int): void $ensureIsDocBlockWithTagNoNameArguments */
         static $ensureIsDocBlockWithTagNoNameArguments;
 
         if ($ensureIsDocBlockWithTagNoNameArguments === null) {
