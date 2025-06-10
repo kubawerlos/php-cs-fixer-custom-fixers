@@ -99,8 +99,6 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 continue;
             }
 
-            $constructorNameIndex = $tokens->getNextMeaningfulToken($constructorAnalysis->getConstructorIndex());
-
             $classOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
             \assert(\is_int($classOpenBraceIndex));
             $classCloseBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $classOpenBraceIndex);
