@@ -31,6 +31,8 @@ use PhpCsFixer\WhitespacesFixerConfig;
  *
  * @phpstan-type _InputConfig array{directory?: string, description?: string}
  * @phpstan-type _Config array{directory: string, description: string}
+ *
+ * @no-named-arguments
  */
 final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {

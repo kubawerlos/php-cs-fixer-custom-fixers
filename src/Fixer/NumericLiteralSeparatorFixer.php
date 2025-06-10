@@ -32,6 +32,8 @@ use PhpCsFixer\Tokenizer\Tokens;
  *
  * @phpstan-type _InputConfig array{binary?: bool, decimal?: bool, float?: bool, hexadecimal?: bool, octal?: bool}
  * @phpstan-type _Config array{binary: bool, decimal: bool, float: bool, hexadecimal: bool, octal: bool}
+ *
+ * @no-named-arguments
  */
 final class NumericLiteralSeparatorFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {

@@ -20,6 +20,9 @@ use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class NoDuplicatedImportsFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

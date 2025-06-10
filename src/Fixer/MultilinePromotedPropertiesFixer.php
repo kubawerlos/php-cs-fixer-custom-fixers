@@ -31,6 +31,8 @@ use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
  *
  * @phpstan-type _InputConfig array{keep_blank_lines?: bool, minimum_number_of_parameters?: int}
  * @phpstan-type _Config array{keep_blank_lines: bool, minimum_number_of_parameters: int}
+ *
+ * @no-named-arguments
  */
 final class MultilinePromotedPropertiesFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {

@@ -20,6 +20,9 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 
+/**
+ * @no-named-arguments
+ */
 final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 {
     /** @var list<int> */

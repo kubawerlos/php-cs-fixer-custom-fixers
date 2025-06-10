@@ -20,6 +20,9 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
+/**
+ * @no-named-arguments
+ */
 final class NoCommentedOutCodeFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

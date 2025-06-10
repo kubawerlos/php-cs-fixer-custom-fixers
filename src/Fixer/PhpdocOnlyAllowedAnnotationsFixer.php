@@ -28,6 +28,8 @@ use PhpCsFixer\Tokenizer\Tokens;
  *
  * @phpstan-type _InputConfig array{elements?: list<string>}
  * @phpstan-type _Config array{elements: list<string>}
+ *
+ * @no-named-arguments
  */
 final class PhpdocOnlyAllowedAnnotationsFixer extends AbstractFixer implements ConfigurableFixerInterface
 {

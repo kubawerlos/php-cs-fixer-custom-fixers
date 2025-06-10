@@ -19,6 +19,9 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class SingleSpaceBeforeStatementFixer extends AbstractFixer
 {
     /** @var list<int> */

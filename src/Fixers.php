@@ -15,6 +15,8 @@ use PhpCsFixer\Fixer\FixerInterface;
 
 /**
  * @implements \IteratorAggregate<FixerInterface>
+ *
+ * @no-named-arguments
  */
 final class Fixers implements \IteratorAggregate
 {

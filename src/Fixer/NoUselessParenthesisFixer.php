@@ -18,6 +18,9 @@ use PhpCsFixer\Tokenizer\Analyzer\BlocksAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class NoUselessParenthesisFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

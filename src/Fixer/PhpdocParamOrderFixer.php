@@ -19,6 +19,8 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @deprecated
+ *
+ * @no-named-arguments
  */
 final class PhpdocParamOrderFixer extends AbstractFixer implements DeprecatedFixerInterface
 {

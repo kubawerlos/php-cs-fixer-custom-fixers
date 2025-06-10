@@ -18,6 +18,9 @@ use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 final class NoUselessDirnameCallFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

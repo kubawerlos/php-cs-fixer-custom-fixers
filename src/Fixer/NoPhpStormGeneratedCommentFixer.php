@@ -18,6 +18,9 @@ use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
+/**
+ * @no-named-arguments
+ */
 final class NoPhpStormGeneratedCommentFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

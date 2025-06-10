@@ -17,6 +17,9 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
 
+/**
+ * @no-named-arguments
+ */
 final class NoUselessDoctrineRepositoryCommentFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface

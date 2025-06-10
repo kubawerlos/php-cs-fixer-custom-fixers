@@ -29,6 +29,8 @@ use PhpCsFixer\Tokenizer\Tokens;
  *
  * @phpstan-type _InputConfig array{prefix?: string, suffix?: string}
  * @phpstan-type _Config array{prefix: string, suffix: string}
+ *
+ * @no-named-arguments
  */
 final class DataProviderNameFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {

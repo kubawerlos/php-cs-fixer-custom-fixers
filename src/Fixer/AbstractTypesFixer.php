@@ -15,6 +15,9 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @no-named-arguments
+ */
 abstract class AbstractTypesFixer extends AbstractFixer
 {
     final public function isCandidate(Tokens $tokens): bool

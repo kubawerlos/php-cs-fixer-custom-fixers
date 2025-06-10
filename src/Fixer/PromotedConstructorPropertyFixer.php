@@ -34,6 +34,8 @@ use PhpCsFixerCustomFixers\TokenRemover;
  *
  * @phpstan-type _InputConfig array{promote_only_existing_properties?: bool}
  * @phpstan-type _Config array{promote_only_existing_properties: bool}
+ *
+ * @no-named-arguments
  */
 final class PromotedConstructorPropertyFixer extends AbstractFixer implements ConfigurableFixerInterface
 {

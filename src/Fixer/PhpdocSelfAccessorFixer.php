@@ -21,6 +21,9 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
+/**
+ * @no-named-arguments
+ */
 final class PhpdocSelfAccessorFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface
