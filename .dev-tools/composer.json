@@ -42,7 +42,8 @@
             "composer-dependency-analyser --composer-json=../composer.json",
             "phpcs",
             "phpmd ../src text phpmd.xml",
-            "phpstan analyse --no-progress"
+            "phpstan analyse --no-progress",
+            "psalm --no-cache --no-progress --shepherd"
         ],
         "fix": [
             "@composer normalize --no-check-lock ../composer.json",
