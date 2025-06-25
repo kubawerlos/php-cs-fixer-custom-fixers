@@ -132,6 +132,74 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
+     * @dataProvider provideFix80Cases
+     *
+     * @requires 8.0
+     */
+    public function testFix80(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<list<string>>
+     */
+    public static function provideFix80Cases(): iterable
+    {
+        yield [
+            <<<'PHP'
+                <?php
+                class Foo {
+                    public function __construct(
+                        private readonly DateTimeInterface $someDate
+                    ) {}
+
+                    public function __invoke(): void {
+                        $this->someDate->format('Y-m-d');
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                class Foo {
+                    public function __construct(
+                        private DateTimeInterface $someDate
+                    ) {}
+
+                    public function __invoke(): void {
+                        $this->someDate->format('Y-m-d');
+                    }
+                }
+                PHP,
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                class Foo {
+                    public function __construct(
+                        private readonly DateTimeInterface $someDate
+                    ) {}
+
+                    public function __invoke(): void {
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                class Foo {
+                    public function __construct(
+                        private DateTimeInterface $someDate
+                    ) {}
+
+                    public function __invoke(): void {
+                    }
+                }
+                PHP,
+        ];
+    }
+
+    /**
      * @dataProvider provideFix82Cases
      *
      * @requires PHP >= 8.2
