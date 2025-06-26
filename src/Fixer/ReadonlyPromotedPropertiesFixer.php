@@ -25,6 +25,25 @@ use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
  */
 final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 {
+    private const ASSIGNMENT_KINDS = [
+        '=',
+        [\T_INC, '++'],
+        [\T_DEC, '--'],
+        [\T_PLUS_EQUAL, '+='],
+        [\T_MINUS_EQUAL, '-='],
+        [\T_MUL_EQUAL, '*='],
+        [\T_DIV_EQUAL, '/='],
+        [\T_MOD_EQUAL, '%='],
+        [\T_POW_EQUAL, '**='],
+        [\T_AND_EQUAL, '&='],
+        [\T_OR_EQUAL, '|='],
+        [\T_XOR_EQUAL, '^='],
+        [\T_SL_EQUAL, '<<='],
+        [\T_SR_EQUAL, '>>='],
+        [\T_COALESCE_EQUAL, '??='],
+        [\T_CONCAT_EQUAL, '.='],
+    ];
+
     /** @var list<int> */
     private array $promotedPropertyVisibilityKinds;
 
@@ -144,16 +163,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 continue;
             }
 
-            $propertyAssignment = $tokens->findSequence(
-                [
-                    [\T_VARIABLE, '$this'],
-                    [\T_OBJECT_OPERATOR],
-                    [\T_STRING, \substr($tokens[$index]->getContent(), 1)],
-                ],
-                $classOpenBraceIndex,
-                $classCloseBraceIndex,
-            );
-            if ($propertyAssignment !== null) {
+            if (!self::isUsedAsReadonly($tokens, \substr($tokens[$index]->getContent(), 1), $classOpenBraceIndex, $classCloseBraceIndex)) {
                 continue;
             }
 
@@ -185,5 +195,65 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         }
 
         return $insertIndex;
+    }
+
+    private static function isUsedAsReadonly(Tokens $tokens, string $name, int $index, int $endIndex): bool
+    {
+        $sequence = [
+            [\T_VARIABLE, '$this'],
+            [\T_OBJECT_OPERATOR],
+            [\T_STRING, $name],
+        ];
+
+        while ($index < $endIndex) {
+            $propertyAssignment = $tokens->findSequence($sequence, $index, $endIndex);
+            if ($propertyAssignment === null) {
+                break;
+            }
+
+            $index = \array_key_last($propertyAssignment);
+
+            if (!self::isReadonlyUsage($tokens, $index)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static function isReadonlyUsage(Tokens $tokens, int $index): bool
+    {
+        $index = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($index));
+
+        while (!$tokens[$index]->equalsAny(self::ASSIGNMENT_KINDS)) {
+            if ($tokens[$index]->isObjectOperator()) {
+                $methodOrPropertyIndex = $tokens->getNextMeaningfulToken($index);
+                \assert(\is_int($methodOrPropertyIndex));
+
+                $afterMethodOrPropertyIndex = $tokens->getNextMeaningfulToken($methodOrPropertyIndex);
+                \assert(\is_int($afterMethodOrPropertyIndex));
+
+                if ($tokens[$afterMethodOrPropertyIndex]->equals('(') || $tokens[$afterMethodOrPropertyIndex]->isObjectOperator()) {
+                    return true;
+                }
+
+                $index = $afterMethodOrPropertyIndex;
+                continue;
+            }
+
+            $blockType = Tokens::detectBlockType($tokens[$index]);
+            if ($blockType !== null && $blockType['isStart']) {
+                $index = $tokens->findBlockEnd($blockType['type'], $index);
+
+                $index = $tokens->getNextMeaningfulToken($index);
+                \assert(\is_int($index));
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

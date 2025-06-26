@@ -34,11 +34,11 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<list<string>>
+     * @return iterable<array{string, 1?: string}>
      */
     public static function provideFixCases(): iterable
     {
-        yield [
+        yield 'not promoted property' => [
             '<?php class Foo {
                 public function __construct(
                     int $x
@@ -46,7 +46,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             }',
         ];
 
-        yield [
+        yield 'multiple promoted properties' => [
             '<?php class Foo {
                 public function __construct(
                     public readonly int $a,
@@ -63,7 +63,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             }',
         ];
 
-        yield [
+        yield 'already readonly properties' => [
             '<?php class Foo {
                 public function __construct(
                     public readonly int $a,
@@ -88,7 +88,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             }',
         ];
 
-        yield [
+        yield 'not in constructor' => [
             '<?php
                 class Foo { public function __construct(public readonly int $x) {} }
                 class Bar { public function notConstruct(int $x) {} }
@@ -101,14 +101,52 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             ',
         ];
 
-        yield [
-            '<?php class Foo {
-                public function __construct(public int $x) {}
-                public function doSomething() { $this->x = 42; }
-            }',
+        yield 'property used in assignment' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(
+                        public int $p1,
+                        public int $p2,
+                        public int $p3,
+                        public int $p4,
+                        public int $p5,
+                        public int $p6,
+                        public int $p7,
+                        public int $p8,
+                        public int $p9,
+                        public bool $p10,
+                        public bool $p11,
+                        public bool $p12,
+                        public int $p13,
+                        public int $p14,
+                        public int $p15,
+                        public string $p16,
+                        public array $p17,
+                    ) {}
+                    public function f() {
+                        $this->p1 = 1;
+                        $this->p2++;
+                        $this->p3--;
+                        $this->p4 += 4;
+                        $this->p5 -= 5;
+                        $this->p6 *= 6;
+                        $this->p7 /= 7;
+                        $this->p8 %= 8;
+                        $this->p9 **= 9;
+                        $this->p10 &= true;
+                        $this->p11 |= true;
+                        $this->p12 ^= true;
+                        $this->p13 <<= 1;
+                        $this->p14 >>= 1;
+                        $this->p15 ??= 15;
+                        $this->p16 .= '16';
+                        $this->p17[0][0][0][0][0][0][0][0] = 17;
+                    }
+                }
+                PHP,
         ];
 
-        yield [
+        yield 'property of other object used in assignment' => [
             '<?php class Foo {
                 public function __construct(public readonly int $x) {}
                 public function doSomething() { $object->x = 42; }
@@ -119,7 +157,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             }',
         ];
 
-        yield [
+        yield 'multiple properties with assignments' => [
             '<?php class Foo {
                 public function __construct(public int $x, public readonly int $y, public int $z) {}
                 public function doSomething() { $this->x = 42;  $this->z = 10; }
@@ -128,6 +166,149 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                 public function __construct(public int $x, public int $y, public int $z) {}
                 public function doSomething() { $this->x = 42;  $this->z = 10; }
             }',
+        ];
+
+        yield 'property used in return statement' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public readonly object $p) {}
+                    public function f() {
+                        return $this->p;
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public object $p) {}
+                    public function f() {
+                        return $this->p;
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'property used as argument' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(
+                        public readonly array $array,
+                        public readonly object $object,
+                    ) {}
+                    public function f() {
+                        bar($this->array[4], $this->object);
+                        baz(1, $this->array, 2);
+                        baz(3, $this->object, 4);
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(
+                        public array $array,
+                        public object $object,
+                    ) {}
+                    public function f() {
+                        bar($this->array[4], $this->object);
+                        baz(1, $this->array, 2);
+                        baz(3, $this->object, 4);
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'property used in method call' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public readonly object $p) {}
+                    public function f() {
+                        $this->p->method();
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public object $p) {}
+                    public function f() {
+                        $this->p->method();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'property used in null-safe method call' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public readonly object $p) {}
+                    public function f() {
+                        $this->p?->method();
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public object $p) {}
+                    public function f() {
+                        $this->p?->method();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'property of property' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public readonly object $object) {}
+                    public function f() {
+                        $this->object->property = 3;
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public object $object) {}
+                    public function f() {
+                        $this->object->property = 3;
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'property used multiple times' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public readonly object $p) {}
+                    public function f() {
+                        $this->value1 = $this->p->method1();
+                        bar($this->p, $this->p->property1);
+                        $this->value2 = $this->p->property2;
+                        $this->p->method2();
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public object $p) {}
+                    public function f() {
+                        $this->value1 = $this->p->method1();
+                        bar($this->p, $this->p->property1);
+                        $this->value2 = $this->p->property2;
+                        $this->p->method2();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'property used multiple times, including assignment' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(public object $p) {}
+                    public function f() {
+                        $this->p->method1();
+                        $this->p = new Bar();
+                        $this->p->method2();
+                    }
+                }
+                PHP,
         ];
     }
 
