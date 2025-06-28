@@ -275,11 +275,18 @@ class Foo {
             return true;
         }
 
-        if (\substr($propertyType, 0, 1) === '?') {
+        $isPropertyNullable = \substr($propertyType, 0, 1) === '?';
+        $isParameterNullable = \substr($parameterType, 0, 1) === '?';
+
+        if ($isParameterNullable && !$isPropertyNullable) {
+            return false;
+        }
+
+        if ($isPropertyNullable) {
             $propertyType = \substr($propertyType, 1);
         }
 
-        if (\substr($parameterType, 0, 1) === '?') {
+        if ($isParameterNullable) {
             $parameterType = \substr($parameterType, 1);
         }
 

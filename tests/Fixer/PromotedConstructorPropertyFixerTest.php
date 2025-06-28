@@ -100,6 +100,16 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'do not promote when type of property is not nullable and type of parameter is nullable' => [
+            '<?php class Foo {
+                private int $x;
+                public function __construct(?int $x) {
+                    $this->x = $x;
+                }
+            }
+            ',
+        ];
+
         yield 'do not promote when not simple assignment' => [
             '<?php class Foo {
                 private int $x;
@@ -919,7 +929,8 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 
         yield 'promote nullable types' => [
             '<?php class Foo {
-                public function __construct(private ?int $x, private ?int $y, private ?int $z)
+                private int $z;
+                public function __construct(private ?int $x, private ?int $y, ?int $z)
                 {
                 }
             }
@@ -932,7 +943,6 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                 {
                     $this->x = $x;
                     $this->y = $y;
-                    $this->z = $z;
                 }
             }
             ',
