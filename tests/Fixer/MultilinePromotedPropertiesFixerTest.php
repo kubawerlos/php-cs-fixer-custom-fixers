@@ -22,6 +22,11 @@ use PhpCsFixer\WhitespacesFixerConfig;
  */
 final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
 {
+    public function testSuccessorName(): void
+    {
+        self::assertSuccessorName('multiline_promoted_properties');
+    }
+
     public function testConfiguration(): void
     {
         $options = self::getConfigurationOptions();
