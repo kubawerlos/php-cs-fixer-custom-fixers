@@ -11,6 +11,8 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixer\WhitespacesFixerConfig;
+
 /**
  * @internal
  *
@@ -40,13 +42,13 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = [], ?WhitespacesFixerConfig $whitespacesFixerConfig = null): void
     {
-        $this->doTest($expected, $input, $configuration);
+        $this->doTest($expected, $input, $configuration, $whitespacesFixerConfig);
     }
 
     /**
-     * @return iterable<array{0: string, 1: null|string, 2?: array<string, bool|int>}>
+     * @return iterable<array{0: string, 1: null|string, 2?: array<string, bool|int>, 3?: WhitespacesFixerConfig}>
      */
     public static function provideFixCases(): iterable
     {
@@ -251,6 +253,19 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
                 ) {}
             }',
             ['keep_blank_lines' => true],
+        ];
+
+        yield '2 spaces intent and windows line endings' => [
+            \str_replace("\n", "\r\n", '<?php class Foo {
+              public function __construct(
+                public int $x
+              ) {}
+            }'),
+            \str_replace("\n", "\r\n", '<?php class Foo {
+              public function __construct(public int $x) {}
+            }'),
+            [],
+            new WhitespacesFixerConfig('  ', "\r\n"),
         ];
     }
 }

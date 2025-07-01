@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.28.0
+- Deprecate MultilinePromotedPropertiesFixer - use "multiline_promoted_properties"
+
 ## v3.27.0
 - Add PhpdocTagNoNamedArgumentsFixer
 
