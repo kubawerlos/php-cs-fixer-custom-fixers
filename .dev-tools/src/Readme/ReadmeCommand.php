@@ -221,7 +221,7 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
                         "\n- `%s` (`%s`): %s; defaults to `%s`",
                         $option->getName(),
                         \implode('`, `', $allowed),
-                        \lcfirst($option->getDescription()),
+                        \lcfirst(\rtrim($option->getDescription(), '.')),
                         Utils::toString($option->getDefault()),
                     );
                 }
