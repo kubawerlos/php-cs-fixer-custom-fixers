@@ -212,8 +212,8 @@ Multiline comments or PHPDocs must contain an opening and closing line with no a
 Promoted properties must be on separate lines.
   DEPRECATED: use `multiline_promoted_properties` instead.
 Configuration options:
-- `keep_blank_lines` (`bool`): Whether to keep blank lines between properties.; defaults to `false`
-- `minimum_number_of_parameters` (`int`): Minimum number of parameters in the constructor to fix.; defaults to `1`
+- `keep_blank_lines` (`bool`): whether to keep blank lines between properties.; defaults to `false`
+- `minimum_number_of_parameters` (`int`): minimum number of parameters in the constructor to fix.; defaults to `1`
 ```diff
  <?php
  class Foo {
