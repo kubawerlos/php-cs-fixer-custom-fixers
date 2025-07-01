@@ -12,8 +12,6 @@
 namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -33,18 +31,7 @@ final class PhpdocParamOrderFixer extends AbstractFixer implements DeprecatedFix
 
     public function getDefinition(): FixerDefinitionInterface
     {
-        return new FixerDefinition(
-            $this->phpdocParamOrderFixer->getDefinition()->getSummary(),
-            [new CodeSample('<?php
-/**
- * @param int $b
- * @param int $a
- * @param int $c
- */
-function foo($a, $b, $c) {}
-')],
-            '',
-        );
+        return $this->phpdocParamOrderFixer->getDefinition();
     }
 
     /**
@@ -71,9 +58,6 @@ function foo($a, $b, $c) {}
         $this->phpdocParamOrderFixer->fix($file, $tokens);
     }
 
-    /**
-     * @return list<string>
-     */
     public function getSuccessorsNames(): array
     {
         return [$this->phpdocParamOrderFixer->getName()];

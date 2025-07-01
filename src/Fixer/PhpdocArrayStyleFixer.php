@@ -13,8 +13,6 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocArrayTypeFixer;
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -34,20 +32,7 @@ final class PhpdocArrayStyleFixer extends AbstractFixer implements DeprecatedFix
 
     public function getDefinition(): FixerDefinitionInterface
     {
-        return new FixerDefinition(
-            'Generic array style should be used in PHPDoc.',
-            [
-                new CodeSample(
-                    '<?php
-/**
- * @return int[]
- */
- function foo() { return [1, 2]; }
-',
-                ),
-            ],
-            '',
-        );
+        return $this->phpdocArrayTypeFixer->getDefinition();
     }
 
     /**
@@ -73,9 +58,6 @@ final class PhpdocArrayStyleFixer extends AbstractFixer implements DeprecatedFix
         $this->phpdocArrayTypeFixer->fix($file, $tokens);
     }
 
-    /**
-     * @return list<string>
-     */
     public function getSuccessorsNames(): array
     {
         return [$this->phpdocArrayTypeFixer->getName()];

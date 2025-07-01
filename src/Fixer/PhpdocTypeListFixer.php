@@ -13,8 +13,6 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocListTypeFixer;
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -34,16 +32,7 @@ final class PhpdocTypeListFixer extends AbstractFixer implements DeprecatedFixer
 
     public function getDefinition(): FixerDefinitionInterface
     {
-        return new FixerDefinition(
-            'PHPDoc type `list` must be used instead of `array` without a key type.',
-            [new CodeSample('<?php
-/**
- * @param array<string>
- */
-function foo($x) {}
-')],
-            '',
-        );
+        return $this->phpdocListTypeFixer->getDefinition();
     }
 
     /**
@@ -52,7 +41,7 @@ function foo($x) {}
      */
     public function getPriority(): int
     {
-        return 1;
+        return $this->phpdocListTypeFixer->getPriority();
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -70,9 +59,6 @@ function foo($x) {}
         $this->phpdocListTypeFixer->fix($file, $tokens);
     }
 
-    /**
-     * @return list<string>
-     */
     public function getSuccessorsNames(): array
     {
         return [$this->phpdocListTypeFixer->getName()];

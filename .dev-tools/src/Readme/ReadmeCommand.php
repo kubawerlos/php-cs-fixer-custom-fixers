@@ -198,9 +198,19 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
                 $fixer->configure(['force' => true]);
             }
             if ($fixer->isRisky()) {
+                $riskyDescription = $fixer->getDefinition()->getRiskyDescription();
+                $starts = [
+                    'Risky when' => 'when',
+                    'Fixer could be risky if' => 'when',
+                ];
+                foreach ($starts as $from => $to) {
+                    if (\str_starts_with($riskyDescription, $from)) {
+                        $riskyDescription = $to . \substr($riskyDescription, \strlen($from));
+                    }
+                }
                 $output .= \sprintf(
                     "\n  *Risky: %s.*",
-                    $fixer->getDefinition()->getRiskyDescription(),
+                    \lcfirst(\rtrim($riskyDescription, '.')),
                 );
             }
             if ($fixer instanceof DataProviderStaticFixer) {

@@ -94,10 +94,10 @@ Constructor's empty braces must be on a single line.
 #### DataProviderNameFixer
 Data provider names must match the name of the test.
   DEPRECATED: use `php_unit_data_provider_name` instead.
-  *Risky: when relying on name of data provider function.*
+  *Risky: when one is calling data provider by name as function.*
 Configuration options:
 - `prefix` (`string`): prefix that replaces "test"; defaults to `'provide'`
-- `suffix` (`string`): suffix to be added at the end"; defaults to `'Cases'`
+- `suffix` (`string`): suffix to be present at the end; defaults to `'Cases'`
 ```diff
  <?php
  class FooTest extends TestCase {
@@ -114,7 +114,7 @@ Configuration options:
 #### DataProviderReturnTypeFixer
 The return type of PHPUnit data provider must be `iterable`.
   DEPRECATED: use `php_unit_data_provider_return_type` instead.
-  *Risky: when relying on signature of data provider.*
+  *Risky: when relying on signature of the data provider.*
 ```diff
  <?php
  class FooTest extends TestCase {
@@ -130,9 +130,9 @@ The return type of PHPUnit data provider must be `iterable`.
 #### DataProviderStaticFixer
 Data providers must be static.
   DEPRECATED: use `php_unit_data_provider_static` instead.
-  *Risky: when `force` is set to `true`.*
+  *Risky: when one is calling data provider function dynamically.*
 Configuration options:
-- `force` (`bool`): whether to make static data providers having dynamic class calls; defaults to `false`
+- `force` (`bool`): whether to make the data providers static even if they have a dynamic class call (may introduce fatal error "using $this when not in object context", and you may have to adjust the code manually by converting dynamic calls to static ones); defaults to `false`
 ```diff
  <?php
  class FooTest extends TestCase {
@@ -178,12 +178,12 @@ Value from `foreach` must not be used if possible.
 ```
 
 #### InternalClassCasingFixer
-Classes defined internally by an extension or the core must be referenced with the correct case.
+When referencing an internal class it must be written using the correct casing.
   DEPRECATED: use `class_reference_name_casing` instead.
 ```diff
  <?php
--$foo = new STDClass();
-+$foo = new stdClass();
+-throw new \exception();
++throw new \Exception();
 ```
 
 #### IssetToArrayKeyExistsFixer
@@ -513,15 +513,16 @@ Assertions and attributes for PHP and PHPUnit versions must have explicit versio
 ```
 
 #### PhpdocArrayStyleFixer
-Generic array style should be used in PHPDoc.
+PHPDoc `array<T>` type must be used instead of `T[]`.
   DEPRECATED: use `phpdoc_array_type` instead.
 ```diff
  <?php
  /**
-- * @return int[]
-+ * @return array<int>
+- * @param int[] $x
+- * @param string[][] $y
++ * @param array<int> $x
++ * @param array<array<string>> $y
   */
-  function foo() { return [1, 2]; }
 ```
 
 #### PhpdocNoIncorrectVarAnnotationFixer
@@ -566,12 +567,14 @@ Orders all `@param` annotations in DocBlocks according to method signature.
 ```diff
  <?php
  /**
-+ * @param int $a
-  * @param int $b
-- * @param int $a
-  * @param int $c
+  * Annotations in wrong order
+  *
+  * @param int   $a
++ * @param array $b
+  * @param Foo   $c
+- * @param array $b
   */
- function foo($a, $b, $c) {}
+ function m($a, array $b, Foo $c) {}
 ```
 
 #### PhpdocParamTypeFixer
@@ -630,15 +633,16 @@ Configuration options:
 ```
 
 #### PhpdocTypeListFixer
-PHPDoc type `list` must be used instead of `array` without a key type.
+PHPDoc `list` type must be used instead of `array` without a key.
   DEPRECATED: use `phpdoc_list_type` instead.
 ```diff
  <?php
  /**
-- * @param array<string>
-+ * @param list<string>
+- * @param array<int> $x
+- * @param array<array<string>> $y
++ * @param list<int> $x
++ * @param list<list<string>> $y
   */
- function foo($x) {}
 ```
 
 #### PhpdocTypesCommaSpacesFixer

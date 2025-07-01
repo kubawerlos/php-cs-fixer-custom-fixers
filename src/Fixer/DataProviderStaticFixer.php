@@ -14,27 +14,19 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\PhpUnit\PhpUnitDataProviderStaticFixer;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * @deprecated
  *
- * @implements ConfigurableFixerInterface<_InputConfig, _Config>
- *
- * @phpstan-type _InputConfig array{force?: bool}
- * @phpstan-type _Config array{force: bool}
+ * @implements ConfigurableFixerInterface<array{force?: bool}, array{force: bool}>
  *
  * @no-named-arguments
  */
 final class DataProviderStaticFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface
 {
-    private bool $force = false;
     private PhpUnitDataProviderStaticFixer $phpUnitDataProviderStaticFixer;
 
     public function __construct()
@@ -44,45 +36,17 @@ final class DataProviderStaticFixer extends AbstractFixer implements Configurabl
 
     public function getDefinition(): FixerDefinitionInterface
     {
-        return new FixerDefinition(
-            $this->phpUnitDataProviderStaticFixer->getDefinition()->getSummary(),
-            [
-                new CodeSample(
-                    '<?php
-class FooTest extends TestCase {
-    /**
-     * @dataProvider provideSomethingCases
-     */
-    public function testSomething($expected, $actual) {}
-    public function provideSomethingCases() {}
-}
-',
-                ),
-            ],
-            '',
-            'when `force` is set to `true`',
-        );
+        return $this->phpUnitDataProviderStaticFixer->getDefinition();
     }
 
     public function getConfigurationDefinition(): FixerConfigurationResolverInterface
     {
-        return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('force', 'whether to make static data providers having dynamic class calls'))
-                ->setAllowedTypes(['bool'])
-                ->setDefault($this->force)
-                ->getOption(),
-        ]);
+        return $this->phpUnitDataProviderStaticFixer->getConfigurationDefinition();
     }
 
-    /**
-     * @param array<string, bool> $configuration
-     */
     public function configure(array $configuration): void
     {
-        if (\array_key_exists('force', $configuration)) {
-            $this->force = $configuration['force'];
-        }
-        $this->phpUnitDataProviderStaticFixer->configure(['force' => $this->force]);
+        $this->phpUnitDataProviderStaticFixer->configure($configuration);
     }
 
     public function getPriority(): int
@@ -105,9 +69,6 @@ class FooTest extends TestCase {
         $this->phpUnitDataProviderStaticFixer->fix($file, $tokens);
     }
 
-    /**
-     * @return list<string>
-     */
     public function getSuccessorsNames(): array
     {
         return [$this->phpUnitDataProviderStaticFixer->getName()];
