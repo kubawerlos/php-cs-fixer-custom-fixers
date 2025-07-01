@@ -23,10 +23,7 @@ use PhpCsFixer\WhitespacesFixerConfig;
 /**
  * @deprecated
  *
- * @implements ConfigurableFixerInterface<_InputConfig, _Config>
- *
- * @phpstan-type _InputConfig array{keep_blank_lines?: bool, minimum_number_of_parameters?: int}
- * @phpstan-type _Config array{keep_blank_lines: bool, minimum_number_of_parameters: int}
+ * @implements ConfigurableFixerInterface<array{keep_blank_lines?: bool, minimum_number_of_parameters?: int}, array{keep_blank_lines: bool, minimum_number_of_parameters: int}>
  *
  * @no-named-arguments
  */
@@ -49,9 +46,6 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
         return $this->multilinePromotedPropertiesFixer->getConfigurationDefinition();
     }
 
-    /**
-     * @param array{minimum_number_of_parameters?: int, keep_blank_lines?: bool} $configuration
-     */
     public function configure(array $configuration): void
     {
         $this->multilinePromotedPropertiesFixer->configure($configuration);
@@ -86,9 +80,6 @@ final class MultilinePromotedPropertiesFixer extends AbstractFixer implements Co
         $this->multilinePromotedPropertiesFixer->fix($file, $tokens);
     }
 
-    /**
-     * @return list<string>
-     */
     public function getSuccessorsNames(): array
     {
         return [$this->multilinePromotedPropertiesFixer->getName()];

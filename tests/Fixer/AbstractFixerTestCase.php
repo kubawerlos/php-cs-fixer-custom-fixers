@@ -55,7 +55,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionRiskyDescriptionStartWithLowercase(): void
     {
-        if (!self::getFixer()->isRisky()) {
+        if (self::getFixer() instanceof DeprecatedFixerInterface || !self::getFixer()->isRisky()) {
             $this->expectNotToPerformAssertions();
 
             return;
@@ -69,7 +69,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testFixerDefinitionRiskyDescriptionDoesNotEndWithDot(): void
     {
-        if (!self::getFixer()->isRisky()) {
+        if (self::getFixer() instanceof DeprecatedFixerInterface || !self::getFixer()->isRisky()) {
             $this->expectNotToPerformAssertions();
 
             return;

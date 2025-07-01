@@ -13,8 +13,6 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\Fixer\Casing\ClassReferenceNameCasingFixer;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -34,11 +32,7 @@ final class InternalClassCasingFixer extends AbstractFixer implements Deprecated
 
     public function getDefinition(): FixerDefinitionInterface
     {
-        return new FixerDefinition(
-            'Classes defined internally by an extension or the core must be referenced with the correct case.',
-            [new CodeSample("<?php\n\$foo = new STDClass();\n")],
-            '',
-        );
+        return $this->classReferenceNameCasingFixer->getDefinition();
     }
 
     public function getPriority(): int
@@ -61,9 +55,6 @@ final class InternalClassCasingFixer extends AbstractFixer implements Deprecated
         $this->classReferenceNameCasingFixer->fix($file, $tokens);
     }
 
-    /**
-     * @return list<string>
-     */
     public function getSuccessorsNames(): array
     {
         return [$this->classReferenceNameCasingFixer->getName()];
