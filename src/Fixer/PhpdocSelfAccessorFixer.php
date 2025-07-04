@@ -62,11 +62,11 @@ class Foo {
         $namespaces = (new NamespacesAnalyzer())->getDeclarations($tokens);
 
         foreach ($namespaces as $namespace) {
-            $this->fixPhpdocSelfAccessor($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName());
+            self::fixPhpdocSelfAccessor($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName());
         }
     }
 
-    private function fixPhpdocSelfAccessor(Tokens $tokens, int $namespaceStartIndex, int $namespaceEndIndex, string $fullName): void
+    private static function fixPhpdocSelfAccessor(Tokens $tokens, int $namespaceStartIndex, int $namespaceEndIndex, string $fullName): void
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
 
@@ -88,20 +88,20 @@ class Foo {
 
             $classyName = $tokens[$nameIndex]->getContent();
 
-            $this->replaceNameOccurrences($tokens, $fullName, $classyName, $startIndex, $endIndex);
+            self::replaceNameOccurrences($tokens, $fullName, $classyName, $startIndex, $endIndex);
 
             $index = $endIndex;
         }
     }
 
-    private function replaceNameOccurrences(Tokens $tokens, string $namespace, string $classyName, int $startIndex, int $endIndex): void
+    private static function replaceNameOccurrences(Tokens $tokens, string $namespace, string $classyName, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!$tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
                 continue;
             }
 
-            $newContent = $this->getNewContent($tokens[$index]->getContent(), $namespace, $classyName);
+            $newContent = self::getNewContent($tokens[$index]->getContent(), $namespace, $classyName);
 
             if ($newContent === $tokens[$index]->getContent()) {
                 continue;
@@ -111,7 +111,7 @@ class Foo {
         }
     }
 
-    private function getNewContent(string $content, string $namespace, string $classyName): string
+    private static function getNewContent(string $content, string $namespace, string $classyName): string
     {
         $docBlock = new DocBlock($content);
 

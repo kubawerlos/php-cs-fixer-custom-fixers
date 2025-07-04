@@ -58,11 +58,11 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
                 continue;
             }
 
-            $this->removeCommas($tokens, $index);
+            self::removeCommas($tokens, $index);
         }
     }
 
-    private function removeCommas(Tokens $tokens, int $index): void
+    private static function removeCommas(Tokens $tokens, int $index): void
     {
         $commaIndex = $tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($commaIndex));

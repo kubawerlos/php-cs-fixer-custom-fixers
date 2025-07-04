@@ -96,12 +96,12 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 continue;
             }
 
-            $firstIndex = $this->getFirstIndex($tokens, $index);
+            $firstIndex = self::getFirstIndex($tokens, $index);
             if ($firstIndex === null) {
                 continue;
             }
 
-            $secondIndex = $this->getSecondIndex($tokens, $index);
+            $secondIndex = self::getSecondIndex($tokens, $index);
             if ($secondIndex === null) {
                 continue;
             }
@@ -117,7 +117,7 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         }
     }
 
-    private function getFirstIndex(Tokens $tokens, int $index): ?int
+    private static function getFirstIndex(Tokens $tokens, int $index): ?int
     {
         $firstIndex = $tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($firstIndex));
@@ -125,14 +125,14 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         if (!$tokens[$firstIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
             return null;
         }
-        if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $firstIndex, $index)) {
+        if (!self::areOnlyHorizontalWhitespacesBetween($tokens, $firstIndex, $index)) {
             return null;
         }
 
         return $firstIndex;
     }
 
-    private function getSecondIndex(Tokens $tokens, int $index): ?int
+    private static function getSecondIndex(Tokens $tokens, int $index): ?int
     {
         $secondIndex = $tokens->getNextMeaningfulToken($index);
         \assert(\is_int($secondIndex));
@@ -140,14 +140,14 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         if (!$tokens[$secondIndex]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
             return null;
         }
-        if (!$this->areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
+        if (!self::areOnlyHorizontalWhitespacesBetween($tokens, $index, $secondIndex)) {
             return null;
         }
 
         return $secondIndex;
     }
 
-    private function areOnlyHorizontalWhitespacesBetween(Tokens $tokens, int $indexStart, int $indexEnd): bool
+    private static function areOnlyHorizontalWhitespacesBetween(Tokens $tokens, int $indexStart, int $indexEnd): bool
     {
         for ($index = $indexStart + 1; $index < $indexEnd; $index++) {
             if (!$tokens[$index]->isGivenKind(\T_WHITESPACE)) {
@@ -190,14 +190,14 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
             [
                 new Token(
                     [\T_CONSTANT_ENCAPSED_STRING,
-                        $prefix . $border . $this->getContentForBorder($firstContent, $border, true) . $this->getContentForBorder($secondContent, $border, false) . $border,
+                        $prefix . $border . self::getContentForBorder($firstContent, $border, true) . self::getContentForBorder($secondContent, $border, false) . $border,
                     ],
                 ),
             ],
         );
     }
 
-    private function getContentForBorder(string $content, string $targetBorder, bool $escapeDollarWhenIsLastCharacter): string
+    private static function getContentForBorder(string $content, string $targetBorder, bool $escapeDollarWhenIsLastCharacter): string
     {
         $currentBorder = $content[0];
         $content = \substr($content, 1, -1);

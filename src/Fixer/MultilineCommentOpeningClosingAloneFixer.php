@@ -61,12 +61,12 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
                 continue;
             }
 
-            $this->fixOpening($tokens, $index);
-            $this->fixClosing($tokens, $index);
+            self::fixOpening($tokens, $index);
+            self::fixClosing($tokens, $index);
         }
     }
 
-    private function fixOpening(Tokens $tokens, int $index): void
+    private static function fixOpening(Tokens $tokens, int $index): void
     {
         if (Preg::match('#^/\\*+\\R#', $tokens[$index]->getContent())) {
             return;
@@ -113,7 +113,7 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
         }
     }
 
-    private function fixClosing(Tokens $tokens, int $index): void
+    private static function fixClosing(Tokens $tokens, int $index): void
     {
         if (Preg::match('#\\R\\h*\\*+/$#', $tokens[$index]->getContent())) {
             return;

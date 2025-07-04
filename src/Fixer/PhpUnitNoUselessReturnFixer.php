@@ -74,11 +74,11 @@ class FooTest extends TestCase {
 
         /** @var list<int> $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->removeUselessReturns($tokens, $indices[0], $indices[1]);
+            self::removeUselessReturns($tokens, $indices[0], $indices[1]);
         }
     }
 
-    private function removeUselessReturns(Tokens $tokens, int $startIndex, int $endIndex): void
+    private static function removeUselessReturns(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         $functionsAnalyzer = new FunctionsAnalyzer();
 

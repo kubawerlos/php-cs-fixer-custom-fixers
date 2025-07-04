@@ -71,13 +71,13 @@ final class ClassConstantUsageFixer extends AbstractFixer
 
             $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openParenthesisIndex);
 
-            $this->fixClass($tokens, $openParenthesisIndex, $closeParenthesisIndex);
+            self::fixClass($tokens, $openParenthesisIndex, $closeParenthesisIndex);
         }
     }
 
-    private function fixClass(Tokens $tokens, int $openParenthesisIndex, int $closeParenthesisIndex): void
+    private static function fixClass(Tokens $tokens, int $openParenthesisIndex, int $closeParenthesisIndex): void
     {
-        [$constantsMap, $constantsIndices] = $this->getClassConstants($tokens, $openParenthesisIndex, $closeParenthesisIndex);
+        [$constantsMap, $constantsIndices] = self::getClassConstants($tokens, $openParenthesisIndex, $closeParenthesisIndex);
 
         for ($index = $closeParenthesisIndex; $index > $openParenthesisIndex; $index--) {
             if (!$tokens[$index]->isGivenKind(\T_CONSTANT_ENCAPSED_STRING)) {
@@ -107,7 +107,7 @@ final class ClassConstantUsageFixer extends AbstractFixer
     /**
      * @return array{array<string, string>, array<int, true>}
      */
-    private function getClassConstants(Tokens $tokens, int $openParenthesisIndex, int $closeParenthesisIndex): array
+    private static function getClassConstants(Tokens $tokens, int $openParenthesisIndex, int $closeParenthesisIndex): array
     {
         $constants = [];
         $constantsIndices = [];
@@ -134,7 +134,7 @@ final class ClassConstantUsageFixer extends AbstractFixer
             $constants[$tokens[$constantNameIndex]->getContent()] = $tokens[$constantValueIndex]->getContent();
         }
 
-        return [$this->getClassConstantsMap($constants), $constantsIndices];
+        return [self::getClassConstantsMap($constants), $constantsIndices];
     }
 
     /**
@@ -142,7 +142,7 @@ final class ClassConstantUsageFixer extends AbstractFixer
      *
      * @return array<string, string>
      */
-    private function getClassConstantsMap(array $constants): array
+    private static function getClassConstantsMap(array $constants): array
     {
         $map = [];
         $valuesCount = [];

@@ -54,9 +54,9 @@ $y = new \\Baz();
     {
         $index = 0;
         while (++$index < $tokens->count()) {
-            $index = $this->skipNamespacedCode($tokens, $index);
+            $index = self::skipNamespacedCode($tokens, $index);
 
-            if (!$this->isToRemove($tokens, $index)) {
+            if (!self::isToRemove($tokens, $index)) {
                 continue;
             }
 
@@ -64,7 +64,7 @@ $y = new \\Baz();
         }
     }
 
-    private function isToRemove(Tokens $tokens, int $index): bool
+    private static function isToRemove(Tokens $tokens, int $index): bool
     {
         if (!$tokens[$index]->isGivenKind(\T_NS_SEPARATOR)) {
             return false;
@@ -90,7 +90,7 @@ $y = new \\Baz();
         return $tokens[$prevIndex]->equalsAny(['(', ',', [CT::T_TYPE_ALTERNATION]]) && $tokens[$nextIndex]->isGivenKind([\T_VARIABLE, CT::T_TYPE_ALTERNATION]);
     }
 
-    private function skipNamespacedCode(Tokens $tokens, int $index): int
+    private static function skipNamespacedCode(Tokens $tokens, int $index): int
     {
         if (!$tokens[$index]->isGivenKind(\T_NAMESPACE)) {
             return $index;

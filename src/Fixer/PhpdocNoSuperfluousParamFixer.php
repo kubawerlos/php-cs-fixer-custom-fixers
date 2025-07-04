@@ -77,9 +77,9 @@ function foo($b, $s) {}
                 continue;
             }
 
-            $paramNames = $this->getParamNames($tokens, $functionIndex);
+            $paramNames = self::getParamNames($tokens, $functionIndex);
 
-            $newContent = $this->getFilteredDocComment($tokens[$index]->getContent(), $paramNames);
+            $newContent = self::getFilteredDocComment($tokens[$index]->getContent(), $paramNames);
 
             if ($newContent === $tokens[$index]->getContent()) {
                 continue;
@@ -96,7 +96,7 @@ function foo($b, $s) {}
     /**
      * @return list<string>
      */
-    private function getParamNames(Tokens $tokens, int $functionIndex): array
+    private static function getParamNames(Tokens $tokens, int $functionIndex): array
     {
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
         \assert(\is_int($paramBlockStartIndex));
@@ -116,13 +116,13 @@ function foo($b, $s) {}
     /**
      * @param list<string> $paramNames
      */
-    private function getFilteredDocComment(string $comment, array $paramNames): string
+    private static function getFilteredDocComment(string $comment, array $paramNames): string
     {
         $doc = new DocBlock($comment);
 
         $foundParamNames = [];
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
-            $paramName = $this->getParamName($annotation->getContent());
+            $paramName = self::getParamName($annotation->getContent());
 
             if (\in_array($paramName, $paramNames, true) && !\in_array($paramName, $foundParamNames, true)) {
                 $foundParamNames[] = $paramName;
@@ -135,7 +135,7 @@ function foo($b, $s) {}
         return $doc->getContent();
     }
 
-    private function getParamName(string $annotation): ?string
+    private static function getParamName(string $annotation): ?string
     {
         Preg::match('/@param\\s+(?:[^\\$]+)?\\s*(\\$[a-zA-Z_\\x80-\\xff][a-zA-Z0-9_\\x80-\\xff]*)\\b/', $annotation, $matches);
 

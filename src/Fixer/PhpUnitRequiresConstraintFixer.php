@@ -76,11 +76,11 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
 
         /** @var list<int> $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->fixClass($tokens, $indices[0], $indices[1]);
+            self::fixClass($tokens, $indices[0], $indices[1]);
         }
     }
 
-    private function fixClass(Tokens $tokens, int $index, int $endIndex): void
+    private static function fixClass(Tokens $tokens, int $index, int $endIndex): void
     {
         while ($index < $endIndex) {
             $index = $tokens->getNextTokenOfKind($index, ['{', [\T_FUNCTION]]);

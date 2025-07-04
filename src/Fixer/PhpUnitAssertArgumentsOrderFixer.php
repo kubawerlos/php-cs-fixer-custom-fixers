@@ -83,11 +83,11 @@ class FooTest extends TestCase {
 
         /** @var list<int> $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->fixArgumentsOrder($tokens, $indices[0], $indices[1]);
+            self::fixArgumentsOrder($tokens, $indices[0], $indices[1]);
         }
     }
 
-    private function fixArgumentsOrder(Tokens $tokens, int $startIndex, int $endIndex): void
+    private static function fixArgumentsOrder(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             $newAssertion = self::getNewAssertion($tokens, $index);

@@ -32,14 +32,14 @@ final class TestsCodeTest extends TestCase
     public function testClassContainsCorrectMethods(string $className): void
     {
         if ((new \ReflectionClass($className))->isTrait()) {
-            foreach ($this->getMethods($className) as $reflectionMethod) {
+            foreach (self::getMethods($className) as $reflectionMethod) {
                 self::assertStringStartsWith('assert', $reflectionMethod->getName());
             }
 
             return;
         }
 
-        foreach ($this->getMethods($className, \ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
+        foreach (self::getMethods($className, \ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
             self::assertTrue(
                 \strpos($reflectionMethod->getName(), 'test') === 0 || Preg::match('/^provide.+Cases$/', $reflectionMethod->getName()),
                 \sprintf(
@@ -58,7 +58,7 @@ final class TestsCodeTest extends TestCase
      */
     public function testDataProvidersAreStatic(string $className): void
     {
-        $dataProviders = $this->getDataProviders($className);
+        $dataProviders = self::getDataProviders($className);
 
         if ($dataProviders === []) {
             $this->expectNotToPerformAssertions();
@@ -83,7 +83,7 @@ final class TestsCodeTest extends TestCase
      */
     public function testDataProvidersKeys(string $className): void
     {
-        $dataProviders = $this->getDataProviders($className);
+        $dataProviders = self::getDataProviders($className);
 
         if ($dataProviders === []) {
             $this->expectNotToPerformAssertions();
@@ -124,7 +124,7 @@ final class TestsCodeTest extends TestCase
             return;
         }
 
-        $dataProviders = $this->getDataProviders($className);
+        $dataProviders = self::getDataProviders($className);
 
         foreach ($dataProviders as $dataProvider) {
             /** @var \Iterator<array<int, null|string>> $dataSet */
@@ -194,10 +194,10 @@ final class TestsCodeTest extends TestCase
      *
      * @return list<\ReflectionMethod>
      */
-    private function getDataProviders(string $className): array
+    private static function getDataProviders(string $className): array
     {
         return \array_values(\array_filter(
-            $this->getMethods($className, \ReflectionMethod::IS_PUBLIC),
+            self::getMethods($className, \ReflectionMethod::IS_PUBLIC),
             static fn (\ReflectionMethod $reflectionMethod): bool => \strpos($reflectionMethod->getName(), 'provide') === 0,
         ));
     }
@@ -207,7 +207,7 @@ final class TestsCodeTest extends TestCase
      *
      * @return list<\ReflectionMethod>
      */
-    private function getMethods(string $className, ?int $methodFilter = null): array
+    private static function getMethods(string $className, ?int $methodFilter = null): array
     {
         $reflectionClass = new \ReflectionClass($className);
 

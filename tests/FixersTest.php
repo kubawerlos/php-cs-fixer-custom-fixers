@@ -25,7 +25,7 @@ final class FixersTest extends TestCase
 {
     public function testCollectionIsSortedByName(): void
     {
-        $fixerNames = $this->fixerNamesFromCollection();
+        $fixerNames = self::fixerNamesFromCollection();
 
         $sortedFixerNames = $fixerNames;
         \sort($sortedFixerNames);
@@ -38,7 +38,7 @@ final class FixersTest extends TestCase
      */
     public function testFixerIsInCollection(FixerInterface $fixer): void
     {
-        self::assertContains($fixer->getName(), $this->fixerNamesFromCollection());
+        self::assertContains($fixer->getName(), self::fixerNamesFromCollection());
     }
 
     /**
@@ -64,7 +64,7 @@ final class FixersTest extends TestCase
     /**
      * @return array<array-key, string>
      */
-    private function fixerNamesFromCollection(): array
+    private static function fixerNamesFromCollection(): array
     {
         return \array_map(
             static fn (FixerInterface $fixer): string => $fixer->getName(),

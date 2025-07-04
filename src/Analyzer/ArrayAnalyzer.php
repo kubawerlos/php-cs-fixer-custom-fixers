@@ -32,7 +32,7 @@ final class ArrayAnalyzer
             $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index));
             \assert(\is_int($arrayContentEndIndex));
 
-            return $this->getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
+            return self::getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
         }
 
         if ($tokens[$index]->isGivenKind(\T_ARRAY)) {
@@ -45,7 +45,7 @@ final class ArrayAnalyzer
             $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $arrayOpenBraceIndex));
             \assert(\is_int($arrayContentEndIndex));
 
-            return $this->getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
+            return self::getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
         }
 
         throw new \InvalidArgumentException(\sprintf('Index %d is not an array.', $index));
@@ -54,12 +54,12 @@ final class ArrayAnalyzer
     /**
      * @return list<ArrayElementAnalysis>
      */
-    private function getElementsForArrayContent(Tokens $tokens, int $startIndex, int $endIndex): array
+    private static function getElementsForArrayContent(Tokens $tokens, int $startIndex, int $endIndex): array
     {
         $elements = [];
 
         $index = $startIndex;
-        while ($endIndex >= $index = $this->nextCandidateIndex($tokens, $index)) {
+        while ($endIndex >= $index = self::nextCandidateIndex($tokens, $index)) {
             if (!$tokens[$index]->equals(',')) {
                 continue;
             }
@@ -67,23 +67,23 @@ final class ArrayAnalyzer
             $elementEndIndex = $tokens->getPrevMeaningfulToken($index);
             \assert(\is_int($elementEndIndex));
 
-            $elements[] = $this->createArrayElementAnalysis($tokens, $startIndex, $elementEndIndex);
+            $elements[] = self::createArrayElementAnalysis($tokens, $startIndex, $elementEndIndex);
 
             $startIndex = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($startIndex));
         }
 
         if ($startIndex <= $endIndex) {
-            $elements[] = $this->createArrayElementAnalysis($tokens, $startIndex, $endIndex);
+            $elements[] = self::createArrayElementAnalysis($tokens, $startIndex, $endIndex);
         }
 
         return $elements;
     }
 
-    private function createArrayElementAnalysis(Tokens $tokens, int $startIndex, int $endIndex): ArrayElementAnalysis
+    private static function createArrayElementAnalysis(Tokens $tokens, int $startIndex, int $endIndex): ArrayElementAnalysis
     {
         $index = $startIndex;
-        while ($endIndex > $index = $this->nextCandidateIndex($tokens, $index)) {
+        while ($endIndex > $index = self::nextCandidateIndex($tokens, $index)) {
             if (!$tokens[$index]->isGivenKind(\T_DOUBLE_ARROW)) {
                 continue;
             }
@@ -100,7 +100,7 @@ final class ArrayAnalyzer
         return new ArrayElementAnalysis(null, null, $startIndex, $endIndex);
     }
 
-    private function nextCandidateIndex(Tokens $tokens, int $index): int
+    private static function nextCandidateIndex(Tokens $tokens, int $index): int
     {
         if ($tokens[$index]->equals('{')) {
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index) + 1;

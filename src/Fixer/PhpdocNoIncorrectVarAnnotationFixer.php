@@ -64,35 +64,35 @@ $bar = new Foo();
             }
 
             // remove ones not having type at the beginning
-            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\\s+[\\?\\\\a-zA-Z_\\x7f-\\xff]/');
+            self::removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\\s+[\\?\\\\a-zA-Z_\\x7f-\\xff]/');
 
             $nextIndex = $tokens->getNextMeaningfulToken($index);
 
             if ($nextIndex === null) {
-                $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
+                self::removeVarAnnotationNotMatchingPattern($tokens, $index, null);
                 continue;
             }
 
             if ($tokens[$nextIndex]->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE])) {
-                $this->removeForClassElement($tokens, $index, $nextIndex);
+                self::removeForClassElement($tokens, $index, $nextIndex);
                 continue;
             }
 
             if ($tokens[$nextIndex]->isGivenKind(\T_VARIABLE)) {
-                $this->removeVarAnnotation($tokens, $index, [$tokens[$nextIndex]->getContent()]);
+                self::removeVarAnnotation($tokens, $index, [$tokens[$nextIndex]->getContent()]);
                 continue;
             }
 
             if ($tokens[$nextIndex]->isGivenKind([\T_FOR, \T_FOREACH, \T_IF, \T_SWITCH, \T_WHILE])) {
-                $this->removeVarAnnotationForControl($tokens, $index, $nextIndex);
+                self::removeVarAnnotationForControl($tokens, $index, $nextIndex);
                 continue;
             }
 
-            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
+            self::removeVarAnnotationNotMatchingPattern($tokens, $index, null);
         }
     }
 
-    private function removeForClassElement(Tokens $tokens, int $index, int $propertyStartIndex): void
+    private static function removeForClassElement(Tokens $tokens, int $index, int $propertyStartIndex): void
     {
         $tokenKinds = [\T_NS_SEPARATOR, \T_STATIC, \T_STRING, \T_WHITESPACE, CT::T_ARRAY_TYPEHINT, CT::T_NULLABLE_TYPE, CT::T_TYPE_ALTERNATION];
 
@@ -105,29 +105,29 @@ $bar = new Foo();
         \assert(\is_int($variableIndex));
 
         if (!$tokens[$variableIndex]->isGivenKind(\T_VARIABLE)) {
-            $this->removeVarAnnotationNotMatchingPattern($tokens, $index, null);
+            self::removeVarAnnotationNotMatchingPattern($tokens, $index, null);
 
             return;
         }
 
         if (Preg::match('/@var\\h+(.+\\h+)?\\$[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*/', $tokens[$index]->getContent())) {
-            $this->removeVarAnnotation($tokens, $index, [$tokens[$variableIndex]->getContent()]);
+            self::removeVarAnnotation($tokens, $index, [$tokens[$variableIndex]->getContent()]);
         }
     }
 
     /**
      * @param list<string> $allowedVariables
      */
-    private function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void
+    private static function removeVarAnnotation(Tokens $tokens, int $index, array $allowedVariables): void
     {
-        $this->removeVarAnnotationNotMatchingPattern(
+        self::removeVarAnnotationNotMatchingPattern(
             $tokens,
             $index,
             '/(\\Q' . \implode('\\E|\\Q', $allowedVariables) . '\\E)\\b/i',
         );
     }
 
-    private function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex): void
+    private static function removeVarAnnotationForControl(Tokens $tokens, int $commentIndex, int $controlIndex): void
     {
         $index = $tokens->getNextMeaningfulToken($controlIndex);
         \assert(\is_int($index));
@@ -144,10 +144,10 @@ $bar = new Foo();
             }
         }
 
-        $this->removeVarAnnotation($tokens, $commentIndex, $variables);
+        self::removeVarAnnotation($tokens, $commentIndex, $variables);
     }
 
-    private function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
+    private static function removeVarAnnotationNotMatchingPattern(Tokens $tokens, int $index, ?string $pattern): void
     {
         $doc = new DocBlock($tokens[$index]->getContent());
 
