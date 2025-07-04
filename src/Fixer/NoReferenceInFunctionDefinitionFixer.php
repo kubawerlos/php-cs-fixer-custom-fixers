@@ -56,7 +56,7 @@ function foo(&$x) {}
                 continue;
             }
 
-            $indices = $this->getArgumentStartIndices($tokens, $index);
+            $indices = self::getArgumentStartIndices($tokens, $index);
 
             foreach ($indices as $i) {
                 if ($tokens[$i]->getContent() === '&') {
@@ -69,7 +69,7 @@ function foo(&$x) {}
     /**
      * @return list<int>
      */
-    private function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex): array
+    private static function getArgumentStartIndices(Tokens $tokens, int $functionNameIndex): array
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
 

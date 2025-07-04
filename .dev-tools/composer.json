@@ -3,9 +3,9 @@
     "require": {
         "php": "^8.4",
         "ergebnis/composer-normalize": "^2.47",
-        "infection/infection": "^0.29.14",
+        "infection/infection": "^0.30.1",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
-        "kubawerlos/php-cs-fixer-config": "^5.2",
+        "kubawerlos/php-cs-fixer-config": "^5.3",
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4.3",
@@ -13,7 +13,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-strict-rules": "^2.0.4",
         "shipmonk/composer-dependency-analyser": "^1.8.3",
-        "squizlabs/php_codesniffer": "^3.13.0",
+        "squizlabs/php_codesniffer": "^3.13.2",
         "tomasvotruba/type-coverage": "^2.0.2",
         "vimeo/psalm": "^6.12"
     },

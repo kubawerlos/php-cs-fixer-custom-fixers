@@ -89,11 +89,11 @@ class FooTest extends TestCase {
 
         /** @var list<int> $indices */
         foreach ($phpUnitTestCaseIndicator->findPhpUnitClasses($tokens) as $indices) {
-            $this->fixAssertions($tokens, $indices[0], $indices[1]);
+            self::fixAssertions($tokens, $indices[0], $indices[1]);
         }
     }
 
-    private function fixAssertions(Tokens $tokens, int $startIndex, int $endIndex): void
+    private static function fixAssertions(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         for ($index = $startIndex; $index < $endIndex; $index++) {
             if (!self::isAssertionToFix($tokens, $index)) {

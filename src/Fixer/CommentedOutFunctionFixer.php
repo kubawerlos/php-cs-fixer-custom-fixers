@@ -103,7 +103,7 @@ var_dump($x);
                 $startIndex = $prevIndex;
             }
 
-            if (!$this->isPreviousTokenSeparateStatement($tokens, $startIndex)) {
+            if (!self::isPreviousTokenSeparateStatement($tokens, $startIndex)) {
                 continue;
             }
 
@@ -123,7 +123,7 @@ var_dump($x);
                 $endIndex = $semicolonIndex;
             }
 
-            $this->fixBlock($tokens, $startIndex, $endIndex);
+            self::fixBlock($tokens, $startIndex, $endIndex);
         }
     }
 
@@ -140,7 +140,7 @@ var_dump($x);
         return (new FunctionsAnalyzer())->isGlobalFunctionCall($tokens, $index);
     }
 
-    private function isPreviousTokenSeparateStatement(Tokens $tokens, int $index): bool
+    private static function isPreviousTokenSeparateStatement(Tokens $tokens, int $index): bool
     {
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($prevIndex));
@@ -169,10 +169,10 @@ var_dump($x);
         return false;
     }
 
-    private function fixBlock(Tokens $tokens, int $startIndex, int $endIndex): void
+    private static function fixBlock(Tokens $tokens, int $startIndex, int $endIndex): void
     {
-        if ($this->canUseSingleLineComment($tokens, $startIndex, $endIndex)) {
-            $this->fixBlockWithSingleLineComments($tokens, $startIndex, $endIndex);
+        if (self::canUseSingleLineComment($tokens, $startIndex, $endIndex)) {
+            self::fixBlockWithSingleLineComments($tokens, $startIndex, $endIndex);
 
             return;
         }
@@ -184,7 +184,7 @@ var_dump($x);
         );
     }
 
-    private function canUseSingleLineComment(Tokens $tokens, int $startIndex, int $endIndex): bool
+    private static function canUseSingleLineComment(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
         if (!$tokens->offsetExists($endIndex + 1)) {
             return true;
@@ -203,7 +203,7 @@ var_dump($x);
         return false;
     }
 
-    private function fixBlockWithSingleLineComments(Tokens $tokens, int $startIndex, int $endIndex): void
+    private static function fixBlockWithSingleLineComments(Tokens $tokens, int $startIndex, int $endIndex): void
     {
         $codeToCommentOut = $tokens->generatePartialCode($startIndex, $endIndex);
 

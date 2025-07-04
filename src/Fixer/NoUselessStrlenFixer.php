@@ -94,24 +94,24 @@ $isNotEmpty = strlen($string) > 0;
                 $tokensToRemove[$prevIndex] = 1;
             }
 
-            if (!$this->transformCondition($tokens, $startIndex, $closeParenthesisIndex)) {
+            if (!self::transformCondition($tokens, $startIndex, $closeParenthesisIndex)) {
                 continue;
             }
 
-            $this->removeTokenAndSiblingWhitespace($tokens, $tokensToRemove);
+            self::removeTokenAndSiblingWhitespace($tokens, $tokensToRemove);
         }
     }
 
-    private function transformCondition(Tokens $tokens, int $startIndex, int $endIndex): bool
+    private static function transformCondition(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        if ($this->transformConditionLeft($tokens, $startIndex)) {
+        if (self::transformConditionLeft($tokens, $startIndex)) {
             return true;
         }
 
-        return $this->transformConditionRight($tokens, $endIndex);
+        return self::transformConditionRight($tokens, $endIndex);
     }
 
-    private function transformConditionLeft(Tokens $tokens, int $index): bool
+    private static function transformConditionLeft(Tokens $tokens, int $index): bool
     {
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($prevIndex));
@@ -139,7 +139,7 @@ $isNotEmpty = strlen($string) > 0;
         return true;
     }
 
-    private function transformConditionRight(Tokens $tokens, int $index): bool
+    private static function transformConditionRight(Tokens $tokens, int $index): bool
     {
         $nextIndex = $tokens->getNextMeaningfulToken($index);
         \assert(\is_int($nextIndex));
@@ -170,7 +170,7 @@ $isNotEmpty = strlen($string) > 0;
     /**
      * @param array<int, int> $tokensToRemove
      */
-    private function removeTokenAndSiblingWhitespace(Tokens $tokens, array $tokensToRemove): void
+    private static function removeTokenAndSiblingWhitespace(Tokens $tokens, array $tokensToRemove): void
     {
         foreach ($tokensToRemove as $index => $direction) {
             $tokens->clearAt($index);

@@ -144,44 +144,44 @@ echo 0123_4567; // octal
     private function getNewContent(string $content): string
     {
         if (\strpos($content, '.') !== false) {
-            $content = $this->updateContent($content, null, '.', 3, $this->floatSeparator);
-            $content = $this->updateContent($content, '.', 'e', 3, $this->floatSeparator, false);
+            $content = self::updateContent($content, null, '.', 3, $this->floatSeparator);
+            $content = self::updateContent($content, '.', 'e', 3, $this->floatSeparator, false);
 
-            return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
+            return self::updateContent($content, 'e', null, 3, $this->floatSeparator);
         }
 
         if (\stripos($content, '0b') === 0) {
-            return $this->updateContent($content, 'b', null, 8, $this->binarySeparator);
+            return self::updateContent($content, 'b', null, 8, $this->binarySeparator);
         }
 
         if (\stripos($content, '0x') === 0) {
-            return $this->updateContent($content, 'x', null, 2, $this->hexadecimalSeparator);
+            return self::updateContent($content, 'x', null, 2, $this->hexadecimalSeparator);
         }
 
         if (Preg::match('/e-?[\\d_]+$/i', $content)) {
-            $content = $this->updateContent($content, null, 'e', 3, $this->floatSeparator);
+            $content = self::updateContent($content, null, 'e', 3, $this->floatSeparator);
 
-            return $this->updateContent($content, 'e', null, 3, $this->floatSeparator);
+            return self::updateContent($content, 'e', null, 3, $this->floatSeparator);
         }
 
         if (\strpos($content, '0') === 0) {
-            return $this->updateContent($content, '0', null, 4, $this->octalSeparator);
+            return self::updateContent($content, '0', null, 4, $this->octalSeparator);
         }
 
-        return $this->updateContent($content, null, null, 3, $this->decimalSeparator);
+        return self::updateContent($content, null, null, 3, $this->decimalSeparator);
     }
 
-    private function updateContent(string $content, ?string $startCharacter, ?string $endCharacter, int $groupSize, ?bool $addSeparators, bool $fromRight = true): string
+    private static function updateContent(string $content, ?string $startCharacter, ?string $endCharacter, int $groupSize, ?bool $addSeparators, bool $fromRight = true): string
     {
         if ($addSeparators === null) {
             return $content;
         }
 
-        $startPosition = $this->getStartPosition($content, $startCharacter);
+        $startPosition = self::getStartPosition($content, $startCharacter);
         if ($startPosition === null) {
             return $content;
         }
-        $endPosition = $this->getEndPosition($content, $endCharacter);
+        $endPosition = self::getEndPosition($content, $endCharacter);
 
         $substringToUpdate = \substr($content, $startPosition, $endPosition - $startPosition);
         $substringToUpdate = \str_replace('_', '', $substringToUpdate);
@@ -201,7 +201,7 @@ echo 0123_4567; // octal
         return \substr($content, 0, $startPosition) . $substringToUpdate . \substr($content, $endPosition);
     }
 
-    private function getStartPosition(string $content, ?string $startCharacter): ?int
+    private static function getStartPosition(string $content, ?string $startCharacter): ?int
     {
         if ($startCharacter === null) {
             return 0;
@@ -216,7 +216,7 @@ echo 0123_4567; // octal
         return $startPosition + 1;
     }
 
-    private function getEndPosition(string $content, ?string $endCharacter): int
+    private static function getEndPosition(string $content, ?string $endCharacter): int
     {
         if ($endCharacter === null) {
             return \strlen($content);

@@ -70,7 +70,7 @@ class Foo {
                 continue;
             }
 
-            $newContent = $this->getNewContent($tokens, $index);
+            $newContent = self::getNewContent($tokens, $index);
 
             if ($newContent === $tokens[$index]->getContent()) {
                 continue;
@@ -83,7 +83,7 @@ class Foo {
         }
     }
 
-    private function getNewContent(Tokens $tokens, int $index): string
+    private static function getNewContent(Tokens $tokens, int $index): string
     {
         $content = $tokens[$index]->getContent();
 

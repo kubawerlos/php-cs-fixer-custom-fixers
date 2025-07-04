@@ -135,8 +135,8 @@ class Foo {
 
     private function promoteProperties(Tokens $tokens, int $classIndex, ConstructorAnalysis $constructorAnalysis): void
     {
-        $isDoctrineEntity = $this->isDoctrineEntity($tokens, $classIndex);
-        $properties = $this->getClassProperties($tokens, $classIndex);
+        $isDoctrineEntity = self::isDoctrineEntity($tokens, $classIndex);
+        $properties = self::getClassProperties($tokens, $classIndex);
 
         $constructorParameterNames = $constructorAnalysis->getConstructorParameterNames();
         $constructorPromotableParameters = $constructorAnalysis->getConstructorPromotableParameters();
@@ -147,16 +147,16 @@ class Foo {
                 continue;
             }
 
-            $propertyIndex = $this->getPropertyIndex($tokens, $properties, $constructorPromotableAssignments[$constructorParameterName]);
+            $propertyIndex = self::getPropertyIndex($tokens, $properties, $constructorPromotableAssignments[$constructorParameterName]);
 
             if (!$this->isPropertyToPromote($tokens, $propertyIndex, $isDoctrineEntity)) {
                 continue;
             }
 
-            $propertyType = $this->getType($tokens, $propertyIndex);
-            $parameterType = $this->getType($tokens, $constructorParameterIndex);
+            $propertyType = self::getType($tokens, $propertyIndex);
+            $parameterType = self::getType($tokens, $constructorParameterIndex);
 
-            if (!$this->typesAllowPromoting($propertyType, $parameterType)) {
+            if (!self::typesAllowPromoting($propertyType, $parameterType)) {
                 continue;
             }
 
@@ -167,11 +167,11 @@ class Foo {
                 continue;
             }
 
-            $tokensToInsert = $this->removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
+            $tokensToInsert = self::removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
 
-            $this->renameVariable($tokens, $constructorAnalysis->getConstructorIndex(), $oldParameterName, $newParameterName);
+            self::renameVariable($tokens, $constructorAnalysis->getConstructorIndex(), $oldParameterName, $newParameterName);
 
-            $this->removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
+            self::removeAssignment($tokens, $constructorPromotableAssignments[$constructorParameterName]);
             $this->updateParameterSignature(
                 $tokens,
                 $constructorParameterIndex,
@@ -181,7 +181,7 @@ class Foo {
         }
     }
 
-    private function isDoctrineEntity(Tokens $tokens, int $index): bool
+    private static function isDoctrineEntity(Tokens $tokens, int $index): bool
     {
         $phpDocIndex = $tokens->getPrevNonWhitespace($index);
         \assert(\is_int($phpDocIndex));
@@ -204,7 +204,7 @@ class Foo {
     /**
      * @param array<string, int> $properties
      */
-    private function getPropertyIndex(Tokens $tokens, array $properties, int $assignmentIndex): ?int
+    private static function getPropertyIndex(Tokens $tokens, array $properties, int $assignmentIndex): ?int
     {
         $propertyNameIndex = $tokens->getPrevTokenOfKind($assignmentIndex, [[\T_STRING]]);
         \assert(\is_int($propertyNameIndex));
@@ -246,7 +246,7 @@ class Foo {
         return \count($docBlock->getAnnotations()) === 0;
     }
 
-    private function getType(Tokens $tokens, ?int $variableIndex): string
+    private static function getType(Tokens $tokens, ?int $variableIndex): string
     {
         if ($variableIndex === null) {
             return '';
@@ -269,7 +269,7 @@ class Foo {
         return $type;
     }
 
-    private function typesAllowPromoting(string $propertyType, string $parameterType): bool
+    private static function typesAllowPromoting(string $propertyType, string $parameterType): bool
     {
         if ($propertyType === '') {
             return true;
@@ -296,7 +296,7 @@ class Foo {
     /**
      * @return array<string, int>
      */
-    private function getClassProperties(Tokens $tokens, int $classIndex): array
+    private static function getClassProperties(Tokens $tokens, int $classIndex): array
     {
         $properties = [];
         $tokensAnalyzer = new TokensAnalyzer($tokens);
@@ -318,7 +318,7 @@ class Foo {
     /**
      * @return list<Token>
      */
-    private function removePropertyAndReturnTokensToInsert(Tokens $tokens, ?int $propertyIndex): array
+    private static function removePropertyAndReturnTokensToInsert(Tokens $tokens, ?int $propertyIndex): array
     {
         if ($propertyIndex === null) {
             return [new Token([\T_PUBLIC, 'public'])];
@@ -327,8 +327,8 @@ class Foo {
         $visibilityIndex = $tokens->getPrevTokenOfKind($propertyIndex, [[\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_VAR]]);
         \assert(\is_int($visibilityIndex));
 
-        $prevPropertyIndex = $this->getTokenOfKindSibling($tokens, -1, $propertyIndex, ['{', '}', ';', ',']);
-        $nextPropertyIndex = $this->getTokenOfKindSibling($tokens, 1, $propertyIndex, [';', ',']);
+        $prevPropertyIndex = self::getTokenOfKindSibling($tokens, -1, $propertyIndex, ['{', '}', ';', ',']);
+        $nextPropertyIndex = self::getTokenOfKindSibling($tokens, 1, $propertyIndex, [';', ',']);
 
         $removeFrom = $tokens->getTokenNotOfKindSibling($prevPropertyIndex, 1, [[\T_WHITESPACE], [\T_COMMENT]]);
         \assert(\is_int($removeFrom));
@@ -362,7 +362,7 @@ class Foo {
     /**
      * @param list<string> $tokenKinds
      */
-    private function getTokenOfKindSibling(Tokens $tokens, int $direction, int $index, array $tokenKinds): int
+    private static function getTokenOfKindSibling(Tokens $tokens, int $direction, int $index, array $tokenKinds): int
     {
         $index += $direction;
 
@@ -383,7 +383,7 @@ class Foo {
         return $index;
     }
 
-    private function renameVariable(Tokens $tokens, int $constructorIndex, string $oldName, string $newName): void
+    private static function renameVariable(Tokens $tokens, int $constructorIndex, string $oldName, string $newName): void
     {
         $parenthesesOpenIndex = $tokens->getNextTokenOfKind($constructorIndex, ['(']);
         \assert(\is_int($parenthesesOpenIndex));
@@ -399,7 +399,7 @@ class Foo {
         }
     }
 
-    private function removeAssignment(Tokens $tokens, int $variableAssignmentIndex): void
+    private static function removeAssignment(Tokens $tokens, int $variableAssignmentIndex): void
     {
         $thisIndex = $tokens->getPrevTokenOfKind($variableAssignmentIndex, [[\T_VARIABLE]]);
         \assert(\is_int($thisIndex));

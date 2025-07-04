@@ -34,7 +34,7 @@ final class ConstructorAnalyzer
                 continue;
             }
 
-            if (!$this->isConstructor($tokens, $index, $element)) {
+            if (!self::isConstructor($tokens, $index, $element)) {
                 continue;
             }
 
@@ -52,7 +52,7 @@ final class ConstructorAnalyzer
     /**
      * @param array<string, int|string|Token> $element
      */
-    private function isConstructor(Tokens $tokens, int $index, array $element): bool
+    private static function isConstructor(Tokens $tokens, int $index, array $element): bool
     {
         if ($element['type'] !== 'method') {
             return false;

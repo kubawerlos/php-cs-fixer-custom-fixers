@@ -80,7 +80,7 @@ final class PriorityInternalFixer implements FixerInterface
         $sequencesStartIndex = \key($indices);
         \assert(\is_int($sequencesStartIndex));
 
-        $commentContent = $this->getCommentContent($className);
+        $commentContent = self::getCommentContent($className);
 
         if ($tokens[$sequencesStartIndex - 2]->isGivenKind(\T_DOC_COMMENT)) {
             $tokens[$sequencesStartIndex - 2] = new Token([\T_DOC_COMMENT, $commentContent]);
@@ -117,7 +117,7 @@ final class PriorityInternalFixer implements FixerInterface
         $tokens->overrideRange($priorityStartIndex, $priorityEndIndex, $priorityTokens);
     }
 
-    private function getCommentContent(string $className): string
+    private static function getCommentContent(string $className): string
     {
         $comment = "/**\n";
         $priorityCollection = PriorityCollection::create();

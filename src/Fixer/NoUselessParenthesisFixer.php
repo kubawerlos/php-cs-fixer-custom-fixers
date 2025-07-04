@@ -62,12 +62,12 @@ foo(($bar));
             $blockType = Tokens::detectBlockType($tokens[$index]);
             $blockEndIndex = $tokens->findBlockEnd($blockType['type'], $index);
 
-            if (!$this->isBlockToRemove($tokens, $index, $blockEndIndex)) {
+            if (!self::isBlockToRemove($tokens, $index, $blockEndIndex)) {
                 continue;
             }
 
-            $this->clearWhitespace($tokens, $index + 1);
-            $this->clearWhitespace($tokens, $blockEndIndex - 1);
+            self::clearWhitespace($tokens, $index + 1);
+            self::clearWhitespace($tokens, $blockEndIndex - 1);
             $tokens->clearTokenAndMergeSurroundingWhitespace($index);
             $tokens->clearTokenAndMergeSurroundingWhitespace($blockEndIndex);
 
@@ -80,9 +80,9 @@ foo(($bar));
         }
     }
 
-    private function isBlockToRemove(Tokens $tokens, int $startIndex, int $endIndex): bool
+    private static function isBlockToRemove(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
-        if ($this->isParenthesisBlockInside($tokens, $startIndex, $endIndex)) {
+        if (self::isParenthesisBlockInside($tokens, $startIndex, $endIndex)) {
             return true;
         }
 
@@ -99,22 +99,22 @@ foo(($bar));
             return false;
         }
 
-        if ($this->isForbiddenBeforeOpenParenthesis($tokens, $prevStartIndex)) {
+        if (self::isForbiddenBeforeOpenParenthesis($tokens, $prevStartIndex)) {
             return false;
         }
 
-        if ($this->isExpressionInside($tokens, $startIndex, $endIndex)) {
+        if (self::isExpressionInside($tokens, $startIndex, $endIndex)) {
             return true;
         }
 
-        if ($this->hasLowPrecedenceLogicOperator($tokens, $startIndex, $endIndex)) {
+        if (self::hasLowPrecedenceLogicOperator($tokens, $startIndex, $endIndex)) {
             return false;
         }
 
         return $tokens[$prevStartIndex]->equalsAny(['=', [\T_RETURN], [\T_THROW]]) && $tokens[$nextEndIndex]->equals(';');
     }
 
-    private function isForbiddenBeforeOpenParenthesis(Tokens $tokens, int $index): bool
+    private static function isForbiddenBeforeOpenParenthesis(Tokens $tokens, int $index): bool
     {
         if (
             $tokens[$index]->isGivenKind([
@@ -146,7 +146,7 @@ foo(($bar));
         return $blockType !== null && !$blockType['isStart'];
     }
 
-    private function isParenthesisBlockInside(Tokens $tokens, int $startIndex, int $endIndex): bool
+    private static function isParenthesisBlockInside(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
         $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
         \assert(\is_int($nextStartIndex));
@@ -161,7 +161,7 @@ foo(($bar));
         return (new BlocksAnalyzer())->isBlock($tokens, $nextStartIndex, $prevIndex);
     }
 
-    private function isExpressionInside(Tokens $tokens, int $startIndex, int $endIndex): bool
+    private static function isExpressionInside(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
         $index = $tokens->getNextMeaningfulToken($startIndex);
         \assert(\is_int($index));
@@ -188,7 +188,7 @@ foo(($bar));
         return true;
     }
 
-    private function hasLowPrecedenceLogicOperator(Tokens $tokens, int $startIndex, int $endIndex): bool
+    private static function hasLowPrecedenceLogicOperator(Tokens $tokens, int $startIndex, int $endIndex): bool
     {
         $index = $tokens->getNextMeaningfulToken($startIndex);
         \assert(\is_int($index));
@@ -211,7 +211,7 @@ foo(($bar));
         return false;
     }
 
-    private function clearWhitespace(Tokens $tokens, int $index): void
+    private static function clearWhitespace(Tokens $tokens, int $index): void
     {
         if (!$tokens[$index]->isWhitespace()) {
             return;

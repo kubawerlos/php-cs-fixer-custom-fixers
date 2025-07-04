@@ -62,19 +62,19 @@ $x = getValue();
                 continue;
             }
 
-            $variableIndex = $this->getVariableIndex($tokens, $docCommentIndex);
+            $variableIndex = self::getVariableIndex($tokens, $docCommentIndex);
             if ($variableIndex === null) {
                 continue;
             }
 
-            $assertTokens = $this->getAssertTokens($tokens, $docCommentIndex, $tokens[$variableIndex]->getContent());
+            $assertTokens = self::getAssertTokens($tokens, $docCommentIndex, $tokens[$variableIndex]->getContent());
             if ($assertTokens === null) {
                 continue;
             }
 
-            $expressionEndIndex = $this->getExpressionEnd($tokens, $variableIndex);
+            $expressionEndIndex = self::getExpressionEnd($tokens, $variableIndex);
 
-            if (!$this->canBePlacedAfterExpression($tokens, $expressionEndIndex)) {
+            if (!self::canBePlacedAfterExpression($tokens, $expressionEndIndex)) {
                 continue;
             }
 
@@ -88,7 +88,7 @@ $x = getValue();
         }
     }
 
-    private function getVariableIndex(Tokens $tokens, int $docCommentIndex): ?int
+    private static function getVariableIndex(Tokens $tokens, int $docCommentIndex): ?int
     {
         $prevIndex = $tokens->getPrevMeaningfulToken($docCommentIndex);
         if (!$tokens[$prevIndex]->equalsAny([';', '{', '}', [\T_OPEN_TAG]])) {
@@ -116,9 +116,9 @@ $x = getValue();
     /**
      * @return null|list<Token>
      */
-    private function getAssertTokens(Tokens $tokens, int $docCommentIndex, string $variableName): ?array
+    private static function getAssertTokens(Tokens $tokens, int $docCommentIndex, string $variableName): ?array
     {
-        $annotation = $this->getAnnotationForVariable($tokens, $docCommentIndex, $variableName);
+        $annotation = self::getAnnotationForVariable($tokens, $docCommentIndex, $variableName);
         if ($annotation === null) {
             return null;
         }
@@ -133,10 +133,10 @@ $x = getValue();
         $assertions = [];
         foreach ($typeExpression->getTypes() as $type) {
             if (\substr($type, 0, 1) === '?') {
-                $assertions['null'] = $this->getCodeForType('null', $variableName);
+                $assertions['null'] = self::getCodeForType('null', $variableName);
                 $type = \substr($type, 1);
             }
-            $assertions[$type] = $this->getCodeForType($type, $variableName);
+            $assertions[$type] = self::getCodeForType($type, $variableName);
         }
 
         try {
@@ -151,7 +151,7 @@ $x = getValue();
         return \array_slice($arrayTokens, 1);
     }
 
-    private function getAnnotationForVariable(Tokens $tokens, int $docCommentIndex, string $variableName): ?Annotation
+    private static function getAnnotationForVariable(Tokens $tokens, int $docCommentIndex, string $variableName): ?Annotation
     {
         $docBlock = new DocBlock($tokens[$docCommentIndex]->getContent());
 
@@ -173,7 +173,7 @@ $x = getValue();
         return $varAnnotation;
     }
 
-    private function getCodeForType(string $type, string $variableName): string
+    private static function getCodeForType(string $type, string $variableName): string
     {
         $typesMap = [
             'array' => 'is_array',
@@ -198,7 +198,7 @@ $x = getValue();
         return \sprintf('%s instanceof %s', $variableName, $type);
     }
 
-    private function getExpressionEnd(Tokens $tokens, int $index): int
+    private static function getExpressionEnd(Tokens $tokens, int $index): int
     {
         while (!$tokens[$index]->equals(';')) {
             $index = $tokens->getNextMeaningfulToken($index);
@@ -213,7 +213,7 @@ $x = getValue();
         return $index;
     }
 
-    private function canBePlacedAfterExpression(Tokens $tokens, int $expressionEndIndex): bool
+    private static function canBePlacedAfterExpression(Tokens $tokens, int $expressionEndIndex): bool
     {
         $afterExpressionIndex = $tokens->getNextMeaningfulToken($expressionEndIndex);
 

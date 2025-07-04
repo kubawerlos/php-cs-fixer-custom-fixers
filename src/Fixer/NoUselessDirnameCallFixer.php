@@ -59,12 +59,12 @@ require dirname(__DIR__) . "/vendor/autoload.php";
                 continue;
             }
 
-            $prevInserts = $this->getPrevTokensUpdates($tokens, $index);
+            $prevInserts = self::getPrevTokensUpdates($tokens, $index);
             if ($prevInserts === null) {
                 continue;
             }
 
-            $nextInserts = $this->getNextTokensUpdates($tokens, $index);
+            $nextInserts = self::getNextTokensUpdates($tokens, $index);
             if ($nextInserts === null) {
                 continue;
             }
@@ -82,7 +82,7 @@ require dirname(__DIR__) . "/vendor/autoload.php";
     /**
      * @return null|array<int, string>
      */
-    private function getPrevTokensUpdates(Tokens $tokens, int $index): ?array
+    private static function getPrevTokensUpdates(Tokens $tokens, int $index): ?array
     {
         $updates = [];
 
@@ -115,7 +115,7 @@ require dirname(__DIR__) . "/vendor/autoload.php";
     /**
      * @return null|array<int, string>
      */
-    private function getNextTokensUpdates(Tokens $tokens, int $index): ?array
+    private static function getNextTokensUpdates(Tokens $tokens, int $index): ?array
     {
         $depthLevel = 1;
         $updates = [];

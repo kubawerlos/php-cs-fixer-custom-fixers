@@ -57,10 +57,10 @@ final class PriorityTest extends TestCase
         Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
 
-        $firstFixer->fix($this->createSplFileInfoDouble(), $tokens);
+        $firstFixer->fix(self::createSplFileInfoDouble(), $tokens);
         $tokens->clearEmptyTokens();
 
-        $secondFixer->fix($this->createSplFileInfoDouble(), $tokens);
+        $secondFixer->fix(self::createSplFileInfoDouble(), $tokens);
         $tokens->clearEmptyTokens();
 
         self::assertSame($expected, $tokens->generateCode());
@@ -77,10 +77,10 @@ final class PriorityTest extends TestCase
         Tokens::clearCache();
         $tokens = Tokens::fromCode($input);
 
-        $secondFixer->fix($this->createSplFileInfoDouble(), $tokens);
+        $secondFixer->fix(self::createSplFileInfoDouble(), $tokens);
         $tokens->clearEmptyTokens();
 
-        $firstFixer->fix($this->createSplFileInfoDouble(), $tokens);
+        $firstFixer->fix(self::createSplFileInfoDouble(), $tokens);
         $tokens->clearEmptyTokens();
 
         self::assertNotSame($expected, $tokens->generateCode());
@@ -143,7 +143,7 @@ final class PriorityTest extends TestCase
         throw new \Exception(\sprintf('Fixer "%s" not found in config: "%s".', $name, \json_encode($config)));
     }
 
-    private function createSplFileInfoDouble(): \SplFileInfo
+    private static function createSplFileInfoDouble(): \SplFileInfo
     {
         return new class ('') extends \SplFileInfo {};
     }

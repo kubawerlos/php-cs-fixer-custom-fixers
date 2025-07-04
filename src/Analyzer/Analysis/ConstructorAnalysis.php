@@ -134,11 +134,11 @@ final class ConstructorAnalysis
             $propertyToVariableMap[$propertyIndex] = $index;
         }
 
-        foreach ($this->getDuplicatesIndices($properties) as $duplicate) {
+        foreach (self::getDuplicatesIndices($properties) as $duplicate) {
             unset($variables[$propertyToVariableMap[$duplicate]]);
         }
 
-        foreach ($this->getDuplicatesIndices($variables) as $duplicate) {
+        foreach (self::getDuplicatesIndices($variables) as $duplicate) {
             unset($variables[$duplicate]);
         }
 
@@ -182,7 +182,7 @@ final class ConstructorAnalysis
      *
      * @return array<int, int>
      */
-    private function getDuplicatesIndices(array $array): array
+    private static function getDuplicatesIndices(array $array): array
     {
         $duplicates = [];
         $values = [];

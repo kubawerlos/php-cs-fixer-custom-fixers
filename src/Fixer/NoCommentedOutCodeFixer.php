@@ -69,7 +69,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
                 $commentIndices = $commentsAnalyzer->getCommentBlockIndices($tokens, $index);
             }
 
-            $indicesToRemove = $this->getIndicesToRemove($tokens, $commentIndices);
+            $indicesToRemove = self::getIndicesToRemove($tokens, $commentIndices);
 
             if ($indicesToRemove === []) {
                 continue;
@@ -88,14 +88,14 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
      *
      * @return list<int>
      */
-    private function getIndicesToRemove(Tokens $tokens, array $commentIndices): array
+    private static function getIndicesToRemove(Tokens $tokens, array $commentIndices): array
     {
         $indicesToRemove = [];
         $testedIndices = [];
         $content = '';
 
         foreach ($commentIndices as $index) {
-            $content .= \PHP_EOL . $this->getContent($tokens[$index]);
+            $content .= \PHP_EOL . self::getContent($tokens[$index]);
             $testedIndices[] = $index;
 
             if (\rtrim($content) === '') {
@@ -109,8 +109,8 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
             }
 
             if (
-                $this->isCorrectSyntax('<?php' . $content)
-                || $this->isCorrectSyntax('<?php class Foo {' . $content . \PHP_EOL . '}')
+                self::isCorrectSyntax('<?php' . $content)
+                || self::isCorrectSyntax('<?php class Foo {' . $content . \PHP_EOL . '}')
             ) {
                 $indicesToRemove = $testedIndices;
             }
@@ -119,7 +119,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         return $indicesToRemove;
     }
 
-    private function getContent(Token $token): string
+    private static function getContent(Token $token): string
     {
         $content = $token->getContent();
 
@@ -130,7 +130,7 @@ final class NoCommentedOutCodeFixer extends AbstractFixer
         return \ltrim($content, '#/');
     }
 
-    private function isCorrectSyntax(string $content): bool
+    private static function isCorrectSyntax(string $content): bool
     {
         try {
             @Tokens::fromCode($content);

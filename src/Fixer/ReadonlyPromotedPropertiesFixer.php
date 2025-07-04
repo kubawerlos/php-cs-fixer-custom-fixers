@@ -109,7 +109,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 continue;
             }
 
-            if ($this->isClassReadonly($tokens, $index)) {
+            if (self::isClassReadonly($tokens, $index)) {
                 continue;
             }
 
@@ -136,7 +136,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         }
     }
 
-    private function isClassReadonly(Tokens $tokens, int $index): bool
+    private static function isClassReadonly(Tokens $tokens, int $index): bool
     {
         do {
             $index = $tokens->getPrevMeaningfulToken($index);

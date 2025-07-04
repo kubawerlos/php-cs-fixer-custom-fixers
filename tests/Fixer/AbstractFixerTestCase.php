@@ -109,7 +109,7 @@ abstract class AbstractFixerTestCase extends TestCase
         Tokens::clearCache();
         $tokens = Tokens::fromCode($codeSample->getCode());
 
-        $fixer->fix($this->createSplFileInfoDouble(), $tokens);
+        $fixer->fix(self::createSplFileInfoDouble(), $tokens);
 
         self::assertNotSame($codeSample->getCode(), $tokens->generateCode());
     }
@@ -189,7 +189,7 @@ abstract class AbstractFixerTestCase extends TestCase
 
             self::assertTrue($fixer->isCandidate($inputTokens));
 
-            $fixer->fix($this->createSplFileInfoDouble(), $inputTokens);
+            $fixer->fix(self::createSplFileInfoDouble(), $inputTokens);
             $inputTokens->clearEmptyTokens();
 
             self::assertSame(
@@ -205,7 +205,7 @@ abstract class AbstractFixerTestCase extends TestCase
             self::assertSameTokens($expectedTokens, $inputTokens);
         }
 
-        $fixer->fix($this->createSplFileInfoDouble(), $expectedTokens);
+        $fixer->fix(self::createSplFileInfoDouble(), $expectedTokens);
 
         self::assertSame($expected, $expectedTokens->generateCode());
 
@@ -253,7 +253,7 @@ abstract class AbstractFixerTestCase extends TestCase
         self::assertSame([$successorName], $fixer->getSuccessorsNames());
     }
 
-    private function createSplFileInfoDouble(): \SplFileInfo
+    private static function createSplFileInfoDouble(): \SplFileInfo
     {
         return new class (\getcwd() . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'FixerFile.php') extends \SplFileInfo {
             public function __construct(string $filename)

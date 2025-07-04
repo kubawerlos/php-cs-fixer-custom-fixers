@@ -54,7 +54,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         Tokens::clearCache();
         $tokens = Tokens::fromCode($codeSample->getCode());
 
-        $fixer->fix($this->createSplFileInfoDouble(), $tokens);
+        $fixer->fix(self::createSplFileInfoDouble(), $tokens);
         self::assertNull($this->lintSource($tokens->generateCode()));
 
         $this->doTest(
@@ -198,7 +198,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
         ];
     }
 
-    private function createSplFileInfoDouble(): \SplFileInfo
+    private static function createSplFileInfoDouble(): \SplFileInfo
     {
         return new class ('') extends \SplFileInfo {};
     }

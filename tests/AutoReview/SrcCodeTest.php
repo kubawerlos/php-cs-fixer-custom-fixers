@@ -83,7 +83,7 @@ final class SrcCodeTest extends TestCase
 
     public function testFixerSupportsAllFilesByDefault(): void
     {
-        self::assertTrue($this->createAbstractFixerDouble()->supports($this->createSplFileInfoDouble()));
+        self::assertTrue(self::createAbstractFixerDouble()->supports(self::createSplFileInfoDouble()));
     }
 
     /**
@@ -148,7 +148,7 @@ final class SrcCodeTest extends TestCase
         }
     }
 
-    private function createAbstractFixerDouble(): AbstractFixer
+    private static function createAbstractFixerDouble(): AbstractFixer
     {
         return new class () extends AbstractFixer {
             public function isCandidate(Tokens $tokens): bool
@@ -178,7 +178,7 @@ final class SrcCodeTest extends TestCase
         };
     }
 
-    private function createSplFileInfoDouble(): \SplFileInfo
+    private static function createSplFileInfoDouble(): \SplFileInfo
     {
         return new class ('') extends \SplFileInfo {};
     }

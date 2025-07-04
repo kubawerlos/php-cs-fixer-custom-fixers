@@ -77,19 +77,19 @@ class Foo
 
             $classEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $classStartIndex);
 
-            if (!$this->doesHaveToStringMethod($tokens, $classStartIndex, $classEndIndex)) {
+            if (!self::doesHaveToStringMethod($tokens, $classStartIndex, $classEndIndex)) {
                 continue;
             }
 
-            if ($this->doesImplementStringable($tokens, $namespaceStartIndex, $index, $classStartIndex)) {
+            if (self::doesImplementStringable($tokens, $namespaceStartIndex, $index, $classStartIndex)) {
                 continue;
             }
 
-            $this->addStringableInterface($tokens, $index);
+            self::addStringableInterface($tokens, $index);
         }
     }
 
-    private function doesHaveToStringMethod(Tokens $tokens, int $classStartIndex, int $classEndIndex): bool
+    private static function doesHaveToStringMethod(Tokens $tokens, int $classStartIndex, int $classEndIndex): bool
     {
         $index = $classStartIndex;
 
@@ -115,9 +115,9 @@ class Foo
         return false;
     }
 
-    private function doesImplementStringable(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex, int $classOpenBraceIndex): bool
+    private static function doesImplementStringable(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex, int $classOpenBraceIndex): bool
     {
-        $interfaces = $this->getInterfaces($tokens, $classKeywordIndex, $classOpenBraceIndex);
+        $interfaces = self::getInterfaces($tokens, $classKeywordIndex, $classOpenBraceIndex);
         if ($interfaces === []) {
             return false;
         }
@@ -130,7 +130,7 @@ class Foo
             return true;
         }
 
-        foreach ($this->getImports($tokens, $namespaceStartIndex, $classKeywordIndex) as $import) {
+        foreach (self::getImports($tokens, $namespaceStartIndex, $classKeywordIndex) as $import) {
             if (\in_array($import, $interfaces, true)) {
                 return true;
             }
@@ -142,7 +142,7 @@ class Foo
     /**
      * @return list<string>
      */
-    private function getInterfaces(Tokens $tokens, int $classKeywordIndex, int $classOpenBraceIndex): array
+    private static function getInterfaces(Tokens $tokens, int $classKeywordIndex, int $classOpenBraceIndex): array
     {
         $implementsIndex = $tokens->getNextTokenOfKind($classKeywordIndex, ['{', [\T_IMPLEMENTS]]);
         \assert(\is_int($implementsIndex));
@@ -172,7 +172,7 @@ class Foo
     /**
      * @return iterable<string>
      */
-    private function getImports(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex): iterable
+    private static function getImports(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex): iterable
     {
         for ($index = $namespaceStartIndex; $index < $classKeywordIndex; $index++) {
             if (!$tokens[$index]->isGivenKind(\T_USE)) {
@@ -197,7 +197,7 @@ class Foo
         }
     }
 
-    private function addStringableInterface(Tokens $tokens, int $classIndex): void
+    private static function addStringableInterface(Tokens $tokens, int $classIndex): void
     {
         $implementsIndex = $tokens->getNextTokenOfKind($classIndex, ['{', [\T_IMPLEMENTS]]);
         \assert(\is_int($implementsIndex));

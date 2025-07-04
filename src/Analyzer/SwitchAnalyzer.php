@@ -26,19 +26,19 @@ final class SwitchAnalyzer
             throw new \InvalidArgumentException(\sprintf('Index %d is not "switch".', $switchIndex));
         }
 
-        $casesStartIndex = $this->getCasesStart($tokens, $switchIndex);
-        $casesEndIndex = $this->getCasesEnd($tokens, $casesStartIndex);
+        $casesStartIndex = self::getCasesStart($tokens, $switchIndex);
+        $casesEndIndex = self::getCasesEnd($tokens, $casesStartIndex);
 
         $cases = [];
         $index = $casesStartIndex;
         while ($index < $casesEndIndex) {
-            $index = $this->getNextSameLevelToken($tokens, $index);
+            $index = self::getNextSameLevelToken($tokens, $index);
 
             if (!$tokens[$index]->isGivenKind([\T_CASE, \T_DEFAULT])) {
                 continue;
             }
 
-            $caseAnalysis = $this->getCaseAnalysis($tokens, $index);
+            $caseAnalysis = self::getCaseAnalysis($tokens, $index);
 
             $cases[] = $caseAnalysis;
         }
@@ -46,7 +46,7 @@ final class SwitchAnalyzer
         return new SwitchAnalysis($casesStartIndex, $casesEndIndex, $cases);
     }
 
-    private function getCasesStart(Tokens $tokens, int $switchIndex): int
+    private static function getCasesStart(Tokens $tokens, int $switchIndex): int
     {
         $parenthesisStartIndex = $tokens->getNextMeaningfulToken($switchIndex);
         \assert(\is_int($parenthesisStartIndex));
@@ -58,7 +58,7 @@ final class SwitchAnalyzer
         return $casesStartIndex;
     }
 
-    private function getCasesEnd(Tokens $tokens, int $casesStartIndex): int
+    private static function getCasesEnd(Tokens $tokens, int $casesStartIndex): int
     {
         if ($tokens[$casesStartIndex]->equals('{')) {
             return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $casesStartIndex);
@@ -66,7 +66,7 @@ final class SwitchAnalyzer
 
         $index = $casesStartIndex;
         while ($index < $tokens->count()) {
-            $index = $this->getNextSameLevelToken($tokens, $index);
+            $index = self::getNextSameLevelToken($tokens, $index);
 
             if ($tokens[$index]->isGivenKind(\T_ENDSWITCH)) {
                 break;
@@ -79,10 +79,10 @@ final class SwitchAnalyzer
         return $tokens[$afterEndswitchIndex]->equals(';') ? $afterEndswitchIndex : $index;
     }
 
-    private function getCaseAnalysis(Tokens $tokens, int $index): CaseAnalysis
+    private static function getCaseAnalysis(Tokens $tokens, int $index): CaseAnalysis
     {
         while ($index < $tokens->count()) {
-            $index = $this->getNextSameLevelToken($tokens, $index);
+            $index = self::getNextSameLevelToken($tokens, $index);
 
             if ($tokens[$index]->equalsAny([':', ';'])) {
                 break;
@@ -92,7 +92,7 @@ final class SwitchAnalyzer
         return new CaseAnalysis($index);
     }
 
-    private function getNextSameLevelToken(Tokens $tokens, int $index): int
+    private static function getNextSameLevelToken(Tokens $tokens, int $index): int
     {
         $index = $tokens->getNextMeaningfulToken($index);
         \assert(\is_int($index));

@@ -61,18 +61,18 @@ class Bar {
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach (\array_reverse((new NamespacesAnalyzer())->getDeclarations($tokens)) as $namespace) {
-            $this->fixImports($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
+            self::fixImports($tokens, $namespace->getScopeStartIndex(), $namespace->getScopeEndIndex(), $namespace->getFullName() === '');
         }
     }
 
-    private function fixImports(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
+    private static function fixImports(Tokens $tokens, int $startIndex, int $endIndex, bool $isInGlobalNamespace): void
     {
         $importedClassesIndices = self::getImportCandidateIndices($tokens, $startIndex, $endIndex);
 
         if (!$isInGlobalNamespace) {
             for ($index = $endIndex; $index > $startIndex; $index--) {
                 if ($tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
-                    $importedClassesIndices = $this->updateComment($tokens, $importedClassesIndices, $index);
+                    $importedClassesIndices = self::updateComment($tokens, $importedClassesIndices, $index);
                     continue;
                 }
 
@@ -80,7 +80,7 @@ class Bar {
                     continue;
                 }
 
-                $importedClassesIndices = $this->updateUsage($tokens, $importedClassesIndices, $index);
+                $importedClassesIndices = self::updateUsage($tokens, $importedClassesIndices, $index);
             }
         }
 
@@ -121,7 +121,7 @@ class Bar {
      *
      * @return array<string, null|int>
      */
-    private function updateComment(Tokens $tokens, array $importedClassesIndices, int $index): array
+    private static function updateComment(Tokens $tokens, array $importedClassesIndices, int $index): array
     {
         $content = $tokens[$index]->getContent();
 
@@ -144,7 +144,7 @@ class Bar {
      *
      * @return array<string, null|int>
      */
-    private function updateUsage(Tokens $tokens, array $importedClassesIndices, int $index): array
+    private static function updateUsage(Tokens $tokens, array $importedClassesIndices, int $index): array
     {
         if (!\in_array($tokens[$index]->getContent(), \array_keys($importedClassesIndices), true)) {
             return $importedClassesIndices;

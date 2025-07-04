@@ -65,7 +65,7 @@ final class PriorityFixer
      */
     public function getFixerToRunAfterNames(): array
     {
-        return $this->getFixerNames($this->fixersToRunAfter);
+        return self::getFixerNames($this->fixersToRunAfter);
     }
 
     /**
@@ -73,7 +73,7 @@ final class PriorityFixer
      */
     public function getFixerToRunBeforeNames(): array
     {
-        return $this->getFixerNames($this->fixersToRunBefore);
+        return self::getFixerNames($this->fixersToRunBefore);
     }
 
     public function calculatePriority(bool $requireAllRelationHavePriority): bool
@@ -107,7 +107,7 @@ final class PriorityFixer
      *
      * @return list<string>
      */
-    private function getFixerNames(array $priorityFixers): array
+    private static function getFixerNames(array $priorityFixers): array
     {
         $fixers = \array_map(
             static fn (self $priorityFixer): string => (new \ReflectionObject($priorityFixer->fixer))->getShortName(),

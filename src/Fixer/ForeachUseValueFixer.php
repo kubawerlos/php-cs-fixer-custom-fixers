@@ -91,7 +91,7 @@ final class ForeachUseValueFixer extends AbstractFixer
 
             $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
 
-            $variables = $this->getForeachVariableNames($tokens, $openParenthesisIndex);
+            $variables = self::getForeachVariableNames($tokens, $openParenthesisIndex);
             if ($variables === null) {
                 continue;
             }
@@ -107,14 +107,14 @@ final class ForeachUseValueFixer extends AbstractFixer
                 continue;
             }
 
-            $this->fixForeachBody($tokens, $blockStartIndex, $blockEndIndex, ...$variables);
+            self::fixForeachBody($tokens, $blockStartIndex, $blockEndIndex, ...$variables);
         }
     }
 
     /**
      * @return null|array{Token, string, string}
      */
-    private function getForeachVariableNames(Tokens $tokens, int $openParenthesisIndex): ?array
+    private static function getForeachVariableNames(Tokens $tokens, int $openParenthesisIndex): ?array
     {
         $arrayIndex = $tokens->getNextMeaningfulToken($openParenthesisIndex);
         \assert(\is_int($arrayIndex));
@@ -150,7 +150,7 @@ final class ForeachUseValueFixer extends AbstractFixer
         ];
     }
 
-    private function fixForeachBody(
+    private static function fixForeachBody(
         Tokens $tokens,
         int $openBraceIndex,
         int $closeBraceIndex,
@@ -160,7 +160,6 @@ final class ForeachUseValueFixer extends AbstractFixer
     ): void {
         $sequence = [
             $arrayToken, '[', [\T_VARIABLE, $keyName], ']'];
-
         $index = $openBraceIndex;
         while (($found = $tokens->findSequence($sequence, $index, $closeBraceIndex)) !== null) {
             $startIndex = \array_key_first($found);
@@ -168,7 +167,7 @@ final class ForeachUseValueFixer extends AbstractFixer
 
             $index = $endIndex;
 
-            if ($this->isInUnset($tokens, $startIndex)) {
+            if (self::isInUnset($tokens, $startIndex)) {
                 continue;
             }
 
@@ -182,7 +181,7 @@ final class ForeachUseValueFixer extends AbstractFixer
         }
     }
 
-    private function isInUnset(Tokens $tokens, int $startIndex): bool
+    private static function isInUnset(Tokens $tokens, int $startIndex): bool
     {
         $openParenthesisIndex = $tokens->getPrevMeaningfulToken($startIndex);
         \assert(\is_int($openParenthesisIndex));
