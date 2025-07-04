@@ -13,6 +13,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-strict-rules": "^2.0.4",
         "shipmonk/composer-dependency-analyser": "^1.8.3",
+        "shipmonk/phpstan-rules": "^4.1.4",
         "squizlabs/php_codesniffer": "^3.13.2",
         "tomasvotruba/type-coverage": "^2.0.2",
         "vimeo/psalm": "^6.12"

@@ -94,7 +94,7 @@ final class TestsCodeTest extends TestCase
             \assert($dataSet instanceof \Iterator);
 
             $keyType = null;
-            foreach (\array_keys(\iterator_to_array($dataSet)) as $key) {
+            foreach (\array_keys(\iterator_to_array($dataSet, true)) as $key) {
                 // based on the type of first key determine what type should be for all keys
                 if ($keyType === null) {
                     $keyType = \is_int($key) ? 'int' : 'string';
@@ -127,9 +127,9 @@ final class TestsCodeTest extends TestCase
         $dataProviders = self::getDataProviders($className);
 
         foreach ($dataProviders as $dataProvider) {
-            /** @var \Iterator<array<int, null|string>> $dataSet */
-            $dataSet = $dataProvider->invoke(null);
-            $dataSet = \iterator_to_array($dataSet);
+            /** @var \Iterator<array<int, null|string>> $dataSetIterator */
+            $dataSetIterator = $dataProvider->invoke(null);
+            $dataSet = \iterator_to_array($dataSetIterator, false);
 
             $doNotChangeCases = [];
             foreach ($dataSet as $value) {
@@ -170,7 +170,7 @@ final class TestsCodeTest extends TestCase
                 ->notName('autoload.php')
                 ->in(__DIR__ . '/..');
 
-            $tests = [];
+            $testsArray = [];
 
             /** @var SplFileInfo $file */
             foreach ($finder as $file) {
@@ -180,10 +180,10 @@ final class TestsCodeTest extends TestCase
                 }
 
                 $className .= '\\' . $file->getBasename('.php');
-                $tests[$className] = [$className];
+                $testsArray[$className] = [$className];
             }
 
-            $tests = new \ArrayIterator($tests);
+            $tests = new \ArrayIterator($testsArray);
         }
 
         return $tests;

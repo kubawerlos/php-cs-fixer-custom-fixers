@@ -308,12 +308,12 @@ do    {
 
         $property->setValue($fixer, \array_diff($tokens, [$token]));
 
-        $tokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
-        $fixer->fix(self::createSplFileInfoDouble(), $tokens);
+        $allTokens = Tokens::fromCode(self::EXAMPLE_WITH_ALL_TOKENS);
+        $fixer->fix(self::createSplFileInfoDouble(), $allTokens);
 
         self::assertNotSame(
             $expectedTokens->generateCode(),
-            $tokens->generateCode(),
+            $allTokens->generateCode(),
             \sprintf('Removing token %s did not broke fixing', Token::getNameForId($token)),
         );
     }
