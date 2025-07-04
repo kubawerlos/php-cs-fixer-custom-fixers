@@ -85,7 +85,9 @@ if (isset($array[$key])) {
 
             $keyStartIndex = $tokens->getNextMeaningfulToken($openBrackets);
             \assert(\is_int($keyStartIndex));
+
             $keyEndIndex = $tokens->getPrevMeaningfulToken($closeBrackets);
+            \assert(\is_int($keyEndIndex));
 
             $keyTokens = [];
             for ($i = $keyStartIndex; $i <= $keyEndIndex; $i++) {

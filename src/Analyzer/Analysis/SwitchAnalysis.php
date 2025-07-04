@@ -20,7 +20,7 @@ final class SwitchAnalysis
     private int $casesEnd;
 
     /** @var list<CaseAnalysis> */
-    private array $cases = [];
+    private array $cases;
 
     /**
      * @param list<CaseAnalysis> $cases

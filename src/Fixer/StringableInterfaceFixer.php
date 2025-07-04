@@ -151,6 +151,7 @@ class Foo
         $interface = '';
         for (
             $index = $tokens->getNextMeaningfulToken($implementsIndex);
+            // @phpstan-ignore-next-line
             $index < $classOpenBraceIndex;
             $index = $tokens->getNextMeaningfulToken($index)
         ) {

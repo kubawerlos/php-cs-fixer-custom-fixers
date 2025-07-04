@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d7bb777898746275cb9b509f52d9a02",
+    "content-hash": "52bc6ed7538d86ec86cb832d332c1464",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2203,6 +2203,41 @@
                 "MIT"
             ],
             "description": "Fast detection of composer dependency issues (dead dependencies, shadow dependencies, misplaced dependencies)"
+        },
+        {
+            "name": "shipmonk/phpstan-rules",
+            "version": "4.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shipmonk-rnd/phpstan-rules.git",
+                "reference": "69059a59c0a6ae2091bd279b2507a579fded835a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shipmonk-rnd/phpstan-rules/zipball/69059a59c0a6ae2091bd279b2507a579fded835a",
+                "reference": "69059a59c0a6ae2091bd279b2507a579fded835a"
+            },
+            "require": {
+                "php": "^7.4 || ^8.0",
+                "phpstan/phpstan": "^2.1.8"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ShipMonk\\PHPStan\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Various extra strict PHPStan rules we found useful in ShipMonk."
         },
         {
             "name": "spatie/array-to-xml",
