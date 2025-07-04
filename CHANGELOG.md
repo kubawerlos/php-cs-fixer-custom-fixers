@@ -2,7 +2,7 @@
 
 ## v3.28.0
 - Deprecate MultilinePromotedPropertiesFixer - use "multiline_promoted_properties"
-- Update minimum PHP CS Fixer version to 3.76.1
+- Update minimum PHP CS Fixer version to 3.76.0
 
 ## v3.27.0
 - Add PhpdocTagNoNamedArgumentsFixer
