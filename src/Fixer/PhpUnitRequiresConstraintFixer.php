@@ -81,14 +81,9 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
     private static function fixClass(Tokens $tokens, int $index, int $endIndex): void
     {
         while ($index < $endIndex) {
-            $index = $tokens->getNextTokenOfKind($index, ['{', [\T_FUNCTION]]);
+            $index = $tokens->getNextTokenOfKind($index, [[\T_FUNCTION]]);
             if ($index === null || $index >= $endIndex) {
                 return;
-            }
-
-            if ($tokens[$index]->equals('{')) {
-                $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
-                continue;
             }
 
             self::fixMethod($tokens, $index);
