@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.29.0
+- Update minimum PHP CS Fixer version to 3.77.0
+
 ## v3.28.0
 - Deprecate MultilinePromotedPropertiesFixer - use "multiline_promoted_properties"
 - Update minimum PHP CS Fixer version to 3.76.0
