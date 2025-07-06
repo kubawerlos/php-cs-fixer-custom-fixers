@@ -101,6 +101,9 @@ class Foo
         }
     }
 
+    /**
+     * @param list<NamespaceUseAnalysis> $useDeclarations
+     */
     private static function getNameFromUse(int $index, array $useDeclarations): ?string
     {
         $uses = \array_filter(
