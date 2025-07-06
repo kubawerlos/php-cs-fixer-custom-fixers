@@ -15,6 +15,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\CT;
+use PhpCsFixer\Tokenizer\FCT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -23,19 +24,11 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoUselessWriteVisibilityFixer extends AbstractFixer
 {
-    /** @var non-empty-array<int, list<int>> */
-    private array $predecessorKindMap;
-
-    public function __construct()
-    {
-        if (\defined('T_PUBLIC_SET')) {
-            $this->predecessorKindMap = [
-                \T_PUBLIC_SET => [\T_PUBLIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC],
-                \T_PROTECTED_SET => [\T_PROTECTED, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED],
-                \T_PRIVATE_SET => [\T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE],
-            ];
-        }
-    }
+    private const PREDECESSOR_KIND_MAP = [
+        FCT::T_PUBLIC_SET => [\T_PUBLIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC],
+        FCT::T_PROTECTED_SET => [\T_PROTECTED, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED],
+        FCT::T_PRIVATE_SET => [\T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE],
+    ];
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -61,7 +54,7 @@ final class NoUselessWriteVisibilityFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return \defined('T_PUBLIC_SET') && $tokens->isAnyTokenKindsFound(\array_keys($this->predecessorKindMap));
+        return $tokens->isAnyTokenKindsFound([FCT::T_PUBLIC_SET, FCT::T_PROTECTED_SET, FCT::T_PRIVATE_SET]);
     }
 
     public function isRisky(): bool
@@ -71,14 +64,14 @@ final class NoUselessWriteVisibilityFixer extends AbstractFixer
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens->findGivenKind(\array_keys($this->predecessorKindMap)) as $kind => $elements) {
+        foreach ($tokens->findGivenKind([FCT::T_PUBLIC_SET, FCT::T_PROTECTED_SET, FCT::T_PRIVATE_SET]) as $kind => $elements) {
             foreach (\array_keys($elements) as $index) {
-                $this->fixVisibility($tokens, $index, $kind, $kind === \T_PUBLIC_SET);
+                self::fixVisibility($tokens, $index, $kind, $kind === \T_PUBLIC_SET);
             }
         }
     }
 
-    private function fixVisibility(Tokens $tokens, int $index, int $kind, bool $makePublicIfNone): void
+    private static function fixVisibility(Tokens $tokens, int $index, int $kind, bool $makePublicIfNone): void
     {
         $prevIndex = $tokens->getPrevMeaningfulToken($index);
         \assert(\is_int($prevIndex));
@@ -87,7 +80,7 @@ final class NoUselessWriteVisibilityFixer extends AbstractFixer
             \assert(\is_int($prevIndex));
         }
 
-        if (!$tokens[$prevIndex]->isGivenKind($this->predecessorKindMap[$kind])) {
+        if (!$tokens[$prevIndex]->isGivenKind(self::PREDECESSOR_KIND_MAP[$kind])) {
             if ($makePublicIfNone) {
                 $prevDeciderIndex = $tokens->getPrevTokenOfKind($index, ['(', ';', '{']);
                 \assert(\is_int($prevDeciderIndex));

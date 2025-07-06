@@ -16,6 +16,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\FixerDefinition\VersionSpecification;
 use PhpCsFixer\FixerDefinition\VersionSpecificCodeSample;
 use PhpCsFixer\Tokenizer\CT;
+use PhpCsFixer\Tokenizer\FCT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
@@ -43,23 +44,14 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         [\T_COALESCE_EQUAL, '??='],
         [\T_CONCAT_EQUAL, '.='],
     ];
-
-    /** @var list<int> */
-    private array $promotedPropertyVisibilityKinds;
-
-    public function __construct()
-    {
-        $this->promotedPropertyVisibilityKinds = [
-            CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
-            CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
-            CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
-        ];
-        if (\defined('T_PUBLIC_SET')) {
-            $this->promotedPropertyVisibilityKinds[] = \T_PUBLIC_SET;
-            $this->promotedPropertyVisibilityKinds[] = \T_PROTECTED_SET;
-            $this->promotedPropertyVisibilityKinds[] = \T_PRIVATE_SET;
-        }
-    }
+    private const PROMOTED_PROPERTY_VISIBILITY_KINDS = [
+        CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
+        CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
+        CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
+        FCT::T_PUBLIC_SET,
+        FCT::T_PROTECTED_SET,
+        FCT::T_PRIVATE_SET,
+    ];
 
     public function getDefinition(): FixerDefinitionInterface
     {
@@ -92,7 +84,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return \defined('T_READONLY') && $tokens->isAnyTokenKindsFound($this->promotedPropertyVisibilityKinds);
+        return $tokens->isAnyTokenKindsFound(self::PROMOTED_PROPERTY_VISIBILITY_KINDS);
     }
 
     public function isRisky(): bool
@@ -126,7 +118,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
             \assert(\is_int($constructorOpenParenthesisIndex));
             $constructorCloseParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $constructorOpenParenthesisIndex);
 
-            $this->fixParameters(
+            self::fixParameters(
                 $tokens,
                 $classOpenBraceIndex,
                 $classCloseBraceIndex,
@@ -146,7 +138,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         return $tokens[$index]->isGivenKind(\T_READONLY);
     }
 
-    private function fixParameters(
+    private static function fixParameters(
         Tokens $tokens,
         int $classOpenBraceIndex,
         int $classCloseBraceIndex,
@@ -158,7 +150,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 continue;
             }
 
-            $insertIndex = $this->getInsertIndex($tokens, $index);
+            $insertIndex = self::getInsertIndex($tokens, $index);
             if ($insertIndex === null) {
                 continue;
             }
@@ -177,7 +169,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         }
     }
 
-    private function getInsertIndex(Tokens $tokens, int $index): ?int
+    private static function getInsertIndex(Tokens $tokens, int $index): ?int
     {
         $insertIndex = null;
 
@@ -189,7 +181,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
             if ($tokens[$index]->isGivenKind(\T_READONLY)) {
                 return null;
             }
-            if ($insertIndex === null && $tokens[$index]->isGivenKind($this->promotedPropertyVisibilityKinds)) {
+            if ($insertIndex === null && $tokens[$index]->isGivenKind(self::PROMOTED_PROPERTY_VISIBILITY_KINDS)) {
                 $insertIndex = $index;
             }
         }

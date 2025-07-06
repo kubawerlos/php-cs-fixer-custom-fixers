@@ -89,9 +89,9 @@ final class SrcCodeTest extends TestCase
     /**
      * @param class-string $className
      *
-     * @dataProvider provideThereIsNoPregFunctionUsedDirectlyCases
+     * @dataProvider provideThereIsNoDisallowedFunctionUsedDirectlyCases
      */
-    public function testThereIsNoPregFunctionUsedDirectly(string $className): void
+    public function testThereIsNoDisallowedFunctionUsedDirectly(string $className): void
     {
         $reflectionClass = new \ReflectionClass($className);
 
@@ -113,8 +113,8 @@ final class SrcCodeTest extends TestCase
             $stringTokens,
         );
         $strings = \array_unique($strings);
-        $message = \sprintf('Class %s must not use preg_*, it shall use Preg::* instead.', $className);
 
+        $message = \sprintf('Class %s must not use preg_*, it shall use Preg::* instead.', $className);
         self::assertNotContains('preg_filter', $strings, $message);
         self::assertNotContains('preg_grep', $strings, $message);
         self::assertNotContains('preg_match', $strings, $message);
@@ -122,18 +122,18 @@ final class SrcCodeTest extends TestCase
         self::assertNotContains('preg_replace', $strings, $message);
         self::assertNotContains('preg_replace_callback', $strings, $message);
         self::assertNotContains('preg_split', $strings, $message);
+
+        self::assertNotContains('defined', $strings);
     }
 
     /**
      * @return iterable<array{string}>
      */
-    public static function provideThereIsNoPregFunctionUsedDirectlyCases(): iterable
+    public static function provideThereIsNoDisallowedFunctionUsedDirectlyCases(): iterable
     {
         $finder = Finder::create()
             ->files()
             ->in(__DIR__ . '/../../src')
-            ->notName('php-cs-fixer.config.*.php')
-            ->notName('run')
             ->sortByName();
 
         /** @var SplFileInfo $file */
