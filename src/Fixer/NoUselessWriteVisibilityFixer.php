@@ -24,7 +24,7 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class NoUselessWriteVisibilityFixer extends AbstractFixer
 {
-    private const array PREDECESSOR_KIND_MAP = [
+    private const PREDECESSOR_KIND_MAP = [
         FCT::T_PUBLIC_SET => [\T_PUBLIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC],
         FCT::T_PROTECTED_SET => [\T_PROTECTED, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED],
         FCT::T_PRIVATE_SET => [\T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE],

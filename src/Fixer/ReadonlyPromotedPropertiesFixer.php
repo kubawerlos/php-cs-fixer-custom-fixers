@@ -44,7 +44,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         [\T_COALESCE_EQUAL, '??='],
         [\T_CONCAT_EQUAL, '.='],
     ];
-    private const array PROMOTED_PROPERTY_VISIBILITY_KINDS = [
+    private const PROMOTED_PROPERTY_VISIBILITY_KINDS = [
         CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE,
         CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED,
         CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC,
