@@ -14,6 +14,8 @@ namespace PhpCsFixerCustomFixers\Fixer;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis;
+use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -60,11 +62,21 @@ class Foo
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $namespaceStartIndex = 0;
+        $useDeclarations = (new NamespaceUsesAnalyzer())->getDeclarationsFromTokens($tokens);
+
+        $stringableInterfaces = ['stringable'];
 
         for ($index = 1; $index < $tokens->count(); $index++) {
             if ($tokens[$index]->isGivenKind(\T_NAMESPACE)) {
-                $namespaceStartIndex = $index;
+                $stringableInterfaces = [];
+                continue;
+            }
+
+            if ($tokens[$index]->isGivenKind(\T_USE)) {
+                $name = self::getNameFromUse($index, $useDeclarations);
+                if ($name !== null) {
+                    $stringableInterfaces[] = $name;
+                }
                 continue;
             }
 
@@ -81,12 +93,34 @@ class Foo
                 continue;
             }
 
-            if (self::doesImplementStringable($tokens, $namespaceStartIndex, $index, $classStartIndex)) {
+            if (self::doesImplementStringable($tokens, $index, $classStartIndex, $stringableInterfaces)) {
                 continue;
             }
 
             self::addStringableInterface($tokens, $index);
         }
+    }
+
+    /**
+     * @param list<NamespaceUseAnalysis> $useDeclarations
+     */
+    private static function getNameFromUse(int $index, array $useDeclarations): ?string
+    {
+        $uses = \array_filter(
+            $useDeclarations,
+            static fn (NamespaceUseAnalysis $namespaceUseAnalysis): bool => $namespaceUseAnalysis->getStartIndex() === $index,
+        );
+
+        \assert(\count($uses) === 1);
+
+        $useDeclaration = \reset($uses);
+
+        $lowercasedFullName = \strtolower($useDeclaration->getFullName());
+        if ($lowercasedFullName !== 'stringable' && $lowercasedFullName !== '\\stringable') {
+            return null;
+        }
+
+        return \strtolower($useDeclaration->getShortName());
     }
 
     private static function doesHaveToStringMethod(Tokens $tokens, int $classStartIndex, int $classEndIndex): bool
@@ -115,23 +149,25 @@ class Foo
         return false;
     }
 
-    private static function doesImplementStringable(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex, int $classOpenBraceIndex): bool
-    {
-        $interfaces = self::getInterfaces($tokens, $classKeywordIndex, $classOpenBraceIndex);
-        if ($interfaces === []) {
+    /**
+     * @param list<string> $stringableInterfaces
+     */
+    private static function doesImplementStringable(
+        Tokens $tokens,
+        int $classKeywordIndex,
+        int $classOpenBraceIndex,
+        array $stringableInterfaces
+    ): bool {
+        $implementedInterfaces = self::getInterfaces($tokens, $classKeywordIndex, $classOpenBraceIndex);
+        if ($implementedInterfaces === []) {
             return false;
         }
-
-        if (\in_array('\\stringable', $interfaces, true)) {
+        if (\in_array('\\stringable', $implementedInterfaces, true)) {
             return true;
         }
 
-        if ($namespaceStartIndex === 0 && \in_array('stringable', $interfaces, true)) {
-            return true;
-        }
-
-        foreach (self::getImports($tokens, $namespaceStartIndex, $classKeywordIndex) as $import) {
-            if (\in_array($import, $interfaces, true)) {
+        foreach ($stringableInterfaces as $stringableInterface) {
+            if (\in_array($stringableInterface, $implementedInterfaces, true)) {
                 return true;
             }
         }
@@ -168,34 +204,6 @@ class Foo
         }
 
         return $interfaces;
-    }
-
-    /**
-     * @return iterable<string>
-     */
-    private static function getImports(Tokens $tokens, int $namespaceStartIndex, int $classKeywordIndex): iterable
-    {
-        for ($index = $namespaceStartIndex; $index < $classKeywordIndex; $index++) {
-            if (!$tokens[$index]->isGivenKind(\T_USE)) {
-                continue;
-            }
-            $nameIndex = $tokens->getNextMeaningfulToken($index);
-            \assert(\is_int($nameIndex));
-
-            if ($tokens[$nameIndex]->isGivenKind(\T_NS_SEPARATOR)) {
-                $nameIndex = $tokens->getNextMeaningfulToken($nameIndex);
-                \assert(\is_int($nameIndex));
-            }
-
-            $nextIndex = $tokens->getNextMeaningfulToken($nameIndex);
-            \assert(\is_int($nextIndex));
-            if ($tokens[$nextIndex]->isGivenKind(\T_AS)) {
-                $nameIndex = $tokens->getNextMeaningfulToken($nextIndex);
-                \assert(\is_int($nameIndex));
-            }
-
-            yield \strtolower($tokens[$nameIndex]->getContent());
-        }
     }
 
     private static function addStringableInterface(Tokens $tokens, int $classIndex): void
