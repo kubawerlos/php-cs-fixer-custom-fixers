@@ -73,7 +73,7 @@ class Foo
             }
 
             if ($tokens[$index]->isGivenKind(\T_USE)) {
-                $name = self::getNameFromUse($tokens, $index, $useDeclarations);
+                $name = self::getNameFromUse($index, $useDeclarations);
                 if ($name !== null) {
                     $stringableInterfaces[] = $name;
                 }
@@ -101,25 +101,23 @@ class Foo
         }
     }
 
-    /**
-     * @param list<NamespaceUseAnalysis> $useDeclarations
-     */
-    private static function getNameFromUse(Tokens $tokens, int $index, array $useDeclarations): ?string
+    private static function getNameFromUse(int $index, array $useDeclarations): ?string
     {
-        foreach ($useDeclarations as $useDeclaration) {
-            if ($useDeclaration->getStartIndex() !== $index) {
-                continue;
-            }
+        $uses = \array_filter(
+            $useDeclarations,
+            static fn (NamespaceUseAnalysis $namespaceUseAnalysis): bool => $namespaceUseAnalysis->getStartIndex() === $index,
+        );
 
-            $lowercasedFullName = \strtolower($useDeclaration->getFullName());
-            if ($lowercasedFullName !== 'stringable' && $lowercasedFullName !== '\\stringable') {
-                return null;
-            }
+        \assert(\count($uses) === 1);
 
-            return \strtolower($useDeclaration->getShortName());
+        $useDeclaration = \reset($uses);
+
+        $lowercasedFullName = \strtolower($useDeclaration->getFullName());
+        if ($lowercasedFullName !== 'stringable' && $lowercasedFullName !== '\\stringable') {
+            return null;
         }
 
-        return null;
+        return \strtolower($useDeclaration->getShortName());
     }
 
     private static function doesHaveToStringMethod(Tokens $tokens, int $classStartIndex, int $classEndIndex): bool
