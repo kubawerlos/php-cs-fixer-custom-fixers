@@ -152,6 +152,23 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
             }
         ';
 
+        yield [
+            <<<'PHP'
+                <?php
+                use NotStringable as Stringy;
+                class Bar implements \Stringable, Stringy {
+                    public function __toString() { return ""; }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                use NotStringable as Stringy;
+                class Bar implements Stringy {
+                    public function __toString() { return ""; }
+                }
+                PHP,
+        ];
+
         $implementedInterfacesCases = [
             \Stringable::class,
             'Foo\\Stringable',
