@@ -1067,4 +1067,41 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ];
         }
     }
+
+    /**
+     * @dataProvider provideFix84Cases
+     *
+     * @requires PHP >= 8.4
+     */
+    public function testFix84(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix84Cases(): iterable
+    {
+        yield 'promote property with hook' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(
+                        private string $bar { set (string $bar) { $this->bar = strtoupper($bar); } }
+                    ) {
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    private string $bar { set (string $bar) { $this->bar = strtoupper($bar); } }
+                    public function __construct(
+                        string $bar
+                    ) {
+                        $this->bar = $bar;
+                    }
+                }
+                PHP,
+        ];
+    }
 }
