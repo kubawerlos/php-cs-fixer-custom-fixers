@@ -6,6 +6,7 @@
         ]
     },
     "timeout": 10,
+    "threads": "max",
     "logs": {
         "text": "php://stdout",
         "github": true,
@@ -194,5 +195,6 @@
         "While_": true,
         "YieldValue": true,
         "Yield_": true
-    }
+    },
+    "minMsi": 100
 }

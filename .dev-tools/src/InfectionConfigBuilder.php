@@ -43,6 +43,7 @@ final class InfectionConfigBuilder
             '$schema' => './vendor/infection/infection/resources/schema.json',
             'source' => ['directories' => ['../src']],
             'timeout' => 10,
+            'threads' => 'max',
             'logs' => [
                 'text' => 'php://stdout',
                 'github' => true,
@@ -53,6 +54,7 @@ final class InfectionConfigBuilder
                 'customPath' => '../vendor/phpunit/phpunit/phpunit',
             ],
             'mutators' => [],
+            'minMsi' => 100,
         ];
 
         $mutators = \array_keys(ProfileList::ALL_MUTATORS);
