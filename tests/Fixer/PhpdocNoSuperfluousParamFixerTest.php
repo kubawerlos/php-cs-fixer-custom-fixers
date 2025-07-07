@@ -299,5 +299,18 @@ function foo(callable $checker) {}
                 function foo($x) {}
                 PHP,
         ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                	/**
+                	 * @param callable(Type $type, callable(Type): Type $traverse): Type $callback
+                	 */
+                	public function __construct(mixed $callback) {}
+                }
+                PHP,
+        ];
     }
 }
