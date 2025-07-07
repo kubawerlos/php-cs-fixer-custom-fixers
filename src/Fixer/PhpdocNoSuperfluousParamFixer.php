@@ -15,7 +15,6 @@ use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -122,7 +121,7 @@ function foo($b, $s) {}
 
         $foundParamNames = [];
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
-            $paramName = self::getParamName($annotation->getContent());
+            $paramName = $annotation->getVariableName();
 
             if (\in_array($paramName, $paramNames, true) && !\in_array($paramName, $foundParamNames, true)) {
                 $foundParamNames[] = $paramName;
@@ -133,19 +132,5 @@ function foo($b, $s) {}
         }
 
         return $doc->getContent();
-    }
-
-    private static function getParamName(string $annotation): ?string
-    {
-        Preg::match('/@param\\s+(?:[^\\$]+)?\\s*(\\$[a-zA-Z_\\x80-\\xff][a-zA-Z0-9_\\x80-\\xff]*)\\b/', $annotation, $matches);
-
-        if (!\array_key_exists(1, $matches)) {
-            return null;
-        }
-
-        // @phpstan-ignore function.alreadyNarrowedType
-        \assert(\is_string($matches[1]));
-
-        return $matches[1];
     }
 }
