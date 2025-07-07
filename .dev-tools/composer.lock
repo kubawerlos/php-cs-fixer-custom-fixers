@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52bc6ed7538d86ec86cb832d332c1464",
+    "content-hash": "cc29da6bc114fd14f8df10b0cfcbe6c9",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1221,21 +1221,21 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "v3.28.0",
+            "version": "v3.29.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "6115bffca3b8d1bfbd7eff7bdd5df1ffb3c8eddc"
+                "reference": "0774fabfdf5e487c170bacfcc03f8e439a960f9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/6115bffca3b8d1bfbd7eff7bdd5df1ffb3c8eddc",
-                "reference": "6115bffca3b8d1bfbd7eff7bdd5df1ffb3c8eddc"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/0774fabfdf5e487c170bacfcc03f8e439a960f9a",
+                "reference": "0774fabfdf5e487c170bacfcc03f8e439a960f9a"
             },
             "require": {
                 "ext-filter": "*",
                 "ext-tokenizer": "*",
-                "friendsofphp/php-cs-fixer": "^3.76",
+                "friendsofphp/php-cs-fixer": "^3.77",
                 "php": "^7.4 || ^8.0"
             },
             "type": "library",
@@ -1579,16 +1579,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.76.0",
+            "version": "v3.80.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "b6804c2a1a4fbff582446a44ad678ae1689df1c3"
+                "reference": "050bfba7a3f1716522075118a60e934344053b34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/b6804c2a1a4fbff582446a44ad678ae1689df1c3",
-                "reference": "b6804c2a1a4fbff582446a44ad678ae1689df1c3"
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/050bfba7a3f1716522075118a60e934344053b34",
+                "reference": "050bfba7a3f1716522075118a60e934344053b34"
             },
             "require": {
                 "ext-json": "*",
@@ -2107,16 +2107,16 @@
         },
         {
             "name": "sanmai/pipeline",
-            "version": "6.18",
+            "version": "6.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sanmai/pipeline.git",
-                "reference": "d9fbdf2a4a363f44f4d8155f71766f35d49b8fb2"
+                "reference": "3707180c66dd6b3b9c4b5f9fe26155325812037d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/d9fbdf2a4a363f44f4d8155f71766f35d49b8fb2",
-                "reference": "d9fbdf2a4a363f44f4d8155f71766f35d49b8fb2"
+                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/3707180c66dd6b3b9c4b5f9fe26155325812037d",
+                "reference": "3707180c66dd6b3b9c4b5f9fe26155325812037d"
             },
             "require": {
                 "php": ">=8.2"
@@ -2994,16 +2994,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.12.0",
+            "version": "6.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "cf420941d061a57050b6c468ef2c778faf40aee2"
+                "reference": "e71404b0465be25cf7f8a631b298c01c5ddd864f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/cf420941d061a57050b6c468ef2c778faf40aee2",
-                "reference": "cf420941d061a57050b6c468ef2c778faf40aee2"
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e71404b0465be25cf7f8a631b298c01c5ddd864f",
+                "reference": "e71404b0465be25cf7f8a631b298c01c5ddd864f"
             },
             "require": {
                 "amphp/amp": "^3",
