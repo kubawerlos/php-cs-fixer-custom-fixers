@@ -442,7 +442,7 @@ $x = 0;
      */
     public static function provideFix80Cases(): iterable
     {
-        yield 'keep correct PHPDoc for class properties, PHP 8.0' => [
+        yield 'keep correct PHPDoc for class properties' => [
             '<?php class Foo
                 {
                     /** @var int|string */
@@ -450,7 +450,7 @@ $x = 0;
                 }',
         ];
 
-        yield 'keep correct PHPDoc for promoted properties, PHP 8.0' => [
+        yield 'keep correct PHPDoc for promoted properties' => [
             '<?php class Foo
                 {
                     public function __construct(
@@ -464,6 +464,19 @@ $x = 0;
                         private array $d,
                     ) {}
                 }',
+        ];
+
+        yield 'keep correct PHPDoc when there is attribute' => [
+            <<<'PHP'
+                <?php class Foo
+                {
+                    /** @var int|string */
+                    #[Attribute1]
+                    #[Attribute2('foo')]
+                    #[Attribute3(4)]
+                    private int|string $intOrString;
+                }
+                PHP,
         ];
     }
 
