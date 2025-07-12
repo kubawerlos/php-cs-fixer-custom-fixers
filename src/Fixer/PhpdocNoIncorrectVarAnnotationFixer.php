@@ -66,7 +66,7 @@ $bar = new Foo();
             // remove ones not having type at the beginning
             self::removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\\s+[\\?\\\\a-zA-Z_\\x7f-\\xff]/');
 
-            $nextIndex = $tokens->getNextMeaningfulToken($index);
+            $nextIndex = self::getIndexAfterPhpDoc($tokens, $index);
 
             if ($nextIndex === null) {
                 self::removeVarAnnotationNotMatchingPattern($tokens, $index, null);
@@ -90,6 +90,18 @@ $bar = new Foo();
 
             self::removeVarAnnotationNotMatchingPattern($tokens, $index, null);
         }
+    }
+
+    private static function getIndexAfterPhpDoc(Tokens $tokens, int $index): ?int
+    {
+        $nextIndex = $tokens->getNextMeaningfulToken($index);
+
+        while ($nextIndex !== null && \defined('T_ATTRIBUTE') && $tokens[$nextIndex]->isGivenKind(\T_ATTRIBUTE)) {
+            $nextIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ATTRIBUTE, $nextIndex);
+            $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
+        }
+
+        return $nextIndex;
     }
 
     private static function removeForClassElement(Tokens $tokens, int $index, int $propertyStartIndex): void
