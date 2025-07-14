@@ -17,6 +17,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\CT;
+use PhpCsFixer\Tokenizer\FCT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
@@ -96,7 +97,7 @@ $bar = new Foo();
     {
         $nextIndex = $tokens->getNextMeaningfulToken($index);
 
-        while ($nextIndex !== null && \defined('T_ATTRIBUTE') && $tokens[$nextIndex]->isGivenKind(\T_ATTRIBUTE)) {
+        while ($nextIndex !== null && $tokens[$nextIndex]->isGivenKind(FCT::T_ATTRIBUTE)) {
             $nextIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ATTRIBUTE, $nextIndex);
             $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
         }
@@ -106,14 +107,7 @@ $bar = new Foo();
 
     private static function removeForClassElement(Tokens $tokens, int $index, int $propertyStartIndex): void
     {
-        $tokenKinds = [\T_NS_SEPARATOR, \T_STATIC, \T_STRING, \T_WHITESPACE, CT::T_ARRAY_TYPEHINT, CT::T_NULLABLE_TYPE, CT::T_TYPE_ALTERNATION];
-
-        if (\defined('T_READONLY')) {
-            $tokenKinds[] = CT::T_TYPE_INTERSECTION;
-            $tokenKinds[] = \T_READONLY;
-        }
-
-        $variableIndex = $tokens->getTokenNotOfKindsSibling($propertyStartIndex, 1, $tokenKinds);
+        $variableIndex = $tokens->getTokenNotOfKindsSibling($propertyStartIndex, 1, [\T_NS_SEPARATOR, \T_STATIC, \T_STRING, \T_WHITESPACE, CT::T_ARRAY_TYPEHINT, CT::T_NULLABLE_TYPE, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION, FCT::T_READONLY]);
         \assert(\is_int($variableIndex));
 
         if (!$tokens[$variableIndex]->isGivenKind(\T_VARIABLE)) {

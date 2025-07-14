@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc29da6bc114fd14f8df10b0cfcbe6c9",
+    "content-hash": "ab0b2efbd9f8b7f3444da6ac50cd0e93",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2994,16 +2994,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.12.1",
+            "version": "6.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "e71404b0465be25cf7f8a631b298c01c5ddd864f"
+                "reference": "70cdf647255a1362b426bb0f522a85817b8c791c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e71404b0465be25cf7f8a631b298c01c5ddd864f",
-                "reference": "e71404b0465be25cf7f8a631b298c01c5ddd864f"
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/70cdf647255a1362b426bb0f522a85817b8c791c",
+                "reference": "70cdf647255a1362b426bb0f522a85817b8c791c"
             },
             "require": {
                 "amphp/amp": "^3",
