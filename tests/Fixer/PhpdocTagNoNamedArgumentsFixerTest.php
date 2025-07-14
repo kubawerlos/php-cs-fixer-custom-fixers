@@ -224,5 +224,54 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
             [],
             new WhitespacesFixerConfig("\t", "\r\n"),
         ];
+
+        yield 'do not add for attribute class' => [
+            <<<'PHP'
+                <?php
+                #[Attribute(flags: Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+                final readonly class MyAttributeClass {}
+                PHP,
+        ];
+
+        yield 'do not add for attribute class (used with alias)' => [
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                use Attribute as TheAttributeClass;
+
+                /**
+                 * @no-named-arguments
+                 */
+                #[FooAttribute]
+                final class NotAttributeClass1 {}
+
+                #[TheAttributeClass(flags: Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+                abstract class MyAttributeClass {}
+
+                /**
+                 * @no-named-arguments
+                 */
+                #[FooAttribute]
+                #[BarAttribute]
+                #[BazAttribute]
+                final class NotAttributeClass1 {}
+                PHP,
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                use Attribute as TheAttributeClass;
+
+                #[FooAttribute]
+                final class NotAttributeClass1 {}
+
+                #[TheAttributeClass(flags: Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+                abstract class MyAttributeClass {}
+
+                #[FooAttribute]
+                #[BarAttribute]
+                #[BazAttribute]
+                final class NotAttributeClass1 {}
+                PHP,
+        ];
     }
 }

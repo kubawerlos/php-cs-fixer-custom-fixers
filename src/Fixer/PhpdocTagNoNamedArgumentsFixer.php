@@ -22,6 +22,11 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\Analyzer\Analysis\NamespaceUseAnalysis;
+use PhpCsFixer\Tokenizer\Analyzer\AttributeAnalyzer;
+use PhpCsFixer\Tokenizer\Analyzer\FullyQualifiedNameAnalyzer;
+use PhpCsFixer\Tokenizer\CT;
+use PhpCsFixer\Tokenizer\FCT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -131,7 +136,13 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
             }
 
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($prevIndex));
+
             if ($tokens[$prevIndex]->isGivenKind(\T_NEW)) {
+                continue;
+            }
+
+            if (self::isAttributeClass($tokens, $prevIndex)) {
                 continue;
             }
 
@@ -148,6 +159,31 @@ final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements Conf
                 $tokens[$docBlockIndex] = new Token([\T_DOC_COMMENT, $newContent]);
             }
         }
+    }
+
+    private static function isAttributeClass(Tokens $tokens, int $index): bool
+    {
+        while ($tokens[$index]->isGivenKind([\T_ABSTRACT, \T_FINAL, FCT::T_READONLY])) {
+            $index = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($index));
+        }
+
+        if (!$tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+            return false;
+        }
+
+        $fullyQualifiedNameAnalyzer = new FullyQualifiedNameAnalyzer($tokens);
+
+        foreach (AttributeAnalyzer::collect($tokens, $tokens->findBlockStart(Tokens::BLOCK_TYPE_ATTRIBUTE, $index)) as $attributeAnalysis) {
+            foreach ($attributeAnalysis->getAttributes() as $attribute) {
+                $attributeName = \strtolower($fullyQualifiedNameAnalyzer->getFullyQualifiedName($attribute['name'], $attribute['start'], NamespaceUseAnalysis::TYPE_CLASS));
+                if ($attributeName === 'attribute') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private function ensureIsDocBlockWithNoNameArgumentsTag(Tokens $tokens, int $index): void

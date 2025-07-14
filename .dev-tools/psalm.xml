@@ -15,6 +15,10 @@
         <directory name='../src' />
     </projectFiles>
 
+    <stubs>
+        <file name='./psalm_stub.php' preloadClasses="true" />
+    </stubs>
+
     <issueHandlers>
         <DeprecatedClass errorLevel='suppress' />
         <InaccessibleMethod errorLevel='suppress' />
