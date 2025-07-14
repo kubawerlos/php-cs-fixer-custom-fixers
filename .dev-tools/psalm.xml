@@ -16,7 +16,7 @@
     </projectFiles>
 
     <stubs>
-        <file name='./psalm_stub.php' preloadClasses="true" />
+        <file name='./psalm_stub.php' preloadClasses='true' />
     </stubs>
 
     <issueHandlers>
