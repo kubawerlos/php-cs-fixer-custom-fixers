@@ -54,7 +54,7 @@
             "phpcbf || exit 0"
         ],
         "infection": [
-            "infection run --min-msi=100 --logger-github --no-progress --threads=16"
+            "infection run"
         ]
     }
 }

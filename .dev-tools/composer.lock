@@ -1221,16 +1221,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
-            "version": "v3.29.0",
+            "version": "v3.29.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
-                "reference": "1623c499adce2c131dafa5b6dd2eb496bb53f3c7"
+                "reference": "0774fabfdf5e487c170bacfcc03f8e439a960f9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/1623c499adce2c131dafa5b6dd2eb496bb53f3c7",
-                "reference": "1623c499adce2c131dafa5b6dd2eb496bb53f3c7"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/0774fabfdf5e487c170bacfcc03f8e439a960f9a",
+                "reference": "0774fabfdf5e487c170bacfcc03f8e439a960f9a"
             },
             "require": {
                 "ext-filter": "*",
@@ -1579,16 +1579,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.77.0",
+            "version": "v3.80.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "4ddab11b872f575afcf852181e92906d75575203"
+                "reference": "050bfba7a3f1716522075118a60e934344053b34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/4ddab11b872f575afcf852181e92906d75575203",
-                "reference": "4ddab11b872f575afcf852181e92906d75575203"
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/050bfba7a3f1716522075118a60e934344053b34",
+                "reference": "050bfba7a3f1716522075118a60e934344053b34"
             },
             "require": {
                 "ext-json": "*",

@@ -167,7 +167,7 @@ class Foo {
                 continue;
             }
 
-            $tokensToInsert = self::removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
+            [$tokensToInsertBefore, $tokensToInsertAfter] = self::removePropertyAndReturnTokensToInsert($tokens, $propertyIndex);
 
             self::renameVariable($tokens, $constructorAnalysis->getConstructorIndex(), $oldParameterName, $newParameterName);
 
@@ -175,7 +175,8 @@ class Foo {
             $this->updateParameterSignature(
                 $tokens,
                 $constructorParameterIndex,
-                $tokensToInsert,
+                $tokensToInsertBefore,
+                $tokensToInsertAfter,
                 \substr($propertyType, 0, 1) === '?',
             );
         }
@@ -316,12 +317,12 @@ class Foo {
     }
 
     /**
-     * @return list<Token>
+     * @return array{list<Token>, list<Token>}
      */
     private static function removePropertyAndReturnTokensToInsert(Tokens $tokens, ?int $propertyIndex): array
     {
         if ($propertyIndex === null) {
-            return [new Token([\T_PUBLIC, 'public'])];
+            return [[new Token([\T_PUBLIC, 'public'])], []];
         }
 
         $visibilityIndex = $tokens->getPrevTokenOfKind($propertyIndex, [[\T_PRIVATE], [\T_PROTECTED], [\T_PUBLIC], [\T_VAR]]);
@@ -342,21 +343,28 @@ class Foo {
             $removeFrom++;
         }
 
-        $tokensToInsert = [];
+        $tokensToInsertBefore = [];
         for ($index = $removeFrom; $index <= $visibilityIndex - 1; $index++) {
-            $tokensToInsert[] = $tokens[$index];
+            $tokensToInsertBefore[] = $tokens[$index];
         }
 
         $visibilityToken = $tokens[$visibilityIndex];
         if ($tokens[$visibilityIndex]->isGivenKind(\T_VAR)) {
             $visibilityToken = new Token([\T_PUBLIC, 'public']);
         }
-        $tokensToInsert[] = $visibilityToken;
+        $tokensToInsertBefore[] = $visibilityToken;
+
+        $tokensToInsertAfter = [];
+        if ($tokens[$removeTo]->isGivenKind(CT::T_PROPERTY_HOOK_BRACE_CLOSE)) {
+            for ($index = $propertyIndex + 1; $index <= $removeTo; $index++) {
+                $tokensToInsertAfter[] = $tokens[$index];
+            }
+        }
 
         $tokens->clearRange($removeFrom + 1, $removeTo);
         TokenRemover::removeWithLinesIfPossible($tokens, $removeFrom);
 
-        return $tokensToInsert;
+        return [$tokensToInsertBefore, $tokensToInsertAfter];
     }
 
     /**
@@ -375,6 +383,10 @@ class Foo {
                 } else {
                     $index = $tokens->findBlockStart($blockType['type'], $index);
                 }
+            }
+
+            if ($tokens[$index]->isGivenKind(CT::T_PROPERTY_HOOK_BRACE_CLOSE)) {
+                break;
             }
 
             $index += $direction;
@@ -412,31 +424,42 @@ class Foo {
     }
 
     /**
-     * @param list<Token> $tokensToInsert
+     * @param list<Token> $tokensToInsertBefore
+     * @param list<Token> $tokensToInsertAfter
      */
-    private function updateParameterSignature(Tokens $tokens, int $constructorParameterIndex, array $tokensToInsert, bool $makeTypeNullable): void
-    {
+    private function updateParameterSignature(
+        Tokens $tokens,
+        int $constructorParameterIndex,
+        array $tokensToInsertBefore,
+        array $tokensToInsertAfter,
+        bool $makeTypeNullable
+    ): void {
         $prevElementIndex = $tokens->getPrevTokenOfKind($constructorParameterIndex, ['(', ',', [CT::T_ATTRIBUTE_CLOSE]]);
         \assert(\is_int($prevElementIndex));
 
         $propertyStartIndex = $tokens->getNextMeaningfulToken($prevElementIndex);
         \assert(\is_int($propertyStartIndex));
 
-        foreach ($tokensToInsert as $index => $token) {
+        foreach ($tokensToInsertBefore as $index => $token) {
             if ($token->isGivenKind(\T_PUBLIC)) {
-                $tokensToInsert[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, $token->getContent()]);
+                $tokensToInsertBefore[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, $token->getContent()]);
             } elseif ($token->isGivenKind(\T_PROTECTED)) {
-                $tokensToInsert[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, $token->getContent()]);
+                $tokensToInsertBefore[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, $token->getContent()]);
             } elseif ($token->isGivenKind(\T_PRIVATE)) {
-                $tokensToInsert[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE, $token->getContent()]);
+                $tokensToInsertBefore[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE, $token->getContent()]);
             }
         }
-        $tokensToInsert[] = new Token([\T_WHITESPACE, ' ']);
+        $tokensToInsertBefore[] = new Token([\T_WHITESPACE, ' ']);
 
         if ($makeTypeNullable && !$tokens[$propertyStartIndex]->isGivenKind(CT::T_NULLABLE_TYPE)) {
-            $tokensToInsert[] = new Token([CT::T_NULLABLE_TYPE, '?']);
+            $tokensToInsertBefore[] = new Token([CT::T_NULLABLE_TYPE, '?']);
         }
 
-        $this->tokensToInsert[$propertyStartIndex] = $tokensToInsert;
+        $this->tokensToInsert[$propertyStartIndex] = $tokensToInsertBefore;
+
+        $nextPropertyStartIndex = $tokens->getNextMeaningfulToken($propertyStartIndex);
+        \assert(\is_int($nextPropertyStartIndex));
+
+        $this->tokensToInsert[$nextPropertyStartIndex + 1] = $tokensToInsertAfter;
     }
 }
