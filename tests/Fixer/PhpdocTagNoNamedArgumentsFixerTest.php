@@ -224,29 +224,69 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
             [],
             new WhitespacesFixerConfig("\t", "\r\n"),
         ];
+    }
 
+    /**
+     * @dataProvider provideFix80Cases
+     *
+     * @requires PHP >= 8.0
+     */
+    public function testFix80(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix80Cases(): iterable
+    {
         yield 'do not add for attribute class' => [
             <<<'PHP'
                 <?php
-                #[Attribute(flags: Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
-                final readonly class MyAttributeClass {}
+                #[Attribute(flags: Attribute::TARGET_METHOD)]
+                final class MyAttributeClass {}
                 PHP,
         ];
 
-        yield 'do not add for attribute class (used with alias)' => [
+        yield 'do not add for attribute class (with alias)' => [
             <<<'PHP'
                 <?php
                 namespace Foo;
                 use Attribute as TheAttributeClass;
+                #[TheAttributeClass(flags: TheAttributeClass::TARGET_METHOD)]
+                abstract class MyAttributeClass {}
+                PHP,
+        ];
+    }
+
+    /**
+     * @dataProvider provideFix82Cases
+     *
+     * @requires PHP >= 8.2
+     */
+    public function testFix82(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix82Cases(): iterable
+    {
+        yield 'do not add for attribute (readonly) class' => [
+            <<<'PHP'
+                <?php
 
                 /**
                  * @no-named-arguments
                  */
                 #[FooAttribute]
-                final class NotAttributeClass1 {}
+                final readonly class NotAttributeClass1 {}
 
-                #[TheAttributeClass(flags: Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
-                abstract class MyAttributeClass {}
+                #[Attribute(flags: Attribute::TARGET_METHOD)]
+                abstract readonly class MyAttributeClass {}
 
                 /**
                  * @no-named-arguments
@@ -254,23 +294,20 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
                 #[FooAttribute]
                 #[BarAttribute]
                 #[BazAttribute]
-                final class NotAttributeClass1 {}
+                final readonly class NotAttributeClass2 {}
                 PHP,
             <<<'PHP'
                 <?php
-                namespace Foo;
-                use Attribute as TheAttributeClass;
-
                 #[FooAttribute]
-                final class NotAttributeClass1 {}
+                final readonly class NotAttributeClass1 {}
 
-                #[TheAttributeClass(flags: Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
-                abstract class MyAttributeClass {}
+                #[Attribute(flags: Attribute::TARGET_METHOD)]
+                abstract readonly class MyAttributeClass {}
 
                 #[FooAttribute]
                 #[BarAttribute]
                 #[BazAttribute]
-                final class NotAttributeClass1 {}
+                final readonly class NotAttributeClass2 {}
                 PHP,
         ];
     }
