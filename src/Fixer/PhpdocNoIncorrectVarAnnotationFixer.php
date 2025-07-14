@@ -97,7 +97,7 @@ $bar = new Foo();
     {
         $nextIndex = $tokens->getNextMeaningfulToken($index);
 
-        while ($nextIndex !== null && \defined('T_ATTRIBUTE') && $tokens[$nextIndex]->isGivenKind(\T_ATTRIBUTE)) {
+        while ($nextIndex !== null && $tokens[$nextIndex]->isGivenKind(FCT::T_ATTRIBUTE)) {
             $nextIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ATTRIBUTE, $nextIndex);
             $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
         }
