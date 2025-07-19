@@ -2,16 +2,11 @@
 
 # PHP CS Fixer: custom fixers
 
-[![Latest stable version](https://img.shields.io/packagist/v/kubawerlos/php-cs-fixer-custom-fixers.svg?label=current%20version)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
-[![PHP version](https://img.shields.io/packagist/php-v/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://php.net)
-[![License](https://img.shields.io/github/license/kubawerlos/php-cs-fixer-custom-fixers.svg)](LICENSE)
-![Tests](https://img.shields.io/badge/tests-3805-brightgreen.svg)
-[![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers)
-
-[![CI status](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml/badge.svg)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
-[![Code coverage](https://img.shields.io/coveralls/github/kubawerlos/php-cs-fixer-custom-fixers/main.svg)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=main)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fkubawerlos%2Fphp-cs-fixer-custom-fixers%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)
-[![Psalm type coverage](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers/coverage.svg)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
+[![CI](https://img.shields.io/github/actions/workflow/status/kubawerlos/php-cs-fixer-custom-fixers/ci.yaml?label=CI)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
+[![Test coverage](https://img.shields.io/coverallsCoverage/github/kubawerlos/php-cs-fixer-custom-fixers.svg?branch=main&label=Test%20coverage)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=main)
+[![Type coverage](https://img.shields.io/endpoint?label=Type%20coverage&url=https%3A%2F%2Fshepherd.dev%2Fviews%2Fcoverage_data.php%3Fkubawerlos%2Fphp-cs-fixer-custom-fixers)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
+[![Mutation Score Indicator](https://img.shields.io/endpoint?label=Mutation%20Score%20Indicator&logo=none&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fkubawerlos%2Fphp-cs-fixer-custom-fixers%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)
+[![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg?label=Downloads)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers/stats)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 

@@ -27,7 +27,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 /**
  * @internal
@@ -60,52 +59,37 @@ final class ReadmeCommand extends Command
     {
         return \implode("\n", [
             self::badge(
-                'Latest stable version',
-                \sprintf('%s/packagist/v/%s.svg?label=current%%20version', self::SHIELDS_HOST, self::composer()->name),
-                \sprintf('https://packagist.org/packages/%s', self::composer()->name),
-            ),
-            self::badge(
-                'PHP version',
-                \sprintf('%s/packagist/php-v/%s.svg', self::SHIELDS_HOST, self::composer()->name),
-                'https://php.net',
-            ),
-            self::badge(
-                'License',
-                \sprintf('%s/github/license/%s.svg', self::SHIELDS_HOST, self::composer()->name),
-                'LICENSE',
-            ),
-            self::badge(
-                'Tests',
-                \sprintf('%s/badge/tests-%d-brightgreen.svg', self::SHIELDS_HOST, self::numberOfTests()),
-            ),
-            self::badge(
-                'Downloads',
-                \sprintf('%s/packagist/dt/%s.svg', self::SHIELDS_HOST, self::composer()->name),
-                \sprintf('https://packagist.org/packages/%s', self::composer()->name),
-            ),
-            '',
-            self::badge(
-                'CI status',
-                \sprintf('https://github.com/%s/actions/workflows/ci.yaml/badge.svg', self::composer()->name),
+                'CI',
+                \sprintf('%s/github/actions/workflow/status/%s/ci.yaml?label=CI', self::SHIELDS_HOST, self::composer()->name),
                 \sprintf('https://github.com/%s/actions/workflows/ci.yaml', self::composer()->name),
             ),
             self::badge(
-                'Code coverage',
-                \sprintf('%s/coveralls/github/%s/main.svg', self::SHIELDS_HOST, self::composer()->name),
+                'Test coverage',
+                \sprintf('%s/coverallsCoverage/github/%s.svg?branch=main&label=Test%%20coverage', self::SHIELDS_HOST, self::composer()->name),
                 \sprintf('https://coveralls.io/github/%s?branch=main', self::composer()->name),
             ),
             self::badge(
-                'Mutation testing badge',
+                'Type coverage',
                 \sprintf(
-                    'https://img.shields.io/endpoint?style=flat&url=%s',
+                    '%s/endpoint?label=Type%%20coverage&url=%s',
+                    self::SHIELDS_HOST,
+                    \rawurlencode('https://shepherd.dev/views/coverage_data.php?' . self::composer()->name),
+                ),
+                \sprintf('https://shepherd.dev/github/%s', self::composer()->name),
+            ),
+            self::badge(
+                'Mutation Score Indicator',
+                \sprintf(
+                    '%s/endpoint?label=Mutation%%20Score%%20Indicator&logo=none&url=%s',
+                    self::SHIELDS_HOST,
                     \rawurlencode(\sprintf('https://badge-api.stryker-mutator.io/github.com/%s/main', self::composer()->name)),
                 ),
                 \sprintf('https://dashboard.stryker-mutator.io/reports/github.com/%s/main', self::composer()->name),
             ),
             self::badge(
-                'Psalm type coverage',
-                \sprintf('https://shepherd.dev/github/%s/coverage.svg', self::composer()->name),
-                \sprintf('https://shepherd.dev/github/%s', self::composer()->name),
+                'Downloads',
+                \sprintf('%s/packagist/dt/%s.svg?label=Downloads', self::SHIELDS_HOST, self::composer()->name),
+                \sprintf('https://packagist.org/packages/%s/stats', self::composer()->name),
             ),
         ]);
     }
@@ -119,14 +103,6 @@ final class ReadmeCommand extends Command
         }
 
         return $badge;
-    }
-
-    private static function numberOfTests(): int
-    {
-        $process = new Process([__DIR__ . '/../../../vendor/bin/phpunit', '--list-tests'], __DIR__ . '/../../..');
-        $process->run();
-
-        return \substr_count($process->getOutput(), \PHP_EOL) - 3; // 3 is for header
     }
 
     private static function description(): string

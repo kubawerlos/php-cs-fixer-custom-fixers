@@ -37,23 +37,4 @@ final class ReadmeCommandTest extends TestCase
             'README.md is not up to date, run "composer fix" to update it.',
         );
     }
-
-    public function testNumberOfTests(): void
-    {
-        \preg_match(
-            '~https://img.shields.io/badge/tests-(\\d+)-brightgreen.svg~',
-            (string) \file_get_contents(__DIR__ . '/../../README.md'),
-            $matches,
-        );
-        self::assertArrayHasKey(1, $matches);
-
-        $expectedNumberOfTests = (int) $matches[1];
-
-        $readmeCommand = new \ReflectionClass(ReadmeCommand::class);
-        $numberOfTests = $readmeCommand->getMethod('numberOfTests');
-        $numberOfTests->setAccessible(true);
-        $actualNumberOfTests = $numberOfTests->invoke($readmeCommand->newInstance());
-
-        self::assertSame($expectedNumberOfTests, $actualNumberOfTests);
-    }
 }
