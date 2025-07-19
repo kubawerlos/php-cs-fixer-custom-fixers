@@ -399,5 +399,167 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
                 $z = 4;
             ',
         ];
+
+        yield 'types defined with `phpstan-type`' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @phpstan-type _Pair array{int, int}
+                 */
+                class Foo {
+                    public function bar() {
+                        /** @var _Pair $x */
+                        $x = getValue();
+                    }
+                }
+                /**
+                 * @phpstan-type _Trio array{int, int, int}
+                 */
+                class Bar {
+                    public function bar() {
+                        /** @var _Trio $x */
+                        $x = getValue();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'types defined with `phpstan-import-type`' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @phpstan-import-type _Pair from FooFoo
+                 */
+                class Foo {
+                    public function bar() {
+                        /** @var _Pair $x */
+                        $x = getValue();
+                    }
+                }
+                /**
+                 * @phpstan-import-type _Trio from BarBar
+                 */
+                class Bar {
+                    public function bar() {
+                        /** @var _Trio $x */
+                        $x = getValue();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'types defined with `phpstan-import-type` with alias' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @phpstan-import-type ConflictingType from FooFoo as Not_ConflictingType
+                 */
+                class Foo {
+                    public function bar() {
+                        $x = getValue();
+                        assert($x instanceof ConflictingType);
+
+                        /** @var Not_ConflictingType $y */
+                        $y = getValue();
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @phpstan-import-type ConflictingType from FooFoo as Not_ConflictingType
+                 */
+                class Foo {
+                    public function bar() {
+                        /** @var ConflictingType $x */
+                        $x = getValue();
+
+                        /** @var Not_ConflictingType $y */
+                        $y = getValue();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'types defined with `psalm-type`' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @psalm-type _Pair = array{int, int}
+                 */
+                class Foo {
+                    public function bar() {
+                        /** @var _Pair $x */
+                        $x = getValue();
+                    }
+                }
+                /**
+                 * @psalm-type _Trio array{int, int, int}
+                 */
+                class Bar {
+                    public function bar() {
+                        /** @var _Trio $x */
+                        $x = getValue();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'types defined with `psalm-import-type`' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @psalm-import-type _Pair from FooFoo
+                 */
+                class Foo {
+                    public function bar() {
+                        /** @var _Pair $x */
+                        $x = getValue();
+                    }
+                }
+                /**
+                 * @psalm-import-type _Trio from BarBar
+                 */
+                class Bar {
+                    public function bar() {
+                        /** @var _Trio $x */
+                        $x = getValue();
+                    }
+                }
+                PHP,
+        ];
+
+        yield 'types defined with `psalm-import-type` with alias' => [
+            <<<'PHP'
+                <?php
+                /**
+                 * @psalm-import-type Bar from FooFoo as BarAliased
+                 */
+                class Foo {
+                    public function bar() {
+                        $x = getValue();
+                        assert($x instanceof Bar);
+
+                        /** @var BarAliased $y */
+                        $y = getValue();
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @psalm-import-type Bar from FooFoo as BarAliased
+                 */
+                class Foo {
+                    public function bar() {
+                        /** @var Bar $x */
+                        $x = getValue();
+
+                        /** @var BarAliased $y */
+                        $y = getValue();
+                    }
+                }
+                PHP,
+        ];
     }
 }
