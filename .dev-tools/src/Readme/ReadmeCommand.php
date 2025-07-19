@@ -88,7 +88,7 @@ final class ReadmeCommand extends Command
             ),
             self::badge(
                 'Downloads',
-                \sprintf('%s/packagist/dt/%s.svg', self::SHIELDS_HOST, self::composer()->name),
+                \sprintf('%s/packagist/dt/%s.svg?label=Downloads', self::SHIELDS_HOST, self::composer()->name),
                 \sprintf('https://packagist.org/packages/%s/stats', self::composer()->name),
             ),
         ]);

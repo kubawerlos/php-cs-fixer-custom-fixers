@@ -6,7 +6,7 @@
 [![Test coverage](https://img.shields.io/coverallsCoverage/github/kubawerlos/php-cs-fixer-custom-fixers.svg?branch=main&label=Test%20coverage)](https://coveralls.io/github/kubawerlos/php-cs-fixer-custom-fixers?branch=main)
 [![Type coverage](https://img.shields.io/endpoint?label=Type%20coverage&url=https%3A%2F%2Fshepherd.dev%2Fviews%2Fcoverage_data.php%3Fkubawerlos%2Fphp-cs-fixer-custom-fixers)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 [![Mutation Score Indicator](https://img.shields.io/endpoint?label=Mutation%20Score%20Indicator&logo=none&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fkubawerlos%2Fphp-cs-fixer-custom-fixers%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)
-[![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers/stats)
+[![Downloads](https://img.shields.io/packagist/dt/kubawerlos/php-cs-fixer-custom-fixers.svg?label=Downloads)](https://packagist.org/packages/kubawerlos/php-cs-fixer-custom-fixers/stats)
 
 A set of custom fixers for [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 
