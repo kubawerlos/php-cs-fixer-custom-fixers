@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.31.0
+- Update minimum PHP CS Fixer version to 3.84.0
+
 ## v3.30.0
 - Update minimum PHP CS Fixer version to 3.82.0
 

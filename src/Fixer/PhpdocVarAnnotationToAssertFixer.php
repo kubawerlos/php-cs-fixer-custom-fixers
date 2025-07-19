@@ -11,6 +11,7 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\AbstractPhpdocToTypeDeclarationFixer;
 use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\FixerDefinition\CodeSample;
@@ -57,17 +58,18 @@ $x = getValue();
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        for ($docCommentIndex = $tokens->count() - 1; $docCommentIndex > 0; $docCommentIndex--) {
-            if (!$tokens[$docCommentIndex]->isGivenKind([\T_DOC_COMMENT])) {
-                continue;
-            }
+        $tokensToInsert = [];
+        $typesToExclude = [];
 
-            $variableIndex = self::getVariableIndex($tokens, $docCommentIndex);
+        foreach ($tokens->findGivenKind(\T_DOC_COMMENT) as $index => $token) {
+            $typesToExclude = \array_merge($typesToExclude, self::getTypesToExclude($token->getContent()));
+
+            $variableIndex = self::getVariableIndex($tokens, $index);
             if ($variableIndex === null) {
                 continue;
             }
 
-            $assertTokens = self::getAssertTokens($tokens, $docCommentIndex, $tokens[$variableIndex]->getContent());
+            $assertTokens = self::getAssertTokens($tokens, $index, $tokens[$variableIndex]->getContent(), $typesToExclude);
             if ($assertTokens === null) {
                 continue;
             }
@@ -82,10 +84,32 @@ $x = getValue();
                 \array_unshift($assertTokens, new Token([\T_WHITESPACE, $tokens[$variableIndex - 1]->getContent()]));
             }
 
-            $tokens->insertAt($expressionEndIndex + 1, $assertTokens);
+            $tokensToInsert[$expressionEndIndex + 1] = $assertTokens;
 
-            TokenRemover::removeWithLinesIfPossible($tokens, $docCommentIndex);
+            TokenRemover::removeWithLinesIfPossible($tokens, $index);
         }
+
+        $tokens->insertSlices($tokensToInsert);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private static function getTypesToExclude(string $content): array
+    {
+        /** @var null|\Closure(string): list<string> $getTypesToExclude */
+        static $getTypesToExclude = null;
+
+        if ($getTypesToExclude === null) {
+            /** @var \Closure(string): list<string> $getTypesToExclude */
+            $getTypesToExclude = \Closure::bind(
+                static fn (string $content): array => AbstractPhpdocToTypeDeclarationFixer::getTypesToExclude($content),
+                null,
+                AbstractPhpdocToTypeDeclarationFixer::class,
+            );
+        }
+
+        return $getTypesToExclude($content);
     }
 
     private static function getVariableIndex(Tokens $tokens, int $docCommentIndex): ?int
@@ -114,9 +138,11 @@ $x = getValue();
     }
 
     /**
+     * @param list<string> $typesToExclude
+     *
      * @return null|list<Token>
      */
-    private static function getAssertTokens(Tokens $tokens, int $docCommentIndex, string $variableName): ?array
+    private static function getAssertTokens(Tokens $tokens, int $docCommentIndex, string $variableName, array $typesToExclude): ?array
     {
         $annotation = self::getAnnotationForVariable($tokens, $docCommentIndex, $variableName);
         if ($annotation === null) {
@@ -135,6 +161,9 @@ $x = getValue();
             if (\substr($type, 0, 1) === '?') {
                 $assertions['null'] = self::getCodeForType('null', $variableName);
                 $type = \substr($type, 1);
+            }
+            if (\in_array($type, $typesToExclude, true)) {
+                return null;
             }
             $assertions[$type] = self::getCodeForType($type, $variableName);
         }
