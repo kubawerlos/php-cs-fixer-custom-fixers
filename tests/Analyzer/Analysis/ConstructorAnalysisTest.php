@@ -255,5 +255,19 @@ final class ConstructorAnalysisTest extends TestCase
                 }
             }',
         ];
+
+        yield 'with assignment of parameter' => [
+            ['$x' => 30, '$z' => 68],
+            '<?php class Foo {
+                public function __construct($x, $y, $z) {
+                    $this->x = $x;
+                    if (someCondition()) {
+                        $y = -1;
+                    }
+                    $this->y = $y;
+                    $this->z = $z;
+                }
+            }',
+        ];
     }
 }

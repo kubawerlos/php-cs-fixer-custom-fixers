@@ -110,17 +110,17 @@ final class ConstructorAnalysis
         $closeBrace = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openBrace);
 
         $variables = [];
+        $variablesWithAssignments = [];
         $properties = [];
         $propertyToVariableMap = [];
 
-        for ($index = $openBrace + 1; $index < $closeBrace; $index++) {
-            if (!$this->tokens[$index]->isGivenKind(\T_VARIABLE)) {
-                continue;
-            }
-
+        foreach ($this->tokens->findGivenKind(\T_VARIABLE, $openBrace, $closeBrace) as $index => $token) {
             $semicolonIndex = $this->tokens->getNextMeaningfulToken($index);
             \assert(\is_int($semicolonIndex));
             if (!$this->tokens[$semicolonIndex]->equals(';')) {
+                if ($this->tokens[$semicolonIndex]->equals('=')) {
+                    $variablesWithAssignments[] = $token->getContent();
+                }
                 continue;
             }
 
@@ -129,8 +129,12 @@ final class ConstructorAnalysis
                 continue;
             }
 
+            if (\in_array($token->getContent(), $variablesWithAssignments, true)) {
+                continue;
+            }
+
             $properties[$propertyIndex] = $this->tokens[$propertyIndex]->getContent();
-            $variables[$index] = $this->tokens[$index]->getContent();
+            $variables[$index] = $token->getContent();
             $propertyToVariableMap[$propertyIndex] = $index;
         }
 

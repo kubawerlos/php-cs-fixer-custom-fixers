@@ -927,6 +927,26 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'do not promote when there is assignment to variable' => [
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                    private string $value;
+
+                    public function __construct(string $value = '')
+                    {
+                        if ($value === 'deleted') {
+                            $value = '';
+                        }
+
+                        $this->value = $value;
+                    }
+                }
+
+                PHP,
+        ];
+
         yield 'promote nullable types' => [
             '<?php class Foo {
                 private int $z;
@@ -990,7 +1010,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
             }',
         ];
 
-        yield 'promote single property when propery is declared last' => [
+        yield 'promote single property when property is declared last' => [
             '<?php class Foo {
                 public function namedConstructor($a, $b) { return new self($a . $b); }
                 public function __construct(private string $bar) {
