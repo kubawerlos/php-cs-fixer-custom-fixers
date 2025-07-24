@@ -312,5 +312,27 @@ function foo(callable $checker) {}
                 }
                 PHP,
         ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                /**
+                 * @param array{value: string} $param1
+                 * @param array{value: string} $param2
+                 * @param ARRAY{value: string} $param3
+                 */
+                function foo(array $param1, $param2, ARRAY $param3) {}
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @param array{value: string} $param1
+                 * @param array{value: string} $param2
+                 * @param array{value: string} $param404
+                 * @param ARRAY{value: string} $param3
+                 */
+                function foo(array $param1, $param2, ARRAY $param3) {}
+                PHP,
+        ];
     }
 }
