@@ -31,6 +31,7 @@ final class InfectionConfigBuilder
         'NotIdenticalNotEqual',
         'OneZeroInteger',
         'Plus',
+        'ReturnRemoval',
         'SyntaxError',
     ];
 
