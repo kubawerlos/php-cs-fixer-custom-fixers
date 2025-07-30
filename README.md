@@ -172,6 +172,24 @@ Value from `foreach` must not be used if possible.
  }
 ```
 
+#### FunctionParameterSeparationFixer
+Function parameters, if any is having attribute or hook, must be separated by a blank line.
+```diff
+ <?php
+ class Foo {
+     public function __construct(
+         #[Attibute1]
+         private string $x,
++
+         #[Attibute2]
+         private string $y,
++
+         #[Attibute3]
+         private string $z,
+     ) {}
+ }
+```
+
 #### InternalClassCasingFixer
 When referencing an internal class it must be written using the correct casing.
   DEPRECATED: use `class_reference_name_casing` instead.
