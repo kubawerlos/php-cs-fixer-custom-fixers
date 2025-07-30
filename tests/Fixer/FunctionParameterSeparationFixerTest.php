@@ -97,7 +97,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
 
                     int $b,
 
-                    #[Attribute]
+                    #[AnAttribute]
                     int $c,
 
                     int $d
@@ -108,7 +108,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
                 function foo(
                     int $a,
                     int $b,
-                    #[Attribute]
+                    #[AnAttribute]
                     int $c,
                     int $d
                 ) {}
@@ -119,7 +119,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
             <<<'PHP'
                 <?php
                 function foo(
-                    #[Attribute]
+                    #[AnAttribute]
                     int $a,
 
                     int $b,
@@ -128,7 +128,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
             <<<'PHP'
                 <?php
                 function foo(
-                    #[Attribute]
+                    #[AnAttribute]
                     int $a,
                     int $b,
                 ) {}
@@ -161,7 +161,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
             <<<'PHP'
                 <?php
                 function foo(
-                    #[Attribute]
+                    #[AnAttribute]
                     int $a,
 
                     int $b
@@ -173,14 +173,14 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
                 function baz(
                     int $a,
 
-                    #[Attribute]
+                    #[AnAttribute]
                     int $b,
                 ) {}
                 PHP,
             <<<'PHP'
                 <?php
                 function foo(
-                    #[Attribute]
+                    #[AnAttribute]
                     int $a,
                     int $b
                 ) {}
@@ -190,7 +190,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
                 ) {}
                 function baz(
                     int $a,
-                    #[Attribute]
+                    #[AnAttribute]
                     int $b,
                 ) {}
                 PHP,
