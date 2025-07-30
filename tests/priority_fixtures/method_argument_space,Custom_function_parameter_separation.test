@@ -14,11 +14,27 @@ function foo(
 <?php
 function foo(
 
+
+
+
     #[Attribute1]
+
+
+
 
     bool $param1,
 
+
+
+
     #[Attribute2]
 
+
+
+
     bool $param2,
+
+
+
+
 ) {}

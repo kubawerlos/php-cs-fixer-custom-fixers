@@ -15,6 +15,8 @@ namespace Tests\Fixer;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\FunctionParameterSeparationFixer
+ *
+ * @requires PHP >= 8.0
  */
 final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
 {
