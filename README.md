@@ -659,7 +659,7 @@ PHPDoc `list` type must be used instead of `array` without a key.
 ```
 
 #### PhpdocTypesCommaSpacesFixer
-PHPDoc types commas must not be preceded by a whitespace, and must be succeeded by a single whitespace.
+PHPDoc types commas must not be preceded by a whitespace, and must be succeeded by a single whitespace or newline.
 ```diff
 -<?php /** @var array<int,string> */
 +<?php /** @var array<int, string> */

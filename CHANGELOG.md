@@ -2,6 +2,7 @@
 
 ## v3.32.0
 - Add FunctionParameterSeparationFixer
+- Update minimum PHP CS Fixer version to 3.85.0
 
 ## v3.31.0
 - Update minimum PHP CS Fixer version to 3.84.0
