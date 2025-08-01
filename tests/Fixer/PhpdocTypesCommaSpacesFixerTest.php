@@ -105,5 +105,26 @@ final class PhpdocTypesCommaSpacesFixerTest extends AbstractFixerTestCase
                     * @return array<string,Foo> Description having "," should not be touched
                     */',
         ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                /**
+                 * @return array{
+                 *     foo: bool,
+                 *     bar: null|string,
+                 *  }
+                 */
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @return array{
+                 *     foo: bool         ,
+                 *     bar: null|string  ,
+                 *  }
+                 */
+                PHP,
+        ];
     }
 }

@@ -44,14 +44,14 @@ abstract class AbstractTypesFixer extends AbstractFixer
                     continue;
                 }
 
-                $typeExpression = $annotation->getTypeExpression();
-                if ($typeExpression === null) {
+                $types = $annotation->getTypes();
+                if ($types === []) {
                     continue;
                 }
 
-                $type = $typeExpression->toString();
-                $type = $this->fixType($type);
-                $annotation->setTypes([$type]);
+                $types = \array_map(fn (string $x): string => $this->fixType($x), $types);
+
+                $annotation->setTypes($types);
             }
 
             $newContent = $docBlock->getContent();
