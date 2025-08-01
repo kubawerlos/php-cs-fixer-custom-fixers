@@ -1,0 +1,40 @@
+--CONFIGURATION--
+{ "method_argument_space": true, "PhpCsFixerCustomFixers/function_parameter_separation": true }
+--EXPECTED--
+<?php
+function foo(
+    #[Attribute1]
+    bool $param1,
+
+    #[Attribute2]
+    bool $param2,
+) {}
+
+--INPUT--
+<?php
+function foo(
+
+
+
+
+    #[Attribute1]
+
+
+
+
+    bool $param1,
+
+
+
+
+    #[Attribute2]
+
+
+
+
+    bool $param2,
+
+
+
+
+) {}
