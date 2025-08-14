@@ -315,8 +315,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixPre85Cases
      *
-     * @requires PHP >= 8.0
-     * @requires PHP < 8.5
+     * @requires PHP ^8.0 || ^8.1 || ^8.2|| ^8.3|| ^8.4
      */
     public function testFixPre85(string $expected, ?string $input = null): void
     {
@@ -336,13 +335,13 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
                 /**
                  * @no-named-arguments
                  */
-                #[\Attribute(flags: TheAttributeClass::TARGET_METHOD)]
+                #[\Attribute(flags: \Attribute::TARGET_METHOD)]
                 abstract class MyAttributeClass {}
                 PHP,
             <<<'PHP'
                 <?php
                 namespace Foo;
-                #[\Attribute(flags: TheAttributeClass::TARGET_METHOD)]
+                #[\Attribute(flags: \Attribute::TARGET_METHOD)]
                 abstract class MyAttributeClass {}
                 PHP,
         ];
