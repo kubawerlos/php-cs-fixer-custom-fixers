@@ -53,7 +53,7 @@ jobs:
           - os: ubuntu-latest
             description: 'with calculating code coverage and Infection'
             calculate-coverage: true
-            phpunit-flags: '--coverage-clover=./build/logs/clover.xml'
+            phpunit-flags: '--coverage-clover=./coverage-clover.xml'
             php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
@@ -133,9 +133,11 @@ jobs:
           FAST_LINT_TEST_CASES: ${{ matrix.FAST_LINT_TEST_CASES }}
 
       - if: matrix.calculate-coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./vendor/bin/php-coveralls --verbose || true
+        uses: codecov/codecov-action@v5
+        with:
+          disable_search: true
+          files: ././coverage-clover.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - if: matrix.calculate-coverage
         env:
