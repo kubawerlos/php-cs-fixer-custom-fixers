@@ -321,7 +321,7 @@ function foo(callable $checker) {}
                  * @param array{value: string} $param2
                  * @param ARRAY{value: string} $param3
                  */
-                function foo(array $param1, $param2, ARRAY $param3) {}
+                function singleLineArrayShapes(array $param1, $param2, ARRAY $param3) {}
                 PHP,
             <<<'PHP'
                 <?php
@@ -331,7 +331,53 @@ function foo(callable $checker) {}
                  * @param array{value: string} $param404
                  * @param ARRAY{value: string} $param3
                  */
-                function foo(array $param1, $param2, ARRAY $param3) {}
+                function singleLineArrayShapes(array $param1, $param2, ARRAY $param3) {}
+                PHP,
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                /**
+                 */
+                function removeMultiLineArrayShapes() {}
+                PHP,
+            <<<'PHP'
+                <?php
+                /**
+                 * @param array{value: string} $param1
+                 * @param array{
+                 *     value: string
+                 * } $param2
+                 * @param array{value: string} $param3
+                 * @param array{
+                 *     value1: bool,
+                 *     value2: int,
+                 *     value3: string,
+                 * } $param4
+                 * @param array{value: string} $param5
+                 */
+                function removeMultiLineArrayShapes() {}
+                PHP,
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                /**
+                 * @param array{value: string} $param1
+                 * @param array{
+                 *     value: string
+                 * } $param2
+                 * @param array{value: string} $param3
+                 * @param array{
+                 *     value1: bool,
+                 *     value2: int,
+                 *     value3: string,
+                 * } $param4
+                 * @param array{value: string} $param5
+                 */
+                function doNotRemoveMultiLineArrayShapes($param1, $param2, $param3, $param4, $param5) {}
                 PHP,
         ];
     }

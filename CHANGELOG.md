@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.33.0
+- Update minimum PHP CS Fixer version to 3.86.0
+
 ## v3.32.0
 - Add FunctionParameterSeparationFixer
 - Update minimum PHP CS Fixer version to 3.85.0
