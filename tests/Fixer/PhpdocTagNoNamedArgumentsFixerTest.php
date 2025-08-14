@@ -255,7 +255,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
                 namespace Foo;
                 use Attribute as TheAttributeClass;
                 #[TheAttributeClass(flags: TheAttributeClass::TARGET_METHOD)]
-                abstract class MyAttributeClass {}
+                final class MyAttributeClass {}
                 PHP,
         ];
     }
@@ -286,7 +286,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
                 final readonly class NotAttributeClass1 {}
 
                 #[Attribute(flags: Attribute::TARGET_METHOD)]
-                abstract readonly class MyAttributeClass {}
+                final readonly class MyAttributeClass {}
 
                 /**
                  * @no-named-arguments
@@ -302,12 +302,48 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
                 final readonly class NotAttributeClass1 {}
 
                 #[Attribute(flags: Attribute::TARGET_METHOD)]
-                abstract readonly class MyAttributeClass {}
+                final readonly class MyAttributeClass {}
 
                 #[FooAttribute]
                 #[BarAttribute]
                 #[BazAttribute]
                 final readonly class NotAttributeClass2 {}
+                PHP,
+        ];
+    }
+
+    /**
+     * @dataProvider provideFixPre85Cases
+     *
+     * @requires PHP >= 8.0
+     * @requires PHP < 8.5
+     */
+    public function testFixPre85(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFixPre85Cases(): iterable
+    {
+        // the below case is fatal error in PHP 8.5+ (https://github.com/php/php-src/pull/19154)
+        yield 'always add for abstract attribute class' => [
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                /**
+                 * @no-named-arguments
+                 */
+                #[\Attribute(flags: TheAttributeClass::TARGET_METHOD)]
+                abstract class MyAttributeClass {}
+                PHP,
+            <<<'PHP'
+                <?php
+                namespace Foo;
+                #[\Attribute(flags: TheAttributeClass::TARGET_METHOD)]
+                abstract class MyAttributeClass {}
                 PHP,
         ];
     }
