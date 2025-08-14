@@ -136,7 +136,7 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: ./vendor/bin/php-coveralls --verbose
+        run: ./vendor/bin/php-coveralls --verbose || true
 
       - if: matrix.calculate-coverage
         env:
