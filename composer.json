@@ -57,6 +57,7 @@
             "@composer --working-dir=.dev-tools --quiet install --classmap-authoritative"
         ],
         "test": [
+            "phpunit --check-php-configuration",
             "phpunit"
         ],
         "verify": [

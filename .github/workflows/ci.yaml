@@ -128,6 +128,8 @@ jobs:
       - if: matrix.install-phpunit-12
         run: composer apply-php_unit_attributes
 
+      - run: ./vendor/bin/phpunit --check-php-configuration
+
       - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
         env:
           FAST_LINT_TEST_CASES: ${{ matrix.FAST_LINT_TEST_CASES }}
