@@ -117,9 +117,6 @@ jobs:
       - if: matrix.with-php-cs-fixer-from-master
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
 
-      - if: matrix.calculate-coverage
-        run: composer require --dev php-coveralls/php-coveralls --no-update
-
       - if: matrix.install-phpunit-12
         run: composer require --dev phpunit/phpunit:^12.3.4 --no-update
 
