@@ -53,7 +53,7 @@ jobs:
           - os: ubuntu-latest
             description: 'with calculating code coverage and Infection'
             calculate-coverage: true
-            phpunit-flags: '--coverage-clover=./coverage-clover.xml'
+            phpunit-flags: '--log-junit=./junit.xml --coverage-clover=./coverage-clover.xml'
             php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
@@ -131,6 +131,14 @@ jobs:
       - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
         env:
           FAST_LINT_TEST_CASES: ${{ matrix.FAST_LINT_TEST_CASES }}
+
+      - if: matrix.calculate-coverage
+        uses: codecov/test-results-action@v1
+        with:
+          disable_search: true
+          files: ./junit.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
 
       - if: matrix.calculate-coverage
         uses: codecov/codecov-action@v5
