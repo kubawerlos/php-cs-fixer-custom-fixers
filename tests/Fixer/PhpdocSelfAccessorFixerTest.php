@@ -240,5 +240,38 @@ interface Foo {
 }
 ',
         ];
+
+        yield [
+            <<<'PHP'
+                <?php class Foo
+                {
+                    /**
+                     * @return array{Foo: self}
+                     */
+                    public function f1() {}
+                    /**
+                     * @return array{
+                     *     Foo: self
+                     * }
+                     */
+                    public function f2() {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo
+                {
+                    /**
+                     * @return array{Foo: Foo}
+                     */
+                    public function f1() {}
+                    /**
+                     * @return array{
+                     *     Foo: Foo
+                     * }
+                     */
+                    public function f2() {}
+                }
+                PHP,
+        ];
     }
 }
