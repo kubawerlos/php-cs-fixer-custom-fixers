@@ -65,8 +65,8 @@ final class ReadmeCommand extends Command
             ),
             self::badge(
                 'Test coverage',
-                \sprintf('%s/coverallsCoverage/github/%s.svg?branch=main&label=Test%%20coverage', self::SHIELDS_HOST, self::composer()->name),
-                \sprintf('https://coveralls.io/github/%s?branch=main', self::composer()->name),
+                \sprintf('%s/codecov/c/gh/%s?branch=main&label=Test%%20coverage', self::SHIELDS_HOST, self::composer()->name),
+                \sprintf('https://app.codecov.io/github/%s/tree/main', self::composer()->name),
             ),
             self::badge(
                 'Type coverage',

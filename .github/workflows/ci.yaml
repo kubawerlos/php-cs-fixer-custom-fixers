@@ -53,7 +53,7 @@ jobs:
           - os: ubuntu-latest
             description: 'with calculating code coverage and Infection'
             calculate-coverage: true
-            phpunit-flags: '--coverage-clover=./build/logs/clover.xml'
+            phpunit-flags: '--log-junit=./junit.xml --coverage-clover=./coverage-clover.xml'
             php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
           - os: ubuntu-latest
@@ -117,9 +117,6 @@ jobs:
       - if: matrix.with-php-cs-fixer-from-master
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
 
-      - if: matrix.calculate-coverage
-        run: composer require --dev php-coveralls/php-coveralls --no-update
-
       - if: matrix.install-phpunit-12
         run: composer require --dev phpunit/phpunit:^12.3.4 --no-update
 
@@ -136,12 +133,21 @@ jobs:
           FAST_LINT_TEST_CASES: ${{ matrix.FAST_LINT_TEST_CASES }}
 
       - if: matrix.calculate-coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: ./vendor/bin/php-coveralls --verbose || true
+        uses: codecov/test-results-action@v1
+        with:
+          disable_search: true
+          files: ./junit.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - if: matrix.calculate-coverage
+        uses: codecov/codecov-action@v5
+        with:
+          disable_search: true
+          files: ./coverage-clover.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - if: matrix.calculate-coverage
         env:
           FAST_LINT_TEST_CASES: 1
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: composer infection
