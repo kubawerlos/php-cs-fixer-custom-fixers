@@ -137,7 +137,7 @@ jobs:
         with:
           disable_search: true
           files: ./junit.xml
-          token: 'what error would it be'
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - if: matrix.calculate-coverage
         uses: codecov/codecov-action@v5
