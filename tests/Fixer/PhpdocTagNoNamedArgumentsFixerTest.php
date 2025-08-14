@@ -315,7 +315,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixPre85Cases
      *
-     * @requires PHP ^8.0 || ^8.1 || ^8.2|| ^8.3|| ^8.4
+     * @requires PHP ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0
      */
     public function testFixPre85(string $expected, ?string $input = null): void
     {
