@@ -92,7 +92,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: none, ctype, curl, dom, iconv, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
-          ini-values: pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
+          ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
 
       - id: composer-cache
@@ -124,6 +124,9 @@ jobs:
 
       - if: matrix.install-phpunit-12
         run: composer apply-php_unit_attributes
+
+      - if: matrix.php-version != '7.4' && matrix.php-version != '8.0'
+        run: ./vendor/bin/phpunit --check-php-configuration
 
       - run: ./vendor/bin/phpunit ${{ matrix.phpunit-flags }}
         env:
