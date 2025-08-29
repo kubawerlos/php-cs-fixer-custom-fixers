@@ -380,5 +380,26 @@ function foo(callable $checker) {}
                 function doNotRemoveMultiLineArrayShapes($param1, $param2, $param3, $param4, $param5) {}
                 PHP,
         ];
+
+        yield [
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                    /**
+                     * @template TKey of array-key
+                     * @template TValue of mixed
+                     *
+                     * @param Collection<TKey, TValue>        $collection
+                     * @param callable(TKey $a, TKey $b): int $comparator
+                     *
+                     * @return ArrayCollection<TKey, TValue>
+                     */
+                    public static function sortByKeys(Collection $collection, callable $comparator): ArrayCollection
+                    {
+                    }
+                }
+                PHP,
+        ];
     }
 }
