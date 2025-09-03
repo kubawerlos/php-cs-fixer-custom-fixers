@@ -69,7 +69,7 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
                      * @requires PHP >= 8.1
                      */
                     public function testFoo1() {}
-                    public function testFo2o() {
+                    public function testFoo2() {
                         new class extends TestCase {
                             /**
                              * @requires PHP >= 8.2
@@ -90,7 +90,7 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
                      * @requires PHP 8.1
                      */
                     public function testFoo1() {}
-                    public function testFo2o() {
+                    public function testFoo2() {
                         new class extends TestCase {
                             /**
                              * @requires PHP 8.2

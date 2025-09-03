@@ -178,13 +178,13 @@ Function parameters, if any is having attribute or hook, must be separated by a 
  <?php
  class Foo {
      public function __construct(
-         #[Attibute1]
+         #[Attribute1]
          private string $x,
 +
-         #[Attibute2]
+         #[Attribute2]
          private string $y,
 +
-         #[Attibute3]
+         #[Attribute3]
          private string $z,
      ) {}
  }

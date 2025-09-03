@@ -312,7 +312,7 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 class HellCoreServiceManagerHelper
                 {
                     const mixed OPTION_666__YES__1010011010_VALUE_4_1_3
-                        = IS_OVERRIDEN_BY_BEELZEBOSS
+                        = IS_OVERRIDDEN_BY_BEELZEBOSS
                             ? "Hell yeah"
                             : CIRCLES_MANAGER_ACCESS === [0o1232, 'super_manager', false, -66.6]
                                 ? true
@@ -326,7 +326,7 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
                 class HellCoreServiceManagerHelper
                 {
                     const OPTION_666__YES__1010011010_VALUE_4_1_3
-                        = IS_OVERRIDEN_BY_BEELZEBOSS
+                        = IS_OVERRIDDEN_BY_BEELZEBOSS
                             ? "Hell yeah"
                             : CIRCLES_MANAGER_ACCESS === [0o1232, 'super_manager', false, -66.6]
                                 ? true
