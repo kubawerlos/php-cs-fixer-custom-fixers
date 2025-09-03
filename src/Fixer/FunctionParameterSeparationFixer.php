@@ -36,11 +36,11 @@ final class FunctionParameterSeparationFixer extends AbstractFixer
                         <?php
                         class Foo {
                             public function __construct(
-                                #[Attibute1]
+                                #[Attribute1]
                                 private string $x,
-                                #[Attibute2]
+                                #[Attribute2]
                                 private string $y,
-                                #[Attibute3]
+                                #[Attribute3]
                                 private string $z,
                             ) {}
                         }
