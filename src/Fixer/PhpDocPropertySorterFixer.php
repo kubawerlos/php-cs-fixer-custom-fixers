@@ -62,7 +62,7 @@ class Foo {}
             }
 
             $originalDocContent = $token->getContent();
-            $sortedDocContent = $this->sortPropertiesInDocBlock($originalDocContent);
+            $sortedDocContent = self::sortPropertiesInDocBlock($originalDocContent);
 
             if ($originalDocContent !== $sortedDocContent) {
                 $tokens[$index] = new Token([\T_DOC_COMMENT, $sortedDocContent]);
@@ -70,7 +70,7 @@ class Foo {}
         }
     }
 
-    private function sortPropertiesInDocBlock(string $docContent): string
+    private static function sortPropertiesInDocBlock(string $docContent): string
     {
         $docLines = \explode("\n", $docContent);
         $processedLines = [];
@@ -80,7 +80,7 @@ class Foo {}
             if (self::isPropertyAnnotation($line)) {
                 $currentPropertyGroup[] = $line;
             } else {
-                $this->flushPropertyGroup($currentPropertyGroup, $processedLines);
+                self::flushPropertyGroup($currentPropertyGroup, $processedLines);
                 $processedLines[] = $line;
             }
         }
@@ -99,13 +99,13 @@ class Foo {}
      * @param list<string> $propertyGroup
      * @param list<string> $processedLines
      */
-    private function flushPropertyGroup(array &$propertyGroup, array &$processedLines): void
+    private static function flushPropertyGroup(array &$propertyGroup, array &$processedLines): void
     {
         if (\count($propertyGroup) === 0) {
             return;
         }
 
-        $this->sortPropertiesByName($propertyGroup);
+        self::sortPropertiesByName($propertyGroup);
         $processedLines = \array_merge($processedLines, $propertyGroup);
         $propertyGroup = [];
     }
@@ -113,17 +113,17 @@ class Foo {}
     /**
      * @param list<string> $properties
      */
-    private function sortPropertiesByName(array &$properties): void
+    private static function sortPropertiesByName(array &$properties): void
     {
         \usort($properties, static function (string $propertyA, string $propertyB): int {
             $nameA = self::extractPropertyName($propertyA);
             $nameB = self::extractPropertyName($propertyB);
 
-            return \strcmp($nameA, $nameB);
+            return \strcmp($nameA ?? '', $nameB ?? '');
         });
     }
 
-    private static function extractPropertyName(string $propertyLine): string
+    private static function extractPropertyName(string $propertyLine): ?string
     {
         $matches = [];
         Preg::match('/@property\\s+[^\\s]+\\s+\\$(\\w+)/', $propertyLine, $matches);
@@ -132,6 +132,6 @@ class Foo {}
             return $matches[1];
         }
 
-        return $propertyLine;
+        return null;
     }
 }

@@ -130,6 +130,23 @@ class Example {}
         yield [
             '<?php
 /**
+ * @property mixed
+ * @property bool $firstName
+ * @property int $lastName
+ */
+',
+            '<?php
+/**
+ * @property int $lastName
+ * @property mixed
+ * @property bool $firstName
+ */
+',
+        ];
+
+        yield [
+            '<?php
+/**
  * @property string $first
  * @property int $second
  *
