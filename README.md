@@ -461,6 +461,19 @@ Configuration options:
 +echo 01234567; // octal
 ```
 
+#### PhpDocPropertySorterFixer
+Sorts @property annotations in PHPDoc blocks alphabetically within groups separated by empty lines.
+```diff
+ <?php
+ /**
+- * @property string $zzz
+  * @property int $aaa
+  * @property bool $mmm
++ * @property string $zzz
+  */
+ class Foo {}
+```
+
 #### PhpUnitAssertArgumentsOrderFixer
 PHPUnit assertions must have expected argument before actual one.
   *Risky: when original PHPUnit methods are overwritten.*
