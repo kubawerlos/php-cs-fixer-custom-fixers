@@ -48,6 +48,11 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
         self::assertRiskiness(false);
     }
 
+    public function testSuccessorName(): void
+    {
+        self::assertSuccessorName('phpdoc_tag_no_named_arguments');
+    }
+
     /**
      * @param array<string, int> $configuration
      *
