@@ -140,6 +140,7 @@ class Foo
             }
 
             $functionNameIndex = $tokens->getNextMeaningfulToken($index);
+            \assert(\is_int($functionNameIndex));
 
             if ($tokens[$functionNameIndex]->equals([\T_STRING, '__toString'], false)) {
                 return true;

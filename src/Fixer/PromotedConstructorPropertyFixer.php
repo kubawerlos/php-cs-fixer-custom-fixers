@@ -161,6 +161,8 @@ class Foo {
             }
 
             $assignedPropertyIndex = $tokens->getPrevTokenOfKind($constructorPromotableAssignments[$constructorParameterName], [[\T_STRING]]);
+            \assert(\is_int($assignedPropertyIndex));
+
             $oldParameterName = $tokens[$constructorParameterIndex]->getContent();
             $newParameterName = '$' . $tokens[$assignedPropertyIndex]->getContent();
             if ($oldParameterName !== $newParameterName && \in_array($newParameterName, $constructorParameterNames, true)) {

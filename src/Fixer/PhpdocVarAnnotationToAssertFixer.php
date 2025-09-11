@@ -115,6 +115,8 @@ $x = getValue();
     private static function getVariableIndex(Tokens $tokens, int $docCommentIndex): ?int
     {
         $prevIndex = $tokens->getPrevMeaningfulToken($docCommentIndex);
+        \assert(\is_int($prevIndex));
+
         if (!$tokens[$prevIndex]->equalsAny([';', '{', '}', [\T_OPEN_TAG]])) {
             return null;
         }
@@ -252,6 +254,7 @@ $x = getValue();
 
         if ($tokens[$afterExpressionIndex]->isGivenKind(\T_NS_SEPARATOR)) {
             $afterExpressionIndex = $tokens->getNextMeaningfulToken($afterExpressionIndex);
+            \assert(\is_int($afterExpressionIndex));
         }
 
         return !$tokens[$afterExpressionIndex]->equals([\T_STRING, 'assert'], false);
