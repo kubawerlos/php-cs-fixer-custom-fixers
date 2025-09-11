@@ -13,6 +13,8 @@ namespace PhpCsFixerCustomFixers\Fixer;
 
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTagNoNamedArgumentsFixer as PTNNAFixer;
 use PhpCsFixer\Fixer\PhpUnit\PhpUnitInternalClassFixer;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
@@ -32,6 +34,8 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 
 /**
+ * @deprecated
+ *
  * @implements ConfigurableFixerInterface<_InputConfig, _Config>
  *
  * @phpstan-type _InputConfig array{directory?: string, description?: string}
@@ -39,11 +43,19 @@ use PhpCsFixer\WhitespacesFixerConfig;
  *
  * @no-named-arguments
  */
-final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+final class PhpdocTagNoNamedArgumentsFixer extends AbstractFixer implements ConfigurableFixerInterface, DeprecatedFixerInterface, WhitespacesAwareFixerInterface
 {
     private string $description = '';
     private string $directory = '';
     private WhitespacesFixerConfig $whitespacesConfig;
+
+    /**
+     * @return list<string>
+     */
+    public function getSuccessorsNames(): array
+    {
+        return [(new PTNNAFixer())->getName()];
+    }
 
     public function setWhitespacesConfig(WhitespacesFixerConfig $config): void
     {

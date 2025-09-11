@@ -643,6 +643,7 @@ The `@var` annotation must be on a single line if it is the only content.
 
 #### PhpdocTagNoNamedArgumentsFixer
 There must be `@no-named-arguments` tag in PHPDoc of a class/enum/interface/trait.
+  DEPRECATED: use `phpdoc_tag_no_named_arguments` instead.
 Configuration options:
 - `description` (`string`): description of the tag; defaults to `''`
 - `directory` (`string`): directory in which apply the changes, empty value will result with current working directory (result of `getcwd` call); defaults to `''`
