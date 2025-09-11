@@ -3,6 +3,7 @@
 ## v3.34.0
 - Add PhpDocPropertySorterFixer
 - Deprecate PhpdocTagNoNamedArgumentsFixer - use "phpdoc_tag_no_named_arguments"
+- Update minimum PHP CS Fixer version to 3.87.0
 
 ## v3.33.0
 - Update minimum PHP CS Fixer version to 3.86.0
