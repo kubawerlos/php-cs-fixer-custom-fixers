@@ -74,11 +74,15 @@ final class TrimKeyFixer extends AbstractFixer
             $newInnerContent = Preg::replace('/\\s{2,}/', ' ', $innerContent);
 
             $prevIndex = $tokens->getPrevMeaningfulToken($indexToFix);
+            \assert(\is_int($prevIndex));
+
             if (!$tokens[$prevIndex]->equals('.')) {
                 $newInnerContent = \ltrim($newInnerContent);
             }
 
             $nextIndex = $tokens->getNextMeaningfulToken($indexToFix);
+            \assert(\is_int($nextIndex));
+
             if (!$tokens[$nextIndex]->equals('.')) {
                 $newInnerContent = \rtrim($newInnerContent);
             }
