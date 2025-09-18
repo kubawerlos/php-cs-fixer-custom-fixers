@@ -126,7 +126,7 @@ class Foo {}
     private static function extractPropertyName(string $propertyLine): ?string
     {
         $matches = [];
-        Preg::match('/@property\\s+[^\\s]+\\s+\\$(\\w+)/', $propertyLine, $matches);
+        Preg::match('/@property(?:-read|-write)?\\s+[^\\s]+\\s+\\$(\\w+)/', $propertyLine, $matches);
         /** @var array<array-key, string> $matches */
         if (\count($matches) > 1) {
             return $matches[1];

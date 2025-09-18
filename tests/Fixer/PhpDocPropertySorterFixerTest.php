@@ -185,5 +185,22 @@ function example($x) {}
 function example($x) {}
 ',
         ];
+
+        yield [
+            '<?php
+/**
+ * @property bool $alpha
+ * @property-read array $beta
+ * @property-write Test $gamma
+ */
+',
+            '<?php
+/**
+ * @property-read array $beta
+ * @property-write Test $gamma
+ * @property bool $alpha
+ */
+',
+        ];
     }
 }
