@@ -463,7 +463,7 @@ Configuration options:
 
 #### PhpDocPropertySorterFixer
 Sorts @property annotations in PHPDoc blocks alphabetically within groups separated by empty lines.
-  DEPRECATED: use `PhpCsFixerCustomFixers/phpdoc_property_sorted` instead.
+  DEPRECATED: use `PhpdocPropertySortedFixer` instead.
 ```diff
  <?php
  /**
