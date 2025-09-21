@@ -13,8 +13,11 @@ namespace PhpCsFixerCustomFixersDev\Readme;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSampleInterface;
+use PhpCsFixer\FixerFactory;
+use PhpCsFixer\RuleSet\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Utils;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -168,7 +171,22 @@ require __DIR__ . \'/vendor/%s/bootstrap.php\';
                 $fixer->getDefinition()->getSummary(),
             );
 
-            $output .= $fixer instanceof DeprecatedFixerInterface ? \sprintf("\n  DEPRECATED: use `%s` instead.", \implode('`, `', $fixer->getSuccessorsNames())) : '';
+            if ($fixer instanceof DeprecatedFixerInterface) {
+                $fixers = (new FixerFactory())
+                    ->registerBuiltInFixers()
+                    ->registerCustomFixers(new Fixers())
+                    ->useRuleSet(new RuleSet(\array_combine($fixer->getSuccessorsNames(), [true])))
+                    ->getFixers();
+
+                $successors = \array_map(
+                    static fn (FixerInterface $fixer): string => $fixer instanceof AbstractFixer
+                    ? (new \ReflectionObject($fixer))->getShortName()
+                    : $fixer->getName(),
+                    $fixers,
+                );
+
+                $output .= \sprintf("\n  DEPRECATED: use `%s` instead.", \implode('`, `', $successors));
+            }
 
             if ($fixer instanceof DataProviderStaticFixer) {
                 $fixer->configure(['force' => true]);
