@@ -2,6 +2,7 @@
 
 ## v3.34.0
 - Add PhpdocPropertySortedFixer
+- Deprecate PhpDocPropertySorterFixer - use PhpdocPropertySortedFixer
 
 ## v3.33.0
 - Add PhpDocPropertySorterFixer
