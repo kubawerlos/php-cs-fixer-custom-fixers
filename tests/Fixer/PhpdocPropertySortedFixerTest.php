@@ -14,9 +14,9 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
- * @covers \PhpCsFixerCustomFixers\Fixer\PhpDocPropertySorterFixer
+ * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocPropertySortedFixer
  */
-final class PhpDocPropertySorterFixerTest extends AbstractFixerTestCase
+final class PhpdocPropertySortedFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
     {

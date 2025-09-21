@@ -21,7 +21,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * @no-named-arguments
  */
-final class PhpDocPropertySorterFixer extends AbstractFixer
+final class PhpdocPropertySortedFixer extends AbstractFixer
 {
     public function getDefinition(): FixerDefinitionInterface
     {

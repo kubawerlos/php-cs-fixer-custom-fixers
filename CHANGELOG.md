@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.34.0
+- Add PhpdocPropertySortedFixer
+
 ## v3.33.0
 - Add PhpDocPropertySorterFixer
 - Deprecate PhpdocTagNoNamedArgumentsFixer - use "phpdoc_tag_no_named_arguments"
