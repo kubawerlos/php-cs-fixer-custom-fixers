@@ -14,6 +14,9 @@ namespace PhpCsFixerCustomFixersDev;
 use Infection\Mutator\ProfileList;
 use PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer;
 
+/**
+ * @internal
+ */
 final class InfectionConfigBuilder
 {
     private const UNWANTED_MUTATORS = [

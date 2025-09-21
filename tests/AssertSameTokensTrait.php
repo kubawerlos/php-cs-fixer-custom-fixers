@@ -14,6 +14,9 @@ namespace Tests;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
+/**
+ * @internal
+ */
 trait AssertSameTokensTrait
 {
     private static function assertSameTokens(Tokens $expectedTokens, Tokens $inputTokens): void
