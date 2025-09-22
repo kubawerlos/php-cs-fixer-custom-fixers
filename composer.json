@@ -50,7 +50,7 @@
         ],
         "infection": [
             "@prepare-dev-tools",
-            "@composer --working-dir=.dev-tools infection -- --coverage=build --skip-initial-tests"
+            "@composer --working-dir=.dev-tools infection"
         ],
         "prepare-dev-tools": [
             "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
@@ -58,7 +58,7 @@
         ],
         "test": [
             "phpunit --check-php-configuration",
-            "phpunit --coverage-xml=.dev-tools/build/coverage-xml --log-junit=.dev-tools/build/junit.xml --coverage-text"
+            "phpunit"
         ],
         "verify": [
             "@analyse",

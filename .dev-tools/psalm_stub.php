@@ -10,6 +10,9 @@
  */
 
 namespace PhpCsFixer\Tokenizer {
+    /**
+     * @internal
+     */
     final class FCT
     {
         public const int T_ATTRIBUTE = \T_ATTRIBUTE;
@@ -18,5 +21,8 @@ namespace PhpCsFixer\Tokenizer {
         public const int T_PUBLIC_SET = \T_PUBLIC_SET;
         public const int T_READONLY = \T_READONLY;
     }
+    /**
+     * @internal
+     */
     final class OtherClassSoTheNameOfClassAboveIsNotChanged {}
 }

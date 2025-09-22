@@ -19,6 +19,9 @@ use PhpCsFixerCustomFixers\Fixer\PhpdocTypeListFixer;
 use PhpCsFixerCustomFixers\Fixers;
 use Tests\PriorityTest;
 
+/**
+ * @internal
+ */
 final class PriorityCollection
 {
     /** @var list<PriorityFixer> */

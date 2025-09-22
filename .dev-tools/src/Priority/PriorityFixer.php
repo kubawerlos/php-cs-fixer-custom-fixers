@@ -13,6 +13,9 @@ namespace PhpCsFixerCustomFixersDev\Priority;
 
 use PhpCsFixer\Fixer\FixerInterface;
 
+/**
+ * @internal
+ */
 final class PriorityFixer
 {
     private FixerInterface $fixer;

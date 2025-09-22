@@ -463,6 +463,7 @@ Configuration options:
 
 #### PhpDocPropertySorterFixer
 Sorts @property annotations in PHPDoc blocks alphabetically within groups separated by empty lines.
+  DEPRECATED: use `PhpdocPropertySortedFixer` instead.
 ```diff
  <?php
  /**
@@ -613,6 +614,19 @@ The `@param` annotations must have a type.
 + * @param mixed  $bar
   */
  function a($foo, $bar) {}
+```
+
+#### PhpdocPropertySortedFixer
+Sorts @property annotations in PHPDoc blocks alphabetically within groups separated by empty lines.
+```diff
+ <?php
+ /**
+- * @property string $zzz
+  * @property int $aaa
+  * @property bool $mmm
++ * @property string $zzz
+  */
+ class Foo {}
 ```
 
 #### PhpdocSelfAccessorFixer

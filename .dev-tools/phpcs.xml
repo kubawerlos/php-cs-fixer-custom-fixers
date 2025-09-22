@@ -13,7 +13,7 @@
 
     <rule ref='PSR12'>
         <exclude name='Generic.Files.LineLength' />
-        <exclude name='PSR12.Files.FileHeader.SpacingAfterBlock' />
+        <exclude name='PSR12.Files.FileHeader.SpacingAfterTagBlock' />
         <exclude name='PSR12.Files.OpenTag.NotAlone' />
         <exclude name='Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore' />
     </rule>
