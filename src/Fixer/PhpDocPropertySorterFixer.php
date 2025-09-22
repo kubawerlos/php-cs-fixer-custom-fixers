@@ -11,127 +11,54 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Preg;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
+ * @deprecated
+ *
  * @no-named-arguments
  */
-final class PhpDocPropertySorterFixer extends AbstractFixer
+final class PhpDocPropertySorterFixer extends AbstractFixer implements DeprecatedFixerInterface
 {
+    private PhpdocPropertySortedFixer $phpdocPropertySortedFixer;
+
+    public function __construct()
+    {
+        $this->phpdocPropertySortedFixer = new PhpdocPropertySortedFixer();
+    }
+
     public function getDefinition(): FixerDefinitionInterface
     {
-        return new FixerDefinition(
-            'Sorts @property annotations in PHPDoc blocks alphabetically within groups separated by empty lines.',
-            [new CodeSample('<?php
-/**
- * @property string $zzz
- * @property int $aaa
- * @property bool $mmm
- */
-class Foo {}
-')],
-            '',
-        );
+        return $this->phpdocPropertySortedFixer->getDefinition();
     }
 
     public function getPriority(): int
     {
-        return 0;
+        return $this->phpdocPropertySortedFixer->getPriority();
     }
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(\T_DOC_COMMENT);
+        return $this->phpdocPropertySortedFixer->isCandidate($tokens);
     }
 
     public function isRisky(): bool
     {
-        return false;
+        return $this->phpdocPropertySortedFixer->isRisky();
     }
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind(\T_DOC_COMMENT)) {
-                continue;
-            }
-
-            $originalDocContent = $token->getContent();
-            $sortedDocContent = self::sortPropertiesInDocBlock($originalDocContent);
-
-            if ($originalDocContent !== $sortedDocContent) {
-                $tokens[$index] = new Token([\T_DOC_COMMENT, $sortedDocContent]);
-            }
-        }
-    }
-
-    private static function sortPropertiesInDocBlock(string $docContent): string
-    {
-        $docLines = \explode("\n", $docContent);
-        $processedLines = [];
-        $currentPropertyGroup = [];
-
-        foreach ($docLines as $line) {
-            if (self::isPropertyAnnotation($line)) {
-                $currentPropertyGroup[] = $line;
-            } else {
-                self::flushPropertyGroup($currentPropertyGroup, $processedLines);
-                $processedLines[] = $line;
-            }
-        }
-
-        return \implode("\n", $processedLines);
-    }
-
-    private static function isPropertyAnnotation(string $line): bool
-    {
-        return Preg::match('/@property/', $line);
+        $this->phpdocPropertySortedFixer->fix($file, $tokens);
     }
 
     /**
-     * Sorts and adds a property group to the processed lines.
-     *
-     * @param list<string> $propertyGroup
-     * @param list<string> $processedLines
+     * @return list<string>
      */
-    private static function flushPropertyGroup(array &$propertyGroup, array &$processedLines): void
+    public function getSuccessorsNames(): array
     {
-        if (\count($propertyGroup) === 0) {
-            return;
-        }
-
-        self::sortPropertiesByName($propertyGroup);
-        $processedLines = \array_merge($processedLines, $propertyGroup);
-        $propertyGroup = [];
-    }
-
-    /**
-     * @param list<string> $properties
-     */
-    private static function sortPropertiesByName(array &$properties): void
-    {
-        \usort($properties, static function (string $propertyA, string $propertyB): int {
-            $nameA = self::extractPropertyName($propertyA);
-            $nameB = self::extractPropertyName($propertyB);
-
-            return \strcmp($nameA ?? '', $nameB ?? '');
-        });
-    }
-
-    private static function extractPropertyName(string $propertyLine): ?string
-    {
-        $matches = [];
-        Preg::match('/@property(?:-read|-write)?\\s+[^\\s]+\\s+\\$(\\w+)/', $propertyLine, $matches);
-        /** @var array<array-key, string> $matches */
-        if (\count($matches) > 1) {
-            return $matches[1];
-        }
-
-        return null;
+        return [$this->phpdocPropertySortedFixer->getName()];
     }
 }
