@@ -185,5 +185,45 @@ function example($x) {}
 function example($x) {}
 ',
         ];
+
+        yield [
+            '<?php
+/**
+ * @property bool $alpha
+ * @property-read array $beta
+ * @property-write Test $gamma
+ */
+',
+            '<?php
+/**
+ * @property-read array $beta
+ * @property-write Test $gamma
+ * @property bool $alpha
+ */
+',
+        ];
+
+        yield [
+            '<?php
+/**
+ * @property-read string $alfa
+ * @property-write string $bravo
+ * @property-write string $charlie
+ * @property-read string $delta
+ * @property-read string $echo
+ * @property-write string $foxtrot
+ */
+',
+            '<?php
+/**
+ * @property-write string $charlie
+ * @property-write string $foxtrot
+ * @property-write string $bravo
+ * @property-read string $echo
+ * @property-read string $delta
+ * @property-read string $alfa
+ */
+',
+        ];
     }
 }
