@@ -140,7 +140,7 @@ final class PriorityTest extends TestCase
             }
         }
 
-        throw new \Exception(\sprintf('Fixer "%s" not found in config: "%s".', $name, \json_encode($config)));
+        throw new \Exception(\sprintf('Fixer "%s" not found in config: "%s".', (string) $name, (string) \json_encode($config)));
     }
 
     private static function createSplFileInfoDouble(): \SplFileInfo

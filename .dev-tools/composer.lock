@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67cb4642797fc309af49765e4cd3e4a3",
+    "content-hash": "5eaeb2678616098171be91a6f1a9197b",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1203,16 +1203,16 @@
         },
         {
             "name": "kubawerlos/php-cs-fixer-config",
-            "version": "v5.4.0",
+            "version": "v5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kubawerlos/php-cs-fixer-config.git",
-                "reference": "61011a160c22f6051621852d907acb59c4d23377"
+                "reference": "d8e692c585a1b84cce68a1c17da03331edcf9352"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/61011a160c22f6051621852d907acb59c4d23377",
-                "reference": "61011a160c22f6051621852d907acb59c4d23377"
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-config/zipball/d8e692c585a1b84cce68a1c17da03331edcf9352",
+                "reference": "d8e692c585a1b84cce68a1c17da03331edcf9352"
             },
             "require": {
                 "kubawerlos/php-cs-fixer-custom-fixers": "^3.34",
@@ -1596,16 +1596,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.87.2",
+            "version": "v3.88.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "257258b810cabf78b55bd7367c911e7cc8089b8b"
+                "reference": "b70300670e5a37dd3a9cb0f188e186c8c206f70f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/257258b810cabf78b55bd7367c911e7cc8089b8b",
-                "reference": "257258b810cabf78b55bd7367c911e7cc8089b8b"
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/b70300670e5a37dd3a9cb0f188e186c8c206f70f",
+                "reference": "b70300670e5a37dd3a9cb0f188e186c8c206f70f"
             },
             "require": {
                 "ext-json": "*",
@@ -1826,16 +1826,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.28",
+            "version": "2.1.29",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "578fa296a166605d97b94091f724f1257185d278"
+                "url": "https://github.com/phpstan/phpstan-phar-composer-source.git",
+                "reference": "git"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/578fa296a166605d97b94091f724f1257185d278",
-                "reference": "578fa296a166605d97b94091f724f1257185d278"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d618573eed4a1b6b75e37b2e0b65ac65c885d88e",
+                "reference": "d618573eed4a1b6b75e37b2e0b65ac65c885d88e"
             },
             "require": {
                 "php": "^7.4|^8.0"
@@ -1893,20 +1893,20 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "2.0.6",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "f9f77efa9de31992a832ff77ea52eb42d675b094"
+                "reference": "d6211c46213d4181054b3d77b10a5c5cb0d59538"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/f9f77efa9de31992a832ff77ea52eb42d675b094",
-                "reference": "f9f77efa9de31992a832ff77ea52eb42d675b094"
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/d6211c46213d4181054b3d77b10a5c5cb0d59538",
+                "reference": "d6211c46213d4181054b3d77b10a5c5cb0d59538"
             },
             "require": {
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^2.0.4"
+                "phpstan/phpstan": "^2.1.29"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -2217,16 +2217,16 @@
         },
         {
             "name": "sanmai/pipeline",
-            "version": "7.1",
+            "version": "7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sanmai/pipeline.git",
-                "reference": "d01565ef9f5cd7d1019c5f8bee09497067511f36"
+                "reference": "9ead38671b86a2c689484a871c72ce645326e9dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/d01565ef9f5cd7d1019c5f8bee09497067511f36",
-                "reference": "d01565ef9f5cd7d1019c5f8bee09497067511f36"
+                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/9ead38671b86a2c689484a871c72ce645326e9dd",
+                "reference": "9ead38671b86a2c689484a871c72ce645326e9dd"
             },
             "require": {
                 "php": ">=8.2"
