@@ -257,6 +257,33 @@ class Foo
             }',
         ];
 
+        yield 'keep string literals' => [
+            <<<'PHP'
+                <?php class Foo
+                {
+                    /**
+                     * @var 'foo'
+                     */
+                    public string $a;
+
+                    /**
+                     * @var 'foo'|'bar'|'baz'
+                     */
+                    protected string $b;
+
+                    /**
+                     * @var 'foo'|'foo-with-dashes'|'bar'|'baz'|null
+                     */
+                    private ?string $c;
+
+                    /**
+                     * @var "in-double-quotes"|null
+                     */
+                    public ?string $d;
+                }
+                PHP,
+        ];
+
         yield 'remove PHPDoc for class properties' => [
             '<?php
 class Foo
