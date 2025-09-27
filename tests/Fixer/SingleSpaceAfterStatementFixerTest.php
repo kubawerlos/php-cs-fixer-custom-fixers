@@ -314,7 +314,7 @@ do    {
         self::assertNotSame(
             $expectedTokens->generateCode(),
             $allTokens->generateCode(),
-            \sprintf('Removing token %s did not broke fixing', Token::getNameForId($token)),
+            \sprintf('Removing token %s did not broke fixing', (string) Token::getNameForId($token)),
         );
     }
 

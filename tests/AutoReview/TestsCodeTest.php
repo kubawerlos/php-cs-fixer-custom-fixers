@@ -146,7 +146,7 @@ final class TestsCodeTest extends TestCase
                     \in_array($value[0], $doNotChangeCases, true),
                     \sprintf(
                         "Expected value:\n%s\nis already tested if it is not changing, it does not need separate test case (%s::%s).",
-                        $value[0],
+                        (string) $value[0],
                         $className,
                         $dataProvider->getName(),
                     ),
