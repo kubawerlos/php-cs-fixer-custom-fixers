@@ -65,7 +65,7 @@ $bar = new Foo();
             }
 
             // remove ones not having type at the beginning
-            self::removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\\s+[\\?\\\\a-zA-Z_\\x7f-\\xff]/');
+            self::removeVarAnnotationNotMatchingPattern($tokens, $index, '/@var\\s+[\\?\\\\a-zA-Z_\\x7f-\\xff\'"]/');
 
             $nextIndex = self::getIndexAfterPhpDoc($tokens, $index);
 
