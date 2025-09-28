@@ -1,0 +1,23 @@
+--CONFIGURATION--
+{ "no_extra_blank_lines": {"tokens": ["comma"]}, "PhpCsFixerCustomFixers/function_parameter_separation": true }
+--EXPECTED--
+<?php
+function foo(
+    #[Attribute1]
+    bool $param1,
+
+    #[Attribute2]
+    bool $param2,
+) {}
+
+--INPUT--
+<?php
+function foo(
+    #[Attribute1]
+    bool $param1,
+
+
+    #[Attribute2]
+    bool $param2,
+
+) {}

@@ -54,11 +54,11 @@ final class FunctionParameterSeparationFixer extends AbstractFixer
     }
 
     /**
-     * Must run after MethodArgumentSpaceFixer.
+     * Must run after MethodArgumentSpaceFixer, NoExtraBlankLinesFixer.
      */
     public function getPriority(): int
     {
-        return 0;
+        return -21;
     }
 
     public function isCandidate(Tokens $tokens): bool
