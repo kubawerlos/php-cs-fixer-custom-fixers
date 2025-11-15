@@ -156,11 +156,11 @@ final class TestsCodeTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{string}>
+     * @return iterable<string, array{class-string}>
      */
     public static function provideTestClassCases(): iterable
     {
-        /** @var \ArrayIterator<string, array{string}> */
+        /** @var \ArrayIterator<string, array{class-string}> */
         static $tests;
 
         if ($tests === null) {
@@ -174,12 +174,14 @@ final class TestsCodeTest extends TestCase
 
             /** @var SplFileInfo $file */
             foreach ($finder as $file) {
-                $className = 'Tests';
+                $name = 'Tests';
                 if ($file->getRelativePath() !== '') {
-                    $className .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
+                    $name .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
                 }
 
-                $className .= '\\' . $file->getBasename('.php');
+                /** @var class-string $className */
+                $className = $name . '\\' . $file->getBasename('.php');
+
                 $testsArray[$className] = [$className];
             }
 

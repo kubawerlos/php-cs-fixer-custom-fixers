@@ -127,7 +127,7 @@ final class SrcCodeTest extends TestCase
     }
 
     /**
-     * @return iterable<array{string}>
+     * @return iterable<array{class-string}>
      */
     public static function provideThereIsNoDisallowedFunctionUsedDirectlyCases(): iterable
     {
@@ -142,6 +142,8 @@ final class SrcCodeTest extends TestCase
             if ($file->getRelativePath() !== '') {
                 $namespace .= '\\' . \str_replace('/', '\\', $file->getRelativePath());
             }
+
+            /** @var class-string $className */
             $className = $namespace . '\\' . $file->getBasename('.php');
 
             yield $className => [$className];
