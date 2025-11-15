@@ -18,6 +18,8 @@ use PhpCsFixer\WhitespacesFixerConfig;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer
  *
+ * @phpstan-import-type _InputConfig from \PhpCsFixer\Fixer\FunctionNotation\MultilinePromotedPropertiesFixer
+ *
  * @requires PHP >= 8.0
  */
 final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
@@ -43,7 +45,7 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param array<string, int> $configuration
+     * @param _InputConfig $configuration
      *
      * @dataProvider provideFixCases
      */
@@ -53,7 +55,7 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array{0: string, 1: null|string, 2?: array<string, bool|int>, 3?: WhitespacesFixerConfig}>
+     * @return iterable<array{0: string, 1: null|string, 2?: _InputConfig, 3?: WhitespacesFixerConfig}>
      */
     public static function provideFixCases(): iterable
     {

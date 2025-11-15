@@ -19,6 +19,8 @@ use PhpCsFixer\WhitespacesFixerConfig;
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocTagNoNamedArgumentsFixer
+ *
+ * @phpstan-import-type _InputConfig from \PhpCsFixerCustomFixers\Fixer\PhpdocTagNoNamedArgumentsFixer
  */
 final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
 {
@@ -54,7 +56,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param array<string, int> $configuration
+     * @param _InputConfig $configuration
      *
      * @dataProvider provideFixCases
      */
@@ -64,7 +66,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<string, array{0: string, 1?: null|string, 2?: array{path_prefix?: string, description?: string}, 3?: WhitespacesFixerConfig}>
+     * @return iterable<string, array{0: string, 1?: null|string, 2?: _InputConfig, 3?: WhitespacesFixerConfig}>
      */
     public static function provideFixCases(): iterable
     {

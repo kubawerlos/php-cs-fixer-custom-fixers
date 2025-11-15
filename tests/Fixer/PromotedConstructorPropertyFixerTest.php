@@ -16,6 +16,8 @@ namespace Tests\Fixer;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer
  *
+ * @phpstan-import-type _InputConfig from \PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer
+ *
  * @requires PHP >= 8.0
  */
 final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
@@ -33,7 +35,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @param array<string, list<string>> $configuration
+     * @param _InputConfig $configuration
      *
      * @dataProvider provideFixCases
      */
@@ -43,7 +45,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * @return iterable<array{0: string, 1?: string}>
+     * @return iterable<array{0: string, 1?: string, 2?: _InputConfig}>
      */
     public static function provideFixCases(): iterable
     {
