@@ -23,6 +23,7 @@
         "ArrayAny": true,
         "ArrayFind": true,
         "ArrayFindKey": true,
+        "ArrayFirst": true,
         "ArrayItem": true,
         "ArrayItemRemoval": {
             "settings": {
@@ -35,6 +36,7 @@
                 "PhpCsFixerCustomFixers\\Fixer\\NoLeadingSlashInGlobalNamespaceFixer::isToRemove"
             ]
         },
+        "ArrayLast": true,
         "ArrayOneItem": true,
         "AssignCoalesce": true,
         "Assignment": true,

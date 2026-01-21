@@ -301,7 +301,11 @@ do    {
 
         $reflectionObject = new \ReflectionObject($fixer);
         $property = $reflectionObject->getProperty('tokens');
-        $property->setAccessible(true);
+
+        // @phpstan-ignore smaller.alwaysFalse
+        if (\PHP_VERSION_ID < 80100) {
+            $property->setAccessible(true);
+        }
 
         /** @var list<int> $tokens */
         $tokens = $property->getValue($fixer);
@@ -326,7 +330,11 @@ do    {
         $fixer = new SingleSpaceAfterStatementFixer();
         $reflectionObject = new \ReflectionObject($fixer);
         $property = $reflectionObject->getProperty('tokens');
-        $property->setAccessible(true);
+
+        // @phpstan-ignore smaller.alwaysFalse
+        if (\PHP_VERSION_ID < 80100) {
+            $property->setAccessible(true);
+        }
 
         /** @var list<int> $tokens */
         $tokens = $property->getValue($fixer);
