@@ -17,7 +17,7 @@ use Symfony\Component\Console\Application;
 $application = new Application();
 $command = new ReadmeCommand();
 
-$application->add($command);
+$application->addCommand($command);
 
 $application->setDefaultCommand($command->getName(), true);
 $application->run();
