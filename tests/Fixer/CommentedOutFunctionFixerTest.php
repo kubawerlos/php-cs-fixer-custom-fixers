@@ -223,13 +223,28 @@ baz();
 //                var_dump($x);
                 print_r($x, true) . " is input";
                 "Result: " . print_r($y, true);
-//                var_dump($y);
+//                dd($y);
             ',
             '<?php
                 var_dump($x);
                 print_r($x, true) . " is input";
                 "Result: " . print_r($y, true);
-                var_dump($y);
+                dd($y);
+            ',
+        ];
+
+        yield 'complex with other default functions' => [
+            '<?php
+//                dump($x);
+                print_r($x, true) . " is input";
+                "Result: " . print_r($y, true);
+//                d($y);
+            ',
+            '<?php
+                dump($x);
+                print_r($x, true) . " is input";
+                "Result: " . print_r($y, true);
+                d($y);
             ',
         ];
     }

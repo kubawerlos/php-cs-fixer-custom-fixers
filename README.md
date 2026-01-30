@@ -65,7 +65,7 @@ Comments must be surrounded by spaces.
 The configured functions must be commented out.
   *Risky: when any of the configured functions have side effects or are overwritten.*
 Configuration options:
-- `functions` (`array`): list of functions to comment out; defaults to `['print_r', 'var_dump', 'var_export']`
+- `functions` (`array`): list of functions to comment out; defaults to `['print_r', 'var_dump', 'var_export', 'dd', 'dump', 'd']`
 ```diff
  <?php
 -var_dump($x);
