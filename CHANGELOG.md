@@ -1,5 +1,12 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.36.0
+- CommentedOutFunctionFixer - add `dump`, `dd`, `d` to default functions
+
+## v3.35.0
+- PhpdocPropertySortedFixer - support `@property-read `and `@property-write`
+- PhpdocNoIncorrectVarAnnotationFixer - keep string literals
+
 ## v3.34.0
 - Add PhpdocPropertySortedFixer
 - Deprecate PhpDocPropertySorterFixer - use PhpdocPropertySortedFixer
