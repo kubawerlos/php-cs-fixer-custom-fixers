@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   analyse:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
@@ -28,7 +28,7 @@ jobs:
       - run: composer analyse
 
   spelling:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v5
       - uses: crate-ci/typos@v1.36.0
@@ -39,38 +39,38 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             description: 'with lowest dependencies'
             composer-flags: '--prefer-lowest'
             php-version: '7.4'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             description: 'with lowest dependencies and shim package'
             composer-flags: '--prefer-lowest'
             use-shim-package: true
             php-version: '7.4'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             php-version: '8.0'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             php-version: '8.1'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             php-version: '8.2'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             php-version: '8.3'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             description: 'with calculating code coverage and Infection'
             calculate-coverage: true
             phpunit-flags: '--log-junit=./junit.xml --coverage-clover=./coverage-clover.xml'
             php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             description: 'with PHP CS Fixer from master'
             with-php-cs-fixer-from-master: true
             php-version: '8.4'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             description: 'with shim package'
             use-shim-package: true
             php-version: '8.4'
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             description: 'with bootstrap'
             with-bootstrap: true
             php-version: '8.4'
@@ -81,11 +81,11 @@ jobs:
             description: 'on Windows'
             php-version: '8.4'
             FAST_LINT_TEST_CASES: 1
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             description: 'with PHPUnit 12'
             php-version: '8.4'
             install-phpunit-12: true
-          - os: ubuntu-latest
+          - os: ubuntu-slim
             php-version: '8.5'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
