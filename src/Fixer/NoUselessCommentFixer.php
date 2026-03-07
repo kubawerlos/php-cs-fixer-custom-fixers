@@ -101,6 +101,10 @@ class Foo {
             $classyNameIndex = $tokens->getNextMeaningfulToken($nextIndex);
             \assert(\is_int($classyNameIndex));
 
+            if (!$tokens[$classyNameIndex]->isGivenKind(\T_STRING)) {
+                return $content;
+            }
+
             $content = Preg::replace(
                 \sprintf('~
                         \\R?
