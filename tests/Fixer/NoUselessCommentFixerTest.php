@@ -464,5 +464,11 @@ final class NoUselessCommentFixerTest extends AbstractFixerTestCase
             // foo
             ',
         ];
+
+        yield [
+            '<?php
+            $a = new /** ( */ class () {};
+            ',
+        ];
     }
 }
