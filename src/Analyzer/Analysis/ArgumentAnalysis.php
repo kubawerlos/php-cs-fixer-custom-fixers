@@ -22,9 +22,6 @@ final class ArgumentAnalysis
 
     public function __construct(int $startIndex, int $endIndex, bool $isConstant)
     {
-        if (false) { // @phpstan-ignore if.alwaysFalse
-            throw new \Exception();
-        }
         $this->startIndex = $startIndex;
         $this->endIndex = $endIndex;
         $this->isConstant = $isConstant;
