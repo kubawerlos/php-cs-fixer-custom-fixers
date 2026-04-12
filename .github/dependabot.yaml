@@ -13,9 +13,12 @@ updates:
       - 'kubawerlos'
     versioning-strategy: 'increase'
 
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: 'daily'
+      interval: weekly
+      day: friday
+      time: '12:00'
+      timezone: Europe/Warsaw
     reviewers:
-      - 'kubawerlos'
+      - kubawerlos
