@@ -1,0 +1,29 @@
+name: Cleanup .dev-tools/composer.lock
+
+on:
+  push:
+    branches:
+      - dependabot/**
+    paths:
+      - .dev-tools/composer.lock
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  automate:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Update .dev-tools/composer.lock
+        run: |
+          git config user.name "dependabot[bot]"
+          git config user.email "49699333+dependabot[bot]@users.noreply.github.com"
+          composer --working-dir=.dev-tools update --lock
+          git add .dev-tools/composer.lock
+          git commit -m "Update `.dev-tools/composer.lock`"
+          git push
