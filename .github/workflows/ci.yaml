@@ -86,13 +86,11 @@ jobs:
           - os: ubuntu-latest
             description: 'with PHPUnit 12'
             php-version: '8.5'
-            use-phpunit-version: 12
+            use-phpunit-version: ^12.5.19
           - os: ubuntu-latest
             description: 'with PHPUnit 13'
             php-version: '8.5'
-            use-phpunit-version: 13
-          - os: ubuntu-latest
-            php-version: '8.5'
+            use-phpunit-version: ^13.1.3
           - os: ubuntu-latest
             php-version: '8.6'
     runs-on: ${{ matrix.os }}
@@ -132,7 +130,7 @@ jobs:
         run: composer require friendsofphp/php-cs-fixer:dev-master --no-update
 
       - if: matrix.use-phpunit-version
-        run: composer require --dev phpunit/phpunit:^${{ matrix.use-phpunit-version }} --no-update
+        run: composer require --dev phpunit/phpunit:${{ matrix.use-phpunit-version }} --no-update
 
       - run: composer update --no-progress --classmap-authoritative ${{ matrix.composer-flags }}
 
