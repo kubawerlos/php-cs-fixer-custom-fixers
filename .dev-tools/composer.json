@@ -13,7 +13,7 @@
         "phpstan/phpstan-phpunit": "^2.0.16",
         "phpstan/phpstan-strict-rules": "^2.0.10",
         "shipmonk/composer-dependency-analyser": "^1.8.4",
-        "shipmonk/dead-code-detector": "^0.15.1",
+        "shipmonk/dead-code-detector": "^1.0.0",
         "shipmonk/phpstan-rules": "^4.3.6",
         "squizlabs/php_codesniffer": "^4.0.1",
         "tomasvotruba/type-coverage": "^2.1.0",
