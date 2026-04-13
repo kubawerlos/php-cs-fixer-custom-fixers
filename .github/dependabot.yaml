@@ -1,17 +1,14 @@
 version: 2
 
 updates:
-  - package-ecosystem: 'composer'
-    directory: '/.dev-tools'
+  - package-ecosystem: composer
+    directory: /.dev-tools
     schedule:
-      interval: 'monthly'
-    ignore:
-      - dependency-name: 'php-cs-fixer/diff'
-    labels:
-      - 'dependencies'
-    reviewers:
-      - 'kubawerlos'
-    versioning-strategy: 'increase'
+      interval: weekly
+      day: friday
+      time: '12:00'
+      timezone: Europe/Warsaw
+    versioning-strategy: increase
 
   - package-ecosystem: github-actions
     directory: /
@@ -20,5 +17,3 @@ updates:
       day: friday
       time: '12:00'
       timezone: Europe/Warsaw
-    reviewers:
-      - kubawerlos
