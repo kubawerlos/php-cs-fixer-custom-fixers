@@ -33,7 +33,10 @@
             "kubawerlos/composer-smaller-lock": true,
             "phpstan/extension-installer": true
         },
-        "bump-after-update": true
+        "bump-after-update": true,
+        "platform": {
+            "php": "8.5"
+        }
     },
     "scripts": {
         "analyse": [
