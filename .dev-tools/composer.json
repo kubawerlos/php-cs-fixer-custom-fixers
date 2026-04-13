@@ -9,7 +9,7 @@
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.1.40",
+        "phpstan/phpstan": "^2.1.46",
         "phpstan/phpstan-phpunit": "^2.0.16",
         "phpstan/phpstan-strict-rules": "^2.0.10",
         "shipmonk/composer-dependency-analyser": "^1.8.4",
@@ -33,7 +33,10 @@
             "kubawerlos/composer-smaller-lock": true,
             "phpstan/extension-installer": true
         },
-        "bump-after-update": true
+        "bump-after-update": true,
+        "platform": {
+            "php": "8.5"
+        }
     },
     "scripts": {
         "analyse": [
