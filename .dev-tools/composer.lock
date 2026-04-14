@@ -1833,14 +1833,10 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpstan/phpstan/zipball/79015445d8bd79e62b29140f12e5bfced1dcca65",
-                "reference": "79015445d8bd79e62b29140f12e5bfced1dcca65",
-                "shasum": ""
+                "reference": "79015445d8bd79e62b29140f12e5bfced1dcca65"
             },
             "require": {
                 "php": "^7.4|^8.0"
-            },
-            "conflict": {
-                "phpstan/phpstan-shim": "*"
             },
             "bin": [
                 "phpstan",
@@ -1852,33 +1848,10 @@
                     "bootstrap.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "PHPStan - PHP Static Analysis Tool",
-            "keywords": [
-                "dev",
-                "static analysis"
-            ],
-            "support": {
-                "docs": "https://phpstan.org/user-guide/getting-started",
-                "forum": "https://github.com/phpstan/phpstan/discussions",
-                "issues": "https://github.com/phpstan/phpstan/issues",
-                "security": "https://github.com/phpstan/phpstan/security/policy",
-                "source": "https://github.com/phpstan/phpstan-src"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/ondrejmirtes",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/phpstan",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-04-13T15:49:08+00:00"
+            "description": "PHPStan - PHP Static Analysis Tool"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -2388,26 +2361,11 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/shipmonk-rnd/phpstan-rules/zipball/a46689f9179206f1edcfe078bcec6fc1ec5bf202",
-                "reference": "a46689f9179206f1edcfe078bcec6fc1ec5bf202",
-                "shasum": ""
+                "reference": "a46689f9179206f1edcfe078bcec6fc1ec5bf202"
             },
             "require": {
                 "php": "^7.4 || ^8.0",
                 "phpstan/phpstan": "^2.1.32"
-            },
-            "require-dev": {
-                "editorconfig-checker/editorconfig-checker": "^10.6.0",
-                "ergebnis/composer-normalize": "^2.45.0",
-                "phpstan/phpstan-deprecation-rules": "^2.0.1",
-                "phpstan/phpstan-phpunit": "^2.0.4",
-                "phpstan/phpstan-strict-rules": "^2.0.3",
-                "phpunit/phpunit": "^9.6.33",
-                "shipmonk/coding-standard": "^0.2.0",
-                "shipmonk/composer-dependency-analyser": "^1.8.1",
-                "shipmonk/coverage-guard": "^1.0.0",
-                "shipmonk/dead-code-detector": "^0.9.0",
-                "shipmonk/name-collision-detector": "^2.1.1",
-                "shipmonk/phpstan-dev": "^0.1.5"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -2422,20 +2380,10 @@
                     "ShipMonk\\PHPStan\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Various extra strict PHPStan rules we found useful in ShipMonk.",
-            "keywords": [
-                "PHPStan",
-                "static analysis"
-            ],
-            "support": {
-                "issues": "https://github.com/shipmonk-rnd/phpstan-rules/issues",
-                "source": "https://github.com/shipmonk-rnd/phpstan-rules/tree/4.3.7"
-            },
-            "time": "2026-04-07T07:56:34+00:00"
+            "description": "Various extra strict PHPStan rules we found useful in ShipMonk."
         },
         {
             "name": "spatie/array-to-xml",
