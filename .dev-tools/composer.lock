@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82727e614eec89f799171bc0dcef6f65",
+    "content-hash": "1b10b4640ea1eae20c045c5b64c8a3e5",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2352,16 +2352,16 @@
         },
         {
             "name": "shipmonk/phpstan-rules",
-            "version": "4.3.6",
+            "version": "4.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shipmonk-rnd/phpstan-rules.git",
-                "reference": "7dbbcec7b00b4120ceaa13141be648eab3f8e24e"
+                "reference": "a46689f9179206f1edcfe078bcec6fc1ec5bf202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shipmonk-rnd/phpstan-rules/zipball/7dbbcec7b00b4120ceaa13141be648eab3f8e24e",
-                "reference": "7dbbcec7b00b4120ceaa13141be648eab3f8e24e"
+                "url": "https://api.github.com/repos/shipmonk-rnd/phpstan-rules/zipball/a46689f9179206f1edcfe078bcec6fc1ec5bf202",
+                "reference": "a46689f9179206f1edcfe078bcec6fc1ec5bf202"
             },
             "require": {
                 "php": "^7.4 || ^8.0",
