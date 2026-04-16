@@ -80,17 +80,19 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
 
     private static function fixClass(Tokens $tokens, int $index, int $endIndex): void
     {
+        self::fixElement($tokens, $index);
+
         while ($index < $endIndex) {
             $index = $tokens->getNextTokenOfKind($index, [[\T_FUNCTION]]);
             if ($index === null || $index >= $endIndex) {
                 return;
             }
 
-            self::fixMethod($tokens, $index);
+            self::fixElement($tokens, $index);
         }
     }
 
-    private static function fixMethod(Tokens $tokens, int $index): void
+    private static function fixElement(Tokens $tokens, int $index): void
     {
         $index = $tokens->getPrevTokenOfKind($index, [';', [\T_DOC_COMMENT], [CT::T_ATTRIBUTE_CLOSE]]);
         if ($index === null || $tokens[$index]->equals(';')) {
