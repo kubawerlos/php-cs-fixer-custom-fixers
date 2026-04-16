@@ -16,7 +16,7 @@ namespace Tests\Fixer;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\FunctionParameterSeparationFixer
  *
- * @requires PHP >= 8.0
+ * @requires PHP >= 8.0.0
  */
 final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
 {
@@ -202,7 +202,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFix84Cases
      *
-     * @requires PHP >= 8.4
+     * @requires PHP >= 8.4.0
      */
     public function testFix84(string $expected, ?string $input = null): void
     {

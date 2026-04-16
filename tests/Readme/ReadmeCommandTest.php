@@ -18,7 +18,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * @internal
  *
- * @requires PHP >= 8.4
+ * @requires PHP >= 8.4.0
  *
  * @covers \PhpCsFixerCustomFixersDev\Readme\ReadmeCommand
  */

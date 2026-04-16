@@ -236,7 +236,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFix80Cases
      *
-     * @requires PHP >= 8.0
+     * @requires PHP >= 8.0.0
      */
     public function testFix80(string $expected, ?string $input = null): void
     {
@@ -270,7 +270,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFix82Cases
      *
-     * @requires PHP >= 8.2
+     * @requires PHP >= 8.2.0
      */
     public function testFix82(string $expected, ?string $input = null): void
     {

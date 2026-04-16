@@ -20,7 +20,7 @@ use PhpCsFixer\WhitespacesFixerConfig;
  *
  * @phpstan-import-type _InputConfig from \PhpCsFixer\Fixer\FunctionNotation\MultilinePromotedPropertiesFixer
  *
- * @requires PHP >= 8.0
+ * @requires PHP >= 8.0.0
  */
 final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
 {
