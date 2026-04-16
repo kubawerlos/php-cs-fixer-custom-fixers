@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.37.0
+- PhpUnitRequiresConstraintFixer - add option "make_version_complete"
+
 ## v3.36.0
 - CommentedOutFunctionFixer - add `dump`, `dd`, `d` to default functions
 
