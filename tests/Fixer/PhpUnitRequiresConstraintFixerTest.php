@@ -20,6 +20,13 @@ namespace Tests\Fixer;
  */
 final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
 {
+    public function testConfiguration(): void
+    {
+        $options = self::getConfigurationOptions();
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('make_version_complete', $options[0]->getName());
+    }
+
     public function testIsRisky(): void
     {
         self::assertRiskiness(false);
