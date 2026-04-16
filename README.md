@@ -518,6 +518,8 @@ PHPUnit `fail`, `markTestIncomplete` and `markTestSkipped` functions must not be
 
 #### PhpUnitRequiresConstraintFixer
 Assertions and attributes for PHP and PHPUnit versions must have explicit version constraint and space after comparison operator.
+Configuration options:
+- `make_version_complete` (`bool`): whether to make version complete; defaults to `false`
 ```diff
  <?php
  class MyTest extends TestCase {

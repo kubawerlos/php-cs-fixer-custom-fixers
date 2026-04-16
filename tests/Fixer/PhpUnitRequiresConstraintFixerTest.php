@@ -14,25 +14,36 @@ namespace Tests\Fixer;
 /**
  * @internal
  *
+ * @phpstan-import-type _InputConfig from \PhpCsFixerCustomFixers\Fixer\PhpUnitRequiresConstraintFixer
+ *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpUnitRequiresConstraintFixer
  */
 final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
 {
+    public function testConfiguration(): void
+    {
+        $options = self::getConfigurationOptions();
+        self::assertArrayHasKey(0, $options);
+        self::assertSame('make_version_complete', $options[0]->getName());
+    }
+
     public function testIsRisky(): void
     {
         self::assertRiskiness(false);
     }
 
     /**
+     * @param _InputConfig $configuration
+     *
      * @dataProvider provideFixCases
      */
-    public function testFix(string $expected, ?string $input = null): void
+    public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
-        $this->doTest($expected, $input);
+        $this->doTest($expected, $input, $configuration);
     }
 
     /**
-     * @return iterable<array{0: string, 1?: string}>
+     * @return iterable<array{0: string, 1?: string, 2?: _InputConfig}>
      */
     public static function provideFixCases(): iterable
     {
@@ -135,6 +146,50 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
                 $fixCase,
             );
         }
+
+        yield 'make version complete' => [
+            <<<'CODE'
+                <?php
+                /**
+                 * @requires PHP > 8.0.0
+                 * @requires PHPUnit < 12.2.0
+                 */
+                class FooTest extends TestCase { public function testFoo() {} }
+                CODE,
+            <<<'CODE'
+                <?php
+                /**
+                 * @requires PHP >8
+                 * @requires PHPUnit <    12.2
+                 */
+                class FooTest extends TestCase { public function testFoo() {} }
+                CODE,
+            ['make_version_complete' => true],
+        ];
+
+        yield 'make version already fixed with make_version_complete=false complete' => [
+            <<<'CODE'
+                <?php
+                class FooTest extends TestCase {
+                    /**
+                     * @requires PHP >= 8.0.0
+                     * @requires PHPUnit < 12.2.0
+                     */
+                    public function testFoo() {}
+                }
+                CODE,
+            <<<'CODE'
+                <?php
+                class FooTest extends TestCase {
+                    /**
+                     * @requires PHP >= 8
+                     * @requires PHPUnit < 12.2
+                     */
+                    public function testFoo() {}
+                }
+                CODE,
+            ['make_version_complete' => true],
+        ];
     }
 
     /**

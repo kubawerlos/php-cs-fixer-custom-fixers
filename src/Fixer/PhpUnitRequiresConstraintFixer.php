@@ -11,6 +11,10 @@
 
 namespace PhpCsFixerCustomFixers\Fixer;
 
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -24,10 +28,17 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
+ * @implements ConfigurableFixerInterface<_InputConfig, _Config>
+ *
+ * @phpstan-type _InputConfig array{make_version_complete?: bool}
+ * @phpstan-type _Config array{make_version_complete: bool}
+ *
  * @no-named-arguments
  */
-final class PhpUnitRequiresConstraintFixer extends AbstractFixer
+final class PhpUnitRequiresConstraintFixer extends AbstractFixer implements ConfigurableFixerInterface
 {
+    private bool $makeVersionComplete = false;
+
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -55,6 +66,24 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
         );
     }
 
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    {
+        return new FixerConfigurationResolver([
+            (new FixerOptionBuilder('make_version_complete', 'whether to make version complete'))
+                ->setDefault($this->makeVersionComplete)
+                ->setAllowedTypes(['bool'])
+                ->getOption(),
+        ]);
+    }
+
+    /**
+     * @param _InputConfig $configuration
+     */
+    public function configure(array $configuration): void
+    {
+        $this->makeVersionComplete = $configuration['make_version_complete'] ?? $this->makeVersionComplete;
+    }
+
     public function getPriority(): int
     {
         return 0;
@@ -74,11 +103,11 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
     {
         /** @var list<int> $indices */
         foreach ((new PhpUnitTestCaseAnalyzer())->findPhpUnitClasses($tokens) as $indices) {
-            self::fixClass($tokens, $indices[0], $indices[1]);
+            $this->fixClass($tokens, $indices[0], $indices[1]);
         }
     }
 
-    private static function fixClass(Tokens $tokens, int $index, int $endIndex): void
+    private function fixClass(Tokens $tokens, int $index, int $endIndex): void
     {
         self::fixElement($tokens, $index);
 
@@ -88,11 +117,11 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
                 return;
             }
 
-            self::fixElement($tokens, $index);
+            $this->fixElement($tokens, $index);
         }
     }
 
-    private static function fixElement(Tokens $tokens, int $index): void
+    private function fixElement(Tokens $tokens, int $index): void
     {
         $index = $tokens->getPrevTokenOfKind($index, [';', [\T_DOC_COMMENT], [CT::T_ATTRIBUTE_CLOSE]]);
         if ($index === null || $tokens[$index]->equals(';')) {
@@ -100,33 +129,33 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
         }
 
         if ($tokens[$index]->isGivenKind(\T_DOC_COMMENT)) {
-            self::fixPhpDoc($tokens, $index);
+            $this->fixPhpDoc($tokens, $index);
         }
 
         if ($tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
-            self::fixAttribute($tokens, $index);
+            $this->fixAttribute($tokens, $index);
         }
     }
 
-    private static function fixPhpDoc(Tokens $tokens, int $index): void
+    private function fixPhpDoc(Tokens $tokens, int $index): void
     {
         $tokens[$index] = new Token([
             \T_DOC_COMMENT,
             Preg::replaceCallback(
                 '/(@requires\\s+\\S+\\s+)(.+?)(\\s*)$/m',
-                static function (array $matches): string {
+                function (array $matches): string {
                     \assert(\is_string($matches[1]));
                     \assert(\is_string($matches[2]));
                     \assert(\is_string($matches[3]));
 
-                    return $matches[1] . self::fixString($matches[2]) . $matches[3];
+                    return $matches[1] . $this->fixString($matches[2]) . $matches[3];
                 },
                 $tokens[$index]->getContent(),
             ),
         ]);
     }
 
-    private static function fixAttribute(Tokens $tokens, int $index): void
+    private function fixAttribute(Tokens $tokens, int $index): void
     {
         $fullyQualifiedNameAnalyzer = new FullyQualifiedNameAnalyzer($tokens);
         foreach (AttributeAnalyzer::collect($tokens, $tokens->findBlockStart(Tokens::BLOCK_TYPE_ATTRIBUTE, $index)) as $attributeAnalysis) {
@@ -151,15 +180,23 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer
                     $quote = \substr($tokens[$stringIndex]->getContent(), -1, 1);
                     $tokens[$stringIndex] = new Token([
                         \T_CONSTANT_ENCAPSED_STRING,
-                        $quote . self::fixString(\substr($tokens[$stringIndex]->getContent(), 1, -1)) . $quote,
+                        $quote . $this->fixString(\substr($tokens[$stringIndex]->getContent(), 1, -1)) . $quote,
                     ]);
                 }
             }
         }
     }
 
-    private static function fixString(string $string): string
+    private function fixString(string $string): string
     {
+        if ($this->makeVersionComplete) {
+            if (\substr_count($string, '.') === 0) {
+                $string .= '.0.0';
+            } elseif (\substr_count($string, '.') === 1) {
+                $string .= '.0';
+            }
+        }
+
         if (Preg::match('/^[\\d\\.-]+(dev|(RC|alpha|beta)[\\d\\.])?$/', $string)) {
             $string = '>=' . $string;
         }
