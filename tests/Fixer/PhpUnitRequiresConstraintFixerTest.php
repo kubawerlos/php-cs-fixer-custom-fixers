@@ -113,6 +113,7 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
                         <?php
                         %s
                         class FooTest extends TestCase {
+                            /** PHPDoc */
                             public function testFoo() {}
                         }
                         PHP,
