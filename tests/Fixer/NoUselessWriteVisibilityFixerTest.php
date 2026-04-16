@@ -16,7 +16,7 @@ namespace Tests\Fixer;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoUselessWriteVisibilityFixer
  *
- * @requires PHP >= 8.4
+ * @requires PHP >= 8.4.0
  */
 final class NoUselessWriteVisibilityFixerTest extends AbstractFixerTestCase
 {

@@ -26,7 +26,7 @@ final class TypedClassConstantFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      *
-     * @requires PHP >= 8.3
+     * @requires PHP >= 8.3.0
      */
     public function testFix(string $expected, ?string $input = null): void
     {

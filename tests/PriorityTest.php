@@ -28,7 +28,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @coversNothing
  *
- * @requires PHP >= 8.3
+ * @requires PHP >= 8.3.0
  */
 final class PriorityTest extends TestCase
 {

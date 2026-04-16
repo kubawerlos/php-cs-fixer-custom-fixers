@@ -18,6 +18,7 @@ use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 use PhpCsFixerConfig\Rules\LibraryRules;
 use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpUnitRequiresConstraintFixer;
 use PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer;
 use PhpCsFixerCustomFixers\Fixer\TypedClassConstantFixer;
 use PhpCsFixerCustomFixers\Fixers;
@@ -38,6 +39,7 @@ if ($expectedPath !== $actualPath) {
 $rules = (new LibraryRules('PHP CS Fixer: custom fixers', 'Kuba Werłos', 2018))->getRules();
 
 $rules[NoSuperfluousConcatenationFixer::name()] = ['allow_preventing_trailing_spaces' => true];
+$rules[PhpUnitRequiresConstraintFixer::name()] = ['make_version_complete' => true];
 
 // add new fixers that are not in PhpCsFixerConfig yet
 foreach (new Fixers() as $fixer) {
