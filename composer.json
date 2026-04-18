@@ -29,6 +29,13 @@
             "Tests\\": "tests"
         }
     },
+    "config": {
+        "audit": {
+            "ignore": {
+                "PKSA-5jz8-6tcw-pbk4": "To allow installing PHPUnit < 12"
+            }
+        }
+    },
     "scripts": {
         "analyse": [
             "@prepare-dev-tools",
