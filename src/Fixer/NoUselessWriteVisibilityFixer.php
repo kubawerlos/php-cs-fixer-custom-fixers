@@ -80,6 +80,7 @@ final class NoUselessWriteVisibilityFixer extends AbstractFixer
             \assert(\is_int($prevIndex));
         }
 
+        \assert(isset(self::PREDECESSOR_KIND_MAP[$kind]));
         if (!$tokens[$prevIndex]->isGivenKind(self::PREDECESSOR_KIND_MAP[$kind])) {
             if ($makePublicIfNone) {
                 $prevDeciderIndex = $tokens->getPrevTokenOfKind($index, ['(', ';', '{']);
