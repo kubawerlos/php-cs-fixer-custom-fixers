@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "123b443fac3ecc86079056da6d648b56",
+    "content-hash": "fffba925e684847e6fe5cefcf34982bd",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1829,11 +1829,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.52",
+            "version": "2.1.53",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/08a34f8db7ca4daabff74a474fe13c0e56e2b4e5",
-                "reference": "08a34f8db7ca4daabff74a474fe13c0e56e2b4e5"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ef67586798c003274797b288a68b221e4270dca7",
+                "reference": "ef67586798c003274797b288a68b221e4270dca7"
             },
             "require": {
                 "php": "^7.4|^8.0"
