@@ -206,6 +206,11 @@ class Foo
     static $a;
 
     /**
+     * @var (self|DateTime)[]
+     */
+    public array $parentheses;
+
+    /**
      * @var int
      */
     public $b;
