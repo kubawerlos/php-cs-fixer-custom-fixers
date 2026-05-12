@@ -538,4 +538,50 @@ $x = 0;
                 }',
         ];
     }
+
+    /**
+     * @dataProvider provideFix84Cases
+     *
+     * @requires PHP >= 8.4.0
+     */
+    public function testFix84(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix84Cases(): iterable
+    {
+        yield 'keep correct PHPDoc for asymmetric-visibility properties' => [
+            <<<'PHP'
+                <?php final class ArrayLogger
+                    {
+                        /**
+                         * @var list<string>
+                         */
+                        public private(set) array $a = [];
+
+                        /** @var array<string> */
+                        public protected(set) array $b = [];
+
+                        /** @var int<0, max> */
+                        protected private(set) int $c = 0;
+
+                        /** @var non-empty-string */
+                        private(set) string $d = "d";
+
+                        /** @var non-empty-string */
+                        protected(set) string $e = "e";
+
+                        /** @var non-empty-string */
+                        public(set) string $f = "f";
+
+                        /** @var list<int> */
+                        public public(set) array $g = [];
+                    }
+                PHP,
+        ];
+    }
 }
