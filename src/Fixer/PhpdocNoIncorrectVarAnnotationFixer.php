@@ -74,7 +74,7 @@ $bar = new Foo();
                 continue;
             }
 
-            if ($tokens[$nextIndex]->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE])) {
+            if ($tokens[$nextIndex]->isGivenKind([\T_PRIVATE, \T_PROTECTED, \T_PUBLIC, \T_VAR, \T_STATIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PUBLIC, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE, FCT::T_PUBLIC_SET, FCT::T_PROTECTED_SET, FCT::T_PRIVATE_SET])) {
                 self::removeForClassElement($tokens, $index, $nextIndex);
                 continue;
             }
@@ -107,7 +107,7 @@ $bar = new Foo();
 
     private static function removeForClassElement(Tokens $tokens, int $index, int $propertyStartIndex): void
     {
-        $variableIndex = $tokens->getTokenNotOfKindsSibling($propertyStartIndex, 1, [\T_NS_SEPARATOR, \T_STATIC, \T_STRING, \T_WHITESPACE, CT::T_ARRAY_TYPEHINT, CT::T_NULLABLE_TYPE, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION, FCT::T_READONLY]);
+        $variableIndex = $tokens->getTokenNotOfKindsSibling($propertyStartIndex, 1, [\T_NS_SEPARATOR, \T_STATIC, \T_STRING, \T_WHITESPACE, CT::T_ARRAY_TYPEHINT, CT::T_NULLABLE_TYPE, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION, FCT::T_READONLY, FCT::T_PUBLIC_SET, FCT::T_PROTECTED_SET, FCT::T_PRIVATE_SET]);
         \assert(\is_int($variableIndex));
 
         if (!$tokens[$variableIndex]->isGivenKind(\T_VARIABLE)) {

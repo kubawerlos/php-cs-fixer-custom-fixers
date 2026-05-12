@@ -555,49 +555,33 @@ $x = 0;
     public static function provideFix84Cases(): iterable
     {
         yield 'keep correct PHPDoc for asymmetric-visibility properties' => [
-            '<?php final class ArrayLogger
-                {
-                    /**
-                     */
-                    public private(set) array $a = [];
+            <<<'PHP'
+                <?php final class ArrayLogger
+                    {
+                        /**
+                         * @var list<string>
+                         */
+                        public private(set) array $a = [];
 
-                    public protected(set) array $b = [];
+                        /** @var array<string> */
+                        public protected(set) array $b = [];
 
-                    protected private(set) int $c = 0;
+                        /** @var int<0, max> */
+                        protected private(set) int $c = 0;
 
-                    private(set) string $d = "d";
+                        /** @var non-empty-string */
+                        private(set) string $d = "d";
 
-                    protected(set) string $e = "e";
+                        /** @var non-empty-string */
+                        protected(set) string $e = "e";
 
-                    public(set) string $f = "f";
+                        /** @var non-empty-string */
+                        public(set) string $f = "f";
 
-                    public public(set) array $g = [];
-                }',
-            '<?php final class ArrayLogger
-                {
-                    /**
-                     * @var list<string>
-                     */
-                    public private(set) array $a = [];
-
-                    /** @var array<string> */
-                    public protected(set) array $b = [];
-
-                    /** @var int<0, max> */
-                    protected private(set) int $c = 0;
-
-                    /** @var non-empty-string */
-                    private(set) string $d = "d";
-
-                    /** @var non-empty-string */
-                    protected(set) string $e = "e";
-
-                    /** @var non-empty-string */
-                    public(set) string $f = "f";
-
-                    /** @var list<int> */
-                    public public(set) array $g = [];
-                }',
+                        /** @var list<int> */
+                        public public(set) array $g = [];
+                    }
+                PHP,
         ];
     }
 }
