@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: crate-ci/typos@v1.46.0
+      - uses: crate-ci/typos@v1.46.1
 
   test:
     name: PHP ${{ matrix.php-version }} ${{ matrix.description }}
@@ -104,7 +104,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: none, ctype, curl, dom, iconv, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
-          ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, pcov.directory=$GITHUB_WORKSPACE/src, zend.assertions=1
+          ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, pcov.directory=${{ github.workspace }}/src, zend.assertions=1
           coverage: ${{ (matrix.calculate-coverage && 'pcov') || 'none' }}
 
       - id: composer-cache
