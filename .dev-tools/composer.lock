@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ec7e029ced6df3fe411f0c2a35dfa76",
+    "content-hash": "6eebc0c292da3526ac1dfc38dbe71179",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1829,11 +1829,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.55",
+            "version": "2.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9eaac3826ed5e9b8427350a43cac825eeca3f566",
-                "reference": "9eaac3826ed5e9b8427350a43cac825eeca3f566"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dea9c8f2d25cc849391042b71e429c1a4bf82660",
+                "reference": "dea9c8f2d25cc849391042b71e429c1a4bf82660"
             },
             "require": {
                 "php": "^7.4|^8.0"
@@ -3136,21 +3136,21 @@
         },
         {
             "name": "tomasvotruba/type-coverage",
-            "version": "2.1.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TomasVotruba/type-coverage.git",
-                "reference": "468354b3964120806a69890cbeb3fcf005876391"
+                "reference": "4087caa4639bdd4c646f2984bc333efeddf69e4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/468354b3964120806a69890cbeb3fcf005876391",
-                "reference": "468354b3964120806a69890cbeb3fcf005876391"
+                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/4087caa4639bdd4c646f2984bc333efeddf69e4b",
+                "reference": "4087caa4639bdd4c646f2984bc333efeddf69e4b"
             },
             "require": {
                 "nette/utils": "^3.2 || ^4.0",
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^2.0"
+                "phpstan/phpstan": "^2.1.33"
             },
             "type": "phpstan-extension",
             "extra": {
