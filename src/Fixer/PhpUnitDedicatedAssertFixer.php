@@ -150,7 +150,7 @@ class FooTest extends TestCase {
 
         $openParenthesisIndex = $tokens->getNextMeaningfulToken($functionCallIndex);
         \assert(\is_int($openParenthesisIndex));
-        $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+        $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesisIndex);
 
         if ($closeParenthesisIndex < $secondArgument->getEndIndex()) {
             return;

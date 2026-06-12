@@ -87,7 +87,7 @@ class Foo
             $classStartIndex = $tokens->getNextTokenOfKind($index, ['{']);
             \assert(\is_int($classStartIndex));
 
-            $classEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $classStartIndex);
+            $classEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $classStartIndex);
 
             if (!self::doesHaveToStringMethod($tokens, $classStartIndex, $classEndIndex)) {
                 continue;
@@ -131,7 +131,7 @@ class Foo
             $index++;
 
             if ($tokens[$index]->equals('{')) {
-                $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index);
+                $index = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $index);
                 continue;
             }
 

@@ -96,7 +96,7 @@ class FooTest extends TestCase {
                 continue;
             }
 
-            $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBraceIndex);
+            $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openingBraceIndex);
 
             $semicolonIndex = $tokens->getNextMeaningfulToken($closingBraceIndex);
             \assert(\is_int($semicolonIndex));
@@ -112,7 +112,7 @@ class FooTest extends TestCase {
             \assert(\is_int($semicolonAfterReturnIndex));
 
             while ($tokens[$semicolonAfterReturnIndex]->equals('(')) {
-                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $semicolonAfterReturnIndex);
+                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $semicolonAfterReturnIndex);
 
                 $semicolonAfterReturnIndex = $tokens->getNextTokenOfKind($closingBraceIndex, [';', '(']);
                 \assert(\is_int($semicolonAfterReturnIndex));

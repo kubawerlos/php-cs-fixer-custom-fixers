@@ -76,7 +76,7 @@ function foo(&$x) {}
         $openParenthesis = $tokens->getNextTokenOfKind($functionNameIndex, ['(']);
         \assert(\is_int($openParenthesis));
 
-        $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+        $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
         $indices = [];
 

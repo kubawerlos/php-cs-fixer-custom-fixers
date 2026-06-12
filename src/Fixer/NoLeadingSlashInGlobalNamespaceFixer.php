@@ -110,6 +110,6 @@ $y = new \\Baz();
             return $tokens->count() - 1;
         }
 
-        return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $nextIndex);
+        return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $nextIndex);
     }
 }

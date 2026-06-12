@@ -73,7 +73,7 @@ $isNotEmpty = strlen($string) > 0;
             $openParenthesisIndex = $tokens->getNextTokenOfKind($index, ['(']);
             \assert(\is_int($openParenthesisIndex));
 
-            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesisIndex);
 
             if ($argumentsAnalyzer->countArguments($tokens, $openParenthesisIndex, $closeParenthesisIndex) !== 1) {
                 continue;

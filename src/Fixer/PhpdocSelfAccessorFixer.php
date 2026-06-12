@@ -84,7 +84,7 @@ class Foo {
             $startIndex = $tokens->getNextTokenOfKind($nameIndex, ['{']);
             \assert(\is_int($startIndex));
 
-            $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $startIndex);
+            $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $startIndex);
 
             $classyName = $tokens[$nameIndex]->getContent();
 
