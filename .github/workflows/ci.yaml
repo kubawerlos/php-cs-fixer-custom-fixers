@@ -145,7 +145,7 @@ jobs:
           FAST_LINT_TEST_CASES: ${{ matrix.FAST_LINT_TEST_CASES }}
 
       - if: matrix.calculate-coverage
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           codecov_yml_path: dev-tools/codecov.yaml
           disable_search: true
