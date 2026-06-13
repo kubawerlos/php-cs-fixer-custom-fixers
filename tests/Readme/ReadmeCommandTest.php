@@ -12,6 +12,9 @@
 namespace Tests\Readme;
 
 use PhpCsFixerCustomFixersDev\Readme\ReadmeCommand;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -23,6 +26,9 @@ use Symfony\Component\Console\Tester\CommandTester;
  *
  * @covers \PhpCsFixerCustomFixersDev\Readme\ReadmeCommand
  */
+#[CoversClass(ReadmeCommand::class)]
+#[RequiresPhp('>= 8.4.0')]
+#[RequiresPhpunit('< 13.0.0')]
 final class ReadmeCommandTest extends TestCase
 {
     public function testReadmeIsUpToDate(): void
