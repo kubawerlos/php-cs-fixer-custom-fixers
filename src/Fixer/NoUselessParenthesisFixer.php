@@ -43,7 +43,7 @@ foo(($bar));
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound(['(', CT::T_BRACE_CLASS_INSTANTIATION_OPEN]);
+        return $tokens->isAnyTokenKindsFound(['(', CT::T_CLASS_INSTANTIATION_PARENTHESIS_OPEN]);
     }
 
     public function isRisky(): bool
@@ -54,7 +54,7 @@ foo(($bar));
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = 0; $index < $tokens->count(); $index++) {
-            if (!$tokens[$index]->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
+            if (!$tokens[$index]->equalsAny(['(', [CT::T_CLASS_INSTANTIATION_PARENTHESIS_OPEN]])) {
                 continue;
             }
 
@@ -151,7 +151,7 @@ foo(($bar));
         $nextStartIndex = $tokens->getNextMeaningfulToken($startIndex);
         \assert(\is_int($nextStartIndex));
 
-        if (!$tokens[$nextStartIndex]->equalsAny(['(', [CT::T_BRACE_CLASS_INSTANTIATION_OPEN]])) {
+        if (!$tokens[$nextStartIndex]->equalsAny(['(', [CT::T_CLASS_INSTANTIATION_PARENTHESIS_OPEN]])) {
             return false;
         }
 

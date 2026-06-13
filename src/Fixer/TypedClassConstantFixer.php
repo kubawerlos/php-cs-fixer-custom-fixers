@@ -76,7 +76,7 @@ final class TypedClassConstantFixer extends AbstractFixer
             $openParenthesisIndex = $tokens->getNextTokenOfKind($index, ['{']);
             \assert(\is_int($openParenthesisIndex));
 
-            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openParenthesisIndex);
+            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $openParenthesisIndex);
 
             self::fixClass($tokens, $openParenthesisIndex, $closeParenthesisIndex);
         }
@@ -161,7 +161,7 @@ final class TypedClassConstantFixer extends AbstractFixer
      */
     private static function getTypeOfExpressionForTokenKinds(array $tokenKinds): string
     {
-        if (self::isOfTypeBasedOnKinds($tokenKinds, [], [\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN])) {
+        if (self::isOfTypeBasedOnKinds($tokenKinds, [], [\T_ARRAY, CT::T_ARRAY_BRACKET_OPEN])) {
             return 'array';
         }
 

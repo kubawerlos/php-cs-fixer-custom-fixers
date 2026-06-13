@@ -78,7 +78,7 @@ class Foo {
             $openParenthesisIndex = $tokens->getNextTokenOfKind($constructorAnalysis->getConstructorIndex(), ['(']);
             \assert(\is_int($openParenthesisIndex));
 
-            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesisIndex);
 
             $openBraceIndex = $tokens->getNextMeaningfulToken($closeParenthesisIndex);
             \assert(\is_int($openBraceIndex));

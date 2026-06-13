@@ -112,11 +112,11 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 
             $classOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
             \assert(\is_int($classOpenBraceIndex));
-            $classCloseBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $classOpenBraceIndex);
+            $classCloseBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $classOpenBraceIndex);
 
             $constructorOpenParenthesisIndex = $tokens->getNextTokenOfKind($constructorAnalysis->getConstructorIndex(), ['(']);
             \assert(\is_int($constructorOpenParenthesisIndex));
-            $constructorCloseParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $constructorOpenParenthesisIndex);
+            $constructorCloseParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $constructorOpenParenthesisIndex);
 
             self::fixParameters(
                 $tokens,

@@ -110,7 +110,7 @@ var_dump($x);
             $indexParenthesisStart = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($indexParenthesisStart));
 
-            $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $indexParenthesisStart);
+            $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $indexParenthesisStart);
 
             $semicolonIndex = $tokens->getNextMeaningfulToken($endIndex);
             \assert(\is_int($semicolonIndex));

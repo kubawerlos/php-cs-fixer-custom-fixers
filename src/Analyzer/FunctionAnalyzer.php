@@ -76,7 +76,7 @@ final class FunctionAnalyzer
             throw new \InvalidArgumentException(\sprintf('Index %d is not a function.', $index));
         }
 
-        $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+        $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
         $argumentsEndIndex = $tokens->getPrevMeaningfulToken($closeParenthesis);
         \assert(\is_int($argumentsEndIndex));
