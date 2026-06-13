@@ -100,7 +100,7 @@ function foo($b, $s) {}
         $paramBlockStartIndex = $tokens->getNextTokenOfKind($functionIndex, ['(']);
         \assert(\is_int($paramBlockStartIndex));
 
-        $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $paramBlockStartIndex);
+        $paramBlockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $paramBlockStartIndex);
 
         $paramNames = [];
         for ($index = $paramBlockStartIndex; $index < $paramBlockEndIndex; $index++) {

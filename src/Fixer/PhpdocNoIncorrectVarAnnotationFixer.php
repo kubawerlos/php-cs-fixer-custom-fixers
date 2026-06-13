@@ -138,7 +138,7 @@ $bar = new Foo();
         $index = $tokens->getNextMeaningfulToken($controlIndex);
         \assert(\is_int($index));
 
-        $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
+        $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $index);
 
         $variables = [];
 

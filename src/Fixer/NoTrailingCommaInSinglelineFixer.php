@@ -43,7 +43,7 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
 
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([\T_ARRAY, CT::T_ARRAY_SQUARE_BRACE_OPEN, CT::T_DESTRUCTURING_SQUARE_BRACE_CLOSE, '(']);
+        return $tokens->isAnyTokenKindsFound([\T_ARRAY, CT::T_ARRAY_BRACKET_OPEN, CT::T_DESTRUCTURING_BRACKET_CLOSE, '(']);
     }
 
     public function isRisky(): bool
@@ -54,7 +54,7 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = $tokens->count() - 1; $index >= 0; $index--) {
-            if (!$tokens[$index]->equalsAny([')', [CT::T_ARRAY_SQUARE_BRACE_CLOSE], [CT::T_DESTRUCTURING_SQUARE_BRACE_CLOSE]])) {
+            if (!$tokens[$index]->equalsAny([')', [CT::T_ARRAY_BRACKET_CLOSE], [CT::T_DESTRUCTURING_BRACKET_CLOSE]])) {
                 continue;
             }
 

@@ -69,7 +69,7 @@ final class ClassConstantUsageFixer extends AbstractFixer
             $openParenthesisIndex = $tokens->getNextTokenOfKind($index, ['{']);
             \assert(\is_int($openParenthesisIndex));
 
-            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openParenthesisIndex);
+            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $openParenthesisIndex);
 
             self::fixClass($tokens, $openParenthesisIndex, $closeParenthesisIndex);
         }

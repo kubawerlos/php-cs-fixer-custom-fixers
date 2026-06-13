@@ -40,7 +40,7 @@ final class ConstructorAnalysis
     {
         $openParenthesis = $this->tokens->getNextTokenOfKind($this->constructorIndex, ['(']);
         \assert(\is_int($openParenthesis));
-        $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+        $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
         $constructorParameterNames = [];
         for ($index = $openParenthesis + 1; $index < $closeParenthesis; $index++) {
@@ -61,7 +61,7 @@ final class ConstructorAnalysis
     {
         $openParenthesis = $this->tokens->getNextTokenOfKind($this->constructorIndex, ['(']);
         \assert(\is_int($openParenthesis));
-        $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+        $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
         $constructorPromotableParameters = [];
         for ($index = $openParenthesis + 1; $index < $closeParenthesis; $index++) {
@@ -103,11 +103,11 @@ final class ConstructorAnalysis
     {
         $openParenthesis = $this->tokens->getNextTokenOfKind($this->constructorIndex, ['(']);
         \assert(\is_int($openParenthesis));
-        $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+        $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
         $openBrace = $this->tokens->getNextTokenOfKind($closeParenthesis, ['{']);
         \assert(\is_int($openBrace));
-        $closeBrace = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openBrace);
+        $closeBrace = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $openBrace);
 
         $variables = [];
         $variablesWithAssignments = [];

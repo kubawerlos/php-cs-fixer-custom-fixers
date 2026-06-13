@@ -73,7 +73,7 @@ if (isset($array[$key])) {
             $openParenthesis = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($openParenthesis));
 
-            $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesis);
+            $closeParenthesis = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
             $closeBrackets = $tokens->getPrevMeaningfulToken($closeParenthesis);
             \assert(\is_int($closeBrackets));
@@ -81,7 +81,7 @@ if (isset($array[$key])) {
                 continue;
             }
 
-            $openBrackets = $tokens->findBlockStart(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $closeBrackets);
+            $openBrackets = $tokens->findBlockStart(Tokens::BLOCK_TYPE_ARRAY_BRACKET, $closeBrackets);
 
             $keyStartIndex = $tokens->getNextMeaningfulToken($openBrackets);
             \assert(\is_int($keyStartIndex));

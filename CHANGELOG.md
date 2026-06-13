@@ -1,5 +1,8 @@
 # CHANGELOG for PHP CS Fixer: custom fixers
 
+## v3.38.0
+- Update minimum PHP CS Fixer version to 3.95.5
+
 ## v3.37.0
 - PhpUnitRequiresConstraintFixer - add option "make_version_complete"
 

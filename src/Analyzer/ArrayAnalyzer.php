@@ -25,11 +25,11 @@ final class ArrayAnalyzer
      */
     public function getElements(Tokens $tokens, int $index): array
     {
-        if ($tokens[$index]->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
+        if ($tokens[$index]->isGivenKind(CT::T_ARRAY_BRACKET_OPEN)) {
             $arrayContentStartIndex = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($arrayContentStartIndex));
 
-            $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index));
+            $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_BRACKET, $index));
             \assert(\is_int($arrayContentEndIndex));
 
             return self::getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
@@ -42,7 +42,7 @@ final class ArrayAnalyzer
             $arrayContentStartIndex = $tokens->getNextMeaningfulToken($arrayOpenBraceIndex);
             \assert(\is_int($arrayContentStartIndex));
 
-            $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $arrayOpenBraceIndex));
+            $arrayContentEndIndex = $tokens->getPrevMeaningfulToken($tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $arrayOpenBraceIndex));
             \assert(\is_int($arrayContentEndIndex));
 
             return self::getElementsForArrayContent($tokens, $arrayContentStartIndex, $arrayContentEndIndex);
@@ -103,22 +103,22 @@ final class ArrayAnalyzer
     private static function nextCandidateIndex(Tokens $tokens, int $index): int
     {
         if ($tokens[$index]->equals('{')) {
-            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $index) + 1;
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $index) + 1;
         }
 
         if ($tokens[$index]->equals('(')) {
-            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index) + 1;
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $index) + 1;
         }
 
-        if ($tokens[$index]->isGivenKind(CT::T_ARRAY_SQUARE_BRACE_OPEN)) {
-            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_SQUARE_BRACE, $index) + 1;
+        if ($tokens[$index]->isGivenKind(CT::T_ARRAY_BRACKET_OPEN)) {
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_ARRAY_BRACKET, $index) + 1;
         }
 
         if ($tokens[$index]->isGivenKind(\T_ARRAY)) {
             $arrayOpenBraceIndex = $tokens->getNextTokenOfKind($index, ['(']);
             \assert(\is_int($arrayOpenBraceIndex));
 
-            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $arrayOpenBraceIndex) + 1;
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $arrayOpenBraceIndex) + 1;
         }
 
         return $index + 1;

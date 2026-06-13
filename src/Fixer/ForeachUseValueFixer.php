@@ -89,7 +89,7 @@ final class ForeachUseValueFixer extends AbstractFixer
             $openParenthesisIndex = $tokens->getNextMeaningfulToken($index);
             \assert(\is_int($openParenthesisIndex));
 
-            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+            $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesisIndex);
 
             $variables = self::getForeachVariableNames($tokens, $openParenthesisIndex);
             if ($variables === null) {
@@ -100,7 +100,7 @@ final class ForeachUseValueFixer extends AbstractFixer
             \assert(\is_int($blockStartIndex));
 
             if ($tokens[$blockStartIndex]->equals('{')) {
-                $blockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $blockStartIndex);
+                $blockEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $blockStartIndex);
             } elseif ($tokens[$blockStartIndex]->equals(':')) {
                 $blockEndIndex = (new AlternativeSyntaxAnalyzer())->findAlternativeSyntaxBlockEnd($tokens, $index);
             } else {

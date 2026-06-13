@@ -50,7 +50,7 @@ final class SwitchAnalyzer
     {
         $parenthesisStartIndex = $tokens->getNextMeaningfulToken($switchIndex);
         \assert(\is_int($parenthesisStartIndex));
-        $parenthesisEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $parenthesisStartIndex);
+        $parenthesisEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $parenthesisStartIndex);
 
         $casesStartIndex = $tokens->getNextMeaningfulToken($parenthesisEndIndex);
         \assert(\is_int($casesStartIndex));
@@ -61,7 +61,7 @@ final class SwitchAnalyzer
     private static function getCasesEnd(Tokens $tokens, int $casesStartIndex): int
     {
         if ($tokens[$casesStartIndex]->equals('{')) {
-            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $casesStartIndex);
+            return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $casesStartIndex);
         }
 
         $index = $casesStartIndex;

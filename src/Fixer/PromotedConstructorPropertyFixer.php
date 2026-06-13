@@ -401,10 +401,10 @@ class Foo {
     {
         $parenthesesOpenIndex = $tokens->getNextTokenOfKind($constructorIndex, ['(']);
         \assert(\is_int($parenthesesOpenIndex));
-        $parenthesesCloseIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $parenthesesOpenIndex);
+        $parenthesesCloseIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $parenthesesOpenIndex);
         $braceOpenIndex = $tokens->getNextTokenOfKind($parenthesesCloseIndex, ['{']);
         \assert(\is_int($braceOpenIndex));
-        $braceCloseIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $braceOpenIndex);
+        $braceCloseIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_BRACE, $braceOpenIndex);
 
         for ($index = $parenthesesOpenIndex; $index < $braceCloseIndex; $index++) {
             if ($tokens[$index]->equals([\T_VARIABLE, $oldName])) {

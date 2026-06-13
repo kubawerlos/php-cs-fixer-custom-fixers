@@ -65,7 +65,7 @@ final class DeclareAfterOpeningTagFixer extends AbstractFixer
         $openParenthesisIndex = $tokens->getNextMeaningfulToken($declareIndex);
         \assert(\is_int($openParenthesisIndex));
 
-        $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openParenthesisIndex);
+        $closeParenthesisIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesisIndex);
 
         if (\stripos($tokens->generatePartialCode($openParenthesisIndex, $closeParenthesisIndex), 'strict_types') === false) {
             return;
