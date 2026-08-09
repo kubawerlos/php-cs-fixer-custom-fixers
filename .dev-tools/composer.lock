@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5a18e81a08dc00dda97222920b98ce3",
+    "content-hash": "d1d7c93032963d5ae5d2001eeeaa8d8b",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1818,11 +1818,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.6",
+            "version": "2.2.8",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a6e9b5a9420f6109c091e87d82683bd1a80b87ed",
-                "reference": "a6e9b5a9420f6109c091e87d82683bd1a80b87ed"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e285254e60f33c21902efef4a926ca0987c06804",
+                "reference": "e285254e60f33c21902efef4a926ca0987c06804"
             },
             "require": {
                 "php": "^7.4|^8.0"
@@ -3170,31 +3170,34 @@
         },
         {
             "name": "tomasvotruba/type-coverage",
-            "version": "2.2.2",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TomasVotruba/type-coverage.git",
-                "reference": "25f298265c823e8fb0505169135855e1e6a91021"
+                "reference": "7ba48c1bf3bbb7ffe99caacc7017bae5ee72d644"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/25f298265c823e8fb0505169135855e1e6a91021",
-                "reference": "25f298265c823e8fb0505169135855e1e6a91021"
+                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/7ba48c1bf3bbb7ffe99caacc7017bae5ee72d644",
+                "reference": "7ba48c1bf3bbb7ffe99caacc7017bae5ee72d644"
             },
             "require": {
                 "php": "^8.4",
-                "phpstan/phpstan": "^2.2"
+                "phpstan/phpstan": "^2.2",
+                "webmozart/assert": "^1.11 || ^2.1"
             },
             "type": "phpstan-extension",
             "extra": {
                 "phpstan": {
                     "includes": [
-                        "config/extension.neon"
+                        "config/extension.neon",
+                        "packages/type-perfect/config/extension.neon"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
+                    "Rector\\TypePerfect\\": "packages/type-perfect/src",
                     "TomasVotruba\\TypeCoverage\\": "src"
                 }
             },
