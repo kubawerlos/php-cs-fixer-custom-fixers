@@ -24,18 +24,15 @@ final class InfectionConfigBuilder
         'DecrementInteger',
         'GreaterThan',
         'GreaterThanOrEqualTo',
-        'IdenticalEqual',
         'IncrementInteger',
         'IntegerNegation',
         'LessThan',
         'LessThanOrEqualTo',
         'Minus',
-        'NotIdentical',
         'NotIdenticalNotEqual',
-        'OneZeroInteger',
         'Plus',
         'ReturnRemoval',
-        'SyntaxError',
+        'SyntaxError', // useless: every file is run by tests
     ];
 
     /**
