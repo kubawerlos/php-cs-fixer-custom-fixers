@@ -112,6 +112,7 @@
         "NewObject": true,
         "NotEqual": true,
         "NotEqualNotIdentical": true,
+        "NotIdentical": true,
         "NullSafeMethodCall": true,
         "NullSafePropertyCall": true,
         "OneZeroFloat": true,

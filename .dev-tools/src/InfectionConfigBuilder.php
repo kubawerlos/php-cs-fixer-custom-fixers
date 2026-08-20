@@ -30,12 +30,11 @@ final class InfectionConfigBuilder
         'LessThan',
         'LessThanOrEqualTo',
         'Minus',
-        'NotIdentical',
         'NotIdenticalNotEqual',
         'OneZeroInteger',
         'Plus',
         'ReturnRemoval',
-        'SyntaxError',
+        'SyntaxError', // useless: every file is run by tests
     ];
 
     /**
