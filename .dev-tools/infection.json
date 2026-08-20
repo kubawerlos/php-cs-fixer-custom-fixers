@@ -85,6 +85,7 @@
             ]
         },
         "LessThanNegotiation": true,
+        "LessThanOrEqualTo": true,
         "LessThanOrEqualToNegotiation": true,
         "LogicalAnd": {
             "ignore": [
