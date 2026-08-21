@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed93b4f0e34bf72fda2f2dbf68326b8b",
+    "content-hash": "df8f26aff1d1a955627ae0bd51c16f0d",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3171,16 +3171,16 @@
         },
         {
             "name": "tomasvotruba/type-coverage",
-            "version": "2.3.0",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TomasVotruba/type-coverage.git",
-                "reference": "7ba48c1bf3bbb7ffe99caacc7017bae5ee72d644"
+                "reference": "7b4aec57af15514dac9a3c5a9671da501444ecd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/7ba48c1bf3bbb7ffe99caacc7017bae5ee72d644",
-                "reference": "7ba48c1bf3bbb7ffe99caacc7017bae5ee72d644"
+                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/7b4aec57af15514dac9a3c5a9671da501444ecd0",
+                "reference": "7b4aec57af15514dac9a3c5a9671da501444ecd0"
             },
             "require": {
                 "php": "^8.4",
@@ -3191,8 +3191,7 @@
             "extra": {
                 "phpstan": {
                     "includes": [
-                        "config/extension.neon",
-                        "packages/type-perfect/config/extension.neon"
+                        "config/extension.neon"
                     ]
                 }
             },
