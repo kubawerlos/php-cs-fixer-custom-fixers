@@ -400,6 +400,17 @@ final class PhpdocVarAnnotationToAssertFixerTest extends AbstractFixerTestCase
             ',
         ];
 
+        yield 'no whitespace before assignment operator' => [
+            '<?php
+                $x= 1;
+                assert(is_int($x));
+            ',
+            '<?php
+                /** @var int $x */
+                $x= 1;
+            ',
+        ];
+
         yield 'types defined with `phpstan-type`' => [
             <<<'PHP'
                 <?php
