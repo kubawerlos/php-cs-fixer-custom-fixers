@@ -105,6 +105,7 @@
         "MBString": true,
         "MatchArmRemoval": true,
         "MethodCallRemoval": true,
+        "Minus": true,
         "MinusEqual": true,
         "ModEqual": true,
         "Modulus": true,
