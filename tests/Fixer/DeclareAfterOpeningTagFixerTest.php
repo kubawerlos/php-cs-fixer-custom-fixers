@@ -107,6 +107,11 @@ declare(strict_types=1);
             ',
         ];
 
+        yield 'fix when opening tag ends with Windows line ending' => [
+            "<?php declare(strict_types=1);\r\n\n// Foo\n",
+            "<?php\r\n\n// Foo\ndeclare(strict_types=1);\n",
+        ];
+
         yield 'fix and clean up empty lines above' => [
             '<?php declare(strict_types=1);
 

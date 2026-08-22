@@ -57,6 +57,7 @@
         "Catch_": true,
         "CloneRemoval": true,
         "Coalesce": true,
+        "Concat": true,
         "ConcatOperandRemoval": true,
         "Continue_": true,
         "Decrement": true,
