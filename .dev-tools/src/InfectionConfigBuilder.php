@@ -20,7 +20,6 @@ use PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer;
 final class InfectionConfigBuilder
 {
     private const UNWANTED_MUTATORS = [
-        'Concat',
         'DecrementInteger',
         'GreaterThan',
         'GreaterThanOrEqualTo',
