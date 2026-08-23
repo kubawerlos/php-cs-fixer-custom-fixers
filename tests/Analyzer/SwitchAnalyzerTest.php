@@ -165,5 +165,11 @@ final class SwitchAnalyzerTest extends TestCase
                 case 100: return false; endswitch;',
             1,
         ];
+
+        yield 'closure in case with semicolon directly before closing brace' => [
+            new SwitchAnalysis(7, 30, [new CaseAnalysis(23)]),
+            '<?php switch ($foo) { case function () { return 1;}: return true; }',
+            1,
+        ];
     }
 }

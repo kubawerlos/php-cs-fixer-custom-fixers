@@ -26,7 +26,6 @@ final class InfectionConfigBuilder
         'IntegerNegation',
         'LessThan',
         'NotIdenticalNotEqual',
-        'Plus',
         'ReturnRemoval',
         'SyntaxError', // useless: every file is run by tests
     ];

@@ -120,6 +120,7 @@
         "NullSafeMethodCall": true,
         "NullSafePropertyCall": true,
         "OneZeroFloat": true,
+        "Plus": true,
         "PlusEqual": true,
         "PowEqual": true,
         "PregMatchMatches": true,

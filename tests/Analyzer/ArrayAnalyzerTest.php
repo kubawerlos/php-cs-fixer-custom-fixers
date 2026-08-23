@@ -175,5 +175,52 @@ final class ArrayAnalyzerTest extends TestCase
                 ],
             ];',
         ];
+
+        yield 'trailing comma directly before closing parenthesis' => [
+            [new ArrayElementAnalysis(null, null, 6, 10)],
+            '<?php $a = [foo(1,)];',
+        ];
+
+        yield 'trailing comma directly before closing bracket of nested array' => [
+            [
+                new ArrayElementAnalysis(null, null, 6, 9),
+                new ArrayElementAnalysis(null, null, 12, 12),
+            ],
+            '<?php $a = [[1,], 2];',
+        ];
+
+        yield 'trailing comma directly before closing parenthesis of nested long syntax array' => [
+            [
+                new ArrayElementAnalysis(null, null, 6, 10),
+                new ArrayElementAnalysis(null, null, 13, 13),
+            ],
+            '<?php $a = [array(1,), 2];',
+        ];
+    }
+
+    /**
+     * @param list<ArrayElementAnalysis> $expected
+     *
+     * @requires PHP >= 8.0.0
+     *
+     * @dataProvider provideGettingArrayElements80Cases
+     */
+    public function testGettingArrayElements80(array $expected, string $code): void
+    {
+        $tokens = Tokens::fromCode($code);
+        $analyzer = new ArrayAnalyzer();
+
+        self::assertSame(\serialize($expected), \serialize($analyzer->getElements($tokens, 5)));
+    }
+
+    /**
+     * @return iterable<array{list<ArrayElementAnalysis>, string}>
+     */
+    public static function provideGettingArrayElements80Cases(): iterable
+    {
+        yield 'match with trailing comma directly before closing brace' => [
+            [new ArrayElementAnalysis(null, null, 6, 18)],
+            '<?php $a = [match(true) {default => 1,}];',
+        ];
     }
 }
