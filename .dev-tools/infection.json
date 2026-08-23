@@ -76,6 +76,7 @@
         "FunctionCall": true,
         "FunctionCallRemoval": true,
         "GreaterThanNegotiation": true,
+        "GreaterThanOrEqualTo": true,
         "GreaterThanOrEqualToNegotiation": true,
         "Identical": true,
         "IfNegation": true,

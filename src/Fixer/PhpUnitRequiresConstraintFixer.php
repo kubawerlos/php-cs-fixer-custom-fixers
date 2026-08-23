@@ -113,7 +113,7 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer implements Conf
 
         while ($index < $endIndex) {
             $index = $tokens->getNextTokenOfKind($index, [[\T_FUNCTION]]);
-            if ($index === null || $index >= $endIndex) {
+            if ($index === null || $index > $endIndex) {
                 return;
             }
 
