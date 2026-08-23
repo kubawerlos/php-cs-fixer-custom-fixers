@@ -96,7 +96,7 @@ class Foo {
     public function isCandidate(Tokens $tokens): bool
     {
         // @phpstan-ignore greaterOrEqual.alwaysTrue
-        return \PHP_VERSION_ID >= 80000 && $tokens->isAllTokenKindsFound([\T_CLASS, \T_VARIABLE]);
+        return \PHP_MAJOR_VERSION >= 8 && $tokens->isAllTokenKindsFound([\T_CLASS, \T_VARIABLE]);
     }
 
     public function isRisky(): bool

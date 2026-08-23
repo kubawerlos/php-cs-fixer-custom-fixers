@@ -53,7 +53,7 @@ final class NoTrailingCommaInSinglelineFixer extends AbstractFixer
 
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
-        for ($index = $tokens->count() - 1; $index >= 0; $index--) {
+        for ($index = $tokens->count() - 1; $index > 0; $index--) {
             if (!$tokens[$index]->equalsAny([')', [CT::T_ARRAY_BRACKET_CLOSE], [CT::T_DESTRUCTURING_BRACKET_CLOSE]])) {
                 continue;
             }

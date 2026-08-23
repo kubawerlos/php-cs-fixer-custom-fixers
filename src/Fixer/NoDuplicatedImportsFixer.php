@@ -61,7 +61,7 @@ use Bar;
         foreach ((new NamespacesAnalyzer())->getDeclarations($tokens) as $namespace) {
             $currentNamespaceUseDeclarations = \array_filter(
                 $useDeclarations,
-                static fn (NamespaceUseAnalysis $useDeclaration): bool => $useDeclaration->getStartIndex() >= $namespace->getScopeStartIndex()
+                static fn (NamespaceUseAnalysis $useDeclaration): bool => $useDeclaration->getStartIndex() > $namespace->getScopeStartIndex()
                         && $useDeclaration->getEndIndex() <= $namespace->getScopeEndIndex(),
             );
 

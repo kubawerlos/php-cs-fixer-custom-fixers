@@ -22,7 +22,6 @@ final class InfectionConfigBuilder
     private const UNWANTED_MUTATORS = [
         'DecrementInteger',
         'GreaterThan',
-        'GreaterThanOrEqualTo',
         'IncrementInteger',
         'IntegerNegation',
         'LessThan',
