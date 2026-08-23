@@ -43,7 +43,7 @@ final class ConstructorAnalysis
         $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
         $constructorParameterNames = [];
-        for ($index = $openParenthesis + 1; $index < $closeParenthesis; $index++) {
+        for ($index = $openParenthesis; $index < $closeParenthesis; $index++) {
             if (!$this->tokens[$index]->isGivenKind(\T_VARIABLE)) {
                 continue;
             }
@@ -64,7 +64,7 @@ final class ConstructorAnalysis
         $closeParenthesis = $this->tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS, $openParenthesis);
 
         $constructorPromotableParameters = [];
-        for ($index = $openParenthesis + 1; $index < $closeParenthesis; $index++) {
+        for ($index = $openParenthesis; $index < $closeParenthesis; $index++) {
             if (!$this->tokens[$index]->isGivenKind(\T_VARIABLE)) {
                 continue;
             }

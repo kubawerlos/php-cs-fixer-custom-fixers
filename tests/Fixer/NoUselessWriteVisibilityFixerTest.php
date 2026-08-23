@@ -123,5 +123,31 @@ final class NoUselessWriteVisibilityFixerTest extends AbstractFixerTestCase
                 }
                 PHP,
         ];
+
+        yield 'no space after write visibility' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public int $x;
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public public(set)int $x;
+                }
+                PHP,
+        ];
+
+        yield 'multiple spaces before write visibility' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public  int $x;
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public  public(set) int $x;
+                }
+                PHP,
+        ];
     }
 }

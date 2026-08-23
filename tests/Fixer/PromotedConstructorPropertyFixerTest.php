@@ -1088,6 +1088,20 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
                 ),
             ];
         }
+
+        yield 'promote when assignment has no surrounding whitespace' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(private string $bar) {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    private string $bar;
+                    public function __construct(string $bar) {$this->bar = $bar;}
+                }
+                PHP,
+        ];
     }
 
     /**
