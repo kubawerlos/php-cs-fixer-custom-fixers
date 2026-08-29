@@ -23,7 +23,6 @@ final class InfectionConfigBuilder
         'DecrementInteger',
         'GreaterThan',
         'IncrementInteger',
-        'IntegerNegation',
         'LessThan',
         'NotIdenticalNotEqual',
         'ReturnRemoval',
