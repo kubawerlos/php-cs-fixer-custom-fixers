@@ -22,6 +22,7 @@ use PhpCsFixer\Linter\LinterInterface;
 use PhpCsFixer\Linter\ProcessLinter;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
+use PhpCsFixerCustomFixersDev\Priority\PriorityCollection;
 use PHPUnit\Framework\TestCase;
 use Tests\AssertSameTokensTrait;
 
@@ -118,7 +119,19 @@ abstract class AbstractFixerTestCase extends TestCase
 
     final public function testPriority(): void
     {
-        self::assertLessThan((new EncodingFixer())->getPriority(), self::getFixer()->getPriority());
+        $fixer = self::getFixer();
+
+        self::assertLessThan((new EncodingFixer())->getPriority(), $fixer->getPriority());
+
+        if ($fixer instanceof DeprecatedFixerInterface) {
+            return;
+        }
+
+        $calculatedPriority = PriorityCollection::create()
+            ->getPriorityFixer((new \ReflectionObject($fixer))->getShortName())
+            ->getPriority();
+
+        self::assertSame($calculatedPriority, $fixer->getPriority());
     }
 
     final public function testMethodNames(): void
