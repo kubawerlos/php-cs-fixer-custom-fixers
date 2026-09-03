@@ -63,7 +63,7 @@ final class ReadmeCommand extends Command
         return \implode("\n", [
             self::badge(
                 'CI',
-                \sprintf('%s/github/actions/workflow/status/%s/ci.yaml?label=CI', self::SHIELDS_HOST, self::composer()->name),
+                \sprintf('%s/github/actions/workflow/status/%s/ci.yaml?branch=main&label=CI', self::SHIELDS_HOST, self::composer()->name),
                 \sprintf('https://github.com/%s/actions/workflows/ci.yaml', self::composer()->name),
             ),
             self::badge(

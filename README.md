@@ -2,7 +2,7 @@
 
 # PHP CS Fixer: custom fixers
 
-[![CI](https://img.shields.io/github/actions/workflow/status/kubawerlos/php-cs-fixer-custom-fixers/ci.yaml?label=CI)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
+[![CI](https://img.shields.io/github/actions/workflow/status/kubawerlos/php-cs-fixer-custom-fixers/ci.yaml?branch=main&label=CI)](https://github.com/kubawerlos/php-cs-fixer-custom-fixers/actions/workflows/ci.yaml)
 [![Test coverage](https://img.shields.io/codecov/c/gh/kubawerlos/php-cs-fixer-custom-fixers?branch=main&label=Test%20coverage)](https://app.codecov.io/github/kubawerlos/php-cs-fixer-custom-fixers/tree/main)
 [![Type coverage](https://img.shields.io/endpoint?label=Type%20coverage&url=https%3A%2F%2Fshepherd.dev%2Fviews%2Fcoverage_data.php%3Fkubawerlos%2Fphp-cs-fixer-custom-fixers)](https://shepherd.dev/github/kubawerlos/php-cs-fixer-custom-fixers)
 [![Mutation Score Indicator](https://img.shields.io/endpoint?label=Mutation%20Score%20Indicator&logo=none&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fkubawerlos%2Fphp-cs-fixer-custom-fixers%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/kubawerlos/php-cs-fixer-custom-fixers/main)
