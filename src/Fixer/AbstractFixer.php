@@ -19,6 +19,9 @@ use PhpCsFixer\Preg;
  */
 abstract class AbstractFixer implements FixerInterface
 {
+    /**
+     * @return non-empty-string
+     */
     final public static function name(): string
     {
         $name = Preg::replace('/(?<!^)(?=[A-Z])/', '_', \substr(static::class, 29, -5));
