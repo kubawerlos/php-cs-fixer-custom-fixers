@@ -158,8 +158,14 @@ require dirname(__DIR__) . "/vendor/autoload.php";
             return null;
         }
 
-        $stringContent = $tokens[$stringIndex]->getContent();
-        $updates[$stringIndex] = \substr($stringContent, 0, 1) . \str_repeat('/..', $depthLevel) . \substr($stringContent, 1);
+        $prefix = '';
+        $content = $tokens[$stringIndex]->getContent();
+
+        if (\strtolower($content[0]) === 'b') {
+            $prefix = $content[0];
+            $content = \substr($content, 1);
+        }
+        $updates[$stringIndex] = $prefix . $content[0] . \str_repeat('/..', $depthLevel) . \substr($content, 1);
 
         return $updates;
     }

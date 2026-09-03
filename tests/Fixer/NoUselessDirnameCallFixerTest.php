@@ -41,7 +41,6 @@ final class NoUselessDirnameCallFixerTest extends AbstractFixerTestCase
         yield ['<?php dirname(__DIR__, LEVEL) . "/path";'];
         yield ['<?php dirname(__DIR__) . $path;'];
         yield ['<?php dirname(__DIR__); "/path";'];
-        yield ["<?php dirname(__DIR__) . b'/path.php';"];
         yield ['<?php dirname(__DIR__) . "{$foo}/path";'];
         yield ['<?php dirname(__DIR__, 2, $extra . "/path.php");'];
 
@@ -88,6 +87,17 @@ final class NoUselessDirnameCallFixerTest extends AbstractFixerTestCase
                 dirname(__DIR__, $level) . "/path3";
                 dirname(__DIR__) . "/path4";
             ',
+        ];
+
+        // binary strings
+        yield [
+            "<?php __DIR__ . b'/../path';",
+            "<?php dirname(__DIR__) . b'/path';",
+        ];
+
+        yield [
+            '<?php __DIR__ . B"/../../path";',
+            '<?php dirname(__DIR__,2) . B"/path";',
         ];
 
         // test with trailing comma
