@@ -67,37 +67,52 @@ final class TrimKeyFixer extends AbstractFixer
                 continue;
             }
 
-            $content = $tokens[$indexToFix]->getContent();
-            $stringBorderQuote = $content[0];
-            $innerContent = \substr($content, 1, -1);
-
-            $newInnerContent = Preg::replace('/\\s{2,}/', ' ', $innerContent);
-
-            $prevIndex = $tokens->getPrevMeaningfulToken($indexToFix);
-            \assert(\is_int($prevIndex));
-
-            if (!$tokens[$prevIndex]->equals('.')) {
-                $newInnerContent = \ltrim($newInnerContent);
-            }
-
-            $nextIndex = $tokens->getNextMeaningfulToken($indexToFix);
-            \assert(\is_int($nextIndex));
-
-            if (!$tokens[$nextIndex]->equals('.')) {
-                $newInnerContent = \rtrim($newInnerContent);
-            }
-
-            if ($newInnerContent === '') {
-                continue;
-            }
-
-            $newContent = $stringBorderQuote . $newInnerContent . $stringBorderQuote;
-
-            if ($content === $newContent) {
+            $newContent = self::getNewContent($tokens, $indexToFix);
+            if ($newContent === null) {
                 continue;
             }
 
             $tokens[$indexToFix] = new Token([\T_CONSTANT_ENCAPSED_STRING, $newContent]);
         }
+    }
+
+    private static function getNewContent(Tokens $tokens, int $index): ?string
+    {
+        $prefix = '';
+        $content = $tokens[$index]->getContent();
+
+        if (\strtolower($content[0]) === 'b') {
+            $prefix = $content[0];
+            $content = \substr($content, 1);
+        }
+
+        $stringBorderQuote = $content[0];
+        $innerContent = \substr($content, 1, -1);
+
+        $newInnerContent = Preg::replace('/\\s{2,}/', ' ', $innerContent);
+
+        $prevIndex = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($prevIndex));
+
+        if (!$tokens[$prevIndex]->equals('.')) {
+            $newInnerContent = \ltrim($newInnerContent);
+        }
+
+        $nextIndex = $tokens->getNextMeaningfulToken($index);
+        \assert(\is_int($nextIndex));
+
+        if (!$tokens[$nextIndex]->equals('.')) {
+            $newInnerContent = \rtrim($newInnerContent);
+        }
+
+        if ($newInnerContent === '') {
+            return null;
+        }
+
+        if ($newInnerContent === $innerContent) {
+            return null;
+        }
+
+        return $prefix . $stringBorderQuote . $newInnerContent . $stringBorderQuote;
     }
 }
