@@ -208,6 +208,29 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
             ['keep_concatenation_for_different_quotes' => true],
         ];
 
+        yield 'keep concatenation for different quotes with binary strings' => [
+            <<<'CONTENT'
+                b"ab";
+                b'cd';
+                b"e" . b'f';
+                "g" . B'h';
+                CONTENT,
+            <<<'CONTENT'
+                b"a" . "b";
+                b'c' . 'd';
+                b"e" . b'f';
+                "g" . B'h';
+                CONTENT,
+            ['keep_concatenation_for_different_quotes' => true],
+        ];
+
+        yield 'option to prevent trailing spaces with binary strings' => [
+            'b"Foo " . B"
+                         & Bar"',
+            null,
+            ['allow_preventing_trailing_spaces' => true],
+        ];
+
         yield 'dollar as last character in double quotes merged with double quotes' => [
             '"My name is \\$foo"',
             '"My name is $" . "foo"',

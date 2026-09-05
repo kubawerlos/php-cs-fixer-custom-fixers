@@ -106,13 +106,6 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 continue;
             }
 
-            if (
-                $this->keepConcatenationForDifferentQuotes
-                && \substr($tokens[$firstIndex]->getContent(), 0, 1) !== \substr($tokens[$secondIndex]->getContent(), 0, 1)
-            ) {
-                continue;
-            }
-
             $this->fixConcat($tokens, $firstIndex, $secondIndex);
         }
     }
@@ -167,20 +160,18 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
         $firstContent = $tokens[$firstIndex]->getContent();
         $secondContent = $tokens[$secondIndex]->getContent();
 
-        if (
-            $this->allowPreventingTrailingSpaces
-            && Preg::match('/\\h(\\\'|")$/', $firstContent)
-            && Preg::match('/^(\\\'|")\\R/', $secondContent)
-        ) {
-            return;
-        }
-
         if (\strtolower($firstContent[0]) === 'b') {
             $prefix = $firstContent[0];
-            $firstContent = \ltrim($firstContent, 'bB');
+            $firstContent = \substr($firstContent, 1);
         }
 
-        $secondContent = \ltrim($secondContent, 'bB');
+        if (\strtolower($secondContent[0]) === 'b') {
+            $secondContent = \substr($secondContent, 1);
+        }
+
+        if ($this->shouldKeepConcatenation($firstContent, $secondContent)) {
+            return;
+        }
 
         $border = $firstContent[0] === '"' || $secondContent[0] === '"' ? '"' : "'";
 
@@ -195,6 +186,17 @@ final class NoSuperfluousConcatenationFixer extends AbstractFixer implements Con
                 ),
             ],
         );
+    }
+
+    private function shouldKeepConcatenation(string $firstContent, string $secondContent): bool
+    {
+        if ($this->keepConcatenationForDifferentQuotes && $firstContent[0] !== $secondContent[0]) {
+            return true;
+        }
+
+        return $this->allowPreventingTrailingSpaces
+            && Preg::match('/\\h(\\\'|")$/', $firstContent)
+            && Preg::match('/^(\\\'|")\\R/', $secondContent);
     }
 
     private static function getContentForBorder(string $content, string $targetBorder, bool $escapeDollarWhenIsLastCharacter): string
