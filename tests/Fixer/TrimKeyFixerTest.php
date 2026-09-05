@@ -109,5 +109,24 @@ final class TrimKeyFixerTest extends AbstractFixerTestCase
                 ];
                 PHP,
         ];
+
+        yield 'binary strings' => [
+            <<<'PHP'
+                <?php return [
+                    b'k1' => 'v',
+                    B"k2" => 'v',
+                    b'k3 k3' => 'v',
+                    b'k4' => 'v',
+                ];
+                PHP,
+            <<<'PHP'
+                <?php return [
+                    b'k1 ' => 'v',
+                    B"    k2" => 'v',
+                    b'k3  k3' => 'v',
+                    b'k4' => 'v',
+                ];
+                PHP,
+        ];
     }
 }
