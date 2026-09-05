@@ -295,6 +295,19 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
                 public function testFoo(): void {}
             }',
         ];
+
+        yield 'attributes with binary strings' => [
+            '<?php class FooTest extends TestCase {
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhp(b\'>= 8.4\')]
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhpunit(B">= 11")]
+                public function testFoo(): void {}
+            }',
+            '<?php class FooTest extends TestCase {
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhp(b\'8.4\')]
+                #[\\PHPUnit\\Framework\\Attributes\\RequiresPhpunit(B"11")]
+                public function testFoo(): void {}
+            }',
+        ];
     }
 
     /**

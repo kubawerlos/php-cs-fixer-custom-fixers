@@ -177,14 +177,26 @@ final class PhpUnitRequiresConstraintFixer extends AbstractFixer implements Conf
                         continue;
                     }
 
-                    $quote = \substr($tokens[$stringIndex]->getContent(), -1, 1);
                     $tokens[$stringIndex] = new Token([
                         \T_CONSTANT_ENCAPSED_STRING,
-                        $quote . $this->fixString(\substr($tokens[$stringIndex]->getContent(), 1, -1)) . $quote,
+                        $this->fixStringLiteral($tokens[$stringIndex]->getContent()),
                     ]);
                 }
             }
         }
+    }
+
+    private function fixStringLiteral(string $content): string
+    {
+        $prefix = '';
+        if (\strtolower($content[0]) === 'b') {
+            $prefix = $content[0];
+            $content = \substr($content, 1);
+        }
+
+        $quote = $content[0];
+
+        return $prefix . $quote . $this->fixString(\substr($content, 1, -1)) . $quote;
     }
 
     private function fixString(string $string): string
