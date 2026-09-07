@@ -94,5 +94,32 @@ final class ClassConstantUsageFixerTest extends AbstractFixerTestCase
                 }
                 PHP,
         ];
+
+        yield 'binary strings' => [
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                    public const BAR = b'bar';
+                    public const BAZ = B"baz";
+                    public function f()
+                    {
+                        return self::BAR . self::BAZ;
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                    public const BAR = b'bar';
+                    public const BAZ = B"baz";
+                    public function f()
+                    {
+                        return b'bar' . B"baz";
+                    }
+                }
+                PHP,
+        ];
     }
 }
