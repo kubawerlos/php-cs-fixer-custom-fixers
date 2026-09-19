@@ -50,6 +50,58 @@ class FooTest extends TestCase {
     }
 
     /**
+     * @requires PHP >= 8.0.0
+     *
+     * @dataProvider provideFix80Cases
+     */
+    public function testFix80(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix80Cases(): iterable
+    {
+        yield 'ignore assertion with named arguments' => [
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertSame(expected: 3, actual: count($array));
+                }
+            }',
+        ];
+
+        yield 'fix function with named argument' => [
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertCount(3, $array);
+                    self::assertInstanceOf("stdClass", $object);
+                }
+            }',
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertSame(3, count(value: $array));
+                    self::assertSame("stdClass", get_class(object: $object));
+                }
+            }',
+        ];
+
+        yield 'fix function with named argument and many spaces' => [
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    $this->assertCount ( 3 ,  $array  ) ;
+                }
+            }',
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    $this->assertSame ( 3 , \\count ( value : $array ) ) ;
+                }
+            }',
+        ];
+    }
+
+    /**
      * @return iterable<array{0: string, 1?: string}>
      */
     private static function getFixCases(): iterable
