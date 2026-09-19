@@ -16,6 +16,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\PhpUnitTestCaseAnalyzer;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
@@ -159,6 +160,16 @@ class FooTest extends TestCase {
         $tokens[$assertionIndex] = new Token([\T_STRING, $newAssertion]);
         $tokens->clearRange($secondArgument->getStartIndex(), $openParenthesisIndex - 1);
         $tokens->clearTokenAndMergeSurroundingWhitespace($openParenthesisIndex);
+
+        $argumentStartIndex = $arguments[0]->getStartIndex();
+        if ($tokens[$argumentStartIndex]->isGivenKind(CT::T_NAMED_ARGUMENT_NAME)) {
+            $colonIndex = $tokens->getNextMeaningfulToken($argumentStartIndex);
+            \assert(\is_int($colonIndex));
+
+            $tokens->clearRange($argumentStartIndex, $colonIndex);
+            $tokens->removeTrailingWhitespace($colonIndex);
+        }
+
         $tokens->clearTokenAndMergeSurroundingWhitespace($closeParenthesisIndex);
     }
 }
