@@ -80,4 +80,26 @@ final class NoUselessStrlenFixerTest extends AbstractFixerTestCase
             ',
         ];
     }
+
+    /**
+     * @requires PHP >= 8.0.0
+     *
+     * @dataProvider provideFix80Cases
+     */
+    public function testFix80(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix80Cases(): iterable
+    {
+        yield ['<?php mb_strlen(string: $s, encoding: \'UTF-8\') > 0;'];
+
+        yield ['<?php $s !== \'\';', '<?php strlen(string: $s) > 0;'];
+        yield ['<?php \'\' === $s;', '<?php 0 === mb_strlen(string: $s);'];
+        yield ['<?php $s !== \'\';', '<?php strlen( string : $s ) > 0;'];
+    }
 }
