@@ -12,6 +12,7 @@
 namespace Tests\Analyzer\Analysis;
 
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +20,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis
  */
+#[CoversClass(ArrayElementAnalysis::class)]
 final class ArrayElementAnalysisTest extends TestCase
 {
     public function testGetKeyStartIndex(): void

@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer
  */
+#[CoversClass(PhpdocOnlyAllowedAnnotationsFixer::class)]
 final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
@@ -35,6 +40,7 @@ final class PhpdocOnlyAllowedAnnotationsFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);

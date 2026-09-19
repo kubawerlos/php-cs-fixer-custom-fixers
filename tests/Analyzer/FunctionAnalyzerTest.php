@@ -14,6 +14,8 @@ namespace Tests\Analyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,11 +23,13 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\FunctionAnalyzer
  */
+#[CoversClass(FunctionAnalyzer::class)]
 final class FunctionAnalyzerTest extends TestCase
 {
     /**
      * @dataProvider provideForNotFunctionCases
      */
+    #[DataProvider('provideForNotFunctionCases')]
     public function testForNotFunction(string $code, int $index): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -48,6 +52,7 @@ final class FunctionAnalyzerTest extends TestCase
      *
      * @dataProvider provideGettingArgumentsCases
      */
+    #[DataProvider('provideGettingArgumentsCases')]
     public function testGettingArguments(array $expected, string $code, int $index): void
     {
         $tokens = Tokens::fromCode($code);

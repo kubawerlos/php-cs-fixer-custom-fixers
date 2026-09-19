@@ -54,9 +54,9 @@ foreach (new Fixers() as $fixer) {
 unset($rules['assign_null_coalescing_to_coalesce_equal']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['get_class_to_class_keyword']); // TODO: remove when dropping support to PHP <8.0
 unset($rules['modernize_strpos']); // TODO: remove when dropping support to PHP <8.0
-unset($rules['php_unit_attributes']); // TODO: remove when dropping support to PHP <8.0
 unset($rules[PromotedConstructorPropertyFixer::name()]); // TODO: remove when dropping support to PHP <8.0
 unset($rules[TypedClassConstantFixer::name()]); // TODO: remove when dropping support to PHP <8.3
+$rules['php_unit_attributes'] = ['keep_annotations' => true]; // TODO: remove when dropping support to PHP <8.0
 $rules['trailing_comma_in_multiline'] = ['after_heredoc' => true, 'elements' => ['arguments', 'arrays']]; // TODO: remove when dropping support to PHP <8.0
 
 foreach (new PhpCsFixerCustomFixersDev\Fixers() as $fixer) {

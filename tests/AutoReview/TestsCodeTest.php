@@ -12,6 +12,8 @@
 namespace Tests\AutoReview;
 
 use PhpCsFixer\Preg;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -22,6 +24,7 @@ use Tests\Fixer\AbstractFixerTestCase;
  *
  * @coversNothing
  */
+#[CoversNothing]
 final class TestsCodeTest extends TestCase
 {
     /**
@@ -29,6 +32,7 @@ final class TestsCodeTest extends TestCase
      *
      * @dataProvider provideTestClassCases
      */
+    #[DataProvider('provideTestClassCases')]
     public function testClassContainsCorrectMethods(string $className): void
     {
         if ((new \ReflectionClass($className))->isTrait()) {
@@ -56,6 +60,7 @@ final class TestsCodeTest extends TestCase
      *
      * @dataProvider provideTestClassCases
      */
+    #[DataProvider('provideTestClassCases')]
     public function testDataProvidersAreStatic(string $className): void
     {
         $dataProviders = self::getDataProviders($className);
@@ -81,6 +86,7 @@ final class TestsCodeTest extends TestCase
      *
      * @dataProvider provideTestClassCases
      */
+    #[DataProvider('provideTestClassCases')]
     public function testDataProvidersKeys(string $className): void
     {
         $dataProviders = self::getDataProviders($className);
@@ -116,6 +122,7 @@ final class TestsCodeTest extends TestCase
     /**
      * @dataProvider provideTestClassCases
      */
+    #[DataProvider('provideTestClassCases')]
     public function testDataProvidersValues(string $className): void
     {
         if (!\is_subclass_of($className, AbstractFixerTestCase::class)) {

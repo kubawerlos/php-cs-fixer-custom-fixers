@@ -15,6 +15,8 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\SwitchAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,6 +24,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\SwitchAnalyzer
  */
+#[CoversClass(SwitchAnalyzer::class)]
 final class SwitchAnalyzerTest extends TestCase
 {
     public function testForNotSwitch(): void
@@ -37,6 +40,7 @@ final class SwitchAnalyzerTest extends TestCase
     /**
      * @dataProvider provideGettingSwitchAnalysisCases
      */
+    #[DataProvider('provideGettingSwitchAnalysisCases')]
     public function testGettingSwitchAnalysis(SwitchAnalysis $expected, string $code, int $index): void
     {
         $tokens = Tokens::fromCode($code);

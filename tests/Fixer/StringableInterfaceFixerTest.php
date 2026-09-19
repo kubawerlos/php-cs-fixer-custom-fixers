@@ -11,11 +11,17 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\StringableInterfaceFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\StringableInterfaceFixer
  */
+#[CoversClass(StringableInterfaceFixer::class)]
 final class StringableInterfaceFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -28,6 +34,8 @@ final class StringableInterfaceFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.0.0
      */
+    #[DataProvider('provideFixCases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

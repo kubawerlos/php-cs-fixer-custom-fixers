@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoSuperfluousConcatenationFixer
  */
+#[CoversClass(NoSuperfluousConcatenationFixer::class)]
 final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -35,6 +40,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testStringIsTheSame(string $expected, ?string $input = null, array $configuration = []): void
     {
         if ($input === null) {
@@ -52,6 +58,7 @@ final class NoSuperfluousConcatenationFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest(

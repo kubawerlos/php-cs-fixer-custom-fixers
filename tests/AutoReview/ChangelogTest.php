@@ -13,6 +13,8 @@ namespace Tests\AutoReview;
 
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,11 +22,13 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversNothing
  */
+#[CoversNothing]
 final class ChangelogTest extends TestCase
 {
     /**
      * @dataProvider \Tests\AutoReview\SrcCodeTest::provideFixerCases
      */
+    #[DataProviderExternal(SrcCodeTest::class, 'provideFixerCases')]
     public function testFixerAddingIsListed(FixerInterface $fixer): void
     {
         self::assertChangelogContains('Add ' . (new \ReflectionObject($fixer))->getShortName());
@@ -33,6 +37,7 @@ final class ChangelogTest extends TestCase
     /**
      * @dataProvider \Tests\AutoReview\SrcCodeTest::provideFixerCases
      */
+    #[DataProviderExternal(SrcCodeTest::class, 'provideFixerCases')]
     public function testFixerDeprecatingIsListed(FixerInterface $fixer): void
     {
         if (!$fixer instanceof DeprecatedFixerInterface) {

@@ -12,6 +12,8 @@
 namespace Tests\AutoReview;
 
 use PhpCsFixerCustomFixersDev\InfectionConfigBuilder;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,11 +21,13 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversNothing
  */
+#[CoversNothing]
 final class InfectionConfigTest extends TestCase
 {
     /**
      * @runInSeparateProcess
      */
+    #[RunInSeparateProcess]
     public function testConfigIsUpToDate(): void
     {
         if (\file_exists(__DIR__ . '/../../.dev-tools/vendor/autoload.php')) {

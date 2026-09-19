@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer
  */
+#[CoversClass(DataProviderNameFixer::class)]
 final class DataProviderNameFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
@@ -44,6 +49,7 @@ final class DataProviderNameFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);

@@ -11,6 +11,11 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\ReadonlyPromotedPropertiesFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
@@ -18,6 +23,8 @@ namespace Tests\Fixer;
  *
  * @requires PHP >= 8.1.0
  */
+#[CoversClass(ReadonlyPromotedPropertiesFixer::class)]
+#[RequiresPhp('>= 8.1.0')]
 final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -28,6 +35,7 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -317,6 +325,8 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.2.0
      */
+    #[DataProvider('provideFix82Cases')]
+    #[RequiresPhp('>= 8.2.0')]
     public function testFix82(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -360,6 +370,8 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.4.0
      */
+    #[DataProvider('provideFix84Cases')]
+    #[RequiresPhp('>= 8.4.0')]
     public function testFix84(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

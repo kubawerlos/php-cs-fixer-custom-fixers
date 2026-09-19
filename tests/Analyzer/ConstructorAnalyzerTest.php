@@ -14,6 +14,8 @@ namespace Tests\Analyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,6 +23,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer
  */
+#[CoversClass(ConstructorAnalyzer::class)]
 final class ConstructorAnalyzerTest extends TestCase
 {
     public function testFindingConstructorWhenNotForClass(): void
@@ -39,6 +42,7 @@ final class ConstructorAnalyzerTest extends TestCase
      *
      * @dataProvider provideFindingNonAbstractConstructorCases
      */
+    #[DataProvider('provideFindingNonAbstractConstructorCases')]
     public function testFindingNonAbstractConstructor(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);

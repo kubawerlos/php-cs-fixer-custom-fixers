@@ -11,6 +11,11 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PhpUnitRequiresConstraintFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
@@ -18,6 +23,7 @@ namespace Tests\Fixer;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpUnitRequiresConstraintFixer
  */
+#[CoversClass(PhpUnitRequiresConstraintFixer::class)]
 final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
@@ -37,6 +43,7 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);
@@ -197,6 +204,8 @@ final class PhpUnitRequiresConstraintFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.0.0
      */
+    #[DataProvider('provideFix80Cases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testFix80(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

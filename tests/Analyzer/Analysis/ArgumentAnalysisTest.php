@@ -12,6 +12,7 @@
 namespace Tests\Analyzer\Analysis;
 
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +20,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis
  */
+#[CoversClass(ArgumentAnalysis::class)]
 final class ArgumentAnalysisTest extends TestCase
 {
     public function testColonIndex(): void

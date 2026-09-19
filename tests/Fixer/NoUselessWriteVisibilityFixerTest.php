@@ -11,6 +11,11 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\NoUselessWriteVisibilityFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
@@ -18,6 +23,8 @@ namespace Tests\Fixer;
  *
  * @requires PHP >= 8.4.0
  */
+#[CoversClass(NoUselessWriteVisibilityFixer::class)]
+#[RequiresPhp('>= 8.4.0')]
 final class NoUselessWriteVisibilityFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -28,6 +35,7 @@ final class NoUselessWriteVisibilityFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

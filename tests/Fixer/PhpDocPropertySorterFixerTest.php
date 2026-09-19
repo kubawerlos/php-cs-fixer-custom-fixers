@@ -12,12 +12,16 @@
 namespace Tests\Fixer;
 
 use PhpCsFixerCustomFixers\Fixer\PhpdocPropertySortedFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpDocPropertySorterFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpDocPropertySorterFixer
  */
+#[CoversClass(PhpDocPropertySorterFixer::class)]
 final class PhpDocPropertySorterFixerTest extends AbstractFixerTestCase
 {
     public function testSuccessorName(): void
@@ -33,6 +37,7 @@ final class PhpDocPropertySorterFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

@@ -13,6 +13,8 @@ namespace Tests;
 
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixerCustomFixers\Fixers;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 
@@ -21,6 +23,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @covers \PhpCsFixerCustomFixers\Fixers
  */
+#[CoversClass(Fixers::class)]
 final class FixersTest extends TestCase
 {
     public function testCollectionIsSortedByName(): void
@@ -36,6 +39,7 @@ final class FixersTest extends TestCase
     /**
      * @dataProvider provideFixerIsInCollectionCases
      */
+    #[DataProvider('provideFixerIsInCollectionCases')]
     public function testFixerIsInCollection(FixerInterface $fixer): void
     {
         self::assertContains($fixer->getName(), self::fixerNamesFromCollection());
