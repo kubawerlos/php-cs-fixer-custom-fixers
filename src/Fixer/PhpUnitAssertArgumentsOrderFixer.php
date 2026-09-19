@@ -16,6 +16,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\PhpUnitTestCaseAnalyzer;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArgumentAnalysis;
@@ -95,7 +96,7 @@ class FooTest extends TestCase {
 
             $arguments = FunctionAnalyzer::getFunctionArguments($tokens, $index);
 
-            if (!self::shouldArgumentsBeSwapped($arguments)) {
+            if (!self::shouldArgumentsBeSwapped($tokens, $arguments)) {
                 continue;
             }
 
@@ -138,9 +139,13 @@ class FooTest extends TestCase {
     /**
      * @param list<ArgumentAnalysis> $arguments
      */
-    private static function shouldArgumentsBeSwapped(array $arguments): bool
+    private static function shouldArgumentsBeSwapped(Tokens $tokens, array $arguments): bool
     {
         if (\count($arguments) < 2) {
+            return false;
+        }
+
+        if ($tokens[$arguments[1]->getStartIndex()]->isGivenKind(CT::T_NAMED_ARGUMENT_NAME)) {
             return false;
         }
 

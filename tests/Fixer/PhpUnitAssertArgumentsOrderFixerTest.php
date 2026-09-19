@@ -50,6 +50,59 @@ class FooTest extends TestCase {
     }
 
     /**
+     * @requires PHP >= 8.0.0
+     *
+     * @dataProvider provideFix80Cases
+     */
+    public function testFix80(string $expected, ?string $input = null): void
+    {
+        $this->doTest($expected, $input);
+    }
+
+    /**
+     * @return iterable<array{0: string, 1?: string}>
+     */
+    public static function provideFix80Cases(): iterable
+    {
+        yield 'named arguments' => [
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertSame(expected: $x, actual: 1);
+                }
+            }',
+        ];
+
+        yield 'named arguments in reversed order' => [
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertSame(actual: $x, expected: 1);
+                }
+            }',
+        ];
+
+        yield 'named argument after positional one' => [
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertSame($x, actual: 1);
+                }
+            }',
+        ];
+
+        yield 'named argument after arguments to swap' => [
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertSame(1, $x, message: "Message");
+                }
+            }',
+            '<?php class FooTest extends TestCase {
+                public function testFoo() {
+                    self::assertSame($x, 1, message: "Message");
+                }
+            }',
+        ];
+    }
+
+    /**
      * @return iterable<array{0: string, 1?: string}>
      */
     private static function getFixCases(): iterable
