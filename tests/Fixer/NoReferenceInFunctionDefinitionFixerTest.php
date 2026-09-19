@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\NoReferenceInFunctionDefinitionFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoReferenceInFunctionDefinitionFixer
  */
+#[CoversClass(NoReferenceInFunctionDefinitionFixer::class)]
 final class NoReferenceInFunctionDefinitionFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -26,6 +31,7 @@ final class NoReferenceInFunctionDefinitionFixerTest extends AbstractFixerTestCa
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

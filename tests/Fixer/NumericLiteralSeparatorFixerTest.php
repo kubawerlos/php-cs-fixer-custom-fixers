@@ -12,12 +12,16 @@
 namespace Tests\Fixer;
 
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NumericLiteralSeparatorFixer
  */
+#[CoversClass(NumericLiteralSeparatorFixer::class)]
 final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -75,6 +79,7 @@ final class NumericLiteralSeparatorFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest(

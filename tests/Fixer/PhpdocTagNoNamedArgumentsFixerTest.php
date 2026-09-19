@@ -14,6 +14,10 @@ namespace Tests\Fixer;
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\WhitespacesFixerConfig;
+use PhpCsFixerCustomFixers\Fixer\PhpdocTagNoNamedArgumentsFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 
 /**
  * @internal
@@ -22,6 +26,7 @@ use PhpCsFixer\WhitespacesFixerConfig;
  *
  * @phpstan-import-type _InputConfig from \PhpCsFixerCustomFixers\Fixer\PhpdocTagNoNamedArgumentsFixer
  */
+#[CoversClass(PhpdocTagNoNamedArgumentsFixer::class)]
 final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
@@ -60,6 +65,7 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = [], ?WhitespacesFixerConfig $whitespacesFixerConfig = null): void
     {
         $this->doTest($expected, $input, $configuration, $whitespacesFixerConfig);
@@ -238,6 +244,8 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.0.0
      */
+    #[DataProvider('provideFix80Cases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testFix80(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -272,6 +280,8 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.2.0
      */
+    #[DataProvider('provideFix82Cases')]
+    #[RequiresPhp('>= 8.2.0')]
     public function testFix82(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -324,6 +334,8 @@ final class PhpdocTagNoNamedArgumentsFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0
      */
+    #[DataProvider('provideFixPre85Cases')]
+    #[RequiresPhp('~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0')]
     public function testFixPre85(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

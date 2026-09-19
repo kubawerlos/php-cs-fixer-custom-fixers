@@ -13,6 +13,9 @@ namespace Tests\Analyzer\Analysis;
 
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,6 +23,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\Analysis\ConstructorAnalysis
  */
+#[CoversClass(ConstructorAnalysis::class)]
 final class ConstructorAnalysisTest extends TestCase
 {
     /**
@@ -27,6 +31,7 @@ final class ConstructorAnalysisTest extends TestCase
      *
      * @dataProvider provideGettingConstructorParameterNamesCases
      */
+    #[DataProvider('provideGettingConstructorParameterNamesCases')]
     public function testGettingConstructorParameterNames(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);
@@ -70,6 +75,8 @@ final class ConstructorAnalysisTest extends TestCase
      *
      * @requires PHP >= 8.0.0
      */
+    #[DataProvider('provideGettingConstructorParameterNames80Cases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testGettingConstructorParameterNames80(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);
@@ -97,6 +104,7 @@ final class ConstructorAnalysisTest extends TestCase
      *
      * @dataProvider provideGettingConstructorPromotableParametersCases
      */
+    #[DataProvider('provideGettingConstructorPromotableParametersCases')]
     public function testGettingConstructorPromotableParameters(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);
@@ -147,6 +155,8 @@ final class ConstructorAnalysisTest extends TestCase
      *
      * @requires PHP >= 8.0.0
      */
+    #[DataProvider('provideGettingConstructorPromotableParameters80Cases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testGettingConstructorPromotableParameters80(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);
@@ -174,6 +184,7 @@ final class ConstructorAnalysisTest extends TestCase
      *
      * @dataProvider provideGettingConstructorPromotableAssignmentsCases
      */
+    #[DataProvider('provideGettingConstructorPromotableAssignmentsCases')]
     public function testGettingConstructorPromotableAssignments(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);

@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderStaticFixer
  */
+#[CoversClass(DataProviderStaticFixer::class)]
 final class DataProviderStaticFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -40,6 +45,7 @@ final class DataProviderStaticFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);

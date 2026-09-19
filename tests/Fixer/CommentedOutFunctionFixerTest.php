@@ -11,11 +11,17 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer
  */
+#[CoversClass(CommentedOutFunctionFixer::class)]
 final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
@@ -35,6 +41,7 @@ final class CommentedOutFunctionFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);
@@ -252,6 +259,7 @@ baz();
     /**
      * @requires PHP < 8.0.0
      */
+    #[RequiresPhp('< 8.0.0')]
     public function testFixPre80(): void
     {
         $this->doTest(

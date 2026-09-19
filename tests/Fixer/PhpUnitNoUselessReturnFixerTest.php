@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer
  */
+#[CoversClass(PhpUnitNoUselessReturnFixer::class)]
 final class PhpUnitNoUselessReturnFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -26,6 +31,7 @@ final class PhpUnitNoUselessReturnFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

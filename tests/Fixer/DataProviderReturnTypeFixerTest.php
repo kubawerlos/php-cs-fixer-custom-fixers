@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer
  */
+#[CoversClass(DataProviderReturnTypeFixer::class)]
 final class DataProviderReturnTypeFixerTest extends AbstractFixerTestCase
 {
     private const TEMPLATE = '<?php
@@ -46,6 +51,7 @@ class FooTest extends TestCase {
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

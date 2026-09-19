@@ -11,6 +11,11 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\FunctionParameterSeparationFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
@@ -18,6 +23,8 @@ namespace Tests\Fixer;
  *
  * @requires PHP >= 8.0.0
  */
+#[CoversClass(FunctionParameterSeparationFixer::class)]
+#[RequiresPhp('>= 8.0.0')]
 final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -28,6 +35,7 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -204,6 +212,8 @@ final class FunctionParameterSeparationFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.4.0
      */
+    #[DataProvider('provideFix84Cases')]
+    #[RequiresPhp('>= 8.4.0')]
     public function testFix84(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

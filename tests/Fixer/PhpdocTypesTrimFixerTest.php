@@ -11,12 +11,19 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\AbstractTypesFixer;
+use PhpCsFixerCustomFixers\Fixer\PhpdocTypesTrimFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\AbstractTypesFixer
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocTypesTrimFixer
  */
+#[CoversClass(AbstractTypesFixer::class)]
+#[CoversClass(PhpdocTypesTrimFixer::class)]
 final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -27,6 +34,7 @@ final class PhpdocTypesTrimFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

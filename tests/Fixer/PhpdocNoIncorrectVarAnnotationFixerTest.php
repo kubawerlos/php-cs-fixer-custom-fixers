@@ -11,11 +11,17 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer
  */
+#[CoversClass(PhpdocNoIncorrectVarAnnotationFixer::class)]
 final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -26,6 +32,7 @@ final class PhpdocNoIncorrectVarAnnotationFixerTest extends AbstractFixerTestCas
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -462,6 +469,8 @@ $x = 0;
      *
      * @requires PHP >= 8.0.0
      */
+    #[DataProvider('provideFix80Cases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testFix80(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -515,6 +524,8 @@ $x = 0;
      *
      * @requires PHP >= 8.1.0
      */
+    #[DataProvider('provideFix81Cases')]
+    #[RequiresPhp('>= 8.1.0')]
     public function testFix81(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -542,6 +553,8 @@ $x = 0;
      *
      * @requires PHP >= 8.4.0
      */
+    #[DataProvider('provideFix84Cases')]
+    #[RequiresPhp('>= 8.4.0')]
     public function testFix84(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

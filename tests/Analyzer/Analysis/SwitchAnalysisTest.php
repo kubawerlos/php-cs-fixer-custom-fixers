@@ -13,6 +13,7 @@ namespace Tests\Analyzer\Analysis;
 
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\SwitchAnalysis;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,6 +21,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\Analysis\SwitchAnalysis
  */
+#[CoversClass(SwitchAnalysis::class)]
 final class SwitchAnalysisTest extends TestCase
 {
     public function testCasesStart(): void

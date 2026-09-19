@@ -11,11 +11,17 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\NoUselessParenthesisFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoUselessParenthesisFixer
  */
+#[CoversClass(NoUselessParenthesisFixer::class)]
 final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -26,6 +32,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -385,6 +392,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
     /**
      * @requires PHP < 8.0.0
      */
+    #[RequiresPhp('< 8.0.0')]
     public function testFixPre80(): void
     {
         $this->doTest(
@@ -396,6 +404,7 @@ final class NoUselessParenthesisFixerTest extends AbstractFixerTestCase
     /**
      * @requires PHP >= 8.0.0
      */
+    #[RequiresPhp('>= 8.0.0')]
     public function testFix80(): void
     {
         $this->doTest(

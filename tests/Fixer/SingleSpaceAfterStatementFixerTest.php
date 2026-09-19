@@ -14,12 +14,15 @@ namespace Tests\Fixer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\SingleSpaceAfterStatementFixer
  */
+#[CoversClass(SingleSpaceAfterStatementFixer::class)]
 final class SingleSpaceAfterStatementFixerTest extends AbstractFixerTestCase
 {
     private const EXAMPLE_WITH_ALL_TOKENS = '<?php
@@ -117,6 +120,7 @@ interface    FooInterface {
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);
@@ -292,6 +296,7 @@ do    {
     /**
      * @dataProvider provideTokenIsUsefulCases
      */
+    #[DataProvider('provideTokenIsUsefulCases')]
     public function testTokenIsUseful(int $token): void
     {
         $fixer = self::getFixer();

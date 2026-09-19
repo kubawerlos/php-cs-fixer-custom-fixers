@@ -19,6 +19,8 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
 use PhpCsFixerCustomFixers\Fixers;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -28,11 +30,13 @@ use Symfony\Component\Finder\SplFileInfo;
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\AbstractFixer
  */
+#[CoversClass(AbstractFixer::class)]
 final class SrcCodeTest extends TestCase
 {
     /**
      * @dataProvider provideFixerCases
      */
+    #[DataProvider('provideFixerCases')]
     public function testFixerExtendsAbstractFixer(FixerInterface $fixer): void
     {
         self::assertInstanceOf(AbstractFixer::class, $fixer);
@@ -41,6 +45,7 @@ final class SrcCodeTest extends TestCase
     /**
      * @dataProvider provideFixerCases
      */
+    #[DataProvider('provideFixerCases')]
     public function testFixerHasValidName(FixerInterface $fixer): void
     {
         $validator = new FixerNameValidator();
@@ -54,6 +59,7 @@ final class SrcCodeTest extends TestCase
     /**
      * @dataProvider provideFixerCases
      */
+    #[DataProvider('provideFixerCases')]
     public function testFixerIsFinal(FixerInterface $fixer): void
     {
         self::assertTrue((new \ReflectionObject($fixer))->isFinal());
@@ -62,6 +68,7 @@ final class SrcCodeTest extends TestCase
     /**
      * @dataProvider provideFixerCases
      */
+    #[DataProvider('provideFixerCases')]
     public function testDeprecatedFixerHasAnnotation(FixerInterface $fixer): void
     {
         $comment = (new \ReflectionObject($fixer))->getDocComment();
@@ -91,6 +98,7 @@ final class SrcCodeTest extends TestCase
      *
      * @dataProvider provideThereIsNoDisallowedFunctionUsedDirectlyCases
      */
+    #[DataProvider('provideThereIsNoDisallowedFunctionUsedDirectlyCases')]
     public function testThereIsNoDisallowedFunctionUsedDirectly(string $className): void
     {
         $reflectionClass = new \ReflectionClass($className);

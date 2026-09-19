@@ -20,6 +20,9 @@ use PhpCsFixer\RuleSet\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerCustomFixers\Fixers;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 
@@ -30,6 +33,8 @@ use Symfony\Component\Finder\Finder;
  *
  * @requires PHP >= 8.3.0
  */
+#[CoversNothing]
+#[RequiresPhp('>= 8.3.0')]
 final class PriorityTest extends TestCase
 {
     use AssertSameTokensTrait;
@@ -37,6 +42,7 @@ final class PriorityTest extends TestCase
     /**
      * @dataProvider providePriorityCases
      */
+    #[DataProvider('providePriorityCases')]
     public function testPriorities(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
         self::assertLessThan($firstFixer->getPriority(), $secondFixer->getPriority());
@@ -45,6 +51,7 @@ final class PriorityTest extends TestCase
     /**
      * @dataProvider providePriorityCases
      */
+    #[DataProvider('providePriorityCases')]
     public function testInOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
         if ($firstFixer instanceof AbstractFixer) {
@@ -72,6 +79,7 @@ final class PriorityTest extends TestCase
     /**
      * @dataProvider providePriorityCases
      */
+    #[DataProvider('providePriorityCases')]
     public function testInRevertedOrder(FixerInterface $firstFixer, FixerInterface $secondFixer, string $expected, string $input): void
     {
         Tokens::clearCache();

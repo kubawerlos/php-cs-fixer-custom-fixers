@@ -11,11 +11,17 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PhpUnitAssertArgumentsOrderFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpUnitAssertArgumentsOrderFixer
  */
+#[CoversClass(PhpUnitAssertArgumentsOrderFixer::class)]
 final class PhpUnitAssertArgumentsOrderFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -26,6 +32,7 @@ final class PhpUnitAssertArgumentsOrderFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -54,6 +61,8 @@ class FooTest extends TestCase {
      *
      * @dataProvider provideFix80Cases
      */
+    #[DataProvider('provideFix80Cases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testFix80(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

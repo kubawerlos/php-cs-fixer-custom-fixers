@@ -14,6 +14,9 @@ namespace Tests\Analyzer;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\Analyzer\Analysis\ArrayElementAnalysis;
 use PhpCsFixerCustomFixers\Analyzer\ArrayAnalyzer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,6 +24,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\ArrayAnalyzer
  */
+#[CoversClass(ArrayAnalyzer::class)]
 final class ArrayAnalyzerTest extends TestCase
 {
     public function testForNotArray(): void
@@ -38,6 +42,7 @@ final class ArrayAnalyzerTest extends TestCase
      *
      * @dataProvider provideGettingArrayElementsCases
      */
+    #[DataProvider('provideGettingArrayElementsCases')]
     public function testGettingArrayElements(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);
@@ -205,6 +210,8 @@ final class ArrayAnalyzerTest extends TestCase
      *
      * @dataProvider provideGettingArrayElements80Cases
      */
+    #[DataProvider('provideGettingArrayElements80Cases')]
+    #[RequiresPhp('>= 8.0.0')]
     public function testGettingArrayElements80(array $expected, string $code): void
     {
         $tokens = Tokens::fromCode($code);

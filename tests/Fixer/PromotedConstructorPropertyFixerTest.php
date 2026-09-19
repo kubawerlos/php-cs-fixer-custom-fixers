@@ -11,6 +11,11 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
@@ -20,6 +25,8 @@ namespace Tests\Fixer;
  *
  * @requires PHP >= 8.0.0
  */
+#[CoversClass(PromotedConstructorPropertyFixer::class)]
+#[RequiresPhp('>= 8.0.0')]
 final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
 {
     public function testConfiguration(): void
@@ -39,6 +46,7 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = []): void
     {
         $this->doTest($expected, $input, $configuration);
@@ -1109,6 +1117,8 @@ final class PromotedConstructorPropertyFixerTest extends AbstractFixerTestCase
      *
      * @requires PHP >= 8.4.0
      */
+    #[DataProvider('provideFix84Cases')]
+    #[RequiresPhp('>= 8.4.0')]
     public function testFix84(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

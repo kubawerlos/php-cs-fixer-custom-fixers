@@ -11,11 +11,17 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer
  */
+#[CoversClass(NoLeadingSlashInGlobalNamespaceFixer::class)]
 final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -26,6 +32,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -105,6 +112,8 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
      *
      * @dataProvider provideFixPre80Cases
      */
+    #[DataProvider('provideFixPre80Cases')]
+    #[RequiresPhp('< 8.0.0')]
     public function testFixPre80(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);
@@ -134,6 +143,7 @@ final class NoLeadingSlashInGlobalNamespaceFixerTest extends AbstractFixerTestCa
     /**
      * @requires PHP >= 8.0.0
      */
+    #[RequiresPhp('>= 8.0.0')]
     public function testFix80(): void
     {
         $this->doTest(

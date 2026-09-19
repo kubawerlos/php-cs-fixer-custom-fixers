@@ -11,11 +11,16 @@
 
 namespace Tests\Fixer;
 
+use PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * @internal
  *
  * @covers \PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer
  */
+#[CoversClass(PhpdocParamOrderFixer::class)]
 final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
 {
     public function testIsRisky(): void
@@ -31,6 +36,7 @@ final class PhpdocParamOrderFixerTest extends AbstractFixerTestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null): void
     {
         $this->doTest($expected, $input);

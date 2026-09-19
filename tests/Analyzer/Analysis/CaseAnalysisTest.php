@@ -12,6 +12,7 @@
 namespace Tests\Analyzer\Analysis;
 
 use PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +20,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\Analyzer\Analysis\CaseAnalysis
  */
+#[CoversClass(CaseAnalysis::class)]
 final class CaseAnalysisTest extends TestCase
 {
     public function testColonIndex(): void

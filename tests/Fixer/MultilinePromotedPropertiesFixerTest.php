@@ -12,6 +12,10 @@
 namespace Tests\Fixer;
 
 use PhpCsFixer\WhitespacesFixerConfig;
+use PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 
 /**
  * @internal
@@ -22,6 +26,8 @@ use PhpCsFixer\WhitespacesFixerConfig;
  *
  * @requires PHP >= 8.0.0
  */
+#[CoversClass(MultilinePromotedPropertiesFixer::class)]
+#[RequiresPhp('>= 8.0.0')]
 final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
 {
     public function testSuccessorName(): void
@@ -49,6 +55,7 @@ final class MultilinePromotedPropertiesFixerTest extends AbstractFixerTestCase
      *
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, ?string $input = null, array $configuration = [], ?WhitespacesFixerConfig $whitespacesFixerConfig = null): void
     {
         $this->doTest($expected, $input, $configuration, $whitespacesFixerConfig);

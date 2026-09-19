@@ -14,6 +14,8 @@ namespace Tests;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerCustomFixers\TokenRemover;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,6 +23,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \PhpCsFixerCustomFixers\TokenRemover
  */
+#[CoversClass(TokenRemover::class)]
 final class TokenRemoverTest extends TestCase
 {
     use AssertSameTokensTrait;
@@ -28,6 +31,7 @@ final class TokenRemoverTest extends TestCase
     /**
      * @dataProvider provideFixCases
      */
+    #[DataProvider('provideFixCases')]
     public function testFix(string $expected, string $input): void
     {
         Tokens::clearCache();
