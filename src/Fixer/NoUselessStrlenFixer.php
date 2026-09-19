@@ -16,6 +16,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -84,6 +85,17 @@ $isNotEmpty = strlen($string) > 0;
                 $openParenthesisIndex => 1,
                 $closeParenthesisIndex => -1,
             ];
+
+            $argumentStartIndex = $tokens->getNextMeaningfulToken($openParenthesisIndex);
+            \assert(\is_int($argumentStartIndex));
+
+            if ($tokens[$argumentStartIndex]->isGivenKind(CT::T_NAMED_ARGUMENT_NAME)) {
+                $tokensToRemove[$argumentStartIndex] = 1;
+
+                $colonIndex = $tokens->getNextMeaningfulToken($argumentStartIndex);
+                \assert(\is_int($colonIndex));
+                $tokensToRemove[$colonIndex] = 1;
+            }
 
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             \assert(\is_int($prevIndex));
