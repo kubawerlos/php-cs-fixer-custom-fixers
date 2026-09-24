@@ -74,7 +74,6 @@ final class MultilineCommentOpeningClosingAloneFixer extends AbstractFixer
 
         Preg::match('#\\R(\\h*)#', $tokens[$index]->getContent(), $matches);
 
-        // @phpstan-ignore function.alreadyNarrowedType
         \assert(\is_string($matches[1]));
 
         $indent = $matches[1] . '*';
