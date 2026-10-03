@@ -3,21 +3,21 @@
     "require": {
         "php": "^8.5",
         "ergebnis/composer-normalize": "^2.54.0",
-        "infection/infection": "^0.35.4",
+        "infection/infection": "^0.35.6",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
         "kubawerlos/php-cs-fixer-config": "^5.7",
         "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.2.15",
-        "phpstan/phpstan-phpunit": "^2.0.18",
+        "phpstan/phpstan": "^2.2.16",
+        "phpstan/phpstan-phpunit": "^2.0.21",
         "phpstan/phpstan-strict-rules": "^2.0.12",
         "shipmonk/composer-dependency-analyser": "^1.8.4",
         "shipmonk/dead-code-detector": "^1.4.2",
-        "shipmonk/phpstan-rules": "^4.4.0",
+        "shipmonk/phpstan-rules": "^4.4.1",
         "squizlabs/php_codesniffer": "^4.0.4",
-        "tomasvotruba/type-coverage": "^2.3.7",
-        "vimeo/psalm": "^6.18.0"
+        "tomasvotruba/type-coverage": "^2.4.1",
+        "vimeo/psalm": "^6.19.1"
     },
     "autoload": {
         "psr-4": {
