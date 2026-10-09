@@ -16,7 +16,7 @@
         "shipmonk/dead-code-detector": "^1.4.2",
         "shipmonk/phpstan-rules": "^4.4.1",
         "squizlabs/php_codesniffer": "^4.0.4",
-        "tomasvotruba/type-coverage": "^2.4.1",
+        "tomasvotruba/type-coverage": "^2.5.0",
         "vimeo/psalm": "^6.19.1"
     },
     "autoload": {
