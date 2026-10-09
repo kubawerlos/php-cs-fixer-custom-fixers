@@ -11,7 +11,7 @@
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan": "^2.2.16",
         "phpstan/phpstan-phpunit": "^2.0.21",
-        "phpstan/phpstan-strict-rules": "^2.0.12",
+        "phpstan/phpstan-strict-rules": "^2.1.0",
         "shipmonk/composer-dependency-analyser": "^1.8.4",
         "shipmonk/dead-code-detector": "^1.4.2",
         "shipmonk/phpstan-rules": "^4.4.1",
