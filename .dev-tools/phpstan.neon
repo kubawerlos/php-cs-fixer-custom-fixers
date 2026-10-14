@@ -8,7 +8,6 @@ parameters:
   level: max
   ignoreErrors:
     - message: '~internal (class|method) PhpCsFixer(CustomFixers(Dev)?)?\\~'
-    - identifier: phpunit.attributeRequiresPhpVersion
     - identifier: shipmonk.checkedExceptionInYieldingMethod
   paths:
     - ../src

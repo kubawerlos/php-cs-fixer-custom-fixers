@@ -48,7 +48,7 @@
             "composer-dependency-analyser --composer-json=../composer.json",
             "phpcs",
             "phpmd ../src text phpmd.xml",
-            "phpstan analyse --no-progress",
+            "cd .. && phpstan analyse --configuration=.dev-tools/phpstan.neon --no-progress",
             "psalm --no-cache --no-progress --shepherd"
         ],
         "fix": [
