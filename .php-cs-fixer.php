@@ -68,6 +68,7 @@ return (new Config())
     ->registerCustomFixers(new Fixers())
     ->registerCustomFixers(new PhpCsFixerCustomFixersDev\Fixers())
     ->setRiskyAllowed(true)
+    ->setUnsupportedPhpVersionAllowed(true)
     ->setUsingCache(false)
     ->setFinder(
         Finder::create()
