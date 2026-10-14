@@ -307,7 +307,6 @@ do    {
         $reflectionObject = new \ReflectionObject($fixer);
         $property = $reflectionObject->getProperty('tokens');
 
-        // @phpstan-ignore smaller.alwaysFalse
         if (\PHP_VERSION_ID < 80100) {
             $property->setAccessible(true);
         }
@@ -336,7 +335,6 @@ do    {
         $reflectionObject = new \ReflectionObject($fixer);
         $property = $reflectionObject->getProperty('tokens');
 
-        // @phpstan-ignore smaller.alwaysFalse
         if (\PHP_VERSION_ID < 80100) {
             $property->setAccessible(true);
         }
