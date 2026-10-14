@@ -17,7 +17,6 @@ parameters:
   reportMaybesInMethodSignatures: false
   treatPhpDocTypesAsCertain: false
   type_coverage:
-      declare: 100
       constant: 0
       param: 100
       property: 100

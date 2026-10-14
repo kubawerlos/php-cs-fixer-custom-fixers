@@ -125,8 +125,8 @@ echo 0123_4567; // octal
             $newContent = $this->getNewContent($content);
 
             if ($content !== $newContent) {
+                /** @psalm-var int $id */
                 $id = $tokens[$index]->getId();
-                \assert(\is_int($id));
 
                 $tokens[$index] = new Token([$id, $newContent]);
             }

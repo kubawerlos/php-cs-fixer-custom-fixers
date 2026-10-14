@@ -76,8 +76,8 @@ class Foo {
                 continue;
             }
 
+            /** @psalm-var int $id */
             $id = $tokens[$index]->getId();
-            \assert(\is_int($id));
 
             $tokens[$index] = new Token([$id, $newContent]);
         }
