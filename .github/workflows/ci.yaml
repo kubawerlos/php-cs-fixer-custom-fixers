@@ -24,7 +24,9 @@ jobs:
         run: rm ./.dev-tools/composer.lock
       - run: composer update --no-progress
       - run: "sed -i 's#constant: 0#constant: 100#g' .dev-tools/phpstan.neon"
-      - run: composer apply-typed_class_constant
+      - run: "sed -i 's#^parameters:#parameters:\\n  phpVersion: 80300#g' .dev-tools/phpstan.neon"
+      - run: composer prepare-dev-tools
+      - run: ./vendor/bin/php-cs-fixer fix --quiet --rules=PhpCsFixerCustomFixers/typed_class_constant || exit 0
       - run: composer analyse
 
   spelling:
