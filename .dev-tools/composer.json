@@ -3,10 +3,10 @@
     "require": {
         "php": "^8.5",
         "ergebnis/composer-normalize": "^2.54.0",
+        "ergebnis/phpstan-rules": "^2.14.0",
         "infection/infection": "^0.35.8",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
         "kubawerlos/php-cs-fixer-config": "^5.7",
-        "mi-schi/phpmd-extension": "^4.3",
         "phpmd/phpmd": "^2.15",
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan": "^2.3.1",
