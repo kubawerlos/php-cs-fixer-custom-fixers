@@ -7,7 +7,7 @@
         "infection/infection": "^0.35.8",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
         "kubawerlos/php-cs-fixer-config": "^5.7",
-        "phpmd/phpmd": "^2.15",
+        "phpmd/phpmd": "^3.0",
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan": "^2.3.1",
         "phpstan/phpstan-phpunit": "^2.1.1",
@@ -47,7 +47,7 @@
             "@composer normalize --dry-run",
             "composer-dependency-analyser --composer-json=../composer.json",
             "phpcs",
-            "phpmd ../src text phpmd.xml",
+            "phpmd analyze ../src --format text --ruleset phpmd.xml",
             "cd .. && phpstan analyse --configuration=.dev-tools/phpstan.neon --no-progress",
             "psalm --no-cache --no-progress --shepherd"
         ],
