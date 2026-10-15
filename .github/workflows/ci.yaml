@@ -13,11 +13,12 @@ concurrency:
 jobs:
   analyse:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - php-version: '8.5'
           - php-version: '8.6'
-    name: Analyse (PHP ${{ matrix.php-version }}}
+    name: Analyse (PHP ${{ matrix.php-version }})
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -32,6 +33,8 @@ jobs:
       - run: composer update --no-progress
       - run: "sed -i 's#constant: 0#constant: 100#g' .dev-tools/phpstan.neon"
       - run: "sed -i 's#^parameters:#parameters:\\n  phpVersion: 80300#g' .dev-tools/phpstan.neon"
+      - if: matrix.php-version == '8.6'
+        run: "sed -i 's#phpmd analyze#phpmd analyze --threads 1#g' .dev-tools/composer.json"
       - run: composer prepare-dev-tools
       - run: ./vendor/bin/php-cs-fixer fix --quiet --rules=PhpCsFixerCustomFixers/typed_class_constant || exit 0
       - run: composer analyse
