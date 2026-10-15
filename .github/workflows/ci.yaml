@@ -12,12 +12,18 @@ concurrency:
 
 jobs:
   analyse:
+    strategy:
+      matrix:
+        include:
+          - php-version: '8.5'
+          - php-version: '8.6'
+    name: Analyse (PHP ${{ matrix.php-version }}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.5'
+          php-version: ${{ matrix.php-version }}
           extensions: none, curl, dom, iconv, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
           ini-file: development
           coverage: none
