@@ -15,6 +15,10 @@ parameters:
     - ../bootstrap.php
   reportMaybesInMethodSignatures: false
   treatPhpDocTypesAsCertain: false
+  ergebnis:
+    allRules: false
+    noSwitch:
+      enabled: true
   type_coverage:
       constant: 0
       param: 100
