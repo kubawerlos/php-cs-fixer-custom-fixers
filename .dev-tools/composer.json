@@ -17,7 +17,7 @@
         "shipmonk/phpstan-rules": "^4.4.1",
         "squizlabs/php_codesniffer": "^4.0.4",
         "tomasvotruba/type-coverage": "^2.5.1",
-        "vimeo/psalm": "^6.20.0"
+        "vimeo/psalm": "^6.20.3"
     },
     "autoload": {
         "psr-4": {
