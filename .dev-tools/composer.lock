@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff7477a9fd24a5935c5456d374cf383f",
+    "content-hash": "95afbdeb265e136c7974684b9c4b710b",
     "packages": [
         {
             "name": "amphp/amp",
@@ -908,18 +908,20 @@
         },
         {
             "name": "ergebnis/phpstan-rules",
-            "version": "2.14.2",
+            "version": "2.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/phpstan-rules.git",
-                "reference": "a8d8695a4197b79f74e1ed1353ef52c41578c0ab"
+                "reference": "5988e8fe66c09558c73824fce64123fdcd5afae2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/a8d8695a4197b79f74e1ed1353ef52c41578c0ab",
-                "reference": "a8d8695a4197b79f74e1ed1353ef52c41578c0ab"
+                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/5988e8fe66c09558c73824fce64123fdcd5afae2",
+                "reference": "5988e8fe66c09558c73824fce64123fdcd5afae2"
             },
             "require": {
+                "composer-runtime-api": "^2.0.0",
+                "ergebnis/version": "^1.4.0",
                 "ext-mbstring": "*",
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0",
                 "phpstan/phpstan": "^2.1.35"
@@ -932,7 +934,7 @@
                     ]
                 },
                 "branch-alias": {
-                    "dev-main": "2.14-dev"
+                    "dev-main": "2.17-dev"
                 }
             },
             "autoload": {
@@ -944,6 +946,42 @@
                 "MIT"
             ],
             "description": "Provides rules for phpstan/phpstan."
+        },
+        {
+            "name": "ergebnis/version",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ergebnis/version.git",
+                "reference": "d24af41aa88e24c24e705816e428668de2b7391a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ergebnis/version/zipball/d24af41aa88e24c24e705816e428668de2b7391a",
+                "reference": "d24af41aa88e24c24e705816e428668de2b7391a"
+            },
+            "require": {
+                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.5-dev"
+                },
+                "composer-normalize": {
+                    "indent-size": 2,
+                    "indent-style": "space"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ergebnis\\Version\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Provides an abstraction of a semantic version."
         },
         {
             "name": "evenement/evenement",
@@ -1896,11 +1934,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.3.3",
+            "version": "2.3.5",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4b57dc8ca7456b635d1661845f44bc060b02c6b0",
-                "reference": "4b57dc8ca7456b635d1661845f44bc060b02c6b0"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/645a1bd6bead15fc1b8474137467961d0fa30a79",
+                "reference": "645a1bd6bead15fc1b8474137467961d0fa30a79"
             },
             "require": {
                 "php": "^7.4|^8.0"
@@ -3572,5 +3610,5 @@
     "platform-overrides": {
         "php": "8.5"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
