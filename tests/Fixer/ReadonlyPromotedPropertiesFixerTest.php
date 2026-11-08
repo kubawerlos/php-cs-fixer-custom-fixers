@@ -58,11 +58,25 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
             '<?php class Foo {
                 public function __construct(
                     public readonly int $a,
+                    protected int $b,
+                    private readonly int $c,
+                ) {}
+            }
+            final class Bar {
+                public function __construct(
+                    public readonly int $a,
                     protected readonly int $b,
                     private readonly int $c,
                 ) {}
             }',
             '<?php class Foo {
+                public function __construct(
+                    public int $a,
+                    protected int $b,
+                    private int $c,
+                ) {}
+            }
+            final class Bar {
                 public function __construct(
                     public int $a,
                     protected int $b,
@@ -444,6 +458,57 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                         public private(set) readonly int $c,
                         readonly private(set) int $e,
                         private(set) readonly int $f,
+                    ) {}
+                }
+                PHP,
+        ];
+
+        yield 'protected write visibility in non-final class' => [
+            <<<'PHP'
+                <?php
+                abstract class Foo {
+                    public function __construct(
+                        public public(set) readonly int $a,
+                        public protected(set) int $b,
+                        public private(set) readonly int $c,
+                        protected protected(set) int $d,
+                        protected private(set) readonly int $e,
+                    ) {}
+                }
+                final class FooChild extends Foo {
+                    public function setB(int $b): void { $this->b = $b; }
+                }
+                class Bar {
+                    public function __construct(
+                        public public(set) readonly int $a,
+                        public protected(set) int $b,
+                        public private(set) readonly int $c,
+                        protected protected(set) int $d,
+                        protected private(set) readonly int $e,
+                    ) {}
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                abstract class Foo {
+                    public function __construct(
+                        public public(set) int $a,
+                        public protected(set) int $b,
+                        public private(set) int $c,
+                        protected protected(set) int $d,
+                        protected private(set) int $e,
+                    ) {}
+                }
+                final class FooChild extends Foo {
+                    public function setB(int $b): void { $this->b = $b; }
+                }
+                class Bar {
+                    public function __construct(
+                        public public(set) int $a,
+                        public protected(set) int $b,
+                        public private(set) int $c,
+                        protected protected(set) int $d,
+                        protected private(set) int $e,
                     ) {}
                 }
                 PHP,

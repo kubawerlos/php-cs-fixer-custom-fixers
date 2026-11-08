@@ -124,6 +124,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 $classCloseBraceIndex,
                 $constructorOpenParenthesisIndex,
                 $constructorCloseParenthesisIndex,
+                self::isClassFinal($tokens, $index),
             );
         }
     }
@@ -138,12 +139,21 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         return $tokens[$index]->isGivenKind(\T_READONLY);
     }
 
+    private static function isClassFinal(Tokens $tokens, int $index): bool
+    {
+        $index = $tokens->getPrevMeaningfulToken($index);
+        \assert(\is_int($index));
+
+        return $tokens[$index]->isGivenKind(\T_FINAL);
+    }
+
     private static function fixParameters(
         Tokens $tokens,
         int $classOpenBraceIndex,
         int $classCloseBraceIndex,
         int $constructorOpenParenthesisIndex,
-        int $constructorCloseParenthesisIndex
+        int $constructorCloseParenthesisIndex,
+        bool $isClassFinal
     ): void {
         for ($index = $constructorCloseParenthesisIndex; $index > $constructorOpenParenthesisIndex; $index--) {
             if (!$tokens[$index]->isGivenKind(\T_VARIABLE)) {
@@ -152,6 +162,10 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
 
             $insertIndex = self::getInsertIndex($tokens, $index);
             if ($insertIndex === null) {
+                continue;
+            }
+
+            if (!$isClassFinal && self::hasProtectedWriteVisibility($tokens, $index)) {
                 continue;
             }
 
@@ -187,6 +201,24 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         }
 
         return $insertIndex;
+    }
+
+    private static function hasProtectedWriteVisibility(Tokens $tokens, int $index): bool
+    {
+        $hasProtectedVisibility = false;
+
+        do {
+            $index = $tokens->getPrevMeaningfulToken($index);
+            \assert(\is_int($index));
+            if ($tokens[$index]->isGivenKind(FCT::T_PRIVATE_SET)) {
+                return false;
+            }
+            if ($tokens[$index]->isGivenKind([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, FCT::T_PROTECTED_SET])) {
+                $hasProtectedVisibility = true;
+            }
+        } while (!$tokens[$index]->equalsAny([',', '(']));
+
+        return $hasProtectedVisibility;
     }
 
     private static function isUsedAsReadonly(Tokens $tokens, string $name, int $index, int $endIndex): bool
