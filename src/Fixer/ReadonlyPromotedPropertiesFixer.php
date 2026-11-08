@@ -75,7 +75,7 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
     }
 
     /**
-     * Must run after PromotedConstructorPropertyFixer.
+     * Must run after FinalInternalClassFixer, PromotedConstructorPropertyFixer.
      */
     public function getPriority(): int
     {
