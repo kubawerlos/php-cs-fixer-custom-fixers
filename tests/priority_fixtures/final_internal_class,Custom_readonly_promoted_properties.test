@@ -1,0 +1,15 @@
+--CONFIGURATION--
+{ "final_internal_class": true, "PhpCsFixerCustomFixers/readonly_promoted_properties": true }
+--EXPECTED--
+<?php
+/** @internal */
+final class Foo {
+    public function __construct(protected readonly int $x) {}
+}
+
+--INPUT--
+<?php
+/** @internal */
+class Foo {
+    public function __construct(protected int $x) {}
+}
