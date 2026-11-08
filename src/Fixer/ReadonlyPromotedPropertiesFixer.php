@@ -140,6 +140,8 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
         int $constructorCloseParenthesisIndex,
         bool $isClassFinal
     ): void {
+        $tokensToInsert = [];
+
         for ($index = $constructorCloseParenthesisIndex; $index > $constructorOpenParenthesisIndex; $index--) {
             if (!$tokens[$index]->isGivenKind(\T_VARIABLE)) {
                 continue;
@@ -158,14 +160,13 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 continue;
             }
 
-            $tokens->insertAt(
-                $insertIndex + 1,
-                [
-                    new Token([\T_WHITESPACE, ' ']),
-                    new Token([\T_READONLY, 'readonly']),
-                ],
-            );
+            $tokensToInsert[$insertIndex + 1] = [
+                new Token([\T_WHITESPACE, ' ']),
+                new Token([\T_READONLY, 'readonly']),
+            ];
         }
+
+        $tokens->insertSlices($tokensToInsert);
     }
 
     private static function getInsertIndex(Tokens $tokens, int $index): ?int
