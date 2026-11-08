@@ -332,6 +332,35 @@ final class ReadonlyPromotedPropertiesFixerTest extends AbstractFixerTestCase
                 }
                 PHP,
         ];
+
+        yield 'property assigned at the end of class with many promoted properties' => [
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(
+                        public int $x,
+                        public readonly int $p1,
+                        public readonly int $p2,
+                        public readonly int $p3,
+                        public readonly int $p4,
+                        public readonly int $p5,
+                    ) {}
+                    public function setX() { $this->x = 1; }
+                }
+                PHP,
+            <<<'PHP'
+                <?php class Foo {
+                    public function __construct(
+                        public int $x,
+                        public int $p1,
+                        public int $p2,
+                        public int $p3,
+                        public int $p4,
+                        public int $p5,
+                    ) {}
+                    public function setX() { $this->x = 1; }
+                }
+                PHP,
+        ];
     }
 
     /**
