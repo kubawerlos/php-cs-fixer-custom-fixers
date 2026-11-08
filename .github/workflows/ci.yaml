@@ -25,8 +25,9 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: none, curl, dom, iconv, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
+          extensions: none, curl, dom, iconv, json, mbstring, opcache, openssl, posix, simplexml, tokenizer, xml, xmlwriter
           ini-file: development
+          ini-values: disable_functions=
           coverage: none
       - if: github.event_name != 'pull_request'
         run: rm ./.dev-tools/composer.lock

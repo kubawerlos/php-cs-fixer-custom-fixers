@@ -2,22 +2,22 @@
     "type": "project",
     "require": {
         "php": "^8.5",
-        "ergebnis/composer-normalize": "^2.54.0",
-        "ergebnis/phpstan-rules": "^2.14.2",
-        "infection/infection": "^0.35.8",
+        "ergebnis/composer-normalize": "^2.56.0",
+        "ergebnis/phpstan-rules": "^2.17.0",
+        "infection/infection": "^0.35.9",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
         "kubawerlos/php-cs-fixer-config": "^5.7",
         "phpmd/phpmd": "^3.0",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.3.3",
+        "phpstan/phpstan": "^2.3.5",
         "phpstan/phpstan-phpunit": "^2.1.1",
-        "phpstan/phpstan-strict-rules": "^2.1.0",
+        "phpstan/phpstan-strict-rules": "^2.1.1",
         "shipmonk/composer-dependency-analyser": "^1.8.4",
         "shipmonk/dead-code-detector": "^1.4.2",
         "shipmonk/phpstan-rules": "^4.4.1",
         "squizlabs/php_codesniffer": "^4.0.4",
         "tomasvotruba/type-coverage": "^2.5.1",
-        "vimeo/psalm": "^6.20.3"
+        "vimeo/psalm": "^7.1"
     },
     "autoload": {
         "psr-4": {
