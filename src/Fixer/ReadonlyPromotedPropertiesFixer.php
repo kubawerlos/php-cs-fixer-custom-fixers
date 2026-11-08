@@ -19,6 +19,7 @@ use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\FCT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\Tokenizer\TokensAnalyzer;
 use PhpCsFixerCustomFixers\Analyzer\ConstructorAnalyzer;
 
 /**
@@ -95,13 +96,15 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, Tokens $tokens): void
     {
         $constructorAnalyzer = new ConstructorAnalyzer();
+        $tokensAnalyzer = new TokensAnalyzer($tokens);
 
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             if (!$tokens[$index]->isGivenKind(\T_CLASS)) {
                 continue;
             }
 
-            if (self::isClassReadonly($tokens, $index)) {
+            $modifiers = $tokensAnalyzer->getClassyModifiers($index);
+            if ($modifiers['readonly'] !== null) {
                 continue;
             }
 
@@ -124,27 +127,9 @@ final class ReadonlyPromotedPropertiesFixer extends AbstractFixer
                 $classCloseBraceIndex,
                 $constructorOpenParenthesisIndex,
                 $constructorCloseParenthesisIndex,
-                self::isClassFinal($tokens, $index),
+                $modifiers['final'] !== null,
             );
         }
-    }
-
-    private static function isClassReadonly(Tokens $tokens, int $index): bool
-    {
-        do {
-            $index = $tokens->getPrevMeaningfulToken($index);
-            \assert(\is_int($index));
-        } while ($tokens[$index]->isGivenKind([\T_ABSTRACT, \T_FINAL]));
-
-        return $tokens[$index]->isGivenKind(\T_READONLY);
-    }
-
-    private static function isClassFinal(Tokens $tokens, int $index): bool
-    {
-        $index = $tokens->getPrevMeaningfulToken($index);
-        \assert(\is_int($index));
-
-        return $tokens[$index]->isGivenKind(\T_FINAL);
     }
 
     private static function fixParameters(
