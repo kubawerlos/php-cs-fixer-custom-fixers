@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f6ca65baedfba17e4cebd7f604c4845",
+    "content-hash": "10751f1820b5245b3b3cb5d7660768d5",
     "packages": [
         {
             "name": "amphp/amp",
@@ -907,16 +907,16 @@
         },
         {
             "name": "ergebnis/phpstan-rules",
-            "version": "2.17.0",
+            "version": "2.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/phpstan-rules.git",
-                "reference": "5988e8fe66c09558c73824fce64123fdcd5afae2"
+                "reference": "67c1bcd57666d30a3da0f744e4776c05178aa0c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/5988e8fe66c09558c73824fce64123fdcd5afae2",
-                "reference": "5988e8fe66c09558c73824fce64123fdcd5afae2"
+                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/67c1bcd57666d30a3da0f744e4776c05178aa0c6",
+                "reference": "67c1bcd57666d30a3da0f744e4776c05178aa0c6"
             },
             "require": {
                 "composer-runtime-api": "^2.0.0",

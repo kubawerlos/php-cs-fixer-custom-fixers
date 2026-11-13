@@ -3,7 +3,7 @@
     "require": {
         "php": "^8.5",
         "ergebnis/composer-normalize": "^2.56.0",
-        "ergebnis/phpstan-rules": "^2.17.0",
+        "ergebnis/phpstan-rules": "^2.17.1",
         "infection/infection": "^0.35.9",
         "kubawerlos/composer-smaller-lock": "^1.1.0",
         "kubawerlos/php-cs-fixer-config": "^5.7",
