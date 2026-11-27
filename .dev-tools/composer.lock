@@ -678,8 +678,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ergebnis/composer-normalize/zipball/74ed2dad07f772e686a7f3498f2a507190640ee5",
-                "reference": "74ed2dad07f772e686a7f3498f2a507190640ee5",
-                "shasum": ""
+                "reference": "74ed2dad07f772e686a7f3498f2a507190640ee5"
             },
             "require": {
                 "composer-plugin-api": "^2.0.0",
@@ -691,23 +690,6 @@
                 "ext-json": "*",
                 "justinrainbow/json-schema": "^5.2.12 || ^6.0.0",
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0"
-            },
-            "require-dev": {
-                "composer/composer": "^2.11.0",
-                "ergebnis/license": "^2.9.0",
-                "ergebnis/php-cs-fixer-config": "^6.64.3",
-                "ergebnis/phpstan-rules": "^2.17.1",
-                "ergebnis/phpunit-slow-test-detector": "^2.27.0",
-                "ergebnis/rector-rules": "^1.19.0",
-                "fakerphp/faker": "^1.24.1",
-                "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.1.55",
-                "phpstan/phpstan-deprecation-rules": "^2.0.5",
-                "phpstan/phpstan-phpunit": "^2.1.2",
-                "phpstan/phpstan-strict-rules": "^2.1.1",
-                "phpunit/phpunit": "^9.6.33",
-                "rector/rector": "^2.7.0",
-                "symfony/filesystem": "^5.4.56 || ^6.4.50 || ^7.4.23 || ^8.1.11"
             },
             "type": "composer-plugin",
             "extra": {
@@ -726,31 +708,10 @@
                     "Ergebnis\\Composer\\Normalize\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Provides a composer plugin for normalizing composer.json.",
-            "homepage": "https://github.com/ergebnis/composer-normalize",
-            "keywords": [
-                "composer",
-                "normalize",
-                "normalizer",
-                "plugin"
-            ],
-            "support": {
-                "issues": "https://github.com/ergebnis/composer-normalize/issues",
-                "security": "https://github.com/ergebnis/composer-normalize/blob/main/.github/SECURITY.md",
-                "source": "https://github.com/ergebnis/composer-normalize"
-            },
-            "time": "2026-11-19T13:10:46+00:00"
+            "description": "Provides a composer plugin for normalizing composer.json."
         },
         {
             "name": "ergebnis/differ",
@@ -763,30 +724,10 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ergebnis/differ/zipball/8797edb44183a8d0849725741a6fecbcb0b86480",
-                "reference": "8797edb44183a8d0849725741a6fecbcb0b86480",
-                "shasum": ""
+                "reference": "8797edb44183a8d0849725741a6fecbcb0b86480"
             },
             "require": {
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0 || ~8.7.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.56.1",
-                "ergebnis/data-provider": "^3.7.1",
-                "ergebnis/license": "^2.9.0",
-                "ergebnis/php-cs-fixer-config": "^6.65.0",
-                "ergebnis/phpstan-rules": "^2.17.1",
-                "ergebnis/phpunit-slow-test-detector": "^2.27.0",
-                "ergebnis/rector-rules": "^1.19.0",
-                "fakerphp/faker": "^1.24.1",
-                "infection/infection": "~0.26.6",
-                "phpbench/phpbench": "^1.2.14",
-                "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.3.6",
-                "phpstan/phpstan-deprecation-rules": "^2.0.5",
-                "phpstan/phpstan-phpunit": "^2.1.2",
-                "phpstan/phpstan-strict-rules": "^2.1.1",
-                "phpunit/phpunit": "^9.6.38",
-                "rector/rector": "^2.7.0"
             },
             "type": "library",
             "extra": {
@@ -803,30 +744,10 @@
                     "Ergebnis\\Differ\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Provides a composer package with a differ for creating a unified diff of two strings.",
-            "homepage": "https://github.com/ergebnis/differ",
-            "keywords": [
-                "diff",
-                "differ",
-                "unified-diff"
-            ],
-            "support": {
-                "issues": "https://github.com/ergebnis/differ/issues",
-                "security": "https://github.com/ergebnis/differ/blob/main/.github/SECURITY.md",
-                "source": "https://github.com/ergebnis/differ"
-            },
-            "time": "2026-11-24T15:44:30+00:00"
+            "description": "Provides a composer package with a differ for creating a unified diff of two strings."
         },
         {
             "name": "ergebnis/json",
@@ -839,29 +760,11 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ergebnis/json/zipball/cb297869141d309284bb67f75ded5b81d15d1517",
-                "reference": "cb297869141d309284bb67f75ded5b81d15d1517",
-                "shasum": ""
+                "reference": "cb297869141d309284bb67f75ded5b81d15d1517"
             },
             "require": {
                 "ext-json": "*",
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0 || ~8.7.0"
-            },
-            "require-dev": {
-                "ergebnis/data-provider": "^3.7.1",
-                "ergebnis/license": "^2.9.0",
-                "ergebnis/php-cs-fixer-config": "^6.64.3",
-                "ergebnis/phpstan-rules": "^2.17.1",
-                "ergebnis/phpunit-slow-test-detector": "^2.27.0",
-                "ergebnis/rector-rules": "^1.19.0",
-                "fakerphp/faker": "^1.24.1",
-                "infection/infection": "~0.26.6",
-                "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.3.7",
-                "phpstan/phpstan-deprecation-rules": "^2.0.5",
-                "phpstan/phpstan-phpunit": "^2.1.2",
-                "phpstan/phpstan-strict-rules": "^2.1.1",
-                "phpunit/phpunit": "^9.6.24",
-                "rector/rector": "^2.7.0"
             },
             "type": "library",
             "extra": {
@@ -878,28 +781,10 @@
                     "Ergebnis\\Json\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Provides a Json value object for representing a valid JSON string.",
-            "homepage": "https://github.com/ergebnis/json",
-            "keywords": [
-                "json"
-            ],
-            "support": {
-                "issues": "https://github.com/ergebnis/json/issues",
-                "security": "https://github.com/ergebnis/json/blob/main/.github/SECURITY.md",
-                "source": "https://github.com/ergebnis/json"
-            },
-            "time": "2026-11-24T15:46:25+00:00"
+            "description": "Provides a Json value object for representing a valid JSON string."
         },
         {
             "name": "ergebnis/json-normalizer",
@@ -912,8 +797,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ergebnis/json-normalizer/zipball/7544b319e0b01a4d6445fe4f381295f9ddc7f1fc",
-                "reference": "7544b319e0b01a4d6445fe4f381295f9ddc7f1fc",
-                "shasum": ""
+                "reference": "7544b319e0b01a4d6445fe4f381295f9ddc7f1fc"
             },
             "require": {
                 "ergebnis/json": "^1.2.0",
@@ -923,26 +807,6 @@
                 "ext-json": "*",
                 "justinrainbow/json-schema": "^5.2.12 || ^6.0.0",
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0 || ~8.7.0"
-            },
-            "require-dev": {
-                "composer/semver": "^3.6.0",
-                "ergebnis/data-provider": "^3.7.1",
-                "ergebnis/license": "^2.9.0",
-                "ergebnis/php-cs-fixer-config": "^6.64.3",
-                "ergebnis/phpunit-slow-test-detector": "^2.27.0",
-                "ergebnis/rector-rules": "^1.19.0",
-                "fakerphp/faker": "^1.24.1",
-                "infection/infection": "~0.26.6",
-                "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.3.7",
-                "phpstan/phpstan-deprecation-rules": "^2.0.5",
-                "phpstan/phpstan-phpunit": "^2.1.2",
-                "phpstan/phpstan-strict-rules": "^2.1.1",
-                "phpunit/phpunit": "^9.6.19",
-                "rector/rector": "^2.7.0"
-            },
-            "suggest": {
-                "composer/semver": "If you want to use ComposerJsonNormalizer or VersionConstraintNormalizer"
             },
             "type": "library",
             "extra": {
@@ -959,29 +823,10 @@
                     "Ergebnis\\Json\\Normalizer\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Provides generic and vendor-specific normalizers for normalizing JSON documents.",
-            "homepage": "https://github.com/ergebnis/json-normalizer",
-            "keywords": [
-                "json",
-                "normalizer"
-            ],
-            "support": {
-                "issues": "https://github.com/ergebnis/json-normalizer/issues",
-                "security": "https://github.com/ergebnis/json-normalizer/blob/main/.github/SECURITY.md",
-                "source": "https://github.com/ergebnis/json-normalizer"
-            },
-            "time": "2026-11-24T15:46:49+00:00"
+            "description": "Provides generic and vendor-specific normalizers for normalizing JSON documents."
         },
         {
             "name": "ergebnis/json-pointer",
@@ -994,28 +839,10 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ergebnis/json-pointer/zipball/3257b82d16f63fcd5f704df790481be45b1e5dff",
-                "reference": "3257b82d16f63fcd5f704df790481be45b1e5dff",
-                "shasum": ""
+                "reference": "3257b82d16f63fcd5f704df790481be45b1e5dff"
             },
             "require": {
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0 || ~8.7.0"
-            },
-            "require-dev": {
-                "ergebnis/data-provider": "^3.7.1",
-                "ergebnis/license": "^2.9.0",
-                "ergebnis/php-cs-fixer-config": "^6.65.0",
-                "ergebnis/phpstan-rules": "^2.17.1",
-                "ergebnis/phpunit-slow-test-detector": "^2.27.0",
-                "ergebnis/rector-rules": "^1.19.0",
-                "fakerphp/faker": "^1.24.1",
-                "infection/infection": "~0.26.6",
-                "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.3.7",
-                "phpstan/phpstan-deprecation-rules": "^2.0.5",
-                "phpstan/phpstan-phpunit": "^2.1.2",
-                "phpstan/phpstan-strict-rules": "^2.1.1",
-                "phpunit/phpunit": "^9.6.34",
-                "rector/rector": "^2.7.0"
             },
             "type": "library",
             "extra": {
@@ -1032,30 +859,10 @@
                     "Ergebnis\\Json\\Pointer\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Provides an abstraction of a JSON pointer.",
-            "homepage": "https://github.com/ergebnis/json-pointer",
-            "keywords": [
-                "RFC6901",
-                "json",
-                "pointer"
-            ],
-            "support": {
-                "issues": "https://github.com/ergebnis/json-pointer/issues",
-                "security": "https://github.com/ergebnis/json-pointer/blob/main/.github/SECURITY.md",
-                "source": "https://github.com/ergebnis/json-pointer"
-            },
-            "time": "2026-11-24T15:47:16+00:00"
+            "description": "Provides an abstraction of a JSON pointer."
         },
         {
             "name": "ergebnis/json-printer",
@@ -1068,29 +875,11 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ergebnis/json-printer/zipball/d435b3a2d13935abe120eccc250bfb9300822257",
-                "reference": "d435b3a2d13935abe120eccc250bfb9300822257",
-                "shasum": ""
+                "reference": "d435b3a2d13935abe120eccc250bfb9300822257"
             },
             "require": {
                 "ext-json": "*",
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0 || ~8.7.0"
-            },
-            "require-dev": {
-                "ergebnis/data-provider": "^3.7.1",
-                "ergebnis/license": "^2.9.0",
-                "ergebnis/php-cs-fixer-config": "^6.64.3",
-                "ergebnis/phpunit-slow-test-detector": "^2.27.0",
-                "ergebnis/rector-rules": "^1.19.0",
-                "fakerphp/faker": "^1.24.0",
-                "infection/infection": "~0.26.6",
-                "phpbench/phpbench": "^1.2.14",
-                "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.3.7",
-                "phpstan/phpstan-deprecation-rules": "^2.0.5",
-                "phpstan/phpstan-phpunit": "^2.1.2",
-                "phpstan/phpstan-strict-rules": "^2.1.1",
-                "phpunit/phpunit": "^9.6.21",
-                "rector/rector": "^2.7.0"
             },
             "type": "library",
             "extra": {
@@ -1107,30 +896,10 @@
                     "Ergebnis\\Json\\Printer\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Provides a JSON printer, allowing for flexible indentation.",
-            "homepage": "https://github.com/ergebnis/json-printer",
-            "keywords": [
-                "formatter",
-                "json",
-                "printer"
-            ],
-            "support": {
-                "issues": "https://github.com/ergebnis/json-printer/issues",
-                "security": "https://github.com/ergebnis/json-printer/blob/main/.github/SECURITY.md",
-                "source": "https://github.com/ergebnis/json-printer"
-            },
-            "time": "2026-11-24T15:47:46+00:00"
+            "description": "Provides a JSON printer, allowing for flexible indentation."
         },
         {
             "name": "ergebnis/json-schema-validator",
@@ -1143,8 +912,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ergebnis/json-schema-validator/zipball/c27ff4eec27b6ddc9acb74d6c7370456904bf1ac",
-                "reference": "c27ff4eec27b6ddc9acb74d6c7370456904bf1ac",
-                "shasum": ""
+                "reference": "c27ff4eec27b6ddc9acb74d6c7370456904bf1ac"
             },
             "require": {
                 "ergebnis/json": "^1.2.0",
@@ -1152,22 +920,6 @@
                 "ext-json": "*",
                 "justinrainbow/json-schema": "^5.2.12 || ^6.0.0",
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0 || ~8.7.0"
-            },
-            "require-dev": {
-                "ergebnis/data-provider": "^3.7.1",
-                "ergebnis/license": "^2.9.0",
-                "ergebnis/php-cs-fixer-config": "^6.64.3",
-                "ergebnis/phpunit-slow-test-detector": "^2.27.0",
-                "ergebnis/rector-rules": "^1.19.0",
-                "fakerphp/faker": "^1.24.0",
-                "infection/infection": "~0.26.6",
-                "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.3.6",
-                "phpstan/phpstan-deprecation-rules": "^2.0.5",
-                "phpstan/phpstan-phpunit": "^2.1.2",
-                "phpstan/phpstan-strict-rules": "^2.1.1",
-                "phpunit/phpunit": "^9.6.20",
-                "rector/rector": "^2.8.4"
             },
             "type": "library",
             "extra": {
@@ -1184,30 +936,10 @@
                     "Ergebnis\\Json\\SchemaValidator\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "am@localheinz.com",
-                    "homepage": "https://localheinz.com"
-                }
-            ],
-            "description": "Provides a JSON schema validator, building on top of justinrainbow/json-schema.",
-            "homepage": "https://github.com/ergebnis/json-schema-validator",
-            "keywords": [
-                "json",
-                "schema",
-                "validator"
-            ],
-            "support": {
-                "issues": "https://github.com/ergebnis/json-schema-validator/issues",
-                "security": "https://github.com/ergebnis/json-schema-validator/blob/main/.github/SECURITY.md",
-                "source": "https://github.com/ergebnis/json-schema-validator"
-            },
-            "time": "2026-11-24T15:48:10+00:00"
+            "description": "Provides a JSON schema validator, building on top of justinrainbow/json-schema."
         },
         {
             "name": "ergebnis/phpstan-rules",
@@ -1549,22 +1281,13 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/24021a898c17193ed7c2111b5fbf1c6486ae85ff",
-                "reference": "24021a898c17193ed7c2111b5fbf1c6486ae85ff",
-                "shasum": ""
+                "reference": "24021a898c17193ed7c2111b5fbf1c6486ae85ff"
             },
             "require": {
                 "ext-filter": "*",
                 "ext-json": "*",
                 "marc-mabe/php-enum": "^4.4",
                 "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "3.3.0",
-                "json-schema/json-schema-test-suite": "dev-main",
-                "marc-mabe/php-enum-phpstan": "^2.0",
-                "phpspec/prophecy": "^1.19",
-                "phpstan/phpstan": "^1.12",
-                "phpunit/phpunit": "^8.5"
             },
             "bin": [
                 "bin/validate-json"
@@ -1580,34 +1303,10 @@
                     "JsonSchema\\": "src/JsonSchema/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Danny van der Sluijs",
-                    "email": "danny.vandersluijs@icloud.com",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "A library to validate a json schema.",
-            "homepage": "https://github.com/jsonrainbow/json-schema",
-            "keywords": [
-                "json",
-                "schema"
-            ],
-            "support": {
-                "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.15.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/DannyvdSluijs",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-11-24T20:35:12+00:00"
+            "description": "A library to validate a json schema."
         },
         {
             "name": "kelunik/certificate",
@@ -1816,18 +1515,11 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/marc-mabe/php-enum/zipball/bb426fcdd65c60fb3638ef741e8782508fda7eef",
-                "reference": "bb426fcdd65c60fb3638ef741e8782508fda7eef",
-                "shasum": ""
+                "reference": "bb426fcdd65c60fb3638ef741e8782508fda7eef"
             },
             "require": {
                 "ext-reflection": "*",
                 "php": "^7.1 | ^8.0"
-            },
-            "require-dev": {
-                "phpbench/phpbench": "^0.16.10 || ^1.0.4",
-                "phpstan/phpstan": "^1.3.1",
-                "phpunit/phpunit": "^7.5.20 | ^8.5.22 | ^9.5.11",
-                "vimeo/psalm": "^4.17.0 | ^5.26.1"
             },
             "type": "library",
             "extra": {
@@ -1844,39 +1536,10 @@
                     "stubs/Stringable.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
-            "authors": [
-                {
-                    "name": "Marc Bennewitz",
-                    "email": "dev@mabe.berlin",
-                    "homepage": "https://mabe.berlin/",
-                    "role": "Lead"
-                }
-            ],
-            "description": "Simple and fast implementation of enumerations with native PHP",
-            "homepage": "https://github.com/marc-mabe/php-enum",
-            "keywords": [
-                "enum",
-                "enum-map",
-                "enum-set",
-                "enumeration",
-                "enumerator",
-                "enummap",
-                "enumset",
-                "map",
-                "set",
-                "type",
-                "type-hint",
-                "typehint"
-            ],
-            "support": {
-                "issues": "https://github.com/marc-mabe/php-enum/issues",
-                "source": "https://github.com/marc-mabe/php-enum/tree/v4.7.2"
-            },
-            "time": "2025-09-14T11:18:39+00:00"
+            "description": "Simple and fast implementation of enumerations with native PHP"
         },
         {
             "name": "netresearch/jsonmapper",
@@ -4163,5 +3826,5 @@
     "platform-overrides": {
         "php": "8.5"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
