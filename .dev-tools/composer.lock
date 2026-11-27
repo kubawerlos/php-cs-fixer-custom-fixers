@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f6ca65baedfba17e4cebd7f604c4845",
+    "content-hash": "f1cfb490aaa9643bcf67d71d66895585",
     "packages": [
         {
             "name": "amphp/amp",
@@ -907,16 +907,16 @@
         },
         {
             "name": "ergebnis/phpstan-rules",
-            "version": "2.17.0",
+            "version": "2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/phpstan-rules.git",
-                "reference": "5988e8fe66c09558c73824fce64123fdcd5afae2"
+                "reference": "f8014018e83ee4afbe6a72a529622d1524749c7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/5988e8fe66c09558c73824fce64123fdcd5afae2",
-                "reference": "5988e8fe66c09558c73824fce64123fdcd5afae2"
+                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/f8014018e83ee4afbe6a72a529622d1524749c7f",
+                "reference": "f8014018e83ee4afbe6a72a529622d1524749c7f"
             },
             "require": {
                 "composer-runtime-api": "^2.0.0",
@@ -933,7 +933,7 @@
                     ]
                 },
                 "branch-alias": {
-                    "dev-main": "2.17-dev"
+                    "dev-main": "2.18-dev"
                 }
             },
             "autoload": {
@@ -948,24 +948,24 @@
         },
         {
             "name": "ergebnis/version",
-            "version": "1.5.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/version.git",
-                "reference": "d24af41aa88e24c24e705816e428668de2b7391a"
+                "reference": "50248d5807da66eabd856ba1ac829c0c93bc5eaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/version/zipball/d24af41aa88e24c24e705816e428668de2b7391a",
-                "reference": "d24af41aa88e24c24e705816e428668de2b7391a"
+                "url": "https://api.github.com/repos/ergebnis/version/zipball/50248d5807da66eabd856ba1ac829c0c93bc5eaf",
+                "reference": "50248d5807da66eabd856ba1ac829c0c93bc5eaf"
             },
             "require": {
-                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0"
+                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0 || ~8.7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.5-dev"
+                    "dev-main": "1.8-dev"
                 },
                 "composer-normalize": {
                     "indent-size": 2,
@@ -1933,11 +1933,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.3.5",
+            "version": "2.3.7",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/645a1bd6bead15fc1b8474137467961d0fa30a79",
-                "reference": "645a1bd6bead15fc1b8474137467961d0fa30a79"
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/90c91c2498849ab8cc4e873864bbf1cb2bf6ea12",
+                "reference": "90c91c2498849ab8cc4e873864bbf1cb2bf6ea12"
             },
             "require": {
                 "php": "^7.4|^8.0"
